@@ -43,7 +43,6 @@ void main() {
         if (spawnEmitter == 1){ // spawn emitter
             Emitters[emtTargetIdx] = emitter;
             Emitters[emtTargetIdx].time = 0.0;       // 4 bytes, but due to the vec3 above, you can expect padding here
-            Emitters[emtTargetIdx].alive = true;       // 4 bytes (bools are often treated as 4 bytes for alignment)
 
         }
         
@@ -55,7 +54,7 @@ void main() {
             Emitter prevEmitter = Emitters[emtTargetIdx];
             Emitters[emtTargetIdx] = emitter;
             Emitters[emtTargetIdx].time = prevEmitter.time;
-            Emitters[emtTargetIdx].alive = true;
+            // Emitters[emtTargetIdx].alive = true;
 
         }
 }

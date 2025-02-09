@@ -93,7 +93,7 @@ namespace Graphics {
 
         int idx{ -1 };
 
-        bool modified{ false };
+        bool active{ true };
     };
 
     class ParticleManager : public ThreadSafeSingleton<ParticleManager> {
