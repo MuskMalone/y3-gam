@@ -23831,7 +23831,7 @@
                                         }
                                     },
                                     {
-                                        "data": 2.0,
+                                        "data": 2.799999952316284,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "moveDuration"
@@ -23869,7 +23869,7 @@
                                         }
                                     },
                                     {
-                                        "data": 5.0,
+                                        "data": 23.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "targetY"
@@ -55047,33 +55047,6 @@
                         }
                     },
                     {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 7.940000057220459,
-                                "z": 0.9782022833824158
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -77160,33 +77133,6 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Props"
-                        }
-                    },
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 2.700000047683716,
-                                "y": 4.300000190734863,
-                                "z": 1.100000023841858
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
                         }
                     },
                     {
