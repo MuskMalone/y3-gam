@@ -1,0 +1,98 @@
+{
+    "rootKeyframe": {
+        "startPos": {
+            "x": -0.005555152893066406,
+            "y": 2.384185791015625e-7,
+            "z": -0.3527889847755432
+        },
+        "startRot": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "startScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "nextNodes": [
+            1
+        ]
+    },
+    "keyframes": [
+        {
+            "nodeId": 1,
+            "startValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "endValue": {
+                "x": 0.0,
+                "y": 16.399999618530275,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "startTime": 0.0,
+            "duration": 0.20000000298023225,
+            "nextNodes": [
+                2
+            ]
+        },
+        {
+            "nodeId": 2,
+            "startValue": {
+                "x": 0.0,
+                "y": 16.399999618530275,
+                "z": 0.0
+            },
+            "endValue": {
+                "x": 0.0,
+                "y": 88.19999694824219,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "startTime": 0.20000000298023225,
+            "duration": 1.0,
+            "nextNodes": [
+                3
+            ]
+        },
+        {
+            "nodeId": 3,
+            "startValue": {
+                "x": 0.0,
+                "y": 88.19999694824219,
+                "z": 0.0
+            },
+            "endValue": {
+                "x": 0.0,
+                "y": 100.0999984741211,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "startTime": 1.2000000476837159,
+            "duration": 0.30000001192092898,
+            "nextNodes": [
+                4
+            ]
+        },
+        {
+            "nodeId": 4,
+            "startValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "startTime": 1.5,
+            "duration": 0.6000000238418579,
+            "nextNodes": []
+        }
+    ]
+}

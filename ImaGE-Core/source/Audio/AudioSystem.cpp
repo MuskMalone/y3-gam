@@ -51,7 +51,7 @@ namespace IGE {
                     FMOD_VECTOR listenerVel = { 0.0f, 0.0f, 0.0f };
                     FMOD_VECTOR listenerForward = { forwardVec.x, forwardVec.y, forwardVec.z };
                     FMOD_VECTOR listenerUp = { upVec.x, upVec.y, upVec.z };
-                    mgr.mSystem->set3DListenerAttributes(0, &listenerPos, &listenerVel, &listenerForward, &listenerUp);
+                    //mgr.mSystem->set3DListenerAttributes(0, &listenerPos, &listenerVel, &listenerForward, &listenerUp);
                 }
 
             }
@@ -73,10 +73,10 @@ namespace IGE {
                             audiosource.PlaySound(sound.first);
                         }
                         
-                        for (auto channel : setting.channels) {
-                            FMOD_VECTOR fmodPosition = { setting.position.x, setting.position.y, setting.position.z };
-                            channel->set3DAttributes(&fmodPosition, 0);
-                        }
+                        //for (auto channel : setting.channels) {
+                        //    FMOD_VECTOR fmodPosition = { setting.position.x, setting.position.y, setting.position.z };
+                        //    channel->set3DAttributes(&fmodPosition, 0);
+                        //}
                     }
                 }
                 mgr.mSceneStarted = false;

@@ -17,20 +17,28 @@ namespace Systems {
 		auto ptclsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::EmitterSystem, Component::Transform>() };
 		for (auto entity : ptclsystem) {
 			ECS::Entity e{ entity };
+
+			if (!e.IsActive()) { continue; }
+
 			// this is not a ref. i have to update all the transforms as they are offsets of the main transform
 			std::vector<Graphics::EmitterInstance> vecProxy{ e.GetComponent<Component::EmitterSystem>().emitters };
 			auto const& pos{ e.GetComponent<Component::Transform>().position };
 			//update the transforms
 			for (int i{}; i < vecProxy.size(); ++i) {
 				auto& emitproxy{ vecProxy[i] };
-				if (!emitproxy.modified) continue;
+				if (e.IsActive()) {
+					emitproxy.active = true;
+				}
+				else {
+					emitproxy.active = false;
+				}
 				for (int i{}; i < emitproxy.vCount; ++i)
 					emitproxy.vertices[i][0] += pos.x, emitproxy.vertices[i][1] += pos.y, emitproxy.vertices[i][2] += pos.z;
 				Graphics::ParticleManager::GetInstance().EmitterAction(emitproxy, 0);
-				e.GetComponent<Component::EmitterSystem>().emitters[i].modified = false;
+				e.GetComponent<Component::EmitterSystem>().emitters[i].active = false;
 			}
 			//updates the emitters
-			//Graphics::ParticleManager::GetInstance().MultiEmitterAction(vecProxy, 0);
+			Graphics::ParticleManager::GetInstance().MultiEmitterAction(vecProxy, 0);
 		}
 		//Graphics::ParticleManager::GetInstance().Bind();
 		float dt{ Performance::FrameRateController::GetInstance().GetDeltaTime() };
@@ -42,7 +50,7 @@ namespace Systems {
 		emitterStepShader->SetUniform("bufferMaxCount", MAX_BUFFER);
 		//1000 is the number of elements per grp
 		glDispatchCompute(MAX_BUFFER / WORK_GROUP, 1, 1);
-		glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+		glMemoryBarrier(GL_ALL_BARRIER_BITS);
 		emitterStepShader->Unuse();
 
 		particleStepShader->Use();
@@ -50,7 +58,7 @@ namespace Systems {
 		//mParticleShader->SetUniform("bufferMaxCount", MAX_BUFFER);
 		//1000 is the number of elements per grp
 		glDispatchCompute(MAX_BUFFER / WORK_GROUP, 1, 1);
-		glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+		glMemoryBarrier(GL_ALL_BARRIER_BITS);
 		particleStepShader->Unuse();
 
 		Graphics::ParticleManager::GetInstance().DebugSSBO();

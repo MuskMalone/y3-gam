@@ -2181,10 +2181,6 @@ namespace GUI {
                       emitterSystem.RemoveEmitter(i);
                       modified = true;
                   }
-
-                  if (modified) {
-                      emitter.modified = true;
-                  }
               }
           }
 
