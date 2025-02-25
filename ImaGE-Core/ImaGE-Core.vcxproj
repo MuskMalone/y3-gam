@@ -251,6 +251,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\Events\Events.h" />
     <ClInclude Include="source\Events\InputEvents.h" />
     <ClInclude Include="source\Events\SceneEvents.h" />
+    <ClInclude Include="source\External\BS_thread_pool.hpp" />
     <ClInclude Include="source\External\GLFWwindowDestructor.h" />
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="source\External\ImGui\backends\imgui_impl_opengl2.h" />

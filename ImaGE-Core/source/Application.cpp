@@ -8,6 +8,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "Application.h"
+#include <BS_thread_pool.hpp>
 
 #pragma region SingletonIncludes
 #include <Events/EventManager.h>
@@ -72,28 +73,30 @@ namespace IGE {
     //Graphics::Renderer::ResizeFinalFramebuffer(width, height);
     QUEUE_EVENT(Events::WindowResized, width, height);
 
-    
-    if (mSpecification.StartFromScene.first) {
-        IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(mSpecification.StartFromScene.second).stem().string(),
-            mSpecification.StartFromScene.second);
 
-        // TEMP - NEED THIS TO PLAY GAME BUILD
-        glfwSetCursorPos(mWindow.get(), mSpecification.WindowWidth / 2.0, mSpecification.WindowHeight / 2.0);
-        glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    if (mSpecification.StartFromScene.first) {
+      IGE_EVENTMGR.DispatchImmediateEvent<Events::LoadSceneEvent>(std::filesystem::path(mSpecification.StartFromScene.second).stem().string(),
+        mSpecification.StartFromScene.second);
+
+      // TEMP - NEED THIS TO PLAY GAME BUILD
+      glfwSetCursorPos(mWindow.get(), mSpecification.WindowWidth / 2.0, mSpecification.WindowHeight / 2.0);
+      glfwSetInputMode(mWindow.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
   }
 
   void Application::Run() {
+    BS::thread_pool threadPool{ 3 };  // currently only threading out graphics
+
     static auto& eventManager{ Events::EventManager::GetInstance() };
     static auto& inputManager{ Input::InputManager::GetInstance() };
     static auto& frameRateController{ Performance::FrameRateController::GetInstance() };
     static auto& systemManager{ Systems::SystemManager::GetInstance() };
 
-    while (!glfwWindowShouldClose(mWindow.get())) { 
+    while (!glfwWindowShouldClose(mWindow.get())) {
       frameRateController.Start();
 
-      if(inputManager.IsKeyTriggered(IK_F11)) //TODO Change to Event based
-          Application::ToggleFullscreen();
+      if (inputManager.IsKeyTriggered(IK_F11)) //TODO Change to Event based
+        Application::ToggleFullscreen();
 
       inputManager.UpdateInput();
 
@@ -104,13 +107,13 @@ namespace IGE {
 
       //=======================================================================
       if (Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
-          Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+        Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
       }
       auto const& fb = Graphics::Renderer::GetFinalFramebuffer();
       std::shared_ptr<Graphics::Texture> gameTex = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
 
       if (gameTex) {
-          gameTex->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+        gameTex->CopyFrom(fb->GetColorAttachmentID(), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
       }
 
       gameTex->Bind(0);
@@ -186,7 +189,7 @@ namespace IGE {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
       throw std::runtime_error("Failed to initialize GLAD");
     }
-    
+
     glClearColor(0.f, 0.f, 0.f, 1.f);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glEnable(GL_DEPTH_TEST);
@@ -201,12 +204,12 @@ namespace IGE {
     glViewport(0, 0, spec.WindowWidth, spec.WindowHeight); // specify size of viewport
     SetCallbacks();
 
-  // render target init
-  Graphics::FramebufferSpec framebufferSpec;
-  framebufferSpec.width = spec.WindowWidth;
-  framebufferSpec.height = spec.WindowHeight;
-  framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
-}
+    // render target init
+    Graphics::FramebufferSpec framebufferSpec;
+    framebufferSpec.width = spec.WindowWidth;
+    framebufferSpec.height = spec.WindowHeight;
+    framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::DEPTH };
+  }
 
   void Application::SetCallbacks() {
     glfwSetFramebufferSizeCallback(mWindow.get(), FramebufferSizeCallback);
@@ -246,29 +249,29 @@ namespace IGE {
     Debug::DebugLogger::DestroyInstance();
   }
 
-  void Application::ToggleFullscreen(){
-      if (mWindowState.isFullscreen) {
-          glfwSetWindowMonitor(mWindow.get(), nullptr, mWindowState.windowedPosX, mWindowState.windowedPosY, mWindowState.windowedWidth, mWindowState.windowedHeight, 0);
-          mWindowState.isFullscreen = false;
-      }
-      else {
-          glfwGetWindowPos(mWindow.get(), &mWindowState.windowedPosX, &mWindowState.windowedPosY);
-          glfwGetWindowSize(mWindow.get(), &mWindowState.windowedWidth, &mWindowState.windowedHeight);
+  void Application::ToggleFullscreen() {
+    if (mWindowState.isFullscreen) {
+      glfwSetWindowMonitor(mWindow.get(), nullptr, mWindowState.windowedPosX, mWindowState.windowedPosY, mWindowState.windowedWidth, mWindowState.windowedHeight, 0);
+      mWindowState.isFullscreen = false;
+    }
+    else {
+      glfwGetWindowPos(mWindow.get(), &mWindowState.windowedPosX, &mWindowState.windowedPosY);
+      glfwGetWindowSize(mWindow.get(), &mWindowState.windowedWidth, &mWindowState.windowedHeight);
 
-          GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-          const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-          glfwSetWindowMonitor(mWindow.get(), monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-          mWindowState.isFullscreen = true;
-      }
+      GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+      const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+      glfwSetWindowMonitor(mWindow.get(), monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+      mWindowState.isFullscreen = true;
+    }
 
-      // Update framebuffers
-      int width, height;
-      glfwGetFramebufferSize(mWindow.get(), &width, &height);
-      glViewport(0, 0, width, height);
-      //for (auto& target : mRenderTargets) {
-      //    target.framebuffer->Resize(width, height);
-      //}
-      Graphics::Renderer::ResizeFinalFramebuffer(width, height);
+    // Update framebuffers
+    int width, height;
+    glfwGetFramebufferSize(mWindow.get(), &width, &height);
+    glViewport(0, 0, width, height);
+    //for (auto& target : mRenderTargets) {
+    //    target.framebuffer->Resize(width, height);
+    //}
+    Graphics::Renderer::ResizeFinalFramebuffer(width, height);
   }
 
   EVENT_CALLBACK_DEF(Application, OnPausedUpdateTrigger) {

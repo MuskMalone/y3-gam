@@ -297,14 +297,16 @@ namespace {
     for (ECS::Entity const& entity : entities) {
       if (numLights >= N)
         break;
+
       if (entity.HasComponent<Component::Light>()) {
         auto const& light = entity.GetComponent<Component::Light>();
+        auto const& trans = entity.GetComponent<Component::Transform>();
         lightUniforms.u_type[numLights] = light.type;
-        lightUniforms.u_LightDirection[numLights] = entity.GetComponent<Component::Transform>().worldRot * light.forwardVec; // Directional light direction in world space
+        lightUniforms.u_LightDirection[numLights] = trans.worldRot * light.forwardVec; // Directional light direction in world space
         lightUniforms.u_LightColor[numLights] = light.color;     // Directional light color
 
         //For spotlight
-        lightUniforms.u_LightPos[numLights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
+        lightUniforms.u_LightPos[numLights] = trans.worldPos; // Position of the spotlight
         lightUniforms.u_InnerSpotAngle[numLights] = light.mInnerSpotAngle; // Inner spot angle in degrees
         lightUniforms.u_OuterSpotAngle[numLights] = light.mOuterSpotAngle; // Outer spot angle in degrees
         lightUniforms.u_LightIntensity[numLights] = light.mLightIntensity; // Intensity of the light
@@ -327,7 +329,7 @@ namespace {
               lightUniforms.u_LightColor[numLights] = color;     // Directional light color
 
               //For spotlight
-              lightUniforms.u_LightPos[numLights] = entity.GetComponent<Component::Transform>().worldPos; // Position of the spotlight
+              lightUniforms.u_LightPos[numLights] = trans.worldPos; // Position of the spotlight
               //lightUniforms.u_InnerSpotAngle[numLights] = light.mInnerSpotAngle; // Inner spot angle in degrees
               //lightUniforms.u_OuterSpotAngle[numLights] = light.mOuterSpotAngle; // Outer spot angle in degrees
               lightUniforms.u_LightIntensity[numLights] = bloom.intensity;//light.mLightIntensity; // Intensity of the light
