@@ -20,6 +20,7 @@ namespace {
                                                           // @TODO: Find a way to make this editor only
 
   void InitTransform(Component::Transform& trans, Anim::RootKeyframe const& root);
+  void SetStartValues(std::vector<Anim::Node>& nodes, Component::Transform const& transform);
 }
 
 namespace Systems {
@@ -52,7 +53,9 @@ namespace Systems {
       if (animation.currentKeyframes.empty()) {
         animation.Reset();
         animation.currentKeyframes = animData.rootKeyframe.nextNodes;
+
         InitTransform(trans, animData.rootKeyframe);
+        SetStartValues(animation.currentKeyframes, trans);
       }
 
       animation.timeElapsed += deltaTime; // update elapsed time
@@ -119,6 +122,7 @@ namespace Systems {
         // insert the next nodes into the current keyframes
         if (!nextNodes.empty()) {
           animation.currentKeyframes.insert(animation.currentKeyframes.end(), nextNodes.begin(), nextNodes.end());
+          SetStartValues(animation.currentKeyframes, trans);
         }
         completedNodes.pop();
       }
@@ -171,7 +175,9 @@ namespace Systems {
     if (animation.currentKeyframes.empty()) {
       animation.Reset();
       animation.currentKeyframes = animData.rootKeyframe.nextNodes;
+
       InitTransform(trans, animData.rootKeyframe);
+      SetStartValues(animation.currentKeyframes, trans);
     }
 
     animation.timeElapsed += deltaTime; // update elapsed time
@@ -238,6 +244,8 @@ namespace Systems {
       // insert the next nodes into the current keyframes
       if (!nextNodes.empty()) {
         animation.currentKeyframes.insert(animation.currentKeyframes.end(), nextNodes.begin(), nextNodes.end());
+        // set the start values of all keyframes
+        SetStartValues(animation.currentKeyframes, trans);
       }
       completedNodes.pop();
     }
@@ -256,5 +264,26 @@ namespace {
     trans.position = root.startPos;
     trans.SetLocalRotWithEuler(root.startRot);
     trans.scale = root.startScale;
+  }
+
+  void SetStartValues(std::vector<Anim::Node>& nodes, Component::Transform const& transform) {
+    for (Anim::Node& node : nodes) {
+      switch (node->type) {
+      case Anim::KeyframeType::TRANSLATION:
+        node->startValue = transform.position;
+
+        break;
+      case Anim::KeyframeType::ROTATION:
+        node->startValue = transform.eulerAngles;
+
+        break;
+      case Anim::KeyframeType::SCALE:
+        node->startValue = transform.scale;
+
+        break;
+      default:
+        break;
+      }
+    }
   }
 }

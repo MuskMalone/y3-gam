@@ -755,15 +755,7 @@ namespace Serialization
     case Anim::KeyframeType::SCALE:
     case Anim::KeyframeType::ROTATION:
     {
-      glm::vec3& start{ std::get<glm::vec3>(keyframe.startValue) },
-        &end{ std::get<glm::vec3>(keyframe.endValue) };
-      if (jsonVal.HasMember("startValue")) {
-        DeserializeRecursive(start, jsonVal["startValue"]);
-      }
-      else {
-        start = glm::vec3();
-        IGE_DBGLOGGER.LogError("Anim::Keyframe missing \"startValue\" member");
-      }
+      glm::vec3& end{ std::get<glm::vec3>(keyframe.endValue) };
 
       if (jsonVal.HasMember("endValue")) {
         DeserializeRecursive(end, jsonVal["endValue"]);
@@ -784,6 +776,17 @@ namespace Serialization
     if (!fileWrapper) {
       IGE_DBGLOGGER.LogError("[Deserializer] Unable to read " + filePath);
       return {};
+    }
+
+    // if file is empty, ignore it
+    {
+      int const ch{ fgetc(fileWrapper.GetFILE()) };
+      if (ch == EOF) {
+        return {};
+      }
+      else {
+        ungetc(ch, fileWrapper.GetFILE());
+      }
     }
 
     std::vector<char> buffer(sBufferSize);

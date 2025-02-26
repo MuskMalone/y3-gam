@@ -9,6 +9,7 @@
 #include <Events/EventCallback.h>
 
 namespace Anim { struct RootKeyframe; }
+namespace Component { struct Transform; }
 
 namespace GUI {
   class KeyframeEditor : public GUIWindow
@@ -40,19 +41,19 @@ namespace GUI {
     struct KeyframeData {
       using ValueType = Anim::Keyframe::ValueType;
 
-      KeyframeData() : startValue{}, endValue{}, type{ Anim::KeyframeType::NONE }, startTime{}, duration{} {}
+      KeyframeData() : endValue{}, type{ Anim::KeyframeType::NONE }, startTime{}, duration{} {}
       KeyframeData(Anim::Keyframe const& keyframe) :
-        startValue{ keyframe.startValue }, endValue{ keyframe.endValue },
-        type{ keyframe.type }, startTime{ keyframe.startTime }, duration{ keyframe.duration } {}
+        endValue{ keyframe.endValue }, type{ keyframe.type },
+        startTime{ keyframe.startTime }, duration{ keyframe.duration } {}
 
       template <typename T>
       T GetInterpolatedValue(T const& startVal, float endTime) const { 
-        return glm::mix(std::get<T>(startValue), std::get<T>(endValue), (endTime - startTime) / duration);
+        return glm::mix(startVal, std::get<T>(endValue), (endTime - startTime) / duration);
       }
 
       inline float GetEndTime() const noexcept { return startTime + duration; }
 
-      ValueType startValue, endValue;
+      ValueType endValue;
       Anim::KeyframeType type;
       float startTime, duration;
     };
@@ -116,6 +117,7 @@ namespace GUI {
     void CreateOutputTree(Anim::Node& dest, KeyframeNode::NodePtr const& src, NodePosMap& nodePosMap) const;
 
     void NodePreview(KeyframeNode::NodePtr const& node);
+    void PreviewKeyframe(KeyframeNode::NodePtr const& node, Component::Transform& transform) const;
     bool DisplayRootNode();
     bool KeyframeNodeBody(KeyframeNode::NodePtr& node);
 

@@ -645,8 +645,6 @@ namespace {
     writer.Key(JSON_ANIM_NODE_ID_KEY);
     writer.Int(node->id);
 
-    writer.Key("startValue");
-    SerializeRecursive(node->startValue, writer);
     writer.Key("endValue");
     SerializeRecursive(node->endValue, writer);
     writer.Key("type");

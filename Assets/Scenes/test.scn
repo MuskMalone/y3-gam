@@ -276,8 +276,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.0,
-                            "z": 92.60381317138672
+                            "y": -16.233257293701173,
+                            "z": 108.97390747070313
                         },
                         "scale": {
                             "x": 1.0,
@@ -297,8 +297,8 @@
                         },
                         "worldPos": {
                             "x": 0.0,
-                            "y": 0.0,
-                            "z": 92.60381317138672
+                            "y": -16.233257293701173,
+                            "z": 108.97390747070313
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -323,15 +323,15 @@
                         "projType": "PERSP",
                         "position": {
                             "x": 0.0,
-                            "y": 0.0,
-                            "z": 92.60381317138672
+                            "y": -16.233257293701173,
+                            "z": 108.97390747070313
                         },
                         "yaw": 0.0,
                         "pitch": 0.0,
                         "fov": 60.0,
                         "aspectRatio": 1.7777777910232545,
                         "nearClip": 0.10000000149011612,
-                        "farClip": 100.0
+                        "farClip": 655.0
                     }
                 }
             ]
@@ -403,6 +403,25 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "..\\Assets\\Animations\\New Animation.anim",
+                                "value": {
+                                    "ID": 11844308266142889822
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "..\\Assets\\Animations\\New Animation.anim",
+                            "second": {
+                                "ID": 11844308266142889822
+                            }
+                        },
+                        "repeat": true
                     }
                 }
             ]

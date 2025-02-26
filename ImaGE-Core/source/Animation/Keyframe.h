@@ -26,8 +26,8 @@ namespace Anim {
     using ValueType = std::variant<glm::vec3>; // may change to rttr::variant if cant serialize
 
     Keyframe() : nextNodes{}, startValue{}, endValue{}, type{ KeyframeType::NONE }, startTime{}, duration{}, id{} {}
-    Keyframe(ValueType startVal, ValueType endVal, KeyframeType _type, float _startTime, float _duration) :
-      nextNodes{}, startValue{ std::move(startVal) }, endValue{ std::move(endVal) },
+    Keyframe(ValueType endVal, KeyframeType _type, float _startTime, float _duration) :
+      nextNodes{}, startValue{}, endValue{ std::move(endVal) },
       type{ _type }, startTime{ _startTime }, duration{ _duration }, id{} {
 
     }

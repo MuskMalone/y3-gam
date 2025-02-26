@@ -3,6 +3,7 @@
 #include <ImNodes/imnodes.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
 #include <GUI/Helpers/AssetHelpers.h>
+#include <Core/Systems/TransformSystem/TransformHelpers.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <chrono>
 
@@ -525,6 +526,20 @@ namespace GUI {
     bool const isRoot{ sRightClickedNode == sRootId };
 
     if (isRoot) {
+      if (ImGui::Selectable("Preview Keyframe")) {
+        ECS::Entity currEntity{ GUIVault::GetSelectedEntity() };
+
+        if (currEntity) {
+          Component::Transform& trans{ currEntity.GetComponent<Component::Transform>() };
+          trans.position = mRoot->startPos;
+          trans.SetLocalRotWithEuler(mRoot->startRot);
+          trans.scale = mRoot->startScale;
+          trans.modified = true;
+
+          modified = true;
+        }
+      }
+
       if (ImGui::Selectable("Use current Entity's transform")) {
         ECS::Entity const selectedEntity{ GUIVault::GetSelectedEntity() };
         if (selectedEntity) {
@@ -539,6 +554,16 @@ namespace GUI {
       }
     } // end isRoot
     else {
+      if (ImGui::Selectable("Preview Keyframe")) {
+        ECS::Entity currEntity{ GUIVault::GetSelectedEntity() };
+
+        if (currEntity) {
+          PreviewKeyframe(mNodes[sRightClickedNode], currEntity.GetComponent<Component::Transform>());
+
+          modified = true;
+        }
+      }
+
       if (ImGui::Selectable("Use current Entity's transform")) {
         ECS::Entity const selectedEntity{ GUIVault::GetSelectedEntity() };
         if (selectedEntity) {
@@ -743,7 +768,7 @@ namespace GUI {
       {
         glm::vec3 const endValue{
           endTime < startTime ?
-            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, endTime)
+            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.rot, endTime)
             : std::get<glm::vec3>(node->data.endValue)
         };
 
@@ -754,7 +779,7 @@ namespace GUI {
       {
         glm::vec3 const endValue{
           endTime < startTime ?
-            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, endTime)
+            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.scale, endTime)
             : std::get<glm::vec3>(node->data.endValue)
         };
 
@@ -810,7 +835,7 @@ namespace GUI {
       {
         glm::vec3 const endValue{
           endTime < startTime ?
-            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, endTime)
+            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.rot, endTime)
             : std::get<glm::vec3>(node->data.endValue)
         };
 
@@ -821,7 +846,7 @@ namespace GUI {
       {
         glm::vec3 const endValue{
           endTime < startTime ?
-            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, endTime)
+            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.scale, endTime)
             : std::get<glm::vec3>(node->data.endValue)
         };
 
@@ -839,10 +864,34 @@ namespace GUI {
       GetCumulativeValuesR(next, startTime, latestUpdate);
     }
   }
+  
+  void KeyframeEditor::PreviewKeyframe(KeyframeNode::NodePtr const& node, Component::Transform& transform) const {
+    GetCumulativeValues(node);
+
+    switch (node->data.type) {
+    case Anim::KeyframeType::TRANSLATION:
+      sCachedCumulativeValues.pos = std::get<glm::vec3>(node->data.endValue);
+
+      break;
+    case Anim::KeyframeType::ROTATION:
+      sCachedCumulativeValues.rot = std::get<glm::vec3>(node->data.endValue);
+
+      break;
+    case Anim::KeyframeType::SCALE:
+      sCachedCumulativeValues.scale = std::get<glm::vec3>(node->data.endValue);
+
+      break;
+    default:
+      break;
+    }
+
+    transform.position = sCachedCumulativeValues.pos;
+    transform.SetLocalRotWithEuler(sCachedCumulativeValues.rot);
+    transform.scale = sCachedCumulativeValues.scale;
+    transform.modified = true;
+  }
 
   void KeyframeEditor::Init() {
-    Reset();
-
     mRoot = std::make_shared<RootKeyframeNode>();
 
     mPinIdToNode.emplace(mRoot->outputPin - 1, mRoot);
@@ -855,6 +904,7 @@ namespace GUI {
   }
 
   EVENT_CALLBACK_DEF(KeyframeEditor, OnAnimationEdit) {
+    Reset();
     Init();
     LoadKeyframes(CAST_TO_EVENT(Events::EditAnimation)->mGUID);
   }
@@ -927,7 +977,7 @@ namespace GUI {
     // construct the rest of the tree
     for (KeyframeNode::NodePtr const& next : mRoot->nextNodes) {
       KeyframeData const& data{ next->data };
-      Anim::Node newKeyframe{ std::make_shared<Anim::Keyframe>(data.startValue, data.endValue, data.type, data.startTime, data.duration) };
+      Anim::Node newKeyframe{ std::make_shared<Anim::Keyframe>(data.endValue, data.type, data.startTime, data.duration) };
       newKeyframe->id = next->id;
       animData.rootKeyframe.nextNodes.emplace_back(newKeyframe);
       nodePositions.posMap.emplace(next->id, ImNodes::GetNodeGridSpacePos(next->id));
@@ -1028,7 +1078,7 @@ namespace GUI {
     for (KeyframeNode::NodePtr const& next : src->nextNodes) {
       KeyframeData const& data{ next->data };
       Anim::Node newNode{
-        std::make_shared<Anim::Keyframe>(data.startValue, data.endValue, data.type, data.startTime, data.duration)
+        std::make_shared<Anim::Keyframe>(data.endValue, data.type, data.startTime, data.duration)
       };
       newNode->id = next->id;
       dest->nextNodes.emplace_back(newNode);
