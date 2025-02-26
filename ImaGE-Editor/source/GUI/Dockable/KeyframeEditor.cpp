@@ -18,10 +18,24 @@
 #include <Events/EventManager.h>
 
 namespace {
+  struct CumulativeValues {
+    CumulativeValues() : pos{}, rot{}, scale{ 1.f, 1.f, 1.f }, outdated{ true } {}
+
+    inline void InvalidateData() noexcept { outdated = true; }
+
+    Anim::Keyframe::ValueType prevVal;
+    glm::vec3 pos, rot, scale;
+    GUI::KeyframeEditor::IDType nodeId;  // the associated node
+    bool outdated;
+  };
+}
+
+namespace {
   static constexpr const char* sKeyframeTypeStr[]{
     "Empty", "Translation", "Scale", "Rotation"
   };
   static constexpr float sLeftColWidth = 70.f, sRightColWidth = 170.f;
+  static CumulativeValues sCachedCumulativeValues;
   static GUI::KeyframeEditor::IDType sRightClickedNode;
   static std::unordered_set<GUI::KeyframeEditor::IDType> sTraversedNodes;
   static ECS::Entity sPreviewingEntity{};
@@ -33,8 +47,15 @@ namespace {
 namespace GUI {
   std::string const KeyframeEditor::sEditorFilePath = std::string(gEditorAssetsDirectory) + ".Animation\\";
 
+  KeyframeEditor::KeyframeNode::KeyframeNode(IDType nodeId, bool hasInputPin, bool hasOutputPin) :
+    data{}, nodeName{ sKeyframeTypeStr[static_cast<int>(Anim::KeyframeType::NONE)] }, nextNodes{},
+    previous{}, id{ nodeId }
+  {
+    inputPin = hasInputPin ? ++sLastPinId : INVALID_ID;
+    outputPin = hasOutputPin ? ++sLastPinId : INVALID_ID;
+  }
   KeyframeEditor::KeyframeNode::KeyframeNode(IDType nodeId, Anim::Keyframe const& keyframeData, bool hasInputPin, bool hasOutputPin) :
-    data{ keyframeData }, cumulativeVal{}, nodeName{ sKeyframeTypeStr[static_cast<int>(keyframeData.type)] }, nextNodes{},
+    data{ keyframeData }, nodeName{ sKeyframeTypeStr[static_cast<int>(keyframeData.type)] }, nextNodes{},
     previous{}, id{ nodeId }
   {
     inputPin = hasInputPin ? ++sLastPinId : INVALID_ID;
@@ -53,7 +74,7 @@ namespace GUI {
   }
 
   KeyframeEditor::KeyframeEditor(const char* windowName) : GUIWindow(windowName),
-    mPinIdToNode{}, mNodes{}, mLinks{}, mSelectedAnim{} {
+    mPinIdToNode{}, mNodes{}, mLinks{}, mRoot{}, mSelectedAnim{} {
     // the context shall live and die with this window
     ImNodes::CreateContext();
     ImNodesIO& io{ ImNodes::GetIO() };
@@ -73,7 +94,7 @@ namespace GUI {
 
     static bool modifying{ false };
     static std::chrono::steady_clock::time_point lastModified{};
-    bool modified{ false };
+    bool modified{ false }, dataModified{ false };
 
     if (!mSelectedAnim) {
       ImVec2 centerPos{ ImGui::GetWindowSize() * 0.5f };
@@ -95,12 +116,17 @@ namespace GUI {
     }
 
     if (NodesToolbar()) {
-      
+
     }
 
     ImNodes::BeginNodeEditor();
 
     bool const editorHovered{ ImNodes::IsEditorHovered() };
+
+    if (DisplayRootNode()) {
+      modified = dataModified = true;
+    }
+
     for (auto&[id, node] : mNodes) {
       bool highlight{ false };
       if (sPreviewingEntity) {
@@ -121,38 +147,32 @@ namespace GUI {
 
       ImNodes::BeginNode(id);
 
-      if (id == sRootId) {
-        DisplayRootNode(node);
+      {
+        std::ostringstream oss{};
+        oss << node->nodeName << " Keyframe (t = " << std::fixed << std::setprecision(2) << node->data.startTime << "s)";
+
+        ImNodes::BeginNodeTitleBar();
+        ImGui::TextUnformatted(oss.str().c_str());
+        ImNodes::EndNodeTitleBar();
       }
-      else {
-        {
-          std::ostringstream oss{};
-          oss << node->nodeName << " Keyframe (t = " << std::fixed << std::setprecision(2) << node->data.startTime << "s)";
-
-          ImNodes::BeginNodeTitleBar();
-          ImGui::TextUnformatted(oss.str().c_str());
-          ImNodes::EndNodeTitleBar();
-        }
         
-        if (KeyframeNodeBody(node)) {
-          UpdateChain(node);
-          modified = true;
-        }
+      if (KeyframeNodeBody(node)) {
+        modified = dataModified = true;
+      }
 
+      if (node->inputPin != INVALID_ID) {
+        ImNodes::BeginInputAttribute(node->inputPin);
+        ImNodes::EndInputAttribute();
+      }
+
+      if (node->outputPin != INVALID_ID) {
         if (node->inputPin != INVALID_ID) {
-          ImNodes::BeginInputAttribute(node->inputPin);
-          ImNodes::EndInputAttribute();
+          ImGui::SameLine();
         }
 
-        if (node->outputPin != INVALID_ID) {
-          if (node->inputPin != INVALID_ID) {
-            ImGui::SameLine();
-          }
-
-          ImNodes::BeginOutputAttribute(node->outputPin);
-          ImNodes::EndOutputAttribute();
-        }
-      } // end else
+        ImNodes::BeginOutputAttribute(node->outputPin);
+        ImNodes::EndOutputAttribute();
+      }
 
       ImNodes::EndNode();
 
@@ -171,38 +191,6 @@ namespace GUI {
 
     ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_BottomRight);
     ImNodes::EndNodeEditor();
-
-     // check for tooltip trigger
-      IDType hoveredNodeId{};
-      bool const shiftHeld{ ImGui::IsKeyDown(ImGuiKey_LeftShift) || ImGui::IsKeyDown(ImGuiKey_RightShift) };
-      bool const hovered{ ImNodes::IsNodeHovered(&hoveredNodeId) };
-      if (shiftHeld && hovered) {
-        // ignore tooltip for root
-        if (hoveredNodeId != sRootId) {
-          NodePreview(mNodes[hoveredNodeId]);
-        }
-      }
-      // if node right-clicked
-      else if (ImGui::IsMouseClicked(ImGuiMouseButton_Right) && hovered) {
-        sRightClickedNode = hoveredNodeId;
-        ImGui::OpenPopup(sNodeOptionsPopupLabel);
-      }
-
-      // makeshift solution to consider dragging nodes around a modification
-      if (hovered && ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
-        modified = true;
-      }
-
-      if (!hovered && ImGui::IsMouseClicked(ImGuiMouseButton_Right) && editorHovered) {
-        ImGui::OpenPopup(sOptionsPopupLabel);
-      }
-
-      if (OptionsMenu()) {
-        modified = true;
-      }
-      if (NodeOptionsMenu()) {
-        modified = true;
-      }
     
 
     // check for link interaction
@@ -217,7 +205,7 @@ namespace GUI {
         mPinIdToNode[result->outputPin - 1]->RemoveLinkedNode(mPinIdToNode[inPin]->id);
         mLinks.erase(result);
       }
-      modified = true;
+      modified = dataModified = true;
     }
 
     if (ImNodes::IsLinkCreated(&outPin, &inPin)) {
@@ -230,9 +218,42 @@ namespace GUI {
         mLinks.emplace_back(++sLastLinkId, inPin, outPin);
         srcNode->nextNodes.emplace_back(destNode);
         destNode->previous = srcNode;
-        UpdateChain(destNode);
-        modified = true;
+        destNode->data.startTime = srcNode->data.GetEndTime();  // update start time
+
+        modified = dataModified = true;
       }
+    }
+
+    // check for tooltip trigger
+    IDType hoveredNodeId{};
+    bool const shiftHeld{ ImGui::IsKeyDown(ImGuiKey_LeftShift) || ImGui::IsKeyDown(ImGuiKey_RightShift) };
+    bool const hovered{ ImNodes::IsNodeHovered(&hoveredNodeId) };
+    if (shiftHeld && hovered) {
+      // ignore tooltip for root
+      if (hoveredNodeId != sRootId) {
+        NodePreview(mNodes[hoveredNodeId]);
+      }
+    }
+    // if node right-clicked
+    else if (ImGui::IsMouseClicked(ImGuiMouseButton_Right) && hovered) {
+      sRightClickedNode = hoveredNodeId;
+      ImGui::OpenPopup(sNodeOptionsPopupLabel);
+    }
+
+    // makeshift solution to consider dragging nodes around a modification
+    if (hovered && ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
+      modified = true;
+    }
+
+    if (!hovered && ImGui::IsMouseClicked(ImGuiMouseButton_Right) && editorHovered) {
+      ImGui::OpenPopup(sOptionsPopupLabel);
+    }
+
+    if (OptionsMenu()) {
+      modified = true;
+    }
+    if (NodeOptionsMenu()) {
+      modified = dataModified = true;
     }
 
     ImGui::End();
@@ -241,6 +262,10 @@ namespace GUI {
       if (sPreviewingEntity.HasComponent<Component::Animation>() && sPreviewingEntity.GetComponent<Component::Animation>().timeElapsed == 0.f) {
         sPreviewingEntity = {};
       }
+    }
+
+    if (dataModified) {
+      sCachedCumulativeValues.InvalidateData();
     }
 
     // only trigger a save after no modifications for <sTimeUntilSave> ms
@@ -264,7 +289,10 @@ namespace GUI {
     }
   }
 
-  bool KeyframeEditor::DisplayRootNode(KeyframeNode::NodePtr const& root) {
+  bool KeyframeEditor::DisplayRootNode() {
+    if (!mRoot) { return false; }
+
+    ImNodes::BeginNode(mRoot->id);
     ImNodes::BeginNodeTitleBar();
     ImGui::TextUnformatted("Root Keyframe");
     ImNodes::EndNodeTitleBar();
@@ -274,35 +302,33 @@ namespace GUI {
     if (ImGui::BeginTable("KeyframeNodePreviewTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
       ImGui::TableSetupColumn("##Col1", ImGuiTableColumnFlags_WidthFixed, sLeftColWidth);
       ImGui::TableSetupColumn("##Col2", ImGuiTableColumnFlags_WidthFixed, sRightColWidth);
-      CumulativeValues& vals{ root->cumulativeVal };
 
       NextRowTable("Position", sRightColWidth);
-      if (NodeVec3Input("##Position", vals.pos)) {
+      if (NodeVec3Input("##Position", mRoot->startPos)) {
         modified = true;
       }
 
       NextRowTable("Rotation", sRightColWidth);
-      if (NodeVec3Input("##Rotation", vals.rot)) {
+      if (NodeVec3Input("##Rotation", mRoot->startRot)) {
         modified = true;
       }
 
       NextRowTable("Scale", sRightColWidth);
-      if (NodeVec3Input("##Scale", vals.scale, 0.001f)) {
+      if (NodeVec3Input("##Scale", mRoot->startScale, 0.001f)) {
         modified = true;
       }
 
       ImGui::EndTable();
     }
 
-    if (root->outputPin != INVALID_ID) {
-      ImNodes::BeginOutputAttribute(root->outputPin);
-      ImNodes::EndOutputAttribute();
-    }
+    ImNodes::BeginOutputAttribute(mRoot->outputPin);
+    ImNodes::EndOutputAttribute();
+    ImNodes::EndNode();
 
     return modified;
   }
 
-  bool KeyframeEditor::KeyframeNodeBody(KeyframeNode::NodePtr const& node) {
+  bool KeyframeEditor::KeyframeNodeBody(KeyframeNode::NodePtr& node) {
     bool modified{ false };
 
     if (ImGui::BeginTable("KeyframeNodeTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
@@ -320,13 +346,27 @@ namespace GUI {
               node->nodeName = sKeyframeTypeStr[i];
               modified = true;
 
-              if (selected == Anim::KeyframeType::SCALE) {
-                node->data.endValue = glm::clamp(std::get<glm::vec3>(node->data.endValue), glm::vec3(0.001f), glm::vec3(FLT_MAX));
+              // default value to same as root
+              switch (selected) {
+              case Anim::KeyframeType::TRANSLATION:
+                node->data.endValue = mRoot->startPos;
+
+                break;
+              case Anim::KeyframeType::ROTATION:
+                node->data.endValue = mRoot->startRot;
+
+                break;
+              case Anim::KeyframeType::SCALE:
+                node->data.endValue = glm::max(mRoot->startScale, glm::vec3(0.001f));
+
+                break;
+              default:
+                break;
               }
-            }
+            } // end if
             break;
-          }
-        }
+          } // end selectable if
+        } // end for loop
 
         ImGui::EndCombo();
       }
@@ -342,6 +382,7 @@ namespace GUI {
 
       NextRowTable("Duration", sRightColWidth);
       if (ImGui::DragFloat("##Duration", &node->data.duration, 0.1f, 0.f, FLT_MAX, "%.2f", ImGuiSliderFlags_AlwaysClamp)) {
+        UpdateStartTimesInChain(node);  // propagate changes down the chain
         modified = true;
       }
       
@@ -353,36 +394,62 @@ namespace GUI {
   }
 
   void KeyframeEditor::NodePreview(KeyframeNode::NodePtr const& node) {
-    CumulativeValues& values{ node->cumulativeVal };
+    GetCumulativeValues(node);
+
     ImGui::BeginTooltip();
 
-    // starting values
-    ImGui::TextUnformatted("Frame starts with:");
-    if (ImGui::BeginTable("NodeTooltipTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
-      ImGui::TableSetupColumn("##Col1", ImGuiTableColumnFlags_WidthFixed, sLeftColWidth);
-      ImGui::TableSetupColumn("##Col2", ImGuiTableColumnFlags_WidthFixed, sRightColWidth);
+    if (node->previous) {
+      // starting values
+      ImGui::TextUnformatted("Frame starts with:");
+      if (ImGui::BeginTable("NodeTooltipTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+        ImGui::TableSetupColumn("##Col1", ImGuiTableColumnFlags_WidthFixed, sLeftColWidth);
+        ImGui::TableSetupColumn("##Col2", ImGuiTableColumnFlags_WidthFixed, sRightColWidth);
 
-      NextRowTable("Position", sRightColWidth);
-      NodeVec3Input("##TooltipPosition", values.pos);
+        NextRowTable("Position", sRightColWidth);
+        NodeVec3Input("##TooltipPosition", sCachedCumulativeValues.pos);
 
-      NextRowTable("Rotation", sRightColWidth);
-      NodeVec3Input("##TooltipRotation", values.rot);
+        NextRowTable("Rotation", sRightColWidth);
+        NodeVec3Input("##TooltipRotation", sCachedCumulativeValues.rot);
 
-      NextRowTable("Scale", sRightColWidth);
-      NodeVec3Input("##TooltipScale", values.scale);
+        NextRowTable("Scale", sRightColWidth);
+        NodeVec3Input("##TooltipScale", sCachedCumulativeValues.scale);
 
-      ImGui::EndTable();
-    }
+        ImGui::EndTable();
+      }
 
-    // current offset from starting value
-    if (node->data.type != Anim::KeyframeType::NONE) {
-      ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 5.f);
-      ImGui::TextUnformatted((node->nodeName + " offset of:").c_str());
+      // current offset from starting value
+      if (node->data.type != Anim::KeyframeType::NONE) {
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 5.f);
+        ImGui::TextUnformatted((node->nodeName + " offset of:").c_str());
 
-      ImGui::SetNextItemWidth(sRightColWidth);
-      // @TODO: need to change if more types are added
-      glm::vec3 offset{ node->data.GetNormalizedValue<glm::vec3>() };
-      NodeVec3Input("##TooltipOffset", offset);
+        ImGui::SetNextItemWidth(sRightColWidth);
+        // @TODO: need to change if more types are added
+        switch (node->data.type) {
+        case Anim::KeyframeType::TRANSLATION:
+        {
+          glm::vec3 offset{ std::get<glm::vec3>(node->data.endValue) - std::get<glm::vec3>(sCachedCumulativeValues.prevVal) };
+          NodeVec3Input("##TooltipOffset", offset);
+
+          break;
+        }
+        case Anim::KeyframeType::ROTATION:
+        {
+          glm::vec3 offset{ std::get<glm::vec3>(node->data.endValue) - std::get<glm::vec3>(sCachedCumulativeValues.prevVal) };
+          NodeVec3Input("##TooltipOffset", offset);
+
+          break;
+        }
+        case Anim::KeyframeType::SCALE:
+        {
+          glm::vec3 offset{ std::get<glm::vec3>(node->data.endValue) - std::get<glm::vec3>(sCachedCumulativeValues.prevVal) };
+          NodeVec3Input("##TooltipOffset", offset);
+
+          break;
+        }
+        default:
+          break;
+        }
+      }
     }
 
     // start to end time
@@ -461,17 +528,11 @@ namespace GUI {
       if (ImGui::Selectable("Use current Entity's transform")) {
         ECS::Entity const selectedEntity{ GUIVault::GetSelectedEntity() };
         if (selectedEntity) {
-          CumulativeValues& rootVals{ GetRootNode()->cumulativeVal };
           Component::Transform const& trans{ selectedEntity.GetComponent<Component::Transform>() };
 
-          rootVals.pos = trans.position;
-          rootVals.rot = trans.eulerAngles;
-          rootVals.scale = trans.scale;
-
-          // propagate the changes down the root
-          for (KeyframeNode::NodePtr& next : GetRootNode()->nextNodes) {
-            UpdateChain(next);
-          }
+          mRoot->startPos = trans.position;
+          mRoot->startRot = trans.eulerAngles;
+          mRoot->startScale = trans.scale;
 
           modified = true;
         }
@@ -496,7 +557,6 @@ namespace GUI {
             break;
           }
 
-          UpdateChain(rightClicked);
           modified = true;
         }
       }
@@ -516,7 +576,6 @@ namespace GUI {
         KeyframeNode::NodePtr& node{ mNodes[sRightClickedNode] };
         node->data = {};
         node->nodeName = sKeyframeTypeStr[0];
-        UpdateChain(node);
 
         modified = true;
       }
@@ -573,12 +632,87 @@ namespace GUI {
     return modified;
   }
 
-  void KeyframeEditor::UpdateChainR(KeyframeNode::NodePtr const& node) {
-    if (!node->previous) {
-      node->cumulativeVal = {};
+  void KeyframeEditor::UpdateStartTimesInChain(KeyframeNode::NodePtr& updatedNode) {
+    if (!updatedNode) { return; }
+
+    for (KeyframeNode::NodePtr& next : updatedNode->nextNodes) {
+      next->data.startTime = updatedNode->data.GetEndTime();
+      UpdateStartTimesInChain(next);
+    }
+  }
+
+  void KeyframeEditor::GetCumulativeValue(KeyframeNode::NodePtr const& node, Anim::KeyframeType type) const {
+    if (!node || type == Anim::KeyframeType::NONE) {
       return;
     }
-    
+
+    // if previous node is of the same type, just set that as the prevVal
+    if (node->data.type == type) {
+      sCachedCumulativeValues.prevVal = node->data.endValue;
+      return;
+    }
+
+    // init to root value
+    switch (type) {
+    case Anim::KeyframeType::TRANSLATION:
+      sCachedCumulativeValues.prevVal = mRoot->startPos;
+
+      break;
+    case Anim::KeyframeType::ROTATION:
+      sCachedCumulativeValues.prevVal = mRoot->startRot;
+
+      break;
+    case Anim::KeyframeType::SCALE:
+      sCachedCumulativeValues.prevVal = mRoot->startScale;
+
+      break;
+    default:
+      break;
+    }
+
+    // recursively check through all nodes that execute before this node
+    for (KeyframeNode::NodePtr const& next : mRoot->nextNodes) {
+      GetCumulativeValueR(next, node->data.startTime, 0.f, type);
+    }
+    sTraversedNodes.clear();
+  }
+
+  void KeyframeEditor::GetCumulativeValues(KeyframeNode::NodePtr const& node) const {
+    // ignore if cached values are up to date
+    if (node->id == sCachedCumulativeValues.nodeId && !sCachedCumulativeValues.outdated) {
+      return;
+    }
+
+    // init to root values
+    sCachedCumulativeValues.pos = mRoot->startPos;
+    sCachedCumulativeValues.rot = mRoot->startRot;
+    sCachedCumulativeValues.scale = mRoot->startScale;
+
+    // vector will hold the latest time updated of each type (starts with all 0s)
+    std::vector<float> latestUpdate = std::vector<float>(static_cast<int>(Anim::KeyframeType::NUM_TYPES));
+
+    // recursively check through all nodes that execute before this node
+    for (KeyframeNode::NodePtr const& next : mRoot->nextNodes) {
+      GetCumulativeValuesR(next, node->data.startTime, latestUpdate);
+    }
+    sTraversedNodes.clear();
+
+    // get the previous value as well
+    GetCumulativeValue(node->previous, node->data.type);
+
+    sCachedCumulativeValues.outdated = false;
+    sCachedCumulativeValues.nodeId = node->id;
+  }
+
+  void KeyframeEditor::GetCumulativeValueR(KeyframeNode::NodePtr const& node, float startTime,
+    float latestUpdate, Anim::KeyframeType type) const 
+  {
+    // base case: current node executes after the target time
+    if (node->data.startTime > startTime) {
+      return;
+    }
+
+    // handle loop
     if (sTraversedNodes.contains(node->id)) {
       IGE_DBGLOGGER.LogError("[AnimationEditor] LOOP DETECTED! PLEASE REMOVE THE LINK! ABORTING OPERATION...");
       return;
@@ -587,74 +721,142 @@ namespace GUI {
       sTraversedNodes.emplace(node->id);
     }
 
+    float const endTime{ std::min(node->data.GetEndTime(), startTime) };
+
     KeyframeData const& prevData{ node->previous->data };
-    node->cumulativeVal = node->previous->cumulativeVal;
-    node->data.startTime = prevData.GetEndTime();
 
-    switch (prevData.type) {
-    case Anim::KeyframeType::TRANSLATION:
-      node->cumulativeVal.pos = std::get<glm::vec3>(prevData.endValue);
-      break;
-    case Anim::KeyframeType::ROTATION:
-      node->cumulativeVal.rot = std::get<glm::vec3>(prevData.endValue);
-      break;
-    case Anim::KeyframeType::SCALE:
-      node->cumulativeVal.scale = std::get<glm::vec3>(prevData.endValue);
-      break;
-    default:
-      break;
-    }
+    // for same KeyframeTypes, take the one with later end time
+    if (endTime > latestUpdate && type == node->data.type) {
+      switch (type) {
+      case Anim::KeyframeType::TRANSLATION:
+      {
+        glm::vec3 const endValue{
+          endTime < startTime ?
+            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, endTime)
+            : std::get<glm::vec3>(node->data.endValue)
+        };
 
-    switch (node->data.type) {
-    case Anim::KeyframeType::TRANSLATION:
-      node->data.startValue = node->cumulativeVal.pos;
-      break;
-    case Anim::KeyframeType::ROTATION:
-      node->data.startValue = node->cumulativeVal.rot;
-      break;
-    case Anim::KeyframeType::SCALE:
-      node->data.startValue = node->cumulativeVal.scale;
-      break;
-    default:
-      break;
+        sCachedCumulativeValues.prevVal = endValue;
+        break;
+      }
+      case Anim::KeyframeType::ROTATION:
+      {
+        glm::vec3 const endValue{
+          endTime < startTime ?
+            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, endTime)
+            : std::get<glm::vec3>(node->data.endValue)
+        };
+
+        sCachedCumulativeValues.prevVal = endValue;
+        break;
+      }
+      case Anim::KeyframeType::SCALE:
+      {
+        glm::vec3 const endValue{
+          endTime < startTime ?
+            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, endTime)
+            : std::get<glm::vec3>(node->data.endValue)
+        };
+
+        sCachedCumulativeValues.prevVal = endValue;
+        break;
+      }
+      default:
+        break;
+      }
+
+      latestUpdate = endTime;
     }
 
     for (KeyframeNode::NodePtr const& next : node->nextNodes) {
-      UpdateChain(next);
+      GetCumulativeValueR(next, startTime, latestUpdate, type);
     }
   }
 
-  void KeyframeEditor::UpdateChain(KeyframeNode::NodePtr const& node) {
-    UpdateChainR(node);
-    sTraversedNodes.clear();
+  void KeyframeEditor::GetCumulativeValuesR(KeyframeNode::NodePtr const& node,
+    float startTime, std::vector<float>& latestUpdate) const 
+  {
+    // base case: current node executes after the target time
+    if (node->data.startTime > startTime) {
+      return;
+    }
+    
+    // handle loop
+    if (sTraversedNodes.contains(node->id)) {
+      IGE_DBGLOGGER.LogError("[AnimationEditor] LOOP DETECTED! PLEASE REMOVE THE LINK! ABORTING OPERATION...");
+      return;
+    }
+    else {
+      sTraversedNodes.emplace(node->id);
+    }
+
+    float const endTime{ std::min(node->data.GetEndTime(), startTime) };
+
+    // for same KeyframeTypes, take the one with later end time
+    if (endTime > latestUpdate[static_cast<int>(node->data.type)]) {
+      switch (node->data.type) {
+      case Anim::KeyframeType::TRANSLATION:
+      {
+        glm::vec3 const endValue{
+          endTime < startTime ?
+            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, endTime)
+            : std::get<glm::vec3>(node->data.endValue)
+        };
+
+        sCachedCumulativeValues.pos = endValue;
+        break;
+      }
+      case Anim::KeyframeType::ROTATION:
+      {
+        glm::vec3 const endValue{
+          endTime < startTime ?
+            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, endTime)
+            : std::get<glm::vec3>(node->data.endValue)
+        };
+
+        sCachedCumulativeValues.rot = endValue;
+        break;
+      }
+      case Anim::KeyframeType::SCALE:
+      {
+        glm::vec3 const endValue{
+          endTime < startTime ?
+            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, endTime)
+            : std::get<glm::vec3>(node->data.endValue)
+        };
+
+        sCachedCumulativeValues.scale = endValue;
+        break;
+      }
+      default:
+        break;
+      }
+
+      latestUpdate[static_cast<int>(node->data.type)] = endTime;
+    }
+
+    for (KeyframeNode::NodePtr const& next : node->nextNodes) {
+      GetCumulativeValuesR(next, startTime, latestUpdate);
+    }
   }
 
   void KeyframeEditor::Init() {
     Reset();
 
-    KeyframeNode::NodePtr newNode{
-      std::make_shared<KeyframeNode>(sRootId, Anim::Keyframe(), false, true)
-    };
-    newNode->nodeName = "Root";
+    mRoot = std::make_shared<RootKeyframeNode>();
 
-    mPinIdToNode.emplace(newNode->outputPin - 1, newNode);
-    mNodes.emplace(sRootId, std::move(newNode));
+    mPinIdToNode.emplace(mRoot->outputPin - 1, mRoot);
   }
 
   void KeyframeEditor::InitRoot(Anim::RootKeyframe const& keyframe) {
-    KeyframeNode::NodePtr const& root{ GetRootNode() };
-    root->cumulativeVal.pos = keyframe.startPos;
-    root->cumulativeVal.rot = keyframe.startRot;
-    root->cumulativeVal.scale = keyframe.startScale;
+    mRoot->startPos = keyframe.startPos;
+    mRoot->startRot = keyframe.startRot;
+    mRoot->startScale = keyframe.startScale;
   }
 
   EVENT_CALLBACK_DEF(KeyframeEditor, OnAnimationEdit) {
     Init();
     LoadKeyframes(CAST_TO_EVENT(Events::EditAnimation)->mGUID);
-
-    for (KeyframeNode::NodePtr const& next : GetRootNode()->nextNodes) {
-      UpdateChain(next);
-    }
   }
 
   bool KeyframeEditor::LoadKeyframes(IGE::Assets::GUID guid) {
@@ -679,7 +881,10 @@ namespace GUI {
     dummy->nextNodes = animData.rootKeyframe.nextNodes;
 
     std::unordered_map<IDType, IDType> idMap;
-    CloneKeyframeTree(GetRootNode(), dummy, idMap);
+    {
+      KeyframeNode::NodePtr rootPtr{ mRoot };
+      CloneKeyframeTree(rootPtr, dummy, idMap);
+    }
 
     // deserialize node positions
     auto& metadata{ am.GetMetadata<IGE::Assets::AnimationAsset>(guid).metadata };
@@ -716,13 +921,11 @@ namespace GUI {
     Anim::AnimationData& animData{ am.GetAsset<IGE::Assets::AnimationAsset>(mSelectedAnim)->mAnimData };
 
     // create the root first
-    KeyframeNode::NodePtr const& root{ GetRootNode() };
-    animData.rootKeyframe = CreateRootKeyframe(root);
-    root->id = sRootId;
+    animData.rootKeyframe = mRoot->ToRootKeyframe();
     nodePositions.posMap.emplace(sRootId, ImNodes::GetNodeGridSpacePos(sRootId));
 
     // construct the rest of the tree
-    for (KeyframeNode::NodePtr const& next : root->nextNodes) {
+    for (KeyframeNode::NodePtr const& next : mRoot->nextNodes) {
       KeyframeData const& data{ next->data };
       Anim::Node newKeyframe{ std::make_shared<Anim::Keyframe>(data.startValue, data.endValue, data.type, data.startTime, data.duration) };
       newKeyframe->id = next->id;
@@ -748,7 +951,7 @@ namespace GUI {
 
   KeyframeEditor::KeyframeNode::NodePtr KeyframeEditor::NewNode() {
     KeyframeNode::NodePtr newNode{
-        std::make_shared<KeyframeNode>(KeyframeNode::NextID(), Anim::Keyframe(), true, true)
+        std::make_shared<KeyframeNode>(KeyframeNode::NextID(), true, true)
     };
 
     mPinIdToNode.emplace(newNode->inputPin, newNode);
@@ -835,23 +1038,24 @@ namespace GUI {
     }
   }
 
-  Anim::RootKeyframe KeyframeEditor::CreateRootKeyframe(KeyframeNode::NodePtr const& root) const {
-    CumulativeValues const& vals{ root->cumulativeVal };
+  Anim::RootKeyframe KeyframeEditor::RootKeyframeNode::ToRootKeyframe() const {
     Anim::RootKeyframe ret{};
 
-    ret.startPos = vals.pos;
-    ret.startRot = vals.rot;
-    ret.startScale = vals.scale;
+    ret.startPos = startPos;
+    ret.startRot = startRot;
+    ret.startScale = startScale;
 
     return ret;
   }
 
   void KeyframeEditor::Reset() {
+    mRoot.reset();
     mSelectedAnim = {};
     mNodes.clear();
     mLinks.clear();
     mPinIdToNode.clear();
     KeyframeNode::ResetIDs();
+    sCachedCumulativeValues = {};
   }
 
   KeyframeEditor::~KeyframeEditor() {

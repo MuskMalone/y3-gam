@@ -36,12 +36,6 @@ namespace GUI {
     inline static constexpr const char* sNodeOptionsPopupLabel = "NodeOptions";
     inline static constexpr const char* sOptionsPopupLabel = "Options";
     static const std::string sEditorFilePath;
-
-    struct CumulativeValues {
-      CumulativeValues() : pos{}, rot{}, scale{ 1.f, 1.f, 1.f } {}
-
-      glm::vec3 pos, rot, scale;
-    };
     
     struct KeyframeData {
       using ValueType = Anim::Keyframe::ValueType;
@@ -52,7 +46,9 @@ namespace GUI {
         type{ keyframe.type }, startTime{ keyframe.startTime }, duration{ keyframe.duration } {}
 
       template <typename T>
-      T GetNormalizedValue() const { return std::get<T>(endValue) - std::get<T>(startValue); }
+      T GetInterpolatedValue(T const& startVal, float endTime) const { 
+        return glm::mix(std::get<T>(startValue), std::get<T>(endValue), (endTime - startTime) / duration);
+      }
 
       inline float GetEndTime() const noexcept { return startTime + duration; }
 
@@ -64,8 +60,9 @@ namespace GUI {
     struct KeyframeNode {
       using NodePtr = std::shared_ptr<KeyframeNode>;
 
+      KeyframeNode(IDType nodeId, bool hasInputPin = true, bool hasOutputPin = true);
       KeyframeNode(IDType nodeId, Anim::Keyframe const& keyframeData, bool hasInputPin = true, bool hasOutputPin = true);
-
+      
       inline static IDType sLastNodeId = sRootId, sLastPinId = -1;
 
       inline static IDType NextID() { return ++sLastNodeId; }
@@ -77,12 +74,22 @@ namespace GUI {
       void RemoveLinkedNode(IDType id);
 
       KeyframeData data;
-      CumulativeValues cumulativeVal;
       std::string nodeName;
       std::vector<NodePtr> nextNodes;
       NodePtr previous;
       IDType inputPin, outputPin;
       IDType id;
+    };
+
+    struct RootKeyframeNode : public KeyframeNode {
+      RootKeyframeNode() : KeyframeNode(sRootId, {}, false, true),
+        startPos{}, startRot{}, startScale{ 1.f, 1.f, 1.f } {
+        nodeName = "Root";
+      }
+
+      Anim::RootKeyframe ToRootKeyframe() const;
+
+      glm::vec3 startPos, startRot, startScale;
     };
     
     struct KeyframeLink {
@@ -94,25 +101,29 @@ namespace GUI {
 
     void Init();
     void InitRoot(Anim::RootKeyframe const& root);
-    Anim::RootKeyframe CreateRootKeyframe(KeyframeNode::NodePtr const& root) const;
-    void CloneKeyframeTree(KeyframeNode::NodePtr& dest, Anim::Node const& src, std::unordered_map<IDType, IDType>& posMap);
-    void CreateOutputTree(Anim::Node& dest, KeyframeNode::NodePtr const& src, NodePosMap& nodePosMap) const;
-    void UpdateChainR(KeyframeNode::NodePtr const& parentNode);
-    void UpdateChain(KeyframeNode::NodePtr const& parentNode);
     void Reset();
+
+    void UpdateStartTimesInChain(KeyframeNode::NodePtr& updatedNode);
+    void GetCumulativeValue(KeyframeNode::NodePtr const& node, Anim::KeyframeType type) const;
+    void GetCumulativeValues(KeyframeNode::NodePtr const& node) const;
+    void GetCumulativeValueR(KeyframeNode::NodePtr const& node, float startTime, float latestUpdate, Anim::KeyframeType type) const;
+    void GetCumulativeValuesR(KeyframeNode::NodePtr const& node, float startTime, std::vector<float>& latestUpdate) const;
+
     void CreateEditorFile(std::string const& animFile) const;
     bool LoadKeyframes(IGE::Assets::GUID guid);
     void SaveKeyframes(std::string const& filePath) const;
-
-    KeyframeNode::NodePtr const& GetRootNode() const { return mNodes.at(sRootId); }
-    KeyframeNode::NodePtr& GetRootNode() { return mNodes.at(sRootId); }
+    void CloneKeyframeTree(KeyframeNode::NodePtr& dest, Anim::Node const& src, std::unordered_map<IDType, IDType>& posMap);
+    void CreateOutputTree(Anim::Node& dest, KeyframeNode::NodePtr const& src, NodePosMap& nodePosMap) const;
 
     void NodePreview(KeyframeNode::NodePtr const& node);
-    bool DisplayRootNode(KeyframeNode::NodePtr const& root);
-    bool KeyframeNodeBody(KeyframeNode::NodePtr const& node);
+    bool DisplayRootNode();
+    bool KeyframeNodeBody(KeyframeNode::NodePtr& node);
+
     bool NodeOptionsMenu();
     bool OptionsMenu();
     bool NodesToolbar();
+
+    Anim::RootKeyframe CreateRootKeyframe() const;
     void NewAnimation();
     KeyframeNode::NodePtr NewNode();
 
@@ -121,6 +132,7 @@ namespace GUI {
     std::unordered_map<IDType, KeyframeNode::NodePtr> mPinIdToNode; // indexed by inPin
     std::unordered_map<IDType, KeyframeNode::NodePtr> mNodes;
     std::vector<KeyframeLink> mLinks;
+    std::shared_ptr<RootKeyframeNode> mRoot;
     IGE::Assets::GUID mSelectedAnim;
   };
 }
