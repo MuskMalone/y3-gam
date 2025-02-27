@@ -244,17 +244,13 @@ namespace Graphics::AssetIO
 
     glm::vec3 const center{ sRecenterMesh ? glm::vec3() : (min + max) * 0.5f };
     glm::vec3 const scale{ max - min };
-    float const maxScale{ std::min(scale.x, std::min(scale.y, scale.z)) };
-    glm::mat4 transform{
-      1.f / maxScale, 0.f, 0.f, 0.f,
-      0.f, 1.f / maxScale, 0.f, 0.f,
-      0.f, 0.f, 1.f / maxScale, 0.f,
-      center.x, center.y, center.z, 1.f
-    };
+    float const maxScale{ std::max(scale.x, std::max(scale.y, scale.z)) };
+
+    glm::mat4 transform{ glm::scale(glm::mat4(1.f), glm::vec3(1.f / maxScale)) };
 
     // if mesh wasn't centered at origin, move it to origin before scaling
     if (!sRecenterMesh) {
-      transform = transform * glm::translate(glm::identity<glm::mat4>(), -center);
+      transform = glm::translate(glm::identity<glm::mat4>(), center / maxScale) * (transform * glm::translate(glm::identity<glm::mat4>(), -center));
     }
 
     // transform all vertices
