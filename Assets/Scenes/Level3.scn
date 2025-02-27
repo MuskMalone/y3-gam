@@ -3105,7 +3105,7 @@
                 {
                     "Tag": {
                         "tag": "Ceiling",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -3265,7 +3265,7 @@
                 {
                     "Tag": {
                         "tag": "Ceiling (Exit)",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -3336,7 +3336,7 @@
                 {
                     "Tag": {
                         "tag": "Ceiling (Room)",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -21474,6 +21474,285 @@
             ]
         },
         {
+            "ID": 326,
+            "Parent": null,
+            "Child Entities": [
+                327
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Puzzle",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 327,
+            "Parent": 326,
+            "Child Entities": [
+                328,
+                329
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Puzzle_Hammer",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -26.921070098876954,
+                            "y": 2.7167470455169679,
+                            "z": -154.93264770507813
+                        },
+                        "scale": {
+                            "x": 0.3199999928474426,
+                            "y": 0.3199999928474426,
+                            "z": 0.3199999928474426
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -26.921070098876954,
+                            "y": 2.7167470455169679,
+                            "z": -154.93264770507813
+                        },
+                        "worldScale": {
+                            "x": 0.3199999928474426,
+                            "y": 0.3199999928474426,
+                            "z": 0.3199999928474426
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 328,
+            "Parent": 327,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCube96",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -26.921070098876954,
+                            "y": 2.7167470455169679,
+                            "z": -154.93264770507813
+                        },
+                        "worldScale": {
+                            "x": 0.3199999928474426,
+                            "y": 0.3199999928474426,
+                            "z": 0.3199999928474426
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 5437073796557026432
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCube96",
+                        "GUID": {
+                            "ID": 5309045186088192693
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 329,
+            "Parent": 327,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCube95",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -4.76837158203125e-7,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -26.921070098876954,
+                            "y": 2.7167468070983888,
+                            "z": -154.93264770507813
+                        },
+                        "worldScale": {
+                            "x": 0.3199999928474426,
+                            "y": 0.3199999928474426,
+                            "z": 0.3199999928474426
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 1320810904050219293
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCube95",
+                        "GUID": {
+                            "ID": 5309045186088192693
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048585,
             "Parent": null,
             "Child Entities": [
@@ -21733,7 +22012,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Ceiling",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {

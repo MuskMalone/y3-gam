@@ -64,6 +64,8 @@ public class PictureAlign : Entity
 
     private ControlPanel2 controlPanelScript;
 
+    public bool isFading = false;
+
     void Start()
     {
         //tutorialFade = FindObjectOfType<TutorialFade>();
@@ -472,6 +474,8 @@ public class PictureAlign : Entity
     {
         if (currentImg != null | border != null)
         {
+            isFading = true;
+
             currentAlpha = Mathf.Lerp(currentAlpha, 0f, fadeSpeed * Time.deltaTime);
 
             Color painting_color = currentImg.GetComponent<Image>().color;
@@ -486,6 +490,7 @@ public class PictureAlign : Entity
             {
                 currentAlpha = 0f;
                 hasFaded = true;
+                isFading = false;
             }
         }
 

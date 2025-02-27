@@ -1,7 +1,7 @@
 {
     "configs": [
         {
-            "key": "test",
+            "key": "Level2",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -27,9 +27,27 @@
             }
         },
         {
-            "key": "Level2",
+            "key": "test",
             "value": {
                 "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "M3",
+            "value": {
+                "shaders": [
+                    {
+                        "active": false,
+                        "shader": 7488299143892968521
+                    }
+                ],
                 "fogMinDist": 1.0,
                 "fogMaxDist": 1000.0,
                 "fogColor": {
@@ -53,14 +71,9 @@
             }
         },
         {
-            "key": "M3",
+            "key": "TutorialLevel",
             "value": {
-                "shaders": [
-                    {
-                        "active": false,
-                        "shader": 7488299143892968521
-                    }
-                ],
+                "shaders": [],
                 "fogMinDist": 1.0,
                 "fogMaxDist": 1000.0,
                 "fogColor": {

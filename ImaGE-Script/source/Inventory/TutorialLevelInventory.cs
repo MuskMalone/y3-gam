@@ -60,6 +60,7 @@ public class TutorialLevelInventory : Entity
     private Vector2 endHandScale = new Vector2(1.4f, 1.8f);
     private Vector2 currentHandScale;
 
+
     void Start()
     {
 
@@ -171,7 +172,7 @@ public class TutorialLevelInventory : Entity
             ToggleInventoryVisibility();
         }
 
-        if (Input.anyKeyTriggered)
+        if (!pictureAlignscript.isFading && Input.anyKeyTriggered)
         {
             switch (Input.inputString)
             {
