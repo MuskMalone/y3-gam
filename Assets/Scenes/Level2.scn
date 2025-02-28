@@ -36205,6 +36205,145 @@
             ]
         },
         {
+            "ID": 497,
+            "Parent": null,
+            "Child Entities": [
+                498,
+                1049075,
+                1049076,
+                1049077,
+                1049078,
+                1049079
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Mother Silhouettes",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 498,
+            "Parent": 497,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Mother Silhouette1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 78.9569091796875,
+                            "y": 27.749664306640626,
+                            "z": -83.3419418334961
+                        },
+                        "scale": {
+                            "x": 6.0,
+                            "y": 11.0,
+                            "z": 10.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 78.9569091796875,
+                            "y": 27.749664306640626,
+                            "z": -83.3419418334961
+                        },
+                        "worldScale": {
+                            "x": 6.0,
+                            "y": 11.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6966392172315074395
+                        },
+                        "isTransparent": false
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048579,
             "Parent": 2,
             "Child Entities": [],
@@ -40136,6 +40275,577 @@
             ]
         },
         {
+            "ID": 1049075,
+            "Parent": 497,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Mother Silhouette6",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 71.12483215332031,
+                            "y": 60.97715759277344,
+                            "z": -244.5468292236328
+                        },
+                        "scale": {
+                            "x": 6.0,
+                            "y": 11.0,
+                            "z": 10.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 71.12483215332031,
+                            "y": 60.97715759277344,
+                            "z": -244.5468292236328
+                        },
+                        "worldScale": {
+                            "x": 6.0,
+                            "y": 11.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6966392172315074395
+                        },
+                        "isTransparent": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049076,
+            "Parent": 497,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Mother Silhouette5",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 61.802459716796878,
+                            "y": 60.97715759277344,
+                            "z": -222.50160217285157
+                        },
+                        "scale": {
+                            "x": 6.0,
+                            "y": 11.0,
+                            "z": 10.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 61.802459716796878,
+                            "y": 60.97715759277344,
+                            "z": -222.50160217285157
+                        },
+                        "worldScale": {
+                            "x": 6.0,
+                            "y": 11.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6966392172315074395
+                        },
+                        "isTransparent": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049077,
+            "Parent": 497,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Mother Silhouette4",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 61.802459716796878,
+                            "y": 56.957763671875,
+                            "z": -194.31484985351563
+                        },
+                        "scale": {
+                            "x": 6.0,
+                            "y": 11.0,
+                            "z": 10.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 61.802459716796878,
+                            "y": 56.957763671875,
+                            "z": -194.31484985351563
+                        },
+                        "worldScale": {
+                            "x": 6.0,
+                            "y": 11.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6966392172315074395
+                        },
+                        "isTransparent": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049078,
+            "Parent": 497,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Mother Silhouette3",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 62.119903564453128,
+                            "y": 40.958045959472659,
+                            "z": -155.02252197265626
+                        },
+                        "scale": {
+                            "x": 6.0,
+                            "y": 11.0,
+                            "z": 10.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 62.119903564453128,
+                            "y": 40.958045959472659,
+                            "z": -155.02252197265626
+                        },
+                        "worldScale": {
+                            "x": 6.0,
+                            "y": 11.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6966392172315074395
+                        },
+                        "isTransparent": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049079,
+            "Parent": 497,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Mother Silhouette2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 62.119903564453128,
+                            "y": 27.749664306640626,
+                            "z": -120.93695068359375
+                        },
+                        "scale": {
+                            "x": 6.0,
+                            "y": 11.0,
+                            "z": 10.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 62.119903564453128,
+                            "y": 27.749664306640626,
+                            "z": -120.93695068359375
+                        },
+                        "worldScale": {
+                            "x": 6.0,
+                            "y": 11.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6966392172315074395
+                        },
+                        "isTransparent": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049080,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "IntroCutscene",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 55.172054290771487,
+                            "y": 23.322519302368165,
+                            "z": -85.3533935546875
+                        },
+                        "scale": {
+                            "x": 3.145151376724243,
+                            "y": 1.0,
+                            "z": 32.8242301940918
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 55.172054290771487,
+                            "y": 23.322519302368165,
+                            "z": -85.3533935546875
+                        },
+                        "worldScale": {
+                            "x": 3.145151376724243,
+                            "y": 1.0,
+                            "z": 32.8242301940918
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.5725756883621216,
+                            "y": 0.5,
+                            "z": 16.4121150970459
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": true
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1049080,
+                                "scriptName": "Lvl2IntroCutscene",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 3.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "fadeDuration"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 472,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fadeImage"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049076,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fifthSilhouette"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 498,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "firstSilhouette"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049077,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fourthSilhouette"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "mainCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049079,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "secondSilhouette"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049075,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "sixthSilhouette"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049078,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "thirdSilhouette"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1049412,
             "Parent": 376,
             "Child Entities": [],
@@ -42233,21 +42943,21 @@
                                         }
                                     },
                                     {
-                                        "data": 30.0,
+                                        "data": 300.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
                                         }
                                     },
                                     {
-                                        "data": 40.0,
+                                        "data": 300.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "speed"
                                         }
                                     },
                                     {
-                                        "data": 20.0,
+                                        "data": 300.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "walkingSpeed"
