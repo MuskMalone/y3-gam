@@ -12,7 +12,7 @@ public class Level2Inventory : Entity
     public event EventHandler<InventoryEventArgs> ItemAdded;
     public event EventHandler<InventoryEventArgs> ItemRemoved;
 
-    private IInventoryItem currentItem;
+    public IInventoryItem currentItem;
     public bool highlighted = false;
     public bool isVisible = false;
 

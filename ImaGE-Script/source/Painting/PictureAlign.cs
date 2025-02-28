@@ -64,6 +64,7 @@ public class PictureAlign : Entity
 
     private ControlPanel2 controlPanelScript;
 
+    // for inventory checks
     public bool isFading = false;
 
     void Start()

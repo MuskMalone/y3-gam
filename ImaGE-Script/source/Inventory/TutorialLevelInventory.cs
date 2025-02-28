@@ -12,7 +12,7 @@ public class TutorialLevelInventory : Entity
     public event EventHandler<InventoryEventArgs> ItemAdded;
     public event EventHandler<InventoryEventArgs> ItemRemoved;
 
-    private IInventoryItem currentItem;
+    public IInventoryItem currentItem;
     public bool highlighted = false;
     public bool isVisible = false;
 
@@ -59,7 +59,6 @@ public class TutorialLevelInventory : Entity
     private Vector2 startHandScale = new Vector2(1.0f, 1.2f);
     private Vector2 endHandScale = new Vector2(1.4f, 1.8f);
     private Vector2 currentHandScale;
-
 
     void Start()
     {
