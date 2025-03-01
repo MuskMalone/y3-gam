@@ -243,7 +243,8 @@ public class Lvl2IntroCutscene : Entity
 
         InternalCalls.SetPosition(playerMove.mEntityID, ref triggerPosition);
         Console.WriteLine("OgRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
-        InternalCalls.SetRotation(mainCamera.mEntityID, ref targetRot);
+       //InternalCalls.SetRotation(mainCamera.mEntityID, ref targetRot);
+        playerMove.SetRotation(new Vector3(73, 65, 0));
         Console.WriteLine("NewRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
         //playerMove.canLook = true;
     }
