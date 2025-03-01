@@ -55,7 +55,7 @@ public class PaintingAlignUILevel2 : Entity
     void Update()
     {
         // Ensure UI does not show if no valid item is selected
-        if (level2inventoryScript.currentItem == null || !level2inventoryScript.highlighted)
+        if (level2inventoryScript.GetCurrentItem() == null || !level2inventoryScript.highlighted)
         {
             disableAlignUI();
             return;

@@ -12,7 +12,7 @@ public class TutorialLevelInventory : Entity
     public event EventHandler<InventoryEventArgs> ItemAdded;
     public event EventHandler<InventoryEventArgs> ItemRemoved;
 
-    public IInventoryItem currentItem;
+    private IInventoryItem currentItem;
     public bool highlighted = false;
     public bool isVisible = false;
 
@@ -328,4 +328,10 @@ public class TutorialLevelInventory : Entity
         pictureAlignscript.ClearUI();
 
     }
+
+    public IInventoryItem GetCurrentItem()
+    {
+        return currentItem;
+    }
+
 }
