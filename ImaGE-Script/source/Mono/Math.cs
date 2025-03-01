@@ -196,30 +196,36 @@ namespace IGE.Utils
       return angles;
     }
 
-
-
-    public static Quaternion EulertoQuat(Vector3 euler)
+    static Vector3 NormalizeAngles(Vector3 angles)
     {
-      // Convert angles from degrees to radians
-      euler.X *= Mathf.Deg2Rad;
-      euler.Y *= Mathf.Deg2Rad;
-      euler.Z *= Mathf.Deg2Rad;
+      angles.X = NormalizeAngle(angles.X);
+      angles.Y = NormalizeAngle(angles.Y);
+      angles.Z = NormalizeAngle(angles.Z);
+      return angles;
+    }
 
-      // Calculate the half angles
-      float cx = Mathf.Cos(euler.X * 0.5f);
-      float sx = Mathf.Sin(euler.X * 0.5f);
-      float cy = Mathf.Cos(euler.Y * 0.5f);
-      float sy = Mathf.Sin(euler.Y * 0.5f);
-      float cz = Mathf.Cos(euler.Z * 0.5f);
-      float sz = Mathf.Sin(euler.Z * 0.5f);
+    static float NormalizeAngle(float angle)
+    {
+      while (angle > 360)
+        angle -= 360;
+      while (angle < 0)
+        angle += 360;
+      return angle;
+    }
 
-      // Compute quaternion components
-      float w = cx * cy * cz + sx * sy * sz;
-      float xVal = sx * cy * cz - cx * sy * sz;
-      float yVal = cx * sy * cz + sx * cy * sz;
-      float zVal = cx * cy * sz - sx * sy * cz;
+    public static Quaternion EulertoQuat(Vector3 eulerDegrees)
+    {
+      float yaw = eulerDegrees.X * (float)(Math.PI / 180.0);
+      float pitch = eulerDegrees.Y * (float)(Math.PI / 180.0);
+      float roll = eulerDegrees.Z * (float)(Math.PI / 180.0);
 
-      return new Quaternion(xVal, yVal, zVal, w);
+      // Create quaternion from yaw, pitch, roll
+      Quaternion newQ = Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll);
+      float tempX = newQ.X;
+      newQ.X = newQ.Y;
+      newQ.Y = tempX;
+      return newQ;
+     // return Quaternion.CreateFromYawPitchRoll(eulerDegrees.Y, eulerDegrees.X, eulerDegrees.Z);
     }
 
 

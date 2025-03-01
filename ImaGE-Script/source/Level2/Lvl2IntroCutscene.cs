@@ -1,6 +1,7 @@
 ﻿using IGE.Utils;
 using System;
 using System.Numerics;
+using System.Runtime;
 
 public class Lvl2IntroCutscene : Entity
 {
@@ -28,7 +29,7 @@ public class Lvl2IntroCutscene : Entity
     private float sillouetteElapsedTime = 0f;
     private const float activationInterval = 1.0f;
 
-    private Quaternion targetRot = Quaternion.CreateFromYawPitchRoll(0, 0, 0);
+    private Quaternion targetRot = Mathf.EulertoQuat(new Vector3(90, 0, 130));
 
     //private bool rotateAfterFirstSilhouette = false;
     //private bool isRotatingPlayer = false;
@@ -242,10 +243,9 @@ public class Lvl2IntroCutscene : Entity
 
         InternalCalls.SetPosition(playerMove.mEntityID, ref triggerPosition);
         Console.WriteLine("OgRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
-        //InternalCalls.SetRotation(playerMove.mEntityID, ref targetRot);
         InternalCalls.SetRotation(mainCamera.mEntityID, ref targetRot);
         Console.WriteLine("NewRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
-        playerMove.canLook = true;
+        //playerMove.canLook = true;
     }
 
     private void StartSilhouetteSequence()
