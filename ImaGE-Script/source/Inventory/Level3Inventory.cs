@@ -28,7 +28,7 @@ public class Level3Inventory : Entity
     public Entity inventorySelectSquare;
     public Entity selectionHand;
     public Entity inventoryImage;
-    private PictureAlign pictureAlignscript;
+    //private PictureAlign pictureAlignscript;
 
     //public Vec3<float>[] SlotPositionList;
     // Workaround for lack of Vec3<float>[]
@@ -64,7 +64,7 @@ public class Level3Inventory : Entity
     private Vector2 currentHandScale;
 
     //Painting Alignment UI
-    private PaintingAlignUILevel3 paintingAlignUILevel3Script;
+    //private PaintingAlignUILevel3 paintingAlignUILevel3Script;
 
     void Start()
     {
@@ -88,8 +88,9 @@ public class Level3Inventory : Entity
         //InternalCalls.SetPosition(tutorialPaintingUI.mEntityID, ref startPosition);
         InternalCalls.SetPosition(hammerUI.mEntityID, ref startPosition);
 
-        pictureAlignscript = FindObjectOfType<PictureAlign>();
-        paintingAlignUILevel3Script = FindObjectOfType<PaintingAlignUILevel3>();
+        //pictureAlignscript = FindObjectOfType<PictureAlign>();
+
+        //paintingAlignUILevel3Script = FindObjectOfType<PaintingAlignUILevel3>();
     }
 
     public void Additem(IInventoryItem item)
@@ -183,7 +184,8 @@ public class Level3Inventory : Entity
             ToggleInventoryVisibility();
         }
 
-        if (!pictureAlignscript.isFading && Input.anyKeyTriggered)
+       // if (!pictureAlignscript.isFading && Input.anyKeyTriggered)
+        if (Input.anyKeyTriggered)
         {
             switch (Input.inputString)
             {
@@ -333,7 +335,7 @@ public class Level3Inventory : Entity
             case "Hammer":
                 hammerUI?.SetActive(true);
                 hammerEquipped = true;
-                paintingAlignUILevel3Script.isPainting = false;
+                //paintingAlignUILevel3Script.isPainting = false;
                 break;
 
         }
@@ -344,8 +346,8 @@ public class Level3Inventory : Entity
         //tutorialPaintingUI?.SetActive(false);
         hammerUI?.SetActive(false);
         hammerEquipped = false;
-        pictureAlignscript.ClearUI();
-        paintingAlignUILevel3Script.isPainting = false;
+        //pictureAlignscript.ClearUI();
+        //paintingAlignUILevel3Script.isPainting = false;
 
     }
 

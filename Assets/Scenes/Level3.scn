@@ -24021,6 +24021,62 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "InventoryPopUp",
+                                "value": {
+                                    "guid": {
+                                        "ID": 6850159606409790597
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -15.899999618530274,
+                                            "y": 0.0,
+                                            "z": -2.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            },
+                            {
+                                "key": "MoveSlots",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2818988100017391053
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -15.899999618530274,
+                                            "y": 0.0,
+                                            "z": -2.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "Inventory",
                         "isActive": false
@@ -24070,6 +24126,133 @@
                 {
                     "Layer": {
                         "layerName": "UI"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 369,
+                                "scriptName": "Level3Inventory",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": -15.850000381469727,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "endScreenPosX"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "hammerEquipped"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049014,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "hammerSelection"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049015,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "hammerUI"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.4000000059604645,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "handExpandDuration"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "highlighted"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 369,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "inventoryImage"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 371,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "inventorySelectSquare"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 370,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "selectionHand"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.30000001192092898,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "slideDuration"
+                                        }
+                                    },
+                                    {
+                                        "data": -20.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "startScreenPosX"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 369,
+                                "scriptName": "Level3HUD",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 369,
+                                            "scriptName": "Level3Inventory"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "inventory"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 },
                 {
