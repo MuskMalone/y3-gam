@@ -222,7 +222,7 @@ public class Lvl2IntroCutscene : Entity
         fadeImage.SetActive(true);
         
         SnapPlayerToTrigger();
-        playerMove.FreezePlayer();
+        //playerMove.FreezePlayer();
         fadeStartTime = Time.gameTime;
     }
 
@@ -237,15 +237,15 @@ public class Lvl2IntroCutscene : Entity
     private void SnapPlayerToTrigger()
     {
         if (playerMove == null) return;
-        playerMove.canLook = false;
-        Vector3 triggerPosition = InternalCalls.GetPosition(mEntityID);
+        //playerMove.canLook = false;
+        //Vector3 triggerPosition = InternalCalls.GetPosition(mEntityID);
 
-        InternalCalls.SetPosition(playerMove.mEntityID, ref triggerPosition);
-        Console.WriteLine("OgRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
-        //InternalCalls.SetRotation(playerMove.mEntityID, ref targetRot);
-        InternalCalls.SetRotation(mainCamera.mEntityID, ref targetRot);
-        Console.WriteLine("NewRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
-        playerMove.canLook = true;
+        //InternalCalls.SetPosition(playerMove.mEntityID, ref triggerPosition);
+        //Console.WriteLine("OgRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
+        ////InternalCalls.SetRotation(playerMove.mEntityID, ref targetRot);
+        //InternalCalls.SetRotation(mainCamera.mEntityID, ref targetRot);
+        //Console.WriteLine("NewRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
+        //playerMove.canLook = true;
     }
 
     private void StartSilhouetteSequence()
