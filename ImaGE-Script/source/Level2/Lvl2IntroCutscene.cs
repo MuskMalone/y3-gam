@@ -175,46 +175,10 @@ public class Lvl2IntroCutscene : Entity
         }
     }
 
-    //private void RotatePlayerToTarget()
-    //{
-    //    if (playerMove == null) return;
-
-    //    // ✅ Get the player's current rotation (Euler)
-    //    Vector3 currentRotation = InternalCalls.GetRotationEuler(playerMove.mEntityID);
-    //    float deltaTime = Time.deltaTime;
-
-    //    // ✅ Use Lerp for smooth rotation
-    //    float newRotationY = Mathf.Lerp(currentRotation.Y, targetRotationY, deltaTime * rotationSpeed);
-
-    //    // ✅ Create a modifiable variable
-    //    Vector3 newRotation = new Vector3(currentRotation.X, newRotationY, currentRotation.Z);
-
-    //    // ✅ Pass a variable instead of a temporary value
-    //    InternalCalls.SetRotationEuler(playerMove.mEntityID, ref newRotation);
-
-    //    // ✅ Debugging to check values
-    //    Console.WriteLine($"Current Rotation: {currentRotation.Y}, Target: {targetRotationY}, New: {newRotation.Y}");
-
-    //    // ✅ Stop rotating when close enough
-    //    if (Math.Abs(newRotationY - targetRotationY) < 0.1f)
-    //    {
-    //        Vector3 finalRotation = new Vector3(currentRotation.X, targetRotationY, currentRotation.Z);
-    //        InternalCalls.SetRotationEuler(playerMove.mEntityID, ref finalRotation);
-    //        isRotatingPlayer = false;
-    //        Console.WriteLine("Rotation Complete!");
-    //        sillouetteElapsedTime = activationInterval;
-    //    }
-    //}
 
 
 
-    //private void StartPlayerRotation()
-    //{
-    //    if (playerMove == null) return;
-
-    //    targetRotationY = 0; // ✅ Target facing direction
-    //    isRotatingPlayer = true;
-    //}
+    
 
     private void StartFade()
     {
@@ -229,7 +193,7 @@ public class Lvl2IntroCutscene : Entity
 
     private void EndFade()
     {
-        //playerMove.UnfreezePlayer();
+        playerMove.UnfreezePlayer();
         isInFadeTransition = false;
         fadeImage.SetActive(false);
         StartSilhouetteSequence();
@@ -238,26 +202,29 @@ public class Lvl2IntroCutscene : Entity
     private void SnapPlayerToTrigger()
     {
         if (playerMove == null) return;
-        playerMove.canLook = false;
+        //playerMove.canLook = false;
         Vector3 triggerPosition = InternalCalls.GetPosition(mEntityID);
 
         InternalCalls.SetPosition(playerMove.mEntityID, ref triggerPosition);
         Console.WriteLine("OgRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
-       //InternalCalls.SetRotation(mainCamera.mEntityID, ref targetRot);
-        playerMove.SetRotation(new Vector3(73, 65, 0));
+        //InternalCalls.SetRotation(mainCamera.mEntityID, ref targetRot);
+
+        //playerMove.SetRotation(new Vector3(73, 65, 0));
+        playerMove.SetRotation(new Vector3(0, 0, 0));
         Console.WriteLine("NewRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
+       //-------------------
         //playerMove.canLook = true;
     }
 
     private void StartSilhouetteSequence()
     {
         isInSillouetteSequence = true;
-        //playerMove.FreezePlayer();
+        playerMove.FreezePlayer();
     }
 
     private void EndSiloutetteSequence()
     {
-        //playerMove.UnfreezePlayer();
+        playerMove.UnfreezePlayer();
         isInSillouetteSequence = false;
     }
 }

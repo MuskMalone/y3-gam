@@ -196,4 +196,6 @@ public class  PlayerMove : Entity
     yaw = rot.Y;                                   // Rotation around the Y-axis (horizontal, for player)
     pitch = rot.X;                                 // Rotation around the X-axis (vertical, for camera)
 }
+
+
 }

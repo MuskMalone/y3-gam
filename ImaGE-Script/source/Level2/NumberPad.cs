@@ -10,10 +10,8 @@ public class NumberPad : Entity
     public Entity keypadUI;
     public Entity keypadTextBox;
     public PlayerMove playerMove;
-    public Entity doorPart;
     public Entity enterButton;
     public Entity backButton;
-    public Entity doorPivot;
 
     // Number buttons
     public Entity button1, button2, button3;
@@ -26,7 +24,7 @@ public class NumberPad : Entity
     private string correctCode = "8785";
     private bool keypadActive = false;
 
-    private enum State { LOCKED, KEYPAD_UI, DOOR_OPENING, UNLOCKED }
+    private enum State { LOCKED, KEYPAD_UI, UNLOCKED }
     private State currState = State.LOCKED;
 
     void Start()
@@ -38,21 +36,26 @@ public class NumberPad : Entity
         backButton?.SetActive(false);
 
         numberButtons = new Dictionary<string, Entity>
-        {
-            { "1", button1 }, { "2", button2 }, { "3", button3 },
-            { "4", button4 }, { "5", button5 }, { "6", button6 },
-            { "7", button7 }, { "8", button8 }, { "9", button9 }
-        };
+    {
+        { "1", button1 }, { "2", button2 }, { "3", button3 },
+        { "4", button4 }, { "5", button5 }, { "6", button6 },
+        { "7", button7 }, { "8", button8 }, { "9", button9 }
+    };
 
         buttonScripts = new Dictionary<string, SafeButtons>();
         foreach (var key in numberButtons.Keys)
         {
             buttonScripts[key] = numberButtons[key].FindScript<SafeButtons>();
+            numberButtons[key]?.SetActive(false);  // **Now setting each button inactive at start**
         }
 
         buttonScripts["Enter"] = enterButton.FindScript<SafeButtons>();
         buttonScripts["Back"] = backButton.FindScript<SafeButtons>();
+
+        enterButton?.SetActive(false);  // Ensure Enter button starts inactive
+        backButton?.SetActive(false);   // Ensure Back button starts inactive
     }
+
 
     void Update()
     {
@@ -66,29 +69,36 @@ public class NumberPad : Entity
                 KeypadUIMode();
                 break;
 
-            case State.DOOR_OPENING:
-                InternalCalls.UpdatePhysicsToTransform(doorPivot.mEntityID);
-                if (!InternalCalls.IsPlayingAnimation(doorPivot.mEntityID))
-                {
-                    currState = State.UNLOCKED;
-                }
-                break;
-
             case State.UNLOCKED:
                 break;
         }
     }
 
+    //private void KeypadInteraction()
+    //{
+    //    bool isKeypadHit = playerInteraction.RayHitString == "Keypad";
+    //    if (Input.GetMouseButtonTriggered(0) && isKeypadHit && !keypadActive)
+    //    {
+    //        keypadActive = true;
+    //        interactWithKeypadUI.SetActive(false);
+    //        OpenKeypadUI();
+    //    }
+    //    interactWithKeypadUI.SetActive(isKeypadHit);
+    //}
+
     private void KeypadInteraction()
     {
-        bool isKeypadHit = playerInteraction.RayHitString == InternalCalls.GetTag(doorPart.mEntityID);
+        bool isKeypadHit = playerInteraction.RayHitString == "Keypad";
+
         if (Input.GetMouseButtonTriggered(0) && isKeypadHit && !keypadActive)
         {
             keypadActive = true;
             interactWithKeypadUI.SetActive(false);
             OpenKeypadUI();
         }
-        interactWithKeypadUI.SetActive(isKeypadHit);
+
+        // ✅ Fix: Only show UI if keypad is NOT active
+        interactWithKeypadUI.SetActive(isKeypadHit && !keypadActive);
     }
 
     private void KeypadUIMode()
@@ -148,13 +158,14 @@ public class NumberPad : Entity
         if (typedCode == correctCode)
         {
             InternalCalls.PlaySound(mEntityID, "Correct");
-            InternalCalls.PlayAnimation(doorPivot.mEntityID, "DoorOpen");
+            Console.WriteLine("Correct code entered!"); // Debugging feedback
             CloseKeypadUI();
-            currState = State.DOOR_OPENING;
+            currState = State.UNLOCKED;
         }
         else
         {
             InternalCalls.PlaySound(mEntityID, "WrongInput");
+            Console.WriteLine("Incorrect code, try again.");
             ClearCode();
         }
     }
