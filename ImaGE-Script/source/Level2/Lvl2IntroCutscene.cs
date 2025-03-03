@@ -29,6 +29,8 @@ public class Lvl2IntroCutscene : Entity
     private float sillouetteElapsedTime = 0f;
     private const float activationInterval = 1.0f;
 
+    private TutorialDialogue tutorialDialogue;
+    public string[] introDialogueOne = { "Mom...?"};
     private Quaternion targetRot = Mathf.EulertoQuat(new Vector3(90, 0, 130));
 
     //private bool rotateAfterFirstSilhouette = false;
@@ -47,7 +49,7 @@ public class Lvl2IntroCutscene : Entity
         //    firstSilhouette, secondSilhouette, thirdSilhouette,
         //    fourthSilhouette, fifthSilhouette, sixthSilhouette
         //};
-
+        tutorialDialogue = FindObjectOfType<TutorialDialogue>();
         BeginningSilhouetteSequence = new Entity[5]
         {
             secondSilhouette, thirdSilhouette,
@@ -226,5 +228,16 @@ public class Lvl2IntroCutscene : Entity
     {
         playerMove.UnfreezePlayer();
         isInSillouetteSequence = false;
+        // Start Dialogue at the end of the cutscene
+        if (tutorialDialogue != null)
+        {
+            //string[] finalLines = { "Mom..?" };
+            //tutorialDialogue.Emotion[] emotions = { TutorialDialogue.Emotion.Sad }; // Choose an emotion if needed
+            tutorialDialogue.SetDialogue(introDialogueOne, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Sad});
+        }
+        else
+        {
+            Debug.LogError("[Lvl2IntroCutscene] Dialogue script is missing!");
+        }
     }
 }
