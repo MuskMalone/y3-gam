@@ -41,7 +41,7 @@ namespace IGE {
 			//mTempAllocator{ 10 * 1024 * 1024 },
 			//mJobSystem{ cMaxPhysicsJobs, cMaxPhysicsBarriers, static_cast<int>(thread::hardware_concurrency() - 1) }
 		{
-			mMaterial->setFrictionCombineMode(physx::PxCombineMode::eMAX);
+			mMaterial->setFrictionCombineMode(physx::PxCombineMode::eMULTIPLY);
 
 			SUBSCRIBE_CLASS_FUNC(Events::RemoveComponentEvent, &PhysicsSystem::HandleRemoveComponent, this);
 			SUBSCRIBE_CLASS_FUNC(Events::RemoveEntityEvent, &PhysicsSystem::HandleRemoveEntity, this);
@@ -50,7 +50,7 @@ namespace IGE {
 			mPvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
 			// Create the scene (simulation world)
 			physx::PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());
-			sceneDesc.gravity = physx::PxVec3(0.0f, 0.f, 0.0f); // Gravity pointing downward
+			sceneDesc.gravity = physx::PxVec3(0.0f, 0.0f, 0.0f); // Gravity pointing downward
 
 			// Use default CPU dispatcher
 			physx::PxDefaultCpuDispatcher* dispatcher = physx::PxDefaultCpuDispatcherCreate(2);
@@ -179,6 +179,10 @@ namespace IGE {
 						// Update the rigid body's velocities.
 						rb.velocity = pxrigidbody->getLinearVelocity();
 						rb.angularVelocity = pxrigidbody->getAngularVelocity();
+
+						if (rb.motionType == Component::RigidBody::MotionType::DYNAMIC) {
+							printf("length: %f, velo: %f %f %f, %s\n", rb.velocity.magnitude(), rb.velocity.x, rb.velocity.y, rb.velocity.z, e.GetComponent<Component::Tag>().tag.c_str());
+						}
 					}
 				}
 
