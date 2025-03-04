@@ -22,24 +22,17 @@ typedef aiMatrix4x4t<float> aiMatrix4x4;
 
 namespace Graphics::AssetIO
 {
-  struct MeshImportFlags
-  {
-    MeshImportFlags() : boneWeights{ false }, animations{ false },
-      lights{ false }, cameras{ false }, materials{ false } {}
-
-    inline bool IsDefault() const noexcept { return !(boneWeights || animations || lights || cameras || materials); }
-    int GetFlags() const;
-
-    bool boneWeights, animations, lights, cameras, materials;
+  struct ImportSettings {
+    bool staticMesh = false;
+    bool recenterMesh = true, normalizeScale = true, flipUVs = false;
   };
-
 
   class IMSH
   {
   public:
     IMSH() : mVertexBuffer{}, mIndices{}, mSubmeshData{}, mStatus{ true }, mIsStatic{ true } {}
     // conversions for use in editor only
-    IMSH(std::string const& file, MeshImportFlags const& = {});
+    IMSH(std::string const& file, ImportSettings const& = {});
 
     /*!*********************************************************************
     \brief
@@ -64,10 +57,6 @@ namespace Graphics::AssetIO
     // NOTE: This converts the object into a mesh source. Data will be MOVED into
     // the MeshSource and accessing contents afterwards is undefined
     MeshSource ToMeshSource(std::shared_ptr<VertexArray> vao);
-
-    // this is a workaround to not being able to pass extra flags during AssetManager import
-    static inline bool sStaticMeshConversion = false;
-    static inline bool sRecenterMesh = true, sNormalizeScale = true, sFlipUVs = false;
 
   private:
     // serialized as first 32 bytes
@@ -97,13 +86,39 @@ namespace Graphics::AssetIO
     bool mStatus, mIsStatic;
 
     static const unsigned sAssimpImportFlags, sMinimalAssimpImportFlags;
+    static const unsigned sMeshImportFlags;
 
     void ComputeBV();
     void RecenterMesh();
-    void NormalizeScale();
+    void NormalizeScale(bool isMeshRecentered);
 
     void ProcessSubmeshes(aiNode* node, aiScene const* scene, aiMatrix4x4 const& parentMtx);
     void ProcessMeshes(aiNode* node, aiScene const* scene);
   };
 
 } // namespace Graphics::AssetIO
+
+
+// don't think we'll ever need this
+#ifdef OLD_STUFF
+struct MeshImportFlags
+{
+  MeshImportFlags() : boneWeights{ false }, animations{ false },
+    lights{ false }, cameras{ false }, materials{ false } {}
+
+  inline bool IsDefault() const noexcept { return !(boneWeights || animations || lights || cameras || materials); }
+  int GetFlags() const {
+    int ret{};
+    if (!animations) { ret |= aiComponent_ANIMATIONS; }
+    if (!boneWeights) { ret |= aiComponent_BONEWEIGHTS; }
+    if (!cameras) { ret |= aiComponent_CAMERAS; }
+    if (!materials) { ret |= aiComponent_MATERIALS; }
+    if (!lights) { ret |= aiComponent_LIGHTS; }
+
+    return ret;
+  }
+
+  bool boneWeights, animations, lights, cameras, materials;
+};
+#endif
+
