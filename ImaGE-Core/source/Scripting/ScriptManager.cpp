@@ -958,11 +958,14 @@ void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec) {
     Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
     return;
   }
-
+  
+  if (glm::length(dVec) < FLT_EPSILON) { // dont move anything if velocity is 0
+    return;
+  }
   Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
-  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().force.x = dVec.x;
   //ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
-  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().force.z = dVec.z;
      
   IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::FORCE);
 }
