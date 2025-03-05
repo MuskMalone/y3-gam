@@ -2010,8 +2010,7 @@
             "ID": 43,
             "Parent": 6,
             "Child Entities": [
-                433,
-                448
+                433
             ],
             "Components": [
                 {
@@ -10539,91 +10538,6 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 448,
-            "Parent": 43,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "SwordCollider",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.21788263320922852,
-                            "y": 0.2199999988079071,
-                            "z": 0.12399999797344208
-                        },
-                        "scale": {
-                            "x": 0.10245901346206665,
-                            "y": 0.10245901346206665,
-                            "z": 0.10199999809265137
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 30.646705627441408,
-                            "y": 15.557058334350586,
-                            "z": -31.03662872314453
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 0.9955199956893921
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 0.5,
-                            "y": 0.5,
-                            "z": 2.700000047683716
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 26.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.22495104372501374,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.9743700623512268
-                        },
-                        "sensor": false
                     }
                 }
             ]
