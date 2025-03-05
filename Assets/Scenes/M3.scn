@@ -13359,6 +13359,13 @@
                                         "data": false,
                                         "type": "System.Boolean",
                                         "scriptField": {
+                                            "fieldName": "isFading"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
                                             "fieldName": "isFrozen"
                                         }
                                     },

@@ -54,37 +54,42 @@ public class PaintingAlignUIGarden : Entity
     // Update is called once per frame
     void Update()
     {
-        if (inventoryScript.highlighted && isPainting)
+        // Ensure UI does not show if no valid item is selected
+        if (inventoryScript.GetCurrentItem() == null || !inventoryScript.highlighted)
         {
-            if (holdupUIScript.isBigPaintingActive)
+            disableAlignUI();
+            return;
+        }
+
+        if (holdupUIScript.isBigPaintingActive && isPainting)
+        {
+            if (pictureAlignScript.IsAligned())
             {
-                if (pictureAlignScript.IsAligned())
-                {
-                    bigPaintingUI.SetActive(false);
-                    smallPaintingUI.SetActive(false);
-                    alignmentUI.SetActive(true);
-                }
-                else
-                {
-                    bigPaintingUI.SetActive(true);
-                    smallPaintingUI.SetActive(false);
-                    alignmentUI.SetActive(false);
-                }
+                bigPaintingUI.SetActive(false);
+                smallPaintingUI.SetActive(false);
+                alignmentUI.SetActive(true);
             }
             else
             {
-                bigPaintingUI.SetActive(false);
-                smallPaintingUI.SetActive(true);
+                bigPaintingUI.SetActive(true);
+                smallPaintingUI.SetActive(false);
                 alignmentUI.SetActive(false);
             }
         }
         else
         {
             bigPaintingUI.SetActive(false);
-            smallPaintingUI.SetActive(false);
+            smallPaintingUI.SetActive(true);
             alignmentUI.SetActive(false);
         }
+    }
 
+
+    public void disableAlignUI()
+    {
+        bigPaintingUI.SetActive(false);
+        smallPaintingUI.SetActive(false);
+        alignmentUI.SetActive(false);
     }
 
 }

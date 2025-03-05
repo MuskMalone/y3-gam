@@ -103,6 +103,7 @@
     <Compile Include="source\InteractableObject\Crowbar.cs" />
     <Compile Include="source\InteractableObject\DionysusPainting.cs" />
     <Compile Include="source\InteractableObject\Hammer.cs" />
+    <Compile Include="source\InteractableObject\HammerLevel3.cs" />
     <Compile Include="source\InteractableObject\Key.cs" />
     <Compile Include="source\InteractableObject\KeyDoor.cs" />
     <Compile Include="source\InteractableObject\LightSwitch.cs" />
@@ -123,7 +124,8 @@
     <Compile Include="source\Inventory\InventoryItemData.cs" />
     <Compile Include="source\Inventory\Level2HUDcs.cs" />
     <Compile Include="source\Inventory\Level2Inventory.cs" />
-    <Compile Include="source\Inventory\TemporaryInventory.cs" />
+    <Compile Include="source\Inventory\Level3HUD.cs" />
+    <Compile Include="source\Inventory\Level3Inventory.cs" />
     <Compile Include="source\Inventory\TutorialLevelHUD.cs" />
     <Compile Include="source\Inventory\TutorialLevelInventory.cs" />
     <Compile Include="source\Level2\ControlPanel2.cs" />
@@ -133,6 +135,8 @@
     <Compile Include="source\Level2\PamphletNoteInteraction.cs" />
     <Compile Include="source\Level2\CorridorTransitionFade.cs" />
     <Compile Include="source\Level2\TransitionToLevel3.cs" />
+    <Compile Include="source\Level3\Level3Dialogue.cs" />
+    <Compile Include="source\Level3\PitPuzzle.cs" />
     <Compile Include="source\MainMenu\CDDragAndDrop.cs" />
     <Compile Include="source\MainMenu\ContinueCD.cs" />
     <Compile Include="source\MainMenu\NewGameCD.cs" />
@@ -158,6 +162,7 @@
     <Compile Include="source\Painting\HoldupUINight.cs" />
     <Compile Include="source\Painting\ImageDisintegrating.cs" />
     <Compile Include="source\Painting\ImageDisintegratingNight.cs" />
+    <Compile Include="source\Painting\PaintingAlignUILevel3.cs" />
     <Compile Include="source\Painting\PaintingAlignUI.cs" />
     <Compile Include="source\Painting\PaintingAlignUIGarden.cs" />
     <Compile Include="source\Painting\PaintingAlignUILevel2.cs" />

@@ -19,6 +19,7 @@ public class HoldupUI : Entity
   private Inventory inventoryScript;
   private TutorialLevelInventory tutorialInventoryScript;
   private Level2Inventory level2InventoryScript;
+  private Level3Inventory level3InventoryScript;
 
   // Track the associated item to remove
   private IInventoryItem associatedItem;
@@ -41,6 +42,7 @@ public class HoldupUI : Entity
     inventoryScript = FindObjectOfType<Inventory>();
     tutorialInventoryScript = FindObjectOfType<TutorialLevelInventory>();
     level2InventoryScript = FindObjectOfType<Level2Inventory>();
+    level3InventoryScript = FindObjectOfType<Level3Inventory>();
     pictureAlignscript = FindObjectOfType<PictureAlign>();
     //if (pictureAlignscript != null)
     //  Console.WriteLine(pictureAlignscript.GetComponent<Tag>().tag);
@@ -244,5 +246,10 @@ public class HoldupUI : Entity
     public void Level2RemoveItself()
     {
         level2InventoryScript.RemoveItem(associatedItem);
+    }
+
+    public void Level3RemoveItself()
+    {
+        level3InventoryScript.RemoveItem(associatedItem);
     }
 }

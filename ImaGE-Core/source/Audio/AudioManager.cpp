@@ -63,7 +63,7 @@ namespace IGE {
             FMOD_VECTOR upDirection = { 0.0f, 1.0f, 0.0f };         // Up vector
 
             //remove for 2d audio
-            //result = mSystem->set3DListenerAttributes(0, &listenerPosition, &listenerVelocity, &forwardDirection, &upDirection);
+            result = mSystem->set3DListenerAttributes(0, &listenerPosition, &listenerVelocity, &forwardDirection, &upDirection);
             if (result != FMOD_OK)
             {
                 std::string str(FMOD_ErrorString(result));
@@ -71,10 +71,7 @@ namespace IGE {
                 return false;
             }
             //remove for 2d audio
-            //mSystem->set3DSettings(1.0f, 1.0f, 1.0f); // Distance factor, rolloff scale, Doppler scale
-            //fetching the master channel group, to control the volume and other properties of all sounds globally
-            
-            //_mSystem->getMasterChannelGroup(&_mGroup["Master"]);
+            mSystem->set3DSettings(1.0f, 1.0f, 1.0f); // Distance factor, rolloff scale, Doppler scale
 
             return true;
         }
@@ -288,8 +285,8 @@ namespace IGE {
             }
 
             //remove for 2d audio
-            FMOD_RESULT result = mSystem->createSound(filepath.c_str(), FMOD_DEFAULT | FMOD_2D, 0, &mData[namehash]); //non-3D sound
-            //FMOD_RESULT result = mSystem->createSound(filepath.c_str(), FMOD_3D, 0, &mData[namehash]);//create 3D sound
+            //FMOD_RESULT result = mSystem->createSound(filepath.c_str(), FMOD_DEFAULT | FMOD_2D, 0, &mData[namehash]); //non-3D sound
+            FMOD_RESULT result = mSystem->createSound(filepath.c_str(), FMOD_3D, 0, &mData[namehash]);//create 3D sound
 
             if (result != FMOD_OK)
             {
@@ -342,24 +339,24 @@ namespace IGE {
                 // Convert position to FMOD_VECTOR
                 FMOD_VECTOR fmodPosition = { settings.position.x, settings.position.y, settings.position.z };
                 //remove for 2d audio
-                temp->setMode(FMOD_2D);
-                ////temp->setMode(FMOD_3D); // Set the channel to 3D mode
-                //temp->set3DAttributes(&fmodPosition, nullptr); // Set the 3D position
-                //temp->set3DMinMaxDistance(settings.minDistance, settings.maxDistance); // Set min/max distance
-                //temp->set3DDopplerLevel(settings.dopplerLevel); // Set Doppler level
-                //// Apply rolloff
-                //switch (settings.rolloffType) {
-                //case SoundInvokeSetting::RolloffType::LINEAR:
-                //    temp->setMode(FMOD_3D_LINEARROLLOFF);
-                //    break;
-                //case SoundInvokeSetting::RolloffType::LOGARITHMIC:
-                //    temp->setMode(FMOD_3D_INVERSEROLLOFF);
-                //    break;
-                //default:
-                //    temp->setMode(FMOD_3D | FMOD_3D_INVERSEROLLOFF);
-                //    temp->set3DMinMaxDistance(1e6f, 1e6f);  // Large min and max distance
-                //    break;
-                //}
+                //temp->setMode(FMOD_2D);
+                temp->setMode(FMOD_3D); // Set the channel to 3D mode
+                temp->set3DAttributes(&fmodPosition, nullptr); // Set the 3D position
+                temp->set3DMinMaxDistance(settings.minDistance, settings.maxDistance); // Set min/max distance
+                temp->set3DDopplerLevel(settings.dopplerLevel); // Set Doppler level
+                // Apply rolloff
+                switch (settings.rolloffType) {
+                case SoundInvokeSetting::RolloffType::LINEAR:
+                    temp->setMode(FMOD_3D_LINEARROLLOFF);
+                    break;
+                case SoundInvokeSetting::RolloffType::LOGARITHMIC:
+                    temp->setMode(FMOD_3D_INVERSEROLLOFF);
+                    break;
+                default:
+                    temp->setMode(FMOD_3D | FMOD_3D_INVERSEROLLOFF);
+                    temp->set3DMinMaxDistance(1e6f, 1e6f);  // Large min and max distance
+                    break;
+                }
             }
 
             // Unpause the channel to start playback

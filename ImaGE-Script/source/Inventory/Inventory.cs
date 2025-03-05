@@ -211,7 +211,7 @@ public class Inventory : Entity
       ToggleInventoryVisibility();
     }
 
-    if (Input.anyKeyTriggered)
+    if (!pictureAlignscript.isFading && Input.anyKeyTriggered)
     {
       switch (Input.inputString)
       {
@@ -419,4 +419,10 @@ public class Inventory : Entity
     pictureAlignscript.ClearUI();
     //Console.WriteLine("CLEAE ARROWS");
   }
+
+    public IInventoryItem GetCurrentItem()
+    {
+        return currentItem;
+    }
+
 }

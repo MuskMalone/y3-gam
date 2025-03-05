@@ -180,7 +180,7 @@ public class Level2Inventory : Entity
             ToggleInventoryVisibility();
         }
 
-        if (Input.anyKeyTriggered)
+        if (!pictureAlignscript.isFading && Input.anyKeyTriggered)
         {
             switch (Input.inputString)
             {
@@ -359,5 +359,10 @@ public class Level2Inventory : Entity
         paintingAlignUILevel2Script.isPainting = false;
         pictureAlignscript.ClearUI();
 
+    }
+
+    public IInventoryItem GetCurrentItem()
+    {
+        return currentItem;
     }
 }

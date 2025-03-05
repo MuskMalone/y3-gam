@@ -45,6 +45,8 @@ public class InventoryTutorial : Entity
     private float timer = 0f;
     public float duration = 4f;
 
+    public bool wasBigPaintingActive = false;
+
     void Start()
     {
         tutorialImage = GetComponent<Image>();
@@ -128,9 +130,11 @@ public class InventoryTutorial : Entity
                 currentAlpha = 0f;
                 isFadingOut = false;
                 finish = true;
+
+                // Capture if big painting was still active when tutorial ends
+                wasBigPaintingActive = FindObjectOfType<HoldupUI>().isBigPaintingActive;
             }
         }
-
     }
 }
 

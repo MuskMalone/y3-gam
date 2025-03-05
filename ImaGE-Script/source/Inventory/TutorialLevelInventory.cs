@@ -171,7 +171,7 @@ public class TutorialLevelInventory : Entity
             ToggleInventoryVisibility();
         }
 
-        if (Input.anyKeyTriggered)
+        if (!pictureAlignscript.isFading && Input.anyKeyTriggered)
         {
             switch (Input.inputString)
             {
@@ -328,4 +328,10 @@ public class TutorialLevelInventory : Entity
         pictureAlignscript.ClearUI();
 
     }
+
+    public IInventoryItem GetCurrentItem()
+    {
+        return currentItem;
+    }
+
 }
