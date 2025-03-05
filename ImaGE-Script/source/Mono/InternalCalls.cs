@@ -226,6 +226,24 @@ namespace IGE.Utils
     #endregion
 
 
+    #region Light Component
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetLightIntensity(uint entityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetLightIntensity(uint entityID, float intensity);
+    #endregion
+
+
+    #region Bloom Component
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetBloomIntensity(uint entityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetBloomIntensity(uint entityID, float intensity);
+    #endregion
+
+
     #region Utility
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

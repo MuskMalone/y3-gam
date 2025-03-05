@@ -1,7 +1,7 @@
 {
     "configs": [
         {
-            "key": "test",
+            "key": "Level2",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -27,20 +27,7 @@
             }
         },
         {
-            "key": "Level2",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "LargeSafe",
+            "key": "test",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -71,20 +58,7 @@
             }
         },
         {
-            "key": "TutorialLevelNew",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "mainmenu",
+            "key": "LargeSafe",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -110,6 +84,19 @@
             }
         },
         {
+            "key": "TutorialLevelNew",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "Level3",
             "value": {
                 "shaders": [],
@@ -123,85 +110,7 @@
             }
         },
         {
-            "key": "Large Pillar",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "Small Pillar",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "Chair",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "PaintingFrame",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "PaintingFrame (Square)",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "Painting Frame",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "testing",
+            "key": "emission test",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
