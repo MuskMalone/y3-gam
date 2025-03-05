@@ -19,8 +19,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 using namespace Prefabs;
 
-PrefabSubData::PrefabSubData() : mParent{ BasePrefabId } {}
-
 PrefabSubData::PrefabSubData(SubDataId id, SubDataId parent) :
   mComponents{}, mId{ id }, mParent{ parent } {}
 

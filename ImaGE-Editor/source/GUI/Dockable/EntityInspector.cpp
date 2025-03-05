@@ -1482,6 +1482,16 @@ namespace GUI {
 
         ImGui::EndCombo();
       }
+      if (mesh.submeshIdx != 0) {
+        NextRowTable("Parent Mesh");
+        try {
+          ImGui::Text(std::filesystem::path(IGE_ASSETMGR.GUIDToPath(mesh.meshSource)).stem().string().c_str());
+        }
+        catch (Debug::ExceptionBase&) {
+          IGE_DBGLOGGER.LogError(std::string("Unable to get filename of Mesh: ") + mesh.meshName);
+          mesh.meshSource = mesh.meshName = {};
+        }
+      }
 
       if (GUIVault::sDevTools) {
         ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));

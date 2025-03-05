@@ -87,6 +87,8 @@ namespace Scenes
     // realign colliders with transforms
     IGE_EVENTMGR.DispatchImmediateEvent<Events::TriggerPausedUpdate>();
     Mono::ScriptManager::GetInstance().LinkAllScriptDataMember();
+
+    IGE_DBGLOGGER.LogInfo("Entity count: " + std::to_string(IGE_ENTITYMGR.GetAllEntities().size()));
   }
 
   // i should just combine clear and unload functions

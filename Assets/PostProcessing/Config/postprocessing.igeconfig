@@ -84,6 +84,19 @@
             }
         },
         {
+            "key": "mainmenu",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "Table",
             "value": {
                 "shaders": [],
@@ -137,6 +150,58 @@
         },
         {
             "key": "Chair",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "PaintingFrame",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "PaintingFrame (Square)",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "Painting Frame",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "testing",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
