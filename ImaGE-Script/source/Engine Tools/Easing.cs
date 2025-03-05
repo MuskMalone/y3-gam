@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 public static class Easing
 {
@@ -112,4 +113,46 @@ public static class Easing
             return Linear(end, start, (value - 0.5f) / 0.5f);
         }
     }
+
+  // Gradient function for Perlin noise
+  private static float Gradient(int hash, float x)
+  {
+    int h = hash & 15;
+    float grad = 1f + (h & 7); // Gradient value from 1 to 8
+    return ((h & 8) != 0 ? -grad : grad) * x;
+  }
+
+  // Hash function to generate pseudo-random values
+  private static int Hash(int x)
+  {
+    x = (x << 13) ^ x;
+    return (x * (x * x * 15731 + 789221) + 1376312589) & 0x7fffffff;
+  }
+
+  // Fade function to smooth step between values
+  private static float Fade(float t)
+  {
+    return t * t * t * (t * (t * 6 - 15) + 10);
+  }
+
+  // Linear interpolation
+  private static float Lerp(float a, float b, float t)
+  {
+    return a + t * (b - a);
+  }
+
+  // 1D Perlin noise function
+  public static float PerlinNoise(float x)
+  {
+    int x0 = (int)Math.Floor(x); // Integer part
+    int x1 = x0 + 1;             // Next integer
+    float xf = x - x0;           // Fractional part
+
+    float fadeX = Fade(xf);
+
+    float grad0 = Gradient(Hash(x0), xf);
+    float grad1 = Gradient(Hash(x1), xf - 1);
+
+    return Lerp(grad0, grad1, fadeX) * 0.5f + 0.5f; // Normalize to [0,1]
+  }
 }

@@ -53,6 +53,10 @@ public class Key : Entity, IInventoryItem
   public void OnUsed()
   {
     keyDoor.UnlockDoor();
+    if (inventoryScript.isVisible)
+    {
+      inventoryScript.ToggleInventoryVisibility();
+    }
     Destroy(mEntityID);
   }
 
