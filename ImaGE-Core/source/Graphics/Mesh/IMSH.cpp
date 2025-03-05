@@ -33,33 +33,23 @@ namespace {
 
 namespace Graphics::AssetIO
 {
-  // erm i read through all the flags and these seemed like the best setup? Idk needs some testing
+  // switch to minimal flags if there are any import issues
   unsigned const IMSH::sMinimalAssimpImportFlags = aiProcess_ValidateDataStructure | aiProcess_Triangulate | aiProcess_JoinIdenticalVertices
     | aiProcess_GenSmoothNormals | aiProcess_SortByPType;
   unsigned const IMSH::sAssimpImportFlags = aiProcess_ValidateDataStructure | aiProcess_JoinIdenticalVertices | aiProcess_Triangulate
     | aiProcess_RemoveComponent | aiProcess_GenSmoothNormals | aiProcess_ImproveCacheLocality | aiProcess_FixInfacingNormals
     | aiProcess_FindInvalidData | aiProcess_SortByPType | aiProcess_OptimizeMeshes | aiProcess_RemoveRedundantMaterials
     | aiProcess_SplitLargeMeshes | aiProcess_TransformUVCoords;
+  unsigned const IMSH::sMeshImportFlags = aiComponent_ANIMATIONS | aiComponent_BONEWEIGHTS | 
+    aiComponent_CAMERAS | aiComponent_MATERIALS | aiComponent_LIGHTS;
 
-
-  int MeshImportFlags::GetFlags() const {
-    int ret{};
-    if (!animations) { ret |= aiComponent_ANIMATIONS; }
-    if (!boneWeights) { ret |= aiComponent_BONEWEIGHTS; }
-    if (!cameras) { ret |= aiComponent_CAMERAS; }
-    if (!materials) { ret |= aiComponent_MATERIALS; }
-    if (!lights) { ret |= aiComponent_LIGHTS; }
-
-    return ret;
-  }
-
-  IMSH::IMSH(std::string const& file, MeshImportFlags const& importFlags) : mVertexBuffer{}, mIndices{}, mSubmeshData{},
-    mStatus{ true }, mIsStatic{ sStaticMeshConversion } {
+  IMSH::IMSH(std::string const& file, ImportSettings const& importFlags) : mVertexBuffer{}, mIndices{}, mSubmeshData{},
+    mStatus{ true }, mIsStatic{ importFlags.staticMesh } {
     Assimp::Importer importer;
 
-    importer.SetPropertyInteger(AI_CONFIG_PP_RVC_FLAGS, importFlags.GetFlags());
+    importer.SetPropertyInteger(AI_CONFIG_PP_RVC_FLAGS, sMeshImportFlags);
 
-    unsigned const flags{ sFlipUVs ? sAssimpImportFlags | aiProcess_FlipUVs : sAssimpImportFlags };
+    unsigned const flags{ importFlags.flipUVs ? (sAssimpImportFlags | aiProcess_FlipUVs) : sAssimpImportFlags };
 
     aiScene const* aiScn{ importer.ReadFile(file, flags) };
     if (!aiScn || aiScn->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !aiScn->mRootNode) {
@@ -70,12 +60,16 @@ namespace Graphics::AssetIO
 
     sFirstMaterialEncountered = false;
     ProcessMeshes(aiScn->mRootNode, aiScn);
+    // if static mesh, put all vertices and indices as 1 submesh entry
+    if (mIsStatic) {
+      mSubmeshData.emplace_back(0, 0, mVertexBuffer.size(), mIndices.size());
+    }
 
-    if (sRecenterMesh) {
+    if (importFlags.recenterMesh) {
       RecenterMesh();
     }
-    if (sNormalizeScale) {
-      NormalizeScale();
+    if (importFlags.normalizeScale) {
+      NormalizeScale(importFlags.recenterMesh);
     }
 
     ComputeBV();
@@ -121,7 +115,6 @@ namespace Graphics::AssetIO
 
       AddVertices(mVertexBuffer, mesh, node->mTransformation);
       AddIndices(mIndices, mesh, 0);
-      mMeshNames.emplace_back(mesh->mName.C_Str());
 
       //if (scene->HasMaterials()) {
       //  mMatValues.emplace_back(GetMaterial(scene->mMaterials[meshIdx]));
@@ -129,12 +122,13 @@ namespace Graphics::AssetIO
 
       // since the first mesh is also rendered as a submesh
       if (!mIsStatic) {
+        mMeshNames.emplace_back(mesh->mName.C_Str());
         mSubmeshData.emplace_back(0, 0, mesh->mNumVertices, mIndices.size());
       }
     }
 
     if (!mIsStatic) {
-      mSubmeshData.reserve(node->mNumChildren);
+      mSubmeshData.reserve(mSubmeshData.size() + node->mNumChildren);
     }
     for (unsigned i{}; i < node->mNumChildren; ++i) {
       ProcessSubmeshes(node->mChildren[i], scene, node->mTransformation);
@@ -233,7 +227,7 @@ namespace Graphics::AssetIO
     }
   }
 
-  void IMSH::NormalizeScale() {
+  void IMSH::NormalizeScale(bool isMeshRecentered) {
     glm::vec3 min{ FLT_MAX }, max{ -FLT_MAX };
 
     // find the min and max AABB
@@ -242,14 +236,14 @@ namespace Graphics::AssetIO
       max = glm::max(vtx.position, max);
     }
 
-    glm::vec3 const center{ sRecenterMesh ? glm::vec3() : (min + max) * 0.5f };
+    glm::vec3 const center{ isMeshRecentered ? glm::vec3() : (min + max) * 0.5f };
     glm::vec3 const scale{ max - min };
     float const maxScale{ std::max(scale.x, std::max(scale.y, scale.z)) };
 
     glm::mat4 transform{ glm::scale(glm::mat4(1.f), glm::vec3(1.f / maxScale)) };
 
     // if mesh wasn't centered at origin, move it to origin before scaling
-    if (!sRecenterMesh) {
+    if (!isMeshRecentered) {
       transform = glm::translate(glm::identity<glm::mat4>(), center / maxScale) * (transform * glm::translate(glm::identity<glm::mat4>(), -center));
     }
 

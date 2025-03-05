@@ -41,7 +41,7 @@ namespace IGE {
 			//mTempAllocator{ 10 * 1024 * 1024 },
 			//mJobSystem{ cMaxPhysicsJobs, cMaxPhysicsBarriers, static_cast<int>(thread::hardware_concurrency() - 1) }
 		{
-			mMaterial->setFrictionCombineMode(physx::PxCombineMode::eMAX);
+			mMaterial->setFrictionCombineMode(physx::PxCombineMode::eMULTIPLY);
 
 			SUBSCRIBE_CLASS_FUNC(Events::RemoveComponentEvent, &PhysicsSystem::HandleRemoveComponent, this);
 			SUBSCRIBE_CLASS_FUNC(Events::RemoveEntityEvent, &PhysicsSystem::HandleRemoveEntity, this);
@@ -50,7 +50,7 @@ namespace IGE {
 			mPvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
 			// Create the scene (simulation world)
 			physx::PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());
-			sceneDesc.gravity = physx::PxVec3(0.0f, 0.f, 0.0f); // Gravity pointing downward
+			sceneDesc.gravity = physx::PxVec3(0.0f, 0.0f, 0.0f); // Gravity pointing downward
 
 			// Use default CPU dispatcher
 			physx::PxDefaultCpuDispatcher* dispatcher = physx::PxDefaultCpuDispatcherCreate(2);
@@ -116,7 +116,7 @@ namespace IGE {
 			// Static accumulator to keep track of elapsed time.
 			// (You may want to move this to a member variable if needed.)
 			static float physicsAccumulator = 0.f;
-			physicsAccumulator += gDeltaTime;
+			physicsAccumulator += Performance::FrameRateController::GetInstance().GetDeltaTime();
 
 			// Run the physics simulation in fixed time steps.
 			while (physicsAccumulator >= gTimeStep) {
@@ -441,27 +441,9 @@ namespace IGE {
 				}break;
 
 				case Component::RigidBodyVars::FORCE: {
-					// Assume dynamicBody is a pointer to your PxRigidDynamic actor
-					physx::PxVec3 currentVelocity = rbptr->getLinearVelocity();
-					physx::PxVec3 targetVelocity = rb.velocity;
-
-					// Determine the velocity change required.
-					physx::PxVec3 deltaVelocity = targetVelocity - currentVelocity;
-
-					// Choose a time interval (in seconds). This could be your simulation timestep, for instance:
-					float dt = Performance::FrameRateController::GetInstance().GetDeltaTime();//1.0f / 60.0f;  // For a 60Hz simulation
-
-					// Get the mass of the actor.
-					float mass = rbptr->getMass();
-
-					// Calculate the acceleration needed.
-					physx::PxVec3 acceleration = deltaVelocity / dt;
-
-					// Calculate the force needed.
-					physx::PxVec3 force = mass * acceleration;
-
-					// Apply the force. Using eFORCE will apply it continuously over the timestep.
-					rbptr->addForce(force, physx::PxForceMode::eFORCE);
+					//force is converted to kN
+					rbptr->addForce(rb.force * 1000.f * Performance::FrameRateController::GetInstance().GetDeltaTime(), physx::PxForceMode::eFORCE);
+					//printf("force added: %d %d %d\n", force.x, force.y, force.z);
 				}break;
 				}
 				if (entity.HasComponent<Component::BoxCollider>() || entity.HasComponent<Component::CapsuleCollider>() || entity.HasComponent<Component::SphereCollider>()) {

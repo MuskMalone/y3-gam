@@ -49,6 +49,7 @@ namespace Component {
 		float mass{ 1.f };
 		physx::PxVec3 velocity{0, 0, 0};
 		physx::PxVec3 angularVelocity{0, 0, 0};
+		physx::PxVec3 force{ 0, 0, 0 }; //not meant to be saved or recorded. passing as a parameter to move rb
 		float staticFriction;
 		float dynamicFriction;
 		float restitution;

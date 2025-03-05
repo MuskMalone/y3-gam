@@ -5155,16 +5155,7 @@
             "Parent": 6,
             "Child Entities": [
                 99,
-                100,
-                104,
-                124,
-                125,
-                126,
-                127,
-                128,
-                129,
-                130,
-                131
+                104
             ],
             "Position": {
                 "x": -7.636002540588379,
@@ -5202,25 +5193,12 @@
                         "value": {
                             "layerName": "Props"
                         }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 100,
-            "Parent": 98,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 17113954348924672938
-                },
-                "subDataId": 2,
-                "componentData": [
+                    },
                     {
-                        "key": "Layer",
+                        "key": "Tag",
                         "value": {
-                            "layerName": "Props"
+                            "tag": "Props_Table",
+                            "isActive": true
                         }
                     }
                 ],
@@ -5255,7 +5233,7 @@
                 "GUID": {
                     "ID": 17113954348924672938
                 },
-                "subDataId": 11,
+                "subDataId": 2,
                 "componentData": [
                     {
                         "key": "Layer",
@@ -5513,166 +5491,6 @@
                     }
                 }
             ]
-        },
-        {
-            "ID": 124,
-            "Parent": 98,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 17113954348924672938
-                },
-                "subDataId": 3,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 125,
-            "Parent": 98,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 17113954348924672938
-                },
-                "subDataId": 4,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 126,
-            "Parent": 98,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 17113954348924672938
-                },
-                "subDataId": 5,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 127,
-            "Parent": 98,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 17113954348924672938
-                },
-                "subDataId": 6,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 128,
-            "Parent": 98,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 17113954348924672938
-                },
-                "subDataId": 7,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 129,
-            "Parent": 98,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 17113954348924672938
-                },
-                "subDataId": 8,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 130,
-            "Parent": 98,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 17113954348924672938
-                },
-                "subDataId": 9,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 131,
-            "Parent": 98,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 17113954348924672938
-                },
-                "subDataId": 10,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
         },
         {
             "ID": 132,
