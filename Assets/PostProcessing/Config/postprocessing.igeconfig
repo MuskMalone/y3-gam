@@ -1,6 +1,19 @@
 {
     "configs": [
         {
+            "key": "Level2",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "test",
             "value": {
                 "shaders": [],
@@ -15,32 +28,6 @@
         },
         {
             "key": "",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "Level2",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "LargeSafe",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -71,6 +58,32 @@
             }
         },
         {
+            "key": "LargeSafe",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "Table",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "TutorialLevelNew",
             "value": {
                 "shaders": [],
@@ -85,19 +98,6 @@
         },
         {
             "key": "mainmenu",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "Table",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
