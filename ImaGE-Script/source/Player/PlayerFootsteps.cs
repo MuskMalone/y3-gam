@@ -8,6 +8,9 @@ public class PlayerFootsteps : Entity
     public Entity player;
     public PlayerMove playerMoveScript;
     public float interval = 0.5f;
+    public float bgmVolume = 0.1f;
+    public float ambienceVolume = 0.5f;
+    public float footstepVolume = 2f;
     // Start is called before the first frame update
     private float timePassed;
     private Random random = new Random();
@@ -23,6 +26,8 @@ public class PlayerFootsteps : Entity
     // Update is called once per frame
     void Update()
     {
+        InternalCalls.SetSoundVolume(player.mEntityID, "BGM", bgmVolume);
+        InternalCalls.SetSoundVolume(player.mEntityID, "Ambience", ambienceVolume);
         timePassed += InternalCalls.GetDeltaTime();
         bool isGrounded = playerMoveScript.IsGrounded();
         Vector3 velocity = InternalCalls.GetVelocity(player.mEntityID);
@@ -45,12 +50,14 @@ public class PlayerFootsteps : Entity
     {
         int soundNumber = random.Next(1, 4);
         string soundName = $"MetalPipe{soundNumber}";
+        InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
         InternalCalls.PlaySound(mEntityID, soundName);
     }
     public void PlayRandomGrassSound()
     {
         int soundNumber = random.Next(1, 7);
         string soundName = $"Grass{soundNumber}";
+        InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
         InternalCalls.PlaySound(mEntityID, soundName);
     }
 
@@ -58,6 +65,7 @@ public class PlayerFootsteps : Entity
     {
         int soundNumber = random.Next(1, 6);
         string soundName = $"Pavement{soundNumber}";
+        InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
         InternalCalls.PlaySound(mEntityID, soundName);
     }
 
@@ -65,6 +73,7 @@ public class PlayerFootsteps : Entity
     {
         int soundNumber = random.Next(1, 6);
         string soundName = $"Wooden{soundNumber}";
+        InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
         InternalCalls.PlaySound(mEntityID, soundName);
     }
     void PlayFootstepSound()
@@ -86,15 +95,10 @@ public class PlayerFootsteps : Entity
                     Debug.Log("GrassSound");
                     break;
                 case "Second Level":
-                    PlayRandomPavementSound();
-                    break;
                 case "Pit Room Ground":
-                    PlayRandomPavementSound();
-                    break;
                 case "Pit Room Platform":
-                    PlayRandomPavementSound();
-                    break;
                 case "Stair Head":
+                case "Stair Part":
                     PlayRandomPavementSound();
                     break;
                 case "Metal Pipes":
