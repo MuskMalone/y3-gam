@@ -87,132 +87,6 @@
             ]
         },
         {
-            "ID": 1,
-            "Parent": 46,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "MainGround",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 109.09281921386719,
-                            "y": 50.0,
-                            "z": 114.44000244140625
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -0.0000057220458984375,
-                            "y": -7.450580596923828e-9,
-                            "z": 1.7881393432617188e-7
-                        },
-                        "worldScale": {
-                            "x": 109.09281921386719,
-                            "y": 50.0,
-                            "z": 114.44000244140625
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Environment"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 14137664646562134886
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Plane",
-                        "GUID": {
-                            "ID": 3815097445005270835
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 54.546409606933597,
-                            "y": 0.20000000298023225,
-                            "z": 57.220001220703128
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": -0.20000000298023225,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "RigidBody": {
-                        "velocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "angularVelocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "staticFriction": 1.0,
-                        "dynamicFriction": 1.0,
-                        "restitution": 0.0,
-                        "gravityFactor": 0.0,
-                        "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC",
-                        "axisLock": 7,
-                        "angularAxisLock": 7
-                    }
-                }
-            ]
-        },
-        {
             "ID": 2,
             "Parent": 231,
             "Child Entities": [],
@@ -2087,7 +1961,6 @@
             "ID": 46,
             "Parent": 8,
             "Child Entities": [
-                1,
                 31,
                 52,
                 74,
@@ -9162,7 +9035,7 @@
                     "Transform": {
                         "position": {
                             "x": 5.24094295501709,
-                            "y": 4.300000190734863,
+                            "y": 3.9815878868103029,
                             "z": -0.7175838351249695
                         },
                         "scale": {
@@ -9183,7 +9056,7 @@
                         },
                         "worldPos": {
                             "x": 5.240937232971191,
-                            "y": 4.300000190734863,
+                            "y": 3.9815878868103029,
                             "z": -0.7175836563110352
                         },
                         "worldScale": {
@@ -21828,6 +21701,13 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Props"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Props_Pillar",
+                            "isActive": true
                         }
                     }
                 ],
