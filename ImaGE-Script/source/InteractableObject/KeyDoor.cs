@@ -82,12 +82,13 @@ public class KeyDoor : Entity
       {
         if (initialAnimation)
         {
-          InternalCalls.PlaySound(mEntityID, "DoorSwing"); // Temp, to replace with slam sound
+          InternalCalls.PlaySound(mEntityID, "DoorSwing");
           initialAnimation = false;
         }
         
         if (!InternalCalls.IsPlayingAnimation(parent))
         {
+          InternalCalls.PlaySound(mEntityID, "DoorSlam");
           currentAnim = null;
           initialAnimation = true;
         }
