@@ -297,7 +297,7 @@
                 469,
                 488,
                 506,
-                725,
+                724,
                 802,
                 890,
                 1044,
@@ -382,6 +382,7 @@
                 83,
                 133,
                 275,
+                640,
                 706,
                 711,
                 933,
@@ -4971,15 +4972,7 @@
             "ID": 93,
             "Parent": 11,
             "Child Entities": [
-                1049193,
-                1049194,
-                2097474,
-                2097475,
-                3146048,
                 3146049,
-                3146053,
-                3146141,
-                3146143,
                 4194597
             ],
             "Components": [
@@ -9267,7 +9260,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 19,
+                "subDataId": 4,
                 "componentData": [
                     {
                         "key": "Light",
@@ -9333,13 +9326,13 @@
                             },
                             "worldPos": {
                                 "x": 12.630999565124512,
-                                "y": 14.364999771118164,
+                                "y": 14.621000289916993,
                                 "z": -35.284000396728519
                             },
                             "worldScale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
+                                "x": 2.2799999713897707,
+                                "y": 2.2799999713897707,
+                                "z": 2.2799999713897707
                             },
                             "worldRot": {
                                 "x": -4.127995012481733e-8,
@@ -14085,6 +14078,84 @@
             ]
         },
         {
+            "ID": 640,
+            "Parent": 8,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "FrameOnAltar",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.7089999914169312,
+                            "y": 14.449999809265137,
+                            "z": -37.67300033569336
+                        },
+                        "scale": {
+                            "x": 3.4200000762939455,
+                            "y": 3.4200000762939455,
+                            "z": 3.4200000762939455
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 90.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 6.291396141052246,
+                            "y": 14.449999809265137,
+                            "z": -37.10568618774414
+                        },
+                        "worldScale": {
+                            "x": 3.4200000762939455,
+                            "y": 3.4200000762939455,
+                            "z": 3.4200000762939455
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 6763860968362688319
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "FrameOnAltar",
+                        "GUID": {
+                            "ID": 7709600725256441171
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 641,
             "Parent": 2097156,
             "Child Entities": [],
@@ -16350,12 +16421,12 @@
         },
         {
             "ID": 724,
-            "Parent": 725,
+            "Parent": 6,
             "Child Entities": [],
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Props_PaintingFrame1",
+                        "tag": "AltarPainting",
                         "isActive": true
                     }
                 },
@@ -16363,8 +16434,8 @@
                     "Transform": {
                         "position": {
                             "x": 6.321000099182129,
-                            "y": 14.543000221252442,
-                            "z": -36.450557708740237
+                            "y": 14.519857406616211,
+                            "z": -36.41422653198242
                         },
                         "scale": {
                             "x": 1.940000057220459,
@@ -16384,8 +16455,8 @@
                         },
                         "worldPos": {
                             "x": 6.321000099182129,
-                            "y": 14.543000221252442,
-                            "z": -36.450557708740237
+                            "y": 14.519857406616211,
+                            "z": -36.41422653198242
                         },
                         "worldScale": {
                             "x": 1.940000057220459,
@@ -16522,67 +16593,6 @@
                                 ]
                             }
                         ]
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 725,
-            "Parent": 6,
-            "Child Entities": [
-                724
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "AltarPainting",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Props"
                     }
                 }
             ]
@@ -23123,17 +23133,7 @@
         {
             "ID": 975,
             "Parent": 8,
-            "Child Entities": [
-                976,
-                977,
-                978,
-                979,
-                980,
-                981,
-                982,
-                983,
-                984
-            ],
+            "Child Entities": [],
             "Components": [
                 {
                     "Tag": {
@@ -23192,708 +23192,6 @@
                         "materialGUID": {
                             "ID": 6763860968362688319
                         }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 976,
-            "Parent": 975,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "polySurface1",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.0000017620009202801157,
-                            "y": 0.00002193450927734375,
-                            "z": -0.000009775161743164063
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.291407108306885,
-                            "y": 14.45007610321045,
-                            "z": -37.10518264770508
-                        },
-                        "worldScale": {
-                            "x": 2.5799999237060549,
-                            "y": 2.5799999237060549,
-                            "z": 2.5799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8914391966167433411
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "polySurface1",
-                        "GUID": {
-                            "ID": 17313626130970703837
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 977,
-            "Parent": 975,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "polySurface2",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.0000017620009202801157,
-                            "y": 0.00002193450927734375,
-                            "z": -0.000009775161743164063
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.291407108306885,
-                            "y": 14.45007610321045,
-                            "z": -37.10518264770508
-                        },
-                        "worldScale": {
-                            "x": 2.5799999237060549,
-                            "y": 2.5799999237060549,
-                            "z": 2.5799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8914391966167433411
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "polySurface2",
-                        "GUID": {
-                            "ID": 17313626130970703837
-                        },
-                        "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 978,
-            "Parent": 975,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "polySurface3",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.0000017620009202801157,
-                            "y": 0.00002193450927734375,
-                            "z": -0.000009775161743164063
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.291407108306885,
-                            "y": 14.45007610321045,
-                            "z": -37.10518264770508
-                        },
-                        "worldScale": {
-                            "x": 2.5799999237060549,
-                            "y": 2.5799999237060549,
-                            "z": 2.5799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8914391966167433411
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "polySurface3",
-                        "GUID": {
-                            "ID": 17313626130970703837
-                        },
-                        "submeshIdx": 2,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 979,
-            "Parent": 975,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "polySurface4",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.0000017620009202801157,
-                            "y": 0.00002193450927734375,
-                            "z": -0.000009775161743164063
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.291407108306885,
-                            "y": 14.45007610321045,
-                            "z": -37.10518264770508
-                        },
-                        "worldScale": {
-                            "x": 2.5799999237060549,
-                            "y": 2.5799999237060549,
-                            "z": 2.5799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8914391966167433411
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "polySurface4",
-                        "GUID": {
-                            "ID": 17313626130970703837
-                        },
-                        "submeshIdx": 3,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 980,
-            "Parent": 975,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "polySurface6",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.0000017620009202801157,
-                            "y": 0.00002193450927734375,
-                            "z": -0.000009775161743164063
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.291407108306885,
-                            "y": 14.45007610321045,
-                            "z": -37.10518264770508
-                        },
-                        "worldScale": {
-                            "x": 2.5799999237060549,
-                            "y": 2.5799999237060549,
-                            "z": 2.5799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8914391966167433411
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "polySurface6",
-                        "GUID": {
-                            "ID": 17313626130970703837
-                        },
-                        "submeshIdx": 4,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 981,
-            "Parent": 975,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "polySurface7",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.0000017620009202801157,
-                            "y": 0.00002193450927734375,
-                            "z": -0.000009775161743164063
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.291407108306885,
-                            "y": 14.45007610321045,
-                            "z": -37.10518264770508
-                        },
-                        "worldScale": {
-                            "x": 2.5799999237060549,
-                            "y": 2.5799999237060549,
-                            "z": 2.5799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8914391966167433411
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "polySurface7",
-                        "GUID": {
-                            "ID": 17313626130970703837
-                        },
-                        "submeshIdx": 5,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 982,
-            "Parent": 975,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "polySurface11",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.0000017620009202801157,
-                            "y": 0.00002193450927734375,
-                            "z": -0.000009775161743164063
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.291407108306885,
-                            "y": 14.45007610321045,
-                            "z": -37.10518264770508
-                        },
-                        "worldScale": {
-                            "x": 2.5799999237060549,
-                            "y": 2.5799999237060549,
-                            "z": 2.5799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8914391966167433411
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "polySurface11",
-                        "GUID": {
-                            "ID": 17313626130970703837
-                        },
-                        "submeshIdx": 6,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 983,
-            "Parent": 975,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "polySurface12",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.0000017620009202801157,
-                            "y": 0.00002193450927734375,
-                            "z": -0.000009775161743164063
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.291407108306885,
-                            "y": 14.45007610321045,
-                            "z": -37.10518264770508
-                        },
-                        "worldScale": {
-                            "x": 2.5799999237060549,
-                            "y": 2.5799999237060549,
-                            "z": 2.5799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8914391966167433411
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "polySurface12",
-                        "GUID": {
-                            "ID": 17313626130970703837
-                        },
-                        "submeshIdx": 7,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 984,
-            "Parent": 975,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "polySurface13",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.0000017620009202801157,
-                            "y": 0.00002193450927734375,
-                            "z": -0.000009775161743164063
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.291407108306885,
-                            "y": 14.45007610321045,
-                            "z": -37.10518264770508
-                        },
-                        "worldScale": {
-                            "x": 2.5799999237060549,
-                            "y": 2.5799999237060549,
-                            "z": 2.5799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8914391966167433411
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "polySurface13",
-                        "GUID": {
-                            "ID": 17313626130970703837
-                        },
-                        "submeshIdx": 8,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
@@ -25216,19 +24514,6 @@
             ]
         },
         {
-            "ID": 1039,
-            "Parent": 1048903,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 16,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1040,
             "Parent": 1048632,
             "Child Entities": [],
@@ -25314,7 +24599,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 15,
+                "subDataId": 3,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -25505,7 +24790,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 19,
+                "subDataId": 4,
                 "componentData": [
                     {
                         "key": "Light",
@@ -25940,19 +25225,6 @@
             ]
         },
         {
-            "ID": 1055,
-            "Parent": 1048903,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 17,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1056,
             "Parent": 3146121,
             "Child Entities": [],
@@ -26110,19 +25382,6 @@
                     }
                 }
             ]
-        },
-        {
-            "ID": 1062,
-            "Parent": 1048903,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 18,
-                "componentData": [],
-                "removedComponents": []
-            }
         },
         {
             "ID": 1063,
@@ -29208,11 +28467,8 @@
             "ID": 1134,
             "Parent": 269,
             "Child Entities": [
-                1135,
                 1136,
                 1137,
-                1138,
-                1139,
                 1140,
                 1141
             ],
@@ -29231,9 +28487,9 @@
                                 "z": -6.5
                             },
                             "scale": {
-                                "x": 2.0,
-                                "y": 2.0,
-                                "z": 2.0
+                                "x": 4.21999979019165,
+                                "y": 4.21999979019165,
+                                "z": 4.21999979019165
                             },
                             "rotation": {
                                 "x": 3.9943020624377825e-7,
@@ -29252,9 +28508,9 @@
                                 "z": -6.5
                             },
                             "worldScale": {
-                                "x": 2.0,
-                                "y": 2.0,
-                                "z": 2.0
+                                "x": 4.21999979019165,
+                                "y": 4.21999979019165,
+                                "z": 4.21999979019165
                             },
                             "worldRot": {
                                 "x": 3.9943020624377825e-7,
@@ -29269,19 +28525,6 @@
             }
         },
         {
-            "ID": 1135,
-            "Parent": 1134,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 16,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1136,
             "Parent": 1134,
             "Child Entities": [],
@@ -29289,7 +28532,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 15,
+                "subDataId": 3,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -29302,7 +28545,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 19,
+                "subDataId": 4,
                 "componentData": [
                     {
                         "key": "Light",
@@ -29347,32 +28590,6 @@
             }
         },
         {
-            "ID": 1138,
-            "Parent": 1134,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 17,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1139,
-            "Parent": 1134,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 18,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1140,
             "Parent": 1134,
             "Child Entities": [],
@@ -29380,7 +28597,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 14,
+                "subDataId": 2,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -29393,7 +28610,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 13,
+                "subDataId": 1,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -29402,11 +28619,8 @@
             "ID": 1142,
             "Parent": 269,
             "Child Entities": [
-                1143,
                 1144,
                 1145,
-                1146,
-                1147,
                 1148,
                 1149
             ],
@@ -29425,9 +28639,9 @@
                                 "z": 10.800000190734864
                             },
                             "scale": {
-                                "x": 2.0,
-                                "y": 2.0,
-                                "z": 2.0
+                                "x": 5.119999885559082,
+                                "y": 5.119999885559082,
+                                "z": 5.119999885559082
                             },
                             "rotation": {
                                 "x": 3.9943020624377825e-7,
@@ -29446,9 +28660,9 @@
                                 "z": 10.800000190734864
                             },
                             "worldScale": {
-                                "x": 2.0,
-                                "y": 2.0,
-                                "z": 2.0
+                                "x": 5.119999885559082,
+                                "y": 5.119999885559082,
+                                "z": 5.119999885559082
                             },
                             "worldRot": {
                                 "x": 3.9943020624377825e-7,
@@ -29463,19 +28677,6 @@
             }
         },
         {
-            "ID": 1143,
-            "Parent": 1142,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 16,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1144,
             "Parent": 1142,
             "Child Entities": [],
@@ -29483,7 +28684,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 15,
+                "subDataId": 3,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -29496,7 +28697,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 19,
+                "subDataId": 4,
                 "componentData": [
                     {
                         "key": "Light",
@@ -29561,14 +28762,14 @@
                                 "z": 0.0
                             },
                             "worldPos": {
-                                "x": -4.199997901916504,
-                                "y": 4.11299991607666,
+                                "x": -4.199995040893555,
+                                "y": 6.609000205993652,
                                 "z": 10.800000190734864
                             },
                             "worldScale": {
-                                "x": 2.0,
-                                "y": 2.0,
-                                "z": 2.0
+                                "x": 5.119999885559082,
+                                "y": 5.119999885559082,
+                                "z": 5.119999885559082
                             },
                             "worldRot": {
                                 "x": 3.9943020624377825e-7,
@@ -29583,32 +28784,6 @@
             }
         },
         {
-            "ID": 1146,
-            "Parent": 1142,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 17,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1147,
-            "Parent": 1142,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 18,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1148,
             "Parent": 1142,
             "Child Entities": [],
@@ -29616,7 +28791,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 14,
+                "subDataId": 2,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -29629,7 +28804,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 13,
+                "subDataId": 1,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -29783,11 +28958,8 @@
             "ID": 1158,
             "Parent": 269,
             "Child Entities": [
-                1159,
                 1160,
                 1161,
-                1162,
-                1163,
                 1164,
                 1165
             ],
@@ -29806,9 +28978,9 @@
                                 "z": -48.900001525878909
                             },
                             "scale": {
-                                "x": 2.0,
-                                "y": 2.0,
-                                "z": 2.0
+                                "x": 4.340000152587891,
+                                "y": 4.340000152587891,
+                                "z": 4.340000152587891
                             },
                             "rotation": {
                                 "x": 3.9943020624377825e-7,
@@ -29827,9 +28999,9 @@
                                 "z": -48.900001525878909
                             },
                             "worldScale": {
-                                "x": 2.0,
-                                "y": 2.0,
-                                "z": 2.0
+                                "x": 4.340000152587891,
+                                "y": 4.340000152587891,
+                                "z": 4.340000152587891
                             },
                             "worldRot": {
                                 "x": 3.9943020624377825e-7,
@@ -29844,19 +29016,6 @@
             }
         },
         {
-            "ID": 1159,
-            "Parent": 1158,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 16,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1160,
             "Parent": 1158,
             "Child Entities": [],
@@ -29864,7 +29023,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 15,
+                "subDataId": 3,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -29877,7 +29036,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 19,
+                "subDataId": 4,
                 "componentData": [
                     {
                         "key": "Light",
@@ -29922,32 +29081,6 @@
             }
         },
         {
-            "ID": 1162,
-            "Parent": 1158,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 17,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1163,
-            "Parent": 1158,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 18,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1164,
             "Parent": 1158,
             "Child Entities": [],
@@ -29955,7 +29088,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 14,
+                "subDataId": 2,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -29968,7 +29101,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 13,
+                "subDataId": 1,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -29977,11 +29110,8 @@
             "ID": 1166,
             "Parent": 269,
             "Child Entities": [
-                1167,
                 1168,
                 1169,
-                1170,
-                1171,
                 1172,
                 1173
             ],
@@ -30000,9 +29130,9 @@
                                 "z": -40.900001525878909
                             },
                             "scale": {
-                                "x": 2.0,
-                                "y": 2.0,
-                                "z": 2.0
+                                "x": 4.360000133514404,
+                                "y": 4.360000133514404,
+                                "z": 4.360000133514404
                             },
                             "rotation": {
                                 "x": 3.9943020624377825e-7,
@@ -30021,9 +29151,9 @@
                                 "z": -40.900001525878909
                             },
                             "worldScale": {
-                                "x": 2.0,
-                                "y": 2.0,
-                                "z": 2.0
+                                "x": 4.360000133514404,
+                                "y": 4.360000133514404,
+                                "z": 4.360000133514404
                             },
                             "worldRot": {
                                 "x": 3.9943020624377825e-7,
@@ -30038,19 +29168,6 @@
             }
         },
         {
-            "ID": 1167,
-            "Parent": 1166,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 16,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1168,
             "Parent": 1166,
             "Child Entities": [],
@@ -30058,7 +29175,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 15,
+                "subDataId": 3,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -30071,7 +29188,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 19,
+                "subDataId": 4,
                 "componentData": [
                     {
                         "key": "Light",
@@ -30116,32 +29233,6 @@
             }
         },
         {
-            "ID": 1170,
-            "Parent": 1166,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 17,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1171,
-            "Parent": 1166,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 18,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1172,
             "Parent": 1166,
             "Child Entities": [],
@@ -30149,7 +29240,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 14,
+                "subDataId": 2,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -30162,7 +29253,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 13,
+                "subDataId": 1,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -32705,11 +31796,8 @@
             "ID": 1048903,
             "Parent": 269,
             "Child Entities": [
-                1039,
                 1041,
                 1047,
-                1055,
-                1062,
                 1048910,
                 1048941
             ],
@@ -32728,9 +31816,9 @@
                                 "z": 0.0
                             },
                             "scale": {
-                                "x": 2.0,
-                                "y": 2.0,
-                                "z": 2.0
+                                "x": 4.199999809265137,
+                                "y": 4.199999809265137,
+                                "z": 4.199999809265137
                             },
                             "rotation": {
                                 "x": 3.9943020624377825e-7,
@@ -32749,9 +31837,9 @@
                                 "z": 0.0
                             },
                             "worldScale": {
-                                "x": 2.0,
-                                "y": 2.0,
-                                "z": 2.0
+                                "x": 4.199999809265137,
+                                "y": 4.199999809265137,
+                                "z": 4.199999809265137
                             },
                             "worldRot": {
                                 "x": 3.9943020624377825e-7,
@@ -32773,7 +31861,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 14,
+                "subDataId": 2,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -32786,7 +31874,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 13,
+                "subDataId": 1,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -33075,162 +32163,6 @@
                         "textureAssetGUID": {
                             "ID": 14811466307683810423
                         }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1049193,
-            "Parent": 93,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "pasted__pasted__pCube54",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.00341033935546875,
-                            "y": -0.00010967254638671875,
-                            "z": -4.48211669921875
-                        },
-                        "scale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "rotation": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        },
-                        "eulerAngles": {
-                            "x": 0.08910302817821503,
-                            "y": 89.77794647216797,
-                            "z": 0.08834758400917053
-                        },
-                        "worldPos": {
-                            "x": 53.937408447265628,
-                            "y": 14.156889915466309,
-                            "z": 54.14798355102539
-                        },
-                        "worldScale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Puzzle"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 6047153977749223718
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "pasted__pasted__pCube54",
-                        "GUID": {
-                            "ID": 18165310156456293132
-                        },
-                        "submeshIdx": 8,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1049194,
-            "Parent": 93,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "pasted__pasted__pCube53",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.00341033935546875,
-                            "y": -0.00010967254638671875,
-                            "z": -4.48211669921875
-                        },
-                        "scale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "rotation": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        },
-                        "eulerAngles": {
-                            "x": 0.08910302817821503,
-                            "y": 89.77794647216797,
-                            "z": 0.08834758400917053
-                        },
-                        "worldPos": {
-                            "x": 53.937408447265628,
-                            "y": 14.156889915466309,
-                            "z": 54.14798355102539
-                        },
-                        "worldScale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Puzzle"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 6047153977749223718
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "pasted__pasted__pCube53",
-                        "GUID": {
-                            "ID": 18165310156456293132
-                        },
-                        "submeshIdx": 7,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
@@ -34905,9 +33837,6 @@
             "Parent": 269,
             "Child Entities": [
                 285,
-                4194493,
-                4194494,
-                4194637,
                 4194650,
                 4194691,
                 7340322
@@ -34927,9 +33856,9 @@
                                 "z": -35.284000396728519
                             },
                             "scale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
+                                "x": 2.2799999713897707,
+                                "y": 2.2799999713897707,
+                                "z": 2.2799999713897707
                             },
                             "rotation": {
                                 "x": -4.127995012481733e-8,
@@ -34948,9 +33877,9 @@
                                 "z": -35.284000396728519
                             },
                             "worldScale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
+                                "x": 2.2799999713897707,
+                                "y": 2.2799999713897707,
+                                "z": 2.2799999713897707
                             },
                             "worldRot": {
                                 "x": -4.127995012481733e-8,
@@ -35196,24 +34125,59 @@
             "Parent": 269,
             "Child Entities": [
                 1049635,
-                4194499,
-                4194559,
-                4194881,
                 5243039,
                 6291745,
                 7340324
             ],
-            "Position": {
-                "x": -17.760000228881837,
-                "y": 1.1679999828338624,
-                "z": -14.392999649047852
-            },
             "Prefab": {
                 "GUID": {
                     "ID": 8786659095930452505
                 },
                 "subDataId": 0,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -17.760000228881837,
+                                "y": 1.1679999828338624,
+                                "z": -14.392999649047852
+                            },
+                            "scale": {
+                                "x": 2.2799999713897707,
+                                "y": 2.2799999713897707,
+                                "z": 2.2799999713897707
+                            },
+                            "rotation": {
+                                "x": 3.9943020624377825e-7,
+                                "y": 0.6555097699165344,
+                                "z": -4.601675982485176e-7,
+                                "w": 0.7551866769790649
+                            },
+                            "eulerAngles": {
+                                "x": 2.316193244145115e-11,
+                                "y": 81.91663360595703,
+                                "z": -0.00006982556078583002
+                            },
+                            "worldPos": {
+                                "x": -17.760000228881837,
+                                "y": 1.1679999828338624,
+                                "z": -14.392999649047852
+                            },
+                            "worldScale": {
+                                "x": 2.2799999713897707,
+                                "y": 2.2799999713897707,
+                                "z": 2.2799999713897707
+                            },
+                            "worldRot": {
+                                "x": 3.9943020624377825e-7,
+                                "y": 0.6555097699165344,
+                                "z": -4.601675982485176e-7,
+                                "w": 0.7551866769790649
+                            }
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -35225,7 +34189,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 19,
+                "subDataId": 4,
                 "componentData": [
                     {
                         "key": "Tag",
@@ -37581,162 +36545,6 @@
                             "w": 1.0
                         },
                         "sensor": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 2097474,
-            "Parent": 93,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "pasted__pasted__pCube52",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.00341033935546875,
-                            "y": -0.00010967254638671875,
-                            "z": -4.48211669921875
-                        },
-                        "scale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "rotation": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        },
-                        "eulerAngles": {
-                            "x": 0.08910302817821503,
-                            "y": 89.77794647216797,
-                            "z": 0.08834758400917053
-                        },
-                        "worldPos": {
-                            "x": 53.937408447265628,
-                            "y": 14.156889915466309,
-                            "z": 54.14798355102539
-                        },
-                        "worldScale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Puzzle"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 6047153977749223718
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "pasted__pasted__pCube52",
-                        "GUID": {
-                            "ID": 18165310156456293132
-                        },
-                        "submeshIdx": 6,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 2097475,
-            "Parent": 93,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "pasted__pasted__pCube47",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.00341033935546875,
-                            "y": -0.00010967254638671875,
-                            "z": -4.48211669921875
-                        },
-                        "scale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "rotation": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        },
-                        "eulerAngles": {
-                            "x": 0.08910302817821503,
-                            "y": 89.77794647216797,
-                            "z": 0.08834758400917053
-                        },
-                        "worldPos": {
-                            "x": 53.937408447265628,
-                            "y": 14.156889915466309,
-                            "z": 54.14798355102539
-                        },
-                        "worldScale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Puzzle"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 6047153977749223718
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "pasted__pasted__pCube47",
-                        "GUID": {
-                            "ID": 18165310156456293132
-                        },
-                        "submeshIdx": 5,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
@@ -40746,84 +39554,6 @@
             }
         },
         {
-            "ID": 3146048,
-            "Parent": 93,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "pasted__pasted__pCube49",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.00341033935546875,
-                            "y": -0.00010967254638671875,
-                            "z": -4.48211669921875
-                        },
-                        "scale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "rotation": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        },
-                        "eulerAngles": {
-                            "x": 0.08910302817821503,
-                            "y": 89.77794647216797,
-                            "z": 0.08834758400917053
-                        },
-                        "worldPos": {
-                            "x": 53.937408447265628,
-                            "y": 14.156889915466309,
-                            "z": 54.14798355102539
-                        },
-                        "worldScale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Puzzle"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 6047153977749223718
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "pasted__pasted__pCube49",
-                        "GUID": {
-                            "ID": 18165310156456293132
-                        },
-                        "submeshIdx": 4,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 3146049,
             "Parent": 93,
             "Child Entities": [],
@@ -40886,7 +39616,7 @@
                 },
                 {
                     "Tag": {
-                        "tag": "Puzzle_Gardendoor",
+                        "tag": "DoorCollider",
                         "isActive": true
                     }
                 },
@@ -40934,13 +39664,6 @@
                 {
                     "Layer": {
                         "layerName": "Puzzle"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 6047153977749223718
-                        }
                     }
                 },
                 {
@@ -41118,84 +39841,6 @@
                                 ]
                             }
                         ]
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 3146053,
-            "Parent": 93,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "pasted__pasted__pCube51",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.00341033935546875,
-                            "y": -0.00010967254638671875,
-                            "z": -4.48211669921875
-                        },
-                        "scale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "rotation": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        },
-                        "eulerAngles": {
-                            "x": 0.08910302817821503,
-                            "y": 89.77794647216797,
-                            "z": 0.08834758400917053
-                        },
-                        "worldPos": {
-                            "x": 53.937408447265628,
-                            "y": 14.156889915466309,
-                            "z": 54.14798355102539
-                        },
-                        "worldScale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Puzzle"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 6047153977749223718
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "pasted__pasted__pCube51",
-                        "GUID": {
-                            "ID": 18165310156456293132
-                        },
-                        "submeshIdx": 3,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
@@ -41655,162 +40300,6 @@
                 ],
                 "removedComponents": []
             }
-        },
-        {
-            "ID": 3146141,
-            "Parent": 93,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "pasted__pasted__pCube50",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.00341033935546875,
-                            "y": -0.00010967254638671875,
-                            "z": -4.48211669921875
-                        },
-                        "scale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "rotation": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        },
-                        "eulerAngles": {
-                            "x": 0.08910302817821503,
-                            "y": 89.77794647216797,
-                            "z": 0.08834758400917053
-                        },
-                        "worldPos": {
-                            "x": 53.937408447265628,
-                            "y": 14.156889915466309,
-                            "z": 54.14798355102539
-                        },
-                        "worldScale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Puzzle"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 6047153977749223718
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "pasted__pasted__pCube50",
-                        "GUID": {
-                            "ID": 18165310156456293132
-                        },
-                        "submeshIdx": 2,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 3146143,
-            "Parent": 93,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "pCylinder18",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.00341033935546875,
-                            "y": -0.00010967254638671875,
-                            "z": -4.48211669921875
-                        },
-                        "scale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "rotation": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        },
-                        "eulerAngles": {
-                            "x": 0.08910302817821503,
-                            "y": 89.77794647216797,
-                            "z": 0.08834758400917053
-                        },
-                        "worldPos": {
-                            "x": 53.937408447265628,
-                            "y": 14.156889915466309,
-                            "z": 54.14798355102539
-                        },
-                        "worldScale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0000067842183852917518,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282534,
-                            "w": 0.708476185798645
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Puzzle"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 6047153977749223718
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "pCylinder18",
-                        "GUID": {
-                            "ID": 18165310156456293132
-                        },
-                        "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
         },
         {
             "ID": 3146145,
@@ -42755,45 +41244,6 @@
             }
         },
         {
-            "ID": 4194493,
-            "Parent": 1049596,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 18,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 4194494,
-            "Parent": 1049596,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 17,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 4194499,
-            "Parent": 1049630,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 18,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 4194536,
             "Parent": 4194552,
             "Child Entities": [],
@@ -43150,19 +41600,6 @@
             ]
         },
         {
-            "ID": 4194559,
-            "Parent": 1049630,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 17,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 4194571,
             "Parent": 2097426,
             "Child Entities": [],
@@ -43410,7 +41847,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "pasted__pasted__pCube43",
+                        "tag": "Puzzle_GardenDoor",
                         "isActive": true
                     }
                 },
@@ -43422,9 +41859,9 @@
                             "z": -4.48211669921875
                         },
                         "scale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
+                            "x": 16.15999984741211,
+                            "y": 16.139995574951173,
+                            "z": 16.139995574951173
                         },
                         "rotation": {
                             "x": 0.0000067842183852917518,
@@ -43443,9 +41880,9 @@
                             "z": 54.14798355102539
                         },
                         "worldScale": {
-                            "x": 2.0999999046325685,
-                            "y": 2.0799999237060549,
-                            "z": 2.0799999237060549
+                            "x": 16.15999984741211,
+                            "y": 16.139995574951173,
+                            "z": 16.139995574951173
                         },
                         "worldRot": {
                             "x": 0.0000067842183852917518,
@@ -43500,19 +41937,6 @@
                         }
                     }
                 ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 4194637,
-            "Parent": 1049596,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 16,
-                "componentData": [],
                 "removedComponents": []
             }
         },
@@ -43586,7 +42010,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 15,
+                "subDataId": 3,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -43626,20 +42050,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 14,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 4194881,
-            "Parent": 1049630,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 16,
+                "subDataId": 2,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -43792,7 +42203,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 15,
+                "subDataId": 3,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -44452,7 +42863,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 14,
+                "subDataId": 2,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -44465,7 +42876,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 13,
+                "subDataId": 1,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -44478,7 +42889,7 @@
                 "GUID": {
                     "ID": 8786659095930452505
                 },
-                "subDataId": 13,
+                "subDataId": 1,
                 "componentData": [],
                 "removedComponents": []
             }

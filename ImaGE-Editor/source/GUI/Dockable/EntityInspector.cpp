@@ -1461,14 +1461,25 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
       NextRowTable("Mesh Type");
-      if (ImGui::BeginCombo("##MeshSelection", mesh.meshName.c_str())) {
+      std::string meshName{ "Unable to retrieve mesh name" };
+      try {
+        meshName = mesh.isCustomMesh ?
+          std::filesystem::path(IGE_ASSETMGR.GUIDToPath(mesh.meshSource)).stem().string()
+          : mesh.meshName;
+      }
+      catch (Debug::ExceptionBase&) {
+        IGE_DBGLOGGER.LogError(std::string("Unable to get filename of Mesh: ") + mesh.meshName);
+        mesh.meshSource = mesh.meshName = {};
+      }
+
+      if (ImGui::BeginCombo("##MeshSelection", meshName.c_str())) {
         for (unsigned i{}; i < meshNames.size(); ++i) {
           const char* selected{ meshNames[i] };
           if (ImGui::Selectable(selected)) {
             try {
               mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(selected);
 
-              if (selected != mesh.meshName) {
+              if (selected != meshName) {
                 modified = true;
                 mesh.isCustomMesh = false;
                 mesh.meshName = selected;
@@ -1482,16 +1493,6 @@ namespace GUI {
         }
 
         ImGui::EndCombo();
-      }
-      if (mesh.submeshIdx != 0) {
-        NextRowTable("Parent Mesh");
-        try {
-          ImGui::Text(std::filesystem::path(IGE_ASSETMGR.GUIDToPath(mesh.meshSource)).stem().string().c_str());
-        }
-        catch (Debug::ExceptionBase&) {
-          IGE_DBGLOGGER.LogError(std::string("Unable to get filename of Mesh: ") + mesh.meshName);
-          mesh.meshSource = mesh.meshName = {};
-        }
       }
 
       if (GUIVault::sDevTools) {
