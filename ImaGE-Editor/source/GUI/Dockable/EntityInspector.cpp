@@ -1420,6 +1420,7 @@ namespace GUI {
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.f));
         if (ImGui::Button("X", ImVec2(22.f, 30.f))) {
           material.SetGUID({});
+          modified = true;
         }
         if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove"); }
         ImGui::PopStyleColor();
