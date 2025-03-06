@@ -2091,6 +2091,7 @@
                 31,
                 52,
                 74,
+                329,
                 587,
                 588,
                 1033,
@@ -8591,18 +8592,6 @@
                             "ID": 5437073796557026432
                         }
                     }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Mesh.056",
-                        "GUID": {
-                            "ID": 1236186684157393745
-                        },
-                        "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
                 }
             ]
         },
@@ -9154,6 +9143,84 @@
                         "textureAssetGUID": {
                             "ID": 13393721084583815832
                         }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 329,
+            "Parent": 46,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BumpyGround",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 5.24094295501709,
+                            "y": 4.300000190734863,
+                            "z": -0.7175838351249695
+                        },
+                        "scale": {
+                            "x": 176.32000732421876,
+                            "y": 176.32000732421876,
+                            "z": 176.32000732421876
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0,
+                            "w": -4.371138828673793e-8
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": -0.000005008956122765085,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 5.240937232971191,
+                            "y": 4.300000190734863,
+                            "z": -0.7175836563110352
+                        },
+                        "worldScale": {
+                            "x": 176.32000732421876,
+                            "y": 176.32000732421876,
+                            "z": 176.32000732421876
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0,
+                            "w": -4.371138828673793e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 14137664646562134886
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "BumpyGround",
+                        "GUID": {
+                            "ID": 8392233331408148840
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -10006,18 +10073,6 @@
                         "materialGUID": {
                             "ID": 5437073796557026432
                         }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Mesh.053",
-                        "GUID": {
-                            "ID": 1236186684157393745
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
@@ -24011,18 +24066,6 @@
                         "materialGUID": {
                             "ID": 5437073796557026432
                         }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Mesh.078",
-                        "GUID": {
-                            "ID": 1236186684157393745
-                        },
-                        "submeshIdx": 2,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
