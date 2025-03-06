@@ -1,0 +1,39 @@
+{
+    "name": "ConcreteWall",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 0.49832773208618166,
+        "y": 0.46258118748664858,
+        "z": 0.2966633439064026
+    },
+    "metalness": 0.0,
+    "roughness": 1.0,
+    "ao": 1.0,
+    "emission": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "transparency": 1.0,
+    "tiling": {
+        "x": 1.0,
+        "y": 1.0
+    },
+    "offset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 8781489412494332407
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}

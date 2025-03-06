@@ -31,7 +31,6 @@ namespace Prefabs
   // this should only be instantiated for use with a Prefab
   struct PrefabSubData
   {
-    PrefabSubData();
     PrefabSubData(SubDataId id, SubDataId parent = BasePrefabId);
 
     rttr::variant GetComponent(rttr::type const& type) const;

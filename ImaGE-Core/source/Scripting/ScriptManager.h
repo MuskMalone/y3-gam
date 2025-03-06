@@ -447,6 +447,11 @@ namespace Mono
 
 		static bool OnTriggerExit(ECS::Entity trigger, ECS::Entity other);
 
+		static void SetBloomIntensity(ECS::Entity::EntityID bloomEntity, float intensity);
+		static float GetBloomIntensity(ECS::Entity::EntityID bloomEntity);
+		static void SetLightIntensity(ECS::Entity::EntityID lightEntity, float intensity);
+		static float GetLightIntensity(ECS::Entity::EntityID lightEntity);
+
 		/*!**********************************************************************
 		*																																			  *
 		*								            Helper Function			          						  *

@@ -172,7 +172,7 @@ public class Inventory : Entity
     return mItems.Find(item => item != null && item.Name == itemName);
   }
 
-  private void ToggleInventoryVisibility()
+  public void ToggleInventoryVisibility()
   {
     if (isSliding) return;
     isVisible = !isVisible;
@@ -211,7 +211,7 @@ public class Inventory : Entity
       ToggleInventoryVisibility();
     }
 
-    if (Input.anyKeyTriggered)
+    if (!pictureAlignscript.isFading && Input.anyKeyTriggered)
     {
       switch (Input.inputString)
       {
@@ -419,4 +419,10 @@ public class Inventory : Entity
     pictureAlignscript.ClearUI();
     //Console.WriteLine("CLEAE ARROWS");
   }
+
+    public IInventoryItem GetCurrentItem()
+    {
+        return currentItem;
+    }
+
 }

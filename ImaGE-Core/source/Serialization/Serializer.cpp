@@ -634,6 +634,10 @@ namespace {
       }
       return true;
     }
+    else if (type == sScriptCompType) {
+      SerializeScriptClassTypes<WriterType>(var, writer);
+      return true;
+    }
 
     return false;
   }
