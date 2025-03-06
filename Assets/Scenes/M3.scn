@@ -9984,7 +9984,7 @@
                         "worldPos": {
                             "x": -0.39159998297691347,
                             "y": -0.24048000574111939,
-                            "z": 82.31999969482422
+                            "z": 79.31999969482422
                         },
                         "worldScale": {
                             "x": 7.831999778747559,
@@ -10002,6 +10002,39 @@
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 350,
+                                "scriptName": "PauseMenuButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "TriggerButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 },
                 {
@@ -10056,7 +10089,7 @@
                         "worldPos": {
                             "x": -0.17799998819828034,
                             "y": 2.204400062561035,
-                            "z": 82.31999969482422
+                            "z": 79.31999969482422
                         },
                         "worldScale": {
                             "x": 7.831999778747559,
@@ -10074,6 +10107,39 @@
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 351,
+                                "scriptName": "PauseMenuButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "TriggerButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 },
                 {
@@ -10128,7 +10194,7 @@
                         "worldPos": {
                             "x": -0.14239999651908875,
                             "y": -2.8456802368164064,
-                            "z": 82.31999969482422
+                            "z": 79.31999969482422
                         },
                         "worldScale": {
                             "x": 7.831999778747559,
@@ -10146,6 +10212,39 @@
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 355,
+                                "scriptName": "PauseMenuButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "TriggerButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 },
                 {
@@ -10175,7 +10274,7 @@
                 {
                     "Tag": {
                         "tag": "PauseMenu",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -10183,7 +10282,7 @@
                         "position": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 2.0
+                            "z": -1.0
                         },
                         "scale": {
                             "x": 35.599998474121097,
@@ -10204,7 +10303,7 @@
                         "worldPos": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 2.0
+                            "z": -1.0
                         },
                         "worldScale": {
                             "x": 35.599998474121097,
@@ -10222,6 +10321,55 @@
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 386,
+                                "scriptName": "PauseMenu",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsPaused"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 355,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "MainMenuButton"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 351,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ResumeButton"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 350,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "SettingsButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 },
                 {
