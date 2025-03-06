@@ -72,9 +72,6 @@ public class  PlayerMove : Entity
       }
     }
 
-    if(InternalCalls.IsKeyTriggered(KeyCode.SEMICOLON))
-      canLook = false;
-
     // Skip look processing if the player is frozen
     if (canLook)
       ProcessLook();
