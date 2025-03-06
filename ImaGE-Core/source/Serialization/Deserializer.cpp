@@ -214,6 +214,7 @@ namespace Serialization
       IGE_DBGLOGGER.LogError("Prefab " + json + " has no name, re-save from prefab editor!");
     }
 
+#ifdef PREFABS_OLD
     if (document.HasMember(JSON_COMPONENTS_KEY)) {
       auto const& compArr{ document[JSON_COMPONENTS_KEY].GetArray() };
       Prefabs::PrefabSubData subObj{ Prefabs::PrefabSubData::BasePrefabId, Prefabs::PrefabSubData::InvalidId };
@@ -229,13 +230,16 @@ namespace Serialization
         if (!compType.is_valid()) { continue; }
 
         rttr::variant compVar{};
-        DeserializeComponent(compVar, compType, compJson);
+        if (!DeserializeSpecialCases(compVar, compType, compJson)) {
+          DeserializeComponent(compVar, compType, compJson);
+        }
 
         subObj.AddComponent(std::move(compVar));
       }
 
       prefab.mObjects.emplace_back(std::move(subObj));
     }
+#endif
 
     auto const& subObjArr{ document[JSON_PFB_DATA_KEY].GetArray() };
     prefab.mObjects.reserve(subObjArr.Size());
@@ -276,7 +280,9 @@ namespace Serialization
         }
 
         rttr::variant compVar{};
-        DeserializeComponent(compVar, compType, compJson);
+        if (!DeserializeSpecialCases(compVar, compType, compJson)) {
+          DeserializeComponent(compVar, compType, compJson);
+        }
 
         subObj.AddComponent(std::move(compVar));
       }
