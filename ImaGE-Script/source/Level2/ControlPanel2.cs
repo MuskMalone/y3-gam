@@ -234,7 +234,8 @@ public class ControlPanel2 : Entity
 	public void Unlock()
 	{
 		currState = State.OPEN;
-	}
+        SetActive(true);
+    }
 
 	private void SetPlayerCameraAsMain()
 	{
