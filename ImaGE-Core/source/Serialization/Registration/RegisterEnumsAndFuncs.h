@@ -67,9 +67,14 @@ static void rttr_auto_register_reflection_function3_(); namespace {
   rttr::registration::enumeration<IGE::Audio::SoundInvokeSetting::RolloffType>("RolloffType")(
     rttr::value("LINEAR", IGE::Audio::SoundInvokeSetting::RolloffType::LINEAR),
     rttr::value("LOGARITHMIC", IGE::Audio::SoundInvokeSetting::RolloffType::LOGARITHMIC),
-      rttr::value("NONE", IGE::Audio::SoundInvokeSetting::RolloffType::NONE)
+    rttr::value("NONE", IGE::Audio::SoundInvokeSetting::RolloffType::NONE)
     );
-
+  rttr::registration::enumeration<IGE::Audio::SoundInvokeSetting::PostProcessingType>("PostProcessingType")(
+      rttr::value("REVERB", IGE::Audio::SoundInvokeSetting::PostProcessingType::REVERB),
+      rttr::value("ECHO", IGE::Audio::SoundInvokeSetting::PostProcessingType::ECHO),
+      rttr::value("DISTORTION", IGE::Audio::SoundInvokeSetting::PostProcessingType::DISTORTION),
+      rttr::value("CHORUS", IGE::Audio::SoundInvokeSetting::PostProcessingType::CHORUS)
+      );
   rttr::registration::enumeration<Component::LightType>("LightType")(
     rttr::value("DIRECTIONAL", Component::LightType::DIRECTIONAL),
     rttr::value("SPOTLIGHT", Component::LightType::SPOTLIGHT),
