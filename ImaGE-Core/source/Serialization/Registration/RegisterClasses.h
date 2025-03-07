@@ -188,7 +188,10 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .property("dopplerLevel", &IGE::Audio::SoundInvokeSetting::dopplerLevel)
           .property("minDistance", &IGE::Audio::SoundInvokeSetting::minDistance)
           .property("maxDistance", &IGE::Audio::SoundInvokeSetting::maxDistance)
-          .property("rolloffType", &IGE::Audio::SoundInvokeSetting::rolloffType); // As reference for mutable property
+          .property("rolloffType", &IGE::Audio::SoundInvokeSetting::rolloffType) // As reference for mutable property
+          .property("enablePostProcessing", &IGE::Audio::SoundInvokeSetting::enablePostProcessing)
+          .property("processingType", &IGE::Audio::SoundInvokeSetting::processingType)
+          .property("postProcessingParameter", &IGE::Audio::SoundInvokeSetting::postProcessingParameter);
       rttr::registration::class_<Component::AudioSource::AudioInstance>("AudioInstance")
           .constructor<>()(rttr::policy::ctor::as_object)
           .property("guid", &Component::AudioSource::AudioInstance::guid)
