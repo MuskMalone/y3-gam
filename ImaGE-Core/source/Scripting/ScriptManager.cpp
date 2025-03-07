@@ -88,9 +88,10 @@ namespace Mono
     { "Inventory", ScriptFieldType::INVENTORY },
     { "TutorialLevelInventory", ScriptFieldType::TUTORIALLEVELINVENTORY },
     { "Level2Inventory", ScriptFieldType::LEVEL2INVENTORY },
+    { "Level3Inventory", ScriptFieldType::LEVEL3INVENTORY },
     { "SpecialDialogue", ScriptFieldType::SPECIALDIALOGUE },
     { "KeyDoor", ScriptFieldType::KEYDOOR },
-    { "PictureAlign", ScriptFieldType::PICTUREALIGN },
+    { "PictureAlign", ScriptFieldType::PICTUREALIGN }
   };
 }
 
@@ -259,6 +260,10 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetTextColor);
   ADD_INTERNAL_CALL(GetTextScale);
   ADD_INTERNAL_CALL(SetTextScale);
+  ADD_INTERNAL_CALL(SetBloomIntensity);
+  ADD_INTERNAL_CALL(GetBloomIntensity);
+  ADD_INTERNAL_CALL(SetLightIntensity);
+  ADD_INTERNAL_CALL(GetLightIntensity);
   ADD_INTERNAL_CALL(GetText);
   ADD_INTERNAL_CALL(SetText);
   ADD_INTERNAL_CALL(AppendText);
@@ -958,11 +963,14 @@ void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec) {
     Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
     return;
   }
-
+  
+  if (glm::length(dVec) < FLT_EPSILON) { // dont move anything if velocity is 0
+    return;
+  }
   Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
-  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().force.x = dVec.x;
   //ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
-  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().force.z = dVec.z;
      
   IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::FORCE);
 }
@@ -1782,6 +1790,58 @@ bool Mono::OnTriggerExit(ECS::Entity trigger, ECS::Entity other) {
   }
 
   return IGE::Physics::PhysicsSystem::GetInstance().get()->OnTriggerExit(trigger, other);
+}
+
+void Mono::SetBloomIntensity(ECS::Entity::EntityID entity, float intensity) {
+  if (ECS::Entity(entity))
+  {
+    if (ECS::Entity(entity).HasComponent<Component::Bloom>())
+      ECS::Entity(entity).GetComponent<Component::Bloom>().intensity = intensity;
+    else
+      Debug::DebugLogger::GetInstance().LogError("SetBloomIntensity: Entity " + ECS::Entity(entity).GetTag() + " does not have a Bloom component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetBloomIntensity: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+}
+
+float Mono::GetBloomIntensity(ECS::Entity::EntityID entity) {
+  if (ECS::Entity(entity)) {
+    if (ECS::Entity(entity).HasComponent<Component::Bloom>())
+      return ECS::Entity(entity).GetComponent<Component::Bloom>().intensity;
+    else
+      Debug::DebugLogger::GetInstance().LogError("GetBloomIntensity: Entity " + ECS::Entity(entity).GetTag() + " does not have a Bloom component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("GetBloomIntensity: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+  return 0.0f;
+}
+
+void Mono::SetLightIntensity(ECS::Entity::EntityID entity, float intensity) {
+  if (ECS::Entity(entity))
+  {
+    if (ECS::Entity(entity).HasComponent<Component::Light>())
+      ECS::Entity(entity).GetComponent<Component::Light>().mLightIntensity = intensity;
+    else
+      Debug::DebugLogger::GetInstance().LogError("SetLightIntensity: Entity " + ECS::Entity(entity).GetTag() + " does not have a Light component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetLightIntensity: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+}
+
+float Mono::GetLightIntensity(ECS::Entity::EntityID entity) {
+  if (ECS::Entity(entity)) {
+    if (ECS::Entity(entity).HasComponent<Component::Light>())
+      return ECS::Entity(entity).GetComponent<Component::Light>().mLightIntensity;
+    else
+      Debug::DebugLogger::GetInstance().LogError("GetLightIntensity: Entity " + ECS::Entity(entity).GetTag() + " does not have a Light component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("GetLightIntensity: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+  return 0.0f;
 }
 
 /*!**********************************************************************

@@ -56,7 +56,7 @@ public class SuspiciousPainting : Entity
       case State.TILTED:
         // unlock the rigidbody
         InternalCalls.LockRigidBody(mEntityID, false);
-        InternalCalls.SetGravityFactor(mEntityID, 30.0f);
+        InternalCalls.SetGravityFactor(mEntityID, 20.0f);
         currState = State.FALLEN;
         break;
 

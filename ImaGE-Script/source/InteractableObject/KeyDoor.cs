@@ -12,6 +12,7 @@ public class KeyDoor : Entity
   public Dialogue dialogueSystem;
   public bool doorInteraction = true;
   public string doorAnimName;  // input from inspector based on name in anim component
+  public string doorSlamAnimName;
 
   public PlayerMove playerMove;
   public Entity playerCamera;
@@ -22,6 +23,9 @@ public class KeyDoor : Entity
   private Vector3 zoomInPos;
   private Vector3 zoomOutPos;
   bool isZoomingOut = true;
+
+  public Entity corridorTrigger;
+  public bool triggerInteraction = true;
 
   private bool doorFlag = false;
   private string currentAnim = null;
@@ -56,16 +60,42 @@ public class KeyDoor : Entity
         doorFlag = false;
       }
     }
-    // if an animation is in progress
-    else if (!string.IsNullOrEmpty(currentAnim))
+
+    else if (!doorInteraction && triggerInteraction)
     {
+      if (InternalCalls.OnTriggerEnter(corridorTrigger.mEntityID, playerMove.mEntityID))
+      {
+        SlamDoor();
+        triggerInteraction = false;
+      }
+    }
+
+    // if an animation is in progress
+    if (!string.IsNullOrEmpty(currentAnim))
+    {
+      uint parent = InternalCalls.GetParentByID(mEntityID);
+
+      // align the collider to the animated transform
+      InternalCalls.UpdatePhysicsToTransform(mEntityID);
+
+      if (currentAnim == doorSlamAnimName)
+      {
+        if (initialAnimation)
+        {
+          InternalCalls.PlaySound(mEntityID, "DoorSwing");
+          initialAnimation = false;
+        }
+        
+        if (!InternalCalls.IsPlayingAnimation(parent))
+        {
+          InternalCalls.PlaySound(mEntityID, "DoorSlam");
+          currentAnim = null;
+          initialAnimation = true;
+        }
+      }
+
       if (currentAnim == doorAnimName)
       {
-        uint parent = InternalCalls.GetParentByID(mEntityID);
-
-        // align the collider to the animated transform
-        InternalCalls.UpdatePhysicsToTransform(mEntityID);
-
         if (initialAnimation)
         {
           Console.WriteLine("Start");
@@ -99,6 +129,7 @@ public class KeyDoor : Entity
           Console.WriteLine("End");
           Debug.Log("End");
           currentAnim = null;
+          initialAnimation = true;
           SetPlayerCameraAsMain();
           playerMove.UnfreezePlayer();
         }
@@ -112,6 +143,12 @@ public class KeyDoor : Entity
     InternalCalls.PlaySound(mEntityID, "UnlockDoor");
     InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), doorAnimName);
     unlockDoorUI.SetActive(false);
+  }
+
+  public void SlamDoor()
+  {
+    currentAnim = doorSlamAnimName;
+    InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), doorSlamAnimName);
   }
 
   private void SetPlayerCameraAsMain()

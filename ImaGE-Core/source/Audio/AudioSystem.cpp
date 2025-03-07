@@ -38,20 +38,21 @@ namespace IGE {
                 }
             }
             {//only accounts for one audio listener
-                auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioListener, Component::Transform, Component::Camera>() };
+                auto listenersystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioListener, Component::Transform, Component::Camera>() };
                 //gets the first listener
-                if (rbsystem.size_hint() > 0) {
-                    ECS::Entity e{ rbsystem.front() };
+                for (auto entity : listenersystem){
+                    ECS::Entity e{ entity };
                     auto& xfm{ e.GetComponent<Component::Transform>() };
                     auto& camera{ e.GetComponent<Component::Camera>() };
                     auto forwardVec{ camera.GetForwardVector() };
                     auto upVec{ camera.GetUpVector() };
                     // Listener setup
-                    FMOD_VECTOR listenerPos = { xfm.position.x, xfm.position.y, xfm.position.z };
+                    FMOD_VECTOR listenerPos = { xfm.worldPos.x, xfm.worldPos.y, xfm.worldPos.z };
                     FMOD_VECTOR listenerVel = { 0.0f, 0.0f, 0.0f };
                     FMOD_VECTOR listenerForward = { forwardVec.x, forwardVec.y, forwardVec.z };
                     FMOD_VECTOR listenerUp = { upVec.x, upVec.y, upVec.z };
-                    //mgr.mSystem->set3DListenerAttributes(0, &listenerPos, &listenerVel, &listenerForward, &listenerUp);
+                    mgr.mSystem->set3DListenerAttributes(0, &listenerPos, &listenerVel, &listenerForward, &listenerUp);
+                    break;
                 }
 
             }
@@ -73,10 +74,10 @@ namespace IGE {
                             audiosource.PlaySound(sound.first);
                         }
                         
-                        //for (auto channel : setting.channels) {
-                        //    FMOD_VECTOR fmodPosition = { setting.position.x, setting.position.y, setting.position.z };
-                        //    channel->set3DAttributes(&fmodPosition, 0);
-                        //}
+                        for (auto channel : setting.channels) {
+                            FMOD_VECTOR fmodPosition = { setting.position.x, setting.position.y, setting.position.z };
+                            channel->set3DAttributes(&fmodPosition, 0);
+                        }
                     }
                 }
                 mgr.mSceneStarted = false;

@@ -23,7 +23,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <EditorEvents.h>
 #include <GUI/Helpers/AssetHelpers.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
-#include <Graphics/Mesh/IMSH.h>
 #include <GUI/Helpers/AssetPayload.h>
 #include "Asset/IGEAssets.h"
 #include <Graphics/MaterialTable.h>
@@ -717,6 +716,7 @@ namespace GUI
     ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
     if (!ImGui::BeginPopupModal(sMeshPopupTitle, NULL, ImGuiWindowFlags_AlwaysAutoResize)) { return; }
     static bool blankWarning{ false };
+    static bool recenterMesh{ false }, normalizeScale{ false }, flipUVs{ false }, staticMesh{false};
     bool close{ false };
 
     ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.5f, 0.5f, 0.5f, 1.f));
@@ -764,7 +764,7 @@ namespace GUI
       NextRowTable("Recenter Mesh?");
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
-      ImGui::Checkbox("##RecenterMesh", &Graphics::AssetIO::IMSH::sRecenterMesh);
+      ImGui::Checkbox("##RecenterMesh", &recenterMesh);
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
       if (elementHover) {
@@ -778,7 +778,7 @@ namespace GUI
       NextRowTable("Normalize Scale?");
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
-      ImGui::Checkbox("##NormalizeScale", &Graphics::AssetIO::IMSH::sNormalizeScale);
+      ImGui::Checkbox("##NormalizeScale", &normalizeScale);
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
       if (elementHover) {
@@ -792,7 +792,7 @@ namespace GUI
       NextRowTable("Flip UVs?");
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
-      ImGui::Checkbox("##FlipUVs", &Graphics::AssetIO::IMSH::sFlipUVs);
+      ImGui::Checkbox("##FlipUVs", &flipUVs);
       ImGui::TableNextRow();
 
       // static mesh checkbox
@@ -800,7 +800,7 @@ namespace GUI
       NextRowTable("Static Mesh");
       if (ImGui::IsItemHovered()) { elementHover = true; }
       
-      ImGui::Checkbox("##StaticMesh", &Graphics::AssetIO::IMSH::sStaticMeshConversion);
+      ImGui::Checkbox("##StaticMesh", &staticMesh);
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
       if (elementHover) {
@@ -825,8 +825,16 @@ namespace GUI
       }
       else {
         // send the relevant file path to the asset manager
+        IGE::Assets::AssetMetadata::AssetProps metadata{};
+        metadata.metadata = {
+          { "recenterMesh", recenterMesh ? "1" : "0" },
+          { "normalizedScale", normalizeScale ? "1" : "0" },
+          { "flipUVs", flipUVs ? "1" : "0" },
+          { "staticMesh", staticMesh ? "1" : "0" }
+        };
+
         IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-        IGE::Assets::GUID const guid{ am.ImportAsset<IGE::Assets::ModelAsset>(MeshPopup::sModelsToImport.back()) };
+        IGE::Assets::GUID const guid{ am.ImportAsset<IGE::Assets::ModelAsset>(MeshPopup::sModelsToImport.back(), metadata) };
 
         close = true;
       }
@@ -1017,6 +1025,9 @@ namespace
           break;
         case GUI::AssetPayload::SHADER:
           am.ChangeAssetPath<IGE::Assets::ShaderAsset>(guid, newPath);
+          break;
+        case GUI::AssetPayload::ANIMATION:
+          am.ChangeAssetPath<IGE::Assets::AnimationAsset>(guid, newPath);
           break;
         case GUI::AssetPayload::SCENE:
         default:

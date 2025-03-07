@@ -62,6 +62,11 @@ namespace ImGuiHelpers
         else {
           entity.EmplaceComponent<Component::Material>(matGUID);
         }
+
+        // handle prefab instance overrides
+        if (entity.HasComponent<Component::PrefabOverrides>()) {
+          entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Material>();
+        }
       }
       catch (Debug::ExceptionBase&) {
         IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
@@ -86,6 +91,11 @@ namespace ImGuiHelpers
           else {
             entity.EmplaceComponent<Component::Image>(texGUID);
           }
+
+          // handle prefab instance overrides
+          if (entity.HasComponent<Component::PrefabOverrides>()) {
+            entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Image>();
+          }
         }
         // not under Canvas, handle Sprite2D case
         else {
@@ -96,6 +106,11 @@ namespace ImGuiHelpers
           // else add the component and set the guid
           else {
             entity.EmplaceComponent<Component::Sprite2D>(texGUID);
+          }
+
+          // handle prefab instance overrides
+          if (entity.HasComponent<Component::PrefabOverrides>()) {
+            entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Sprite2D>();
           }
         }
       }
@@ -119,6 +134,11 @@ namespace ImGuiHelpers
         else {
           entity.EmplaceComponent<Component::Text>(font, "YOUR TEXT HERE", assetPayload.GetFileName());
         }
+
+        // handle prefab instance overrides
+        if (entity.HasComponent<Component::PrefabOverrides>()) {
+          entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Text>();
+        }
       }
       catch (Debug::ExceptionBase&) {
         IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
@@ -136,6 +156,11 @@ namespace ImGuiHelpers
       else {
         entity.EmplaceComponent<Component::AudioSource>().CreateSound(fp);
       }
+
+      // handle prefab instance overrides
+      if (entity.HasComponent<Component::PrefabOverrides>()) {
+        entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::AudioSource>();
+      }
       
       break;
     }
@@ -151,6 +176,11 @@ namespace ImGuiHelpers
         // else add the component and set the material
         else {
           entity.EmplaceComponent<Component::Animation>().animations.emplace(assetPayload.GetFilePath(), guid);
+        }
+
+        // handle prefab instance overrides
+        if (entity.HasComponent<Component::PrefabOverrides>()) {
+          entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Animation>();
         }
       }
       catch (Debug::ExceptionBase&) {

@@ -227,7 +227,7 @@ namespace IGE {
 					}
 				}
 				if (mRegisterTypeImports.find(folder) != mRegisterTypeImports.end()) {
-					mRegisterTypeImports[folder](file);
+					mRegisterTypeImports[folder](file, {});
 					Debug::DebugLogger::GetInstance().LogInfo("Added " + file + " to assets");
 				}else{
 					Debug::DebugLogger::GetInstance().LogWarning(file + " no asset category found");

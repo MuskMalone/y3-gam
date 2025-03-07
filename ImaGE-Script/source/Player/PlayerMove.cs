@@ -18,6 +18,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 using IGE.Utils;
 using System;
 using System.Numerics;
+using System.Text;
 
 public class  PlayerMove : Entity
 {
@@ -36,8 +37,8 @@ public class  PlayerMove : Entity
 
   private Quaternion playerRotation = Quaternion.Identity;  // Player rotation (yaw only)
   private Quaternion cameraRotation = Quaternion.Identity;  // Camera rotation (pitch only)
-  private float initialGravityFactor = 5f;
-  private float extraGravityFactorDuringDescent = 15f;
+  public float initialGravityFactor = 5f;
+  public float extraGravityFactorDuringDescent = 15f;
 
   public bool canLook = true, canMove = true;
   private bool skipNextMouseDelta = false;  // to skip the jump in delta when unfreezing player
@@ -71,9 +72,6 @@ public class  PlayerMove : Entity
       }
     }
 
-    if(InternalCalls.IsKeyTriggered(KeyCode.SEMICOLON))
-      canLook = false;
-
     // Skip look processing if the player is frozen
     ProcessLook();
 
@@ -94,8 +92,13 @@ public class  PlayerMove : Entity
     {
       speed = walkingSpeed;
     }
-
-    Vector3 move = GetComponent<Transform>().right * x * speed + GetComponent<Transform>().forward * z * speed;
+    Vector3 movementVector = (GetComponent<Transform>().right * x + GetComponent<Transform>().forward * z);
+    float movementVectorLength = movementVector.Length();
+    if (Math.Abs(movementVectorLength) > float.Epsilon)
+    {
+      movementVector /= movementVectorLength;
+    }
+    Vector3 move = movementVector * speed;
 
     InternalCalls.MoveCharacter(mEntityID, move);
 
