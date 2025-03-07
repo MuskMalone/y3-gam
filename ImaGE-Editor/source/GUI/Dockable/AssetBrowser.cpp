@@ -1026,6 +1026,9 @@ namespace
         case GUI::AssetPayload::SHADER:
           am.ChangeAssetPath<IGE::Assets::ShaderAsset>(guid, newPath);
           break;
+        case GUI::AssetPayload::ANIMATION:
+          am.ChangeAssetPath<IGE::Assets::AnimationAsset>(guid, newPath);
+          break;
         case GUI::AssetPayload::SCENE:
         default:
           break;
