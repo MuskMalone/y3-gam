@@ -73,8 +73,7 @@ public class  PlayerMove : Entity
     }
 
     // Skip look processing if the player is frozen
-    if (canLook)
-      ProcessLook();
+    ProcessLook();
 
     if (canMove)
       PlayerMovement();
@@ -115,23 +114,28 @@ public class  PlayerMove : Entity
 
   void ProcessLook()
   {
-    Vector3 mouseDelt = InternalCalls.GetMouseDelta();
+    if (canLook)
+    {
+      Vector3 mouseDelt = InternalCalls.GetMouseDelta();
 
-    if (skipNextMouseDelta && mouseDelt.X != 0.0f && mouseDelt.Y != 0.0f) {
-      skipNextMouseDelta = false;
-      //Debug.Log("Skipped delta of: " + InternalCalls.GetMouseDelta().ToString());
-      return;
+      if (skipNextMouseDelta && mouseDelt.X != 0.0f && mouseDelt.Y != 0.0f)
+      {
+        skipNextMouseDelta = false;
+        //Debug.Log("Skipped delta of: " + InternalCalls.GetMouseDelta().ToString());
+        return;
+      }
+
+      float mouseDeltaX = mouseDelt.X;
+      float mouseDeltaY = mouseDelt.Y;
+
+      yaw -= mouseDeltaX * sensitivity;
+
+      // Apply mouse delta to pitch (rotate camera around the X-axis)
+      pitch -= mouseDeltaY * sensitivity;
     }
 
-    float mouseDeltaX = mouseDelt.X;
-    float mouseDeltaY = mouseDelt.Y;
-
-    yaw -= mouseDeltaX * sensitivity;
     if (yaw > 360.0f || yaw < -360.0f)
       yaw /= 360.0f;
-
-    // Apply mouse delta to pitch (rotate camera around the X-axis)
-    pitch -= mouseDeltaY * sensitivity;
 
     // Clamp pitch to prevent camera from flipping upside down
     pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
@@ -189,4 +193,12 @@ public class  PlayerMove : Entity
   {
     return new Vector2(pitch,yaw);
   }
+
+  public void SetRotation(Vector3 rot)
+  {
+    yaw = rot.Y;                                   // Rotation around the Y-axis (horizontal, for player)
+    pitch = rot.X;                                 // Rotation around the X-axis (vertical, for camera)
+}
+
+
 }

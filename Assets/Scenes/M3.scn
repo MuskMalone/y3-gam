@@ -6,6 +6,9 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "AudioListener": {}
+                },
+                {
                     "Tag": {
                         "tag": "MainCamera",
                         "isActive": true
@@ -1302,7 +1305,7 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "..\\Assets\\Audio\\GardenAmbience_BGM.wav",
+                                "key": "Ambience",
                                 "value": {
                                     "guid": {
                                         "ID": 1367675903760881373
@@ -1327,7 +1330,7 @@
                                 }
                             },
                             {
-                                "key": "..\\Assets\\Audio\\Picture Perfect - BGM1_Vers1_Loop.wav",
+                                "key": "BGM",
                                 "value": {
                                     "guid": {
                                         "ID": 12594617213081250855
@@ -1646,6 +1649,60 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "isFading"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 40,
+                                "scriptName": "PlayerFootsteps",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "ambienceVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.07000000029802323,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "bgmVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "footstepVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "interval"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "player"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMoveScript"
                                         }
                                     }
                                 ]
@@ -2813,6 +2870,27 @@
                                 "entityID": 51,
                                 "scriptName": "PlayerFootsteps",
                                 "scriptFieldInstList": [
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "ambienceVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.10000000149011612,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "bgmVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "footstepVolume"
+                                        }
+                                    },
                                     {
                                         "data": 0.6000000238418579,
                                         "type": "System.Single",
@@ -6890,6 +6968,132 @@
             ]
         },
         {
+            "ID": 188,
+            "Parent": 2097207,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Curb",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 102.5,
+                            "y": 7.065000057220459,
+                            "z": -49.29999923706055
+                        },
+                        "scale": {
+                            "x": 0.3409999907016754,
+                            "y": 1.6299999952316285,
+                            "z": 95.58899688720703
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 90.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 102.49999237060547,
+                            "y": 7.065000057220459,
+                            "z": -49.29999923706055
+                        },
+                        "worldScale": {
+                            "x": 0.3409999907016754,
+                            "y": 1.6299999952316285,
+                            "z": 95.58899688720703
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Environment"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 2046570302303426118
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.23800000548362733,
+                            "y": 0.800000011920929,
+                            "z": 47.82400131225586
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
+                    }
+                }
+            ]
+        },
+        {
             "ID": 196,
             "Parent": 5243127,
             "Child Entities": [],
@@ -8611,7 +8815,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 57.459712982177737,
+                            "x": 46.459712982177737,
                             "y": 133.70687866210938,
                             "z": -25.954999923706056
                         },
@@ -9129,6 +9333,32 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 44.7599983215332,
+                            "y": 0.6000000238418579,
+                            "z": 55.86000061035156
+                        },
+                        "positionOffset": {
+                            "x": 4.599999904632568,
+                            "y": -4.099999904632568,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
                 }
             ]
         },
@@ -9167,7 +9397,7 @@
                             "z": 90.0
                         },
                         "worldPos": {
-                            "x": 100.56389617919922,
+                            "x": 89.56389617919922,
                             "y": 50.472877502441409,
                             "z": -38.99877166748047
                         },
@@ -17225,7 +17455,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 107.6560287475586,
+                            "x": 96.6560287475586,
                             "y": 137.9655303955078,
                             "z": -37.66276550292969
                         },
@@ -17303,7 +17533,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 57.459712982177737,
+                            "x": 46.459712982177737,
                             "y": 56.81909942626953,
                             "z": -25.954532623291017
                         },
@@ -17633,7 +17863,7 @@
                             "z": 90.0
                         },
                         "worldPos": {
-                            "x": 100.56389617919922,
+                            "x": 89.56389617919922,
                             "y": 101.68009185791016,
                             "z": -38.99877166748047
                         },
@@ -18026,7 +18256,7 @@
                             "z": 180.0
                         },
                         "worldPos": {
-                            "x": 78.0587158203125,
+                            "x": 67.0587158203125,
                             "y": 110.06072998046875,
                             "z": 0.0
                         },
@@ -18085,7 +18315,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 115.8499984741211,
+                            "x": 104.8499984741211,
                             "y": 150.14584350585938,
                             "z": -8.268251419067383
                         },
@@ -18733,7 +18963,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 115.31470489501953,
+                            "x": 104.31470489501953,
                             "y": 136.60899353027345,
                             "z": -2.7897562980651857
                         },
@@ -21226,7 +21456,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
+                            "x": -11.0,
                             "y": 0.0,
                             "z": 0.0
                         },
@@ -21247,7 +21477,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
+                            "x": -11.0,
                             "y": 0.0,
                             "z": 0.0
                         },
@@ -26861,7 +27091,7 @@
                             "z": 90.0
                         },
                         "worldPos": {
-                            "x": 100.56389617919922,
+                            "x": 89.56389617919922,
                             "y": 75.55886840820313,
                             "z": -38.99877166748047
                         },
@@ -27195,7 +27425,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 79.75325775146485,
+                            "x": 68.75325775146485,
                             "y": 90.7229995727539,
                             "z": -2.7897562980651857
                         },
@@ -27458,7 +27688,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 57.459712982177737,
+                            "x": 46.459712982177737,
                             "y": 95.87700653076172,
                             "z": -25.954999923706056
                         },
@@ -27563,7 +27793,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 102.94499969482422,
+                            "x": 91.94499969482422,
                             "y": 77.62300109863281,
                             "z": -26.10700035095215
                         },
@@ -27950,7 +28180,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 79.75325775146485,
+                            "x": 68.75325775146485,
                             "y": 90.7229995727539,
                             "z": -49.46944808959961
                         },
@@ -28801,7 +29031,7 @@
                             "z": 90.0
                         },
                         "worldPos": {
-                            "x": 115.50672149658203,
+                            "x": 104.50672149658203,
                             "y": 124.28986358642578,
                             "z": -26.10700035095215
                         },
@@ -30089,6 +30319,7 @@
                 68,
                 72,
                 73,
+                188,
                 474,
                 629,
                 1048617,
@@ -32872,7 +33103,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 127.66710662841797,
+                            "x": 116.66710662841797,
                             "y": 136.6086883544922,
                             "z": -26.10700035095215
                         },
@@ -33865,7 +34096,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 56.4900016784668,
+                            "x": 45.4900016784668,
                             "y": 90.322998046875,
                             "z": -26.10700035095215
                         },

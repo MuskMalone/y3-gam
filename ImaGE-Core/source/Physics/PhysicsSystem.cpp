@@ -121,7 +121,7 @@ namespace IGE {
 			// Run the physics simulation in fixed time steps.
 			while (physicsAccumulator >= gTimeStep) {
 				// Clear any previous frame data (if needed for this physics step).
-				mRays.clear();
+
 				mOnTriggerPairs.clear();
 
 				// Simulate one fixed time step (e.g., 1/60 second).
@@ -638,6 +638,7 @@ namespace IGE {
 					Graphics::Renderer::DrawLine(ray.origin, ray.end, { 0, 1, 0, 1 });
 				}
 			}
+			mRays.clear();
 		}
 
 		void PhysicsSystem::ClearSystem()

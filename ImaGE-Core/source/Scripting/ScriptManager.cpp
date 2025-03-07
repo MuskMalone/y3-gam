@@ -92,7 +92,7 @@ namespace Mono
     { "SpecialDialogue", ScriptFieldType::SPECIALDIALOGUE },
     { "KeyDoor", ScriptFieldType::KEYDOOR },
     { "PictureAlign", ScriptFieldType::PICTUREALIGN },
-    { "ControlPanel2", ScriptFieldType::CONTROLPANEL }i 
+    { "ControlPanel2", ScriptFieldType::CONTROLPANEL }
   };
 }
 

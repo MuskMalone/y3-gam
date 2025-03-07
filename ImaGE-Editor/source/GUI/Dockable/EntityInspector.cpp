@@ -705,7 +705,10 @@ namespace GUI {
                   audioSource.RemoveSound(currentName);
                   break;
               }
-
+              if (ImGui::Button(("Play##" + uniqueID).c_str())) {
+                  audioSource.PlaySound(currentName);
+                  break;
+              }
               // Begin a Tree Node for sound properties with a unique ID
               if (ImGui::TreeNode(("Sound Properties##" + uniqueID).c_str())) {
                   // Table for 3D position
@@ -785,7 +788,36 @@ namespace GUI {
                   }
 
                   ImGui::EndTable();
+                  // Table for Post Processing settings
+                  if (ImGui::BeginTable(("PostProcessingTable##" + uniqueID).c_str(), 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+                      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+                      ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
 
+                      NextRowTable("Enable Post Processing");
+                      if (ImGui::Checkbox(("##EnablePostProcessing" + uniqueID).c_str(), &audioInstance.playSettings.enablePostProcessing)) {
+                          modified = true;
+                      }
+
+                      // Only show additional post-processing controls if enabled
+                      if (audioInstance.playSettings.enablePostProcessing) {
+                          // Combo for selecting the processing type
+                          static const char* processingTypes[] = { "Reverb", "Echo", "Distortion", "Chorus" };
+                          int currentProcessing = static_cast<int>(audioInstance.playSettings.processingType);
+                          NextRowTable("Processing Type");
+                          if (ImGui::Combo(("##ProcessingType" + uniqueID).c_str(), &currentProcessing, processingTypes, IM_ARRAYSIZE(processingTypes))) {
+                              audioInstance.playSettings.processingType = static_cast<IGE::Audio::SoundInvokeSetting::PostProcessingType>(currentProcessing);
+                              modified = true;
+                          }
+
+                          // Drag float for the post-processing parameter
+                          NextRowTable("Parameter");
+                          if (ImGui::DragFloat(("##PostProcessingParameter" + uniqueID).c_str(), &audioInstance.playSettings.postProcessingParameter, 0.1f, 0.0f, 10000.0f)) {
+                              modified = true;
+                          }
+                      }
+
+                      ImGui::EndTable();
+                  }
                   ImGui::TreePop();
               }
           }

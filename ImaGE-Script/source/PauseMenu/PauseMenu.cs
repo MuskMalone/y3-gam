@@ -28,6 +28,22 @@ public class PauseMenu : Entity
     ResumeButtonScript = ResumeButton.FindScript<PauseMenuButtons>();
     MainMenuButtonScript = MainMenuButton.FindScript<PauseMenuButtons>();
     SettingsButtonScript = SettingsButton.FindScript<PauseMenuButtons>();
+
+    Vector3 originalMenu = InternalCalls.GetPosition(mEntityID);
+    Vector3 newPosMenu = new Vector3(originalMenu.X, originalMenu.Y, OriginalTargetZMenu);
+    InternalCalls.SetPosition(mEntityID, ref newPosMenu);
+
+    Vector3 originalResume = InternalCalls.GetPosition(ResumeButtonScript.mEntityID);
+    Vector3 newPosResume = new Vector3(originalResume.X, originalResume.Y, OriginalTargetZButton);
+    InternalCalls.SetPosition(ResumeButtonScript.mEntityID, ref newPosResume);
+
+    Vector3 originalSettings = InternalCalls.GetPosition(SettingsButtonScript.mEntityID);
+    Vector3 newPosSettings = new Vector3(originalSettings.X, originalSettings.Y, OriginalTargetZButton);
+    InternalCalls.SetPosition(SettingsButtonScript.mEntityID, ref newPosSettings);
+
+    Vector3 originalMainMenu = InternalCalls.GetPosition(MainMenuButtonScript.mEntityID);
+    Vector3 newPosMainMenu = new Vector3(originalMainMenu.X, originalMainMenu.Y, OriginalTargetZButton);
+    InternalCalls.SetPosition(MainMenuButtonScript.mEntityID, ref newPosMainMenu);
   }
 
   void Update()

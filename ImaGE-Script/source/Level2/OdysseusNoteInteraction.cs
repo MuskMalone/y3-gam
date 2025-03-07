@@ -6,7 +6,7 @@ public class OdysseusNoteInteraction : Entity
     public Entity odysseusUI;
     public PlayerInteraction playerInteraction;
     public Entity viewNoteUI;  // UI prompt for "Press Click to View"
-
+    public string noteTag = "OdysseusNote";
     public OdysseusNoteInteraction() : base() { }
 
     void Start()
@@ -37,7 +37,7 @@ public class OdysseusNoteInteraction : Entity
     void Update()
     {
         bool mouseClicked = Input.GetMouseButtonTriggered(0);
-        bool isNoteHit = playerInteraction.RayHitString == "OdysseusNote";
+        bool isNoteHit = playerInteraction.RayHitString == noteTag;
         bool noteIsActive = odysseusUI.IsActive();
 
         // Show "Press Click to View" UI when hovering over note

@@ -1,13 +1,13 @@
 {
     "editorCam": {
         "position": {
-            "x": 123.86041259765625,
-            "y": 44.70643615722656,
-            "z": -201.57696533203126
+            "x": 153.4942169189453,
+            "y": 45.27397155761719,
+            "z": -110.35383605957031
         },
-        "fov": 45.0,
-        "pitch": -8.895974159240723,
-        "yaw": -218.19187927246095,
+        "fov": 22.5,
+        "pitch": -0.8694595098495483,
+        "yaw": 226.23159790039063,
         "nearClip": 0.10000000149011612,
         "farClip": 1500.0
     },
@@ -20,12 +20,7 @@
         {
             "entityId": 14,
             "stackId": 3564701276,
-            "isOpen": true
-        },
-        {
-            "entityId": 23,
-            "stackId": 2528161911,
-            "isOpen": true
+            "isOpen": false
         },
         {
             "entityId": 27,
@@ -40,12 +35,17 @@
         {
             "entityId": 55,
             "stackId": 1985780400,
+            "isOpen": false
+        },
+        {
+            "entityId": 68,
+            "stackId": 2619196087,
             "isOpen": true
         },
         {
             "entityId": 90,
             "stackId": 1891848722,
-            "isOpen": true
+            "isOpen": false
         },
         {
             "entityId": 97,
@@ -60,7 +60,7 @@
         {
             "entityId": 138,
             "stackId": 1151304944,
-            "isOpen": true
+            "isOpen": false
         },
         {
             "entityId": 152,
@@ -90,7 +90,7 @@
         {
             "entityId": 235,
             "stackId": 148795143,
-            "isOpen": false
+            "isOpen": true
         },
         {
             "entityId": 265,
@@ -128,6 +128,11 @@
             "isOpen": false
         },
         {
+            "entityId": 383,
+            "stackId": 4049983393,
+            "isOpen": true
+        },
+        {
             "entityId": 385,
             "stackId": 411632671,
             "isOpen": true
@@ -140,7 +145,7 @@
         {
             "entityId": 394,
             "stackId": 3517759500,
-            "isOpen": false
+            "isOpen": true
         },
         {
             "entityId": 397,
@@ -155,7 +160,7 @@
         {
             "entityId": 410,
             "stackId": 2618366017,
-            "isOpen": true
+            "isOpen": false
         },
         {
             "entityId": 412,
@@ -170,12 +175,12 @@
         {
             "entityId": 477,
             "stackId": 1288106067,
-            "isOpen": true
+            "isOpen": false
         },
         {
             "entityId": 478,
             "stackId": 661234317,
-            "isOpen": true
+            "isOpen": false
         },
         {
             "entityId": 480,
@@ -194,12 +199,32 @@
         },
         {
             "entityId": 497,
-            "stackId": 753888984,
+            "stackId": 4213616029,
+            "isOpen": false
+        },
+        {
+            "entityId": 499,
+            "stackId": 897262437,
             "isOpen": true
         },
         {
-            "entityId": 498,
-            "stackId": 746459618,
+            "entityId": 500,
+            "stackId": 1653287429,
+            "isOpen": true
+        },
+        {
+            "entityId": 518,
+            "stackId": 1012297644,
+            "isOpen": true
+        },
+        {
+            "entityId": 528,
+            "stackId": 2673065800,
+            "isOpen": true
+        },
+        {
+            "entityId": 531,
+            "stackId": 3013357584,
             "isOpen": true
         },
         {
@@ -218,9 +243,9 @@
             "isOpen": false
         },
         {
-            "entityId": 1048928,
-            "stackId": 2676519047,
-            "isOpen": false
+            "entityId": 1049036,
+            "stackId": 3731012106,
+            "isOpen": true
         },
         {
             "entityId": 1049413,
@@ -240,7 +265,7 @@
         {
             "entityId": 3145735,
             "stackId": 1226565678,
-            "isOpen": true
+            "isOpen": false
         }
     ]
 }
