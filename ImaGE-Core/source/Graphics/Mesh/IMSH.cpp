@@ -60,7 +60,7 @@ namespace Graphics::AssetIO
     importer.SetPropertyInteger(AI_CONFIG_PP_RVC_FLAGS, importFlags.GetFlags());
 
     unsigned const flags{ sFlipUVs ? sAssimpImportFlags | aiProcess_FlipUVs : sAssimpImportFlags };
-    //unsigned const flags{ sFlipUVs ? sMinimalAssimpImportFlags | aiProcess_FlipUVs : sMinimalAssimpImportFlags };
+    
     aiScene const* aiScn{ importer.ReadFile(file, flags) };
     if (!aiScn || aiScn->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !aiScn->mRootNode) {
       mStatus = false;
