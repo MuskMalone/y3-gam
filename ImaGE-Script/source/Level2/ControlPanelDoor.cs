@@ -67,6 +67,7 @@ public class ControlPanelDoor : Entity
                 {
                     InternalCalls.PlayAnimation(mEntityID, doorOpenAnimation);
                     currState = State.OPENING;
+                    controlPanel.Unlock();  // we'll unlock the interaction the moment the animation starts
                 }
 
                 break;
@@ -86,7 +87,6 @@ public class ControlPanelDoor : Entity
 
             // animation completed: destroy this script
             case State.OPENED:
-                controlPanel.Open();
                 Destroy(this);
 
                 break;

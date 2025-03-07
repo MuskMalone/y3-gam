@@ -23,21 +23,18 @@ public class LightSwitch : Entity
         bool mouseClicked = Input.GetMouseButtonTriggered(0);
         bool isSwitchHit = playerInteraction.RayHitString == "Light Switch";
 
-        if (mouseClicked)
+        if (mouseClicked && isSwitchHit)
         {
-            if (isSwitchHit)
+            //Console.WriteLine("CameHere");
+            InternalCalls.PlaySound(mEntityID, "LightSwitch");
+
+            lightsOn = !lightsOn;
+            foreach (Entity light in LightsToToggleActive)
             {
-                Console.WriteLine("CameHere");
-                InternalCalls.PlaySound(mEntityID, "LightSwitch");
-
-                lightsOn = !lightsOn;
-                foreach (Entity light in LightsToToggleActive)
-                {
-                    light.SetActive(lightsOn);
-                }
-
-                controlPanel.LightsToggled(lightsOn);
+                light.SetActive(lightsOn);
             }
+
+            controlPanel.LightsToggled(lightsOn);
         }
     }
 }

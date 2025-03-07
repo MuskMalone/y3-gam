@@ -42,7 +42,6 @@ public class ControlPanel2 : Entity
 	public Entity dionysusStatue;
 
 	private Entity[][] hiddenTexts; // Stores all hidden texts for each mode
-	public int activeModeIndex = 0;
 	public Entity playerCamera;
 	public Entity controlPanelCamera;
 	public PlayerMove playerMove;
@@ -53,8 +52,6 @@ public class ControlPanel2 : Entity
 	public float minHorizontalRotation = -36.0f; // Minimum yaw
 	public float maxHorizontalRotation = 32.0f;  // Maximum yaw
 
-	public Entity[] LightsToToggleActive;
-
 	// also used for indexing hiddenTexts arr
 	public enum StatueType
 	{
@@ -63,14 +60,14 @@ public class ControlPanel2 : Entity
 		POSEIDON,
 		ARTEMIS
 	}
-	private StatueType currStatue = StatueType.ZEUS;
+	private StatueType currStatue = StatueType.ZEUS;	// current statue in place
 
 	private enum State
 	{
-		CLOSED,
-		OPEN,
-		CONTROL_PANEL,
-		UV_LIGHT
+		CLOSED,			// door closed (pre-animation)
+		OPEN,			// unlocked, interaction is allowed
+		CONTROL_PANEL,	// when interacting with lights ON
+		UV_LIGHT		// UV light (when lights off)
 	}
 
 	private State currState = State.CLOSED;
@@ -111,13 +108,14 @@ public class ControlPanel2 : Entity
 
 				if (mouseClicked && isPanelHit)
 				{
-					InternalCalls.PlaySound(mEntityID, "UVLight");
+                    Debug.Log("HIT");
+                    InternalCalls.PlaySound(mEntityID, "UVLight");
 					SetControlPanelCameraAsMain();
+					playerMove.FreezePlayer();
 
 					// transition to the next state depending on whether lights are on
-					if (areLightsOn)
+					if (!areLightsOn)
 					{
-						//i turn on the currentmode number
 						SetHiddenText(currStatue, true);
 						UVLight.SetActive(true);
 						currState = State.UV_LIGHT;
@@ -126,19 +124,18 @@ public class ControlPanel2 : Entity
 					{
 						currState = State.CONTROL_PANEL;
 					}
-
-					playerMove.FreezePlayer();
 				}
 
 				break;
 
 			// no UV light: simply check for ESC input
 			case State.CONTROL_PANEL:
-				if (Input.GetKeyTriggered(KeyCode.ESCAPE))
+                
+                if (Input.GetKeyTriggered(KeyCode.ESCAPE))
 				{
 					playerMove.UnfreezePlayer();
-
 					SetPlayerCameraAsMain();
+
 					currState = State.OPEN; // return to OPEN state
 				}
 				break;
@@ -183,10 +180,11 @@ public class ControlPanel2 : Entity
 				if (Input.GetKeyTriggered(KeyCode.ESCAPE))
 				{
 					playerMove.UnfreezePlayer();
+                    SetPlayerCameraAsMain();
 
 					// hide the hiddenText
 					SetHiddenText(currStatue, false);
-					SetPlayerCameraAsMain();
+                    UVLight.SetActive(false);
 					currState = State.OPEN; // return to OPEN state
 				}
 				break;
@@ -202,13 +200,6 @@ public class ControlPanel2 : Entity
 	// called by PictureAlign when painting is used
 	public void SwitchMode(StatueType statue)
 	{
-		if (currState == State.UV_LIGHT)
-		{
-			// hide current hiddenText, and set the next set active
-			SetHiddenText(currStatue, false);
-			SetHiddenText(statue, true);
-		}
-
 		// set the next statue as the only active
 		DisableAllStatues();
 		switch (statue)
@@ -236,12 +227,11 @@ public class ControlPanel2 : Entity
 	// called by LightSwitch when toggled
 	public void LightsToggled(bool isOn)
 	{
-		// set state based on whether lights are on
-		currState = isOn ? State.UV_LIGHT : State.CONTROL_PANEL;
+        areLightsOn = isOn;
 	}
 
-	// called by ControlPanelDoor after animation ends
-	public void Open()
+	// called by ControlPanelDoor when animation begins
+	public void Unlock()
 	{
 		currState = State.OPEN;
 	}
@@ -257,18 +247,6 @@ public class ControlPanel2 : Entity
 		InternalCalls.SetTag(playerCamera.mEntityID, "PlayerCamera");
 		InternalCalls.SetTag(controlPanelCamera.mEntityID, "MainCamera");
 	}
-
-	//private bool AreAllLightsOff()
-	//{
-	//	foreach (Entity light in LightsToToggleActive)
-	//	{
-	//		if (light.IsActive())
-	//		{
-	//			return false;
-	//		}
-	//	}
-	//	return true;
-	//}
 
 	public void SetHiddenText(StatueType statue, bool active)
 	{
