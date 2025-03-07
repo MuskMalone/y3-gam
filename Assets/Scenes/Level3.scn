@@ -14714,6 +14714,91 @@
             ]
         },
         {
+            "ID": 320,
+            "Parent": 3145772,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Invisible barrier 2",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -41.90821075439453,
+                            "y": 42.11199951171875,
+                            "z": -151.9497833251953
+                        },
+                        "scale": {
+                            "x": 9.483099937438965,
+                            "y": 2.0690064430236818,
+                            "z": 4.580080032348633
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -41.90821075439453,
+                            "y": 42.11199951171875,
+                            "z": -151.9497833251953
+                        },
+                        "worldScale": {
+                            "x": 9.483099937438965,
+                            "y": 2.0690064430236818,
+                            "z": 4.580080032348633
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 4.741549968719482,
+                            "y": 1.0345032215118409,
+                            "z": 2.2900400161743166
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
             "ID": 323,
             "Parent": 250,
             "Child Entities": [],
@@ -26268,6 +26353,7 @@
             "Parent": null,
             "Child Entities": [
                 61,
+                320,
                 332,
                 1048890,
                 1048891,
@@ -26743,7 +26829,7 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
-                                            "entityID": 4294967295,
+                                            "entityID": 320,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",

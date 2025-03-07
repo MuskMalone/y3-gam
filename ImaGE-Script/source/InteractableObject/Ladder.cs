@@ -17,7 +17,7 @@ public class Ladder : Entity
 
     void Start()
     {
-        invisibleBarrier.SetActive(false);
+        //invisibleBarrier.SetActive(true);
         if (playerMove == null)
         {
             Debug.LogError("[Ladder.cs] PlayerMove Script Entity not found!");
