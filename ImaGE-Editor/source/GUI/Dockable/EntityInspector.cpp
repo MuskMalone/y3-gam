@@ -705,7 +705,10 @@ namespace GUI {
                   audioSource.RemoveSound(currentName);
                   break;
               }
-
+              if (ImGui::Button(("Play##" + uniqueID).c_str())) {
+                  audioSource.PlaySound(currentName);
+                  break;
+              }
               // Begin a Tree Node for sound properties with a unique ID
               if (ImGui::TreeNode(("Sound Properties##" + uniqueID).c_str())) {
                   // Table for 3D position
