@@ -14,6 +14,7 @@ public class NumberPad : Entity
     public Entity backButton;
 
     // Number buttons
+    public Entity button0;
     public Entity button1, button2, button3;
     public Entity button4, button5, button6;
     public Entity button7, button8, button9;
@@ -37,7 +38,7 @@ public class NumberPad : Entity
 
         numberButtons = new Dictionary<string, Entity>
     {
-        { "1", button1 }, { "2", button2 }, { "3", button3 },
+            {"0", button0 }, { "1", button1 }, { "2", button2 }, { "3", button3 },
         { "4", button4 }, { "5", button5 }, { "6", button6 },
         { "7", button7 }, { "8", button8 }, { "9", button9 }
     };
