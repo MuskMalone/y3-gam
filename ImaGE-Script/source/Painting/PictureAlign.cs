@@ -216,10 +216,7 @@ public class PictureAlign : Entity
         else if (picture == "DionysusPainting")
         {
             FadeOut();
-            controlPanelScript.dionysusStatueVisible = true;
-            controlPanelScript.artemisStatueVisible = false;
-            controlPanelScript.zeusStatueVisible = false;
-            controlPanelScript.poseidonStatueVisible = false;
+            controlPanelScript.SwitchMode(ControlPanel2.StatueType.DIONYSUS);
             if (hasFaded)
             {
                 currentImg.SetActive(false);
@@ -234,10 +231,7 @@ public class PictureAlign : Entity
         else if (picture == "ArtemisPainting")
         {
             FadeOut();
-            controlPanelScript.dionysusStatueVisible = false;
-            controlPanelScript.artemisStatueVisible = true;
-            controlPanelScript.zeusStatueVisible = false;
-            controlPanelScript.poseidonStatueVisible = false;
+            controlPanelScript.SwitchMode(ControlPanel2.StatueType.ARTEMIS);
             if (hasFaded)
             {
                 currentImg.SetActive(false);
@@ -252,10 +246,7 @@ public class PictureAlign : Entity
         else if (picture == "ZeusPainting")
         {
             FadeOut();
-            controlPanelScript.dionysusStatueVisible = false;
-            controlPanelScript.artemisStatueVisible = false;
-            controlPanelScript.zeusStatueVisible = true;
-            controlPanelScript.poseidonStatueVisible = false;
+            controlPanelScript.SwitchMode(ControlPanel2.StatueType.ZEUS);
             if (hasFaded)
             {
                 currentImg.SetActive(false);
@@ -270,10 +261,7 @@ public class PictureAlign : Entity
         else if (picture == "PoseidonPainting")
         {
             FadeOut();
-            controlPanelScript.dionysusStatueVisible = false;
-            controlPanelScript.artemisStatueVisible = false;
-            controlPanelScript.zeusStatueVisible = false;
-            controlPanelScript.poseidonStatueVisible = true;
+            controlPanelScript.SwitchMode(ControlPanel2.StatueType.POSEIDON);
             if (hasFaded)
             {
                 currentImg.SetActive(false);
