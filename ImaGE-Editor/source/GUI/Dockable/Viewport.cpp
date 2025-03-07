@@ -38,7 +38,7 @@ namespace {
   static bool sMovingToEntity{ false };
   static glm::vec3 sTargetPosition, sMoveDir;
   static float sDistToCover;
-  static ECS::Entity sPrevSelectedEntity;
+  static ECS::Entity sPrevSelectedEntity{}, sPrevSelectedLeaf{};
 
   // for multi-select
   static bool sCtrlHeld{ false };
@@ -147,7 +147,14 @@ namespace GUI
               if (entityId >= 0) {
                 ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
                   root{ GetRootEntity(selected) };
-                sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
+                ECS::EntityManager& em{ IGE_ENTITYMGR };
+
+                if (selected == sPrevSelectedLeaf && em.HasParent(sPrevSelectedEntity)) {
+                  sPrevSelectedEntity = em.GetParentEntity(sPrevSelectedEntity);
+                }
+                else {
+                  sPrevSelectedLeaf = sPrevSelectedEntity = selected;
+                }
 
                 if (sCtrlHeld) {
                   ECS::Entity const curr{ GUIVault::GetSelectedEntity() };
@@ -168,14 +175,14 @@ namespace GUI
                     GUIVault::AddSelectedEntity(root);
                     GUIVault::SetSelectedEntity(sPrevSelectedEntity);
                   }
-                }
+                } // end if ctrlHeld
                 else {
                   GUIVault::ClearSelectedEntities();
                   GUIVault::SetSelectedEntity(sPrevSelectedEntity);
                 }
 
                 QUEUE_EVENT(Events::EntityScreenPicked, sPrevSelectedEntity);
-              }
+              } // end if entityId >= 0
               else {
                 sPrevSelectedEntity = {};
                 GUIVault::SetSelectedEntity({});

@@ -169,6 +169,7 @@
                 469,
                 488,
                 506,
+                512,
                 724,
                 1049003,
                 1049345,
@@ -186,7 +187,6 @@
                 4194716,
                 4194721,
                 4194865,
-                5243225,
                 5243271,
                 6291459,
                 6291689
@@ -255,6 +255,7 @@
                 50,
                 83,
                 133,
+                468,
                 706,
                 975,
                 1121,
@@ -262,8 +263,7 @@
                 1049289,
                 1049610,
                 1049698,
-                2097207,
-                4194361
+                2097207
             ],
             "Components": [
                 {
@@ -4836,6 +4836,162 @@
             }
         },
         {
+            "ID": 102,
+            "Parent": 1048974,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SafeDoor",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 1.4760017395019532,
+                            "y": 0.0,
+                            "z": -0.060001373291015628
+                        },
+                        "scale": {
+                            "x": 6.599999904632568,
+                            "y": 6.599999904632568,
+                            "z": 6.599999904632568
+                        },
+                        "rotation": {
+                            "x": 1.2363447865482159e-7,
+                            "y": -0.7071067690849304,
+                            "z": -6.181723932741079e-8,
+                            "w": -0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 360.0,
+                            "y": 89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 54.59122085571289,
+                            "y": 12.177000045776368,
+                            "z": 49.11144256591797
+                        },
+                        "worldScale": {
+                            "x": 6.599999904632568,
+                            "y": 6.599999904632568,
+                            "z": 6.599999904632568
+                        },
+                        "worldRot": {
+                            "x": 1.2363447865482159e-7,
+                            "y": -0.7071067690849304,
+                            "z": -6.181723932741079e-8,
+                            "w": -0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 5437073796557026432
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "OpenDoor",
+                        "GUID": {
+                            "ID": 12578097593838907199
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 103,
+            "Parent": 3145740,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SafeBody",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.649999976158142,
+                            "y": 1.649999976158142,
+                            "z": 1.649999976158142
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 53.09299850463867,
+                            "y": 12.177000045776368,
+                            "z": 47.76028823852539
+                        },
+                        "worldScale": {
+                            "x": 6.599999904632568,
+                            "y": 6.599999904632568,
+                            "z": 6.599999904632568
+                        },
+                        "worldRot": {
+                            "x": -4.371138828673793e-8,
+                            "y": 1.0,
+                            "z": -4.371138828673793e-8,
+                            "w": 1.910685465164705e-15
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 5437073796557026432
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "SafeBody",
+                        "GUID": {
+                            "ID": 12578097593838907199
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 104,
             "Parent": 98,
             "Child Entities": [],
@@ -5101,33 +5257,6 @@
                     }
                 }
             ]
-        },
-        {
-            "ID": 125,
-            "Parent": 1049698,
-            "Child Entities": [
-                1048778
-            ],
-            "Position": {
-                "x": -34.125,
-                "y": 17.968000411987306,
-                "z": -36.45500183105469
-            },
-            "Prefab": {
-                "GUID": {
-                    "ID": 7212992046423042303
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
         },
         {
             "ID": 126,
@@ -7558,33 +7687,6 @@
             ]
         },
         {
-            "ID": 222,
-            "Parent": 1049698,
-            "Child Entities": [
-                6292014
-            ],
-            "Position": {
-                "x": 23.727603912353517,
-                "y": 24.243000030517579,
-                "z": -52.00031280517578
-            },
-            "Prefab": {
-                "GUID": {
-                    "ID": 18270607630731340668
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 225,
             "Parent": 50,
             "Child Entities": [
@@ -8024,86 +8126,6 @@
             }
         },
         {
-            "ID": 259,
-            "Parent": 4194361,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 4458459919830508951
-                },
-                "subDataId": 4,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 260,
-            "Parent": 4194361,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 4458459919830508951
-                },
-                "subDataId": 9,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 263,
-            "Parent": 4194361,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 4458459919830508951
-                },
-                "subDataId": 8,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 266,
-            "Parent": 4194361,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 4458459919830508951
-                },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 269,
             "Parent": null,
             "Child Entities": [
@@ -8378,92 +8400,6 @@
                             }
                         },
                         "repeat": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 280,
-            "Parent": 4194361,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 4458459919830508951
-                },
-                "subDataId": 7,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 281,
-            "Parent": 3145740,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "SafeBody",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 2.384185791015625e-7,
-                            "z": 0.0000722131080692634
-                        },
-                        "scale": {
-                            "x": 1.649999976158142,
-                            "y": 1.649999976158142,
-                            "z": 1.649999976158142
-                        },
-                        "rotation": {
-                            "x": -6.6814973767022919e-22,
-                            "y": 7.64274186065882e-15,
-                            "z": 8.742277657347586e-8,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 8.757937409141492e-13,
-                            "z": 0.00001001791224553017
-                        },
-                        "worldPos": {
-                            "x": 53.09299850463867,
-                            "y": 12.177000999450684,
-                            "z": 47.7599983215332
-                        },
-                        "worldScale": {
-                            "x": 6.599999904632568,
-                            "y": 6.599999904632568,
-                            "z": 6.599999904632568
-                        },
-                        "worldRot": {
-                            "x": 4.371138828673793e-8,
-                            "y": 1.0,
-                            "z": -4.371138828673793e-8,
-                            "w": -1.910685676922942e-15
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 5437073796557026432
-                        }
                     }
                 }
             ]
@@ -8802,6 +8738,84 @@
             }
         },
         {
+            "ID": 310,
+            "Parent": 1048974,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Handle",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.022220611572265626,
+                            "y": 0.0,
+                            "z": -1.4111557006835938
+                        },
+                        "scale": {
+                            "x": 6.599999904632568,
+                            "y": 6.599999904632568,
+                            "z": 6.599999904632568
+                        },
+                        "rotation": {
+                            "x": -4.371138828673793e-8,
+                            "y": 1.0,
+                            "z": -4.371138828673793e-8,
+                            "w": 1.910685465164705e-15
+                        },
+                        "eulerAngles": {
+                            "x": -180.0,
+                            "y": -0.0,
+                            "z": -180.0
+                        },
+                        "worldPos": {
+                            "x": 53.09299850463867,
+                            "y": 12.177000045776368,
+                            "z": 47.76028823852539
+                        },
+                        "worldScale": {
+                            "x": 6.599999904632568,
+                            "y": 6.599999904632568,
+                            "z": 6.599999904632568
+                        },
+                        "worldRot": {
+                            "x": -4.371138828673793e-8,
+                            "y": 1.0,
+                            "z": -4.371138828673793e-8,
+                            "w": 1.910685465164705e-15
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 5437073796557026432
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Handle",
+                        "GUID": {
+                            "ID": 12578097593838907199
+                        },
+                        "submeshIdx": 4,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 313,
             "Parent": 3145743,
             "Child Entities": [],
@@ -8935,6 +8949,26 @@
             "Prefab": {
                 "GUID": {
                     "ID": 7160965812706139332
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 319,
+            "Parent": 4194716,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5179621797397581550
                 },
                 "subDataId": 1,
                 "componentData": [
@@ -9644,6 +9678,84 @@
             ]
         },
         {
+            "ID": 394,
+            "Parent": 3145740,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "ClosedDoor",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.649999976158142,
+                            "y": 1.649999976158142,
+                            "z": 1.649999976158142
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 53.09299850463867,
+                            "y": 12.177000045776368,
+                            "z": 47.76028823852539
+                        },
+                        "worldScale": {
+                            "x": 6.599999904632568,
+                            "y": 6.599999904632568,
+                            "z": 6.599999904632568
+                        },
+                        "worldRot": {
+                            "x": -4.371138828673793e-8,
+                            "y": 1.0,
+                            "z": -4.371138828673793e-8,
+                            "w": 1.910685465164705e-15
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 5437073796557026432
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "ClosedDoor",
+                        "GUID": {
+                            "ID": 12578097593838907199
+                        },
+                        "submeshIdx": 3,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 395,
             "Parent": 60,
             "Child Entities": [
@@ -9885,43 +9997,43 @@
             ]
         },
         {
-            "ID": 437,
-            "Parent": 1049768,
+            "ID": 436,
+            "Parent": 1048974,
             "Child Entities": [],
             "Components": [
                 {
                     "Tag": {
-                        "tag": "OpenedDoor",
+                        "tag": "Keypad",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.36899998784065249,
-                            "y": 4.76837158203125e-7,
-                            "z": 0.014999999664723874
+                            "x": -0.022220611572265626,
+                            "y": 0.0,
+                            "z": -1.4111557006835938
                         },
                         "scale": {
-                            "x": 1.649999976158142,
-                            "y": 1.649999976158142,
-                            "z": 1.649999976158142
+                            "x": 6.599999904632568,
+                            "y": 6.599999904632568,
+                            "z": 6.599999904632568
                         },
                         "rotation": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": -0.7071067690849304
+                            "x": -4.371138828673793e-8,
+                            "y": 1.0,
+                            "z": -4.371138828673793e-8,
+                            "w": 1.910685465164705e-15
                         },
                         "eulerAngles": {
-                            "x": -360.0,
-                            "y": -90.0,
-                            "z": 0.00001001791224553017
+                            "x": -180.0,
+                            "y": -0.0,
+                            "z": -180.0
                         },
                         "worldPos": {
-                            "x": 54.59122085571289,
-                            "y": 12.177001953125,
-                            "z": 49.11144256591797
+                            "x": 53.09299850463867,
+                            "y": 12.177000045776368,
+                            "z": 47.76028823852539
                         },
                         "worldScale": {
                             "x": 6.599999904632568,
@@ -9929,10 +10041,10 @@
                             "z": 6.599999904632568
                         },
                         "worldRot": {
-                            "x": 6.181723932741079e-8,
-                            "y": -0.7071067690849304,
-                            "z": 0.0,
-                            "w": -0.7071067690849304
+                            "x": -4.371138828673793e-8,
+                            "y": 1.0,
+                            "z": -4.371138828673793e-8,
+                            "w": 1.910685465164705e-15
                         }
                     }
                 },
@@ -9946,6 +10058,96 @@
                         "materialGUID": {
                             "ID": 5437073796557026432
                         }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Keypad",
+                        "GUID": {
+                            "ID": 12578097593838907199
+                        },
+                        "submeshIdx": 5,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 438,
+            "Parent": 1048974,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Buttons",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.022220611572265626,
+                            "y": 0.0,
+                            "z": -1.4111557006835938
+                        },
+                        "scale": {
+                            "x": 6.599999904632568,
+                            "y": 6.599999904632568,
+                            "z": 6.599999904632568
+                        },
+                        "rotation": {
+                            "x": -4.371138828673793e-8,
+                            "y": 1.0,
+                            "z": -4.371138828673793e-8,
+                            "w": 1.910685465164705e-15
+                        },
+                        "eulerAngles": {
+                            "x": -180.0,
+                            "y": -0.0,
+                            "z": -180.0
+                        },
+                        "worldPos": {
+                            "x": 53.09299850463867,
+                            "y": 12.177000045776368,
+                            "z": 47.76028823852539
+                        },
+                        "worldScale": {
+                            "x": 6.599999904632568,
+                            "y": 6.599999904632568,
+                            "z": 6.599999904632568
+                        },
+                        "worldRot": {
+                            "x": -4.371138828673793e-8,
+                            "y": 1.0,
+                            "z": -4.371138828673793e-8,
+                            "w": 1.910685465164705e-15
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 5437073796557026432
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Buttons",
+                        "GUID": {
+                            "ID": 12578097593838907199
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -10114,6 +10316,242 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 458,
+            "Parent": 468,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4458459919830508951
+                },
+                "subDataId": 5,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 459,
+            "Parent": 468,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4458459919830508951
+                },
+                "subDataId": 6,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 460,
+            "Parent": 468,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4458459919830508951
+                },
+                "subDataId": 4,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 461,
+            "Parent": 468,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4458459919830508951
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 462,
+            "Parent": 468,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4458459919830508951
+                },
+                "subDataId": 9,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 463,
+            "Parent": 468,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4458459919830508951
+                },
+                "subDataId": 8,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 464,
+            "Parent": 468,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4458459919830508951
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 465,
+            "Parent": 468,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4458459919830508951
+                },
+                "subDataId": 10,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 466,
+            "Parent": 468,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4458459919830508951
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 467,
+            "Parent": 468,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4458459919830508951
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 468,
+            "Parent": 8,
+            "Child Entities": [
+                458,
+                459,
+                460,
+                461,
+                462,
+                463,
+                464,
+                465,
+                466,
+                467
+            ],
+            "Position": {
+                "x": -1.3552894592285157,
+                "y": 2.099998950958252,
+                "z": 0.544438898563385
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 4458459919830508951
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 469,
@@ -10461,6 +10899,19 @@
             }
         },
         {
+            "ID": 484,
+            "Parent": 1049596,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8786659095930452505
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 488,
             "Parent": 6,
             "Child Entities": [
@@ -10791,8 +11242,97 @@
             ]
         },
         {
+            "ID": 511,
+            "Parent": 6291689,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 3467401324182861937
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Vase1",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 512,
+            "Parent": 6,
+            "Child Entities": [
+                556,
+                6291797
+            ],
+            "Position": {
+                "x": -38.21369171142578,
+                "y": 8.330789566040039,
+                "z": 7.862283229827881
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 3467401324182861937
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Props_Vase1",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 518,
+            "Parent": 4194721,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 3467401324182861937
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Vase1",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 556,
-            "Parent": 5243225,
+            "Parent": 512,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -20830,26 +21370,6 @@
             ]
         },
         {
-            "ID": 1048675,
-            "Parent": 4194361,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 4458459919830508951
-                },
-                "subDataId": 3,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1048681,
             "Parent": 7340121,
             "Child Entities": [],
@@ -21205,6 +21725,28 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 1048701,
+            "Parent": 7340590,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 1048715,
@@ -21668,28 +22210,8 @@
             ]
         },
         {
-            "ID": 1048778,
-            "Parent": 125,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 7212992046423042303
-                },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1048805,
-            "Parent": 1049672,
+            "ID": 1048798,
+            "Parent": 2098248,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -21698,16 +22220,11 @@
                 "subDataId": 1,
                 "componentData": [
                     {
-                        "key": "Layer",
+                        "key": "Material",
                         "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Props_Pillar",
-                            "isActive": true
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
                         }
                     }
                 ],
@@ -21750,26 +22267,6 @@
                     "ID": 13818176251542423782
                 },
                 "subDataId": 6,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1048828,
-            "Parent": 4194361,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 4458459919830508951
-                },
-                "subDataId": 5,
                 "componentData": [
                     {
                         "key": "Layer",
@@ -21906,46 +22403,6 @@
             }
         },
         {
-            "ID": 1048838,
-            "Parent": 4194361,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 4458459919830508951
-                },
-                "subDataId": 2,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1048840,
-            "Parent": 4194361,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 4458459919830508951
-                },
-                "subDataId": 10,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1048841,
             "Parent": 2097181,
             "Child Entities": [],
@@ -21966,26 +22423,6 @@
                         "value": {
                             "tag": "ArcDoor Top Collider",
                             "isActive": true
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1048851,
-            "Parent": 4194361,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 4458459919830508951
-                },
-                "subDataId": 6,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -22277,26 +22714,6 @@
             }
         },
         {
-            "ID": 1048914,
-            "Parent": 4194716,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 5179621797397581550
-                },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1048938,
             "Parent": 4194674,
             "Child Entities": [],
@@ -22418,6 +22835,70 @@
                 ],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 1048974,
+            "Parent": 1049768,
+            "Child Entities": [
+                102,
+                310,
+                436,
+                438
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "OpenDoor",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -2.661366806933074e-7
+                        },
+                        "scale": {
+                            "x": 0.25,
+                            "y": 0.25,
+                            "z": 0.25
+                        },
+                        "rotation": {
+                            "x": 4.371138828673793e-8,
+                            "y": -1.0,
+                            "z": 4.371138828673793e-8,
+                            "w": 1.910685465164705e-15
+                        },
+                        "eulerAngles": {
+                            "x": -180.0,
+                            "y": -4.378968704570746e-13,
+                            "z": -180.0
+                        },
+                        "worldPos": {
+                            "x": 53.11521911621094,
+                            "y": 12.177000045776368,
+                            "z": 49.171443939208987
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
         },
         {
             "ID": 1048977,
@@ -23883,72 +24364,6 @@
                 ],
                 "removedComponents": []
             }
-        },
-        {
-            "ID": 1049283,
-            "Parent": 3145740,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "ClosedDoor",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.649999976158142,
-                            "y": 1.649999976158142,
-                            "z": 1.649999976158142
-                        },
-                        "rotation": {
-                            "x": -8.742277657347586e-8,
-                            "y": 0.0,
-                            "z": 8.742277657347586e-8,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": -0.00001001791224553017,
-                            "y": 8.757937409141492e-13,
-                            "z": 0.00001001791224553017
-                        },
-                        "worldPos": {
-                            "x": 53.09299850463867,
-                            "y": 12.177000045776368,
-                            "z": 47.76028823852539
-                        },
-                        "worldScale": {
-                            "x": 6.599999904632568,
-                            "y": 6.599999904632568,
-                            "z": 6.599999904632568
-                        },
-                        "worldRot": {
-                            "x": 4.371138828673793e-8,
-                            "y": 1.0,
-                            "z": 4.371138828673793e-8,
-                            "w": 1.910685465164705e-15
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 5437073796557026432
-                        }
-                    }
-                }
-            ]
         },
         {
             "ID": 1049285,
@@ -26277,7 +26692,7 @@
             "Parent": 269,
             "Child Entities": [
                 285,
-                4194650,
+                484,
                 4194691,
                 7340322
             ],
@@ -28062,33 +28477,6 @@
             ]
         },
         {
-            "ID": 1049672,
-            "Parent": 1049698,
-            "Child Entities": [
-                1048805
-            ],
-            "Position": {
-                "x": -25.99939727783203,
-                "y": 24.243000030517579,
-                "z": -52.00031280517578
-            },
-            "Prefab": {
-                "GUID": {
-                    "ID": 18270607630731340668
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1049678,
             "Parent": 702,
             "Child Entities": [],
@@ -28453,10 +28841,10 @@
             "ID": 1049698,
             "Parent": 8,
             "Child Entities": [
-                125,
-                222,
-                1049672,
-                2097872
+                2098248,
+                3145990,
+                3146448,
+                7340590
             ],
             "Components": [
                 {
@@ -29054,7 +29442,7 @@
             "ID": 1049768,
             "Parent": 3145740,
             "Child Entities": [
-                437
+                1048974
             ],
             "Components": [
                 {
@@ -30171,6 +30559,116 @@
             ]
         },
         {
+            "ID": 2097232,
+            "Parent": 7340590,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 6,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097247,
+            "Parent": 3145990,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 6,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097248,
+            "Parent": 7340590,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 5,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097252,
+            "Parent": 2098248,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097253,
+            "Parent": 2098248,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 6,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097262,
             "Parent": 5243127,
             "Child Entities": [],
@@ -30655,6 +31153,50 @@
             }
         },
         {
+            "ID": 2097354,
+            "Parent": 3145990,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 5,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097381,
+            "Parent": 2098248,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 5,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097393,
             "Parent": 7340121,
             "Child Entities": [],
@@ -30675,6 +31217,94 @@
                         "value": {
                             "tag": "Three_arc_pTorus4",
                             "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097411,
+            "Parent": 3146448,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097412,
+            "Parent": 3145990,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097415,
+            "Parent": 3145990,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 4,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097418,
+            "Parent": 3145990,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
                         }
                     }
                 ],
@@ -30836,6 +31466,28 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 2097432,
+            "Parent": 3145990,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 2097438,
@@ -31004,6 +31656,182 @@
             ]
         },
         {
+            "ID": 2097477,
+            "Parent": 2098248,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 4,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097489,
+            "Parent": 3146448,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097490,
+            "Parent": 3146448,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 6,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097491,
+            "Parent": 3146448,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 5,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 12878512862779641630
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097496,
+            "Parent": 3145990,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 12878512862779641630
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097497,
+            "Parent": 7340590,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 4,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 12878512862779641630
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097498,
+            "Parent": 7340590,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097499,
+            "Parent": 7340590,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097525,
             "Parent": 3145886,
             "Child Entities": [],
@@ -31080,6 +31908,50 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 2097571,
+            "Parent": 2098248,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097581,
+            "Parent": 2098248,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 12878512862779641630
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 2097632,
@@ -32292,70 +33164,6 @@
             ]
         },
         {
-            "ID": 2097872,
-            "Parent": 1049698,
-            "Child Entities": [
-                2097900
-            ],
-            "Prefab": {
-                "GUID": {
-                    "ID": 7212992046423042303
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": 31.381000518798829,
-                                "y": 17.968000411987306,
-                                "z": -36.45500183105469
-                            },
-                            "scale": {
-                                "x": 42.0,
-                                "y": 42.0,
-                                "z": 42.0
-                            },
-                            "rotation": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "eulerAngles": {
-                                "x": 0.0,
-                                "y": -0.0,
-                                "z": 0.0
-                            },
-                            "worldPos": {
-                                "x": 38.38139724731445,
-                                "y": 17.968000411987306,
-                                "z": -35.88768768310547
-                            },
-                            "worldScale": {
-                                "x": 42.0,
-                                "y": 42.0,
-                                "z": 42.0
-                            },
-                            "worldRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            }
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 2097899,
             "Parent": 6,
             "Child Entities": [
@@ -32569,26 +33377,6 @@
                                 "z": 0.06540319323539734,
                                 "w": -4.647666074220069e-8
                             }
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 2097900,
-            "Parent": 2097872,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 7212992046423042303
-                },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -33192,6 +33980,40 @@
             ]
         },
         {
+            "ID": 2098248,
+            "Parent": 1049698,
+            "Child Entities": [
+                1048798,
+                2097252,
+                2097253,
+                2097381,
+                2097477,
+                2097571,
+                2097581
+            ],
+            "Position": {
+                "x": -25.999000549316408,
+                "y": 23.72800064086914,
+                "z": -52.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Large Pillar L",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2098261,
             "Parent": 706,
             "Child Entities": [
@@ -33250,8 +34072,8 @@
             "ID": 3145740,
             "Parent": 11,
             "Child Entities": [
-                281,
-                1049283,
+                103,
+                394,
                 1049768
             ],
             "Components": [
@@ -33945,6 +34767,28 @@
             }
         },
         {
+            "ID": 3145827,
+            "Parent": 3146448,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 4,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 3145836,
             "Parent": 269,
             "Child Entities": [
@@ -34483,6 +35327,122 @@
             ]
         },
         {
+            "ID": 3145980,
+            "Parent": 3145990,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 8,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3145990,
+            "Parent": 1049698,
+            "Child Entities": [
+                2097247,
+                2097354,
+                2097412,
+                2097415,
+                2097418,
+                2097432,
+                2097496,
+                3145980
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Small Pillar L",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -34.125,
+                                "y": 17.968000411987306,
+                                "z": -36.45500183105469
+                            },
+                            "scale": {
+                                "x": 19.0,
+                                "y": 19.0,
+                                "z": 19.0
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -27.124603271484376,
+                                "y": 17.968000411987306,
+                                "z": -35.88768768310547
+                            },
+                            "worldScale": {
+                                "x": 19.0,
+                                "y": 19.0,
+                                "z": 19.0
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3145992,
+            "Parent": 7340590,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 3146002,
             "Parent": 11,
             "Child Entities": [
@@ -34549,6 +35509,28 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 3146003,
+            "Parent": 3146448,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 3146011,
@@ -34713,33 +35695,6 @@
                     }
                 }
             ]
-        },
-        {
-            "ID": 3146075,
-            "Parent": 6291689,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 3467401324182861937
-                },
-                "subDataId": 2,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Vase1",
-                            "isActive": true
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
         },
         {
             "ID": 3146077,
@@ -36254,6 +37209,62 @@
             ]
         },
         {
+            "ID": 3146448,
+            "Parent": 1049698,
+            "Child Entities": [
+                2097411,
+                2097489,
+                2097490,
+                2097491,
+                3145827,
+                3146003,
+                3146476
+            ],
+            "Position": {
+                "x": 23.72800064086914,
+                "y": 23.72800064086914,
+                "z": -52.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Large Pillar R",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3146476,
+            "Parent": 3146448,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 3146525,
             "Parent": 3146077,
             "Child Entities": [],
@@ -36601,42 +37612,6 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 4194361,
-            "Parent": 8,
-            "Child Entities": [
-                259,
-                260,
-                263,
-                266,
-                280,
-                1048675,
-                1048828,
-                1048838,
-                1048840,
-                1048851
-            ],
-            "Position": {
-                "x": -1.3552894592285157,
-                "y": 2.099998950958252,
-                "z": 0.544438898563385
-            },
-            "Prefab": {
-                "GUID": {
-                    "ID": 4458459919830508951
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
                         }
                     }
                 ],
@@ -37533,19 +38508,6 @@
             ]
         },
         {
-            "ID": 4194650,
-            "Parent": 1049596,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 3,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 4194674,
             "Parent": 6,
             "Child Entities": [
@@ -37674,7 +38636,7 @@
             "ID": 4194716,
             "Parent": 6,
             "Child Entities": [
-                1048914,
+                319,
                 5243252
             ],
             "Prefab": {
@@ -37733,7 +38695,7 @@
             "ID": 4194721,
             "Parent": 6,
             "Child Entities": [
-                6291800,
+                518,
                 7340374
             ],
             "Position": {
@@ -38939,41 +39901,6 @@
             ]
         },
         {
-            "ID": 5243225,
-            "Parent": 6,
-            "Child Entities": [
-                556,
-                6291797
-            ],
-            "Position": {
-                "x": -38.21369171142578,
-                "y": 8.330789566040039,
-                "z": 7.862283229827881
-            },
-            "Prefab": {
-                "GUID": {
-                    "ID": 3467401324182861937
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Props_Vase1",
-                            "isActive": true
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 5243252,
             "Parent": 4194716,
             "Child Entities": [],
@@ -39281,6 +40208,28 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Props"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 6291513,
+            "Parent": 7340590,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 8,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
                         }
                     }
                 ],
@@ -39614,7 +40563,7 @@
             "ID": 6291689,
             "Parent": 6,
             "Child Entities": [
-                3146075,
+                511,
                 6291799
             ],
             "Position": {
@@ -39793,7 +40742,7 @@
         },
         {
             "ID": 6291797,
-            "Parent": 5243225,
+            "Parent": 512,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -39839,53 +40788,6 @@
                         "value": {
                             "tag": "Vase4",
                             "isActive": true
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 6291800,
-            "Parent": 4194721,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 3467401324182861937
-                },
-                "subDataId": 2,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Vase1",
-                            "isActive": true
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 6292014,
-            "Parent": 222,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 18270607630731340668
-                },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
                         }
                     }
                 ],
@@ -40014,6 +40916,78 @@
                         "value": {
                             "tag": "Vase4",
                             "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 7340590,
+            "Parent": 1049698,
+            "Child Entities": [
+                1048701,
+                2097232,
+                2097248,
+                2097497,
+                2097498,
+                2097499,
+                3145992,
+                6291513
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Small Pillar R",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 31.381000518798829,
+                                "y": 17.968000411987306,
+                                "z": -36.45500183105469
+                            },
+                            "scale": {
+                                "x": 19.0,
+                                "y": 19.0,
+                                "z": 19.0
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 38.38139724731445,
+                                "y": 17.968000411987306,
+                                "z": -35.88768768310547
+                            },
+                            "worldScale": {
+                                "x": 19.0,
+                                "y": 19.0,
+                                "z": 19.0
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            }
                         }
                     }
                 ],
