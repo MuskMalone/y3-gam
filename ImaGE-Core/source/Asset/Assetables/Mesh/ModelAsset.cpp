@@ -51,10 +51,11 @@ namespace IGE {
 
 			Graphics::AssetIO::ImportSettings settings{};
 			// same keys as in AssetBrowser.cpp
-			settings.staticMesh = ReadBoolean(metadata, "staticMesh");
-			settings.flipUVs = ReadBoolean(metadata, "flipUVs");
-			settings.recenterMesh = ReadBoolean(metadata, "recenterMesh");
-			settings.normalizeScale = ReadBoolean(metadata, "normalizedScale");
+			settings.staticMesh = ReadBoolean(metadata, IMSH_IMPORT_STATIC);
+			settings.flipUVs = ReadBoolean(metadata, IMSH_IMPORT_FLIP_UV);
+			settings.recenterMesh = ReadBoolean(metadata, IMSH_IMPORT_RECENTER);
+			settings.normalizeScale = ReadBoolean(metadata, IMSH_IMPORT_NORM_SCALE);
+			settings.minimalFlags = ReadBoolean(metadata, IMSH_IMPORT_MIN_FLAGS);
 
 			Graphics::AssetIO::IMSH imsh{ fp, settings };
 			imsh.WriteToBinFile(compiledDir + filename + gMeshFileExt);
