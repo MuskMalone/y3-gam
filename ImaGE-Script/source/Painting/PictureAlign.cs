@@ -36,10 +36,16 @@ public class PictureAlign : Entity
   private Quaternion savedCameraRotation;
 
   //For setting the borderSize
-  private Vector3 bigBorderScale = new Vector3(2.340f, 0.790f, 0.771f);
-  private Vector3 bigBorderPos = new Vector3(-0.004f, 0.030f, -2.810f);
-  private Vector3 smallBorderScale = new Vector3(1.150f, 0.360f, 0.411f);
-  private Vector3 smallBorderPos = new Vector3(1.620f, 0.001f, -2.810f);
+  private Vector3 smallBorderScale = new Vector3(12.320f, 12.820f, 12.820f);
+  private Vector3 bigBorderScale = new Vector3(24.800f, 26.220f, -0.800f);
+  private Vector3 smallBorderPos = new Vector3(10.200f, -0.100f, -0.010f);
+  private Vector3 bigBorderPos = new Vector3(0.360f, 0.4f, -0.010f);\
+
+
+  //  private Vector3 bigBorderScale = new Vector3(2.340f, 0.790f, 0.771f);
+  //private Vector3 bigBorderPos = new Vector3(-0.004f, 0.030f, -2.810f);
+  //private Vector3 smallBorderScale = new Vector3(1.150f, 0.360f, 0.411f);
+  //private Vector3 smallBorderPos = new Vector3(1.620f, 0.001f, -2.810f);
 
   private HoldupUI currentImg;
   private string picture;
