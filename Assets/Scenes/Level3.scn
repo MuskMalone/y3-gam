@@ -172,6 +172,40 @@
             ],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PaintingMatchObject",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9407064822443940162
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.4886460304260255
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "Player",
                         "isActive": true
