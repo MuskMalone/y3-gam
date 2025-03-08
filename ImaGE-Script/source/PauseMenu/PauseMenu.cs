@@ -11,6 +11,8 @@ public class PauseMenu : Entity
   private PauseMenuButtons MainMenuButtonScript;
   private PauseMenuButtons SettingsButtonScript;
 
+  public PlayerMove playerMove;
+
   public bool IsPaused = false;
 
   private float TargetZMenu = 2f;
@@ -111,6 +113,7 @@ public class PauseMenu : Entity
   private void PauseGame()
   {
     IsPaused = true;
+    playerMove.FreezePlayer();
     SetActive(true);
     InternalCalls.ShowCursor();
     Debug.Log("Game Paused");
@@ -135,6 +138,7 @@ public class PauseMenu : Entity
   private void ResumeGame()
   {
     IsPaused = false;
+    playerMove.UnfreezePlayer();
     SetActive(false);
     SetAllButtonsInactive();
     InternalCalls.HideCursor();
