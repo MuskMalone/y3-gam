@@ -67,16 +67,21 @@ public class PictureAlign : Entity
     // for inventory checks
     public bool isFading = false;
 
+    //For pit puzzle
+    private PitPuzzle pitPuzzleScript;
+
     void Start()
     {
         //tutorialFade = FindObjectOfType<TutorialFade>();
         // Initialize the movement and camera control components
-    playerMove = player.FindObjectOfType<PlayerMove>();
+        playerMove = player.FindObjectOfType<PlayerMove>();
 
         corridorTransitionFadeScript = FindObjectOfType<CorridorTransitionFade>();
         controlPanelScript = FindObjectOfType<ControlPanel2>();
 
-    if (playerMove == null) Debug.LogError("PlayerMove component not found!");
+        if (playerMove == null) Debug.LogError("PlayerMove component not found!");
+
+        pitPuzzleScript = FindObjectOfType<PitPuzzle>();
 
     }
 
@@ -269,6 +274,22 @@ public class PictureAlign : Entity
                 playerMove.UnfreezePlayer();
                 isTransitioning = false;
                 currentImg.Level2RemoveItself();
+                currentImg = null;
+                hasFaded = false;
+            }
+        }
+        else if (picture == "PitPainting")
+        {
+            FadeOut();
+            //controlPanelScript.SwitchMode(ControlPanel2.StatueType.POSEIDON);
+            pitPuzzleScript.switchPlanks();
+            if (hasFaded)
+            {
+                currentImg.SetActive(false);
+                SetActive(false);
+                playerMove.UnfreezePlayer();
+                isTransitioning = false;
+                currentImg.Level3RemoveItself();
                 currentImg = null;
                 hasFaded = false;
             }

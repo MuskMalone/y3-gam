@@ -17,18 +17,18 @@ public class Level3Inventory : Entity
     public bool isVisible = false;
 
     // Inventory Item UI (Image at the bottom right)
-    //public Entity tutorialPaintingUI;
+    public Entity pitPaintingUI;
     public Entity hammerUI;
 
     // Inventory Item Selection (Image in the inventory bar)
-    //public Entity tutorialPaintingSelection;
+    public Entity pitPaintingSelection;
     public Entity hammerSelection;
 
     // Inventory Tools
     public Entity inventorySelectSquare;
     public Entity selectionHand;
     public Entity inventoryImage;
-    //private PictureAlign pictureAlignscript;
+    private PictureAlign pictureAlignscript;
 
     //public Vec3<float>[] SlotPositionList;
     // Workaround for lack of Vec3<float>[]
@@ -64,7 +64,7 @@ public class Level3Inventory : Entity
     private Vector2 currentHandScale;
 
     //Painting Alignment UI
-    //private PaintingAlignUILevel3 paintingAlignUILevel3Script;
+    private PaintingAlignUILevel3 paintingAlignUILevel3Script;
 
     void Start()
     {
@@ -80,17 +80,17 @@ public class Level3Inventory : Entity
         inventoryImage?.SetActive(false);
         selectionHand?.SetActive(false);
 
-        //tutorialPaintingUI?.SetActive(false);
+        pitPaintingUI?.SetActive(false);
         hammerUI?.SetActive(false);
 
 
         Vector3 startPosition = new Vector3(12.0f, -4.0f, 0f);
-        //InternalCalls.SetPosition(tutorialPaintingUI.mEntityID, ref startPosition);
+        InternalCalls.SetPosition(pitPaintingUI.mEntityID, ref startPosition);
         InternalCalls.SetPosition(hammerUI.mEntityID, ref startPosition);
 
-        //pictureAlignscript = FindObjectOfType<PictureAlign>();
+        pictureAlignscript = FindObjectOfType<PictureAlign>();
 
-        //paintingAlignUILevel3Script = FindObjectOfType<PaintingAlignUILevel3>();
+        paintingAlignUILevel3Script = FindObjectOfType<PaintingAlignUILevel3>();
     }
 
     public void Additem(IInventoryItem item)
@@ -328,14 +328,15 @@ public class Level3Inventory : Entity
 
         switch (itemName)
         {
-            //case "TutorialPainting":
-            //    tutorialPaintingUI?.SetActive(true);
-            //    tutorialPaintingUI?.FindScript<HoldupUI>().SetAlginUI("TutorialPainting", GetItemByName("TutorialPainting"));
-            //    break;
+            case "PitPainting":
+                pitPaintingUI?.SetActive(true);
+                pitPaintingUI?.FindScript<HoldupUI>().SetAlginUI("PitPainting", GetItemByName("PitPainting"));
+                paintingAlignUILevel3Script.isPainting = true;
+                break;
             case "Hammer":
                 hammerUI?.SetActive(true);
                 hammerEquipped = true;
-                //paintingAlignUILevel3Script.isPainting = false;
+                paintingAlignUILevel3Script.isPainting = false;
                 break;
 
         }
@@ -343,11 +344,11 @@ public class Level3Inventory : Entity
 
     private void DisableAllUI()
     {
-        //tutorialPaintingUI?.SetActive(false);
+        pitPaintingUI?.SetActive(false);
         hammerUI?.SetActive(false);
         hammerEquipped = false;
-        //pictureAlignscript.ClearUI();
-        //paintingAlignUILevel3Script.isPainting = false;
+        pictureAlignscript.ClearUI();
+        paintingAlignUILevel3Script.isPainting = false;
 
     }
 
