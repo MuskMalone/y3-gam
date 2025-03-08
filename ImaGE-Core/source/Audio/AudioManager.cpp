@@ -477,7 +477,8 @@ namespace IGE {
 
         void AudioManager::StopSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& setting)
         {
-            while (setting.channels.size()) {
+            auto sz = setting.channels.size();
+            for (uint64_t i{}; i < sz; ++i) {
                 (*setting.channels.begin())->stop();
             }
             setting.paused = false;
@@ -575,22 +576,23 @@ namespace IGE {
             FMOD::Channel* channel = reinterpret_cast<FMOD::Channel*>(chanCtrl);
             int loopCount{ };
             channel->getLoopCount(&loopCount);
-            if (loopCount != 0) return FMOD_OK;
             //if (channel->getLoopCount())
             void* userData = nullptr;
             channel->getUserData(&userData);
             
-            if (userData && !IGE::Audio::AudioManager::GetInstance().mSceneStopped) {
-                try {
-                    SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
-                    settings->channels.erase(channel); // Remove channel from active list
+
+            try {
+                SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
+                if (userData && !IGE::Audio::AudioManager::GetInstance().mSceneStopped) {
+                    if (loopCount == 0)
+                        settings->channels.erase(channel); // Remove channel from active list
+                }
 #ifdef AUDIO_VERBOSE
-                    Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
+                Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
 #endif
-                }
-                catch (...) {
-                    Debug::DebugLogger::GetInstance().LogWarning("audio instance doesnt exist");
-                }
+            }
+            catch (...) {
+                Debug::DebugLogger::GetInstance().LogWarning("audio instance doesnt exist");
             }
             return FMOD_OK;
         }

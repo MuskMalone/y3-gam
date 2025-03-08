@@ -93,6 +93,7 @@
     <Compile Include="source\Cutscene\TutorialCutscene.cs" />
     <Compile Include="source\Dialogue\Dialogue.cs" />
     <Compile Include="source\Dialogue\SpecialDialogue.cs" />
+    <Compile Include="source\DynamicAudio\BGMLevel1.cs" />
     <Compile Include="source\Engine Tools\Easing.cs" />
     <Compile Include="source\Engine Tools\FPS.cs" />
     <Compile Include="source\InteractableObject\AltarPaintingFrame.cs" />
@@ -175,7 +176,7 @@
     <Compile Include="source\PauseMenu\PauseMenuButtons.cs" />
     <Compile Include="source\Player\CameraCapture.cs" />
     <Compile Include="source\Player\InputManager.cs" />
-    <Compile Include="source\Player\PlayerFootsteps.cs" />
+    <Compile Include="source\DynamicAudio\PlayerFootsteps.cs" />
     <Compile Include="source\Player\PlayerInteraction.cs" />
     <Compile Include="source\Player\PlayerMove.cs" />
     <Compile Include="source\SelectionManager.cs" />

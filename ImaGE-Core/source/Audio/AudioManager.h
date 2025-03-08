@@ -53,6 +53,7 @@ namespace IGE {
 				FMOD_CHANNELCONTROL_CALLBACK_TYPE callbackType, void* commanddata1, void* commanddata2);
 			mutable std::unordered_set<FMOD::Channel*> channels; // not for imgui
 			mutable bool paused{ false }; // not fo rimgui
+			mutable bool manualStop{ false }; // not for imgui
 		};
 
 		struct Sound {
