@@ -30,8 +30,8 @@ using IGE.Utils;
 
 public class DeathTrigger : Entity
 {
-    public Entity deathbox;
-    public Entity player;
+    public PlayerMove playerMove;
+    private Vector3 respawnPosition = new Vector3(-43, -0.565f, -64.572f);
     // Start is called before the first frame update
     void Start()
     {
@@ -41,9 +41,10 @@ public class DeathTrigger : Entity
     // Update is called once per frame
     void Update()
     {
-        if (InternalCalls.OnTriggerEnter(deathbox.mEntityID, player.mEntityID))
+        if (InternalCalls.OnTriggerEnter(mEntityID, playerMove.mEntityID))
         {
-            Console.WriteLine("death triggered");
+            //Console.WriteLine("death triggered");
+            InternalCalls.SetPosition(playerMove.mEntityID, ref respawnPosition);
         }
     }
 

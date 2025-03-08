@@ -8945,6 +8945,67 @@
             ]
         },
         {
+            "ID": 172,
+            "Parent": 3145772,
+            "Child Entities": [
+                1048948
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Triggers",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 175,
             "Parent": 122,
             "Child Entities": [],
@@ -25332,7 +25393,7 @@
         },
         {
             "ID": 1048948,
-            "Parent": 2097554,
+            "Parent": 172,
             "Child Entities": [],
             "Components": [
                 {
@@ -25345,7 +25406,7 @@
                     "Transform": {
                         "position": {
                             "x": -42.196998596191409,
-                            "y": -24.8966064453125,
+                            "y": -34.541412353515628,
                             "z": -97.99800109863281
                         },
                         "scale": {
@@ -25366,7 +25427,7 @@
                         },
                         "worldPos": {
                             "x": -42.196998596191409,
-                            "y": -24.8966064453125,
+                            "y": -34.541412353515628,
                             "z": -97.99800109863281
                         },
                         "worldScale": {
@@ -25390,7 +25451,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 9688658947475917145
                         }
                     }
                 },
@@ -25441,22 +25502,12 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
-                                            "entityID": 1048948,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "deathbox"
-                                        }
-                                    },
-                                    {
-                                        "data": {
                                             "entityID": 2,
-                                            "scriptName": "Entity"
+                                            "scriptName": "PlayerMove"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
-                                            "fieldName": "player"
+                                            "fieldName": "playerMove"
                                         }
                                     }
                                 ]
@@ -27846,7 +27897,6 @@
                 1048890,
                 1048891,
                 1048906,
-                1048948,
                 1048982,
                 1049654,
                 1049656,
@@ -28477,6 +28527,7 @@
             "Parent": null,
             "Child Entities": [
                 61,
+                172,
                 320,
                 332,
                 2097554
