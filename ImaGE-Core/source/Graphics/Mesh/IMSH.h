@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <string>
 #include <vector>
 #include <Graphics/Mesh/MeshSource.h>
+#include "MeshImport.h"
 
 // forward declarations
 struct aiScene; struct aiNode;
@@ -22,11 +23,6 @@ typedef aiMatrix4x4t<float> aiMatrix4x4;
 
 namespace Graphics::AssetIO
 {
-  struct ImportSettings {
-    bool staticMesh = false;
-    bool recenterMesh = true, normalizeScale = true, flipUVs = false;
-  };
-
   class IMSH
   {
   public:
@@ -97,28 +93,3 @@ namespace Graphics::AssetIO
   };
 
 } // namespace Graphics::AssetIO
-
-
-// don't think we'll ever need this
-#ifdef OLD_STUFF
-struct MeshImportFlags
-{
-  MeshImportFlags() : boneWeights{ false }, animations{ false },
-    lights{ false }, cameras{ false }, materials{ false } {}
-
-  inline bool IsDefault() const noexcept { return !(boneWeights || animations || lights || cameras || materials); }
-  int GetFlags() const {
-    int ret{};
-    if (!animations) { ret |= aiComponent_ANIMATIONS; }
-    if (!boneWeights) { ret |= aiComponent_BONEWEIGHTS; }
-    if (!cameras) { ret |= aiComponent_CAMERAS; }
-    if (!materials) { ret |= aiComponent_MATERIALS; }
-    if (!lights) { ret |= aiComponent_LIGHTS; }
-
-    return ret;
-  }
-
-  bool boneWeights, animations, lights, cameras, materials;
-};
-#endif
-
