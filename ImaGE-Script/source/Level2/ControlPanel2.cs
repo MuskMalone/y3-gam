@@ -30,347 +30,261 @@ using System.Numerics;
 
 public class ControlPanel2 : Entity
 {
-    public PlayerInteraction playerInteraction;
-    public Entity UVLight;
-    public Entity[] hiddenText0;
-    public Entity[] hiddenText1;
-    public Entity[] hiddenText2;
-    public Entity[] hiddenText3;
-    public Entity zeusStatue;
-    public Entity poseidonStatue;
-    public Entity artemisStatue;
-    public Entity dionysusStatue;
+	public PlayerInteraction playerInteraction;
+	public Entity UVLight;
+	public Entity[] hiddenText0;
+	public Entity[] hiddenText1;
+	public Entity[] hiddenText2;
+	public Entity[] hiddenText3;
+	public Entity zeusStatue;
+	public Entity poseidonStatue;
+	public Entity artemisStatue;
+	public Entity dionysusStatue;
 
-    public bool zeusStatueVisible = false;
-    public bool poseidonStatueVisible = false;
-    public bool artemisStatueVisible = false;
-    public bool dionysusStatueVisible = false;
+	private Entity[][] hiddenTexts; // Stores all hidden texts for each mode
+	public Entity playerCamera;
+	public Entity controlPanelCamera;
+	public PlayerMove playerMove;
+	public float rotationSpeed = 50.0f; // degrees per second
 
+	public float minVerticalRotation = -17.0f; // Minimum pitch
+	public float maxVerticalRotation = 25.0f;  // Maximum pitch
+	public float minHorizontalRotation = -36.0f; // Minimum yaw
+	public float maxHorizontalRotation = 32.0f;  // Maximum yaw
 
-    //public Entity[][] hiddenTexts; // Stores all hidden texts for each mode
-    public int activeModeIndex = 0;
-    public Entity playerCamera;
-    public Entity controlPanelCamera;
-    public PlayerMove playerMove;
-    public float rotationSpeed = 50.0f; // degrees per second
+	// also used for indexing hiddenTexts arr
+	public enum StatueType
+	{
+		ZEUS = 0,
+		DIONYSUS,
+		POSEIDON,
+		ARTEMIS
+	}
+	private StatueType currStatue = StatueType.ZEUS;	// current statue in place
 
-    public float minVerticalRotation = -17.0f; // Minimum pitch
-    public float maxVerticalRotation = 25.0f;  // Maximum pitch
-    public float minHorizontalRotation = -36.0f; // Minimum yaw
-    public float maxHorizontalRotation = 32.0f;  // Maximum yaw
+	private enum State
+	{
+		CLOSED,			// door closed (pre-animation)
+		OPEN,			// unlocked, interaction is allowed
+		CONTROL_PANEL,	// when interacting with lights ON
+		UV_LIGHT		// UV light (when lights off)
+	}
 
-    private bool controllingLights = false;
-    public int currMode = 1;
-    //public LightSwitch lightSwitch;
-    public Entity[] LightsToToggleActive;
+	private State currState = State.CLOSED;
+	private bool areLightsOn = true;
 
-    private bool isUVLightActive = false;
-    private bool areNumbersActive = false;
-    public ControlPanel2() : base()
-    {
+	public ControlPanel2() : base()
+	{
 
-    }
+	}
 
-    void Start()
-    {
-        if (playerMove == null)
-        {
-            Debug.LogError("[ControlPanel2.cs] PlayerMove Script Entity not found!");
-            return;
-        }
+	void Start()
+	{
+		if (playerMove == null)
+		{
+			Debug.LogError("[ControlPanel2.cs] PlayerMove Script Entity not found!");
+			return;
+		}
 
-        foreach (Entity text in hiddenText0)
-        {
-            text?.SetActive(false);
-        }
+		// workaround since inspector cant display 2D Entity array
+		InitHiddenTexts();
 
-        foreach (Entity text in hiddenText1)
-        {
-            text?.SetActive(false);
-        }
+		zeusStatue.SetActive(true);
+		poseidonStatue.SetActive(false);
+		artemisStatue.SetActive(false);
+		dionysusStatue.SetActive(false);
 
-        foreach (Entity text in hiddenText2)
-        {
-            text?.SetActive(false);
-        }
+		UVLight.SetActive(false);
+	}
 
-        foreach (Entity text in hiddenText3)
-        {
-            text?.SetActive(false);
-        }
+	void Update()
+	{
+		switch (currState)
+		{
+			// after control panel animation has triggered
+			case State.OPEN:
+				bool mouseClicked = Input.GetMouseButtonTriggered(0);
+				bool isPanelHit = playerInteraction.RayHitString == "ControlPanel";
 
-        zeusStatue.SetActive(true);
-        poseidonStatue.SetActive(false);
-        artemisStatue.SetActive(false);
-        dionysusStatue.SetActive(false);
+				if (mouseClicked && isPanelHit)
+				{
+                    Debug.Log("HIT");
+                    InternalCalls.PlaySound(mEntityID, "UVLight");
+					SetControlPanelCameraAsMain();
+					playerMove.FreezePlayer();
 
-        UVLight.SetActive(false);
-    }
+					// transition to the next state depending on whether lights are on
+					if (!areLightsOn)
+					{
+						SetHiddenText(currStatue, true);
+						UVLight.SetActive(true);
+						currState = State.UV_LIGHT;
+					}
+					else
+					{
+						currState = State.CONTROL_PANEL;
+					}
+				}
 
-    void Update()
-    {
-        bool mouseClicked = Input.GetMouseButtonTriggered(0);
-        bool isPanelHit = playerInteraction.RayHitString == "ControlPanel2";
-        
-        //when painting used
-        if(!controllingLights)
-        {
-            //if(Input.GetKeyDown(KeyCode.N))
-            if(!dionysusStatueVisible && zeusStatueVisible && !poseidonStatueVisible && !artemisStatueVisible)
-            {
-                if (AreAllLightsOff() && isUVLightActive)
-                {
-                    DisableMode(currMode);
-                }
-                currMode = 1;
-                DisableAllStatues();
-                zeusStatue.SetActive(true);
-                if(AreAllLightsOff() && isUVLightActive)
-                {
-                    SwitchMode(currMode);
-                }
+				break;
+
+			// no UV light: simply check for ESC input
+			case State.CONTROL_PANEL:
                 
-                //SwitchMode(0);
-            }
-            //else if(Input.GetKeyDown(KeyCode.M))
-            else if (!dionysusStatueVisible && !zeusStatueVisible && poseidonStatueVisible && !artemisStatueVisible)
-            {
-                if (AreAllLightsOff() && isUVLightActive)
-                {
-                    DisableMode(currMode);
-                }
-                currMode = 2;
-                DisableAllStatues();
-                poseidonStatue.SetActive(true);
-                if (AreAllLightsOff() && isUVLightActive)
-                {
-                    SwitchMode(currMode);
-                }
-                //SwitchMode(1);
-            }
-            //else if (Input.GetKeyDown(KeyCode.Y))
-            else if (!dionysusStatueVisible && !zeusStatueVisible && !poseidonStatueVisible && artemisStatueVisible)
-            {
-                
-                if (AreAllLightsOff() && isUVLightActive)
-                {
-                    //Console.WriteLine("currMode before" + currMode);
-                    DisableMode(currMode);
-                }
-                currMode = 3;
-                DisableAllStatues();
-                artemisStatue.SetActive(true);
-                //Console.WriteLine("currMode after" + currMode);
-                if (AreAllLightsOff() && isUVLightActive)
-                {
-                    
-                    SwitchMode(currMode);
-                }
-                //SwitchMode(1);
-            }
-            //else if (Input.GetKeyDown(KeyCode.U))
-            else if (dionysusStatueVisible && !zeusStatueVisible && !poseidonStatueVisible && !artemisStatueVisible) 
-            {
-                if (AreAllLightsOff() && isUVLightActive)
-                {
-                    DisableMode(currMode);
-                }
-                currMode = 4;
-                DisableAllStatues();
-                dionysusStatue.SetActive(true);
-                if (AreAllLightsOff() && isUVLightActive)
-                {
-                    SwitchMode(currMode);
-                }
-                //SwitchMode(1);
-            }
-        }
+                if (Input.GetKeyTriggered(KeyCode.ESCAPE))
+				{
+					playerMove.UnfreezePlayer();
+					SetPlayerCameraAsMain();
 
-        //i can use the control panel
-        if (mouseClicked && isPanelHit)
-        {
-            InternalCalls.PlaySound(mEntityID, "UVLight");
-            SetControlPanelCameraAsMain();
-            controllingLights = true;
+					currState = State.OPEN; // return to OPEN state
+				}
+				break;
 
-            //if the lights are off
-            if (AreAllLightsOff())
-            {
-                //i turn on the currentmode number
-                SwitchMode(currMode);
-                //numbers are visible
-                areNumbersActive = true;
-            }
-        }
+			// UV light: enable controls and check for ESC input
+			case State.UV_LIGHT:
+				Vector3 currentRotation = InternalCalls.GetRotationEuler(UVLight.mEntityID);
+				float deltaTime = Time.deltaTime;
+				bool playerInput = false;
 
-        //if the light are on
-        if(!AreAllLightsOff())
-        {
-            //i turn off the numbers
-            DisableMode(currMode);
-            //numbers are invisible
-            areNumbersActive = false;
-        }
-        //if the lights are off and the numbers are invisible
-        if(AreAllLightsOff() && !areNumbersActive)
-        {
-            //turn on the numbers
-            SwitchMode(currMode);
-            //numbers visible
-            areNumbersActive = true;
-        }
+				if (Input.GetKeyDown(KeyCode.W))
+				{
+					//Console.WriteLine("Entered W");
+					currentRotation.X += rotationSpeed * deltaTime;
+					playerInput = true;
+				}
+				if (Input.GetKeyDown(KeyCode.S))
+				{
+					//Console.WriteLine("Entered S");
+					currentRotation.X -= rotationSpeed * deltaTime;
+					playerInput = true;
+				}
+				if (Input.GetKeyDown(KeyCode.A))
+				{
+					currentRotation.Y += rotationSpeed * deltaTime;
+					playerInput = true;
+				}
+				if (Input.GetKeyDown(KeyCode.D))
+				{
+					currentRotation.Y -= rotationSpeed * deltaTime;
+					playerInput = true;
+				}
 
-        
-        if (controllingLights)
-        {
-            if(!isUVLightActive)
-            {
-                UVLight.SetActive(true);
-                isUVLightActive = true;
-            }
-            playerMove.FreezePlayer();
-            Vector3 currentRotation = InternalCalls.GetRotationEuler(UVLight.mEntityID);
-            float deltaTime = Time.deltaTime;
+				// only update if there was input
+				if (playerInput)
+				{
+					currentRotation.X = Mathf.Clamp(currentRotation.X, minVerticalRotation, maxVerticalRotation);
+					currentRotation.Y = Mathf.Clamp(currentRotation.Y, minHorizontalRotation, maxHorizontalRotation);
+					InternalCalls.SetRotationEuler(UVLight.mEntityID, ref currentRotation);
+				}
 
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                //Console.WriteLine("Entered W");
-                currentRotation.X += rotationSpeed * deltaTime;
-            }
+				if (Input.GetKeyTriggered(KeyCode.ESCAPE))
+				{
+					playerMove.UnfreezePlayer();
+                    SetPlayerCameraAsMain();
 
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                //Console.WriteLine("Entered S");
-                currentRotation.X -= rotationSpeed * deltaTime;
-            }
+					// hide the hiddenText
+					SetHiddenText(currStatue, false);
+                    UVLight.SetActive(false);
+					currState = State.OPEN; // return to OPEN state
+				}
+				break;
 
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                currentRotation.Y += rotationSpeed * deltaTime;
-            }
+			// do nothing
+			case State.CLOSED:
+				break;
+			default:
+				break;
+		}
+	}
 
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                currentRotation.Y -= rotationSpeed * deltaTime;
-            }
+	// called by PictureAlign when painting is used
+	public void SwitchMode(StatueType statue)
+	{
+		// set the next statue as the only active
+		DisableAllStatues();
+		switch (statue)
+		{
+			case StatueType.ZEUS:
+				zeusStatue.SetActive(true);
+				break;
+			case StatueType.POSEIDON:
+				poseidonStatue.SetActive(true);
+				break;
+			case StatueType.ARTEMIS:
+				artemisStatue.SetActive(true);
+				break;
+			case StatueType.DIONYSUS:
+				dionysusStatue.SetActive(true);
+				break;
+			default:
+				break;
+		}
 
-            currentRotation.X = Mathf.Clamp(currentRotation.X, minVerticalRotation, maxVerticalRotation);
-            currentRotation.Y = Mathf.Clamp(currentRotation.Y, minHorizontalRotation, maxHorizontalRotation);
-            InternalCalls.SetRotationEuler(UVLight.mEntityID, ref currentRotation);
+		// update the current statue
+		currStatue = statue;
+	}
 
-            if (Input.GetKeyTriggered(KeyCode.ESCAPE))
-            {
-                controllingLights = false;
-                playerMove.UnfreezePlayer();
-                //DisableMode(currMode);
-                
-                SetPlayerCameraAsMain();
-            }
-        }
+	// called by LightSwitch when toggled
+	public void LightsToggled(bool isOn)
+	{
+        areLightsOn = isOn;
+	}
 
-        //UVLight.SetActive(controllingLights);
+	// called by ControlPanelDoor when animation begins
+	public void Unlock()
+	{
+		currState = State.OPEN;
+        SetActive(true);
     }
 
-    private void SetPlayerCameraAsMain()
-    {
-        InternalCalls.SetTag(playerCamera.mEntityID, "MainCamera");
-        InternalCalls.SetTag(controlPanelCamera.mEntityID, "PanelCamera");
-    }
+	private void SetPlayerCameraAsMain()
+	{
+		InternalCalls.SetTag(playerCamera.mEntityID, "MainCamera");
+		InternalCalls.SetTag(controlPanelCamera.mEntityID, "PanelCamera");
+	}
 
-    private void SetControlPanelCameraAsMain()
-    {
-        InternalCalls.SetTag(playerCamera.mEntityID, "PlayerCamera");
-        InternalCalls.SetTag(controlPanelCamera.mEntityID, "MainCamera");
-    }
+	private void SetControlPanelCameraAsMain()
+	{
+		InternalCalls.SetTag(playerCamera.mEntityID, "PlayerCamera");
+		InternalCalls.SetTag(controlPanelCamera.mEntityID, "MainCamera");
+	}
 
-    private bool AreAllLightsOff()
-    {
-        foreach (Entity light in LightsToToggleActive)
-        {
-            if (light.IsActive())
-            {
-                return false;
-            }
-        }
-        return true;
-    }
+	public void SetHiddenText(StatueType statue, bool active)
+	{
+		foreach (Entity text in hiddenTexts[(int)statue])
+		{
+			text?.SetActive(active);
+		}
+	}
 
-    public void DisableMode(int index)
-    {
-        if (index == 1)
-        {
-            foreach (Entity text in hiddenText0)
-            {
-                text?.SetActive(false);
-            }
-        }
-        else if (index == 2)
-        {
-            foreach (Entity text in hiddenText1)
-            {
-                text?.SetActive(false);
-            }
-        }
-        else if (index == 3)
-        {
-            foreach (Entity text in hiddenText2)
-            {
-                text?.SetActive(false);
-            }
-        }
-        else if (index == 4)
-        {
-            foreach (Entity text in hiddenText3)
-            {
-                text?.SetActive(false);
-            }
-        }
-    }
+	public void DisableAllStatues()
+	{
+		zeusStatue.SetActive(false);
+		poseidonStatue.SetActive(false);
+		artemisStatue.SetActive(false);
+		dionysusStatue.SetActive(false);
+	}
 
-    public void DisableAllStatues()
-    {
-        zeusStatue.SetActive(false);
-        poseidonStatue.SetActive(false);
-        artemisStatue.SetActive(false);
-        dionysusStatue.SetActive(false);
-    }
+	private void InitHiddenTexts()
+	{
+		hiddenTexts = new Entity[4][];
+		hiddenTexts[0] = hiddenText0?.ToArray();
+		hiddenTexts[1] = hiddenText1?.ToArray();
+		hiddenTexts[2] = hiddenText2?.ToArray();
+		hiddenTexts[3] = hiddenText3?.ToArray();
 
+		// hide all hiddenText
+		for (int i = 0; i < 4; ++i)
+		{
+			foreach (Entity text in hiddenTexts[i])
+			{
+				text?.SetActive(false);
+			}
+		}
 
-    public void SwitchMode(int index)
-    {
-        if (index == 1)
-        {
-            foreach (Entity text in hiddenText0)
-            {
-                text?.SetActive(true);
-            }
-            
-        }
-        else if (index == 2)
-        {
-            foreach (Entity text in hiddenText1)
-            {
-                text?.SetActive(true);
-            }
-            
-        }
-        else if (index == 3)
-        {
-            foreach (Entity text in hiddenText2)
-            {
-                text?.SetActive(true);
-            }
-            
-        }
-        else if (index == 4)
-        {
-            foreach (Entity text in hiddenText3)
-            {
-                text?.SetActive(true);
-            }
-            
-        }
-    }
+		// we'll only use the 2D array during runtime
+		hiddenText0 = hiddenText1 = hiddenText2 = hiddenText3 = null;
+	}
 }
 
 

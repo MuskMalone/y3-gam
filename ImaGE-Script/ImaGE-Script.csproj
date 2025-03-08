@@ -107,6 +107,7 @@
     <Compile Include="source\InteractableObject\HammerLevel3.cs" />
     <Compile Include="source\InteractableObject\Key.cs" />
     <Compile Include="source\InteractableObject\KeyDoor.cs" />
+    <Compile Include="source\InteractableObject\Ladder.cs" />
     <Compile Include="source\InteractableObject\LightFlicker.cs" />
     <Compile Include="source\InteractableObject\LightSwitch.cs" />
     <Compile Include="source\InteractableObject\NightPainting.cs" />
@@ -131,12 +132,16 @@
     <Compile Include="source\Inventory\TutorialLevelHUD.cs" />
     <Compile Include="source\Inventory\TutorialLevelInventory.cs" />
     <Compile Include="source\Level2\ControlPanel2.cs" />
+    <Compile Include="source\Level2\ControlPanelDoor.cs" />
     <Compile Include="source\Level2\CorridorTransitionFade.cs" />
     <Compile Include="source\Level2\LevelEndFade.cs" />
     <Compile Include="source\Level2\LevelStartFade.cs" />
+    <Compile Include="source\Level2\Lvl2IntroCutscene.cs" />
+    <Compile Include="source\Level2\NumberPad.cs" />
     <Compile Include="source\Level2\OdysseusNoteInteraction.cs" />
     <Compile Include="source\Level2\PamphletNoteInteraction.cs" />
     <Compile Include="source\Level2\TransitionToLevel3.cs" />
+    <Compile Include="source\Level3\EyeballFollow.cs" />
     <Compile Include="source\Level3\Level3Dialogue.cs" />
     <Compile Include="source\Level3\PitPuzzle.cs" />
     <Compile Include="source\MainMenu\CDDragAndDrop.cs" />
@@ -192,8 +197,6 @@
     <Compile Include="source\Tutorial\TutorialFade.cs" />
     <Compile Include="source\Tutorial\WASDTutorial.cs" />
     <Compile Include="source\tttt.cs" />
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
