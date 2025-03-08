@@ -1645,6 +1645,10 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
             }
             std::cout << l.color.r << "\n";
           }
+
+          if (gchild.GetTag() == "CeilingLightBloom") {
+            gchild.SetIsActive(true);
+          }
         }
       }
       else if(child.GetTag() == "Tools Spotlight")
@@ -1680,11 +1684,20 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
    
   for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
   {
+    ECS::Entity parentEntity = ECS::EntityManager::GetInstance().GetParentEntity(child);
+    parentEntity.SetIsActive(true);
+    ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(parentEntity);
+    /*
     std::string n = child.GetTag();
     if (n == "Light")
     {
       child.SetIsActive(true);
     }
+
+    if (n == "PseudoLampBloom") {
+      child.SetIsActive(true);
+    }
+    */
   }
 
 
