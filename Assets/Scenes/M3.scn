@@ -6,6 +6,9 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "AudioListener": {}
+                },
+                {
                     "Tag": {
                         "tag": "MainCamera",
                         "isActive": true
@@ -1302,7 +1305,7 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "..\\Assets\\Audio\\GardenAmbience_BGM.wav",
+                                "key": "Ambience",
                                 "value": {
                                     "guid": {
                                         "ID": 1367675903760881373
@@ -1327,7 +1330,7 @@
                                 }
                             },
                             {
-                                "key": "..\\Assets\\Audio\\Picture Perfect - BGM1_Vers1_Loop.wav",
+                                "key": "BGM",
                                 "value": {
                                     "guid": {
                                         "ID": 12594617213081250855
@@ -1646,6 +1649,60 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "isFading"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 40,
+                                "scriptName": "PlayerFootsteps",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "ambienceVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.07000000029802323,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "bgmVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "footstepVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "interval"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "player"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMoveScript"
                                         }
                                     }
                                 ]
@@ -2813,6 +2870,27 @@
                                 "entityID": 51,
                                 "scriptName": "PlayerFootsteps",
                                 "scriptFieldInstList": [
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "ambienceVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.10000000149011612,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "bgmVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "footstepVolume"
+                                        }
+                                    },
                                     {
                                         "data": 0.6000000238418579,
                                         "type": "System.Single",

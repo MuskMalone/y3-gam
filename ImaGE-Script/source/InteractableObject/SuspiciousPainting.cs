@@ -30,7 +30,7 @@ public class SuspiciousPainting : Entity
     {
       case State.ON_WALL:
         bool isPaintingHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-        if (Input.GetMouseButtonTriggered(0) && isPaintingHit)
+        if (isPaintingHit && Input.GetMouseButtonTriggered(0))
         {
           InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), dropAnimName);
 

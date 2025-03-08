@@ -132,6 +132,7 @@ bool Inspector::DrawOptionsListButton(std::string const& windowName) {
 
       // Clear component
       if (DrawOptionButton("Clear")) {
+        ent.GetComponent<ComponentType>().Clear();
         if (std::is_same<Component::Layer, ComponentType>()) {
           ent.SetLayer("Default");
         }

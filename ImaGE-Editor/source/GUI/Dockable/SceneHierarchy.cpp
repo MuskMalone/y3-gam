@@ -34,6 +34,7 @@ namespace {
   static bool sJumpToEntity{ false };
   // have to use these bools cause we can't get ImGui ID stack out of window scope
   static bool sSaveHierarchyState{ false }, sLoadHierarchyState{ false };
+  static std::string sSearchQuery{};
 
   void RemovePrefabOverrides(ECS::Entity root, IGE::Assets::GUID guid);
   ECS::Entity GetPrefabRoot(ECS::Entity root);
@@ -42,6 +43,9 @@ namespace {
 
   void ReassignSubmeshIndices(ECS::Entity root);
   ECS::Entity GetCanvasEntity();
+  std::string ToLower(const std::string& str);
+  bool HasSearchMatch(const std::string& entityName, const std::string& searchQuery);
+  bool EntityOrDescendantMatches(ECS::Entity entity, const std::string& searchQuery);
 }
 
 namespace GUI
@@ -68,7 +72,9 @@ namespace GUI
   void SceneHierarchy::Run()
   {
     ImGui::Begin(mWindowName.c_str());
-
+    // ***** NEW: Add Search Bar *****
+    ImGui::InputText("Search", &sSearchQuery);
+    // ********************************
     if (mSceneName.empty())
     {
       ImGui::Text("No Scene Selected");
@@ -248,13 +254,26 @@ namespace GUI
 
   void SceneHierarchy::RecurseDownHierarchy(ECS::Entity entity, float nodeToLabelSpacing)
   {
+      // ***** NEW: If search is active, skip branches with no match *****
+      if (!sSearchQuery.empty() && !EntityOrDescendantMatches(entity, sSearchQuery))
+          return;
+      // ****************************************************************
     bool const isCurrentEntity{ GUIVault::GetSelectedEntity() == entity || GUIVault::IsEntitySelected(entity)},
       isEditMode{ sEntityToRename == entity && sEditNameMode };
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
     bool const hasChildren{ mEntityManager.HasChild(entity) };
-    treeFlag |= hasChildren ? ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
-      : ImGuiTreeNodeFlags_Leaf;
+    //treeFlag |= hasChildren ? ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
+    //  : ImGuiTreeNodeFlags_Leaf;
+    
+    // When no search is active, use the normal flags.
+    // When a search is active, force nodes to be open to show matching children and their parents.
+    if (sSearchQuery.empty())
+        treeFlag |= hasChildren ? ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
+        : ImGuiTreeNodeFlags_Leaf;
+    else
+        treeFlag |= hasChildren ? (ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen)
+        : ImGuiTreeNodeFlags_Leaf;
 
     if (isCurrentEntity) { treeFlag |= ImGuiTreeNodeFlags_Selected; }
 
@@ -1001,5 +1020,38 @@ namespace {
   ECS::Entity GetCanvasEntity() {
     auto const canvases{ IGE_ENTITYMGR.GetAllEntitiesWithComponents<Component::Canvas>() };
     return canvases.empty() ? ECS::Entity() : canvases.front();
+  }
+
+  // Converts a string to lower-case.
+  std::string ToLower(const std::string& str) {
+      std::string lowerStr = str;
+      std::transform(lowerStr.begin(), lowerStr.end(), lowerStr.begin(),
+          [](unsigned char c) { return std::tolower(c); });
+      return lowerStr;
+  }
+
+  // Returns true if the given entity name contains the search query (case-insensitive)
+  bool HasSearchMatch(const std::string& entityName, const std::string& searchQuery) {
+      std::string lowerEntity = ToLower(entityName);
+      std::string lowerQuery = ToLower(searchQuery);
+      return lowerEntity.find(lowerQuery) != std::string::npos;
+  }
+
+  // Recursively checks if the entity or any of its descendants match the search.
+  bool EntityOrDescendantMatches(ECS::Entity entity, const std::string& searchQuery) {
+      // If search is empty, always match.
+      if (searchQuery.empty()) return true;
+
+      if (HasSearchMatch(entity.GetComponent<Component::Tag>().tag, searchQuery))
+          return true;
+
+      ECS::EntityManager& em = ECS::EntityManager::GetInstance();
+      if (em.HasChild(entity)) {
+          for (ECS::Entity child : em.GetChildEntity(entity)) {
+              if (EntityOrDescendantMatches(child, searchQuery))
+                  return true;
+          }
+      }
+      return false;
   }
 }

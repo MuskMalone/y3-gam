@@ -91,7 +91,8 @@ namespace Mono
     { "Level3Inventory", ScriptFieldType::LEVEL3INVENTORY },
     { "SpecialDialogue", ScriptFieldType::SPECIALDIALOGUE },
     { "KeyDoor", ScriptFieldType::KEYDOOR },
-    { "PictureAlign", ScriptFieldType::PICTUREALIGN }
+    { "PictureAlign", ScriptFieldType::PICTUREALIGN },
+    { "ControlPanel2", ScriptFieldType::CONTROLPANEL }
   };
 }
 

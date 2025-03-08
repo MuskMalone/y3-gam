@@ -359,6 +359,68 @@ namespace IGE {
                 }
             }
 
+            if (settings.enablePostProcessing)  // <-- You'll need to add this bool flag in SoundInvokeSetting
+            {
+                FMOD::DSP* dsp = nullptr;
+
+                switch (settings.processingType)
+                {
+                case SoundInvokeSetting::PostProcessingType::REVERB:
+                    result = mSystem->createDSPByType(FMOD_DSP_TYPE_SFXREVERB, &dsp);
+                    if (result == FMOD_OK && dsp)
+                    {
+                        // Set reverb-specific parameters (e.g., decay time)
+                        dsp->setParameterFloat(FMOD_DSP_SFXREVERB_DECAYTIME, settings.postProcessingParameter);
+                        // Additional reverb parameters can be set here
+                    }
+                    break;
+
+                case SoundInvokeSetting::PostProcessingType::ECHO:
+                    result = mSystem->createDSPByType(FMOD_DSP_TYPE_ECHO, &dsp);
+                    if (result == FMOD_OK && dsp)
+                    {
+                        dsp->setParameterFloat(FMOD_DSP_ECHO_DELAY, settings.postProcessingParameter);
+                        // You can adjust other echo parameters if desired
+                    }
+                    break;
+
+                case SoundInvokeSetting::PostProcessingType::DISTORTION:
+                    result = mSystem->createDSPByType(FMOD_DSP_TYPE_DISTORTION, &dsp);
+                    if (result == FMOD_OK && dsp)
+                    {
+                        dsp->setParameterFloat(FMOD_DSP_DISTORTION_LEVEL, settings.postProcessingParameter);
+                        // Set additional distortion parameters as needed
+                    }
+                    break;
+
+                case SoundInvokeSetting::PostProcessingType::CHORUS:
+                    result = mSystem->createDSPByType(FMOD_DSP_TYPE_CHORUS, &dsp);
+                    if (result == FMOD_OK && dsp)
+                    {
+                        dsp->setParameterFloat(FMOD_DSP_CHORUS_RATE, settings.postProcessingParameter);
+                    }
+                    break;
+
+                default:
+                    break;
+                }
+
+                if (result == FMOD_OK && dsp)
+                {
+                    // Attach the DSP to the channel at position 0 in the chain.
+                    result = temp->addDSP(0, dsp);
+                    if (result != FMOD_OK)
+                    {
+                        Debug::DebugLogger::GetInstance().LogError("FMOD ERROR adding DSP effect", true);
+                    }
+                    // Note: You might want to store the dsp pointer if you plan to remove or modify it later.
+                }
+                else
+                {
+                    Debug::DebugLogger::GetInstance().LogError("Failed to create DSP effect", true);
+                }
+            }
+
             // Unpause the channel to start playback
             result = temp->setPaused(false);
             if (result != FMOD_OK)
