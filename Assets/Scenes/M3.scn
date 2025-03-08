@@ -257,6 +257,7 @@
                 47,
                 50,
                 83,
+                112,
                 133,
                 468,
                 706,
@@ -1368,7 +1369,7 @@
                                 "key": "HallwayAmbience",
                                 "value": {
                                     "guid": {
-                                        "ID": 3956320565903918081
+                                        "ID": 13273604742113096410
                                     },
                                     "playSettings": {
                                         "position": {
@@ -1376,19 +1377,19 @@
                                             "y": 10.785017013549805,
                                             "z": 50.972084045410159
                                         },
-                                        "volume": 30.0,
-                                        "pitch": 0.10000000149011612,
+                                        "volume": 0.0,
+                                        "pitch": 0.5,
                                         "pan": 0.0,
                                         "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 15000.0
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             },
@@ -1706,7 +1707,7 @@
                                         }
                                     },
                                     {
-                                        "data": 0.07000000029802323,
+                                        "data": 0.30000001192092898,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "bgmVolume"
@@ -1753,6 +1754,55 @@
                                 "scriptName": "BGMLevel1",
                                 "scriptFieldInstList": [
                                     {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "ambienceVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "ambientVolAfter"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "ambientVolBefore"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.02500000037252903,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "bgmVolAfter"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.30000001192092898,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "bgmVolBefore"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.30000001192092898,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "bgmVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "currTiming"
+                                        }
+                                    },
+                                    {
                                         "data": 0.0,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -1770,6 +1820,27 @@
                                         }
                                     },
                                     {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "hallwayAmbienceVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.4000000059604645,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "hallwayAmbientVolAfter"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "hallwayAmbientVolBefore"
+                                        }
+                                    },
+                                    {
                                         "data": false,
                                         "type": "System.Boolean",
                                         "scriptField": {
@@ -1784,6 +1855,20 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "player"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "startPlaying"
+                                        }
+                                    },
+                                    {
+                                        "data": 1.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "transitionTiming"
                                         }
                                     },
                                     {
@@ -5230,6 +5315,160 @@
                 ],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 112,
+            "Parent": 8,
+            "Child Entities": [
+                113
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] SFX",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 7.000396251678467,
+                            "y": -7.450580596923828e-9,
+                            "z": 0.5673143267631531
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 113,
+            "Parent": 112,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "MotherHumming",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11294076012291334009
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 67.94245910644531,
+                                            "y": 17.022228240966798,
+                                            "z": -31.63915252685547
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 150.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Mother Humming",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 60.94206237792969,
+                            "y": 17.022228240966798,
+                            "z": -32.20646667480469
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 67.94245910644531,
+                            "y": 17.022228240966798,
+                            "z": -31.63915252685547
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
         },
         {
             "ID": 116,
@@ -39505,6 +39744,16 @@
                                         "type": "System.String[]",
                                         "scriptField": {
                                             "fieldName": "lockedDialogue"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 113,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "motherHumming"
                                         }
                                     },
                                     {

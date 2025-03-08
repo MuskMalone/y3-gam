@@ -27,6 +27,9 @@ public class KeyDoor : Entity
   public Entity corridorTrigger;
   public bool triggerInteraction = true;
 
+  public Entity motherHumming;
+
+
   private bool doorFlag = false;
   private string currentAnim = null;
 
@@ -143,6 +146,7 @@ public class KeyDoor : Entity
     InternalCalls.PlaySound(mEntityID, "UnlockDoor");
     InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), doorAnimName);
     unlockDoorUI.SetActive(false);
+    InternalCalls.PlaySound(motherHumming.mEntityID, "MotherHumming");
   }
 
   public void SlamDoor()

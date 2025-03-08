@@ -10,10 +10,30 @@ public class BGMLevel1 : Entity
     public float distanceFromPlayerFromDoor;
     public bool isEnteredHallway = false;
 
+    public float bgmVolume = 0.3f;
+    public float ambienceVolume = 0.5f;
+    public float hallwayAmbienceVolume = 0.0f;
+
+    public float bgmVolBefore = 0.3f;
+    public float bgmVolAfter = 0.05f;
+
+    public float ambientVolBefore = 0.5f;
+    public float ambientVolAfter = 0.0f;
+
+    public float hallwayAmbientVolBefore = 0.0f;
+    public float hallwayAmbientVolAfter = 1.0f;
+
+    public float transitionTiming = 0.8f; // in seconds
+    public float currTiming = 0.0f;
+    
+    public bool startPlaying;
     void Start() { }
 
     void Update()
     {
+        InternalCalls.SetSoundVolume(player.mEntityID, "BGM", bgmVolume);
+        InternalCalls.SetSoundVolume(player.mEntityID, "Ambience", ambienceVolume);
+        InternalCalls.SetSoundVolume(player.mEntityID, "HallwayAmbience", hallwayAmbienceVolume);
         if (!unlockDoorUI.IsActive())
         {
             Vector3 playerLoc = InternalCalls.GetWorldPosition(player.mEntityID);
@@ -23,12 +43,33 @@ public class BGMLevel1 : Entity
 
             isEnteredHallway = playerLoc.X > doorLoc.X;
 
-            if (isEnteredHallway)
-            {
-
+            if (InternalCalls.OnTriggerExit(doorEntryTrigger.mEntityID, player.mEntityID)){
+                startPlaying = true;
             }
-            else
+            if (startPlaying)
             {
+                if (currTiming <= transitionTiming)
+                {
+                    Console.WriteLine($"{currTiming}, {InternalCalls.GetDeltaTime()}");
+                    currTiming += InternalCalls.GetDeltaTime();
+                    float percent = currTiming / transitionTiming;
+                    if (isEnteredHallway)
+                    {
+                        bgmVolume = Easing.Linear(bgmVolBefore, bgmVolAfter, percent);
+                        ambienceVolume = Easing.Linear(ambientVolBefore, ambientVolAfter, percent);
+                        hallwayAmbienceVolume = Easing.Linear(hallwayAmbientVolBefore, hallwayAmbientVolAfter, percent);
+                    }
+                    else
+                    {
+                        bgmVolume = Easing.Linear(bgmVolAfter, bgmVolBefore, percent);
+                        ambienceVolume = Easing.Linear(ambientVolAfter, ambientVolBefore, percent);
+                        hallwayAmbienceVolume = Easing.Linear(hallwayAmbientVolAfter, hallwayAmbientVolBefore, percent);
+                    }
+                }
+                else {
+                    currTiming = 0.0f;
+                    startPlaying = false;
+                }
 
             }
         }

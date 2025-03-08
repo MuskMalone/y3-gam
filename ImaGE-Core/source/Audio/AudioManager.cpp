@@ -583,7 +583,7 @@ namespace IGE {
 
             try {
                 SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
-                if (userData && !IGE::Audio::AudioManager::GetInstance().mSceneStopped) {
+                if (userData){// && !IGE::Audio::AudioManager::GetInstance().mSceneStopped) {
                     if (loopCount == 0)
                         settings->channels.erase(channel); // Remove channel from active list
                 }
