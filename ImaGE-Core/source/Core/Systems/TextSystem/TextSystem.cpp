@@ -79,6 +79,10 @@ namespace Systems {
   }
 
   void TextSystem::RenderTextForAllEntities(glm::mat4 viewProj, std::vector<ECS::Entity> const& entities) {
+    if (gIsGamePaused) {
+      return;
+    }
+
     for (auto const& entity : entities) {
       if (entity.HasComponent<Component::Text, Component::Transform>()) {
         auto& textComp{ ECS::Entity{entity}.GetComponent<Component::Text>() };

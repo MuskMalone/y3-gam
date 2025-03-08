@@ -13,8 +13,6 @@ public class PauseMenu : Entity
 
   public PlayerMove playerMove;
 
-  public bool IsPaused = false;
-
   private float TargetZMenu = 2f;
   private float TargetZButton = 3f;
 
@@ -50,11 +48,11 @@ public class PauseMenu : Entity
 
   void Update()
   {
-    if (!IsPaused && InternalCalls.IsKeyTriggered(KeyCode.P)) {
+    if (!InternalCalls.GetIsPaused() && InternalCalls.IsKeyTriggered(KeyCode.P)) {
       PauseGame();
     }
 
-    if (IsPaused)
+    if (InternalCalls.GetIsPaused())
     {
       SetAllButtonsInactive();
 
@@ -112,7 +110,7 @@ public class PauseMenu : Entity
 
   private void PauseGame()
   {
-    IsPaused = true;
+    InternalCalls.PauseGame();
     playerMove.FreezePlayer();
     SetActive(true);
     InternalCalls.ShowCursor();
@@ -137,7 +135,7 @@ public class PauseMenu : Entity
 
   private void ResumeGame()
   {
-    IsPaused = false;
+    InternalCalls.ResumeGame();
     playerMove.UnfreezePlayer();
     SetActive(false);
     SetAllButtonsInactive();

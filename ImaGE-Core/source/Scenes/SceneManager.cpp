@@ -64,6 +64,7 @@ namespace Scenes
 
   void SceneManager::StopScene() {
     Events::EventManager::GetInstance().DispatchImmediateEvent<Events::SceneStateChange>(Events::SceneStateChange::STOPPED, mSceneName);
+    gIsGamePaused = false;
     ClearScene();
     UnloadScene();
 

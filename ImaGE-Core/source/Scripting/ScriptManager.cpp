@@ -304,6 +304,9 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SpawnOpenDoor);
   ADD_INTERNAL_CALL(SpawnTaraSilhouette);
   ADD_INTERNAL_CALL(SetShaderState);
+  ADD_INTERNAL_CALL(PauseGame);
+  ADD_INTERNAL_CALL(ResumeGame);
+  ADD_INTERNAL_CALL(GetIsPaused);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -1843,6 +1846,18 @@ float Mono::GetLightIntensity(ECS::Entity::EntityID entity) {
     Debug::DebugLogger::GetInstance().LogError("GetLightIntensity: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
   }
   return 0.0f;
+}
+
+void Mono::PauseGame() {
+  gIsGamePaused = true;
+}
+
+void Mono::ResumeGame() {
+  gIsGamePaused = false;
+}
+
+bool Mono::GetIsPaused() {
+  return gIsGamePaused;
 }
 
 /*!**********************************************************************
