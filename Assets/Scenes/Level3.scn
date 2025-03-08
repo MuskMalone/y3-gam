@@ -15124,7 +15124,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             }
@@ -15446,7 +15449,8 @@
             "Parent": 3145772,
             "Child Entities": [
                 327,
-                376
+                376,
+                2097555
             ],
             "Components": [
                 {
@@ -16845,7 +16849,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             }
@@ -17716,7 +17723,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             },
@@ -17741,7 +17751,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             }
@@ -23099,7 +23112,7 @@
         },
         {
             "ID": 1048890,
-            "Parent": 3145772,
+            "Parent": 2097554,
             "Child Entities": [],
             "Components": [
                 {
@@ -23184,7 +23197,7 @@
         },
         {
             "ID": 1048891,
-            "Parent": 3145772,
+            "Parent": 2097554,
             "Child Entities": [],
             "Components": [
                 {
@@ -23281,7 +23294,7 @@
         },
         {
             "ID": 1048906,
-            "Parent": 3145772,
+            "Parent": 2097554,
             "Child Entities": [
                 1048907
             ],
@@ -23382,7 +23395,7 @@
                         "position": {
                             "x": 0.015214625746011734,
                             "y": -8.195638656616211e-8,
-                            "z": 0.0052939653396606449
+                            "z": 0.005293905735015869
                         },
                         "scale": {
                             "x": 0.9475691318511963,
@@ -23401,7 +23414,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -41.57079315185547,
+                            "x": -41.570796966552737,
                             "y": -3.350003242492676,
                             "z": -98.75634765625
                         },
@@ -24103,7 +24116,7 @@
         },
         {
             "ID": 1048982,
-            "Parent": 3145772,
+            "Parent": 2097554,
             "Child Entities": [],
             "Components": [
                 {
@@ -24851,7 +24864,7 @@
         },
         {
             "ID": 1049654,
-            "Parent": 3145772,
+            "Parent": 2097554,
             "Child Entities": [],
             "Components": [
                 {
@@ -24948,7 +24961,7 @@
         },
         {
             "ID": 1049656,
-            "Parent": 3145772,
+            "Parent": 2097554,
             "Child Entities": [],
             "Components": [
                 {
@@ -25213,7 +25226,7 @@
         },
         {
             "ID": 2097268,
-            "Parent": 3145772,
+            "Parent": 2097554,
             "Child Entities": [],
             "Components": [
                 {
@@ -25317,7 +25330,7 @@
         },
         {
             "ID": 2097270,
-            "Parent": 3145772,
+            "Parent": 2097554,
             "Child Entities": [],
             "Components": [
                 {
@@ -25421,7 +25434,7 @@
         },
         {
             "ID": 2097272,
-            "Parent": 3145772,
+            "Parent": 2097554,
             "Child Entities": [],
             "Components": [
                 {
@@ -26141,8 +26154,298 @@
             ]
         },
         {
-            "ID": 3145769,
+            "ID": 2097554,
             "Parent": 3145772,
+            "Child Entities": [
+                1048890,
+                1048891,
+                1048906,
+                1048982,
+                1049654,
+                1049656,
+                2097268,
+                2097270,
+                2097272,
+                3145769,
+                3145771,
+                3146795
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Structure",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2097555,
+            "Parent": 332,
+            "Child Entities": [
+                2097556,
+                2097562
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Pit Painting",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -55.80306625366211,
+                            "y": -1.3701918125152588,
+                            "z": -55.126373291015628
+                        },
+                        "scale": {
+                            "x": 0.029999999329447748,
+                            "y": 0.029999999329447748,
+                            "z": 0.029999999329447748
+                        },
+                        "rotation": {
+                            "x": -0.14339052140712739,
+                            "y": 0.6922907829284668,
+                            "z": 0.14344003796577454,
+                            "w": 0.6925298571586609
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 89.98021697998047,
+                            "z": 23.40380859375
+                        },
+                        "worldPos": {
+                            "x": -55.80306625366211,
+                            "y": -1.3701918125152588,
+                            "z": -55.126373291015628
+                        },
+                        "worldScale": {
+                            "x": 0.029999999329447748,
+                            "y": 0.029999999329447748,
+                            "z": 0.029999999329447748
+                        },
+                        "worldRot": {
+                            "x": -0.14339052140712739,
+                            "y": 0.6922907829284668,
+                            "z": 0.14344003796577454,
+                            "w": 0.6925298571586609
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2097556,
+            "Parent": 2097555,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Props_PaintingFrame",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -55.80306625366211,
+                            "y": -1.3701918125152588,
+                            "z": -55.126373291015628
+                        },
+                        "worldScale": {
+                            "x": 0.029999999329447748,
+                            "y": 0.029999999329447748,
+                            "z": 0.029999999329447748
+                        },
+                        "worldRot": {
+                            "x": -0.14339052140712739,
+                            "y": 0.6922907829284668,
+                            "z": 0.14344003796577454,
+                            "w": 0.6925298571586609
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 10289315563564798747
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Props_PaintingFrame",
+                        "GUID": {
+                            "ID": 16879903618849634565
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2097562,
+            "Parent": 2097555,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Painting",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -1.9360191822052003,
+                            "y": -3.208787441253662,
+                            "z": -1.023681640625
+                        },
+                        "scale": {
+                            "x": 120.0,
+                            "y": 120.0,
+                            "z": 120.0
+                        },
+                        "rotation": {
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -55.79302978515625,
+                            "y": -1.470742106437683,
+                            "z": -55.06830596923828
+                        },
+                        "worldScale": {
+                            "x": 3.5999999046325685,
+                            "y": 3.5999999046325685,
+                            "z": 3.5999999046325685
+                        },
+                        "worldRot": {
+                            "x": 0.3883001208305359,
+                            "y": 0.5909509062767029,
+                            "z": -0.3880960941314697,
+                            "w": 0.5910849571228027
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 6854822526889887560
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3145769,
+            "Parent": 2097554,
             "Child Entities": [],
             "Components": [
                 {
@@ -26246,7 +26549,7 @@
         },
         {
             "ID": 3145771,
-            "Parent": 3145772,
+            "Parent": 2097554,
             "Child Entities": [],
             "Components": [
                 {
@@ -26355,18 +26658,7 @@
                 61,
                 320,
                 332,
-                1048890,
-                1048891,
-                1048906,
-                1048982,
-                1049654,
-                1049656,
-                2097268,
-                2097270,
-                2097272,
-                3145769,
-                3145771,
-                3146795
+                2097554
             ],
             "Components": [
                 {
@@ -26626,7 +26918,7 @@
         },
         {
             "ID": 3146795,
-            "Parent": 3145772,
+            "Parent": 2097554,
             "Child Entities": [],
             "Components": [
                 {
