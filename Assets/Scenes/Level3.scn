@@ -10557,6 +10557,55 @@
                     "Layer": {
                         "layerName": "UI"
                     }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 228,
+                                "scriptName": "PaintingAlignUILevel3",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 231,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "alignmentUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 229,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "bigPaintingUI"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isPainting"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 230,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "smallPaintingUI"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 }
             ]
         },
@@ -19041,6 +19090,26 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 226,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "pitPaintingSelection"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 227,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "pitPaintingUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 370,
                                             "scriptName": "Entity"
                                         },
@@ -27381,6 +27450,40 @@
             ],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PickupObjects",
+                                "value": {
+                                    "guid": {
+                                        "ID": 14271662682490721671
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -55.80306625366211,
+                                            "y": -1.3701918125152588,
+                                            "z": -55.126373291015628
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "PitPainting",
                         "isActive": true
@@ -27478,6 +27581,58 @@
                         "motionType": "KINEMATIC",
                         "axisLock": 7,
                         "angularAxisLock": 7
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 2097555,
+                                "scriptName": "PitPainting",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 232,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "EToPickUpUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 226,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "_Image"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 369,
+                                            "scriptName": "Level3Inventory"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "inventoryScript"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
