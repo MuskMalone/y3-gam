@@ -297,7 +297,7 @@
                 {
                     "Tag": {
                         "tag": "Point Light",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -374,6 +374,90 @@
                             "shadowModified": true,
                             "customCenter": false
                         }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Bloom": {
+                        "threshold": 0.6000000238418579,
+                        "intensity": 3.0,
+                        "range": 15.0
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "PseudoLampBloom",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.006752531975507736,
+                            "y": 0.003672804683446884,
+                            "z": -0.0009590350673533976
+                        },
+                        "scale": {
+                            "x": 0.061000000685453418,
+                            "y": 0.061000000685453418,
+                            "z": 0.061000000685453418
+                        },
+                        "rotation": {
+                            "x": -3.9943020624377825e-7,
+                            "y": -0.6555097699165344,
+                            "z": 4.601675982485176e-7,
+                            "w": 0.7551866769790649
+                        },
+                        "eulerAngles": {
+                            "x": -0.0004916429752483964,
+                            "y": -81.91663360595703,
+                            "z": 0.0004965766565874219
+                        },
+                        "worldPos": {
+                            "x": -2.561137080192566e-9,
+                            "y": 0.003672804683446884,
+                            "z": -0.006820295937359333
+                        },
+                        "worldScale": {
+                            "x": 0.061000000685453418,
+                            "y": 0.061000000685453418,
+                            "z": 0.061000000685453418
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 16148162105990453228
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Sphere",
+                        "GUID": {
+                            "ID": 10126676604415907788
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]

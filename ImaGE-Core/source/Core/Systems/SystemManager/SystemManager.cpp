@@ -26,6 +26,18 @@ namespace Systems {
       frc.StartSystemTimer();
 #endif
 
+      if (gIsGamePaused) {
+        // Special handling of specific systems when game is paused
+        std::string currName = system->GetName();
+        if (currName == "Pre-Transform System" || currName == "Physics System" || currName == "Post-Transform System"||
+          currName == "Animation System" || currName == "Text System" || currName == "Particle System" || currName == "Audio System") {
+#ifndef DISTRIBUTION
+          frc.EndSystemTimer(currName);
+#endif
+          continue;
+        }
+      }
+
       system->Update();
 
 #ifndef DISTRIBUTION
