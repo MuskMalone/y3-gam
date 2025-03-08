@@ -334,6 +334,7 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\Graphics\Mesh\IMSH.h" />
     <ClInclude Include="source\Graphics\Mesh\Mesh.h" />
     <ClInclude Include="source\Graphics\Mesh\MeshFactory.h" />
+    <ClInclude Include="source\Graphics\Mesh\MeshImport.h" />
     <ClInclude Include="source\Graphics\Mesh\MeshMatValues.h" />
     <ClInclude Include="source\Graphics\Mesh\MeshSource.h" />
     <ClInclude Include="source\Graphics\Mesh\Submesh.h" />

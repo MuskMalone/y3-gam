@@ -26,6 +26,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <GUI/Helpers/AssetPayload.h>
 #include "Asset/IGEAssets.h"
 #include <Graphics/MaterialTable.h>
+#include <Graphics/Mesh/MeshImport.h>
 
 namespace MeshPopup {
   static constexpr float sTableCol1Width = 250.f;
@@ -716,7 +717,7 @@ namespace GUI
     ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
     if (!ImGui::BeginPopupModal(sMeshPopupTitle, NULL, ImGuiWindowFlags_AlwaysAutoResize)) { return; }
     static bool blankWarning{ false };
-    static bool recenterMesh{ false }, normalizeScale{ false }, flipUVs{ false }, staticMesh{false};
+    static Graphics::AssetIO::ImportSettings settings{};
     bool close{ false };
 
     ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.5f, 0.5f, 0.5f, 1.f));
@@ -764,7 +765,7 @@ namespace GUI
       NextRowTable("Recenter Mesh?");
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
-      ImGui::Checkbox("##RecenterMesh", &recenterMesh);
+      ImGui::Checkbox("##RecenterMesh", &settings.recenterMesh);
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
       if (elementHover) {
@@ -778,7 +779,7 @@ namespace GUI
       NextRowTable("Normalize Scale?");
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
-      ImGui::Checkbox("##NormalizeScale", &normalizeScale);
+      ImGui::Checkbox("##NormalizeScale", &settings.normalizeScale);
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
       if (elementHover) {
@@ -792,7 +793,7 @@ namespace GUI
       NextRowTable("Flip UVs?");
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
-      ImGui::Checkbox("##FlipUVs", &flipUVs);
+      ImGui::Checkbox("##FlipUVs", &settings.flipUVs);
       ImGui::TableNextRow();
 
       // static mesh checkbox
@@ -800,14 +801,46 @@ namespace GUI
       NextRowTable("Static Mesh");
       if (ImGui::IsItemHovered()) { elementHover = true; }
       
-      ImGui::Checkbox("##StaticMesh", &staticMesh);
+      ImGui::Checkbox("##StaticMesh", &settings.staticMesh);
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
       if (elementHover) {
         ImGui::SetTooltip("Combine all sub-meshes into a single mesh entity");
+        elementHover = false;
+      }
+      ImGui::EndTable();
+
+      ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 20.f);
+      if (ImGui::TreeNodeEx("Advanced")) {
+        if (ImGui::BeginTable("AdvancedTable", 2, ImGuiTableFlags_SizingFixedFit)) {
+          ImGui::TableSetupColumn("##c0", ImGuiTableColumnFlags_WidthFixed, firstColWidth);
+          ImGui::TableSetupColumn("##c1", ImGuiTableColumnFlags_WidthFixed, MeshPopup::sTableCol1Width);
+          ImGui::TableNextRow();
+
+          bool optimizeVertices{ !settings.minimalFlags };
+
+          NextRowTable("Optimize Vertices");
+          if (ImGui::IsItemHovered()) { elementHover = true; }
+
+          if (ImGui::Checkbox("##OptimizeVertices", &optimizeVertices)) {
+            settings.minimalFlags = !optimizeVertices;
+          }
+          if (ImGui::IsItemHovered()) { elementHover = true; }
+
+          if (elementHover) {
+            ImGui::BeginTooltip();
+            ImGui::Text("Attempt to optimize the structure of the mesh during import. On by default.");
+            ImGui::Text("Turn this off if you are facing issues with your mesh.");
+            ImGui::EndTooltip();
+          }
+
+          ImGui::EndTable();
+        }
+        ImGui::TreePop();
       }
 
-      ImGui::EndTable();
+      
+
     }
 
     ImGui::NewLine();
@@ -827,10 +860,11 @@ namespace GUI
         // send the relevant file path to the asset manager
         IGE::Assets::AssetMetadata::AssetProps metadata{};
         metadata.metadata = {
-          { "recenterMesh", recenterMesh ? "1" : "0" },
-          { "normalizedScale", normalizeScale ? "1" : "0" },
-          { "flipUVs", flipUVs ? "1" : "0" },
-          { "staticMesh", staticMesh ? "1" : "0" }
+          { IMSH_IMPORT_RECENTER, settings.recenterMesh ? "1" : "0" },
+          { IMSH_IMPORT_NORM_SCALE, settings.normalizeScale ? "1" : "0" },
+          { IMSH_IMPORT_FLIP_UV, settings.flipUVs ? "1" : "0" },
+          { IMSH_IMPORT_STATIC, settings.staticMesh ? "1" : "0" },
+          { IMSH_IMPORT_MIN_FLAGS, settings.minimalFlags ? "1" : "0" }
         };
 
         IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
