@@ -89,10 +89,13 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="source\Credits\CreditsText.cs" />
     <Compile Include="source\Cutscene\EndSceneFadeToBlack.cs" />
     <Compile Include="source\Cutscene\TutorialCutscene.cs" />
     <Compile Include="source\Dialogue\Dialogue.cs" />
     <Compile Include="source\Dialogue\SpecialDialogue.cs" />
+    <Compile Include="source\DynamicAudio\BGMLevel1.cs" />
+    <Compile Include="source\DynamicAudio\TransitionHintLevel1.cs" />
     <Compile Include="source\Engine Tools\Easing.cs" />
     <Compile Include="source\Engine Tools\FPS.cs" />
     <Compile Include="source\InteractableObject\AltarPaintingFrame.cs" />
@@ -151,6 +154,7 @@
     <Compile Include="source\Mono\Component.cs" />
     <Compile Include="source\Mono\Debug.cs" />
     <Compile Include="source\Mono\Entity.cs" />
+    <Compile Include="source\Mono\Global.cs" />
     <Compile Include="source\Mono\Image.cs" />
     <Compile Include="source\Mono\Input.cs" />
     <Compile Include="source\Mono\Inside.cs" />
@@ -180,7 +184,7 @@
     <Compile Include="source\PauseMenu\PauseMenuButtons.cs" />
     <Compile Include="source\Player\CameraCapture.cs" />
     <Compile Include="source\Player\InputManager.cs" />
-    <Compile Include="source\Player\PlayerFootsteps.cs" />
+    <Compile Include="source\DynamicAudio\PlayerFootsteps.cs" />
     <Compile Include="source\Player\PlayerInteraction.cs" />
     <Compile Include="source\Player\PlayerMove.cs" />
     <Compile Include="source\SelectionManager.cs" />

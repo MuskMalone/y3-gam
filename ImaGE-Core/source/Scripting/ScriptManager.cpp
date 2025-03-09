@@ -281,6 +281,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(RaycastFromEntity);
   ADD_INTERNAL_CALL(SetSoundPitch);
   ADD_INTERNAL_CALL(SetSoundVolume);
+  ADD_INTERNAL_CALL(EnableSoundPostProcessing);
+  ADD_INTERNAL_CALL(DisableSoundPostProcessing);
   ADD_INTERNAL_CALL(PlaySound);
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
@@ -304,6 +306,9 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SpawnOpenDoor);
   ADD_INTERNAL_CALL(SpawnTaraSilhouette);
   ADD_INTERNAL_CALL(SetShaderState);
+  ADD_INTERNAL_CALL(PauseGame);
+  ADD_INTERNAL_CALL(ResumeGame);
+  ADD_INTERNAL_CALL(GetIsPaused);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -1100,6 +1105,20 @@ void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v)
     entity.GetComponent<Component::AudioSource>().SetSoundVolume(name, v);
 }
 
+void Mono::EnableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s, unsigned type, float param)
+{
+    std::string const name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().EnablePostProcessing(name, static_cast<IGE::Audio::SoundInvokeSetting::PostProcessingType>(type), param);
+}
+
+void Mono::DisableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s)
+{
+    std::string const name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().DisablePostProcessing(name);
+}
+
 void Mono::PlaySound(ECS::Entity::EntityID e, MonoString* s)
 {
     std::string const name{ MonoStringToSTD(s) };
@@ -1642,6 +1661,10 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
             }
             std::cout << l.color.r << "\n";
           }
+
+          if (gchild.GetTag() == "CeilingLightBloom") {
+            gchild.SetIsActive(true);
+          }
         }
       }
       else if(child.GetTag() == "Tools Spotlight")
@@ -1677,11 +1700,20 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
    
   for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
   {
+    ECS::Entity parentEntity = ECS::EntityManager::GetInstance().GetParentEntity(child);
+    parentEntity.SetIsActive(true);
+    ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(parentEntity);
+    /*
     std::string n = child.GetTag();
     if (n == "Light")
     {
       child.SetIsActive(true);
     }
+
+    if (n == "PseudoLampBloom") {
+      child.SetIsActive(true);
+    }
+    */
   }
 
 
@@ -1843,6 +1875,18 @@ float Mono::GetLightIntensity(ECS::Entity::EntityID entity) {
     Debug::DebugLogger::GetInstance().LogError("GetLightIntensity: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
   }
   return 0.0f;
+}
+
+void Mono::PauseGame() {
+  gIsGamePaused = true;
+}
+
+void Mono::ResumeGame() {
+  gIsGamePaused = false;
+}
+
+bool Mono::GetIsPaused() {
+  return gIsGamePaused;
 }
 
 /*!**********************************************************************

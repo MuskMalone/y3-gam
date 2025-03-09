@@ -7,11 +7,13 @@ public class NumberPad : Entity
 {
     public PlayerInteraction playerInteraction;
     public Entity interactWithKeypadUI;
+    public Entity keypadInstructionsUI;
     public Entity keypadUI;
     public Entity keypadTextBox;
     public PlayerMove playerMove;
     public Entity enterButton;
     public Entity backButton;
+    private Random random = new Random();
 
     // Number buttons
     public Entity button0;
@@ -24,6 +26,8 @@ public class NumberPad : Entity
     private string typedCode = "";
     private string correctCode = "8785";
     private bool keypadActive = false;
+    private float lastPressTime = 0f;
+    private float inputDelay = 0.3f; // Prevents multiple rapid inputs
 
     private enum State { LOCKED, KEYPAD_UI, UNLOCKED }
     private State currState = State.LOCKED;
@@ -32,31 +36,31 @@ public class NumberPad : Entity
     {
         interactWithKeypadUI?.SetActive(false);
         keypadUI?.SetActive(false);
+        keypadInstructionsUI?.SetActive(false);
         keypadTextBox?.SetActive(false);
         enterButton?.SetActive(false);
         backButton?.SetActive(false);
 
         numberButtons = new Dictionary<string, Entity>
-    {
+        {
             {"0", button0 }, { "1", button1 }, { "2", button2 }, { "3", button3 },
-        { "4", button4 }, { "5", button5 }, { "6", button6 },
-        { "7", button7 }, { "8", button8 }, { "9", button9 }
-    };
+            { "4", button4 }, { "5", button5 }, { "6", button6 },
+            { "7", button7 }, { "8", button8 }, { "9", button9 }
+        };
 
         buttonScripts = new Dictionary<string, SafeButtons>();
         foreach (var key in numberButtons.Keys)
         {
             buttonScripts[key] = numberButtons[key].FindScript<SafeButtons>();
-            numberButtons[key]?.SetActive(false);  // **Now setting each button inactive at start**
+            numberButtons[key]?.SetActive(false);
         }
 
         buttonScripts["Enter"] = enterButton.FindScript<SafeButtons>();
         buttonScripts["Back"] = backButton.FindScript<SafeButtons>();
 
-        enterButton?.SetActive(false);  // Ensure Enter button starts inactive
-        backButton?.SetActive(false);   // Ensure Back button starts inactive
+        enterButton?.SetActive(false);
+        backButton?.SetActive(false);
     }
-
 
     void Update()
     {
@@ -65,27 +69,13 @@ public class NumberPad : Entity
             case State.LOCKED:
                 KeypadInteraction();
                 break;
-
             case State.KEYPAD_UI:
                 KeypadUIMode();
                 break;
-
             case State.UNLOCKED:
                 break;
         }
     }
-
-    //private void KeypadInteraction()
-    //{
-    //    bool isKeypadHit = playerInteraction.RayHitString == "Keypad";
-    //    if (Input.GetMouseButtonTriggered(0) && isKeypadHit && !keypadActive)
-    //    {
-    //        keypadActive = true;
-    //        interactWithKeypadUI.SetActive(false);
-    //        OpenKeypadUI();
-    //    }
-    //    interactWithKeypadUI.SetActive(isKeypadHit);
-    //}
 
     private void KeypadInteraction()
     {
@@ -96,14 +86,15 @@ public class NumberPad : Entity
             keypadActive = true;
             interactWithKeypadUI.SetActive(false);
             OpenKeypadUI();
+            InternalCalls.PlaySound(mEntityID, "SafeInteract"); // ✅ Matches Safe.cs (play when interacting)
         }
 
-        // ✅ Fix: Only show UI if keypad is NOT active
         interactWithKeypadUI.SetActive(isKeypadHit && !keypadActive);
     }
 
     private void KeypadUIMode()
     {
+        if (!keypadUI.IsActive()) return;
         SetAllButtonsInactive();
 
         foreach (var key in numberButtons.Keys)
@@ -147,10 +138,14 @@ public class NumberPad : Entity
 
     private void AppendDigit(string digit)
     {
+        if (Time.gameTime - lastPressTime < inputDelay) return;
+        lastPressTime = Time.gameTime;
+
         if (typedCode.Length < 4)
         {
             typedCode += digit;
             InternalCalls.SetText(keypadTextBox.mEntityID, typedCode);
+            PlayRandomKeypadButtonSound(); // ✅ Matches Safe.cs (play when pressing a key)
         }
     }
 
@@ -158,14 +153,14 @@ public class NumberPad : Entity
     {
         if (typedCode == correctCode)
         {
-            InternalCalls.PlaySound(mEntityID, "Correct");
-            Console.WriteLine("Correct code entered!"); // Debugging feedback
+            InternalCalls.PlaySound(mEntityID, "SafeUnlock"); // ✅ Matches Safe.cs (play when correct)
+            Console.WriteLine("Correct code entered!");
             CloseKeypadUI();
             currState = State.UNLOCKED;
         }
         else
         {
-            InternalCalls.PlaySound(mEntityID, "WrongInput");
+            InternalCalls.PlaySound(mEntityID, "WrongInput"); // ✅ Matches Safe.cs (play when incorrect)
             Console.WriteLine("Incorrect code, try again.");
             ClearCode();
         }
@@ -173,10 +168,14 @@ public class NumberPad : Entity
 
     private void BackButton()
     {
+        if (Time.gameTime - lastPressTime < inputDelay) return;
+        lastPressTime = Time.gameTime;
+
         if (typedCode.Length > 0)
         {
             typedCode = typedCode.Substring(0, typedCode.Length - 1);
             InternalCalls.SetText(keypadTextBox.mEntityID, typedCode);
+            InternalCalls.PlaySound(mEntityID, "KeypadBackspace"); // ✅ Matches Safe.cs (play when backspacing)
         }
     }
 
@@ -186,9 +185,11 @@ public class NumberPad : Entity
         playerMove.FreezePlayer();
         keypadUI.SetActive(true);
         keypadTextBox.SetActive(true);
+        keypadInstructionsUI.SetActive(true);
         enterButton.SetActive(true);
         backButton.SetActive(true);
         InternalCalls.ShowCursor();
+        ResetButtonStates();
         currState = State.KEYPAD_UI;
     }
 
@@ -198,6 +199,7 @@ public class NumberPad : Entity
         playerMove.UnfreezePlayer();
         keypadUI.SetActive(false);
         keypadTextBox.SetActive(false);
+        keypadInstructionsUI.SetActive(false);
         enterButton.SetActive(false);
         backButton.SetActive(false);
         interactWithKeypadUI.SetActive(false);
@@ -220,5 +222,21 @@ public class NumberPad : Entity
     {
         typedCode = "";
         InternalCalls.SetText(keypadTextBox.mEntityID, "");
+    }
+
+    private void ResetButtonStates()
+    {
+        foreach (var key in buttonScripts.Keys)
+        {
+            buttonScripts[key].IsClicked = false;
+            buttonScripts[key].TriggerButton = false;
+        }
+    }
+
+    private void PlayRandomKeypadButtonSound()
+    {
+        int soundNumber = random.Next(1, 3); // ✅ Matches Safe.cs (random beep sound)
+        string soundName = $"KeypadBeep{soundNumber}";
+        InternalCalls.PlaySound(mEntityID, soundName);
     }
 }
