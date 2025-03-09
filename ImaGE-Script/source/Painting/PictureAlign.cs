@@ -241,14 +241,14 @@ public class PictureAlign : Entity
             }
         }
         // Greek god paintings: Dionysus, Artemis, Zeus, Poseidon
-        else if (picture == "DionysusPainting" || picture == "ArtemisPainting" || picture == "ZeusPainting" || picture == "PoseidonPainting")
+        else if (picture == "DionysusPainting" || picture == "HermesPainting" || picture == "ZeusPainting" || picture == "PoseidonPainting")
         {
             // Set the mode according to the painting
             if (picture == "DionysusPainting")
             {
                 controlPanelScript.SwitchMode(ControlPanel2.StatueType.ATHENA);
             }
-            else if (picture == "ArtemisPainting")
+            else if (picture == "HermesPainting")
             {
                 controlPanelScript.SwitchMode(ControlPanel2.StatueType.HERMES);
             }

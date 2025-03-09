@@ -329,9 +329,9 @@ public class Level2Inventory : Entity
                 paintingAlignUILevel2Script.isPainting = true;
                 break;
 
-            case "ArtemisPainting":
+            case "HermesPainting":
                 artemisPaintingUI?.SetActive(true);
-                artemisPaintingUI?.FindScript<HoldupUI>().SetAlginUI("ArtemisPainting", GetItemByName("ArtemisPainting"));
+                artemisPaintingUI?.FindScript<HoldupUI>().SetAlginUI("HermesPainting", GetItemByName("HermesPainting"));
                 paintingAlignUILevel2Script.isPainting = true;
                 break;
 

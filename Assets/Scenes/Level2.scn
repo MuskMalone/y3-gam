@@ -18092,7 +18092,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "PickupArtemisPaintingUI",
+                        "tag": "PickupHermesPaintingUI",
                         "isActive": false
                     }
                 },
@@ -18444,7 +18444,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 11441124444540639741
+                            "ID": 6636401366303615448
                         }
                     }
                 },
@@ -20148,7 +20148,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "ArtemisPaintingSelection",
+                        "tag": "HermesPaintingSelection",
                         "isActive": false
                     }
                 },
@@ -20207,7 +20207,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 9121770711002245543
+                            "ID": 10916400202910617440
                         }
                     }
                 }
@@ -20328,7 +20328,7 @@
                 },
                 {
                     "Tag": {
-                        "tag": "ArtemisPainting",
+                        "tag": "HermesPainting",
                         "isActive": true
                     }
                 },
@@ -20409,7 +20409,7 @@
                         "scriptList": [
                             {
                                 "entityID": 407,
-                                "scriptName": "ArtemisPainting",
+                                "scriptName": "HermesPainting",
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
@@ -40430,7 +40430,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "ArtemisPaintingUI",
+                        "tag": "HermesPaintingUI",
                         "isActive": false
                     }
                 },
@@ -40510,7 +40510,7 @@
                                         }
                                     },
                                     {
-                                        "data": "ArtermisPainting.txt",
+                                        "data": "HermesPainting.txt",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "dataFilePath"
@@ -40559,7 +40559,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 9121770711002245543
+                            "ID": 10916400202910617440
                         }
                     }
                 }
@@ -42650,7 +42650,7 @@
                                 "scriptName": "CameraCapture",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": "PoseidonPainting",
+                                        "data": "HermesPainting",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "PictureName"
