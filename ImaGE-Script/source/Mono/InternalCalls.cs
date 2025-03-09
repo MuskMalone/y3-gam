@@ -246,6 +246,7 @@ namespace IGE.Utils
 
     #region Utility
 
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static string GetLayerName(uint entity);
 
@@ -260,6 +261,12 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetSoundVolume(uint entity, string sound, float volume);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void EnableSoundPostProcessing(uint entity, string sound, uint type, float param);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void DisableSoundPostProcessing(uint entity, string sound);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void PlaySound(uint entity, string sound);

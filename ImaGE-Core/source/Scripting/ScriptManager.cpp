@@ -281,6 +281,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(RaycastFromEntity);
   ADD_INTERNAL_CALL(SetSoundPitch);
   ADD_INTERNAL_CALL(SetSoundVolume);
+  ADD_INTERNAL_CALL(EnableSoundPostProcessing);
+  ADD_INTERNAL_CALL(DisableSoundPostProcessing);
   ADD_INTERNAL_CALL(PlaySound);
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
@@ -1101,6 +1103,20 @@ void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v)
     std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
     entity.GetComponent<Component::AudioSource>().SetSoundVolume(name, v);
+}
+
+void Mono::EnableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s, unsigned type, float param)
+{
+    std::string const name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().EnablePostProcessing(name, static_cast<IGE::Audio::SoundInvokeSetting::PostProcessingType>(type), param);
+}
+
+void Mono::DisableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s)
+{
+    std::string const name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().DisablePostProcessing(name);
 }
 
 void Mono::PlaySound(ECS::Entity::EntityID e, MonoString* s)

@@ -33,6 +33,7 @@ public class SuspiciousPainting : Entity
         if (isPaintingHit && Input.GetMouseButtonTriggered(0))
         {
           InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), dropAnimName);
+          InternalCalls.PlaySound(mEntityID, "UnhookSound");
 
           currState = State.ANIMATION;
           removePaintingUI.SetActive(false);
@@ -58,6 +59,7 @@ public class SuspiciousPainting : Entity
         InternalCalls.LockRigidBody(mEntityID, false);
         InternalCalls.SetGravityFactor(mEntityID, 20.0f);
         currState = State.FALLEN;
+        InternalCalls.PlaySound(mEntityID, "DropSound");
         break;
 
       case State.FALLEN:

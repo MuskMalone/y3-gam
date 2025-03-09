@@ -337,6 +337,8 @@ namespace Mono
 
 		static void SetSoundPitch(ECS::Entity::EntityID, MonoString*, float);
 		static void SetSoundVolume(ECS::Entity::EntityID, MonoString*, float);
+		static void EnableSoundPostProcessing(ECS::Entity::EntityID, MonoString*, unsigned, float);
+		static void DisableSoundPostProcessing(ECS::Entity::EntityID, MonoString*);
 		static void PlaySound(ECS::Entity::EntityID, MonoString*);
 		static void PauseSound(ECS::Entity::EntityID, MonoString*);
 		static void PlaySoundFromPosition(ECS::Entity::EntityID, MonoString*, unsigned time);
