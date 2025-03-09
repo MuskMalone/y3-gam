@@ -360,7 +360,6 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void ChangeToolsPainting();
 
-
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SpawnToolBox();
 
@@ -372,6 +371,15 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetShaderState(uint idx, bool active);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void PauseGame();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ResumeGame();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool GetIsPaused();
     #endregion
-    }
+  }
 }

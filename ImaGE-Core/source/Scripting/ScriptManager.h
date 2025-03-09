@@ -454,6 +454,10 @@ namespace Mono
 		static void SetLightIntensity(ECS::Entity::EntityID lightEntity, float intensity);
 		static float GetLightIntensity(ECS::Entity::EntityID lightEntity);
 
+		static void PauseGame();
+		static void ResumeGame();
+		static bool GetIsPaused();
+
 		/*!**********************************************************************
 		*																																			  *
 		*								            Helper Function			          						  *

@@ -306,6 +306,9 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SpawnOpenDoor);
   ADD_INTERNAL_CALL(SpawnTaraSilhouette);
   ADD_INTERNAL_CALL(SetShaderState);
+  ADD_INTERNAL_CALL(PauseGame);
+  ADD_INTERNAL_CALL(ResumeGame);
+  ADD_INTERNAL_CALL(GetIsPaused);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -1658,6 +1661,10 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
             }
             std::cout << l.color.r << "\n";
           }
+
+          if (gchild.GetTag() == "CeilingLightBloom") {
+            gchild.SetIsActive(true);
+          }
         }
       }
       else if(child.GetTag() == "Tools Spotlight")
@@ -1693,11 +1700,20 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
    
   for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
   {
+    ECS::Entity parentEntity = ECS::EntityManager::GetInstance().GetParentEntity(child);
+    parentEntity.SetIsActive(true);
+    ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(parentEntity);
+    /*
     std::string n = child.GetTag();
     if (n == "Light")
     {
       child.SetIsActive(true);
     }
+
+    if (n == "PseudoLampBloom") {
+      child.SetIsActive(true);
+    }
+    */
   }
 
 
@@ -1859,6 +1875,18 @@ float Mono::GetLightIntensity(ECS::Entity::EntityID entity) {
     Debug::DebugLogger::GetInstance().LogError("GetLightIntensity: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
   }
   return 0.0f;
+}
+
+void Mono::PauseGame() {
+  gIsGamePaused = true;
+}
+
+void Mono::ResumeGame() {
+  gIsGamePaused = false;
+}
+
+bool Mono::GetIsPaused() {
+  return gIsGamePaused;
 }
 
 /*!**********************************************************************
