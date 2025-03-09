@@ -1,0 +1,101 @@
+{
+    "Name": "hexWall",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "wall1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.07120142132043839,
+                            "y": 0.10999999940395355,
+                            "z": 0.32706382870674136
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.5555702447891235,
+                            "z": 0.0,
+                            "w": 0.8314695954322815
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 67.49999237060547,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.07120142132043839,
+                            "y": 0.10999999940395355,
+                            "z": 0.32706382870674136
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.5555702447891235,
+                            "z": 0.0,
+                            "w": 0.8314695954322815
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.03560071066021919,
+                            "y": 0.054999999701976779,
+                            "z": 0.16353191435337068
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        }
+    ]
+}

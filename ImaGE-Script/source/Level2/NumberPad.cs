@@ -13,6 +13,7 @@ public class NumberPad : Entity
     public PlayerMove playerMove;
     public Entity enterButton;
     public Entity backButton;
+    private Random random = new Random();
 
     // Number buttons
     public Entity button0;
@@ -35,6 +36,7 @@ public class NumberPad : Entity
     {
         interactWithKeypadUI?.SetActive(false);
         keypadUI?.SetActive(false);
+        keypadInstructionsUI?.SetActive(false);
         keypadTextBox?.SetActive(false);
         enterButton?.SetActive(false);
         backButton?.SetActive(false);
@@ -84,6 +86,7 @@ public class NumberPad : Entity
             keypadActive = true;
             interactWithKeypadUI.SetActive(false);
             OpenKeypadUI();
+            InternalCalls.PlaySound(mEntityID, "SafeInteract"); // ✅ Matches Safe.cs (play when interacting)
         }
 
         interactWithKeypadUI.SetActive(isKeypadHit && !keypadActive);
@@ -135,13 +138,14 @@ public class NumberPad : Entity
 
     private void AppendDigit(string digit)
     {
-        if (Time.gameTime - lastPressTime < inputDelay) return; 
+        if (Time.gameTime - lastPressTime < inputDelay) return;
         lastPressTime = Time.gameTime;
 
         if (typedCode.Length < 4)
         {
             typedCode += digit;
             InternalCalls.SetText(keypadTextBox.mEntityID, typedCode);
+            PlayRandomKeypadButtonSound(); // ✅ Matches Safe.cs (play when pressing a key)
         }
     }
 
@@ -149,14 +153,14 @@ public class NumberPad : Entity
     {
         if (typedCode == correctCode)
         {
-            InternalCalls.PlaySound(mEntityID, "Correct");
+            InternalCalls.PlaySound(mEntityID, "SafeUnlock"); // ✅ Matches Safe.cs (play when correct)
             Console.WriteLine("Correct code entered!");
             CloseKeypadUI();
             currState = State.UNLOCKED;
         }
         else
         {
-            InternalCalls.PlaySound(mEntityID, "WrongInput");
+            InternalCalls.PlaySound(mEntityID, "WrongInput"); // ✅ Matches Safe.cs (play when incorrect)
             Console.WriteLine("Incorrect code, try again.");
             ClearCode();
         }
@@ -164,13 +168,14 @@ public class NumberPad : Entity
 
     private void BackButton()
     {
-        if (Time.gameTime - lastPressTime < inputDelay) return; // ✅ Prevents rapid backspaces
+        if (Time.gameTime - lastPressTime < inputDelay) return;
         lastPressTime = Time.gameTime;
 
         if (typedCode.Length > 0)
         {
             typedCode = typedCode.Substring(0, typedCode.Length - 1);
             InternalCalls.SetText(keypadTextBox.mEntityID, typedCode);
+            InternalCalls.PlaySound(mEntityID, "KeypadBackspace"); // ✅ Matches Safe.cs (play when backspacing)
         }
     }
 
@@ -221,11 +226,17 @@ public class NumberPad : Entity
 
     private void ResetButtonStates()
     {
-        // ✅ Reset all button states when UI is opened to prevent hover-triggered inputs
         foreach (var key in buttonScripts.Keys)
         {
             buttonScripts[key].IsClicked = false;
             buttonScripts[key].TriggerButton = false;
         }
+    }
+
+    private void PlayRandomKeypadButtonSound()
+    {
+        int soundNumber = random.Next(1, 3); // ✅ Matches Safe.cs (random beep sound)
+        string soundName = $"KeypadBeep{soundNumber}";
+        InternalCalls.PlaySound(mEntityID, soundName);
     }
 }

@@ -1,6 +1,19 @@
 {
     "configs": [
         {
+            "key": "Level2",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "",
             "value": {
                 "shaders": [],
@@ -27,9 +40,14 @@
             }
         },
         {
-            "key": "Level2",
+            "key": "M3",
             "value": {
-                "shaders": [],
+                "shaders": [
+                    {
+                        "active": false,
+                        "shader": 7488299143892968521
+                    }
+                ],
                 "fogMinDist": 1.0,
                 "fogMaxDist": 1000.0,
                 "fogColor": {
@@ -53,14 +71,9 @@
             }
         },
         {
-            "key": "M3",
+            "key": "Table",
             "value": {
-                "shaders": [
-                    {
-                        "active": false,
-                        "shader": 7488299143892968521
-                    }
-                ],
+                "shaders": [],
                 "fogMinDist": 1.0,
                 "fogMaxDist": 1000.0,
                 "fogColor": {
@@ -97,7 +110,7 @@
             }
         },
         {
-            "key": "Table",
+            "key": "Level3",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -123,33 +136,7 @@
             }
         },
         {
-            "key": "Level3",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
             "key": "Painting Frame (Rect)",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "Fountain",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -175,6 +162,19 @@
             }
         },
         {
+            "key": "Fountain",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "PauseMenu",
             "value": {
                 "shaders": [],
@@ -188,7 +188,7 @@
             }
         },
         {
-            "key": "hexWall1",
+            "key": "Easel",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -201,7 +201,7 @@
             }
         },
         {
-            "key": "Easel",
+            "key": "hexWall1",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -228,6 +228,32 @@
         },
         {
             "key": "Large Pillar",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "hexWall",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "hexCollider",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,

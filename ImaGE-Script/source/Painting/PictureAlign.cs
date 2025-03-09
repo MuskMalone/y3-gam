@@ -216,7 +216,7 @@ public class PictureAlign : Entity
         else if (picture == "DionysusPainting")
         {
             FadeOut();
-            controlPanelScript.SwitchMode(ControlPanel2.StatueType.DIONYSUS);
+            controlPanelScript.SwitchMode(ControlPanel2.StatueType.ATHENA);
             if (hasFaded)
             {
                 currentImg.SetActive(false);
@@ -231,7 +231,7 @@ public class PictureAlign : Entity
         else if (picture == "ArtemisPainting")
         {
             FadeOut();
-            controlPanelScript.SwitchMode(ControlPanel2.StatueType.ARTEMIS);
+            controlPanelScript.SwitchMode(ControlPanel2.StatueType.HERMES);
             if (hasFaded)
             {
                 currentImg.SetActive(false);
