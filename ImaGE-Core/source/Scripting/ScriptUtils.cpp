@@ -16,44 +16,44 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace Mono
 {
 	template <typename T>
-	MonoArray* GetMonoArray(std::shared_ptr<MonoDomain> md, uintptr_t sz) {
-		return mono_array_new(md.get(), mono_get_int32_class(), sz);
+	MonoArray* GetMonoArray(MonoDomain* md, uintptr_t sz) {
+		return mono_array_new(md, mono_get_int32_class(), sz);
 	}
 
 	template <>
-	MonoArray* GetMonoArray<int>(std::shared_ptr<MonoDomain> md, uintptr_t sz) {
-		return mono_array_new(md.get(), mono_get_int32_class(), sz);
+	MonoArray* GetMonoArray<int>(MonoDomain* md, uintptr_t sz) {
+		return mono_array_new(md, mono_get_int32_class(), sz);
 	}
 
 
 	template <>
-	MonoArray* GetMonoArray<std::string>(std::shared_ptr<MonoDomain> md, uintptr_t sz) {
-		return mono_array_new(md.get(), mono_get_string_class(), sz);
+	MonoArray* GetMonoArray<std::string>(MonoDomain* md, uintptr_t sz) {
+		return mono_array_new(md, mono_get_string_class(), sz);
 	}
 
 	template <>
-	MonoArray* GetMonoArray<unsigned>(std::shared_ptr<MonoDomain> md, uintptr_t sz) {
-		return mono_array_new(md.get(), mono_get_uint32_class(), sz);
+	MonoArray* GetMonoArray<unsigned>(MonoDomain* md, uintptr_t sz) {
+		return mono_array_new(md, mono_get_uint32_class(), sz);
 	}
 
 	template <>
-	MonoArray* GetMonoArray<float>(std::shared_ptr<MonoDomain> md, uintptr_t sz) {
-		return mono_array_new(md.get(), mono_get_single_class(), sz);
+	MonoArray* GetMonoArray<float>(MonoDomain* md, uintptr_t sz) {
+		return mono_array_new(md, mono_get_single_class(), sz);
 	}
 
 	template <>
-	MonoArray* GetMonoArray<double>(std::shared_ptr<MonoDomain> md, uintptr_t sz) {
-		return mono_array_new(md.get(), mono_get_double_class(), sz);
+	MonoArray* GetMonoArray<double>(MonoDomain* md, uintptr_t sz) {
+		return mono_array_new(md, mono_get_double_class(), sz);
 	}
 
 	template <>
-	MonoArray* GetMonoArray<MonoString*>(std::shared_ptr<MonoDomain> md, size_t sz) {
-		return mono_array_new(md.get(), mono_get_string_class(), sz);
+	MonoArray* GetMonoArray<MonoString*>(MonoDomain* md, size_t sz) {
+		return mono_array_new(md, mono_get_string_class(), sz);
 	}
 
 	template <>
-	MonoArray* GetMonoArray<MonoObject*>(std::shared_ptr<MonoDomain> md, size_t sz) {
-		return mono_array_new(md.get(), mono_get_object_class(), sz);
+	MonoArray* GetMonoArray<MonoObject*>(MonoDomain* md, size_t sz) {
+		return mono_array_new(md, mono_get_object_class(), sz);
 	}
 
 }

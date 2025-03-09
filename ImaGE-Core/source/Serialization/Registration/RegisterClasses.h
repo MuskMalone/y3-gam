@@ -267,8 +267,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("startPos", &T::startPos)
       .property("startRot", &T::startRot)
-      .property("startScale", &T::startScale)
-      .property("relativePositioning", &T::relativePositioning);
+      .property("startScale", &T::startScale);
   }
 
   {
@@ -277,6 +276,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .constructor<>()(rttr::policy::ctor::as_object)
       .property(JSON_ANIM_NODE_ID_KEY, &T::id)
       .property("type", &T::type)
+      .property("interpolationType", &T::interpolationType)
       .property("startTime", &T::startTime)
       .property("duration", &T::duration);
   }

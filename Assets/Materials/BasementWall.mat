@@ -1,0 +1,39 @@
+{
+    "name": "BasementWall",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+    },
+    "metalness": 0.5,
+    "roughness": 0.5,
+    "ao": 1.0,
+    "emission": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "transparency": 1.0,
+    "tiling": {
+        "x": 3.430000066757202,
+        "y": 1.1799999475479127
+    },
+    "offset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 11512450829400536789
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}

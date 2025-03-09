@@ -98,6 +98,7 @@
     <Compile Include="source\DynamicAudio\TransitionHintLevel1.cs" />
     <Compile Include="source\Engine Tools\Easing.cs" />
     <Compile Include="source\Engine Tools\FPS.cs" />
+    <Compile Include="source\Engine Tools\Transition.cs" />
     <Compile Include="source\InteractableObject\AltarPaintingFrame.cs" />
     <Compile Include="source\InteractableObject\ArtemisPainting.cs" />
     <Compile Include="source\InteractableObject\BackToMainMenuButton.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="source\InteractableObject\CorridorPainting.cs" />
     <Compile Include="source\InteractableObject\Crowbar.cs" />
     <Compile Include="source\InteractableObject\DionysusPainting.cs" />
+    <Compile Include="source\InteractableObject\Fragment.cs" />
     <Compile Include="source\InteractableObject\Hammer.cs" />
     <Compile Include="source\InteractableObject\HammerLevel3.cs" />
     <Compile Include="source\InteractableObject\Key.cs" />

@@ -242,9 +242,6 @@ namespace Serialization
     writer.Key("rootKeyframe");
     writer.StartObject();
 
-    writer.Key("relativePositioning");
-    writer.Bool(animData.rootKeyframe.relativePositioning);
-
     writer.Key("startPos");
     SerializeRecursive(animData.rootKeyframe.startPos, writer);
     writer.Key("startRot");
@@ -656,6 +653,8 @@ namespace {
     SerializeRecursive(node->endValue, writer);
     writer.Key("type");
     SerializeRecursive(node->type, writer);
+    writer.Key("interpolationType");
+    SerializeRecursive(node->interpolationType, writer);
 
     writer.Key("startTime");
     writer.Double(node->startTime);

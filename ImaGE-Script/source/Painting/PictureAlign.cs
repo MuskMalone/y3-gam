@@ -115,6 +115,22 @@ public class PictureAlign : Entity
     //  isNight = true;
     //  playerMove.canLook = false;
     //}
+    if (!isBigPic && currentImg != null && Input.GetKeyTriggered(KeyCode.R))
+    {
+        // Use (float)Math.PI / 4 for ~0.7854 radians (45 degrees).
+        float angle45 = (float)Math.PI / 4f;
+        Quaternion rot45 = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, angle45);
+
+        // Rotate the painting.
+        var imgTransform = currentImg.GetComponent<Transform>();
+        imgTransform.rotation = imgTransform.rotation * rot45;
+
+        // Rotate the border too.
+        var borderTransform = border.GetComponent<Transform>();
+        borderTransform.rotation = borderTransform.rotation * rot45;
+    }
+
+
 
     if (!toStop)
     {
@@ -224,67 +240,107 @@ public class PictureAlign : Entity
                 //InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
             }
         }
+        // Greek god paintings: Dionysus, Artemis, Zeus, Poseidon
+        else if (picture == "DionysusPainting" || picture == "ArtemisPainting" || picture == "ZeusPainting" || picture == "PoseidonPainting")
+        {
+            // Set the mode according to the painting
+            if (picture == "DionysusPainting")
+            {
+                controlPanelScript.SwitchMode(ControlPanel2.StatueType.ATHENA);
+            }
+            else if (picture == "ArtemisPainting")
+            {
+                controlPanelScript.SwitchMode(ControlPanel2.StatueType.HERMES);
+            }
+            else if (picture == "ZeusPainting")
+            {
+                controlPanelScript.SwitchMode(ControlPanel2.StatueType.ZEUS);
+            }
+            else if (picture == "PoseidonPainting")
+            {
+                controlPanelScript.SwitchMode(ControlPanel2.StatueType.POSEIDON);
+            }
 
-        else if (picture == "DionysusPainting")
-        {
-            FadeOut();
-            controlPanelScript.SwitchMode(ControlPanel2.StatueType.ATHENA);
-            if (hasFaded)
+            // Fade-out phase: keep calling FadeOut until currentAlpha is nearly 0
+            if (!hasFaded)
             {
-                currentImg.SetActive(false);
-                SetActive(false);
+                FadeOut();
+                if (Mathf.Abs(currentAlpha - 0f) < 0.01f)
+                {
+                    hasFaded = true;
+                }
+            }
+            else
+            {
+                // Once fade-out is complete, instantly reset the image alpha to 1
+                currentAlpha = 1f;
+                ResetCurrentImgAlpha();
                 playerMove.UnfreezePlayer();
                 isTransitioning = false;
-                currentImg.Level2RemoveItself();
-                currentImg = null;
                 hasFaded = false;
             }
         }
-        else if (picture == "ArtemisPainting")
-        {
-            FadeOut();
-            controlPanelScript.SwitchMode(ControlPanel2.StatueType.HERMES);
-            if (hasFaded)
-            {
-                currentImg.SetActive(false);
-                SetActive(false);
-                playerMove.UnfreezePlayer();
-                isTransitioning = false;
-                currentImg.Level2RemoveItself();
-                currentImg = null;
-                hasFaded = false;
-            }
-        }
-        else if (picture == "ZeusPainting")
-        {
-            FadeOut();
-            controlPanelScript.SwitchMode(ControlPanel2.StatueType.ZEUS);
-            if (hasFaded)
-            {
-                currentImg.SetActive(false);
-                SetActive(false);
-                playerMove.UnfreezePlayer();
-                isTransitioning = false;
-                currentImg.Level2RemoveItself();
-                currentImg = null;
-                hasFaded = false;
-            }
-        }
-        else if (picture == "PoseidonPainting")
-        {
-            FadeOut();
-            controlPanelScript.SwitchMode(ControlPanel2.StatueType.POSEIDON);
-            if (hasFaded)
-            {
-                currentImg.SetActive(false);
-                SetActive(false);
-                playerMove.UnfreezePlayer();
-                isTransitioning = false;
-                currentImg.Level2RemoveItself();
-                currentImg = null;
-                hasFaded = false;
-            }
-        }
+
+        //else if (picture == "DionysusPainting")
+        //{
+        //    FadeOut();
+        //    controlPanelScript.SwitchMode(ControlPanel2.StatueType.ATHENA);
+        //    if (hasFaded)
+        //    {
+        //        currentImg.SetActive(false);
+        //        SetActive(false);
+        //        playerMove.UnfreezePlayer();
+        //        isTransitioning = false;
+        //        currentImg.Level2RemoveItself();
+        //        currentImg = null;
+        //        hasFaded = false;
+        //    }
+        //}
+        //else if (picture == "ArtemisPainting")
+        //{
+        //    FadeOut();
+        //    controlPanelScript.SwitchMode(ControlPanel2.StatueType.HERMES);
+        //    if (hasFaded)
+        //    {
+        //        currentImg.SetActive(false);
+        //        SetActive(false);
+        //        playerMove.UnfreezePlayer();
+        //        isTransitioning = false;
+        //        currentImg.Level2RemoveItself();
+        //        currentImg = null;
+        //        hasFaded = false;
+        //    }
+        //}
+        //else if (picture == "ZeusPainting")
+        //{
+        //    FadeOut();
+        //    controlPanelScript.SwitchMode(ControlPanel2.StatueType.ZEUS);
+        //    if (hasFaded)
+        //    {
+        //        currentImg.SetActive(false);
+        //        SetActive(false);
+        //        playerMove.UnfreezePlayer();
+        //        isTransitioning = false;
+        //        currentImg.Level2RemoveItself();
+        //        currentImg = null;
+        //        hasFaded = false;
+        //    }
+        //}
+        //else if (picture == "PoseidonPainting")
+        //{
+        //    FadeOut();
+        //    controlPanelScript.SwitchMode(ControlPanel2.StatueType.POSEIDON);
+        //    if (hasFaded)
+        //    {
+        //        currentImg.SetActive(false);
+        //        SetActive(false);
+        //        playerMove.UnfreezePlayer();
+        //        isTransitioning = false;
+        //        currentImg.Level2RemoveItself();
+        //        currentImg = null;
+        //        hasFaded = false;
+        //    }
+        //}
         else if (picture == "PitPainting")
         {
             FadeOut();
@@ -423,30 +479,60 @@ public class PictureAlign : Entity
 
   }
 
-  public void SetBorder(bool BigPic)
-  {
-    isBigPic = BigPic;
-    Vector3 _offset = new Vector3(0, 0, 5); // Example offset
-    if (!BigPic)
-    {
-      DownArrow.SetActive(false);
-      UpArrow.SetActive(false);
-      RightArrow.SetActive(false);
-      LeftArrow.SetActive(false);
+    //public void SetBorder(bool BigPic)
+    //{
+    //  isBigPic = BigPic;
+    //  Vector3 _offset = new Vector3(0, 0, 5); // Example offset
+    //  if (!BigPic)
+    //  {
+    //    DownArrow.SetActive(false);
+    //    UpArrow.SetActive(false);
+    //    RightArrow.SetActive(false);
+    //    LeftArrow.SetActive(false);
 
 
-      border.GetComponent<Transform>().position = smallBorderPos;
-      border.GetComponent<Transform>().scale = smallBorderScale;
-      //border.GetComponent<Transform>().rotation = Mathf.EulertoQuat(new Vector3(mainCamera.GetComponent<Transform>().rotationEuler.X, 0, 0));
-    }
-    else
+    //    border.GetComponent<Transform>().position = smallBorderPos;
+    //    border.GetComponent<Transform>().scale = smallBorderScale;
+    //    //border.GetComponent<Transform>().rotation = Mathf.EulertoQuat(new Vector3(mainCamera.GetComponent<Transform>().rotationEuler.X, 0, 0));
+    //  }
+    //  else
+    //  {
+    //    toStop = false;
+    //    // UpdateObject(border, mainCamera, _offset);
+    //    border.GetComponent<Transform>().position = bigBorderPos;
+    //    border.GetComponent<Transform>().scale = bigBorderScale;
+    //  }
+    //}
+    public void SetBorder(bool BigPic)
     {
-      toStop = false;
-      // UpdateObject(border, mainCamera, _offset);
-      border.GetComponent<Transform>().position = bigBorderPos;
-      border.GetComponent<Transform>().scale = bigBorderScale;
+        isBigPic = BigPic;
+        Vector3 _offset = new Vector3(0, 0, 5); // Example offset
+
+        if (!BigPic)
+        {
+            // The painting is small: position/scale as normal
+            DownArrow.SetActive(false);
+            UpArrow.SetActive(false);
+            RightArrow.SetActive(false);
+            LeftArrow.SetActive(false);
+
+            border.GetComponent<Transform>().position = smallBorderPos;
+            border.GetComponent<Transform>().scale = smallBorderScale;
+        }
+        else
+        {
+            // The painting is big: reset rotation to upright
+            if (currentImg != null)
+            {
+                currentImg.GetComponent<Transform>().rotation = Quaternion.Identity;
+            }
+            border.GetComponent<Transform>().rotation = Quaternion.Identity;
+
+            toStop = false;
+            border.GetComponent<Transform>().position = bigBorderPos;
+            border.GetComponent<Transform>().scale = bigBorderScale;
+        }
     }
-  }
 
   public void ClearUI()
   {
@@ -495,19 +581,20 @@ public class PictureAlign : Entity
 
     void FadeOut()
     {
-        if (currentImg != null | border != null)
+        if (currentImg != null || border != null)
         {
             isFading = true;
-
             currentAlpha = Mathf.Lerp(currentAlpha, 0f, fadeSpeed * Time.deltaTime);
 
-            Color painting_color = currentImg.GetComponent<Image>().color;
+            Image paintingImage = currentImg.GetComponent<Image>();
+            Color painting_color = paintingImage.color;
             painting_color.a = currentAlpha;
-            currentImg.GetComponent<Image>().color = painting_color;
+            paintingImage.color = painting_color;
 
-            Color border_color = border.GetComponent<Image>().color;
+            Image borderImage = border.GetComponent<Image>();
+            Color border_color = borderImage.color;
             border_color.a = currentAlpha;
-            border.GetComponent<Image>().color = border_color;
+            borderImage.color = border_color;
 
             if (Mathf.Abs(currentAlpha - 0f) < 0.01f)
             {
@@ -516,7 +603,6 @@ public class PictureAlign : Entity
                 isFading = false;
             }
         }
-
     }
 
     //private void TransitionCamera()
@@ -610,6 +696,26 @@ public class PictureAlign : Entity
                 currentImg = null;
 
                 InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
+            }
+        }
+    }
+    private void ResetCurrentImgAlpha()
+    {
+        // Force the image and border to a fully opaque white color.
+        if (currentImg != null)
+        {
+            Image paintingImage = currentImg.GetComponent<Image>();
+            if (paintingImage != null)
+            {
+                paintingImage.color = new Color(1f, 1f, 1f, 1f);
+            }
+        }
+        if (border != null)
+        {
+            Image borderImage = border.GetComponent<Image>();
+            if (borderImage != null)
+            {
+                borderImage.color = new Color(1f, 1f, 1f, 1f);
             }
         }
     }
