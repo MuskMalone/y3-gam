@@ -16,10 +16,11 @@ namespace Anim {
   };
 
   struct RootKeyframe {
-    RootKeyframe() : startPos{}, startRot{}, startScale{ 1.f, 1.f, 1.f }, nextNodes{} {}
+    RootKeyframe() : nextNodes{}, startPos{}, startRot{}, startScale{ 1.f, 1.f, 1.f }, relativePositioning{ false } {}
 
-    glm::vec3 startPos, startRot, startScale;
     std::vector<Node> nextNodes;
+    glm::vec3 startPos, startRot, startScale;
+    bool relativePositioning;
   };
 
   struct Keyframe {

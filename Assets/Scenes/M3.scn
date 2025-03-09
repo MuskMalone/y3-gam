@@ -172,7 +172,7 @@
                 469,
                 488,
                 506,
-                724,
+                1048783,
                 1049003,
                 1049378,
                 2097443,
@@ -259,7 +259,6 @@
                 83,
                 133,
                 706,
-                975,
                 1121,
                 1049221,
                 1049289,
@@ -8794,84 +8793,6 @@
             ]
         },
         {
-            "ID": 207,
-            "Parent": 214,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Puzzle_PaintingFragment3",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -11.11309814453125,
-                            "y": 7.164290904998779,
-                            "z": -19.015771865844728
-                        },
-                        "scale": {
-                            "x": 0.12603126466274262,
-                            "y": 0.1694677174091339,
-                            "z": 0.4300000071525574
-                        },
-                        "rotation": {
-                            "x": -0.10964654386043549,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.9939706325531006
-                        },
-                        "eulerAngles": {
-                            "x": -12.589881896972657,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.118812561035156,
-                            "y": 14.545254707336426,
-                            "z": -36.51301193237305
-                        },
-                        "worldScale": {
-                            "x": 0.12603126466274262,
-                            "y": 0.1694677174091339,
-                            "z": 0.4300000071525574
-                        },
-                        "worldRot": {
-                            "x": -0.10964654386043549,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.9939706325531006
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Puzzle_PaintingFragment3",
-                        "GUID": {
-                            "ID": 13853952119863121254
-                        },
-                        "submeshIdx": 2,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 210,
             "Parent": null,
             "Child Entities": [],
@@ -8960,8 +8881,7 @@
             "ID": 214,
             "Parent": 11,
             "Child Entities": [
-                203,
-                207
+                203
             ],
             "Components": [
                 {
@@ -14422,6 +14342,100 @@
             }
         },
         {
+            "ID": 624,
+            "Parent": 1048783,
+            "Child Entities": [
+                625,
+                626,
+                627,
+                628
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16013359636150386060
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 625,
+            "Parent": 624,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16013359636150386060
+                },
+                "subDataId": 4,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Puzzle_PaintingFragment1",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 626,
+            "Parent": 624,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16013359636150386060
+                },
+                "subDataId": 5,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Puzzle_PaintingFragment2",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 627,
+            "Parent": 624,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16013359636150386060
+                },
+                "subDataId": 6,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 628,
+            "Parent": 624,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16013359636150386060
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Puzzle_PaintingFragment4",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 629,
             "Parent": 2097207,
             "Child Entities": [],
@@ -15684,184 +15698,6 @@
                             "ID": 18354799241013045715
                         },
                         "isTransparent": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 724,
-            "Parent": 6,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "AltarPainting",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 6.321000099182129,
-                            "y": 14.519857406616211,
-                            "z": -36.41422653198242
-                        },
-                        "scale": {
-                            "x": 1.940000057220459,
-                            "y": 1.940000057220459,
-                            "z": 1.940000057220459
-                        },
-                        "rotation": {
-                            "x": -0.16418683528900147,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.9864292740821838
-                        },
-                        "eulerAngles": {
-                            "x": -18.89999771118164,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.321000099182129,
-                            "y": 14.519857406616211,
-                            "z": -36.41422653198242
-                        },
-                        "worldScale": {
-                            "x": 1.940000057220459,
-                            "y": 1.940000057220459,
-                            "z": 1.940000057220459
-                        },
-                        "worldRot": {
-                            "x": -0.16418683528900147,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.9864292740821838
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Props"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 10289315563564798747
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Props_PaintingFrame1_s",
-                        "GUID": {
-                            "ID": 17556891556518666196
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 0.20000000298023225
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": -5.0,
-                            "y": -1.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": -0.04361772537231445,
-                            "y": -0.008718229830265046,
-                            "z": -0.0003806461172644049,
-                            "w": 0.9990102052688599
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "RigidBody": {
-                        "velocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "angularVelocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
-                        "restitution": 0.0,
-                        "gravityFactor": 0.0,
-                        "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC",
-                        "axisLock": 7,
-                        "angularAxisLock": 7
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 724,
-                                "scriptName": "AltarPaintingFrame",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 2098176,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "altarPaintingFrameUI"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 197,
-                                            "scriptName": "Dialogue"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "dialogueSystem"
-                                        }
-                                    },
-                                    {
-                                        "data": [
-                                            "I can't picture what the painting looks like right\nnow...",
-                                            "I'll have to come back later."
-                                        ],
-                                        "type": "System.String[]",
-                                        "scriptField": {
-                                            "fieldName": "paintingDialogue"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 40,
-                                            "scriptName": "PlayerInteraction"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerInteraction"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
                     }
                 }
             ]
@@ -17382,84 +17218,6 @@
                         "textureAssetGUID": {
                             "ID": 14809817590802918865
                         }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 975,
-            "Parent": 8,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "FrameOnAltar",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.7089638710021973,
-                            "y": 14.450019836425782,
-                            "z": -37.67250061035156
-                        },
-                        "scale": {
-                            "x": 2.5799999237060549,
-                            "y": 2.5799999237060549,
-                            "z": 2.5799999237060549
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 89.98021697998047,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.2914323806762699,
-                            "y": 14.450019836425782,
-                            "z": -37.105186462402347
-                        },
-                        "worldScale": {
-                            "x": 2.5799999237060549,
-                            "y": 2.5799999237060549,
-                            "z": 2.5799999237060549
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 6763860968362688319
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "FrameOnAltar",
-                        "GUID": {
-                            "ID": 7709600725256441171
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
@@ -22007,6 +21765,28 @@
             ]
         },
         {
+            "ID": 1048783,
+            "Parent": 6,
+            "Child Entities": [
+                624,
+                1049300,
+                1049551
+            ],
+            "Position": {
+                "x": 6.321000099182129,
+                "y": 14.520000457763672,
+                "z": -36.41400146484375
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 16013359636150386060
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 1048810,
             "Parent": 7340121,
             "Child Entities": [],
@@ -23976,6 +23756,19 @@
             ]
         },
         {
+            "ID": 1049300,
+            "Parent": 1048783,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16013359636150386060
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 1049326,
             "Parent": 2097869,
             "Child Entities": [],
@@ -25636,6 +25429,19 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 1049551,
+            "Parent": 1048783,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16013359636150386060
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 1049592,

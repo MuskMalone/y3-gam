@@ -267,7 +267,8 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("startPos", &T::startPos)
       .property("startRot", &T::startRot)
-      .property("startScale", &T::startScale);
+      .property("startScale", &T::startScale)
+      .property("relativePositioning", &T::relativePositioning);
   }
 
   {

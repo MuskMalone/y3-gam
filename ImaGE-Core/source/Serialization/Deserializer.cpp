@@ -41,6 +41,7 @@ namespace Serialization
     FILEWrapper fileWrapper{ filePath.c_str(), "r" };
     if (!fileWrapper) {
       IGE_DBGLOGGER.LogError("[Deserializer] Unable to read " + filePath);
+      IGE_DBGLOGGER.LogInfo("[Deserializer] Please ignore this if your file is new/empty");
       return;
     }
 
