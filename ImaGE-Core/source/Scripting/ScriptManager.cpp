@@ -41,7 +41,7 @@ namespace Mono
 {
   std::map<std::string, ScriptClassInfo> ScriptManager::mMonoClassMap{};
   std::shared_ptr<MonoDomain> ScriptManager::mRootDomain{ nullptr };
-  std::shared_ptr<MonoDomain> ScriptManager::mAppDomain{ nullptr };
+  MonoDomain* ScriptManager::mAppDomain{ nullptr };
   std::vector<std::string> ScriptManager::mAllScriptNames;
   std::string ScriptManager::mCoreAssFilePath{};
   std::string ScriptManager::mAppDomFilePath{};
@@ -179,8 +179,8 @@ ScriptManager::ScriptManager()
 
 void ScriptManager::LoadAppDomain()
 {
-  mAppDomain = std::shared_ptr<MonoDomain>(mono_domain_create_appdomain(const_cast<char*>(mAppDomFilePath.c_str()), nullptr), mono_domain_unload);
-  mono_domain_set(mAppDomain.get(), true);
+  mAppDomain = mono_domain_create_appdomain(const_cast<char*>(mAppDomFilePath.c_str()), nullptr);
+  mono_domain_set(mAppDomain, true);
 }
 
 #define ADD_INTERNAL_CALL(func) mono_add_internal_call("IGE.Utils.InternalCalls::"#func, Mono::func);
@@ -684,25 +684,54 @@ void ScriptManager::ReloadAssembly()
 #ifdef _DEBUG
   std::cout << "ASSReload\n";
 #endif
-  mono_domain_set(mono_get_root_domain(), false);
-  mAppDomain.reset();
-  mMonoClassMap.clear();
-  mAllScriptNames.clear();
 
+  mono_domain_set(mono_get_root_domain(), false);
+#ifdef _DEBUG
+  std::cout << " mono_domain_set(mono_get_root_domain(), false); Done\n";
+#endif
+//  if(mAppDomain)
+//    mAppDomain.reset();
+//
+//#ifdef _DEBUG
+//  std::cout << " mAppDomain.reset(); Done\n";
+//#endif
+  mMonoClassMap.clear();
+
+#ifdef _DEBUG
+  std::cout << "  mMonoClassMap.clear(); Done\n";
+#endif
+  mAllScriptNames.clear();
+#ifdef _DEBUG
+  std::cout << " mAllScriptNames.clear(); Done\n";
+#endif
   LoadAppDomain();
   //Assets::AssetManager& assetManager{ Assets::AssetManager::GetInstance() };
   mFileWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../Assets/Scripts/ImaGE-Script.dll", AssemblyFileSystemEvent);
   mAssemblyReloadPending = false;
-
+#ifdef _DEBUG
+  std::cout << "loadAp domain Reload Done\n";
+#endif
   ReloadScripts();
 
+#ifdef _DEBUG
+  std::cout << "ASS Reload Done\n";
+#endif
 }
 
 void ScriptManager::ReloadScripts()
 {
   AddInternalCalls();
+#ifdef _DEBUG
+  std::cout << "Addinternal call Done\n";
+#endif
   LoadAllMonoClass();
+#ifdef _DEBUG
+  std::cout << "load mono class Done\n";
+#endif
   ReloadAllScripts();
+#ifdef _DEBUG
+  std::cout << "load all scripts Done\n";
+#endif
 }
 
 
@@ -722,7 +751,7 @@ ScriptManager::~ScriptManager()
     mono_domain_set(mono_get_root_domain(), false);
 
  
-    mAppDomain.reset();
+    mono_domain_unload(mAppDomain);
 
   
     //mono_jit_cleanup(mRootDomain.get());
@@ -749,7 +778,7 @@ MonoObject* Mono::ScriptManager::InstantiateClass(const char* className, std::ve
       throw Debug::Exception<ScriptManager>(Debug::LVL_CRITICAL, Msg("Unable to fetch script: " + std::string(className)));
     }
 
-    MonoObject* classInstance = mono_object_new(mAppDomain.get(), currClass);  //Get a reference to the class we want to instantiate
+    MonoObject* classInstance = mono_object_new(mAppDomain, currClass);  //Get a reference to the class we want to instantiate
 
 
     if (classInstance == nullptr)
@@ -1930,6 +1959,6 @@ std::string Mono::MonoStringToSTD(MonoString* str)
 MonoString* Mono::STDToMonoString(const std::string& str)
 {
   Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
-  return (mono_string_new(sm->mAppDomain.get(), str.c_str()));
+  return (mono_string_new(sm->mAppDomain, str.c_str()));
 
 }

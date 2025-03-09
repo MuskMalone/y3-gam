@@ -264,7 +264,7 @@ namespace Scenes
   void SceneManager::ExecuteMainThreadQueue()
   {
     std::scoped_lock<std::mutex> lock(mMainThreadQueueMutex);
-
+    
     for (auto& func : mMainThreadQueue)
       func();
 
