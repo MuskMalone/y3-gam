@@ -7,6 +7,7 @@ public class PlayerFootsteps : Entity
     //public Entity audioManager;
     public Entity player;
     public PlayerMove playerMoveScript;
+    public bool isLevel1 = false;
     public Entity doorEntryTrigger;
     public float interval = 0.5f;
     public float footstepVolume = 2f;
@@ -47,7 +48,7 @@ public class PlayerFootsteps : Entity
                 timePassed = 0;
             }
         }
-        if (doorEntryTrigger.mEntityID != uint.MaxValue)
+        if (isLevel1)
         {
             Vector3 playerLoc = InternalCalls.GetWorldPosition(player.mEntityID);
             Vector3 doorLoc = InternalCalls.GetWorldPosition(doorEntryTrigger.mEntityID);
