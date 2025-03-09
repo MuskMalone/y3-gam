@@ -4101,13 +4101,13 @@
                 81,
                 82,
                 83,
+                174,
                 244,
                 246,
                 247,
                 248,
                 249,
-                1048644,
-                4194436
+                1048644
             ],
             "Components": [
                 {
@@ -9104,77 +9104,6 @@
             ]
         },
         {
-            "ID": 171,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": 36.800716400146487,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 50.27771759033203,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 172,
             "Parent": 3145772,
             "Child Entities": [
@@ -9293,6 +9222,152 @@
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 174,
+            "Parent": 61,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Ladder",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -41.8165397644043,
+                            "y": 26.39642333984375,
+                            "z": -155.73619079589845
+                        },
+                        "scale": {
+                            "x": 60.0,
+                            "y": 60.0,
+                            "z": 60.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -41.8165397644043,
+                            "y": 26.39642333984375,
+                            "z": -155.73619079589845
+                        },
+                        "worldScale": {
+                            "x": 60.0,
+                            "y": 60.0,
+                            "z": 60.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "ladder",
+                        "GUID": {
+                            "ID": 645047868141100883
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.2000000476837159,
+                            "y": 30.0,
+                            "z": 3.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 174,
+                                "scriptName": "Ladder",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 320,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "invisibleBarrier"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -9973,219 +10048,6 @@
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 206,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": 33.11127853393555,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 46.588279724121097,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 209,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": 21.79367446899414,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 35.27067565917969,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 210,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": 25.585674285888673,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 39.06267547607422,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
                     }
@@ -16600,77 +16462,6 @@
             ]
         },
         {
-            "ID": 313,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": 29.21875,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 42.69575119018555,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 319,
             "Parent": 131,
             "Child Entities": [],
@@ -22443,77 +22234,6 @@
             ]
         },
         {
-            "ID": 1048629,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": 18.169677734375,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 31.646678924560548,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1048630,
             "Parent": 1048679,
             "Child Entities": [],
@@ -22562,77 +22282,6 @@
                             "y": 0.0,
                             "z": 0.7071067690849304,
                             "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048632,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": 14.248330116271973,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 27.725330352783204,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
                         }
                     }
                 },
@@ -24052,77 +23701,6 @@
             ]
         },
         {
-            "ID": 1048709,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder side",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -18.876544952392579,
-                            "y": 10.96399974822998,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 1.5,
-                            "y": 56.62099838256836,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -44.84154510498047,
-                            "y": 24.44099998474121,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 1.5,
-                            "y": 56.62099838256836,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1048723,
             "Parent": 1048728,
             "Child Entities": [],
@@ -24638,77 +24216,6 @@
             }
         },
         {
-            "ID": 1048754,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": 10.19589900970459,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 23.67289924621582,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1048756,
             "Parent": 1048746,
             "Child Entities": [],
@@ -24806,219 +24313,6 @@
                 ],
                 "removedComponents": []
             }
-        },
-        {
-            "ID": 1048763,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": 6.674954414367676,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 20.151954650878908,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048764,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": -1.021327018737793,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 12.455673217773438,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048766,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": -4.883709907531738,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 8.593290328979493,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
         },
         {
             "ID": 1048769,
@@ -25308,77 +24602,6 @@
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048887,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": 2.456686019897461,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 15.933686256408692,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
                     }
@@ -27189,219 +26412,6 @@
             ]
         },
         {
-            "ID": 1049083,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": -8.720094680786133,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 4.756905555725098,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1049164,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": -12.086246490478516,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": 1.3907537460327149,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1049173,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder steps (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -15.735328674316407,
-                            "y": -15.290653228759766,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -41.7003288269043,
-                            "y": -1.8136529922485352,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 4.945959091186523,
-                            "y": 1.5,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1049288,
             "Parent": 1049506,
             "Child Entities": [],
@@ -28582,77 +27592,6 @@
                             "y": 0.2134675830602646,
                             "z": 0.0,
                             "w": 0.9769501686096191
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 2097338,
-            "Parent": 4194436,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder side (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -12.721996307373047,
-                            "y": 10.963652610778809,
-                            "z": -21.1123046875
-                        },
-                        "scale": {
-                            "x": 1.5,
-                            "y": 56.620914459228519,
-                            "z": 1.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -38.68699645996094,
-                            "y": 24.44065284729004,
-                            "z": -156.289306640625
-                        },
-                        "worldScale": {
-                            "x": 1.5,
-                            "y": 56.620914459228519,
-                            "z": 1.5
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
                         }
                     }
                 },
@@ -30931,151 +29870,6 @@
                             "w": 1.0
                         },
                         "sensor": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 4194436,
-            "Parent": 61,
-            "Child Entities": [
-                171,
-                206,
-                209,
-                210,
-                313,
-                1048629,
-                1048632,
-                1048709,
-                1048754,
-                1048763,
-                1048764,
-                1048766,
-                1048887,
-                1049083,
-                1049164,
-                1049173,
-                2097338
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Ladder",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -25.96500015258789,
-                            "y": 13.47700023651123,
-                            "z": -135.177001953125
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -25.96500015258789,
-                            "y": 13.47700023651123,
-                            "z": -135.177001953125
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 4.400000095367432,
-                            "y": 28.256999969482423,
-                            "z": 1.5
-                        },
-                        "positionOffset": {
-                            "x": -15.899999618530274,
-                            "y": 11.199999809265137,
-                            "z": -21.11199951171875
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 4194436,
-                                "scriptName": "Ladder",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 320,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "invisibleBarrier"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 2,
-                                            "scriptName": "PlayerInteraction"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerInteraction"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 2,
-                                            "scriptName": "PlayerMove"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerMove"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
                     }
                 }
             ]
