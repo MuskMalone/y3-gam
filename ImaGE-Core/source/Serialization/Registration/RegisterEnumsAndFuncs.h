@@ -90,6 +90,15 @@ static void rttr_auto_register_reflection_function3_(); namespace {
       rttr::value("SCALE", T::SCALE)
       );
   }
+  {
+    using T = Anim::InterpolationType;
+    rttr::registration::enumeration<T>("InterpolationType")(
+      rttr::value("LINEAR", T::LINEAR),
+      rttr::value("EASE_IN", T::EASE_IN),
+      rttr::value("EASE_OUT", T::EASE_OUT),
+      rttr::value("EASE_INOUT", T::EASE_OUT)
+      );
+  }
 
   rttr::registration::enumeration<Component::Camera::Type>("CameraType")(
     rttr::value("ORTHO", Component::Camera::Type::ORTHO),

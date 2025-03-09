@@ -41,24 +41,22 @@ namespace GUI {
     struct KeyframeData {
       using ValueType = Anim::Keyframe::ValueType;
 
-      KeyframeData() : endValue{}, type{ Anim::KeyframeType::NONE }, startTime{}, duration{} {}
+      KeyframeData() : endValue{}, type{ Anim::KeyframeType::NONE }, interpType{ Anim::InterpolationType::LINEAR },
+        startTime {}, duration{} {}
       KeyframeData(Anim::Keyframe const& keyframe) :
-        endValue{ keyframe.endValue }, type{ keyframe.type },
+        endValue{ keyframe.endValue }, type{ keyframe.type }, interpType{ keyframe.interpolationType },
         startTime{ keyframe.startTime }, duration{ keyframe.duration } {}
 
       template <typename T>
       T GetInterpolatedValue(T const& startVal, float endTime) const { 
         return glm::mix(startVal, std::get<T>(endValue), (endTime - startTime) / duration);
       }
-      template <typename T>
-      T GetInterpolatedValue(T const& startVal, T const endVal, float endTime) const {
-        return glm::mix(startVal, endVal, (endTime - startTime) / duration);
-      }
 
       inline float GetEndTime() const noexcept { return startTime + duration; }
 
       ValueType endValue;
       Anim::KeyframeType type;
+      Anim::InterpolationType interpType;
       float startTime, duration;
     };
 
@@ -88,14 +86,13 @@ namespace GUI {
 
     struct RootKeyframeNode : public KeyframeNode {
       RootKeyframeNode() : KeyframeNode(sRootId, {}, false, true),
-        startPos{}, startRot{}, startScale{ 1.f, 1.f, 1.f }, relativePositioning{ false } {
+        startPos{}, startRot{}, startScale{ 1.f, 1.f, 1.f } {
         nodeName = "Root";
       }
 
       Anim::RootKeyframe ToRootKeyframe() const;
 
       glm::vec3 startPos, startRot, startScale;
-      bool relativePositioning;
     };
     
     struct KeyframeLink {

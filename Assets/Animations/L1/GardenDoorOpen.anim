@@ -28,6 +28,7 @@
                 "z": 0.0
             },
             "type": "ROTATION",
+            "interpolationType": "LINEAR",
             "startTime": 0.0,
             "duration": 0.4000000059604645,
             "nextNodes": [
@@ -42,6 +43,7 @@
                 "z": 0.0
             },
             "type": "ROTATION",
+            "interpolationType": "LINEAR",
             "startTime": 0.4000000059604645,
             "duration": 0.33000001311302187,
             "nextNodes": [
@@ -56,6 +58,7 @@
                 "z": 0.0
             },
             "type": "ROTATION",
+            "interpolationType": "LINEAR",
             "startTime": 0.7300000190734863,
             "duration": 0.8500000238418579,
             "nextNodes": [
@@ -70,6 +73,7 @@
                 "z": 0.0
             },
             "type": "ROTATION",
+            "interpolationType": "LINEAR",
             "startTime": 1.5800000429153443,
             "duration": 0.5,
             "nextNodes": [
@@ -84,6 +88,7 @@
                 "z": 0.0
             },
             "type": "ROTATION",
+            "interpolationType": "LINEAR",
             "startTime": 2.0799999237060549,
             "duration": 0.5,
             "nextNodes": [
@@ -98,6 +103,7 @@
                 "z": 0.0
             },
             "type": "ROTATION",
+            "interpolationType": "LINEAR",
             "startTime": 2.5799999237060549,
             "duration": 0.4000000059604645,
             "nextNodes": [
@@ -112,6 +118,7 @@
                 "z": 0.0
             },
             "type": "NONE",
+            "interpolationType": "LINEAR",
             "startTime": 2.9800000190734865,
             "duration": 1.0,
             "nextNodes": []

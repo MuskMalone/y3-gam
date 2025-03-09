@@ -18,7 +18,7 @@ namespace Systems {
 		for (auto entity : ptclsystem) {
 			ECS::Entity e{ entity };
 
-			if (!e.IsActive()) { continue; }
+			//if (!e.IsActive()) { continue; }
 
 			// this is not a ref. i have to update all the transforms as they are offsets of the main transform
 			std::vector<Graphics::EmitterInstance> vecProxy{ e.GetComponent<Component::EmitterSystem>().emitters };
@@ -31,6 +31,7 @@ namespace Systems {
 				}
 				else {
 					emitproxy.active = false;
+					continue;
 				}
 				for (int i{}; i < emitproxy.vCount; ++i)
 					emitproxy.vertices[i][0] += pos.x, emitproxy.vertices[i][1] += pos.y, emitproxy.vertices[i][2] += pos.z;

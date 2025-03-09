@@ -33,17 +33,13 @@ public class PlayerFootsteps : Entity
     // Update is called once per frame
     void Update()
     {
-        Console.WriteLine("hypothesis1");
         timePassed += InternalCalls.GetDeltaTime();
         bool isGrounded = playerMoveScript.IsGrounded();
         Vector3 velocity = InternalCalls.GetVelocity(player.mEntityID);
         float magnitude = velocity.X * velocity.X + velocity.Y * velocity.Y + velocity.Z * velocity.Z;
 
-        //for testing purposes to remove
-        Console.WriteLine("hypothesis2");
         Vector3 position = InternalCalls.GetPosition(player.mEntityID);
         uint entityHit = InternalCalls.RaycastFromEntity(player.mEntityID, position, position + (new Vector3(0, -200, 0)));
-        Console.WriteLine("hypothesis3");
         if (isGrounded && magnitude > speedThreshold)
         {
             if (timePassed >= interval) {
@@ -51,10 +47,8 @@ public class PlayerFootsteps : Entity
                 timePassed = 0;
             }
         }
-        Console.WriteLine("hypothesis4");
         if (doorEntryTrigger.mEntityID != uint.MaxValue)
         {
-            Console.WriteLine("hypothesis5");
             Vector3 playerLoc = InternalCalls.GetWorldPosition(player.mEntityID);
             Vector3 doorLoc = InternalCalls.GetWorldPosition(doorEntryTrigger.mEntityID);
             isEnteredHallway = playerLoc.X > doorLoc.X;
@@ -66,7 +60,6 @@ public class PlayerFootsteps : Entity
 
                     if (isEnteredHallway)
                     {
-                        Console.WriteLine("hypothesis6");
                         InternalCalls.EnableSoundPostProcessing(mEntityID, soundName, Convert.ToUInt32(ppType), ppPararm);
                     }
                     else

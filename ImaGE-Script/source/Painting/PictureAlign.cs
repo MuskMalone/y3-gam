@@ -616,6 +616,7 @@ public class PictureAlign : Entity
             {
                 Console.Write("corridorTransitionFadeScript missing");
                 corridorTransitionFadeScript.isFading = true;
+                InternalCalls.PlaySound(player.mEntityID, "TransitionCorridor");
             }
         }
 
@@ -647,6 +648,7 @@ public class PictureAlign : Entity
                 playerMove.UnfreezePlayer();
                 currentImg.RemoveItself();
                 currentImg = null;
+
                 InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
             }
         }
