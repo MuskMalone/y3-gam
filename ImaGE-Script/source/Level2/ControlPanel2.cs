@@ -138,7 +138,7 @@ public class ControlPanel2 : Entity
                     playerMove.UnfreezePlayer();
                     SetPlayerCameraAsMain();
 
-                    // ✅ Hide hidden text when exiting the control panel
+                    
                     if (defaultStateActive)
                     {
                         SetDefaultHiddenText(false);
@@ -224,7 +224,7 @@ public class ControlPanel2 : Entity
 
         currStatue = statue;
 
-        // ✅ If UV light was already enabled, keep it on when switching statues
+        
         if (uvLightEnabled)
         {
             SetHiddenText(currStatue, true);
