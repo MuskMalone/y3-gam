@@ -3280,6 +3280,174 @@
                                         "postProcessingParameter": 15000.0
                                     }
                                 }
+                            },
+                            {
+                                "key": "Wooden1",
+                                "value": {
+                                    "guid": {
+                                        "ID": 3692094709506884826
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -9.138481140136719,
+                                            "y": 2.6667213439941408,
+                                            "z": 42.61762237548828
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Wooden2",
+                                "value": {
+                                    "guid": {
+                                        "ID": 3915418001198232854
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -9.138481140136719,
+                                            "y": 2.6667213439941408,
+                                            "z": 42.61762237548828
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Wooden3",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11295149910885220024
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -9.138481140136719,
+                                            "y": 2.6667213439941408,
+                                            "z": 42.61762237548828
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Wooden4",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7827877820513640779
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -9.138481140136719,
+                                            "y": 2.6667213439941408,
+                                            "z": 42.61762237548828
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Wooden5",
+                                "value": {
+                                    "guid": {
+                                        "ID": 696386623329056322
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -9.138481140136719,
+                                            "y": 2.6667213439941408,
+                                            "z": 42.61762237548828
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Wooden6",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9253881664932996385
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -9.138481140136719,
+                                            "y": 2.6667213439941408,
+                                            "z": 42.61762237548828
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
                             }
                         ]
                     }
@@ -3372,6 +3540,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "interval"
+                                        }
+                                    },
+                                    {
+                                        "data": true,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isLevel1"
                                         }
                                     },
                                     {
@@ -28532,9 +28707,9 @@
                             {
                                 "vertices": [
                                     {
-                                        "x": -20.809999465942384,
-                                        "y": 0.9330000281333923,
-                                        "z": -16.694000244140626,
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
                                         "w": 0.0
                                     },
                                     {

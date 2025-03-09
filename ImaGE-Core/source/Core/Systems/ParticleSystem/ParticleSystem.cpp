@@ -22,7 +22,7 @@ namespace Systems {
 
 			// this is not a ref. i have to update all the transforms as they are offsets of the main transform
 			std::vector<Graphics::EmitterInstance> vecProxy{ e.GetComponent<Component::EmitterSystem>().emitters };
-			auto const& pos{ e.GetComponent<Component::Transform>().position };
+			auto const& pos{ e.GetComponent<Component::Transform>().worldPos };
 			//update the transforms
 			for (int i{}; i < vecProxy.size(); ++i) {
 				auto& emitproxy{ vecProxy[i] };
