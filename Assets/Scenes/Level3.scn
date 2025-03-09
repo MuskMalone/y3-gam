@@ -3923,6 +3923,7 @@
                 240,
                 241,
                 242,
+                258,
                 399,
                 1048633,
                 1048655,
@@ -7245,6 +7246,16 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 256,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ClickUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 320,
                                             "scriptName": "Entity"
                                         },
@@ -10481,6 +10492,156 @@
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 256,
+            "Parent": 1049011,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "InteractLadderUI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -1.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 5.71999979019165,
+                            "y": 1.940000057220459,
+                            "z": 5.71999979019165
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -1.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 5.71999979019165,
+                            "y": 1.940000057220459,
+                            "z": 5.71999979019165
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11263099506730874307
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 258,
+            "Parent": 93,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "cardboard_box",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -1.373053789138794,
+                            "y": -1.880886197090149,
+                            "z": -12.787309646606446
+                        },
+                        "scale": {
+                            "x": 4.0,
+                            "y": 4.0,
+                            "z": 4.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -1.373053789138794,
+                            "y": -1.880886197090149,
+                            "z": -12.787309646606446
+                        },
+                        "worldScale": {
+                            "x": 4.0,
+                            "y": 4.0,
+                            "z": 4.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 10889283180776892986
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "cardboard_box",
+                        "GUID": {
+                            "ID": 5938457390777868202
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -22098,6 +22259,7 @@
             "Parent": 326,
             "Child Entities": [
                 232,
+                256,
                 1049012
             ],
             "Components": [

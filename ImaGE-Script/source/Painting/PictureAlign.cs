@@ -115,6 +115,22 @@ public class PictureAlign : Entity
     //  isNight = true;
     //  playerMove.canLook = false;
     //}
+    if (!isBigPic && currentImg != null && Input.GetKeyTriggered(KeyCode.R))
+    {
+        // Use (float)Math.PI / 4 for ~0.7854 radians (45 degrees).
+        float angle45 = (float)Math.PI / 4f;
+        Quaternion rot45 = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, angle45);
+
+        // Rotate the painting.
+        var imgTransform = currentImg.GetComponent<Transform>();
+        imgTransform.rotation = imgTransform.rotation * rot45;
+
+        // Rotate the border too.
+        var borderTransform = border.GetComponent<Transform>();
+        borderTransform.rotation = borderTransform.rotation * rot45;
+    }
+
+
 
     if (!toStop)
     {
@@ -463,30 +479,60 @@ public class PictureAlign : Entity
 
   }
 
-  public void SetBorder(bool BigPic)
-  {
-    isBigPic = BigPic;
-    Vector3 _offset = new Vector3(0, 0, 5); // Example offset
-    if (!BigPic)
-    {
-      DownArrow.SetActive(false);
-      UpArrow.SetActive(false);
-      RightArrow.SetActive(false);
-      LeftArrow.SetActive(false);
+    //public void SetBorder(bool BigPic)
+    //{
+    //  isBigPic = BigPic;
+    //  Vector3 _offset = new Vector3(0, 0, 5); // Example offset
+    //  if (!BigPic)
+    //  {
+    //    DownArrow.SetActive(false);
+    //    UpArrow.SetActive(false);
+    //    RightArrow.SetActive(false);
+    //    LeftArrow.SetActive(false);
 
 
-      border.GetComponent<Transform>().position = smallBorderPos;
-      border.GetComponent<Transform>().scale = smallBorderScale;
-      //border.GetComponent<Transform>().rotation = Mathf.EulertoQuat(new Vector3(mainCamera.GetComponent<Transform>().rotationEuler.X, 0, 0));
-    }
-    else
+    //    border.GetComponent<Transform>().position = smallBorderPos;
+    //    border.GetComponent<Transform>().scale = smallBorderScale;
+    //    //border.GetComponent<Transform>().rotation = Mathf.EulertoQuat(new Vector3(mainCamera.GetComponent<Transform>().rotationEuler.X, 0, 0));
+    //  }
+    //  else
+    //  {
+    //    toStop = false;
+    //    // UpdateObject(border, mainCamera, _offset);
+    //    border.GetComponent<Transform>().position = bigBorderPos;
+    //    border.GetComponent<Transform>().scale = bigBorderScale;
+    //  }
+    //}
+    public void SetBorder(bool BigPic)
     {
-      toStop = false;
-      // UpdateObject(border, mainCamera, _offset);
-      border.GetComponent<Transform>().position = bigBorderPos;
-      border.GetComponent<Transform>().scale = bigBorderScale;
+        isBigPic = BigPic;
+        Vector3 _offset = new Vector3(0, 0, 5); // Example offset
+
+        if (!BigPic)
+        {
+            // The painting is small: position/scale as normal
+            DownArrow.SetActive(false);
+            UpArrow.SetActive(false);
+            RightArrow.SetActive(false);
+            LeftArrow.SetActive(false);
+
+            border.GetComponent<Transform>().position = smallBorderPos;
+            border.GetComponent<Transform>().scale = smallBorderScale;
+        }
+        else
+        {
+            // The painting is big: reset rotation to upright
+            if (currentImg != null)
+            {
+                currentImg.GetComponent<Transform>().rotation = Quaternion.Identity;
+            }
+            border.GetComponent<Transform>().rotation = Quaternion.Identity;
+
+            toStop = false;
+            border.GetComponent<Transform>().position = bigBorderPos;
+            border.GetComponent<Transform>().scale = bigBorderScale;
+        }
     }
-  }
 
   public void ClearUI()
   {
