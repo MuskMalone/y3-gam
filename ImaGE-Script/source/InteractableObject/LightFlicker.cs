@@ -59,11 +59,11 @@ public class LightFlicker : Entity
       float interpolatedIntensity = Mathf.Lerp(0.2f, 10.0f, noiseValue);
             if (lightSFX.mEntityID != uint.MaxValue)
             {
-                InternalCalls.SetSoundVolume(lightSFX.mEntityID, "ElectricBuzz", (interpolatedIntensity - 0.2f) / (10.0f - 0.2f));
+                //InternalCalls.SetSoundVolume(lightSFX.mEntityID, "ElectricBuzz", (interpolatedIntensity - 0.2f) / (10.0f - 0.2f));
             }
             if (prevNoiseValue - noiseValue > float.Epsilon)
             {
-                PlayRandomPing();
+                //PlayRandomPing();
             }
             prevNoiseValue = noiseValue;
             InternalCalls.SetLightIntensity(lightSource.mEntityID, interpolatedIntensity);
