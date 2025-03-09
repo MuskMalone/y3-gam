@@ -243,6 +243,16 @@ namespace IGE.Utils
     extern public static void SetBloomIntensity(uint entityID, float intensity);
     #endregion
 
+    #region Canvas Component
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetCanvasTransitionProgress(uint entityID, float intensity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void EnableCanvasTransition(uint entityID, bool isEnabled);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetCanvasTransitionType(uint entityID, int intensity);
+    #endregion
 
     #region Utility
 

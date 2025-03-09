@@ -458,6 +458,10 @@ namespace Mono
 		static void ResumeGame();
 		static bool GetIsPaused();
 
+		static void SetCanvasTransitionProgress(ECS::Entity::EntityID canvasEntity, float progress);
+		static void EnableCanvasTransition(ECS::Entity::EntityID canvasEntity, bool isEnabled);
+		static void SetCanvasTransitionType(ECS::Entity::EntityID canvasEntity, int transitionType);
+
 		/*!**********************************************************************
 		*																																			  *
 		*								            Helper Function			          						  *
