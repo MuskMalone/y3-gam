@@ -1,0 +1,39 @@
+{
+    "name": "OldwoodBox",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 0.9230769276618958,
+        "y": 0.9230769276618958,
+        "z": 0.9230769276618958
+    },
+    "metalness": 0.0,
+    "roughness": 1.0,
+    "ao": 1.0,
+    "emission": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "transparency": 1.0,
+    "tiling": {
+        "x": 0.10000000149011612,
+        "y": 2.450000047683716
+    },
+    "offset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 7615143375560863597
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}

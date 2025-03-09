@@ -96,7 +96,7 @@ static void rttr_auto_register_reflection_function3_(); namespace {
       rttr::value("LINEAR", T::LINEAR),
       rttr::value("EASE_IN", T::EASE_IN),
       rttr::value("EASE_OUT", T::EASE_OUT),
-      rttr::value("EASE_INOUT", T::EASE_OUT)
+      rttr::value("EASE_INOUT", T::EASE_INOUT)
       );
   }
 

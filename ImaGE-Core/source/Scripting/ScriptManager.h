@@ -42,7 +42,7 @@ namespace Mono
 		static std::vector < std::tuple<std::string, int, int>>mScreenShotInfo;
 		static std::vector<std::string> mAllScriptNames;
 		static std::shared_ptr<MonoDomain> mRootDomain;
-		static std::shared_ptr<MonoDomain> mAppDomain;
+		static MonoDomain* mAppDomain;
 		static std::string mAppDomFilePath;
 		static std::string mCoreAssFilePath;
 		static std::unique_ptr<filewatch::FileWatch<std::string>> mFileWatcher;
@@ -457,6 +457,10 @@ namespace Mono
 		static void PauseGame();
 		static void ResumeGame();
 		static bool GetIsPaused();
+
+		static void SetCanvasTransitionProgress(ECS::Entity::EntityID canvasEntity, float progress);
+		static void EnableCanvasTransition(ECS::Entity::EntityID canvasEntity, bool isEnabled);
+		static void SetCanvasTransitionType(ECS::Entity::EntityID canvasEntity, int transitionType);
 
 		/*!**********************************************************************
 		*																																			  *

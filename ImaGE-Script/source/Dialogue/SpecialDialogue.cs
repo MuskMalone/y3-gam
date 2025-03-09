@@ -6,6 +6,7 @@ using static Dialogue;
 
 public class SpecialDialogue : Entity
 {
+  public Transition transition;
   public PlayerMove playerMove;
   public string introMessage;
   public string[] initialDialogue;
@@ -19,7 +20,6 @@ public class SpecialDialogue : Entity
   public Entity thirdSilhouette;
   public Entity fourthSilhouette;
   private Entity[] BeginningSilhouetteSequence;
-  public Entity fadeImage;
 
   // Private Variables
   private bool triggerFadeTransition = true;
@@ -80,10 +80,10 @@ public class SpecialDialogue : Entity
       float elapsed = Time.gameTime - fadeStartTime;
       fadeTransitionTimer = elapsed;
 
-      float alpha = Mathf.Lerp(1f, 0f, fadeTransitionTimer / fadeDuration);
-      InternalCalls.SetImageColor(fadeImage.mEntityID, new Vector4(1, 1, 1, alpha));
+      //float alpha = Mathf.Lerp(1f, 0f, fadeTransitionTimer / fadeDuration);
+      //InternalCalls.SetImageColor(fadeImage.mEntityID, new Vector4(1, 1, 1, alpha));
 
-      if (fadeTransitionTimer >= fadeDuration)
+      if (transition.IsFinished())
       {
         EndFade();
       }
@@ -198,9 +198,10 @@ public class SpecialDialogue : Entity
 
   private void StartFade()
   {
+    transition.StartTransition(true, fadeDuration, Transition.TransitionType.TV_SWITCH);
+
     triggerFadeTransition = false;
     isInFadeTransition = true;
-    fadeImage.SetActive(true);
     playerMove.FreezePlayer();
 
     isInFadeTransition = true;
@@ -210,7 +211,6 @@ public class SpecialDialogue : Entity
   {
     playerMove.UnfreezePlayer();
     isInFadeTransition = false;
-    fadeImage.SetActive(false);
     triggerInitialSpecialDialogue = true;
   }
 
