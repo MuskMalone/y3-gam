@@ -89,6 +89,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="source\Credits\CreditsText.cs" />
     <Compile Include="source\Cutscene\EndSceneFadeToBlack.cs" />
     <Compile Include="source\Cutscene\TutorialCutscene.cs" />
     <Compile Include="source\Dialogue\Dialogue.cs" />
