@@ -1,0 +1,683 @@
+{
+    "Name": "Altar Painting",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Altar Painting",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.940000057220459,
+                            "y": 1.940000057220459,
+                            "z": 1.940000057220459
+                        },
+                        "rotation": {
+                            "x": -0.16418683528900147,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9864292740821838
+                        },
+                        "eulerAngles": {
+                            "x": -18.89999771118164,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.940000057220459,
+                            "y": 1.940000057220459,
+                            "z": 1.940000057220459
+                        },
+                        "worldRot": {
+                            "x": -0.16418683528900147,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9864292740821838
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Props"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "AltarPainting",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -9.5367431640625e-7,
+                            "z": 2.384185791015625e-7
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -0.0000016005570842025919,
+                            "z": 0.0000010368835319241044
+                        },
+                        "worldScale": {
+                            "x": 1.940000057220459,
+                            "y": 1.940000057220459,
+                            "z": 1.940000057220459
+                        },
+                        "worldRot": {
+                            "x": -0.16418683528900147,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9864292740821838
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Props"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 10289315563564798747
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Props_PaintingFrame1_s",
+                        "GUID": {
+                            "ID": 17556891556518666196
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 0.20000000298023225
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": -5.0,
+                            "y": -1.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": -0.04361772537231445,
+                            "y": -0.008718229830265046,
+                            "z": -0.0003806461172644049,
+                            "w": 0.9990102052688599
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048578,
+                                "scriptName": "AltarPaintingFrame",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 2098176,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "altarPaintingFrameUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 197,
+                                            "scriptName": "Dialogue"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "dialogueSystem"
+                                        }
+                                    },
+                                    {
+                                        "data": [
+                                            "I can't picture what the painting looks like right\nnow...",
+                                            "I'll have to come back later."
+                                        ],
+                                        "type": "System.String[]",
+                                        "scriptField": {
+                                            "fieldName": "paintingDialogue"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "FrameOnAltar",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.015241146087646485,
+                            "y": 0.08130884170532227,
+                            "z": -0.34862232208251955
+                        },
+                        "scale": {
+                            "x": 1.7699999809265137,
+                            "y": 1.7699999809265137,
+                            "z": 1.7699999809265137
+                        },
+                        "rotation": {
+                            "x": 0.11609762161970139,
+                            "y": 0.697510838508606,
+                            "z": 0.11609762161970139,
+                            "w": 0.697510838508606
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": 71.10000610351563,
+                            "z": 90.0
+                        },
+                        "worldPos": {
+                            "x": -0.02956782467663288,
+                            "y": -0.0698394626379013,
+                            "z": -0.6909578442573547
+                        },
+                        "worldScale": {
+                            "x": 3.433799982070923,
+                            "y": 3.433799982070923,
+                            "z": 3.433799982070923
+                        },
+                        "worldRot": {
+                            "x": -7.450580596923828e-9,
+                            "y": 0.7071067690849304,
+                            "z": -7.450580596923828e-9,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 6763860968362688319
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "FrameOnAltar",
+                        "GUID": {
+                            "ID": 7709600725256441171
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Puzzle_PaintingFragments",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.007478488143533468,
+                            "z": 0.002560463035479188
+                        },
+                        "scale": {
+                            "x": 0.08975999802350998,
+                            "y": 0.08975999802350998,
+                            "z": 0.08975999802350998
+                        },
+                        "rotation": {
+                            "x": 0.0030025988817214967,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9999955296516419
+                        },
+                        "eulerAngles": {
+                            "x": 0.34407296776771548,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.015335055068135262,
+                            "z": 8.847564458847046e-9
+                        },
+                        "worldScale": {
+                            "x": 0.17413440346717835,
+                            "y": 0.17413440346717835,
+                            "z": 0.17413440346717835
+                        },
+                        "worldRot": {
+                            "x": -0.16122426092624665,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9869178533554077
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "Parent": 3,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Puzzle_PaintingFragment1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.03551555797457695,
+                            "z": -0.004816241562366486
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 7.4505820180093e-8,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.000008537737812730484,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.00920519232749939,
+                            "z": 0.001173023716546595
+                        },
+                        "worldScale": {
+                            "x": 0.17413440346717835,
+                            "y": 0.17413440346717835,
+                            "z": 0.17413440346717835
+                        },
+                        "worldRot": {
+                            "x": -0.16122418642044068,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9869178533554077
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Puzzle_PaintingFragment1",
+                        "GUID": {
+                            "ID": 13853952119863121254
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5,
+            "Parent": 3,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Puzzle_PaintingFragment2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.015335055068135262,
+                            "z": 8.847564458847046e-9
+                        },
+                        "worldScale": {
+                            "x": 0.17413440346717835,
+                            "y": 0.17413440346717835,
+                            "z": 0.17413440346717835
+                        },
+                        "worldRot": {
+                            "x": -0.16122426092624665,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9869178533554077
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Puzzle_PaintingFragment2",
+                        "GUID": {
+                            "ID": 13853952119863121254
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 6,
+            "Parent": 3,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Puzzle_PaintingFragment3",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.015335055068135262,
+                            "z": 8.847564458847046e-9
+                        },
+                        "worldScale": {
+                            "x": 0.17413440346717835,
+                            "y": 0.17413440346717835,
+                            "z": 0.17413440346717835
+                        },
+                        "worldRot": {
+                            "x": -0.16122426092624665,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9869178533554077
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Puzzle_PaintingFragment3",
+                        "GUID": {
+                            "ID": 13853952119863121254
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 7,
+            "Parent": 3,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Puzzle_PaintingFragment4",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.015335055068135262,
+                            "z": 8.847564458847046e-9
+                        },
+                        "worldScale": {
+                            "x": 0.17413440346717835,
+                            "y": 0.17413440346717835,
+                            "z": 0.17413440346717835
+                        },
+                        "worldRot": {
+                            "x": -0.16122426092624665,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9869178533554077
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Puzzle_PaintingFragment4",
+                        "GUID": {
+                            "ID": 13853952119863121254
+                        },
+                        "submeshIdx": 3,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}
