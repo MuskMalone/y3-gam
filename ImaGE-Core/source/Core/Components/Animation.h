@@ -64,6 +64,5 @@ namespace Component {
     AnimationEntry currentAnimation; // name, guid
     float timeElapsed;
     bool repeat, paused;
-    bool relative;
   };
 }

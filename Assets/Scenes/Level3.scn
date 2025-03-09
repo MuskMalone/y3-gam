@@ -7066,6 +7066,84 @@
             ]
         },
         {
+            "ID": 129,
+            "Parent": 173,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Box",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.0047607421875,
+                            "y": 0.01593017578125,
+                            "z": 0.00177001953125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 7.423803806304932,
+                            "y": -0.57965087890625,
+                            "z": -0.5911499261856079
+                        },
+                        "worldScale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 10889283180776892986
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Box",
+                        "GUID": {
+                            "ID": 9728659714236848066
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 130,
             "Parent": 21,
             "Child Entities": [],
@@ -9158,6 +9236,68 @@
             ]
         },
         {
+            "ID": 173,
+            "Parent": null,
+            "Child Entities": [
+                129,
+                203
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Boxes",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 7.400000095367432,
+                            "y": -0.5,
+                            "z": -0.6000000238418579
+                        },
+                        "scale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "rotation": {
+                            "x": -0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 7.400000095367432,
+                            "y": -0.5,
+                            "z": -0.6000000238418579
+                        },
+                        "worldScale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "worldRot": {
+                            "x": -0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 175,
             "Parent": 122,
             "Child Entities": [],
@@ -9676,6 +9816,84 @@
                             "ID": 7931298207308680715
                         },
                         "submeshIdx": 3,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 203,
+            "Parent": 173,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Nails",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 7.400000095367432,
+                            "y": -0.5,
+                            "z": -0.6000000238418579
+                        },
+                        "worldScale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Nails",
+                        "GUID": {
+                            "ID": 9728659714236848066
+                        },
+                        "submeshIdx": 1,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -21688,6 +21906,224 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 399,
+            "Parent": null,
+            "Child Entities": [
+                400,
+                401
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SpoiltBoxes",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "rotation": {
+                            "x": -0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "worldRot": {
+                            "x": -0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 400,
+            "Parent": 399,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Box",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 10889283180776892986
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Box",
+                        "GUID": {
+                            "ID": 10340492984457631318
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 401,
+            "Parent": 399,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Nails",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 1.0,
+                            "w": -4.371138828673793e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Nails",
+                        "GUID": {
+                            "ID": 10340492984457631318
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
