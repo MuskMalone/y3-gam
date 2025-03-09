@@ -700,13 +700,16 @@ namespace GUI {
                   break;
               }
 
+              if (ImGui::Button(("Play##" + uniqueID).c_str())) {
+                  audioSource.PlaySound(currentName);
+              }
+              ImGui::SameLine();
+              if (ImGui::Button(("Stop##" + uniqueID).c_str())) {
+                  audioSource.StopSound(currentName);
+              }
               ImGui::SameLine();
               if (ImGui::Button(("Delete##" + uniqueID).c_str())) {
                   audioSource.RemoveSound(currentName);
-                  break;
-              }
-              if (ImGui::Button(("Play##" + uniqueID).c_str())) {
-                  audioSource.PlaySound(currentName);
                   break;
               }
               // Begin a Tree Node for sound properties with a unique ID

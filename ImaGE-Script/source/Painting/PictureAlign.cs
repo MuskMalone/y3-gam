@@ -36,10 +36,17 @@ public class PictureAlign : Entity
   private Quaternion savedCameraRotation;
 
   //For setting the borderSize
-  private Vector3 smallBorderScale = new Vector3(12.320f, 12.820f, 12.820f);
-  private Vector3 bigBorderScale = new Vector3(24.800f, 26.220f, -0.800f);
-  private Vector3 smallBorderPos = new Vector3(10.200f, -0.100f, -0.010f);
-  private Vector3 bigBorderPos = new Vector3(0.360f, 0.4f, -0.010f);
+  private Vector3 smallBorderScale = new Vector3(15.761f, 9.000f, -10.360f);
+  private Vector3 bigBorderScale = new Vector3(33.961f, 20.880f, -0.800f);
+  private Vector3 smallBorderPos = new Vector3(10.100f, 0.150f, -0.010f);
+  private Vector3 bigBorderPos = new Vector3(0.230f, 0.850f, -0.010f);
+
+
+  //  private Vector3 bigBorderScale = new Vector3(2.340f, 0.790f, 0.771f);
+  //private Vector3 bigBorderPos = new Vector3(-0.004f, 0.030f, -2.810f);
+  //private Vector3 smallBorderScale = new Vector3(1.150f, 0.360f, 0.411f);
+  //private Vector3 smallBorderPos = new Vector3(1.620f, 0.001f, -2.810f);
+
   private HoldupUI currentImg;
   private string picture;
 
@@ -67,16 +74,21 @@ public class PictureAlign : Entity
     // for inventory checks
     public bool isFading = false;
 
+    //For pit puzzle
+    private PitPuzzle pitPuzzleScript;
+
     void Start()
     {
         //tutorialFade = FindObjectOfType<TutorialFade>();
         // Initialize the movement and camera control components
-    playerMove = player.FindObjectOfType<PlayerMove>();
+        playerMove = player.FindObjectOfType<PlayerMove>();
 
         corridorTransitionFadeScript = FindObjectOfType<CorridorTransitionFade>();
         controlPanelScript = FindObjectOfType<ControlPanel2>();
 
-    if (playerMove == null) Debug.LogError("PlayerMove component not found!");
+        if (playerMove == null) Debug.LogError("PlayerMove component not found!");
+
+        pitPuzzleScript = FindObjectOfType<PitPuzzle>();
 
     }
 
@@ -273,6 +285,22 @@ public class PictureAlign : Entity
                 hasFaded = false;
             }
         }
+        else if (picture == "PitPainting")
+        {
+            FadeOut();
+            //controlPanelScript.SwitchMode(ControlPanel2.StatueType.POSEIDON);
+            pitPuzzleScript.switchPlanks();
+            if (hasFaded)
+            {
+                currentImg.SetActive(false);
+                SetActive(false);
+                playerMove.UnfreezePlayer();
+                isTransitioning = false;
+                currentImg.Level3RemoveItself();
+                currentImg = null;
+                hasFaded = false;
+            }
+        }
         else
         {
           Console.WriteLine("WHAt");
@@ -398,18 +426,23 @@ public class PictureAlign : Entity
   public void SetBorder(bool BigPic)
   {
     isBigPic = BigPic;
+    Vector3 _offset = new Vector3(0, 0, 5); // Example offset
     if (!BigPic)
     {
       DownArrow.SetActive(false);
       UpArrow.SetActive(false);
       RightArrow.SetActive(false);
       LeftArrow.SetActive(false);
+
+
       border.GetComponent<Transform>().position = smallBorderPos;
       border.GetComponent<Transform>().scale = smallBorderScale;
+      //border.GetComponent<Transform>().rotation = Mathf.EulertoQuat(new Vector3(mainCamera.GetComponent<Transform>().rotationEuler.X, 0, 0));
     }
     else
     {
       toStop = false;
+      // UpdateObject(border, mainCamera, _offset);
       border.GetComponent<Transform>().position = bigBorderPos;
       border.GetComponent<Transform>().scale = bigBorderScale;
     }
@@ -427,6 +460,7 @@ public class PictureAlign : Entity
 
   public bool ChangeSkyBox()
   {
+    Global.isNighttime = true;
     return InternalCalls.SetDaySkyBox(mainCamera.mEntityID, 1.0f);
   }
 

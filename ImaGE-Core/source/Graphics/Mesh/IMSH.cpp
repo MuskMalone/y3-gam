@@ -18,8 +18,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <glm/gtx/transform.hpp>
 
 namespace {
-  static bool sFirstMaterialEncountered{ false };
-
   glm::vec2 ToGLMVec2(aiVector3D const& vec) { return { vec.x, vec.y }; }
   glm::vec3 ToGLMVec3(aiVector3D const& vec) { return { vec.x, vec.y, vec.z }; }
   glm::vec3 ToGLMVec3(aiColor3D const& col) { return { col.r, col.g, col.b }; }
@@ -49,7 +47,10 @@ namespace Graphics::AssetIO
 
     importer.SetPropertyInteger(AI_CONFIG_PP_RVC_FLAGS, sMeshImportFlags);
 
-    unsigned const flags{ importFlags.flipUVs ? (sAssimpImportFlags | aiProcess_FlipUVs) : sAssimpImportFlags };
+    unsigned flags{ importFlags.minimalFlags ? sMinimalAssimpImportFlags : sAssimpImportFlags };
+    if (importFlags.flipUVs) {
+      flags |= aiProcess_FlipUVs;
+    }
 
     aiScene const* aiScn{ importer.ReadFile(file, flags) };
     if (!aiScn || aiScn->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !aiScn->mRootNode) {
@@ -58,7 +59,6 @@ namespace Graphics::AssetIO
       return;
     }
 
-    sFirstMaterialEncountered = false;
     ProcessMeshes(aiScn->mRootNode, aiScn);
     // if static mesh, put all vertices and indices as 1 submesh entry
     if (mIsStatic) {

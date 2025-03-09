@@ -204,13 +204,39 @@ namespace IGE.Utils
       return angles;
     }
 
-    static float NormalizeAngle(float angle)
+    public static float NormalizeAngle(float angle)
     {
       while (angle > 360)
         angle -= 360;
       while (angle < 0)
         angle += 360;
       return angle;
+    }
+
+
+    public static Quaternion QuaternionFromToRot(Vector3 fromDirection, Vector3 toDirection)
+    {
+      // Normalize the input directions
+      fromDirection = Vector3.Normalize(fromDirection);
+      toDirection = Vector3.Normalize(toDirection);
+
+      // Calculate the axis of rotation using the cross product
+      Vector3 axis = Vector3.Cross(fromDirection, toDirection);
+
+      // If the cross product is zero, the vectors are parallel (no rotation needed)
+      if (axis.LengthSquared() < float.Epsilon)
+      {
+        return Quaternion.Identity;
+      }
+
+      // Normalize the axis
+      axis = Vector3.Normalize(axis);
+
+      // Calculate the angle of rotation using the dot product
+      float angle = (float)Math.Acos(Mathf.Clamp(Vector3.Dot(fromDirection, toDirection), -1f, 1f));
+
+      // Create and return the quaternion
+      return Quaternion.CreateFromAxisAngle(axis, angle);
     }
 
     public static Quaternion EulertoQuat(Vector3 eulerDegrees)

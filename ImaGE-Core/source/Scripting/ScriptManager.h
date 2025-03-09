@@ -337,6 +337,8 @@ namespace Mono
 
 		static void SetSoundPitch(ECS::Entity::EntityID, MonoString*, float);
 		static void SetSoundVolume(ECS::Entity::EntityID, MonoString*, float);
+		static void EnableSoundPostProcessing(ECS::Entity::EntityID, MonoString*, unsigned, float);
+		static void DisableSoundPostProcessing(ECS::Entity::EntityID, MonoString*);
 		static void PlaySound(ECS::Entity::EntityID, MonoString*);
 		static void PauseSound(ECS::Entity::EntityID, MonoString*);
 		static void PlaySoundFromPosition(ECS::Entity::EntityID, MonoString*, unsigned time);
@@ -451,6 +453,10 @@ namespace Mono
 		static float GetBloomIntensity(ECS::Entity::EntityID bloomEntity);
 		static void SetLightIntensity(ECS::Entity::EntityID lightEntity, float intensity);
 		static float GetLightIntensity(ECS::Entity::EntityID lightEntity);
+
+		static void PauseGame();
+		static void ResumeGame();
+		static bool GetIsPaused();
 
 		/*!**********************************************************************
 		*																																			  *

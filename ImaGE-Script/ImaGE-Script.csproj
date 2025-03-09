@@ -89,10 +89,13 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="source\Credits\CreditsText.cs" />
     <Compile Include="source\Cutscene\EndSceneFadeToBlack.cs" />
     <Compile Include="source\Cutscene\TutorialCutscene.cs" />
     <Compile Include="source\Dialogue\Dialogue.cs" />
     <Compile Include="source\Dialogue\SpecialDialogue.cs" />
+    <Compile Include="source\DynamicAudio\BGMLevel1.cs" />
+    <Compile Include="source\DynamicAudio\TransitionHintLevel1.cs" />
     <Compile Include="source\Engine Tools\Easing.cs" />
     <Compile Include="source\Engine Tools\FPS.cs" />
     <Compile Include="source\InteractableObject\AltarPaintingFrame.cs" />
@@ -106,6 +109,7 @@
     <Compile Include="source\InteractableObject\HammerLevel3.cs" />
     <Compile Include="source\InteractableObject\Key.cs" />
     <Compile Include="source\InteractableObject\KeyDoor.cs" />
+    <Compile Include="source\InteractableObject\Ladder.cs" />
     <Compile Include="source\InteractableObject\LightFlicker.cs" />
     <Compile Include="source\InteractableObject\LightSwitch.cs" />
     <Compile Include="source\InteractableObject\NightPainting.cs" />
@@ -139,6 +143,7 @@
     <Compile Include="source\Level2\OdysseusNoteInteraction.cs" />
     <Compile Include="source\Level2\PamphletNoteInteraction.cs" />
     <Compile Include="source\Level2\TransitionToLevel3.cs" />
+    <Compile Include="source\Level3\EyeballFollow.cs" />
     <Compile Include="source\Level3\Level3Dialogue.cs" />
     <Compile Include="source\Level3\PitPuzzle.cs" />
     <Compile Include="source\MainMenu\CDDragAndDrop.cs" />
@@ -149,6 +154,7 @@
     <Compile Include="source\Mono\Component.cs" />
     <Compile Include="source\Mono\Debug.cs" />
     <Compile Include="source\Mono\Entity.cs" />
+    <Compile Include="source\Mono\Global.cs" />
     <Compile Include="source\Mono\Image.cs" />
     <Compile Include="source\Mono\Input.cs" />
     <Compile Include="source\Mono\Inside.cs" />
@@ -178,7 +184,7 @@
     <Compile Include="source\PauseMenu\PauseMenuButtons.cs" />
     <Compile Include="source\Player\CameraCapture.cs" />
     <Compile Include="source\Player\InputManager.cs" />
-    <Compile Include="source\Player\PlayerFootsteps.cs" />
+    <Compile Include="source\DynamicAudio\PlayerFootsteps.cs" />
     <Compile Include="source\Player\PlayerInteraction.cs" />
     <Compile Include="source\Player\PlayerMove.cs" />
     <Compile Include="source\SelectionManager.cs" />
@@ -187,6 +193,7 @@
     <Compile Include="source\ToolsPuzzle\ImageDisintegratingTools.cs" />
     <Compile Include="source\ToolsPuzzle\PictureAlignTools.cs" />
     <Compile Include="source\ToolsPuzzle\RotationGuidanceToolsPainting.cs" />
+    <Compile Include="source\Triggers\DeathTrigger.cs" />
     <Compile Include="source\Triggers\DeathtriggerPit.cs" />
     <Compile Include="source\Triggers\FinishLineTrigger.cs" />
     <Compile Include="source\Tutorial\InventoryTutorial.cs" />
