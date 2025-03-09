@@ -1446,6 +1446,34 @@
                                         "postProcessingParameter": 1500.0
                                     }
                                 }
+                            },
+                            {
+                                "key": "TransitionCorridor",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9248082960212212954
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 5.302999973297119,
+                                            "y": 10.785017013549805,
+                                            "z": 50.972084045410159
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
                             }
                         ]
                     }
@@ -1717,84 +1745,6 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "isFading"
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                "entityID": 40,
-                                "scriptName": "PlayerFootsteps",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 383,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "doorEntryTrigger"
-                                        }
-                                    },
-                                    {
-                                        "data": 8,
-                                        "type": "System.Int32",
-                                        "scriptField": {
-                                            "fieldName": "footstepSoundCount"
-                                        }
-                                    },
-                                    {
-                                        "data": 2.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "footstepVolume"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.5,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "interval"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 40,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "player"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 40,
-                                            "scriptName": "PlayerMove"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerMoveScript"
-                                        }
-                                    },
-                                    {
-                                        "data": 1500.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "ppPararm"
-                                        }
-                                    },
-                                    {
-                                        "data": 0,
-                                        "type": "System.Int32",
-                                        "scriptField": {
-                                            "fieldName": "ppType"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.5,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "speedThreshold"
                                         }
                                     }
                                 ]
@@ -8808,92 +8758,6 @@
                         },
                         "repeat": true
                     }
-                },
-                {
-                    "EmitterSystem": {
-                        "emitters": [
-                            {
-                                "vertices": [
-                                    {
-                                        "x": 71.7750015258789,
-                                        "y": 12.288999557495118,
-                                        "z": -1.628999948501587,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    }
-                                ],
-                                "col": {
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0,
-                                    "w": 1.0
-                                },
-                                "vel": {
-                                    "x": 0.5,
-                                    "y": 0.0,
-                                    "z": -0.5
-                                },
-                                "gravity": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "size": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
-                                "angvel": 0.0,
-                                "lifetime": 5.0,
-                                "speed": 2.5,
-                                "frequency": 0.5,
-                                "type": 1,
-                                "vCount": 1,
-                                "preset": 0,
-                                "particlesPerFrame": 217
-                            }
-                        ]
-                    }
                 }
             ]
         },
@@ -10838,7 +10702,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 57.05079650878906,
+                            "x": 56.93828582763672,
                             "y": 14.156999588012696,
                             "z": 54.10149002075195
                         },
@@ -10859,7 +10723,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 57.05079650878906,
+                            "x": 56.93828582763672,
                             "y": 14.156999588012696,
                             "z": 54.10149002075195
                         },
@@ -12449,6 +12313,32 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.424306869506836,
+                            "y": 0.5,
+                            "z": 30.569385528564454
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
                 }
             ]
         },
@@ -12526,6 +12416,32 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.424306392669678,
+                            "y": 0.5,
+                            "z": 49.020294189453128
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -17792,7 +17708,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Altar Platform (Copy)",
+                        "tag": "Altar Platform",
                         "isActive": true
                     }
                 },
@@ -39110,7 +39026,7 @@
                                 "key": "LockedDoor",
                                 "value": {
                                     "guid": {
-                                        "ID": 8874749514258673930
+                                        "ID": 17970498899727066841
                                     },
                                     "playSettings": {
                                         "position": {
@@ -39123,7 +39039,7 @@
                                         "pan": 0.0,
                                         "mute": false,
                                         "loop": false,
-                                        "playOnAwake": true,
+                                        "playOnAwake": false,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
