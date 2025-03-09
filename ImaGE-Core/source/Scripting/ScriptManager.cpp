@@ -92,7 +92,8 @@ namespace Mono
     { "SpecialDialogue", ScriptFieldType::SPECIALDIALOGUE },
     { "KeyDoor", ScriptFieldType::KEYDOOR },
     { "PictureAlign", ScriptFieldType::PICTUREALIGN },
-    { "ControlPanel2", ScriptFieldType::CONTROLPANEL }
+    { "ControlPanel2", ScriptFieldType::CONTROLPANEL },
+    { "Transition", ScriptFieldType::TRANSITION }
   };
 }
 
@@ -309,6 +310,9 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(PauseGame);
   ADD_INTERNAL_CALL(ResumeGame);
   ADD_INTERNAL_CALL(GetIsPaused);
+  ADD_INTERNAL_CALL(SetCanvasTransitionProgress);
+  ADD_INTERNAL_CALL(EnableCanvasTransition);
+  ADD_INTERNAL_CALL(SetCanvasTransitionType);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -1887,6 +1891,48 @@ void Mono::ResumeGame() {
 
 bool Mono::GetIsPaused() {
   return gIsGamePaused;
+}
+
+void Mono::SetCanvasTransitionProgress(ECS::Entity::EntityID canvasEntity, float progress) {
+  if (ECS::Entity(canvasEntity)) {
+    if (ECS::Entity(canvasEntity).HasComponent<Component::Canvas>())
+      ECS::Entity(canvasEntity).GetComponent<Component::Canvas>().transitionProgress = progress;
+
+    else
+      Debug::DebugLogger::GetInstance().LogError("SetCanvasTransitionProgress: Entity " + ECS::Entity(canvasEntity).GetTag() + " does not have a Canvas component");
+  }
+
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetCanvasTransitionProgress: No entity with ID: " + std::to_string(static_cast<uint32_t>(canvasEntity)));
+  }
+}
+
+void Mono::EnableCanvasTransition(ECS::Entity::EntityID canvasEntity, bool isEnabled) {
+  if (ECS::Entity(canvasEntity)) {
+    if (ECS::Entity(canvasEntity).HasComponent<Component::Canvas>())
+      ECS::Entity(canvasEntity).GetComponent<Component::Canvas>().hasTransition = isEnabled;
+
+    else
+      Debug::DebugLogger::GetInstance().LogError("EnableCanvasTransition: Entity " + ECS::Entity(canvasEntity).GetTag() + " does not have a Canvas component");
+  }
+
+  else {
+    Debug::DebugLogger::GetInstance().LogError("EnableCanvasTransition: No entity with ID: " + std::to_string(static_cast<uint32_t>(canvasEntity)));
+  }
+}
+
+void Mono::SetCanvasTransitionType(ECS::Entity::EntityID canvasEntity, int transitionType) {
+  if (ECS::Entity(canvasEntity)) {
+    if (ECS::Entity(canvasEntity).HasComponent<Component::Canvas>())
+      ECS::Entity(canvasEntity).GetComponent<Component::Canvas>().transitionType = static_cast<Component::Canvas::TransitionType>(transitionType);
+
+    else
+      Debug::DebugLogger::GetInstance().LogError("SetCanvasTransitionType: Entity " + ECS::Entity(canvasEntity).GetTag() + " does not have a Canvas component");
+  }
+
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetCanvasTransitionType: No entity with ID: " + std::to_string(static_cast<uint32_t>(canvasEntity)));
+  }
 }
 
 /*!**********************************************************************

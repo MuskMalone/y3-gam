@@ -4676,6 +4676,17 @@
                     }
                 },
                 {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 75,
+                                "scriptName": "Transition",
+                                "scriptFieldInstList": []
+                            }
+                        ]
+                    }
+                },
+                {
                     "Canvas": {
                         "isVisible": true,
                         "hasTransition": false,
@@ -15172,16 +15183,6 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 758,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "fadeImage"
-                                        }
-                                    },
-                                    {
-                                        "data": {
                                             "entityID": 161,
                                             "scriptName": "Entity"
                                         },
@@ -15245,6 +15246,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "thirdSilhouette"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 75,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
                                         }
                                     },
                                     {
