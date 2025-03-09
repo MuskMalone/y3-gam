@@ -7055,6 +7055,114 @@
             ]
         },
         {
+            "ID": 131,
+            "Parent": null,
+            "Child Entities": [
+                239,
+                319
+            ],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PickUpObjects",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7072180673722841169
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 48.51694869995117,
+                                            "y": 7.028196334838867,
+                                            "z": -122.16154479980469
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Hammer (Animation)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 48.51694869995117,
+                            "y": 7.028196334838867,
+                            "z": -122.16154479980469
+                        },
+                        "scale": {
+                            "x": 0.3199999928474426,
+                            "y": 0.3199999928474426,
+                            "z": 0.3199999928474426
+                        },
+                        "rotation": {
+                            "x": 0.24538245797157288,
+                            "y": 0.9592549800872803,
+                            "z": -0.021839261054992677,
+                            "w": 0.13834834098815919
+                        },
+                        "eulerAngles": {
+                            "x": 178.4499969482422,
+                            "y": 16.030000686645509,
+                            "z": 151.08399963378907
+                        },
+                        "worldPos": {
+                            "x": 48.51694869995117,
+                            "y": 7.028196334838867,
+                            "z": -122.16154479980469
+                        },
+                        "worldScale": {
+                            "x": 0.3199999928474426,
+                            "y": 0.3199999928474426,
+                            "z": 0.3199999928474426
+                        },
+                        "worldRot": {
+                            "x": 0.24538245797157288,
+                            "y": 0.9592549800872803,
+                            "z": -0.021839261054992677,
+                            "w": 0.13834834098815919
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
+                }
+            ]
+        },
+        {
             "ID": 134,
             "Parent": 93,
             "Child Entities": [],
@@ -9528,6 +9636,18 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "Animation": {
+                        "animations": [],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
                 }
             ]
         },
@@ -11132,6 +11252,84 @@
                         "textureAssetGUID": {
                             "ID": 13393721084583815832
                         }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 239,
+            "Parent": 131,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCube95",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 1.5715484619140626,
+                            "y": -2.5355224609375,
+                            "z": 0.023096084594726564
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 1.4901161193847657e-8,
+                            "y": 0.0,
+                            "z": -2.9802322387695315e-8,
+                            "w": 0.9999998807907105
+                        },
+                        "eulerAngles": {
+                            "x": 0.0000017075475398087293,
+                            "y": 5.0888875497432168e-14,
+                            "z": -0.0000034150950796174586
+                        },
+                        "worldPos": {
+                            "x": 47.70887756347656,
+                            "y": 6.548209190368652,
+                            "z": -122.32861328125
+                        },
+                        "worldScale": {
+                            "x": 0.3199999928474426,
+                            "y": 0.3199999928474426,
+                            "z": 0.3199999928474426
+                        },
+                        "worldRot": {
+                            "x": 0.2453823983669281,
+                            "y": 0.9592548608779907,
+                            "z": -0.02183927781879902,
+                            "w": 0.13834832608699799
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 1320810904050219293
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCube95",
+                        "GUID": {
+                            "ID": 5309045186088192693
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -16138,6 +16336,84 @@
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 319,
+            "Parent": 131,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCube96",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 1.5715484619140626,
+                            "y": -2.5355224609375,
+                            "z": 0.023096084594726564
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 1.4901161193847657e-8,
+                            "y": 0.0,
+                            "z": -2.9802322387695315e-8,
+                            "w": 0.9999998807907105
+                        },
+                        "eulerAngles": {
+                            "x": 0.0000017075475398087293,
+                            "y": 5.0888875497432168e-14,
+                            "z": -0.0000034150950796174586
+                        },
+                        "worldPos": {
+                            "x": 47.70887756347656,
+                            "y": 6.548209190368652,
+                            "z": -122.32861328125
+                        },
+                        "worldScale": {
+                            "x": 0.3199999928474426,
+                            "y": 0.3199999928474426,
+                            "z": 0.3199999928474426
+                        },
+                        "worldRot": {
+                            "x": 0.2453823983669281,
+                            "y": 0.9592548608779907,
+                            "z": -0.02183927781879902,
+                            "w": 0.13834832608699799
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 5437073796557026432
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCube96",
+                        "GUID": {
+                            "ID": 5309045186088192693
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
                     }
@@ -26021,6 +26297,18 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "Animation": {
+                        "animations": [],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
                 }
             ]
         },
@@ -26653,6 +26941,18 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
                     }
                 }
             ]
@@ -28025,6 +28325,18 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "Animation": {
+                        "animations": [],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
                 }
             ]
         },
@@ -28770,6 +29082,18 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "Animation": {
+                        "animations": [],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
                 }
             ]
         },
@@ -28787,7 +29111,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 49.21099853515625,
+                            "x": 49.26655197143555,
                             "y": 6.946382999420166,
                             "z": -122.22464752197266
                         },
@@ -28808,7 +29132,7 @@
                             "z": 90.0
                         },
                         "worldPos": {
-                            "x": 49.21099853515625,
+                            "x": 49.26655197143555,
                             "y": 6.946382999420166,
                             "z": -122.22464752197266
                         },
@@ -28847,6 +29171,18 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
                     }
                 }
             ]
@@ -29935,6 +30271,18 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "Animation": {
+                        "animations": [],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
                 }
             ]
         },
@@ -30012,6 +30360,18 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
                     }
                 }
             ]
