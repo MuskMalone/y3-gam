@@ -55,6 +55,7 @@ namespace IGE {
 				const physx::PxTriggerPair& triggerPair = pairs[i];
 				physx::PxActor* actor1 = triggerPair.triggerActor;
 				physx::PxActor* actor2 = triggerPair.otherActor;
+				//if (!actor1->userData || !actor2->userData) return;
 				if (actor1->getType() == physx::PxActorType::eRIGID_DYNAMIC && actor2->getType() == physx::PxActorType::eRIGID_DYNAMIC) {
 					auto triggeractor{ reinterpret_cast<physx::PxRigidDynamic*>(actor1) };
 					auto otheractor{ reinterpret_cast<physx::PxRigidDynamic*>(actor2) };

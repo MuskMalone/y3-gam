@@ -1447,6 +1447,34 @@
                                         "postProcessingParameter": 1500.0
                                     }
                                 }
+                            },
+                            {
+                                "key": "TransitionCorridor",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9248082960212212954
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 5.302999973297119,
+                                            "y": 10.785017013549805,
+                                            "z": 50.972084045410159
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
                             }
                         ]
                     }
@@ -1718,84 +1746,6 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "isFading"
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                "entityID": 40,
-                                "scriptName": "PlayerFootsteps",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 383,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "doorEntryTrigger"
-                                        }
-                                    },
-                                    {
-                                        "data": 8,
-                                        "type": "System.Int32",
-                                        "scriptField": {
-                                            "fieldName": "footstepSoundCount"
-                                        }
-                                    },
-                                    {
-                                        "data": 2.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "footstepVolume"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.5,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "interval"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 40,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "player"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 40,
-                                            "scriptName": "PlayerMove"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerMoveScript"
-                                        }
-                                    },
-                                    {
-                                        "data": 1500.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "ppPararm"
-                                        }
-                                    },
-                                    {
-                                        "data": 0,
-                                        "type": "System.Int32",
-                                        "scriptField": {
-                                            "fieldName": "ppType"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.5,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "speedThreshold"
                                         }
                                     }
                                 ]
@@ -10813,7 +10763,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 57.05079650878906,
+                            "x": 56.93828582763672,
                             "y": 14.156999588012696,
                             "z": 54.10149002075195
                         },
@@ -10834,7 +10784,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 57.05079650878906,
+                            "x": 56.93828582763672,
                             "y": 14.156999588012696,
                             "z": 54.10149002075195
                         },
@@ -39135,7 +39085,7 @@
                                 "key": "LockedDoor",
                                 "value": {
                                     "guid": {
-                                        "ID": 8874749514258673930
+                                        "ID": 17970498899727066841
                                     },
                                     "playSettings": {
                                         "position": {
@@ -39148,7 +39098,7 @@
                                         "pan": 0.0,
                                         "mute": false,
                                         "loop": false,
-                                        "playOnAwake": true,
+                                        "playOnAwake": false,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
