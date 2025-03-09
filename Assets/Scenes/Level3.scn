@@ -6977,6 +6977,95 @@
             ]
         },
         {
+            "ID": 128,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Spot Light",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 40.0,
+                            "y": 0.0,
+                            "z": -1.5
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7901550531387329,
+                            "z": 0.0,
+                            "w": -0.6129069924354553
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -255.60000610351563,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 40.0,
+                            "y": 0.0,
+                            "z": -1.5
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.7901550531387329,
+                            "z": 0.0,
+                            "w": -0.6129069924354553
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "SPOTLIGHT",
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "intensity": 7.5,
+                        "innerAngle": 5.0,
+                        "outerAngle": 167.0,
+                        "range": 53.0,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 130,
             "Parent": 21,
             "Child Entities": [],
@@ -7050,6 +7139,69 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 131,
+            "Parent": null,
+            "Child Entities": [
+                176,
+                239,
+                319
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "cabinet",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 25.82200050354004,
+                            "y": 1.899999976158142,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 25.82200050354004,
+                            "y": 1.899999976158142,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
                     }
                 }
             ]
@@ -9073,6 +9225,84 @@
                         "textureAssetGUID": {
                             "ID": 11835534321060799032
                         }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 176,
+            "Parent": 131,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cube.016",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 25.82200050354004,
+                            "y": 1.899999976158142,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11987628570518417045
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube.016",
+                        "GUID": {
+                            "ID": 1136119046851465075
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -11132,6 +11362,84 @@
                         "textureAssetGUID": {
                             "ID": 13393721084583815832
                         }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 239,
+            "Parent": 131,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cube.018",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 25.82200050354004,
+                            "y": 1.899999976158142,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 9688658947475917145
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube.018",
+                        "GUID": {
+                            "ID": 1136119046851465075
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -16138,6 +16446,84 @@
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 319,
+            "Parent": 131,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cube.001",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 25.82200050354004,
+                            "y": 1.899999976158142,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 7305788823909041484
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube.001",
+                        "GUID": {
+                            "ID": 1136119046851465075
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
                     }
