@@ -5095,14 +5095,14 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 123.52403259277344,
-                            "y": 48.69279479980469,
+                            "x": 124.29130554199219,
+                            "y": 47.81353759765625,
                             "z": -67.94361877441406
                         },
                         "scale": {
-                            "x": 0.9999997019767761,
-                            "y": 30.35137939453125,
-                            "z": 97.38068389892578
+                            "x": 0.9999991059303284,
+                            "y": 42.86695861816406,
+                            "z": 80.43582916259766
                         },
                         "rotation": {
                             "x": 0.0,
@@ -5116,14 +5116,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 123.52403259277344,
-                            "y": 48.69279479980469,
+                            "x": 124.29130554199219,
+                            "y": 47.81353759765625,
                             "z": -68.50439453125
                         },
                         "worldScale": {
-                            "x": 0.9999997019767761,
-                            "y": 30.35137939453125,
-                            "z": 97.38068389892578
+                            "x": 0.9999991059303284,
+                            "y": 42.86695861816406,
+                            "z": 80.43582916259766
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -5141,7 +5141,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 8279116233736380187
+                            "ID": 10447971358078479087
                         }
                     }
                 },
@@ -32975,13 +32975,13 @@
         },
         {
             "ID": 543,
-            "Parent": null,
+            "Parent": 3145843,
             "Child Entities": [],
             "Components": [
                 {
                     "Tag": {
                         "tag": "statue_hermes",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -33053,13 +33053,13 @@
         },
         {
             "ID": 544,
-            "Parent": null,
+            "Parent": 3145843,
             "Child Entities": [],
             "Components": [
                 {
                     "Tag": {
                         "tag": "statue_odysseus",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -33131,13 +33131,13 @@
         },
         {
             "ID": 545,
-            "Parent": null,
+            "Parent": 3145843,
             "Child Entities": [],
             "Components": [
                 {
                     "Tag": {
                         "tag": "statue_poseidon",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -33209,13 +33209,13 @@
         },
         {
             "ID": 546,
-            "Parent": null,
+            "Parent": 3145843,
             "Child Entities": [],
             "Components": [
                 {
                     "Tag": {
                         "tag": "statue_zeus",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -33287,7 +33287,7 @@
         },
         {
             "ID": 547,
-            "Parent": null,
+            "Parent": 3145843,
             "Child Entities": [],
             "Components": [
                 {
@@ -45663,79 +45663,66 @@
             ]
         },
         {
-            "ID": 3146079,
+            "ID": 3145843,
             "Parent": null,
-            "Child Entities": [],
+            "Child Entities": [
+                543,
+                544,
+                545,
+                546,
+                547
+            ],
             "Components": [
                 {
                     "Tag": {
-                        "tag": "statue_denial_new",
-                        "isActive": false
+                        "tag": "Odyssey",
+                        "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": 130.67294311523438,
-                            "y": 43.641971588134769,
-                            "z": -148.79287719726563
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
                         "scale": {
-                            "x": 14.359999656677246,
-                            "y": 14.359999656677246,
-                            "z": 14.359999656677246
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": -0.7071067690849304,
+                            "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 1.0
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -89.98021697998047,
+                            "y": 0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 130.67294311523438,
-                            "y": 43.641971588134769,
-                            "z": -148.79287719726563
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
                         "worldScale": {
-                            "x": 14.359999656677246,
-                            "y": 14.359999656677246,
-                            "z": 14.359999656677246
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.7071067690849304,
+                            "y": 0.0,
                             "z": 0.0,
-                            "w": 0.7071067690849304
+                            "w": 1.0
                         }
                     }
                 },
                 {
                     "Layer": {
                         "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube.009",
-                        "GUID": {
-                            "ID": 8404256502759923475
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
