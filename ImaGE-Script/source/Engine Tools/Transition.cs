@@ -1,4 +1,5 @@
 ﻿using IGE.Utils;
+using System;
 
 // This script is to be placed in the Canvas entity
 public class Transition : Entity
@@ -44,6 +45,7 @@ public class Transition : Entity
   // These functions are to be called from other scripts
   public void StartTransition(bool fadeIn, float duration, TransitionType transitionType)
   {
+    Debug.Log("Starting Transition");
     isFadeIn = fadeIn;
     totalTime = duration;
     transitionTimer = 0f;

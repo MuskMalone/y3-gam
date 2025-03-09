@@ -6273,6 +6273,78 @@
             ]
         },
         {
+            "ID": 123,
+            "Parent": 589,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "PickupFragmentUI",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -1.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 4.201000213623047,
+                            "y": 1.7400000095367432,
+                            "z": 5.739999771118164
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -1.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 4.201000213623047,
+                            "y": 1.7400000095367432,
+                            "z": 5.739999771118164
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 16948251644551116755
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 126,
             "Parent": 3145836,
             "Child Entities": [],
@@ -8857,6 +8929,13 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "Bloom": {
+                        "threshold": 1.0,
+                        "intensity": 1.2000000476837159,
+                        "range": 10.0
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "Puzzle_PaintingFragment1",
                         "isActive": true
@@ -8911,7 +8990,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 16148162105990453228
                         }
                     }
                 },
@@ -8954,8 +9033,110 @@
                     }
                 },
                 {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 203,
+                                "scriptName": "Fragment",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 415,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "GardenFragment"
+                                        }
+                                    },
+                                    {
+                                        "data": "FlyIn",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "fragAnimNameEnterBox"
+                                        }
+                                    },
+                                    {
+                                        "data": "FlyUp",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "fragAnimNameFlyUp"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fragmentCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 123,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fragmentPickupUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 0,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 75,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
                     "Animation": {
                         "animations": [
+                            {
+                                "key": "FlyUp",
+                                "value": {
+                                    "ID": 12704832680008719980
+                                }
+                            },
                             {
                                 "key": "Hover",
                                 "value": {
@@ -12678,6 +12859,7 @@
             "ID": 589,
             "Parent": 75,
             "Child Entities": [
+                123,
                 324,
                 590,
                 591,
