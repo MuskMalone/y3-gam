@@ -1,6 +1,5 @@
 {
     "rootKeyframe": {
-        "relativePositioning": false,
         "startPos": {
             "x": -0.0000019073486328125,
             "y": 0.0,
@@ -29,6 +28,7 @@
                 "z": 60.0
             },
             "type": "ROTATION",
+            "interpolationType": "LINEAR",
             "startTime": 0.0,
             "duration": 0.25,
             "nextNodes": [
@@ -43,6 +43,7 @@
                 "z": 125.0
             },
             "type": "ROTATION",
+            "interpolationType": "LINEAR",
             "startTime": 0.25,
             "duration": 0.20000000298023225,
             "nextNodes": [
@@ -57,6 +58,7 @@
                 "z": 110.0
             },
             "type": "ROTATION",
+            "interpolationType": "LINEAR",
             "startTime": 0.44999998807907107,
             "duration": 0.20000000298023225,
             "nextNodes": []

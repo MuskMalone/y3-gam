@@ -35,6 +35,9 @@ namespace {
   static constexpr const char* sKeyframeTypeStr[]{
     "Empty", "Translation", "Scale", "Rotation"
   };
+  static constexpr const char* sInterpTypeStr[]{
+    "Linear", "Ease In", "Ease Out", "Ease InOut"
+  };
   static constexpr float sLeftColWidth = 70.f, sRightColWidth = 170.f;
   static CumulativeValues sCachedCumulativeValues;
   static GUI::KeyframeEditor::IDType sRightClickedNode;
@@ -365,6 +368,28 @@ namespace GUI {
                 break;
               }
             } // end if
+            break;
+          } // end selectable if
+        } // end for loop
+
+        ImGui::EndCombo();
+      }
+
+      ImGui::TableNextRow(); ImGui::TableSetColumnIndex(0);
+      ImGui::Text("Interp.");
+      if (ImGui::IsItemHovered()) {
+        ImGui::SetTooltip(" Interpolation Type ");
+      }
+      ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(sRightColWidth);
+      if (ImGui::BeginCombo("##InterpType", sInterpTypeStr[static_cast<int>(node->data.interpType)])) {
+        for (int i{}; i < static_cast<int>(Anim::InterpolationType::NUM_TYPES); ++i) {
+          if (ImGui::Selectable(sInterpTypeStr[i])) {
+            Anim::InterpolationType const selected{ static_cast<Anim::InterpolationType>(i) };
+
+            if (selected != node->data.interpType) {
+              node->data.interpType = selected;
+              modified = true;
+            }
             break;
           } // end selectable if
         } // end for loop
@@ -971,7 +996,7 @@ namespace GUI {
     // construct the rest of the tree
     for (KeyframeNode::NodePtr const& next : mRoot->nextNodes) {
       KeyframeData const& data{ next->data };
-      Anim::Node newKeyframe{ std::make_shared<Anim::Keyframe>(data.endValue, data.type, data.startTime, data.duration) };
+      Anim::Node newKeyframe{ std::make_shared<Anim::Keyframe>(data.endValue, data.type, data.interpType, data.startTime, data.duration) };
       newKeyframe->id = next->id;
       animData.rootKeyframe.nextNodes.emplace_back(newKeyframe);
       nodePositions.posMap.emplace(next->id, ImNodes::GetNodeGridSpacePos(next->id));
@@ -1076,7 +1101,7 @@ namespace GUI {
     for (KeyframeNode::NodePtr const& next : src->nextNodes) {
       KeyframeData const& data{ next->data };
       Anim::Node newNode{
-        std::make_shared<Anim::Keyframe>(data.endValue, data.type, data.startTime, data.duration)
+        std::make_shared<Anim::Keyframe>(data.endValue, data.type, data.interpType, data.startTime, data.duration)
       };
       newNode->id = next->id;
       dest->nextNodes.emplace_back(newNode);

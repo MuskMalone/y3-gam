@@ -24,7 +24,14 @@ namespace {
 }
 
 namespace Systems {
-  AnimationSystem::AnimationSystem(const char* name) : System(name) {
+  AnimationSystem::AnimationSystem(const char* name) : System(name),
+    interpFuncs{
+      std::bind(&AnimationSystem::LinearInterpolation<glm::vec3>, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
+      std::bind(&AnimationSystem::EaseIn<glm::vec3>, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
+      std::bind(&AnimationSystem::EaseOut<glm::vec3>, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
+      std::bind(&AnimationSystem::EaseInOut<glm::vec3>, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)
+    }
+  {
     SUBSCRIBE_CLASS_FUNC(Events::PreviewAnimation, &AnimationSystem::OnEntityPreview, this);
   }
 
@@ -69,6 +76,7 @@ namespace Systems {
 
         // if the keyframe ends this frame, complete and remove it
         bool const lastFrame{ animation.timeElapsed >= keyframe.GetEndTime() };
+        auto& interpToApply{ interpFuncs[static_cast<int>(keyframe.interpolationType)] };
 
         switch (keyframe.type) {
         case Anim::KeyframeType::TRANSLATION:
@@ -76,7 +84,7 @@ namespace Systems {
             trans.position = std::get<glm::vec3>(keyframe.endValue);
           }
           else {
-            trans.position = glm::mix(std::get<glm::vec3>(keyframe.startValue), std::get<glm::vec3>(keyframe.endValue), normalizedTime);
+            trans.position = interpToApply(keyframe.startValue, keyframe.endValue, normalizedTime);
           }
           trans.modified = true;
           break;
@@ -86,7 +94,7 @@ namespace Systems {
           }
           else {
             trans.SetLocalRotWithEuler(
-              glm::mix(std::get<glm::vec3>(keyframe.startValue), std::get<glm::vec3>(keyframe.endValue), normalizedTime)
+              interpToApply(keyframe.startValue, keyframe.endValue, normalizedTime)
             );
           }
           trans.modified = true;
@@ -96,7 +104,7 @@ namespace Systems {
             trans.scale = std::get<glm::vec3>(keyframe.endValue);
           }
           else {
-            trans.scale = glm::mix(std::get<glm::vec3>(keyframe.startValue), std::get<glm::vec3>(keyframe.endValue), normalizedTime);
+            interpToApply(keyframe.startValue, keyframe.endValue, normalizedTime);
           }
           trans.modified = true;
           break;
@@ -191,6 +199,7 @@ namespace Systems {
 
       // if the keyframe ends this frame, complete and remove it
       bool const lastFrame{ animation.timeElapsed >= keyframe.GetEndTime() };
+      auto& interpToApply{ interpFuncs[static_cast<int>(keyframe.interpolationType)] };
 
       switch (keyframe.type) {
       case Anim::KeyframeType::TRANSLATION:
@@ -198,7 +207,7 @@ namespace Systems {
           trans.position = std::get<glm::vec3>(keyframe.endValue);
         }
         else {
-          trans.position = glm::mix(std::get<glm::vec3>(keyframe.startValue), std::get<glm::vec3>(keyframe.endValue), normalizedTime);
+          trans.position = interpToApply(keyframe.startValue, keyframe.endValue, normalizedTime);
         }
         trans.modified = true;
         break;
@@ -208,7 +217,7 @@ namespace Systems {
         }
         else {
           trans.SetLocalRotWithEuler(
-            glm::mix(std::get<glm::vec3>(keyframe.startValue), std::get<glm::vec3>(keyframe.endValue), normalizedTime)
+            interpToApply(keyframe.startValue, keyframe.endValue, normalizedTime)
           );
         }
         trans.modified = true;
@@ -218,7 +227,7 @@ namespace Systems {
           trans.scale = std::get<glm::vec3>(keyframe.endValue);
         }
         else {
-          trans.scale = glm::mix(std::get<glm::vec3>(keyframe.startValue), std::get<glm::vec3>(keyframe.endValue), normalizedTime);
+          interpToApply(keyframe.startValue, keyframe.endValue, normalizedTime);
         }
         trans.modified = true;
         break;

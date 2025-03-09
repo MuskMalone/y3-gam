@@ -41,9 +41,10 @@ namespace GUI {
     struct KeyframeData {
       using ValueType = Anim::Keyframe::ValueType;
 
-      KeyframeData() : endValue{}, type{ Anim::KeyframeType::NONE }, startTime{}, duration{} {}
+      KeyframeData() : endValue{}, type{ Anim::KeyframeType::NONE }, interpType{ Anim::InterpolationType::LINEAR },
+        startTime {}, duration{} {}
       KeyframeData(Anim::Keyframe const& keyframe) :
-        endValue{ keyframe.endValue }, type{ keyframe.type },
+        endValue{ keyframe.endValue }, type{ keyframe.type }, interpType{ keyframe.interpolationType },
         startTime{ keyframe.startTime }, duration{ keyframe.duration } {}
 
       template <typename T>
@@ -55,6 +56,7 @@ namespace GUI {
 
       ValueType endValue;
       Anim::KeyframeType type;
+      Anim::InterpolationType interpType;
       float startTime, duration;
     };
 

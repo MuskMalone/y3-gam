@@ -28,6 +28,7 @@
                 "z": 50.3117561340332
             },
             "type": "TRANSLATION",
+            "interpolationType": "LINEAR",
             "startTime": 0.0,
             "duration": 0.6000000238418579,
             "nextNodes": [
@@ -42,6 +43,7 @@
                 "z": 50.3117561340332
             },
             "type": "TRANSLATION",
+            "interpolationType": "LINEAR",
             "startTime": 0.6000000238418579,
             "duration": 0.30000001192092898,
             "nextNodes": [
@@ -56,6 +58,7 @@
                 "z": 50.3117561340332
             },
             "type": "TRANSLATION",
+            "interpolationType": "LINEAR",
             "startTime": 0.9000000357627869,
             "duration": 0.5,
             "nextNodes": [
@@ -70,6 +73,7 @@
                 "z": 0.0
             },
             "type": "NONE",
+            "interpolationType": "LINEAR",
             "startTime": 1.4000000953674317,
             "duration": 0.20000000298023225,
             "nextNodes": [
@@ -84,6 +88,7 @@
                 "z": -90.0
             },
             "type": "ROTATION",
+            "interpolationType": "LINEAR",
             "startTime": 1.6000001430511475,
             "duration": 0.5,
             "nextNodes": [
@@ -98,6 +103,7 @@
                 "z": 0.0
             },
             "type": "NONE",
+            "interpolationType": "LINEAR",
             "startTime": 2.1000001430511476,
             "duration": 0.5,
             "nextNodes": []

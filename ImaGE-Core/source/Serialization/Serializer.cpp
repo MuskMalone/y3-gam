@@ -653,6 +653,8 @@ namespace {
     SerializeRecursive(node->endValue, writer);
     writer.Key("type");
     SerializeRecursive(node->type, writer);
+    writer.Key("interpolationType");
+    SerializeRecursive(node->interpolationType, writer);
 
     writer.Key("startTime");
     writer.Double(node->startTime);
