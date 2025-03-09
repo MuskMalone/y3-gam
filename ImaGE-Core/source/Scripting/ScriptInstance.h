@@ -310,7 +310,7 @@ namespace Mono {
 		shared pointer to the field we are trying to get
 		************************************************************************/
 		template<typename T>
-		void SetFieldValueArr(std::vector<T> value,MonoClassField* field, std::shared_ptr<MonoDomain> md)
+		void SetFieldValueArr(std::vector<T> value,MonoClassField* field, MonoDomain* md)
 		{
 			MonoArray* newArray = GetMonoArray<T>(md, value.size());
 			for (int i = 0; i < mono_array_length(newArray); ++i) {
@@ -320,11 +320,11 @@ namespace Mono {
 		}
 
 
-		void SetFieldValueStrArr(std::vector<std::string> value, MonoClassField* field, std::shared_ptr<MonoDomain> md)
+		void SetFieldValueStrArr(std::vector<std::string> value, MonoClassField* field, MonoDomain* md)
 		{
 			MonoArray* newArray = GetMonoArray<std::string>(md, value.size());
 			for (int i = 0; i < mono_array_length(newArray); ++i) {
-				mono_array_set(newArray, MonoString*, i, mono_string_new(md.get(), value[i].c_str()));
+				mono_array_set(newArray, MonoString*, i, mono_string_new(md, value[i].c_str()));
 			}
 			mono_field_set_value(mClassInst, field, newArray);
 		}
@@ -375,7 +375,7 @@ namespace Mono {
 		Value we want to set
 		************************************************************************/
 		template<typename T>
-		void SetChildFieldValueArr(std::shared_ptr<MonoObject> obj, MonoClassField* field, std::vector<T> value, std::shared_ptr<MonoDomain> md)
+		void SetChildFieldValueArr(std::shared_ptr<MonoObject> obj, MonoClassField* field, std::vector<T> value, MonoDomain* md)
 		{
 			MonoArray* newArray = GetMonoArray<T>(md, value.size());
 			for (int i = 0; i < mono_array_length(newArray); ++i) {

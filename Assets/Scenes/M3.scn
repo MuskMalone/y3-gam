@@ -172,6 +172,7 @@
                 469,
                 488,
                 506,
+                630,
                 1048783,
                 1049003,
                 1049378,
@@ -4851,6 +4852,17 @@
                     }
                 },
                 {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 75,
+                                "scriptName": "Transition",
+                                "scriptFieldInstList": []
+                            }
+                        ]
+                    }
+                },
+                {
                     "Canvas": {
                         "isVisible": true,
                         "hasTransition": false,
@@ -8916,17 +8928,43 @@
                     }
                 },
                 {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.7950000166893005,
+                            "y": 1.399999976158142,
+                            "z": 0.6629999876022339
+                        },
+                        "positionOffset": {
+                            "x": 0.6000000238418579,
+                            "y": 0.800000011920929,
+                            "z": 0.10000000149011612
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 22.0,
+                            "y": 35.0,
+                            "z": -5.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.19468018412590028,
+                            "y": 0.28696227073669436,
+                            "z": -0.09815899282693863,
+                            "w": 0.9328007102012634
+                        },
+                        "sensor": false
+                    }
+                },
+                {
                     "Animation": {
                         "animations": [
                             {
-                                "key": "..\\Assets\\Animations\\L1\\FragmentFloat.anim",
+                                "key": "Hover",
                                 "value": {
                                     "ID": 7795434828334433536
                                 }
                             }
                         ],
                         "currentAnimation": {
-                            "first": "..\\Assets\\Animations\\L1\\FragmentFloat.anim",
+                            "first": "Hover",
                             "second": {
                                 "ID": 7795434828334433536
                             }
@@ -10470,13 +10508,13 @@
                     "Transform": {
                         "position": {
                             "x": 5.24094295501709,
-                            "y": 3.9815878868103029,
-                            "z": -0.7175838351249695
+                            "y": 2.9820001125335695,
+                            "z": -3.3372364044189455
                         },
                         "scale": {
                             "x": 176.32000732421876,
-                            "y": 176.32000732421876,
-                            "z": 176.32000732421876
+                            "y": 136.67999267578126,
+                            "z": 179.5
                         },
                         "rotation": {
                             "x": 0.0,
@@ -10491,13 +10529,13 @@
                         },
                         "worldPos": {
                             "x": 5.240937232971191,
-                            "y": 3.9815878868103029,
-                            "z": -0.7175836563110352
+                            "y": 2.9820001125335695,
+                            "z": -3.337236166000366
                         },
                         "worldScale": {
                             "x": 176.32000732421876,
-                            "y": 176.32000732421876,
-                            "z": 176.32000732421876
+                            "y": 136.67999267578126,
+                            "z": 179.5
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -11192,66 +11230,81 @@
         },
         {
             "ID": 415,
-            "Parent": 1048783,
+            "Parent": 630,
             "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 16013359636150386060
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Puzzle_PaintingFragment1 (Animation)",
+                        "isActive": true
+                    }
                 },
-                "subDataId": 4,
-                "componentData": [
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Puzzle_PaintingFragment1 (Animation)",
-                            "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": 0.0,
-                                "y": 2.509122848510742,
-                                "z": 0.859778642654419
-                            },
-                            "scale": {
-                                "x": 0.08975999802350998,
-                                "y": 0.08975999802350998,
-                                "z": 0.08975999802350998
-                            },
-                            "rotation": {
-                                "x": 0.003002613317221403,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 0.9999955296516419
-                            },
-                            "eulerAngles": {
-                                "x": 0.34407463669776919,
-                                "y": -0.0,
-                                "z": 0.0
-                            },
-                            "worldPos": {
-                                "x": 6.321000099182129,
-                                "y": 19.665544509887697,
-                                "z": -36.41269302368164
-                            },
-                            "worldScale": {
-                                "x": 0.17413440346717835,
-                                "y": 0.17413440346717835,
-                                "z": 0.17413440346717835
-                            },
-                            "worldRot": {
-                                "x": -0.16122424602508546,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 0.9869178533554077
-                            }
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -5.9312744140625,
+                            "y": -5.0364990234375,
+                            "z": 0.4127655029296875
+                        },
+                        "scale": {
+                            "x": 2.1875784397125246,
+                            "y": 2.1875784397125246,
+                            "z": 2.1875784397125246
+                        },
+                        "rotation": {
+                            "x": 0.0030026137828826906,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9999955892562866
+                        },
+                        "eulerAngles": {
+                            "x": 0.34407466650009158,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 6.3177170753479,
+                            "y": 18.453996658325197,
+                            "z": -36.58473205566406
+                        },
+                        "worldScale": {
+                            "x": 0.17400000989437104,
+                            "y": 0.17400000989437104,
+                            "z": 0.17400000989437104
+                        },
+                        "worldRot": {
+                            "x": 0.060561403632164,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9981645345687866
                         }
                     }
-                ],
-                "removedComponents": []
-            }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Puzzle_PaintingFragment1",
+                        "GUID": {
+                            "ID": 13853952119863121254
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
         },
         {
             "ID": 422,
@@ -14821,6 +14874,98 @@
             ]
         },
         {
+            "ID": 630,
+            "Parent": 6,
+            "Child Entities": [
+                415
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Fragment Midpoint",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 6.789490699768066,
+                            "y": 18.855716705322267,
+                            "z": -36.57130432128906
+                        },
+                        "scale": {
+                            "x": 0.07954000681638718,
+                            "y": 0.07954000681638718,
+                            "z": 0.07954000681638718
+                        },
+                        "rotation": {
+                            "x": 0.05756402388215065,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9983417987823486
+                        },
+                        "eulerAngles": {
+                            "x": 6.599999904632568,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 6.789490699768066,
+                            "y": 18.855716705322267,
+                            "z": -36.57130432128906
+                        },
+                        "worldScale": {
+                            "x": 0.07954000681638718,
+                            "y": 0.07954000681638718,
+                            "z": 0.07954000681638718
+                        },
+                        "worldRot": {
+                            "x": 0.05756402388215065,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9983417987823486
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Sphere",
+                        "GUID": {
+                            "ID": 10126676604415907788
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "FlyIn",
+                                "value": {
+                                    "ID": 13136212335453471688
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
+                }
+            ]
+        },
+        {
             "ID": 631,
             "Parent": 1049607,
             "Child Entities": [],
@@ -15429,16 +15574,6 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 758,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "fadeImage"
-                                        }
-                                    },
-                                    {
-                                        "data": {
                                             "entityID": 161,
                                             "scriptName": "Entity"
                                         },
@@ -15502,6 +15637,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "thirdSilhouette"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 75,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
                                         }
                                     },
                                     {
@@ -22027,7 +22172,6 @@
             "ID": 1048783,
             "Parent": 6,
             "Child Entities": [
-                415,
                 624,
                 1049300,
                 1049551

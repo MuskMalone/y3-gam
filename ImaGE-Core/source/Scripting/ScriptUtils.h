@@ -55,7 +55,8 @@ namespace Mono {
 		SPECIALDIALOGUE,
 		KEYDOOR,
 		PICTUREALIGN,
-		CONTROLPANEL
+		CONTROLPANEL,
+		TRANSITION
 	};
 
 
@@ -106,27 +107,27 @@ namespace Mono {
 		The size of the array
 	************************************************************************/
 	template <typename T>
-	MonoArray* GetMonoArray(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<int>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<int>(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<std::string>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<std::string>(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<unsigned>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<unsigned>(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<float>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<float>(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<double>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<double>(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<double>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<double>(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<MonoObject*>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<MonoObject*>(MonoDomain* md, size_t sz);
 
 }

@@ -325,7 +325,7 @@ void ScriptInstance::GetFieldCSClass(std::vector<rttr::variant>& mScriptFieldIns
   if (!sfi.mData.mClassInst)
   {
     Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
-    sfi.mData.mClassInst = mono_field_get_value_object(sm->mAppDomain.get(), sfi.mScriptField.mClassField, mClassInst);
+    sfi.mData.mClassInst = mono_field_get_value_object(sm->mAppDomain, sfi.mScriptField.mClassField, mClassInst);
     sfi.mData.mScriptName = sm->mRevClassMap[sfi.mScriptField.mFieldType];
     if (sfi.mData.mClassInst)
     {

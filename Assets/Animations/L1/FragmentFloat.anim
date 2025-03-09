@@ -28,7 +28,7 @@
                 "z": 15.86824893951416
             },
             "type": "TRANSLATION",
-            "interpolationType": 3,
+            "interpolationType": "EASE_INOUT",
             "startTime": 0.0,
             "duration": 1.0,
             "nextNodes": [
@@ -43,7 +43,7 @@
                 "z": 15.86824893951416
             },
             "type": "TRANSLATION",
-            "interpolationType": 3,
+            "interpolationType": "EASE_INOUT",
             "startTime": 1.0,
             "duration": 1.0,
             "nextNodes": []
