@@ -27,12 +27,27 @@ public class BGMLevel1 : Entity
     public float currTiming = 0.0f;
     
     public bool startPlaying;
-    void Start() { }
+
+    private bool playedNighttimeAmbience;
+
+    void Start() {
+        Global.isNighttime = false;
+    }
 
     void Update()
     {
+        
         InternalCalls.SetSoundVolume(player.mEntityID, "BGM", bgmVolume);
-        InternalCalls.SetSoundVolume(player.mEntityID, "Ambience", ambienceVolume);
+        if (Global.isNighttime)
+        {
+            InternalCalls.SetSoundVolume(player.mEntityID, "NighttimeAmbience", ambienceVolume);
+            InternalCalls.SetSoundVolume(player.mEntityID, "Ambience", 0.0f);
+        }
+        else
+        {
+            InternalCalls.SetSoundVolume(player.mEntityID, "NighttimeAmbience", 0.0f);
+            InternalCalls.SetSoundVolume(player.mEntityID, "Ambience", ambienceVolume);
+        }
         InternalCalls.SetSoundVolume(player.mEntityID, "HallwayAmbience", hallwayAmbienceVolume);
         if (!unlockDoorUI.IsActive())
         {
@@ -50,7 +65,6 @@ public class BGMLevel1 : Entity
             {
                 if (currTiming <= transitionTiming)
                 {
-                    Console.WriteLine($"{currTiming}, {InternalCalls.GetDeltaTime()}");
                     currTiming += InternalCalls.GetDeltaTime();
                     float percent = currTiming / transitionTiming;
                     if (isEnteredHallway)
@@ -70,7 +84,6 @@ public class BGMLevel1 : Entity
                     currTiming = 0.0f;
                     startPlaying = false;
                 }
-
             }
         }
     }

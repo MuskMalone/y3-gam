@@ -94,6 +94,7 @@
     <Compile Include="source\Dialogue\Dialogue.cs" />
     <Compile Include="source\Dialogue\SpecialDialogue.cs" />
     <Compile Include="source\DynamicAudio\BGMLevel1.cs" />
+    <Compile Include="source\DynamicAudio\TransitionHintLevel1.cs" />
     <Compile Include="source\Engine Tools\Easing.cs" />
     <Compile Include="source\Engine Tools\FPS.cs" />
     <Compile Include="source\InteractableObject\AltarPaintingFrame.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="source\Mono\Component.cs" />
     <Compile Include="source\Mono\Debug.cs" />
     <Compile Include="source\Mono\Entity.cs" />
+    <Compile Include="source\Mono\Global.cs" />
     <Compile Include="source\Mono\Image.cs" />
     <Compile Include="source\Mono\Input.cs" />
     <Compile Include="source\Mono\Inside.cs" />

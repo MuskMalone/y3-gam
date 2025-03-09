@@ -19,7 +19,7 @@ namespace IGE {
 				LOGARITHMIC, 
 				NONE
 			};
-			enum class PostProcessingType {
+			enum class PostProcessingType : uint32_t {
 				REVERB, 
 				ECHO, 
 				DISTORTION,

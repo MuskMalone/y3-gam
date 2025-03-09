@@ -7,13 +7,20 @@ public class PlayerFootsteps : Entity
     //public Entity audioManager;
     public Entity player;
     public PlayerMove playerMoveScript;
+    public Entity doorEntryTrigger;
     public float interval = 0.5f;
-    public float bgmVolume = 0.1f;
-    public float ambienceVolume = 0.5f;
     public float footstepVolume = 2f;
+    public int footstepSoundCount = 8;
+    public float speedThreshold = 0.5f;
+
+    public int ppType = 0;
+    public float ppPararm = 1500.0f;
+    
     // Start is called before the first frame update
     private float timePassed;
     private Random random = new Random();
+    private int footstepCount = 0;
+    private bool isEnteredHallway;
     public PlayerFootsteps() : base()
     {
 
@@ -26,8 +33,6 @@ public class PlayerFootsteps : Entity
     // Update is called once per frame
     void Update()
     {
-        InternalCalls.SetSoundVolume(player.mEntityID, "BGM", bgmVolume);
-        InternalCalls.SetSoundVolume(player.mEntityID, "Ambience", ambienceVolume);
         timePassed += InternalCalls.GetDeltaTime();
         bool isGrounded = playerMoveScript.IsGrounded();
         Vector3 velocity = InternalCalls.GetVelocity(player.mEntityID);
@@ -37,36 +42,61 @@ public class PlayerFootsteps : Entity
         Vector3 position = InternalCalls.GetPosition(player.mEntityID);
         uint entityHit = InternalCalls.RaycastFromEntity(player.mEntityID, position, position + (new Vector3(0, -200, 0)));
 
-        if (isGrounded && magnitude > 0.1f)
+        if (isGrounded && magnitude > speedThreshold)
         {
             if (timePassed >= interval) {
                 PlayFootstepSound();
                 timePassed = 0;
             }
         }
+        if (doorEntryTrigger.mEntityID != uint.MaxValue)
+        {
+            Vector3 playerLoc = InternalCalls.GetWorldPosition(player.mEntityID);
+            Vector3 doorLoc = InternalCalls.GetWorldPosition(doorEntryTrigger.mEntityID);
+            isEnteredHallway = playerLoc.X > doorLoc.X;
+            if (InternalCalls.OnTriggerExit(doorEntryTrigger.mEntityID, player.mEntityID))
+            {
+                for (int i = 0; i < footstepSoundCount; ++i)
+                {
+                    string soundName = $"Pavement{i + 1}.wav";
+
+                    if (isEnteredHallway)
+                    {
+                        InternalCalls.EnableSoundPostProcessing(mEntityID, soundName, Convert.ToUInt32(ppType), ppPararm);
+                    }
+                    else
+                    {
+                        InternalCalls.DisableSoundPostProcessing(mEntityID, soundName);
+                    }
+                }
+            }
+        }
     }
 
     public void PlayRandomMetalSound()
     {
-        int soundNumber = random.Next(1, 4);
-        string soundName = $"MetalPipe{soundNumber}";
+        footstepCount = footstepCount % footstepSoundCount;
+        string soundName = $"MetalPipe{footstepCount + 1}";
         InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
         InternalCalls.PlaySound(mEntityID, soundName);
+        footstepCount++;
     }
     public void PlayRandomGrassSound()
     {
-        int soundNumber = random.Next(1, 7);
-        string soundName = $"Grass{soundNumber}";
+        footstepCount = footstepCount % footstepSoundCount;
+        string soundName = $"Grass{footstepCount + 1}.wav";
         InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
         InternalCalls.PlaySound(mEntityID, soundName);
+        footstepCount++;
     }
 
     public void PlayRandomPavementSound()
     {
-        int soundNumber = random.Next(1, 6);
-        string soundName = $"Pavement{soundNumber}";
+        footstepCount = footstepCount % footstepSoundCount;
+        string soundName = $"Pavement{footstepCount + 1}.wav";
         InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
         InternalCalls.PlaySound(mEntityID, soundName);
+        footstepCount++;
     }
 
     public void PlayRandomWoodenSound()
@@ -75,6 +105,15 @@ public class PlayerFootsteps : Entity
         string soundName = $"Wooden{soundNumber}";
         InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
         InternalCalls.PlaySound(mEntityID, soundName);
+    }
+
+    public void PlayRandomGravelSound()
+    {
+        footstepCount = footstepCount % footstepSoundCount;
+        string soundName = $"Gravel{footstepCount + 1}.wav";
+        InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
+        InternalCalls.PlaySound(mEntityID, soundName);
+        footstepCount++;
     }
     void PlayFootstepSound()
     {
@@ -90,7 +129,7 @@ public class PlayerFootsteps : Entity
 
             switch (tag)
             {
-                case "MainGround":
+                case "BumpyGround":
                     PlayRandomGrassSound();
                     Debug.Log("GrassSound");
                     break;
@@ -99,11 +138,15 @@ public class PlayerFootsteps : Entity
                 case "Pit Room Platform":
                 case "Stair Head":
                 case "Stair Part":
+                case "Altar Platform":
                     PlayRandomPavementSound();
                     break;
-                case "Metal Pipes":
-                    PlayRandomMetalSound();
+                case "Crossroads":
+                    PlayRandomGravelSound();
                     break;
+                //case "Metal Pipes":
+                //    PlayRandomMetalSound();
+                //    break;
                 case "Wooden Ground":
                     PlayRandomWoodenSound();
                     break;

@@ -427,6 +427,7 @@ public class PictureAlign : Entity
 
   public bool ChangeSkyBox()
   {
+    Global.isNighttime = true;
     return InternalCalls.SetDaySkyBox(mainCamera.mEntityID, 1.0f);
   }
 
