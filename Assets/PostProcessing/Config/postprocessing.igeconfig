@@ -14,6 +14,19 @@
             }
         },
         {
+            "key": "Altar Painting",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "",
             "value": {
                 "shaders": [],
@@ -28,6 +41,19 @@
         },
         {
             "key": "test",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "LargeSafe",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -58,33 +84,7 @@
             }
         },
         {
-            "key": "Altar Painting",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "LargeSafe",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "Table",
+            "key": "TutorialLevelNew",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -110,20 +110,7 @@
             }
         },
         {
-            "key": "TutorialLevelNew",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "Level3",
+            "key": "Table",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -149,6 +136,19 @@
             }
         },
         {
+            "key": "Level3",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "Painting Frame (Rect)",
             "value": {
                 "shaders": [],
@@ -162,7 +162,7 @@
             }
         },
         {
-            "key": "Credits",
+            "key": "Fountain",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -175,7 +175,7 @@
             }
         },
         {
-            "key": "Fountain",
+            "key": "Credits",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
