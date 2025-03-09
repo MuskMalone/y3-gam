@@ -12231,6 +12231,32 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.424306869506836,
+                            "y": 0.5,
+                            "z": 30.569385528564454
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
                 }
             ]
         },
@@ -12308,6 +12334,32 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.424306392669678,
+                            "y": 0.5,
+                            "z": 49.020294189453128
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -17574,7 +17626,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Altar Platform (Copy)",
+                        "tag": "Altar Platform",
                         "isActive": true
                     }
                 },
