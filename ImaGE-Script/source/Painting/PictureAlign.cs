@@ -115,6 +115,9 @@ public class PictureAlign : Entity
     //  isNight = true;
     //  playerMove.canLook = false;
     //}
+
+
+
     if (!isBigPic && currentImg != null && Input.GetKeyTriggered(KeyCode.R))
     {
         // Use (float)Math.PI / 4 for ~0.7854 radians (45 degrees).
@@ -278,6 +281,8 @@ public class PictureAlign : Entity
                 playerMove.UnfreezePlayer();
                 isTransitioning = false;
                 hasFaded = false;
+
+                //ClearUI();
             }
         }
 
