@@ -20076,7 +20076,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "PickupDionysusPaintingUI",
+                        "tag": "PickupAthenaPaintingUI",
                         "isActive": false
                     }
                 },
@@ -25265,7 +25265,7 @@
                 },
                 {
                     "Tag": {
-                        "tag": "DionysusPainting",
+                        "tag": "AthenaPainting",
                         "isActive": true
                     }
                 },
@@ -25346,7 +25346,7 @@
                         "scriptList": [
                             {
                                 "entityID": 478,
-                                "scriptName": "DionysusPainting",
+                                "scriptName": "AthenaPainting",
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
@@ -25455,7 +25455,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 13883962159139114481
+                            "ID": 9185059207085514845
                         }
                     }
                 },
@@ -26069,7 +26069,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "DionysusPaintingSelection",
+                        "tag": "AthenaPaintingSelection",
                         "isActive": false
                     }
                 },
@@ -26128,7 +26128,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 8861718640100227070
+                            "ID": 13647062181320439875
                         }
                     }
                 }
@@ -26141,7 +26141,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "DionysusPaintingUI",
+                        "tag": "AthenaPaintingUI",
                         "isActive": false
                     }
                 },
@@ -26221,7 +26221,7 @@
                                         }
                                     },
                                     {
-                                        "data": "DionysusPainting.txt",
+                                        "data": "AthenaPainting.txt",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "dataFilePath"
@@ -26270,7 +26270,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 8861718640100227070
+                            "ID": 13647062181320439875
                         }
                     }
                 }
@@ -42650,7 +42650,7 @@
                                 "scriptName": "CameraCapture",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": "HermesPainting",
+                                        "data": "AthenaPainting",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "PictureName"

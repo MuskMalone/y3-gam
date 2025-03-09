@@ -323,9 +323,9 @@ public class Level2Inventory : Entity
 
         switch (itemName)
         {
-            case "DionysusPainting":
+            case "AthenaPainting":
                 dionysusPaintingUI?.SetActive(true);
-                dionysusPaintingUI?.FindScript<HoldupUI>().SetAlginUI("DionysusPainting", GetItemByName("DionysusPainting"));
+                dionysusPaintingUI?.FindScript<HoldupUI>().SetAlginUI("AthenaPainting", GetItemByName("AthenaPainting"));
                 paintingAlignUILevel2Script.isPainting = true;
                 break;
 
