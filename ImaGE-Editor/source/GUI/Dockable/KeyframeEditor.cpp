@@ -232,9 +232,7 @@ namespace GUI {
     if (shiftHeld && hovered) {
       // ignore tooltip for root
       if (hoveredNodeId != sRootId) {
-        if (!mRoot->relativePositioning || GUIVault::GetSelectedEntity()) {
-          NodePreview(mNodes[hoveredNodeId]);
-        }
+        NodePreview(mNodes[hoveredNodeId]);
       }
     }
     // if node right-clicked
@@ -324,18 +322,6 @@ namespace GUI {
       ImGui::EndTable();
     }
 
-    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 10.f);
-    if (ImGui::Checkbox("Relative Positioning", &mRoot->relativePositioning)) {
-      modified = true;
-    }
-
-    if (ImGui::IsItemHovered()) {
-      ImGui::BeginTooltip();
-      ImGui::TextUnformatted("Use the entity's current transform as the starting point of the animation");
-      ImGui::TextUnformatted("(instead of initializing it to the values above)");
-      ImGui::EndTooltip();
-    }
-
     ImNodes::BeginOutputAttribute(mRoot->outputPin);
     ImNodes::EndOutputAttribute();
     ImNodes::EndNode();
@@ -387,7 +373,7 @@ namespace GUI {
       }
 
       if (node->data.type != Anim::KeyframeType::NONE) {
-        NextRowTable(mRoot->relativePositioning ? "Offset" : "Target", sRightColWidth);
+        NextRowTable("Target", sRightColWidth);
         glm::vec3& rawVal{ std::get<glm::vec3>(node->data.endValue) };
         if (NodeVec3Input("##Target Value", rawVal, node->data.type == Anim::KeyframeType::SCALE ? 0.001f : -FLT_MAX)) {
           node->data.endValue = rawVal;
@@ -435,42 +421,28 @@ namespace GUI {
       // current offset from starting value
       if (node->data.type != Anim::KeyframeType::NONE) {
         ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 5.f);
-        if (mRoot->relativePositioning) {
-          ImGui::TextUnformatted((node->nodeName + " end value:").c_str());
-        }
-        else {
-          ImGui::TextUnformatted((node->nodeName + " offset of:").c_str());
-        }
+        ImGui::TextUnformatted((node->nodeName + " offset of:").c_str());
 
         ImGui::SetNextItemWidth(sRightColWidth);
         // @TODO: need to change if more types are added
         switch (node->data.type) {
         case Anim::KeyframeType::TRANSLATION:
         {
-          glm::vec3 offset{ mRoot->relativePositioning ?
-            sCachedCumulativeValues.pos + std::get<glm::vec3>(node->data.endValue)
-            : std::get<glm::vec3>(node->data.endValue) - std::get<glm::vec3>(sCachedCumulativeValues.prevVal) 
-          };
+          glm::vec3 offset{ std::get<glm::vec3>(node->data.endValue) - std::get<glm::vec3>(sCachedCumulativeValues.prevVal) };
           NodeVec3Input("##TooltipOffset", offset);
 
           break;
         }
         case Anim::KeyframeType::ROTATION:
         {
-          glm::vec3 offset{ mRoot->relativePositioning ?
-            sCachedCumulativeValues.rot + std::get<glm::vec3>(node->data.endValue)
-            : std::get<glm::vec3>(node->data.endValue) - std::get<glm::vec3>(sCachedCumulativeValues.prevVal)
-          };
+          glm::vec3 offset{ std::get<glm::vec3>(node->data.endValue) - std::get<glm::vec3>(sCachedCumulativeValues.prevVal) };
           NodeVec3Input("##TooltipOffset", offset);
 
           break;
         }
         case Anim::KeyframeType::SCALE:
         {
-          glm::vec3 offset{ mRoot->relativePositioning ?
-            sCachedCumulativeValues.scale + std::get<glm::vec3>(node->data.endValue)
-            : std::get<glm::vec3>(node->data.endValue) - std::get<glm::vec3>(sCachedCumulativeValues.prevVal)
-          };
+          glm::vec3 offset{ std::get<glm::vec3>(node->data.endValue) - std::get<glm::vec3>(sCachedCumulativeValues.prevVal) };
           NodeVec3Input("##TooltipOffset", offset);
 
           break;
@@ -708,29 +680,15 @@ namespace GUI {
     // init to root value
     switch (type) {
     case Anim::KeyframeType::TRANSLATION:
-      if (mRoot->relativePositioning) {
-        sCachedCumulativeValues.prevVal = GUIVault::GetSelectedEntity().GetComponent<Component::Transform>().position;
-      }
-      else {
-        sCachedCumulativeValues.prevVal = mRoot->startPos;
-      }
+      sCachedCumulativeValues.prevVal = mRoot->startPos;
+
       break;
     case Anim::KeyframeType::ROTATION:
-      if (mRoot->relativePositioning) {
-        sCachedCumulativeValues.prevVal = GUIVault::GetSelectedEntity().GetComponent<Component::Transform>().eulerAngles;
-      }
-      else {
-        sCachedCumulativeValues.prevVal = mRoot->startRot;
-      }
+      sCachedCumulativeValues.prevVal = mRoot->startRot;
 
       break;
     case Anim::KeyframeType::SCALE:
-      if (mRoot->relativePositioning) {
-        sCachedCumulativeValues.prevVal = GUIVault::GetSelectedEntity().GetComponent<Component::Transform>().scale;
-      }
-      else {
-        sCachedCumulativeValues.prevVal = mRoot->startScale;
-      }
+      sCachedCumulativeValues.prevVal = mRoot->startScale;
 
       break;
     default:
@@ -751,18 +709,9 @@ namespace GUI {
     }
 
     // init to root values
-    if (mRoot->relativePositioning) {
-      Component::Transform const& trans{ GUIVault::GetSelectedEntity().GetComponent<Component::Transform>() };
-
-      sCachedCumulativeValues.pos = trans.position;
-      sCachedCumulativeValues.rot = trans.eulerAngles;
-      sCachedCumulativeValues.scale = trans.scale;
-    }
-    else {
-      sCachedCumulativeValues.pos = mRoot->startPos;
-      sCachedCumulativeValues.rot = mRoot->startRot;
-      sCachedCumulativeValues.scale = mRoot->startScale;
-    }
+    sCachedCumulativeValues.pos = mRoot->startPos;
+    sCachedCumulativeValues.rot = mRoot->startRot;
+    sCachedCumulativeValues.scale = mRoot->startScale;
 
     // vector will hold the latest time updated of each type (starts with all 0s)
     std::vector<float> latestUpdate = std::vector<float>(static_cast<int>(Anim::KeyframeType::NUM_TYPES));
@@ -806,19 +755,9 @@ namespace GUI {
       switch (type) {
       case Anim::KeyframeType::TRANSLATION:
       {
-        glm::vec3 endValue{};
-        // if relative, treat endValue as offsets
-        if (mRoot->relativePositioning) {
-          glm::vec3 const trueEndVal{ sCachedCumulativeValues.pos + std::get<glm::vec3>(node->data.endValue) };
-
-          endValue = endTime < startTime ?
-            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, trueEndVal, endTime)
-            : trueEndVal;
-        }
-        else {
-          endValue = endTime < startTime ?
-            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, endTime)
-            : std::get<glm::vec3>(node->data.endValue);
+        glm::vec3 const endValue{ endTime < startTime ? 
+          node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, endTime)
+          : std::get<glm::vec3>(node->data.endValue)
         };
 
         sCachedCumulativeValues.prevVal = endValue;
@@ -826,19 +765,9 @@ namespace GUI {
       }
       case Anim::KeyframeType::ROTATION:
       {
-        glm::vec3 endValue{};
-        // if relative, treat endValue as offsets
-        if (mRoot->relativePositioning) {
-          glm::vec3 const trueEndVal{ sCachedCumulativeValues.rot + std::get<glm::vec3>(node->data.endValue) };
-
-          endValue = endTime < startTime ?
-            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.rot, trueEndVal, endTime)
-            : trueEndVal;
-        }
-        else {
-          endValue = endTime < startTime ?
-            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.rot, endTime)
-            : std::get<glm::vec3>(node->data.endValue);
+        glm::vec3 const endValue{ endTime < startTime ?
+          node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.rot, endTime)
+          : std::get<glm::vec3>(node->data.endValue)
         };
 
         sCachedCumulativeValues.prevVal = endValue;
@@ -846,19 +775,9 @@ namespace GUI {
       }
       case Anim::KeyframeType::SCALE:
       {
-        glm::vec3 endValue{};
-        // if relative, treat endValue as offsets
-        if (mRoot->relativePositioning) {
-          glm::vec3 const trueEndVal{ sCachedCumulativeValues.scale + std::get<glm::vec3>(node->data.endValue) };
-
-          endValue = endTime < startTime ?
-            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.scale, trueEndVal, endTime)
-            : trueEndVal;
-        }
-        else {
-          endValue = endTime < startTime ?
-            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.scale, endTime)
-            : std::get<glm::vec3>(node->data.endValue);
+        glm::vec3 const endValue{ endTime < startTime ?
+          node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.scale, endTime)
+          : std::get<glm::vec3>(node->data.endValue)
         };
 
         sCachedCumulativeValues.prevVal = endValue;
@@ -900,19 +819,9 @@ namespace GUI {
       switch (node->data.type) {
       case Anim::KeyframeType::TRANSLATION:
       {
-        glm::vec3 endValue{};
-        // if relative, treat endValue as offsets
-        if (mRoot->relativePositioning) {
-          glm::vec3 const trueEndVal{ sCachedCumulativeValues.pos + std::get<glm::vec3>(node->data.endValue) };
-
-          endValue = endTime < startTime ?
-            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, trueEndVal, endTime)
-            : trueEndVal;
-        }
-        else {
-          endValue = endTime < startTime ?
+        glm::vec3 const endValue{ endTime < startTime ?
             node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.pos, endTime)
-            : std::get<glm::vec3>(node->data.endValue);
+            : std::get<glm::vec3>(node->data.endValue)
         };
 
         sCachedCumulativeValues.pos = endValue;
@@ -920,19 +829,9 @@ namespace GUI {
       }
       case Anim::KeyframeType::ROTATION:
       {
-        glm::vec3 endValue{};
-        // if relative, treat endValue as offsets
-        if (mRoot->relativePositioning) {
-          glm::vec3 const trueEndVal{ sCachedCumulativeValues.rot + std::get<glm::vec3>(node->data.endValue) };
-
-          endValue = endTime < startTime ?
-            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.rot, trueEndVal, endTime)
-            : trueEndVal;
-        }
-        else {
-          endValue = endTime < startTime ?
+        glm::vec3 const endValue{ endTime < startTime ?
             node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.rot, endTime)
-            : std::get<glm::vec3>(node->data.endValue);
+            : std::get<glm::vec3>(node->data.endValue)
         };
 
         sCachedCumulativeValues.rot = endValue;
@@ -940,19 +839,9 @@ namespace GUI {
       }
       case Anim::KeyframeType::SCALE:
       {
-        glm::vec3 endValue{};
-        // if relative, treat endValue as offsets
-        if (mRoot->relativePositioning) {
-          glm::vec3 const trueEndVal{ sCachedCumulativeValues.scale + std::get<glm::vec3>(node->data.endValue) };
-
-          endValue = endTime < startTime ?
-            node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.scale, trueEndVal, endTime)
-            : trueEndVal;
-        }
-        else {
-          endValue = endTime < startTime ?
+        glm::vec3 const endValue{ endTime < startTime ?
             node->data.GetInterpolatedValue<glm::vec3>(sCachedCumulativeValues.scale, endTime)
-            : std::get<glm::vec3>(node->data.endValue);
+            : std::get<glm::vec3>(node->data.endValue)
         };
 
         sCachedCumulativeValues.scale = endValue;
@@ -975,21 +864,15 @@ namespace GUI {
 
     switch (node->data.type) {
     case Anim::KeyframeType::TRANSLATION:
-      sCachedCumulativeValues.pos = mRoot->relativePositioning ?
-        sCachedCumulativeValues.pos + std::get<glm::vec3>(node->data.endValue)
-        : std::get<glm::vec3>(node->data.endValue);
+      sCachedCumulativeValues.pos = std::get<glm::vec3>(node->data.endValue);
 
       break;
     case Anim::KeyframeType::ROTATION:
-      sCachedCumulativeValues.rot = mRoot->relativePositioning ?
-        sCachedCumulativeValues.rot + std::get<glm::vec3>(node->data.endValue)
-        : std::get<glm::vec3>(node->data.endValue);
+      sCachedCumulativeValues.rot = std::get<glm::vec3>(node->data.endValue);
 
       break;
     case Anim::KeyframeType::SCALE:
-      sCachedCumulativeValues.scale = mRoot->relativePositioning ?
-        sCachedCumulativeValues.scale +std::get<glm::vec3>(node->data.endValue)
-        : std::get<glm::vec3>(node->data.endValue);
+      sCachedCumulativeValues.scale = std::get<glm::vec3>(node->data.endValue);
 
       break;
     default:
@@ -1012,7 +895,6 @@ namespace GUI {
     mRoot->startPos = root.startPos;
     mRoot->startRot = root.startRot;
     mRoot->startScale = root.startScale;
-    mRoot->relativePositioning = root.relativePositioning;
   }
 
   EVENT_CALLBACK_DEF(KeyframeEditor, OnAnimationEdit) {
@@ -1210,7 +1092,6 @@ namespace GUI {
     ret.startPos = startPos;
     ret.startRot = startRot;
     ret.startScale = startScale;
-    ret.relativePositioning = relativePositioning;
 
     return ret;
   }

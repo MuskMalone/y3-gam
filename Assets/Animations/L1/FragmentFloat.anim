@@ -1,0 +1,65 @@
+{
+    "rootKeyframe": {
+        "relativePositioning": false,
+        "startPos": {
+            "x": 54.542625427246097,
+            "y": 5.029445171356201,
+            "z": 15.86824893951416
+        },
+        "startRot": {
+            "x": 0.0,
+            "y": -0.0,
+            "z": 0.0
+        },
+        "startScale": {
+            "x": 0.189361110329628,
+            "y": 0.18637323379516602,
+            "z": 0.12600000202655793
+        },
+        "nextNodes": [
+            1
+        ]
+    },
+    "keyframes": [
+        {
+            "nodeId": 1,
+            "endValue": {
+                "x": 54.542625427246097,
+                "y": 6.6370930671691898,
+                "z": 15.86824893951416
+            },
+            "type": "TRANSLATION",
+            "startTime": 0.0,
+            "duration": 0.30000001192092898,
+            "nextNodes": [
+                2
+            ]
+        },
+        {
+            "nodeId": 2,
+            "endValue": {
+                "x": 54.542625427246097,
+                "y": 5.029445171356201,
+                "z": 15.86824893951416
+            },
+            "type": "TRANSLATION",
+            "startTime": 0.30000001192092898,
+            "duration": 2.0,
+            "nextNodes": [
+                3
+            ]
+        },
+        {
+            "nodeId": 3,
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "startTime": 2.299999952316284,
+            "duration": 2.0,
+            "nextNodes": []
+        }
+    ]
+}

@@ -20,7 +20,7 @@ namespace {
                                                           // @TODO: Find a way to make this editor only
 
   void InitTransform(Component::Transform& trans, Anim::RootKeyframe const& root);
-  void SetStartValues(std::vector<Anim::Node>& nodes, Component::Transform const& transform, bool relative);
+  void SetStartValues(std::vector<Anim::Node>& nodes, Component::Transform const& transform);
 }
 
 namespace Systems {
@@ -53,13 +53,9 @@ namespace Systems {
       if (animation.currentKeyframes.empty()) {
         animation.Reset();
         animation.currentKeyframes = animData.rootKeyframe.nextNodes;
-        animation.relative = animData.rootKeyframe.relativePositioning;
 
-        // initialize transform to start values if not using relative position
-        if (!animation.relative) {
-          InitTransform(trans, animData.rootKeyframe);
-        }
-        SetStartValues(animation.currentKeyframes, trans, animation.relative);
+        InitTransform(trans, animData.rootKeyframe);
+        SetStartValues(animation.currentKeyframes, trans);
       }
 
       animation.timeElapsed += deltaTime; // update elapsed time
@@ -126,7 +122,7 @@ namespace Systems {
         // insert the next nodes into the current keyframes
         if (!nextNodes.empty()) {
           animation.currentKeyframes.insert(animation.currentKeyframes.end(), nextNodes.begin(), nextNodes.end());
-          SetStartValues(animation.currentKeyframes, trans, animation.relative);
+          SetStartValues(animation.currentKeyframes, trans);
         }
         completedNodes.pop();
       }
@@ -179,13 +175,9 @@ namespace Systems {
     if (animation.currentKeyframes.empty()) {
       animation.Reset();
       animation.currentKeyframes = animData.rootKeyframe.nextNodes;
-      animation.relative = animData.rootKeyframe.relativePositioning;
 
-      // initialize transform to start values if not using relative position
-      if (!animation.relative) {
-        InitTransform(trans, animData.rootKeyframe);
-      }
-      SetStartValues(animation.currentKeyframes, trans, animation.relative);
+      InitTransform(trans, animData.rootKeyframe);
+      SetStartValues(animation.currentKeyframes, trans);
     }
 
     animation.timeElapsed += deltaTime; // update elapsed time
@@ -253,7 +245,7 @@ namespace Systems {
       if (!nextNodes.empty()) {
         animation.currentKeyframes.insert(animation.currentKeyframes.end(), nextNodes.begin(), nextNodes.end());
         // set the start values of all keyframes
-        SetStartValues(animation.currentKeyframes, trans, animation.relative);
+        SetStartValues(animation.currentKeyframes, trans);
       }
       completedNodes.pop();
     }
@@ -274,49 +266,23 @@ namespace {
     trans.scale = root.startScale;
   }
 
-  void SetStartValues(std::vector<Anim::Node>& nodes, Component::Transform const& transform, bool relative) {
-    // for relative, treat endvalue as offsets
-    if (relative) {
-      for (Anim::Node& node : nodes) {
-        switch (node->type) {
-        case Anim::KeyframeType::TRANSLATION:
-          node->startValue = transform.position;
-          node->endValue = transform.position + std::get<glm::vec3>(node->endValue);
+  void SetStartValues(std::vector<Anim::Node>& nodes, Component::Transform const& transform) {
+    for (Anim::Node& node : nodes) {
+      switch (node->type) {
+      case Anim::KeyframeType::TRANSLATION:
+        node->startValue = transform.position;
 
-          break;
-        case Anim::KeyframeType::ROTATION:
-          node->startValue = transform.eulerAngles;
-          node->endValue = transform.eulerAngles + std::get<glm::vec3>(node->endValue);
+        break;
+      case Anim::KeyframeType::ROTATION:
+        node->startValue = transform.eulerAngles;
 
-          break;
-        case Anim::KeyframeType::SCALE:
-          node->startValue = transform.scale;
-          node->endValue = transform.scale + std::get<glm::vec3>(node->endValue);
+        break;
+      case Anim::KeyframeType::SCALE:
+        node->startValue = transform.scale;
 
-          break;
-        default:
-          break;
-        }
-      }
-    }
-    else {
-      for (Anim::Node& node : nodes) {
-        switch (node->type) {
-        case Anim::KeyframeType::TRANSLATION:
-          node->startValue = transform.position;
-
-          break;
-        case Anim::KeyframeType::ROTATION:
-          node->startValue = transform.eulerAngles;
-
-          break;
-        case Anim::KeyframeType::SCALE:
-          node->startValue = transform.scale;
-
-          break;
-        default:
-          break;
-        }
+        break;
+      default:
+        break;
       }
     }
   }
