@@ -3393,16 +3393,6 @@
             "ID": 53,
             "Parent": null,
             "Child Entities": [
-                72,
-                73,
-                74,
-                75,
-                146,
-                147,
-                148,
-                149,
-                150,
-                151,
                 152
             ],
             "Components": [
@@ -3560,6 +3550,67 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 60,
+            "Parent": 248,
+            "Child Entities": [
+                75
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Ceilings",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -8.940696716308594e-8,
+                            "y": 0.0,
+                            "z": 1.4901161193847657e-8
+                        },
+                        "scale": {
+                            "x": 0.004999999888241291,
+                            "y": 0.004999999888241291,
+                            "z": 0.004999999888241291
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.2232501059770584,
+                            "z": 0.0,
+                            "w": 0.9747611880302429
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 25.799999237060548,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 67.13998413085938,
+                            "y": 147.9957733154297,
+                            "z": -432.07000732421877
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
                     }
                 }
             ]
@@ -3907,7 +3958,7 @@
         },
         {
             "ID": 72,
-            "Parent": 53,
+            "Parent": 112,
             "Child Entities": [],
             "Components": [
                 {
@@ -3919,9 +3970,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 61.323143005371097,
-                            "y": 87.8829574584961,
-                            "z": -415.3600769042969
+                            "x": -5.816841125488281,
+                            "y": -60.112815856933597,
+                            "z": 16.709930419921876
                         },
                         "scale": {
                             "x": 1.0,
@@ -3996,7 +4047,7 @@
         },
         {
             "ID": 73,
-            "Parent": 53,
+            "Parent": 112,
             "Child Entities": [],
             "Components": [
                 {
@@ -4008,9 +4059,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 61.323143005371097,
-                            "y": 174.29388427734376,
-                            "z": -459.47821044921877
+                            "x": -5.816841125488281,
+                            "y": 26.298110961914064,
+                            "z": -27.408203125
                         },
                         "scale": {
                             "x": 1.0,
@@ -4085,7 +4136,7 @@
         },
         {
             "ID": 74,
-            "Parent": 53,
+            "Parent": 300,
             "Child Entities": [],
             "Components": [
                 {
@@ -4174,7 +4225,7 @@
         },
         {
             "ID": 75,
-            "Parent": 53,
+            "Parent": 60,
             "Child Entities": [],
             "Components": [
                 {
@@ -4186,9 +4237,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 64.88360595703125,
-                            "y": 228.9754638671875,
-                            "z": -417.5502014160156
+                            "x": -2.256378173828125,
+                            "y": 80.97969055175781,
+                            "z": 14.519805908203125
                         },
                         "scale": {
                             "x": 233.46023559570313,
@@ -6212,6 +6263,8 @@
             "ID": 112,
             "Parent": 248,
             "Child Entities": [
+                72,
+                73,
                 160
             ],
             "Components": [
@@ -7952,7 +8005,7 @@
         },
         {
             "ID": 146,
-            "Parent": 53,
+            "Parent": 323,
             "Child Entities": [],
             "Components": [
                 {
@@ -8030,7 +8083,7 @@
         },
         {
             "ID": 147,
-            "Parent": 53,
+            "Parent": 323,
             "Child Entities": [],
             "Components": [
                 {
@@ -8108,7 +8161,7 @@
         },
         {
             "ID": 148,
-            "Parent": 53,
+            "Parent": 323,
             "Child Entities": [],
             "Components": [
                 {
@@ -8186,7 +8239,7 @@
         },
         {
             "ID": 149,
-            "Parent": 53,
+            "Parent": 323,
             "Child Entities": [],
             "Components": [
                 {
@@ -8264,7 +8317,7 @@
         },
         {
             "ID": 150,
-            "Parent": 53,
+            "Parent": 323,
             "Child Entities": [],
             "Components": [
                 {
@@ -8342,7 +8395,7 @@
         },
         {
             "ID": 151,
-            "Parent": 53,
+            "Parent": 323,
             "Child Entities": [],
             "Components": [
                 {
@@ -12677,6 +12730,7 @@
             "ID": 248,
             "Parent": null,
             "Child Entities": [
+                60,
                 111,
                 112,
                 217,
@@ -14537,6 +14591,67 @@
             ]
         },
         {
+            "ID": 300,
+            "Parent": 1048901,
+            "Child Entities": [
+                74
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Section 4 (Corridor)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 301,
             "Parent": 1048800,
             "Child Entities": [
@@ -15973,6 +16088,72 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Section 1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 323,
+            "Parent": 1048796,
+            "Child Entities": [
+                146,
+                147,
+                148,
+                149,
+                150,
+                151
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Section 4 (Corridor)",
                         "isActive": true
                     }
                 },
@@ -34897,6 +35078,7 @@
             "Parent": null,
             "Child Entities": [
                 322,
+                323,
                 1048800,
                 1048897
             ],
@@ -36381,6 +36563,7 @@
             "ID": 1048901,
             "Parent": null,
             "Child Entities": [
+                300,
                 368,
                 1048582,
                 1048902
