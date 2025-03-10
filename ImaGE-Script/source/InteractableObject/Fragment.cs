@@ -1,5 +1,6 @@
 ﻿using IGE.Utils;
 using System;
+using System.Data;
 using System.Numerics;
 using static System.TimeZoneInfo;
 
@@ -10,10 +11,9 @@ public class Fragment : Entity
   public string fragAnimNameFlyUp;
   public string fragAnimNameEnterBox;
   public PlayerMove playerMove;
-  public Entity playerCamera;
-  public Entity fragmentCamera;
-  public Entity GardenFragment;
-  public Entity Particles;
+  public Entity playerCamera, fragmentCamera;
+  public Entity GardenFragment, Particles;
+  public Entity ParticleBurst;  // boom
   public Transition transition;
   public Entity BlackBorder1;
   public Entity BlackBorder2;
@@ -21,20 +21,23 @@ public class Fragment : Entity
   public Vector3 startPos;
   public Vector3 downPos;
   public Vector3 zoomPos;
+  public float explosionWaitTime;
 
   float elapsedTime = 0.0f;
-  float transitionTimeFirstPhase = 3.0f;
-  float transitionTimeSecondPhase = 5.0f;
-  bool initialAnimation = true;
+  float transitionTimeFirstPhase = 4f;
+  float transitionTimeSecondPhase = 2.8f;
 
-  private bool fragmentInteraction = true;
-  private Vector3 zoomInPos;
-  private Vector3 zoomOutPos;
-  bool isZoomingOut = true;
-  private string currentAnim = null;
-  private bool triggerSecondAnimation = false;
-  private bool firstPhase = false;
-  private bool finalPhase = false;
+  private enum State
+  {
+    IDLE,           // floating in place
+    FLY_UP,         // after player interaction
+    PANNING_DOWN,   // fragment coming down
+    TRANSITION,
+    ZOOMING_IN,     // fragment fitting into place
+    EXPLOSION,      // boom
+    FINAL_PHASE     // animation done
+  }
+  private State currState = State.IDLE;
 
   void Start()
   {
@@ -45,84 +48,109 @@ public class Fragment : Entity
 
   void Update()
   {
-    if (fragmentInteraction)
+    switch (currState)
     {
-      // To place script on fragment collider
-      bool isFragmentHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-      if (Input.GetKeyTriggered(KeyCode.E) && isFragmentHit)
-      {
-        TriggerAnimation();
-        fragmentInteraction = false;
-        isFragmentHit = false;
-      }
-      fragmentPickupUI.SetActive(isFragmentHit);
-    }
-
-    // if an animation is in progress
-    if (!string.IsNullOrEmpty(currentAnim))
-    {
-      if (currentAnim == fragAnimNameFlyUp)
-      {
-        if (!InternalCalls.IsPlayingAnimation(mEntityID))
+      // check for player interaction
+      case State.IDLE:
         {
-          currentAnim = null;
-          initialAnimation = true;
-          SetPlayerCameraAsMain();
+          // To place script on fragment collider
+          bool isFragmentHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+          if (Input.GetKeyTriggered(KeyCode.E) && isFragmentHit)
+          {
+            TriggerAnimation();
+            currState = State.FLY_UP;
+            fragmentPickupUI.SetActive(false);
+          }
+          else
+          {
+            fragmentPickupUI.SetActive(isFragmentHit);
+          }
 
-          transition.StartTransition(false, 2, Transition.TransitionType.WIPE);
+          break;
         }
-      }
-
-      if (currentAnim == fragAnimNameEnterBox)
-      {
-        elapsedTime += Time.deltaTime;
-
-        // First Phase: Going Down
-        if (firstPhase)
+      case State.FLY_UP:
         {
+          if (InternalCalls.IsPlayingAnimation(mEntityID)) { return; }
+
+          SetPlayerCameraAsMain();
+          transition.StartTransition(false, 2f, Transition.TransitionType.WIPE);
+          currState = State.TRANSITION;
+
+          break;
+        }
+      case State.TRANSITION:
+        {
+          if (!transition.IsFinished()) { return; }
+
+          TriggerFlyinAnimation();
+          currState = State.PANNING_DOWN;
+
+          break;
+        }
+      // First Phase: Going Down
+      case State.PANNING_DOWN:
+        {
+          elapsedTime += Time.deltaTime;
+
           Vector3 newPos = Vector3.Lerp(startPos, downPos, elapsedTime / transitionTimeFirstPhase);
           InternalCalls.SetPosition(fragmentCamera.mEntityID, ref newPos);
 
           if (elapsedTime >= transitionTimeFirstPhase)
           {
-            firstPhase = false; // Switch to next phase
             elapsedTime = 0f;   // Reset timer
+            currState = State.ZOOMING_IN; // Switch to next phase
           }
-        }
 
-        // Second Phase: Zoom In
-        else
+          break;
+        }
+      // Second Phase: Zoom In
+      case State.ZOOMING_IN:
         {
+          elapsedTime += Time.deltaTime;
+
           Vector3 newPos = Vector3.Lerp(downPos, zoomPos, elapsedTime / transitionTimeSecondPhase);
           InternalCalls.SetPosition(fragmentCamera.mEntityID, ref newPos);
 
           if (elapsedTime >= transitionTimeSecondPhase)
           {
-            finalPhase = true;
             elapsedTime = 0f;
-            transition.StartTransition(false, 2, Transition.TransitionType.WIPE);
+            ParticleBurst.SetActive(true);  // enable the entity with the emitter
+            currState = State.EXPLOSION;
+            Particles.SetActive(false);
           }
+
+          break;
         }
-      }
-    }
+      case State.EXPLOSION:
+        {
+          if (!transition.IsFinished()) { return; }
 
-    if (string.IsNullOrEmpty(currentAnim) && triggerSecondAnimation && transition.IsFinished())
-    {
-      triggerSecondAnimation = false;
-      TriggerFlyinAnimation();
-    }
+          elapsedTime += Time.deltaTime;
 
-    if (finalPhase)
-    {
-      transition.StartTransition(true, 0.5f, Transition.TransitionType.WIPE);
-      SetPlayerCameraAsMain();
-      playerMove.UnfreezePlayer();
-      finalPhase = false;
-      currentAnim = null;
-      Particles.SetActive(false);
-      Destroy(mEntityID);
-      BlackBorder1.SetActive(false);
-      BlackBorder2.SetActive(false);
+          if (elapsedTime >= explosionWaitTime)
+          {
+            elapsedTime = 0f;
+            transition.StartTransition(false, 2f, Transition.TransitionType.WIPE);
+            currState = State.FINAL_PHASE;
+          }
+
+          break;
+        }
+      case State.FINAL_PHASE:
+        {
+          if (!transition.IsFinished()) { return; }
+
+          transition.StartTransition(true, 0.5f, Transition.TransitionType.WIPE);
+          SetPlayerCameraAsMain();
+          playerMove.UnfreezePlayer();
+          BlackBorder1.SetActive(false);
+          BlackBorder2.SetActive(false);
+          Destroy(mEntityID);
+
+          break;
+        }
+      default:
+        break;
     }
   }
 
@@ -140,10 +168,8 @@ public class Fragment : Entity
 
   void TriggerAnimation()
   {
-    currentAnim = fragAnimNameFlyUp;
     InternalCalls.PlayAnimation(mEntityID, fragAnimNameFlyUp, false);
     playerMove.FreezePlayer();
-    triggerSecondAnimation = true;
     GardenFragment.SetActive(true);
     Particles.SetActive(true);
     BlackBorder1.SetActive(true);
@@ -152,12 +178,9 @@ public class Fragment : Entity
 
   void TriggerFlyinAnimation()
   {
-    firstPhase = true;
-    SetActive(false);
     transition.StartTransition(true, 0.5f, Transition.TransitionType.WIPE);
     uint parent = InternalCalls.GetParentByID(GardenFragment.mEntityID);
     InternalCalls.PlayAnimation(parent, fragAnimNameEnterBox, false);
-    currentAnim = fragAnimNameEnterBox;
     SetFragmentCameraAsMain();
   }
 }

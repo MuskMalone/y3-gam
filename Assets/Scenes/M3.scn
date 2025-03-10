@@ -9658,6 +9658,16 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 634,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ParticleBurst"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 26,
                                             "scriptName": "Entity"
                                         },
@@ -9675,6 +9685,13 @@
                                         "type": "System.Numerics.Vector3",
                                         "scriptField": {
                                             "fieldName": "downPos"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "explosionWaitTime"
                                         }
                                     },
                                     {
@@ -15808,7 +15825,7 @@
                         "key": "Bloom",
                         "value": {
                             "threshold": 1.0,
-                            "intensity": 1.2000000476837159,
+                            "intensity": 0.0,
                             "range": 10.0
                         }
                     },
@@ -15816,7 +15833,7 @@
                         "key": "Material",
                         "value": {
                             "materialGUID": {
-                                "ID": 0
+                                "ID": 16148162105990453228
                             }
                         }
                     }
@@ -16279,6 +16296,28 @@
                     }
                 },
                 {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 634,
+                                "scriptName": "FragmentParticleBurst",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 415,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Fragment"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
                     "EmitterSystem": {
                         "emitters": [
                             {
@@ -16355,7 +16394,7 @@
                                 "angvel": 0.0,
                                 "lifetime": 4.0,
                                 "speed": 10.0,
-                                "frequency": 0.5,
+                                "frequency": 0.009999999776482582,
                                 "type": 1,
                                 "vCount": 1,
                                 "preset": 2,
@@ -16435,7 +16474,7 @@
                                 "angvel": 0.0,
                                 "lifetime": 4.0,
                                 "speed": 6.0,
-                                "frequency": 0.5,
+                                "frequency": 0.009999999776482582,
                                 "type": 1,
                                 "vCount": 1,
                                 "preset": 2,
@@ -16952,6 +16991,13 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "secondSilhouette"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "skipCutscene"
                                         }
                                     },
                                     {
