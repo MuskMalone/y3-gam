@@ -13,6 +13,7 @@ public class Fragment : Entity
   public Entity playerCamera;
   public Entity fragmentCamera;
   public Entity GardenFragment;
+  public Entity Particles;
   public Transition transition;
 
   public Vector3 startPos;
@@ -114,6 +115,8 @@ public class Fragment : Entity
       playerMove.UnfreezePlayer();
       finalPhase = false;
       currentAnim = null;
+      Particles.SetActive(false);
+      Destroy(mEntityID);
     }
   }
 
@@ -136,6 +139,7 @@ public class Fragment : Entity
     playerMove.FreezePlayer();
     triggerSecondAnimation = true;
     GardenFragment.SetActive(true);
+    Particles.SetActive(true);
   }
 
   void TriggerFlyinAnimation()

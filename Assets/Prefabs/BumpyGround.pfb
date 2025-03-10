@@ -1,0 +1,108 @@
+{
+    "Name": "BumpyGround",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BumpyGround",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 5.24094295501709,
+                            "y": 2.9820001125335695,
+                            "z": -3.3372364044189455
+                        },
+                        "scale": {
+                            "x": 176.32000732421876,
+                            "y": 136.67999267578126,
+                            "z": 179.5
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0,
+                            "w": -4.371138828673793e-8
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": -0.000005008956122765085,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 5.240937232971191,
+                            "y": 2.9820001125335695,
+                            "z": -3.337236166000366
+                        },
+                        "worldScale": {
+                            "x": 176.32000732421876,
+                            "y": 136.67999267578126,
+                            "z": 179.5
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0,
+                            "w": -4.371138828673793e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 14137664646562134886
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "BumpyGround",
+                        "GUID": {
+                            "ID": 8392233331408148840
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 44.7599983215332,
+                            "y": 0.6000000238418579,
+                            "z": 55.86000061035156
+                        },
+                        "positionOffset": {
+                            "x": 4.599999904632568,
+                            "y": -3.4000000953674318,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        }
+    ]
+}
