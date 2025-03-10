@@ -1976,10 +1976,14 @@
                 39,
                 58,
                 70,
-                74,
+                81,
+                88,
                 130,
                 1048636,
+                1048650,
                 1048668,
+                1048846,
+                1048862,
                 1048950,
                 1048951,
                 2097264,
@@ -4165,7 +4169,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 8767289450398112251
+                            "ID": 382172955627364870
                         }
                     }
                 },
@@ -4262,12 +4266,71 @@
             ]
         },
         {
-            "ID": 74,
+            "ID": 81,
+            "Parent": 21,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "FlameEffect",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 88,
             "Parent": 21,
             "Child Entities": [
-                75,
-                268,
-                269
+                89,
+                90,
+                91
             ],
             "Components": [
                 {
@@ -4279,7 +4342,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
+                            "x": 22.867158889770509,
                             "y": 10.92717170715332,
                             "z": -8.495205879211426
                         },
@@ -4300,7 +4363,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
+                            "x": 22.867158889770509,
                             "y": 10.92717170715332,
                             "z": -8.495205879211426
                         },
@@ -4325,15 +4388,15 @@
             ]
         },
         {
-            "ID": 75,
-            "Parent": 74,
+            "ID": 89,
+            "Parent": 88,
             "Child Entities": [],
             "Components": [
                 {
                     "Bloom": {
-                        "threshold": 0.550000011920929,
-                        "intensity": 1.840000033378601,
-                        "range": 8.770000457763672
+                        "threshold": 0.3400000035762787,
+                        "intensity": 1.2000000476837159,
+                        "range": 6.260000228881836
                     }
                 },
                 {
@@ -4366,7 +4429,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
+                            "x": 22.867158889770509,
                             "y": 10.92717170715332,
                             "z": -8.495205879211426
                         },
@@ -4402,6 +4465,162 @@
                             "ID": 13110369586823712426
                         },
                         "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 90,
+            "Parent": 88,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "lamp",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 22.867158889770509,
+                            "y": 10.92717170715332,
+                            "z": -8.495205879211426
+                        },
+                        "worldScale": {
+                            "x": 5.199999809265137,
+                            "y": 5.199999809265137,
+                            "z": 5.199999809265137
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 2736295656358640927
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "lamp",
+                        "GUID": {
+                            "ID": 13110369586823712426
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 91,
+            "Parent": 88,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "glass",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 22.867158889770509,
+                            "y": 10.92717170715332,
+                            "z": -8.495205879211426
+                        },
+                        "worldScale": {
+                            "x": 5.199999809265137,
+                            "y": 5.199999809265137,
+                            "z": 5.199999809265137
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 9688658947475917145
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "glass",
+                        "GUID": {
+                            "ID": 13110369586823712426
+                        },
+                        "submeshIdx": 1,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -11169,162 +11388,6 @@
                 {
                     "Layer": {
                         "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 268,
-            "Parent": 74,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "lamp",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 10.92717170715332,
-                            "z": -8.495205879211426
-                        },
-                        "worldScale": {
-                            "x": 5.199999809265137,
-                            "y": 5.199999809265137,
-                            "z": 5.199999809265137
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 2736295656358640927
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "lamp",
-                        "GUID": {
-                            "ID": 13110369586823712426
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 269,
-            "Parent": 74,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "glass",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 10.92717170715332,
-                            "z": -8.495205879211426
-                        },
-                        "worldScale": {
-                            "x": 5.199999809265137,
-                            "y": 5.199999809265137,
-                            "z": 5.199999809265137
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 9688658947475917145
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "glass",
-                        "GUID": {
-                            "ID": 13110369586823712426
-                        },
-                        "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
@@ -18566,6 +18629,232 @@
             ]
         },
         {
+            "ID": 1048650,
+            "Parent": 21,
+            "Child Entities": [
+                1048651,
+                1048844,
+                1048845
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "wall_lamp3",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -39.57904815673828,
+                            "y": 10.92717170715332,
+                            "z": -8.317541122436524
+                        },
+                        "scale": {
+                            "x": 5.199999809265137,
+                            "y": 5.199999809265137,
+                            "z": 5.199999809265137
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -39.57904815673828,
+                            "y": 10.92717170715332,
+                            "z": -8.317541122436524
+                        },
+                        "worldScale": {
+                            "x": 5.199999809265137,
+                            "y": 5.199999809265137,
+                            "z": 5.199999809265137
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048651,
+            "Parent": 1048650,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Bloom": {
+                        "threshold": 0.3400000035762787,
+                        "intensity": 1.2000000476837159,
+                        "range": 6.260000228881836
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "lightbulb",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -39.57904815673828,
+                            "y": 10.92717170715332,
+                            "z": -8.317541122436524
+                        },
+                        "worldScale": {
+                            "x": 5.199999809265137,
+                            "y": 5.199999809265137,
+                            "z": 5.199999809265137
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 14852787506312387779
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "lightbulb",
+                        "GUID": {
+                            "ID": 13110369586823712426
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048654,
+            "Parent": 1048846,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "glass",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -10.290299415588379,
+                            "y": 10.92717170715332,
+                            "z": -8.317541122436524
+                        },
+                        "worldScale": {
+                            "x": 5.199999809265137,
+                            "y": 5.199999809265137,
+                            "z": 5.199999809265137
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 9688658947475917145
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "glass",
+                        "GUID": {
+                            "ID": 13110369586823712426
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048655,
             "Parent": 93,
             "Child Entities": [],
@@ -18644,6 +18933,84 @@
             ]
         },
         {
+            "ID": 1048656,
+            "Parent": 1048846,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "lamp",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -10.290299415588379,
+                            "y": 10.92717170715332,
+                            "z": -8.317541122436524
+                        },
+                        "worldScale": {
+                            "x": 5.199999809265137,
+                            "y": 5.199999809265137,
+                            "z": 5.199999809265137
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 2736295656358640927
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "lamp",
+                        "GUID": {
+                            "ID": 13110369586823712426
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048668,
             "Parent": 21,
             "Child Entities": [],
@@ -18651,7 +19018,7 @@
                 {
                     "Tag": {
                         "tag": "Light",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -19204,6 +19571,91 @@
                             "ID": 17765947293750286982
                         },
                         "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048689,
+            "Parent": 1048846,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Bloom": {
+                        "threshold": 0.3400000035762787,
+                        "intensity": 1.2000000476837159,
+                        "range": 6.260000228881836
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "lightbulb",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -10.290299415588379,
+                            "y": 10.92717170715332,
+                            "z": -8.317541122436524
+                        },
+                        "worldScale": {
+                            "x": 5.199999809265137,
+                            "y": 5.199999809265137,
+                            "z": 5.199999809265137
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 14852787506312387779
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "lightbulb",
+                        "GUID": {
+                            "ID": 13110369586823712426
+                        },
+                        "submeshIdx": 2,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -20451,6 +20903,314 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048844,
+            "Parent": 1048650,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "lamp",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -39.57904815673828,
+                            "y": 10.92717170715332,
+                            "z": -8.317541122436524
+                        },
+                        "worldScale": {
+                            "x": 5.199999809265137,
+                            "y": 5.199999809265137,
+                            "z": 5.199999809265137
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 2736295656358640927
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "lamp",
+                        "GUID": {
+                            "ID": 13110369586823712426
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048845,
+            "Parent": 1048650,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "glass",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -39.57904815673828,
+                            "y": 10.92717170715332,
+                            "z": -8.317541122436524
+                        },
+                        "worldScale": {
+                            "x": 5.199999809265137,
+                            "y": 5.199999809265137,
+                            "z": 5.199999809265137
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 9688658947475917145
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "glass",
+                        "GUID": {
+                            "ID": 13110369586823712426
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048846,
+            "Parent": 21,
+            "Child Entities": [
+                1048654,
+                1048656,
+                1048689
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "wall_lamp2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -10.290299415588379,
+                            "y": 10.92717170715332,
+                            "z": -8.317541122436524
+                        },
+                        "scale": {
+                            "x": 5.199999809265137,
+                            "y": 5.199999809265137,
+                            "z": 5.199999809265137
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -10.290299415588379,
+                            "y": 10.92717170715332,
+                            "z": -8.317541122436524
+                        },
+                        "worldScale": {
+                            "x": 5.199999809265137,
+                            "y": 5.199999809265137,
+                            "z": 5.199999809265137
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048862,
+            "Parent": 21,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Point Light",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -13.782808303833008,
+                            "y": 22.569536209106447,
+                            "z": 0.2400522232055664
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -13.782808303833008,
+                            "y": 22.569536209106447,
+                            "z": 0.2400522232055664
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 0.19607843458652497,
+                            "y": 0.1568627506494522,
+                            "z": 0.11764705926179886
+                        },
+                        "intensity": 0.07999999821186066,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 60.0,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
                     }
                 }
             ]
