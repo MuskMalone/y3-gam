@@ -11415,6 +11415,13 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "Bloom": {
+                        "threshold": 1.0,
+                        "intensity": 1.2000000476837159,
+                        "range": 10.0
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "Puzzle_PaintingFragment1 (Animation)",
                         "isActive": true
@@ -11445,7 +11452,7 @@
                         },
                         "worldPos": {
                             "x": 6.3177170753479,
-                            "y": 18.453996658325197,
+                            "y": 23.433916091918947,
                             "z": -36.58473205566406
                         },
                         "worldScale": {
@@ -11469,7 +11476,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 16148162105990453228
                         }
                     }
                 },
@@ -14904,7 +14911,24 @@
                     "ID": 16013359636150386060
                 },
                 "subDataId": 6,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Bloom",
+                        "value": {
+                            "threshold": 1.0,
+                            "intensity": 1.2000000476837159,
+                            "range": 10.0
+                        }
+                    },
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 16148162105990453228
+                            }
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -15072,7 +15096,7 @@
                     "Transform": {
                         "position": {
                             "x": 6.789490699768066,
-                            "y": 18.855716705322267,
+                            "y": 23.835636138916017,
                             "z": -36.57130432128906
                         },
                         "scale": {
@@ -15093,7 +15117,7 @@
                         },
                         "worldPos": {
                             "x": 6.789490699768066,
-                            "y": 18.855716705322267,
+                            "y": 23.835636138916017,
                             "z": -36.57130432128906
                         },
                         "worldScale": {
