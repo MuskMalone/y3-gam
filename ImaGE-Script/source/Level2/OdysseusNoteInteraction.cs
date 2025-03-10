@@ -35,14 +35,45 @@ public class OdysseusNoteInteraction : Entity
         viewNoteUI.SetActive(false); // Hide prompt at the start
     }
 
+    //void Update()
+    //{
+    //    bool mouseClicked = Input.GetMouseButtonTriggered(0);
+    //    bool isNoteHit = playerInteraction.RayHitString == noteTag;
+    //    bool noteIsActive = odysseusUI.IsActive();
+
+    //    // Show "Press Click to View" UI when hovering over note
+    //    viewNoteUI.SetActive(isNoteHit && !noteIsActive);
+
+    //    if (mouseClicked)
+    //    {
+    //        if (isNoteHit && !noteIsActive)
+    //        {
+    //            ShowNoteUI();
+    //        }
+    //        else if (noteIsActive)
+    //        {
+    //            HideNoteUI();
+    //        }
+    //    }
+
+    //    viewNoteUI.SetActive(isNoteHit);
+    //}
+
     void Update()
     {
         bool mouseClicked = Input.GetMouseButtonTriggered(0);
         bool isNoteHit = playerInteraction.RayHitString == noteTag;
         bool noteIsActive = odysseusUI.IsActive();
 
-        // Show "Press Click to View" UI when hovering over note
-        viewNoteUI.SetActive(isNoteHit && !noteIsActive);
+        // Ensure "Press Click to View" UI only shows when hovering over the note and it's not open
+        if (!noteIsActive)
+        {
+            viewNoteUI.SetActive(isNoteHit);
+        }
+        else
+        {
+            viewNoteUI.SetActive(false); // Hide it when the note is opened
+        }
 
         if (mouseClicked)
         {
@@ -55,9 +86,8 @@ public class OdysseusNoteInteraction : Entity
                 HideNoteUI();
             }
         }
-
-        viewNoteUI.SetActive(isNoteHit);
     }
+
 
     private void ShowNoteUI()
     {
