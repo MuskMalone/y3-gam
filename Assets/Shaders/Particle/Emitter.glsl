@@ -13,26 +13,6 @@
 // More testing needed
 layout( local_size_x = 1, local_size_y = 1, local_size_z = 1 ) in;
 
-// uniform vec2 uTexcoords[4];
-// uniform uvec2 uTexhdl;
-
-//variables to store the new emitter
-// uniform vec4 uEmtvertices[4]; // Each vec4 is 16 bytes, total 64 bytes
-// uniform vec4 uEmtcol;         // 16 bytes (vec3 is aligned like vec4)
-// uniform vec2 uEmtsize;    // 8 bytes (vec2 is aligned to 8 bytes)
-
-// uniform float uEmtrot;    // 4 bytes
-// uniform float uEmtlifetime; // 4 bytes
-// uniform float uEmtangvel;  // 4 bytes
-// uniform float uEmtspeed;
-
-// uniform float uEmtfrequency;  // 4 bytes
-// uniform int uEmttype;         // 4 bytes
-// // 1 for point, 2 for line, 4 for rect
-// uniform int uEmtvCount;       // 4 byte
-// uniform int uEmtpreset;
-// uniform int uEmtparticlesPerFrame;
-
 uniform Emitter emitter;
 
 uniform int emtTargetIdx = -1;

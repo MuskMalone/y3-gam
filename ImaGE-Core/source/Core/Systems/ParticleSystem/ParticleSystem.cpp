@@ -17,7 +17,7 @@ namespace Systems {
 		auto ptclsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::EmitterSystem, Component::Transform>() };
 		for (auto entity : ptclsystem) {
 			ECS::Entity e{ entity };
-
+			//std::cout << e.GetComponent<Component::Tag>().tag << "this is the tag in component" << std::endl;
 			//if (!e.IsActive()) { continue; }
 
 			// this is not a ref. i have to update all the transforms as they are offsets of the main transform
@@ -33,13 +33,13 @@ namespace Systems {
 					emitproxy.active = false;
 					continue;
 				}
-				for (int i{}; i < emitproxy.vCount; ++i)
-					emitproxy.vertices[i][0] += pos.x, emitproxy.vertices[i][1] += pos.y, emitproxy.vertices[i][2] += pos.z;
+				for (int j{}; j < emitproxy.vCount; ++j)
+					emitproxy.vertices[j][0] += pos.x, emitproxy.vertices[j][1] += pos.y, emitproxy.vertices[j ][2] += pos.z;
 				Graphics::ParticleManager::GetInstance().EmitterAction(emitproxy, 0);
-				e.GetComponent<Component::EmitterSystem>().emitters[i].active = false;
+				//e.GetComponent<Component::EmitterSystem>().emitters[i].active = false;
 			}
 			//updates the emitters
-			Graphics::ParticleManager::GetInstance().MultiEmitterAction(vecProxy, 0);
+			//Graphics::ParticleManager::GetInstance().MultiEmitterAction(vecProxy, 0);
 		}
 		//Graphics::ParticleManager::GetInstance().Bind();
 		float dt{ Performance::FrameRateController::GetInstance().GetDeltaTime() };
@@ -75,8 +75,14 @@ namespace Systems {
 
 	EVENT_CALLBACK_DEF(ParticleSystem, HandleRemoveComponent) {
 		auto e{ CAST_TO_EVENT(Events::RemoveComponentEvent) };
+		ECS::Entity entity{ const_cast<ECS::Entity&>(e->mEntity) };
+		
+		Graphics::ParticleManager::GetInstance().MultiEmitterAction(entity.GetComponent<Component::EmitterSystem>().emitters, -1);
 	}
 	EVENT_CALLBACK_DEF(ParticleSystem, HandleRemoveEntity) {
 		auto e{ CAST_TO_EVENT(Events::RemoveEntityEvent) };
+		ECS::Entity entity{ const_cast<ECS::Entity&>(e->mEntity) };
+		if (entity.HasComponent<Component::EmitterSystem>())
+			Graphics::ParticleManager::GetInstance().MultiEmitterAction(entity.GetComponent<Component::EmitterSystem>().emitters, -1);
 	}
 }
