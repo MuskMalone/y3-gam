@@ -23,6 +23,7 @@ namespace Systems {
 			// this is not a ref. i have to update all the transforms as they are offsets of the main transform
 			std::vector<Graphics::EmitterInstance> vecProxy{ e.GetComponent<Component::EmitterSystem>().emitters };
 			auto const& pos{ e.GetComponent<Component::Transform>().worldPos };
+			auto const& tag{ e.GetComponent<Component::Tag>().tag };
 			//update the transforms
 			for (int i{}; i < vecProxy.size(); ++i) {
 				auto& emitproxy{ vecProxy[i] };
@@ -31,7 +32,6 @@ namespace Systems {
 				}
 				else {
 					emitproxy.active = false;
-					continue;
 				}
 				for (int j{}; j < emitproxy.vCount; ++j)
 					emitproxy.vertices[j][0] += pos.x, emitproxy.vertices[j][1] += pos.y, emitproxy.vertices[j ][2] += pos.z;
@@ -76,8 +76,8 @@ namespace Systems {
 	EVENT_CALLBACK_DEF(ParticleSystem, HandleRemoveComponent) {
 		auto e{ CAST_TO_EVENT(Events::RemoveComponentEvent) };
 		ECS::Entity entity{ const_cast<ECS::Entity&>(e->mEntity) };
-		
-		Graphics::ParticleManager::GetInstance().MultiEmitterAction(entity.GetComponent<Component::EmitterSystem>().emitters, -1);
+		if (entity.HasComponent<Component::EmitterSystem>())
+			Graphics::ParticleManager::GetInstance().MultiEmitterAction(entity.GetComponent<Component::EmitterSystem>().emitters, -1);
 	}
 	EVENT_CALLBACK_DEF(ParticleSystem, HandleRemoveEntity) {
 		auto e{ CAST_TO_EVENT(Events::RemoveEntityEvent) };
