@@ -648,9 +648,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.850600004196167,
-                            "y": 0.08251065015792847,
-                            "z": 0.25691020488739016
+                            "x": -0.8871011734008789,
+                            "y": 0.082511305809021,
+                            "z": 0.2568725347518921
                         },
                         "scale": {
                             "x": 1.0,
@@ -669,9 +669,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 22.543964385986329,
-                            "y": 10.822125434875489,
-                            "z": -81.57244110107422
+                            "x": 23.13561248779297,
+                            "y": 10.822135925292969,
+                            "z": -81.57180786132813
                         },
                         "worldScale": {
                             "x": 16.209083557128908,
@@ -3272,13 +3272,13 @@
                     "Transform": {
                         "position": {
                             "x": 77.3958511352539,
-                            "y": 80.27039337158203,
+                            "y": 81.06326293945313,
                             "z": -295.76080322265627
                         },
                         "scale": {
-                            "x": 87.6406478881836,
-                            "y": 50.269962310791019,
-                            "z": 2.393357038497925
+                            "x": 87.64064025878906,
+                            "y": 52.93927001953125,
+                            "z": 2.3933568000793459
                         },
                         "rotation": {
                             "x": 0.0,
@@ -3293,13 +3293,13 @@
                         },
                         "worldPos": {
                             "x": 77.3958511352539,
-                            "y": 80.27039337158203,
+                            "y": 81.06326293945313,
                             "z": -295.76080322265627
                         },
                         "worldScale": {
-                            "x": 87.6406478881836,
-                            "y": 50.269962310791019,
-                            "z": 2.393357038497925
+                            "x": 87.64064025878906,
+                            "y": 52.93927001953125,
+                            "z": 2.3933568000793459
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -3350,7 +3350,7 @@
                     "Transform": {
                         "position": {
                             "x": -1.9767227172851563,
-                            "y": -95.19544982910156,
+                            "y": -95.7239990234375,
                             "z": -32.4595947265625
                         },
                         "scale": {
@@ -3371,7 +3371,7 @@
                         },
                         "worldPos": {
                             "x": 65.16326141357422,
-                            "y": 52.800323486328128,
+                            "y": 52.27177429199219,
                             "z": -464.52960205078127
                         },
                         "worldScale": {
@@ -11410,7 +11410,7 @@
                 {
                     "Tag": {
                         "tag": "platform_railings",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -11488,7 +11488,7 @@
                 {
                     "Tag": {
                         "tag": "bridge_railing",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -12656,7 +12656,8 @@
                 290,
                 331,
                 332,
-                2097203
+                2097203,
+                9437476
             ],
             "Components": [
                 {
@@ -16202,37 +16203,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 25,
+                                                "entityID": 184,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 25,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 26,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 26,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 40,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 40,
+                                                        "data": 184,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16254,11 +16229,37 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 184,
+                                                "entityID": 40,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 184,
+                                                        "data": 40,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 26,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 26,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 25,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 25,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -17317,7 +17318,8 @@
                 384,
                 404,
                 490,
-                493
+                493,
+                1049724
             ],
             "Components": [
                 {
@@ -17769,6 +17771,16 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 1049724,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "LeftClickControlPanelUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 183,
                                             "scriptName": "Entity"
                                         },
@@ -17831,50 +17843,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 192,
+                                                "entityID": 187,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 192,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 191,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 191,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 190,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 190,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 189,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 189,
+                                                        "data": 187,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -17896,11 +17869,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 187,
+                                                "entityID": 189,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 187,
+                                                        "data": 189,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 190,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 190,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 191,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 191,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 192,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 192,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -17917,50 +17929,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 198,
+                                                "entityID": 193,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 198,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 197,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 197,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 196,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 196,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 1048771,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 1048771,
+                                                        "data": 193,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -17982,11 +17955,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 193,
+                                                "entityID": 1048771,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 193,
+                                                        "data": 1048771,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 196,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 196,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 197,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 197,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 198,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 198,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -18003,50 +18015,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 258,
+                                                "entityID": 253,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 258,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 257,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 257,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 256,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 256,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 255,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 255,
+                                                        "data": 253,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -18068,11 +18041,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 253,
+                                                "entityID": 255,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 253,
+                                                        "data": 255,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 256,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 256,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 257,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 257,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 258,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 258,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -18089,50 +18101,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 264,
+                                                "entityID": 259,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 264,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 263,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 263,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 262,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 262,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 261,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 261,
+                                                        "data": 259,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -18154,11 +18127,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 259,
+                                                "entityID": 261,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 259,
+                                                        "data": 261,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 262,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 262,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 263,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 263,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 264,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 264,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -19648,7 +19660,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -19669,7 +19681,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -19726,7 +19738,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -19747,7 +19759,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -19804,7 +19816,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -19825,7 +19837,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -19882,7 +19894,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -19903,7 +19915,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -19960,7 +19972,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -19981,7 +19993,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -20038,7 +20050,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -20059,7 +20071,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -20116,7 +20128,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -20137,7 +20149,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -20194,7 +20206,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -20215,7 +20227,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -20272,7 +20284,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -20293,7 +20305,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -20350,7 +20362,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -20371,7 +20383,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -20428,7 +20440,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -20449,7 +20461,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -20506,7 +20518,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -20527,7 +20539,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -20584,7 +20596,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -20605,7 +20617,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -20662,7 +20674,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -20683,7 +20695,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -20740,7 +20752,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -20761,7 +20773,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -20818,7 +20830,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -20839,7 +20851,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -20896,7 +20908,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -20917,7 +20929,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -20974,7 +20986,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -20995,7 +21007,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -21052,7 +21064,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -21073,7 +21085,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -21130,7 +21142,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -21151,7 +21163,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -21208,7 +21220,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -21229,7 +21241,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -21286,7 +21298,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -21307,7 +21319,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -21364,7 +21376,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -21385,7 +21397,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -21442,7 +21454,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -21463,7 +21475,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -21520,7 +21532,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -21541,7 +21553,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -21598,7 +21610,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.808635480912926e-7,
-                            "y": 2.384185791015625e-7,
+                            "y": 7.152557373046875e-7,
                             "z": 0.0
                         },
                         "scale": {
@@ -21619,7 +21631,7 @@
                         },
                         "worldPos": {
                             "x": 80.67549896240235,
-                            "y": 35.5326042175293,
+                            "y": 35.53260803222656,
                             "z": -188.09547424316407
                         },
                         "worldScale": {
@@ -21676,7 +21688,7 @@
                     "Transform": {
                         "position": {
                             "x": -0.018457412719726564,
-                            "y": -0.000014781951904296875,
+                            "y": -0.0000152587890625,
                             "z": 0.0000057220458984375
                         },
                         "scale": {
@@ -21687,17 +21699,17 @@
                         "rotation": {
                             "x": -8.881784197001253e-16,
                             "y": 1.3234889800848444e-23,
-                            "z": 8.704148513061227e-14,
+                            "z": 8.881784197001252e-14,
                             "w": 1.0
                         },
                         "eulerAngles": {
                             "x": -1.0177775099486433e-13,
-                            "y": 1.5166155592509985e-21,
-                            "z": 9.974219367103743e-12
+                            "y": 1.5166157611993902e-21,
+                            "z": 1.0177775289221813e-11
                         },
                         "worldPos": {
                             "x": 74.99331665039063,
-                            "y": 35.53248596191406,
+                            "y": 35.5324821472168,
                             "z": -186.52378845214845
                         },
                         "worldScale": {
@@ -21707,8 +21719,8 @@
                         },
                         "worldRot": {
                             "x": -8.88178366760566e-16,
-                            "y": 2.589363346184691e-23,
-                            "z": 1.5549927567803935e-8,
+                            "y": 2.58936318841251e-23,
+                            "z": 1.5549931120517614e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -21754,7 +21766,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -21763,19 +21775,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -21784,9 +21796,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -21832,7 +21844,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -21841,19 +21853,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -21862,9 +21874,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -21910,7 +21922,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -21919,19 +21931,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -21940,9 +21952,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -21988,7 +22000,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -21997,19 +22009,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -22018,9 +22030,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -22066,7 +22078,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -22075,19 +22087,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -22096,9 +22108,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -22144,7 +22156,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -22153,19 +22165,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -22174,9 +22186,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -22222,7 +22234,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -22231,19 +22243,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -22252,9 +22264,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -22300,7 +22312,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -22309,19 +22321,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -22330,9 +22342,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -22378,7 +22390,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -22387,19 +22399,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -22408,9 +22420,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -22456,7 +22468,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -22465,19 +22477,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -22486,9 +22498,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -22534,7 +22546,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -22543,19 +22555,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -22564,9 +22576,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -22612,7 +22624,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -22621,19 +22633,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -22642,9 +22654,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -22690,7 +22702,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -22699,19 +22711,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -22720,9 +22732,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -22768,7 +22780,7 @@
                     "Transform": {
                         "position": {
                             "x": -0.0350494384765625,
-                            "y": -0.000118255615234375,
+                            "y": -0.00011873245239257813,
                             "z": 3.961329280399432e-22
                         },
                         "scale": {
@@ -22779,17 +22791,17 @@
                         "rotation": {
                             "x": -8.881784197001253e-16,
                             "y": 1.3234889800848444e-23,
-                            "z": 5.684341886080801e-13,
+                            "z": 5.702105454474804e-13,
                             "w": 1.0
                         },
                         "eulerAngles": {
                             "x": -1.0177775099486433e-13,
-                            "y": 1.5166645317359946e-21,
-                            "z": 6.513776323879839e-11
+                            "y": 1.5166647336843864e-21,
+                            "z": 6.53413156914695e-11
                         },
                         "worldPos": {
                             "x": 74.82740020751953,
-                            "y": 35.53145217895508,
+                            "y": 35.53144836425781,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -22799,8 +22811,8 @@
                         },
                         "worldRot": {
                             "x": -8.88178366760566e-16,
-                            "y": 2.589363346184691e-23,
-                            "z": 1.555040896050741e-8,
+                            "y": 2.58936318841251e-23,
+                            "z": 1.555041251322109e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -22846,7 +22858,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -22855,19 +22867,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -22876,9 +22888,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -22924,7 +22936,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -4.76837158203125e-7,
+                            "y": -7.152557373046875e-7,
                             "z": 3.979884298632189e-22
                         },
                         "scale": {
@@ -22933,19 +22945,19 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": -9.4039548065783e-38,
+                            "x": -1.88079096131566e-37,
                             "y": 0.0,
-                            "z": 1.7763568394002506e-15,
+                            "z": 3.552713678800501e-15,
                             "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": -1.0776138548761779e-35,
+                            "x": -2.1552277097523559e-35,
                             "y": 0.0,
-                            "z": 2.0355550198972867e-13
+                            "z": 4.071110039794573e-13
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
-                            "y": 35.532630920410159,
+                            "y": 35.53262710571289,
                             "z": -186.5238494873047
                         },
                         "worldScale": {
@@ -22954,9 +22966,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600851573193e-31,
+                            "x": -4.116009456127411e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549842302675644e-8,
+                            "z": 1.554984585538932e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -26399,15 +26411,15 @@
                             "z": 38.46154022216797
                         },
                         "rotation": {
-                            "x": -8.651638422052036e-36,
+                            "x": -8.698658196084928e-36,
                             "y": 2.6469779601696888e-23,
-                            "z": 3.2862601528904636e-13,
+                            "z": 3.304023721284466e-13,
                             "w": 1.0
                         },
                         "eulerAngles": {
                             "x": 5.3880692743808895e-36,
                             "y": 3.033213347043524e-21,
-                            "z": 3.76577692640101e-11
+                            "z": 3.786132171668122e-11
                         },
                         "worldPos": {
                             "x": 75.17789459228516,
@@ -26420,9 +26432,9 @@
                             "z": 10.0
                         },
                         "worldRot": {
-                            "x": -4.11600804553419e-31,
+                            "x": -4.11600851573193e-31,
                             "y": 2.6469778023975076e-23,
-                            "z": 1.5549840526318804e-8,
+                            "z": 1.5549842302675644e-8,
                             "w": 0.9999999403953552
                         }
                     }
@@ -35031,7 +35043,8 @@
                 1048857,
                 1049040,
                 2097495,
-                2097535
+                2097535,
+                2097870
             ],
             "Components": [
                 {
@@ -40638,6 +40651,78 @@
             ]
         },
         {
+            "ID": 1049724,
+            "Parent": 385,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "LeftClickControlPanel",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.5,
+                            "y": -1.5,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 7.7769999504089359,
+                            "y": 3.325000047683716,
+                            "z": 8.258000373840332
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.5,
+                            "y": -1.5,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.7769999504089359,
+                            "y": 3.325000047683716,
+                            "z": 8.258000373840332
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6014659498711023500
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 2097157,
             "Parent": 2097165,
             "Child Entities": [],
@@ -42302,6 +42387,162 @@
             ]
         },
         {
+            "ID": 2097870,
+            "Parent": 1048897,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "museum_pamphlet",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 92.69503021240235,
+                            "y": 29.075302124023439,
+                            "z": -203.9241180419922
+                        },
+                        "scale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 92.69503021240235,
+                            "y": 29.075302124023439,
+                            "z": -203.9241180419922
+                        },
+                        "worldScale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "museum_pamphlet",
+                        "GUID": {
+                            "ID": 12544970708819419612
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2098275,
+            "Parent": 9437476,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "bridge_rails",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -8.940696716308594e-8,
+                            "y": -5.960464477539063e-8,
+                            "z": 1.1920928955078126e-7
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 63.48896789550781,
+                            "y": 140.0546875,
+                            "z": -431.0999755859375
+                        },
+                        "worldScale": {
+                            "x": 163.0,
+                            "y": 163.0,
+                            "z": 163.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.2232501059770584,
+                            "z": 0.0,
+                            "w": 0.9747611880302429
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "bridge_rails",
+                        "GUID": {
+                            "ID": 12868677199856248736
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 3145735,
             "Parent": null,
             "Child Entities": [
@@ -43762,6 +44003,225 @@
                             "y": 0.0,
                             "z": 0.0,
                             "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5243924,
+            "Parent": 9437476,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "platform_railings.002",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -8.940696716308594e-8,
+                            "y": -5.960464477539063e-8,
+                            "z": 1.1920928955078126e-7
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 63.48896789550781,
+                            "y": 140.0546875,
+                            "z": -431.0999755859375
+                        },
+                        "worldScale": {
+                            "x": 163.0,
+                            "y": 163.0,
+                            "z": 163.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.2232501059770584,
+                            "z": 0.0,
+                            "w": 0.9747611880302429
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "platform_railings.002",
+                        "GUID": {
+                            "ID": 12868677199856248736
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 6292286,
+            "Parent": 9437476,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "bridge.001",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -8.940696716308594e-8,
+                            "y": -5.960464477539063e-8,
+                            "z": 1.1920928955078126e-7
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 63.48896789550781,
+                            "y": 140.0546875,
+                            "z": -431.0999755859375
+                        },
+                        "worldScale": {
+                            "x": 163.0,
+                            "y": 163.0,
+                            "z": 163.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.2232501059770584,
+                            "z": 0.0,
+                            "w": 0.9747611880302429
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "bridge.001",
+                        "GUID": {
+                            "ID": 12868677199856248736
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 9437476,
+            "Parent": 248,
+            "Child Entities": [
+                2098275,
+                5243924,
+                6292286
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "hex_rails",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.01432451605796814,
+                            "y": -0.03970533609390259,
+                            "z": 0.012311667203903199
+                        },
+                        "scale": {
+                            "x": 0.8149999976158142,
+                            "y": 0.8149999976158142,
+                            "z": 0.8149999976158142
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 63.48898696899414,
+                            "y": 140.05470275878907,
+                            "z": -431.1000061035156
+                        },
+                        "worldScale": {
+                            "x": 163.0,
+                            "y": 163.0,
+                            "z": 163.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.2232501059770584,
+                            "z": 0.0,
+                            "w": 0.9747611880302429
                         }
                     }
                 },
