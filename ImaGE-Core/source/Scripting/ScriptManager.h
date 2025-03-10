@@ -387,6 +387,8 @@ namespace Mono
 
 		static glm::vec3 GetCameraForward();
 
+		static glm::vec3 GetCameraRight();
+
 		static ECS::Entity::EntityID FindChildByTag(ECS::Entity::EntityID entity, MonoString* s);
 
 		static ECS::Entity::EntityID FindParentByTag(MonoString* s);
