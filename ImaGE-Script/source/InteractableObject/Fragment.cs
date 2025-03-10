@@ -15,6 +15,8 @@ public class Fragment : Entity
   public Entity GardenFragment;
   public Entity Particles;
   public Transition transition;
+  public Entity BlackBorder1;
+  public Entity BlackBorder2;
 
   public Vector3 startPos;
   public Vector3 downPos;
@@ -37,6 +39,8 @@ public class Fragment : Entity
   void Start()
   {
     fragmentPickupUI?.SetActive(false);
+    BlackBorder1.SetActive(false);
+    BlackBorder2.SetActive(false);
   }
 
   void Update()
@@ -117,6 +121,8 @@ public class Fragment : Entity
       currentAnim = null;
       Particles.SetActive(false);
       Destroy(mEntityID);
+      BlackBorder1.SetActive(false);
+      BlackBorder2.SetActive(false);
     }
   }
 
@@ -140,6 +146,8 @@ public class Fragment : Entity
     triggerSecondAnimation = true;
     GardenFragment.SetActive(true);
     Particles.SetActive(true);
+    BlackBorder1.SetActive(true);
+    BlackBorder2.SetActive(true);
   }
 
   void TriggerFlyinAnimation()
