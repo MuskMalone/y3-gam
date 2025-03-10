@@ -17,7 +17,7 @@
         },
         "nextNodes": [
             1,
-            7
+            6
         ]
     },
     "keyframes": [
@@ -91,25 +91,10 @@
             "interpolationType": "EASE_OUT",
             "startTime": 5.449999809265137,
             "duration": 1.0,
-            "nextNodes": [
-                6
-            ]
-        },
-        {
-            "nodeId": 6,
-            "endValue": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "type": "NONE",
-            "interpolationType": "LINEAR",
-            "startTime": 6.449999809265137,
-            "duration": 0.800000011920929,
             "nextNodes": []
         },
         {
-            "nodeId": 7,
+            "nodeId": 6,
             "endValue": {
                 "x": 6.789490699768066,
                 "y": 19.18000030517578,
@@ -120,11 +105,11 @@
             "startTime": 0.0,
             "duration": 2.5,
             "nextNodes": [
-                8
+                7
             ]
         },
         {
-            "nodeId": 8,
+            "nodeId": 7,
             "endValue": {
                 "x": 6.789490699768066,
                 "y": 19.476285934448243,
@@ -135,11 +120,11 @@
             "startTime": 2.5,
             "duration": 0.75,
             "nextNodes": [
-                9
+                8
             ]
         },
         {
-            "nodeId": 9,
+            "nodeId": 8,
             "endValue": {
                 "x": 6.789490699768066,
                 "y": 18.855716705322267,
@@ -150,11 +135,11 @@
             "startTime": 3.25,
             "duration": 0.75,
             "nextNodes": [
-                10
+                9
             ]
         },
         {
-            "nodeId": 10,
+            "nodeId": 9,
             "endValue": {
                 "x": 6.789490699768066,
                 "y": 19.479999542236329,

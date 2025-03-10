@@ -6,6 +6,7 @@ using static Dialogue;
 
 public class SpecialDialogue : Entity
 {
+  public bool skipCutscene;
   public Transition transition;
   public PlayerMove playerMove;
   public string introMessage;
@@ -55,6 +56,8 @@ public class SpecialDialogue : Entity
 
   void Start()
   {
+    if (skipCutscene) { Destroy(mEntityID); }
+
     // Workaround
     BeginningSilhouetteSequence = new Entity[4];
     BeginningSilhouetteSequence[0] = firstSilhouette;
@@ -286,5 +289,6 @@ public class SpecialDialogue : Entity
         mainDialogueFontScale);
 
     InternalCalls.SetShaderState(0, false);
+    Destroy(mEntityID);
   }
 }
