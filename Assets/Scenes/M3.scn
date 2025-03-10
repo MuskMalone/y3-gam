@@ -6273,6 +6273,81 @@
             ]
         },
         {
+            "ID": 118,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "FragmentCamera",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 6.400000095367432,
+                            "y": 24.0,
+                            "z": -22.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 6.400000095367432,
+                            "y": 24.0,
+                            "z": -22.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Camera": {
+                        "projType": "PERSP",
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -10.0
+                        },
+                        "yaw": 0.0,
+                        "pitch": 0.0,
+                        "fov": 45.0,
+                        "aspectRatio": 1.7777777910232545,
+                        "nearClip": 0.10000000149011612,
+                        "farClip": 100.0
+                    }
+                }
+            ]
+        },
+        {
             "ID": 123,
             "Parent": 589,
             "Child Entities": [],
@@ -9050,6 +9125,17 @@
                                         }
                                     },
                                     {
+                                        "data": {
+                                            "x": 6.400000095367432,
+                                            "y": 15.0,
+                                            "z": -22.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "downPos"
+                                        }
+                                    },
+                                    {
                                         "data": "FlyIn",
                                         "type": "System.String",
                                         "scriptField": {
@@ -9065,7 +9151,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 4294967295,
+                                            "entityID": 118,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -9115,12 +9201,34 @@
                                     },
                                     {
                                         "data": {
+                                            "x": 6.400000095367432,
+                                            "y": 24.0,
+                                            "z": -22.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "startPos"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 75,
                                             "scriptName": "Transition"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "transition"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 6.400000095367432,
+                                            "y": 15.0,
+                                            "z": -27.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "zoomPos"
                                         }
                                     }
                                 ]
@@ -11415,9 +11523,16 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "Bloom": {
+                        "threshold": 1.0,
+                        "intensity": 1.2000000476837159,
+                        "range": 10.0
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "Puzzle_PaintingFragment1 (Animation)",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -11445,7 +11560,7 @@
                         },
                         "worldPos": {
                             "x": 6.3177170753479,
-                            "y": 18.453996658325197,
+                            "y": 23.433916091918947,
                             "z": -36.58473205566406
                         },
                         "worldScale": {
@@ -11469,7 +11584,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 16148162105990453228
                         }
                     }
                 },
@@ -14904,7 +15019,24 @@
                     "ID": 16013359636150386060
                 },
                 "subDataId": 6,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Bloom",
+                        "value": {
+                            "threshold": 1.0,
+                            "intensity": 1.2000000476837159,
+                            "range": 10.0
+                        }
+                    },
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 16148162105990453228
+                            }
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -15072,7 +15204,7 @@
                     "Transform": {
                         "position": {
                             "x": 6.789490699768066,
-                            "y": 18.855716705322267,
+                            "y": 23.835636138916017,
                             "z": -36.57130432128906
                         },
                         "scale": {
@@ -15093,7 +15225,7 @@
                         },
                         "worldPos": {
                             "x": 6.789490699768066,
-                            "y": 18.855716705322267,
+                            "y": 23.835636138916017,
                             "z": -36.57130432128906
                         },
                         "worldScale": {
