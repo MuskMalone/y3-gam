@@ -17,7 +17,7 @@ namespace Systems {
 		auto ptclsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::EmitterSystem, Component::Transform>() };
 		for (auto entity : ptclsystem) {
 			ECS::Entity e{ entity };
-			std::cout << e.GetComponent<Component::Tag>().tag << "this is the tag in component" << std::endl;
+			//std::cout << e.GetComponent<Component::Tag>().tag << "this is the tag in component" << std::endl;
 			//if (!e.IsActive()) { continue; }
 
 			// this is not a ref. i have to update all the transforms as they are offsets of the main transform
