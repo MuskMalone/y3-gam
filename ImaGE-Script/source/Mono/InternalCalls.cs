@@ -111,6 +111,9 @@ namespace IGE.Utils
     internal extern static Vector3 GetCameraForward();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetCameraRight();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static string GetInputString();
 
     #endregion
