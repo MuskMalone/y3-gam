@@ -144,10 +144,12 @@
     <Compile Include="source\Level2\HexTeleport.cs" />
     <Compile Include="source\Level2\LevelEndFade.cs" />
     <Compile Include="source\Level2\LevelStartFade.cs" />
+    <Compile Include="source\Level2\LeverPuzzle.cs" />
     <Compile Include="source\Level2\Lvl2IntroCutscene.cs" />
     <Compile Include="source\Level2\NumberPad.cs" />
     <Compile Include="source\Level2\OdysseusNoteInteraction.cs" />
     <Compile Include="source\Level2\PamphletNoteInteraction.cs" />
+    <Compile Include="source\Level2\PullLever.cs" />
     <Compile Include="source\Level2\TransitionToLevel3.cs" />
     <Compile Include="source\Level3\EyeballFollow.cs" />
     <Compile Include="source\Level3\Level3Dialogue.cs" />

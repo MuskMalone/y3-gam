@@ -15,6 +15,8 @@ public class Fragment : Entity
   public Entity GardenFragment, Particles;
   public Entity ParticleBurst;  // boom
   public Transition transition;
+  public Entity BlackBorder1;
+  public Entity BlackBorder2;
 
   public Vector3 startPos;
   public Vector3 downPos;
@@ -22,8 +24,8 @@ public class Fragment : Entity
   public float explosionWaitTime;
 
   float elapsedTime = 0.0f;
-  float transitionTimeFirstPhase = 3.0f;
-  float transitionTimeSecondPhase = 3.8f;
+  float transitionTimeFirstPhase = 4f;
+  float transitionTimeSecondPhase = 2.8f;
 
   private enum State
   {
@@ -40,6 +42,8 @@ public class Fragment : Entity
   void Start()
   {
     fragmentPickupUI?.SetActive(false);
+    BlackBorder1.SetActive(false);
+    BlackBorder2.SetActive(false);
   }
 
   void Update()
@@ -139,6 +143,8 @@ public class Fragment : Entity
           transition.StartTransition(true, 0.5f, Transition.TransitionType.WIPE);
           SetPlayerCameraAsMain();
           playerMove.UnfreezePlayer();
+          BlackBorder1.SetActive(false);
+          BlackBorder2.SetActive(false);
           Destroy(mEntityID);
 
           break;
@@ -166,6 +172,8 @@ public class Fragment : Entity
     playerMove.FreezePlayer();
     GardenFragment.SetActive(true);
     Particles.SetActive(true);
+    BlackBorder1.SetActive(true);
+    BlackBorder2.SetActive(true);
   }
 
   void TriggerFlyinAnimation()
