@@ -1,4 +1,5 @@
-﻿using IGE.Utils;
+﻿using System;
+using IGE.Utils;
 
 public class OdysseusNoteInteraction : Entity
 {
@@ -54,13 +55,15 @@ public class OdysseusNoteInteraction : Entity
                 HideNoteUI();
             }
         }
+
+        viewNoteUI.SetActive(isNoteHit);
     }
 
     private void ShowNoteUI()
     {
+        InternalCalls.PlaySound(mEntityID, "ViewNote");
         if (odysseusUI != null && playerMove != null)
         {
-            InternalCalls.PlaySound(mEntityID, "ViewNote");
             odysseusUI.SetActive(true);
             playerMove.FreezePlayer();
             viewNoteUI.SetActive(false); // Hide hover text when note opens
@@ -69,6 +72,7 @@ public class OdysseusNoteInteraction : Entity
 
     private void HideNoteUI()
     {
+        InternalCalls.PlaySound(mEntityID, "ViewNote");
         if (odysseusUI != null && playerMove != null)
         {
             odysseusUI.SetActive(false);
