@@ -24,7 +24,7 @@ public class NumberPad : Entity
     private Dictionary<string, Entity> numberButtons;
     private Dictionary<string, SafeButtons> buttonScripts;
     private string typedCode = "";
-    private string correctCode = "8785";
+    private string correctCode = "7828";
     private bool keypadActive = false;
     private float lastPressTime = 0f;
     private float inputDelay = 0.3f; // Prevents multiple rapid inputs
@@ -145,7 +145,7 @@ public class NumberPad : Entity
         {
             typedCode += digit;
             InternalCalls.SetText(keypadTextBox.mEntityID, typedCode);
-            PlayRandomKeypadButtonSound(); // ✅ Matches Safe.cs (play when pressing a key)
+            PlayRandomKeypadButtonSound(); 
         }
     }
 
@@ -153,14 +153,14 @@ public class NumberPad : Entity
     {
         if (typedCode == correctCode)
         {
-            InternalCalls.PlaySound(mEntityID, "SafeUnlock"); // ✅ Matches Safe.cs (play when correct)
+            InternalCalls.PlaySound(mEntityID, "SafeUnlock"); 
             Console.WriteLine("Correct code entered!");
             CloseKeypadUI();
             currState = State.UNLOCKED;
         }
         else
         {
-            InternalCalls.PlaySound(mEntityID, "WrongInput"); // ✅ Matches Safe.cs (play when incorrect)
+            InternalCalls.PlaySound(mEntityID, "WrongInput"); 
             Console.WriteLine("Incorrect code, try again.");
             ClearCode();
         }

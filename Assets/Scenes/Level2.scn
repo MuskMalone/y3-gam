@@ -124,9 +124,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 114.8292236328125,
-                            "y": 39.553524017333987,
-                            "z": -172.8482208251953
+                            "x": 9.982994079589844,
+                            "y": 161.5631561279297,
+                            "z": -381.1171875
                         },
                         "worldScale": {
                             "x": 0.7200000286102295,
@@ -150,9 +150,9 @@
                     "Camera": {
                         "projType": "PERSP",
                         "position": {
-                            "x": 114.8292236328125,
-                            "y": 39.553524017333987,
-                            "z": -172.8482208251953
+                            "x": 9.982994079589844,
+                            "y": 161.5631561279297,
+                            "z": -381.1171875
                         },
                         "yaw": 0.0,
                         "pitch": 0.0,
@@ -1679,7 +1679,8 @@
                 1048680,
                 1048857,
                 1048919,
-                1049040
+                1049040,
+                2097535
             ],
             "Components": [
                 {
@@ -3365,6 +3366,13 @@
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 15167292664783388040
+                        }
                     }
                 },
                 {
@@ -6608,6 +6616,146 @@
                             "ID": 15103043447677058457
                         },
                         "submeshIdx": 5,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 113,
+            "Parent": null,
+            "Child Entities": [
+                116,
+                297
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Props_StandingPlacard",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 128.11395263671876,
+                            "y": 27.968870162963868,
+                            "z": -101.39678192138672
+                        },
+                        "scale": {
+                            "x": 10.34000015258789,
+                            "y": 10.34000015258789,
+                            "z": 10.34000015258789
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 128.11395263671876,
+                            "y": 27.968870162963868,
+                            "z": -101.39678192138672
+                        },
+                        "worldScale": {
+                            "x": 10.34000015258789,
+                            "y": 10.34000015258789,
+                            "z": 10.34000015258789
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 116,
+            "Parent": 113,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Props_StandingPlacardBase",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 128.11395263671876,
+                            "y": 27.968870162963868,
+                            "z": -101.39678192138672
+                        },
+                        "worldScale": {
+                            "x": 10.34000015258789,
+                            "y": 10.34000015258789,
+                            "z": 10.34000015258789
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 426159184016619343
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Props_StandingPlacardBase",
+                        "GUID": {
+                            "ID": 1744515832360171614
+                        },
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -12837,16 +12985,16 @@
                 360,
                 471,
                 556,
-                1048599,
                 1048782,
                 1048811,
                 1048929,
-                1049049,
                 1049116,
+                2097175,
                 2097360,
+                2097371,
                 2097493,
                 2097542,
-                2097793
+                3146369
             ],
             "Components": [
                 {
@@ -14297,84 +14445,6 @@
             ]
         },
         {
-            "ID": 272,
-            "Parent": 1048599,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle.009 (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 36.78544998168945,
-                            "y": -36.72862243652344,
-                            "z": 80.05184936523438
-                        },
-                        "scale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "rotation": {
-                            "x": 0.4360165596008301,
-                            "y": 5.8396455671072547e-8,
-                            "z": 0.8999386429786682,
-                            "w": -5.8396452118358869e-8
-                        },
-                        "eulerAngles": {
-                            "x": 0.000005008956577512436,
-                            "y": -51.69999694824219,
-                            "z": -180.0
-                        },
-                        "worldPos": {
-                            "x": 0.2755165100097656,
-                            "y": 151.45028686523438,
-                            "z": -373.0394592285156
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": 0.4360165596008301,
-                            "y": 5.8396455671072547e-8,
-                            "z": 0.8999386429786682,
-                            "w": -5.8396452118358869e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle.009",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 4,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 278,
             "Parent": 203,
             "Child Entities": [],
@@ -14455,6 +14525,203 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 297,
+            "Parent": 113,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "ViewNote",
+                                "value": {
+                                    "guid": {
+                                        "ID": 15442316027693835521
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 128.11395263671876,
+                                            "y": 27.968870162963868,
+                                            "z": -101.39678192138672
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "OdysseusNote",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 128.11395263671876,
+                            "y": 27.968870162963868,
+                            "z": -101.39678192138672
+                        },
+                        "worldScale": {
+                            "x": 10.34000015258789,
+                            "y": 10.34000015258789,
+                            "z": 10.34000015258789
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 4030069030820414712
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Props_StandingPlacard1",
+                        "GUID": {
+                            "ID": 1744515832360171614
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 2.740000009536743,
+                            "y": 1.1399999856948853,
+                            "z": 0.3400000035762787
+                        },
+                        "positionOffset": {
+                            "x": 0.10000000149011612,
+                            "y": 4.300000190734863,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 42.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.3583679497241974,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9335803985595703
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 297,
+                                "scriptName": "OdysseusNoteInteraction",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": "OdysseusNote",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "noteTag"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 180,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "odysseusUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 469,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "viewNoteUI"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -17112,37 +17379,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 184,
+                                                "entityID": 25,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 184,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 121,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 121,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 40,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 40,
+                                                        "data": 25,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -17164,11 +17405,37 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 25,
+                                                "entityID": 40,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 25,
+                                                        "data": 40,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 121,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 121,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 184,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 184,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -18678,50 +18945,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 187,
+                                                "entityID": 192,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 187,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 188,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 188,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 189,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 189,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 190,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 190,
+                                                        "data": 192,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -18743,11 +18971,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 192,
+                                                "entityID": 190,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 192,
+                                                        "data": 190,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 189,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 189,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 188,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 188,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 187,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 187,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -18764,50 +19031,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 193,
+                                                "entityID": 198,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 193,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 194,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 194,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 1048771,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 1048771,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 196,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 196,
+                                                        "data": 198,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -18829,11 +19057,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 198,
+                                                "entityID": 196,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 198,
+                                                        "data": 196,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 1048771,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 1048771,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 194,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 194,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 193,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 193,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -18850,50 +19117,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 253,
+                                                "entityID": 258,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 253,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 254,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 254,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 255,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 255,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 256,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 256,
+                                                        "data": 258,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -18915,11 +19143,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 258,
+                                                "entityID": 256,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 258,
+                                                        "data": 256,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 255,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 255,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 254,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 254,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 253,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 253,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -18936,50 +19203,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 259,
+                                                "entityID": 264,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 259,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 260,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 260,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 261,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 261,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 262,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 262,
+                                                        "data": 264,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -19001,11 +19229,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 264,
+                                                "entityID": 262,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 264,
+                                                        "data": 262,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 261,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 261,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 260,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 260,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 259,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 259,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -19888,7 +20155,7 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 129.5940704345703,
+                                            "x": 138.75808715820313,
                                             "y": 27.85300064086914,
                                             "z": -93.4296875
                                         },
@@ -19920,14 +20187,14 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 129.5940704345703,
+                            "x": 138.75808715820313,
                             "y": 27.85300064086914,
                             "z": -92.86891174316406
                         },
                         "scale": {
-                            "x": 10.043000221252442,
+                            "x": 10.046830177307129,
                             "y": 1.6399999856948853,
-                            "z": 5.020999908447266
+                            "z": 5.021000385284424
                         },
                         "rotation": {
                             "x": 3.925402936033606e-8,
@@ -19941,14 +20208,14 @@
                             "z": -180.0
                         },
                         "worldPos": {
-                            "x": 129.5940704345703,
+                            "x": 138.75808715820313,
                             "y": 27.85300064086914,
                             "z": -93.4296875
                         },
                         "worldScale": {
-                            "x": 10.043000221252442,
+                            "x": 10.046830177307129,
                             "y": 1.6399999856948853,
-                            "z": 5.020999908447266
+                            "z": 5.021000385284424
                         },
                         "worldRot": {
                             "x": 3.925402936033606e-8,
@@ -20593,84 +20860,6 @@
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 412,
-            "Parent": 1048589,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle.006",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0012146234512329102,
-                            "y": 0.007541656494140625,
-                            "z": -0.0007571578025817871
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 1.3565703630447388,
-                            "y": 153.8154296875,
-                            "z": -374.0809631347656
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": -0.9288095831871033,
-                            "y": -4.0599555717335537e-8,
-                            "z": 0.37055739760398867,
-                            "w": -1.6197578389665069e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle.006",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 3,
-                        "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
                     }
@@ -27329,7 +27518,7 @@
                 {
                     "Tag": {
                         "tag": "Mother Silhouette1",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -30658,84 +30847,6 @@
             ]
         },
         {
-            "ID": 555,
-            "Parent": 1048599,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 36.648399353027347,
-                            "y": -36.85014343261719,
-                            "z": 80.23373413085938
-                        },
-                        "scale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "rotation": {
-                            "x": -0.36650121212005618,
-                            "y": -2.464957304937343e-8,
-                            "z": -0.9304175972938538,
-                            "w": -2.4649565943946074e-8
-                        },
-                        "eulerAngles": {
-                            "x": 0.000005008956577512436,
-                            "y": -43.000003814697269,
-                            "z": 180.0
-                        },
-                        "worldPos": {
-                            "x": 0.13846588134765626,
-                            "y": 151.32876586914063,
-                            "z": -372.8575744628906
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": -0.36650121212005618,
-                            "y": -2.464957304937343e-8,
-                            "z": -0.9304175972938538,
-                            "w": -2.4649565943946074e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 556,
             "Parent": 248,
             "Child Entities": [],
@@ -31673,84 +31784,6 @@
             ]
         },
         {
-            "ID": 1048581,
-            "Parent": 1048589,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle.008",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.000003814697265625,
-                            "y": 0.0,
-                            "z": -0.000003814697265625
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 1.3523797988891602,
-                            "y": 153.8380584716797,
-                            "z": -374.0801086425781
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": -0.9288095831871033,
-                            "y": -4.0599555717335537e-8,
-                            "z": 0.37055739760398867,
-                            "w": -1.6197578389665069e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle.008",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1048588,
             "Parent": 1048782,
             "Child Entities": [],
@@ -31831,157 +31864,6 @@
                             "w": 1.0
                         },
                         "sensor": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048589,
-            "Parent": 1048599,
-            "Child Entities": [
-                412,
-                1048581,
-                1048638
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Lever (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 37.86229705810547,
-                            "y": -34.340850830078128,
-                            "z": 79.01119995117188
-                        },
-                        "scale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "rotation": {
-                            "x": -0.9288095831871033,
-                            "y": -4.0599555717335537e-8,
-                            "z": 0.37055739760398867,
-                            "w": -1.6197578389665069e-8
-                        },
-                        "eulerAngles": {
-                            "x": 180.0,
-                            "y": 43.5,
-                            "z": 0.000005008956122765085
-                        },
-                        "worldPos": {
-                            "x": 1.3523635864257813,
-                            "y": 153.8380584716797,
-                            "z": -374.0801086425781
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": -0.9288095831871033,
-                            "y": -4.0599555717335537e-8,
-                            "z": 0.37055739760398867,
-                            "w": -1.6197578389665069e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Animation": {
-                        "animations": [
-                            {
-                                "key": "SwitchOff",
-                                "value": {
-                                    "ID": 6867738549244953467
-                                }
-                            },
-                            {
-                                "key": "SwitchOn",
-                                "value": {
-                                    "ID": 8458106001911501966
-                                }
-                            }
-                        ],
-                        "currentAnimation": {
-                            "first": "",
-                            "second": {
-                                "ID": 0
-                            }
-                        },
-                        "repeat": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048599,
-            "Parent": 248,
-            "Child Entities": [
-                272,
-                555,
-                1048589
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "FullLever3",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.5123355388641357,
-                            "y": 0.20091569423675538,
-                            "z": 0.1309289187192917
-                        },
-                        "scale": {
-                            "x": 0.004999999888241291,
-                            "y": 0.004999999888241291,
-                            "z": 0.004999999888241291
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.2232501059770584,
-                            "z": 0.0,
-                            "w": 0.9747611880302429
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 25.799999237060548,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -36.50993347167969,
-                            "y": 188.1789093017578,
-                            "z": -453.09130859375
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
                     }
                 }
             ]
@@ -32149,6 +32031,84 @@
             ]
         },
         {
+            "ID": 1048619,
+            "Parent": 2097371,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.009",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.0000152587890625
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.7022732496261597,
+                            "y": 100.07101440429688,
+                            "z": -491.410888671875
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.4281466603279114,
+                            "y": 3.433049400314303e-10,
+                            "z": -0.9037092924118042,
+                            "w": -4.3710041808253666e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.009",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 4,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048621,
             "Parent": 1049116,
             "Child Entities": [],
@@ -32306,84 +32266,6 @@
             ]
         },
         {
-            "ID": 1048638,
-            "Parent": 1048589,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle.004",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.000003814697265625,
-                            "y": 0.0,
-                            "z": -0.000003814697265625
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 1.3523797988891602,
-                            "y": 153.8380584716797,
-                            "z": -374.0801086425781
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": -0.9288095831871033,
-                            "y": -4.0599555717335537e-8,
-                            "z": 0.37055739760398867,
-                            "w": -1.6197578389665069e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle.004",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 2,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1048640,
             "Parent": 1048782,
             "Child Entities": [],
@@ -32464,162 +32346,6 @@
                             "w": 1.0
                         },
                         "sensor": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048641,
-            "Parent": 1048969,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle.008",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.000003814697265625,
-                            "y": 0.0,
-                            "z": -0.000003814697265625
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -0.47257569432258608,
-                            "y": 100.68978881835938,
-                            "z": -489.1261901855469
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": -0.928807258605957,
-                            "y": -4.034017919707367e-8,
-                            "z": -0.3705630898475647,
-                            "w": 1.6833315186204346e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle.008",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048642,
-            "Parent": 1049049,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 48.319984436035159,
-                            "y": -28.818504333496095,
-                            "z": 65.42149353027344
-                        },
-                        "scale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "rotation": {
-                            "x": -0.4625225067138672,
-                            "y": 3.8754276232566556e-8,
-                            "z": 0.8866075277328491,
-                            "w": 2.0217820306811519e-8
-                        },
-                        "eulerAngles": {
-                            "x": 0.00000500882561027538,
-                            "y": 55.10000228881836,
-                            "z": 180.0
-                        },
-                        "worldPos": {
-                            "x": -1.7687950134277344,
-                            "y": 98.0179214477539,
-                            "z": -490.6165466308594
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": -0.45554491877555849,
-                            "y": 3.8911867505930789e-8,
-                            "z": 0.8902127742767334,
-                            "w": 1.9912825166557014e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
@@ -34977,6 +34703,162 @@
             ]
         },
         {
+            "ID": 1048794,
+            "Parent": 2097371,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.0000152587890625
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.7022732496261597,
+                            "y": 100.07101440429688,
+                            "z": -491.410888671875
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.4281466603279114,
+                            "y": 3.433049400314303e-10,
+                            "z": -0.9037092924118042,
+                            "w": -4.3710041808253666e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048808,
+            "Parent": 1048896,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.008",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.000030517578125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.7021632790565491,
+                            "y": 100.07102966308594,
+                            "z": -491.4109802246094
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.4281466603279114,
+                            "y": 3.433049400314303e-10,
+                            "z": -0.9037092924118042,
+                            "w": -4.3710041808253666e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.008",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048811,
             "Parent": 248,
             "Child Entities": [],
@@ -35348,6 +35230,84 @@
             }
         },
         {
+            "ID": 1048848,
+            "Parent": 2097175,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.009",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.0000152587890625
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.5214536190032959,
+                            "y": 152.15313720703126,
+                            "z": -372.86199951171877
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.3534749746322632,
+                            "y": 7.259668421966126e-8,
+                            "z": 0.9354438781738281,
+                            "w": -4.553982080324204e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.009",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 4,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048849,
             "Parent": 1048826,
             "Child Entities": [],
@@ -35608,6 +35568,326 @@
                 ],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 1048859,
+            "Parent": 1048896,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.004",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.000030517578125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.7021632790565491,
+                            "y": 100.07102966308594,
+                            "z": -491.4109802246094
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.4281466603279114,
+                            "y": 3.433049400314303e-10,
+                            "z": -0.9037092924118042,
+                            "w": -4.3710041808253666e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.004",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048895,
+            "Parent": 1048896,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.006",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.000030517578125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.7021632790565491,
+                            "y": 100.07102966308594,
+                            "z": -491.4109802246094
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.4281466603279114,
+                            "y": 3.433049400314303e-10,
+                            "z": -0.9037092924118042,
+                            "w": -4.3710041808253666e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.006",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 3,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048896,
+            "Parent": 2097371,
+            "Child Entities": [
+                1048808,
+                1048859,
+                1048895
+            ],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "IncoherentWhispers",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11018935099233621270
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -0.702234148979187,
+                                            "y": 100.07101440429688,
+                                            "z": -491.4109191894531
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Lever2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.0000019073486328125,
+                            "y": -0.000003814697265625,
+                            "z": -0.000030517578125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.702234148979187,
+                            "y": 100.07101440429688,
+                            "z": -491.4109191894531
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.4281466603279114,
+                            "y": 3.433049400314303e-10,
+                            "z": -0.9037092924118042,
+                            "w": -4.3710041808253666e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.5,
+                            "y": 1.5,
+                            "z": 1.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048896,
+                                "scriptName": "PullLever",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "SwitchOn",
+                                "value": {
+                                    "ID": 8458106001911501966
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
+                }
+            ]
         },
         {
             "ID": 1048919,
@@ -36188,84 +36468,6 @@
             ]
         },
         {
-            "ID": 1048944,
-            "Parent": 1048969,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle.004",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.000003814697265625,
-                            "y": 0.0,
-                            "z": -0.000003814697265625
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -0.47257569432258608,
-                            "y": 100.68978881835938,
-                            "z": -489.1261901855469
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": -0.928807258605957,
-                            "y": -4.034017919707367e-8,
-                            "z": -0.3705630898475647,
-                            "w": 1.6833315186204346e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle.004",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 2,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1048955,
             "Parent": 376,
             "Child Entities": [],
@@ -36365,156 +36567,6 @@
                             "w": 1.0
                         },
                         "sensor": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048959,
-            "Parent": null,
-            "Child Entities": [
-                4195303,
-                6291803
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Props_StandingPlacard",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 76.09870147705078,
-                            "y": 29.481834411621095,
-                            "z": -84.8254623413086
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 76.09870147705078,
-                            "y": 29.481834411621095,
-                            "z": -84.8254623413086
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048969,
-            "Parent": 1049049,
-            "Child Entities": [
-                1048641,
-                1048944,
-                2097614
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Lever (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 49.59263229370117,
-                            "y": -26.146636962890626,
-                            "z": 66.9320297241211
-                        },
-                        "scale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "rotation": {
-                            "x": -0.9258682727813721,
-                            "y": -4.047114288141529e-8,
-                            "z": -0.3778464198112488,
-                            "w": 1.651596903684549e-8
-                        },
-                        "eulerAngles": {
-                            "x": 180.0,
-                            "y": -44.40069580078125,
-                            "z": 0.000005008993412047857
-                        },
-                        "worldPos": {
-                            "x": -0.4725761413574219,
-                            "y": 100.68978881835938,
-                            "z": -489.1261901855469
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": -0.928807258605957,
-                            "y": -4.034017919707367e-8,
-                            "z": -0.3705630898475647,
-                            "w": 1.6833315186204346e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Animation": {
-                        "animations": [
-                            {
-                                "key": "SwitchOff",
-                                "value": {
-                                    "ID": 6867738549244953467
-                                }
-                            },
-                            {
-                                "key": "SwitchOn",
-                                "value": {
-                                    "ID": 8458106001911501966
-                                }
-                            }
-                        ],
-                        "currentAnimation": {
-                            "first": "",
-                            "second": {
-                                "ID": 0
-                            }
-                        },
-                        "repeat": false
                     }
                 }
             ]
@@ -36889,6 +36941,84 @@
             ]
         },
         {
+            "ID": 1048988,
+            "Parent": 2097165,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.008",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.000030517578125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.5215401649475098,
+                            "y": 152.1531524658203,
+                            "z": -372.8620910644531
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.3534749746322632,
+                            "y": 7.259668421966126e-8,
+                            "z": 0.9354438781738281,
+                            "w": -4.553982080324204e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.008",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048990,
             "Parent": 1048929,
             "Child Entities": [],
@@ -37048,7 +37178,7 @@
                         "position": {
                             "x": 127.289306640625,
                             "y": 26.375577926635743,
-                            "z": -196.75350952148438
+                            "z": -198.5786590576172
                         },
                         "scale": {
                             "x": 9.508000373840332,
@@ -37069,7 +37199,7 @@
                         "worldPos": {
                             "x": 127.289306640625,
                             "y": 26.375577926635743,
-                            "z": -197.3142852783203
+                            "z": -199.13943481445313
                         },
                         "worldScale": {
                             "x": 9.508000373840332,
@@ -37178,69 +37308,6 @@
                         "textureAssetGUID": {
                             "ID": 2965171751674092586
                         }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1049049,
-            "Parent": 248,
-            "Child Entities": [
-                1048642,
-                1048969,
-                2097219
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "FullLever2",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.800419807434082,
-                            "y": -0.10579675436019898,
-                            "z": -0.2972695529460907
-                        },
-                        "scale": {
-                            "x": 0.004999999888241291,
-                            "y": 0.004999999888241291,
-                            "z": 0.004999999888241291
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.2308989018201828,
-                            "z": 0.0,
-                            "w": 0.9729777574539185
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 26.700000762939454,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -51.11041259765625,
-                            "y": 126.83642578125,
-                            "z": -555.27099609375
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.007853895425796509,
-                            "z": 0.0,
-                            "w": 0.9999691247940064
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
                     }
                 }
             ]
@@ -37607,26 +37674,14 @@
                     }
                 },
                 {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                },
-                {
                     "BoxCollider": {
                         "scale": {
-                            "x": 1.5725756883621216,
+                            "x": 2.2730000019073488,
                             "y": 0.5,
-                            "z": 16.4121150970459
+                            "z": 17.211999893188478
                         },
                         "positionOffset": {
-                            "x": 0.0,
+                            "x": -1.7000000476837159,
                             "y": 0.0,
                             "z": 0.0
                         },
@@ -39234,6 +39289,84 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049131,
+            "Parent": 2097175,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.0000152587890625
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.5214536190032959,
+                            "y": 152.15313720703126,
+                            "z": -372.86199951171877
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.3534749746322632,
+                            "y": 7.259668421966126e-8,
+                            "z": 0.9354438781738281,
+                            "w": -4.553982080324204e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -40977,6 +41110,84 @@
             ]
         },
         {
+            "ID": 2097157,
+            "Parent": 2097165,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.004",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.000030517578125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.5215401649475098,
+                            "y": 152.1531524658203,
+                            "z": -372.8620910644531
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.3534749746322632,
+                            "y": 7.259668421966126e-8,
+                            "z": 0.9354438781738281,
+                            "w": -4.553982080324204e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.004",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 2097162,
             "Parent": 376,
             "Child Entities": [],
@@ -41066,43 +41277,81 @@
             ]
         },
         {
-            "ID": 2097219,
-            "Parent": 1049049,
-            "Child Entities": [],
+            "ID": 2097165,
+            "Parent": 2097175,
+            "Child Entities": [
+                1048988,
+                2097157,
+                2097214
+            ],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "IncoherentWhispers",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11018935099233621270
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -0.521479606628418,
+                                            "y": 152.15313720703126,
+                                            "z": -372.8620300292969
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
-                        "tag": "Circle.009 (Copy)",
+                        "tag": "Lever2",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": 48.571598052978519,
-                            "y": -28.590103149414064,
-                            "z": 65.83464050292969
+                            "x": -0.0000019073486328125,
+                            "y": -0.000003814697265625,
+                            "z": -0.000030517578125
                         },
                         "scale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
                         },
                         "rotation": {
-                            "x": 0.47178152203559878,
-                            "y": -1.7919274952760135e-8,
-                            "z": -0.8817154765129089,
-                            "w": 1.7919203898486559e-8
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": 0.00000500908709000214,
-                            "y": 56.29999923706055,
-                            "z": -180.0
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
                         },
                         "worldPos": {
-                            "x": -1.5107231140136719,
-                            "y": 98.24632263183594,
-                            "z": -490.2074279785156
+                            "x": -0.521479606628418,
+                            "y": 152.15313720703126,
+                            "z": -372.8620300292969
                         },
                         "worldScale": {
                             "x": 3.0,
@@ -41110,10 +41359,199 @@
                             "z": 3.0
                         },
                         "worldRot": {
-                            "x": 0.4648420512676239,
-                            "y": -1.7777987082467918e-8,
-                            "z": -0.8853935599327087,
-                            "w": 1.8059386874824669e-8
+                            "x": 0.3534749746322632,
+                            "y": 7.259668421966126e-8,
+                            "z": 0.9354438781738281,
+                            "w": -4.553982080324204e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.5,
+                            "y": 1.5,
+                            "z": 1.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 2097165,
+                                "scriptName": "PullLever",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "SwitchOn",
+                                "value": {
+                                    "ID": 8458106001911501966
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2097175,
+            "Parent": 248,
+            "Child Entities": [
+                1048848,
+                1049131,
+                2097165
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "FullLever3",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.1757383644580841,
+                            "y": 0.020786762237548829,
+                            "z": 0.4137722849845886
+                        },
+                        "scale": {
+                            "x": 0.014999999664723874,
+                            "y": 0.014999999664723874,
+                            "z": 0.014999999664723874
+                        },
+                        "rotation": {
+                            "x": 0.5533916354179382,
+                            "y": 6.05976566703248e-8,
+                            "z": 0.8329210877418518,
+                            "w": -6.059767088117951e-8
+                        },
+                        "eulerAngles": {
+                            "x": 0.00000500895384902833,
+                            "y": -67.19999694824219,
+                            "z": -180.0
+                        },
+                        "worldPos": {
+                            "x": -0.52142333984375,
+                            "y": 152.1531219482422,
+                            "z": -372.8619689941406
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.3534749746322632,
+                            "y": 7.259668421966126e-8,
+                            "z": 0.9354438781738281,
+                            "w": -4.553982080324204e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2097214,
+            "Parent": 2097165,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.006",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.000030517578125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.5215401649475098,
+                            "y": 152.1531524658203,
+                            "z": -372.8620910644531
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.3534749746322632,
+                            "y": 7.259668421966126e-8,
+                            "z": 0.9354438781738281,
+                            "w": -4.553982080324204e-8
                         }
                     }
                 },
@@ -41131,11 +41569,11 @@
                 },
                 {
                     "Mesh": {
-                        "meshName": "Circle.009",
+                        "meshName": "Circle.006",
                         "GUID": {
                             "ID": 14090961136758613768
                         },
-                        "submeshIdx": 4,
+                        "submeshIdx": 3,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -41265,6 +41703,69 @@
                 ],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 2097371,
+            "Parent": 248,
+            "Child Entities": [
+                1048619,
+                1048794,
+                1048896
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "FullLever2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.43453341722488406,
+                            "y": -0.23962384462356568,
+                            "z": -0.11949298530817032
+                        },
+                        "scale": {
+                            "x": 0.014999999664723874,
+                            "y": 0.014999999664723874,
+                            "z": 0.014999999664723874
+                        },
+                        "rotation": {
+                            "x": 0.2155875563621521,
+                            "y": -9.42363076461561e-9,
+                            "z": -0.9764845371246338,
+                            "w": -4.2683495848905298e-8
+                        },
+                        "eulerAngles": {
+                            "x": -1.1220816891746241e-13,
+                            "y": 24.900001525878908,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": -0.7023086547851563,
+                            "y": 100.07099914550781,
+                            "z": -491.4108581542969
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.4281466603279114,
+                            "y": 3.433049400314303e-10,
+                            "z": -0.9037092924118042,
+                            "w": -4.3710041808253666e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
         },
         {
             "ID": 2097403,
@@ -41557,220 +42058,54 @@
             ]
         },
         {
-            "ID": 2097523,
-            "Parent": 2097793,
-            "Child Entities": [
-                2097524,
-                2097525,
-                3145775
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Lever (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 54.53667449951172,
-                            "y": -23.195045471191408,
-                            "z": 69.24917602539063
-                        },
-                        "scale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "rotation": {
-                            "x": 0.38751620054244997,
-                            "y": 0.0,
-                            "z": -0.9218629002571106,
-                            "w": 0.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 45.600074768066409,
-                            "z": 180.0
-                        },
-                        "worldPos": {
-                            "x": 121.6766586303711,
-                            "y": 124.80072784423828,
-                            "z": -362.8208312988281
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": 0.38751620054244997,
-                            "y": 0.0,
-                            "z": -0.9218629002571106,
-                            "w": 0.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Animation": {
-                        "animations": [
-                            {
-                                "key": "SwitchOff",
-                                "value": {
-                                    "ID": 6867738549244953467
-                                }
-                            },
-                            {
-                                "key": "SwitchOn",
-                                "value": {
-                                    "ID": 8458106001911501966
-                                }
-                            }
-                        ],
-                        "currentAnimation": {
-                            "first": "",
-                            "second": {
-                                "ID": 0
-                            }
-                        },
-                        "repeat": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 2097524,
-            "Parent": 2097523,
+            "ID": 2097535,
+            "Parent": 27,
             "Child Entities": [],
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Circle.004",
+                        "tag": "statue_zeusDisplay",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.000003814697265625,
-                            "y": 0.0,
-                            "z": -0.000003814697265625
+                            "x": 124.41384887695313,
+                            "y": 39.568359375,
+                            "z": -203.23133850097657
                         },
                         "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "x": 34.0,
+                            "y": 34.0,
+                            "z": 34.0
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.010646307840943337,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.9999433159828186
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -0.0,
+                            "y": -1.2200000286102296,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 121.6766586303711,
-                            "y": 124.80072784423828,
-                            "z": -362.8208312988281
+                            "x": 124.41384887695313,
+                            "y": 39.568359375,
+                            "z": -203.7921142578125
                         },
                         "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
+                            "x": 34.0,
+                            "y": 34.0,
+                            "z": 34.0
                         },
                         "worldRot": {
-                            "x": 0.38751620054244997,
-                            "y": 0.0,
-                            "z": -0.9218629002571106,
-                            "w": 0.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle.004",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 2,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 2097525,
-            "Parent": 2097523,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle.008",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.000003814697265625,
-                            "y": 0.0,
-                            "z": -0.000003814697265625
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.010646307840943337,
                             "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 121.6766586303711,
-                            "y": 124.80072784423828,
-                            "z": -362.8208312988281
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": 0.38751620054244997,
-                            "y": 0.0,
-                            "z": -0.9218629002571106,
-                            "w": 0.0
+                            "w": 0.9999433159828186
                         }
                     }
                 },
@@ -41788,89 +42123,11 @@
                 },
                 {
                     "Mesh": {
-                        "meshName": "Circle.008",
+                        "meshName": "statue_zeus",
                         "GUID": {
-                            "ID": 14090961136758613768
+                            "ID": 11698047877356672003
                         },
-                        "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 2097534,
-            "Parent": 2097793,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle.009 (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 55.593017578125,
-                            "y": -25.502601623535158,
-                            "z": 70.34332275390625
-                        },
-                        "scale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "rotation": {
-                            "x": 0.9063078165054321,
-                            "y": 3.96159727245049e-8,
-                            "z": 0.42261824011802676,
-                            "w": -1.8473230056770263e-8
-                        },
-                        "eulerAngles": {
-                            "x": 180.0,
-                            "y": -50.0,
-                            "z": 0.000005008955668017734
-                        },
-                        "worldPos": {
-                            "x": 122.73300170898438,
-                            "y": 122.49317169189453,
-                            "z": -361.7266845703125
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": 0.9063078165054321,
-                            "y": 3.96159727245049e-8,
-                            "z": 0.42261824011802676,
-                            "w": -1.8473230056770263e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle.009",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 4,
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -41977,84 +42234,6 @@
                             "w": 1.0
                         },
                         "sensor": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 2097614,
-            "Parent": 1048969,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle.006",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.000003814697265625,
-                            "y": 0.0,
-                            "z": -0.000003814697265625
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -0.47257569432258608,
-                            "y": 100.68978881835938,
-                            "z": -489.1261901855469
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": -0.928807258605957,
-                            "y": -4.034017919707367e-8,
-                            "z": -0.3705630898475647,
-                            "w": 1.6833315186204346e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle.006",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 3,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
@@ -42204,147 +42383,6 @@
             ]
         },
         {
-            "ID": 2097769,
-            "Parent": 2097793,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle (Copy)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 55.81745147705078,
-                            "y": -25.49156951904297,
-                            "z": 70.48455810546875
-                        },
-                        "scale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "rotation": {
-                            "x": -0.9063077569007874,
-                            "y": 1.8473231833127103e-8,
-                            "z": -0.4226182699203491,
-                            "w": -3.961596917179122e-8
-                        },
-                        "eulerAngles": {
-                            "x": 180.0,
-                            "y": -50.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 122.95743560791016,
-                            "y": 122.50420379638672,
-                            "z": -361.58544921875
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": -0.9063077569007874,
-                            "y": 1.8473231833127103e-8,
-                            "z": -0.4226182699203491,
-                            "w": -3.961596917179122e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 2097793,
-            "Parent": 248,
-            "Child Entities": [
-                2097523,
-                2097534,
-                2097769
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "FullLever",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -8.940696716308594e-8,
-                            "y": 0.0,
-                            "z": 1.4901161193847657e-8
-                        },
-                        "scale": {
-                            "x": 0.004999999888241291,
-                            "y": 0.004999999888241291,
-                            "z": 0.004999999888241291
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.2232501059770584,
-                            "z": 0.0,
-                            "w": 0.9747611880302429
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 25.799999237060548,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 67.13998413085938,
-                            "y": 147.9957733154297,
-                            "z": -432.07000732421877
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
             "ID": 3145735,
             "Parent": null,
             "Child Entities": [
@@ -42362,9 +42400,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 114.779541015625,
-                                            "y": 31.433523178100587,
-                                            "z": -172.19949340820313
+                                            "x": 9.933314323425293,
+                                            "y": 153.4431610107422,
+                                            "z": -380.4684753417969
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -42390,9 +42428,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 114.779541015625,
-                                            "y": 31.433523178100587,
-                                            "z": -172.19949340820313
+                                            "x": 9.933314323425293,
+                                            "y": 153.4431610107422,
+                                            "z": -380.4684753417969
                                         },
                                         "volume": 0.6000000238418579,
                                         "pitch": 1.0,
@@ -42418,9 +42456,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 114.779541015625,
-                                            "y": 31.433523178100587,
-                                            "z": -172.19949340820313
+                                            "x": 9.933314323425293,
+                                            "y": 153.4431610107422,
+                                            "z": -380.4684753417969
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -42450,9 +42488,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 114.779541015625,
-                            "y": 31.433523178100587,
-                            "z": -172.19949340820313
+                            "x": 9.933314323425293,
+                            "y": 153.4431610107422,
+                            "z": -380.4684753417969
                         },
                         "scale": {
                             "x": 0.7200000286102295,
@@ -42471,9 +42509,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 114.779541015625,
-                            "y": 31.433523178100587,
-                            "z": -172.19949340820313
+                            "x": 9.933314323425293,
+                            "y": 153.4431610107422,
+                            "z": -380.4684753417969
                         },
                         "worldScale": {
                             "x": 0.7200000286102295,
@@ -42741,84 +42779,6 @@
             ]
         },
         {
-            "ID": 3145775,
-            "Parent": 2097523,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle.006",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.000003814697265625,
-                            "y": 0.0,
-                            "z": -0.000003814697265625
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 121.6766586303711,
-                            "y": 124.80072784423828,
-                            "z": -362.8208312988281
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": 0.38751620054244997,
-                            "y": 0.0,
-                            "z": -0.9218629002571106,
-                            "w": 0.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle.006",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 3,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 3145843,
             "Parent": null,
             "Child Entities": [
@@ -42879,6 +42839,404 @@
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3146099,
+            "Parent": 3146369,
+            "Child Entities": [
+                3146100,
+                3146101,
+                4194351
+            ],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "IncoherentWhispers",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11018935099233621270
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 119.690185546875,
+                                            "y": 123.21105194091797,
+                                            "z": -358.9761962890625
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Lever2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.0000019073486328125,
+                            "y": -0.000003814697265625,
+                            "z": -0.000030517578125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 119.690185546875,
+                            "y": 123.21105194091797,
+                            "z": -358.9761962890625
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.9198215007781982,
+                            "y": 4.366286177059919e-8,
+                            "z": 0.39233702421188357,
+                            "w": 2.059091563921811e-9
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.5,
+                            "y": 1.5,
+                            "z": 1.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 3146099,
+                                "scriptName": "PullLever",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "SwitchOn",
+                                "value": {
+                                    "ID": 8458106001911501966
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3146100,
+            "Parent": 3146099,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.006",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.000030517578125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 119.69011688232422,
+                            "y": 123.2110595703125,
+                            "z": -358.97613525390627
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.9198215007781982,
+                            "y": 4.366286177059919e-8,
+                            "z": 0.39233702421188357,
+                            "w": 2.059091563921811e-9
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.006",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 3,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3146101,
+            "Parent": 3146099,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.004",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.000030517578125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 119.69011688232422,
+                            "y": 123.2110595703125,
+                            "z": -358.97613525390627
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.9198215007781982,
+                            "y": 4.366286177059919e-8,
+                            "z": 0.39233702421188357,
+                            "w": 2.059091563921811e-9
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.004",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3146110,
+            "Parent": 3146369,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.0000152587890625
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 119.69023132324219,
+                            "y": 123.21105194091797,
+                            "z": -358.9762268066406
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.9198215007781982,
+                            "y": 4.366286177059919e-8,
+                            "z": 0.39233702421188357,
+                            "w": 2.059091563921811e-9
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -42957,6 +43315,147 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3146345,
+            "Parent": 3146369,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.009",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.0000152587890625
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 119.69023132324219,
+                            "y": 123.21105194091797,
+                            "z": -358.9762268066406
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.9198215007781982,
+                            "y": 4.366286177059919e-8,
+                            "z": 0.39233702421188357,
+                            "w": 2.059091563921811e-9
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.009",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 4,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3146369,
+            "Parent": 248,
+            "Child Entities": [
+                3146099,
+                3146110,
+                3146345
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "FullLever",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.39562326669692995,
+                            "y": -0.123923659324646,
+                            "z": 0.21468085050582887
+                        },
+                        "scale": {
+                            "x": 0.014999999664723874,
+                            "y": 0.014999999664723874,
+                            "z": 0.014999999664723874
+                        },
+                        "rotation": {
+                            "x": 0.9841955900192261,
+                            "y": 4.3020556006467817e-8,
+                            "z": 0.17708465456962586,
+                            "w": -7.740616148055324e-9
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": -20.39999008178711,
+                            "z": 0.000005008956122765085
+                        },
+                        "worldPos": {
+                            "x": 119.69026184082031,
+                            "y": 123.21104431152344,
+                            "z": -358.97625732421877
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.9198215007781982,
+                            "y": 4.366286177059919e-8,
+                            "z": 0.39233702421188357,
+                            "w": 2.059091563921811e-9
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
                     }
                 }
             ]
@@ -43051,6 +43550,84 @@
             ]
         },
         {
+            "ID": 4194351,
+            "Parent": 3146099,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.008",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.000003814697265625,
+                            "z": -0.000030517578125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 119.69011688232422,
+                            "y": 123.2110595703125,
+                            "z": -358.97613525390627
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.9198215007781982,
+                            "y": 4.366286177059919e-8,
+                            "z": 0.39233702421188357,
+                            "w": 2.059091563921811e-9
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.008",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 4194375,
             "Parent": 1048782,
             "Child Entities": [],
@@ -43131,162 +43708,6 @@
                             "w": 1.0
                         },
                         "sensor": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 4195303,
-            "Parent": 1048959,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Props_StandingPlacard1",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 76.09870147705078,
-                            "y": 29.481834411621095,
-                            "z": -84.8254623413086
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Props_StandingPlacard1",
-                        "GUID": {
-                            "ID": 1744515832360171614
-                        },
-                        "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 6291803,
-            "Parent": 1048959,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Props_StandingPlacardBase",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 76.09870147705078,
-                            "y": 29.481834411621095,
-                            "z": -84.8254623413086
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Props_StandingPlacardBase",
-                        "GUID": {
-                            "ID": 1744515832360171614
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
