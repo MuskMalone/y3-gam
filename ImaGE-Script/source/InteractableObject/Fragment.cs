@@ -1,6 +1,7 @@
 ﻿using IGE.Utils;
 using System;
 using System.Numerics;
+using static System.TimeZoneInfo;
 
 public class Fragment : Entity
 {
@@ -14,8 +15,13 @@ public class Fragment : Entity
   public Entity GardenFragment;
   public Transition transition;
 
+  public Vector3 startPos;
+  public Vector3 downPos;
+  public Vector3 zoomPos;
+
   float elapsedTime = 0.0f;
-  float zoomOutDuration = 2.50f;
+  float transitionTimeFirstPhase = 3.0f;
+  float transitionTimeSecondPhase = 5.0f;
   bool initialAnimation = true;
 
   private bool fragmentInteraction = true;
@@ -24,6 +30,8 @@ public class Fragment : Entity
   bool isZoomingOut = true;
   private string currentAnim = null;
   private bool triggerSecondAnimation = false;
+  private bool firstPhase = false;
+  private bool finalPhase = false;
 
   void Start()
   {
@@ -52,8 +60,6 @@ public class Fragment : Entity
       {
         if (!InternalCalls.IsPlayingAnimation(mEntityID))
         {
-          Console.WriteLine("End");
-          Debug.Log("End");
           currentAnim = null;
           initialAnimation = true;
           SetPlayerCameraAsMain();
@@ -64,16 +70,50 @@ public class Fragment : Entity
 
       if (currentAnim == fragAnimNameEnterBox)
       {
+        elapsedTime += Time.deltaTime;
 
+        // First Phase: Going Down
+        if (firstPhase)
+        {
+          Vector3 newPos = Vector3.Lerp(startPos, downPos, elapsedTime / transitionTimeFirstPhase);
+          InternalCalls.SetPosition(fragmentCamera.mEntityID, ref newPos);
+
+          if (elapsedTime >= transitionTimeFirstPhase)
+          {
+            firstPhase = false; // Switch to next phase
+            elapsedTime = 0f;   // Reset timer
+          }
+        }
+
+        // Second Phase: Zoom In
+        else
+        {
+          Vector3 newPos = Vector3.Lerp(downPos, zoomPos, elapsedTime / transitionTimeSecondPhase);
+          InternalCalls.SetPosition(fragmentCamera.mEntityID, ref newPos);
+
+          if (elapsedTime >= transitionTimeSecondPhase)
+          {
+            finalPhase = true;
+            elapsedTime = 0f;
+            transition.StartTransition(false, 2, Transition.TransitionType.WIPE);
+          }
+        }
       }
     }
 
     if (string.IsNullOrEmpty(currentAnim) && triggerSecondAnimation && transition.IsFinished())
     {
+      triggerSecondAnimation = false;
+      TriggerFlyinAnimation();
+    }
+
+    if (finalPhase)
+    {
       transition.StartTransition(true, 0.5f, Transition.TransitionType.WIPE);
-      uint parent = InternalCalls.GetParentByID(GardenFragment.mEntityID);
-      InternalCalls.PlayAnimation(parent, fragAnimNameEnterBox, false);
-      currentAnim = fragAnimNameEnterBox;
+      SetPlayerCameraAsMain();
+      playerMove.UnfreezePlayer();
+      finalPhase = false;
+      currentAnim = null;
     }
   }
 
@@ -95,5 +135,17 @@ public class Fragment : Entity
     InternalCalls.PlayAnimation(mEntityID, fragAnimNameFlyUp, false);
     playerMove.FreezePlayer();
     triggerSecondAnimation = true;
+    GardenFragment.SetActive(true);
+  }
+
+  void TriggerFlyinAnimation()
+  {
+    firstPhase = true;
+    SetActive(false);
+    transition.StartTransition(true, 0.5f, Transition.TransitionType.WIPE);
+    uint parent = InternalCalls.GetParentByID(GardenFragment.mEntityID);
+    InternalCalls.PlayAnimation(parent, fragAnimNameEnterBox, false);
+    currentAnim = fragAnimNameEnterBox;
+    SetFragmentCameraAsMain();
   }
 }
