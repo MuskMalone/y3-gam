@@ -7340,12 +7340,12 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.000029325485229492189,
+                            "x": 0.000029802322387695314,
                             "y": 0.0,
                             "z": 5.364418029785156e-7
                         },
                         "scale": {
-                            "x": 1.0,
+                            "x": 0.9999986886978149,
                             "y": 1.0,
                             "z": 1.0
                         },
@@ -7361,12 +7361,12 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -20.40135955810547,
+                            "x": -20.40135383605957,
                             "y": 11.070148468017579,
                             "z": -13.748868942260743
                         },
                         "worldScale": {
-                            "x": 15.0,
+                            "x": 14.999979972839356,
                             "y": 15.0,
                             "z": 15.0
                         },
@@ -7567,70 +7567,6 @@
                             "shadowModified": true,
                             "customCenter": false
                         }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 146,
-            "Parent": null,
-            "Child Entities": [
-                161,
-                1048724,
-                2097302,
-                2097438
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "[Folder] Mother's Silhouettes",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Special Objects"
                     }
                 }
             ]
@@ -8149,79 +8085,6 @@
                 ],
                 "removedComponents": []
             }
-        },
-        {
-            "ID": 161,
-            "Parent": 146,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Mother Silhouette",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 5.750814914703369,
-                            "y": 3.4702322483062746,
-                            "z": 25.55379295349121
-                        },
-                        "scale": {
-                            "x": 6.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 5.750814914703369,
-                            "y": 3.4702322483062746,
-                            "z": 25.55379295349121
-                        },
-                        "worldScale": {
-                            "x": 6.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Special Objects"
-                    }
-                },
-                {
-                    "Sprite2D": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 6966392172315074395
-                        },
-                        "isTransparent": true
-                    }
-                }
-            ]
         },
         {
             "ID": 164,
@@ -8919,7 +8782,7 @@
                 },
                 {
                     "Text": {
-                        "textContent": "Use I to bring up your inventory and switch slots\nwith Num Keys!",
+                        "textContent": "",
                         "color": {
                             "x": 0.0,
                             "y": 0.0,
@@ -17845,7 +17708,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 6418878341695253411
+                            "ID": 15517140084201726538
                         }
                     }
                 },
@@ -19974,126 +19837,6 @@
                             "y": 5.0,
                             "z": 0.0
                         }
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 668,
-                                "scriptName": "SpecialDialogue",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 197,
-                                            "scriptName": "Dialogue"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "dialogueSystem"
-                                        }
-                                    },
-                                    {
-                                        "data": 1.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "fadeDuration"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 161,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "firstSilhouette"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 2097302,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "fourthSilhouette"
-                                        }
-                                    },
-                                    {
-                                        "data": [
-                                            "In the dream I had, I saw her...",
-                                            "She must be somewhere around here!"
-                                        ],
-                                        "type": "System.String[]",
-                                        "scriptField": {
-                                            "fieldName": "initialDialogue"
-                                        }
-                                    },
-                                    {
-                                        "data": "Lucid Dream\nEmulation Playtest (02)\n04-02-1998\n01:03am",
-                                        "type": "System.String",
-                                        "scriptField": {
-                                            "fieldName": "introMessage"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 40,
-                                            "scriptName": "PlayerMove"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerMove"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 2097438,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "secondSilhouette"
-                                        }
-                                    },
-                                    {
-                                        "data": false,
-                                        "type": "System.Boolean",
-                                        "scriptField": {
-                                            "fieldName": "skipCutscene"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1048724,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "thirdSilhouette"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 75,
-                                            "scriptName": "Transition"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "transition"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.019999999552965165,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "typewriterSpeed"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
                     }
                 }
             ]
@@ -24912,79 +24655,6 @@
                 ],
                 "removedComponents": []
             }
-        },
-        {
-            "ID": 1048724,
-            "Parent": 146,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Mother Hands By Side 2",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -3.1804802417755129,
-                            "y": 3.3568882942199709,
-                            "z": -11.6023530960083
-                        },
-                        "scale": {
-                            "x": 6.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -3.1804802417755129,
-                            "y": 3.3568882942199709,
-                            "z": -11.6023530960083
-                        },
-                        "worldScale": {
-                            "x": 6.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Special Objects"
-                    }
-                },
-                {
-                    "Sprite2D": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 6966392172315074395
-                        },
-                        "isTransparent": true
-                    }
-                }
-            ]
         },
         {
             "ID": 1048732,
@@ -31230,79 +30900,6 @@
             ]
         },
         {
-            "ID": 2097302,
-            "Parent": 146,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Mother Pickup",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -3.8256287574768068,
-                            "y": 3.3568882942199709,
-                            "z": -11.6023530960083
-                        },
-                        "scale": {
-                            "x": 6.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -3.8256287574768068,
-                            "y": 3.3568882942199709,
-                            "z": -11.6023530960083
-                        },
-                        "worldScale": {
-                            "x": 6.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Special Objects"
-                    }
-                },
-                {
-                    "Sprite2D": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 8853058459690293750
-                        },
-                        "isTransparent": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 2097314,
             "Parent": 1077,
             "Child Entities": [],
@@ -31508,79 +31105,6 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 2097438,
-            "Parent": 146,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Mother Hands By Side 1",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 6.170706272125244,
-                            "y": 3.3568851947784426,
-                            "z": 13.706865310668946
-                        },
-                        "scale": {
-                            "x": 6.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.170706272125244,
-                            "y": 3.3568851947784426,
-                            "z": 13.706865310668946
-                        },
-                        "worldScale": {
-                            "x": 6.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Special Objects"
-                    }
-                },
-                {
-                    "Sprite2D": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 6966392172315074395
-                        },
-                        "isTransparent": true
                     }
                 }
             ]
