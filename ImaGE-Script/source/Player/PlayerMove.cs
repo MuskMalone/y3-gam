@@ -162,6 +162,7 @@ public class  PlayerMove : Entity
     // Ray ends slightly beneath the entity
     Vector3 rayEnd = entityPosition + new Vector3(0, 0 - isGroundedRayHeight, 0);
     uint entityIDHit = InternalCalls.RaycastFromEntity(mEntityID, rayStart, rayEnd);
+    //Console.WriteLine(InternalCalls.GetTag(entityIDHit));
     return entityIDHit != 0;
 
   }

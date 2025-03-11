@@ -83,21 +83,39 @@ namespace IGE {
 				if (rbiter != mRigidBodyIDs.end()) {
 					pxrb = rbiter->second;
 
+					//if (!e.IsActive()) {
+					//	if (mInactiveActors.find(pxrb) == mInactiveActors.end()) {
+					//		mScene->removeActor(*pxrb);
+					//		mInactiveActors.insert(pxrb);
+					//	}
+					//	return;
+					//}
+					//else {
+					//	if (mInactiveActors.find(pxrb) != mInactiveActors.end()) {
+					//		mScene->addActor(*pxrb);
+					//		mInactiveActors.erase(pxrb);
+					//	}
+					//}
+					// Instead of removing/adding actors, disable simulation for inactive entities.
 					if (!e.IsActive()) {
-						if (mInactiveActors.find(pxrb) == mInactiveActors.end()) {
-							mScene->removeActor(*pxrb);
-							mInactiveActors.insert(pxrb);
+						// If not already disabled, set the flag.
+						if (!pxrb->getActorFlags().isSet(physx::PxActorFlag::eDISABLE_SIMULATION)) {
+							pxrb->setActorFlag(physx::PxActorFlag::eDISABLE_SIMULATION, true);
 						}
+						// Optionally, you can skip updating transforms since the actor won’t move.
 						return;
 					}
 					else {
-						if (mInactiveActors.find(pxrb) != mInactiveActors.end()) {
-							mScene->addActor(*pxrb);
-							mInactiveActors.erase(pxrb);
+						// If the entity is active, ensure simulation is enabled.
+						if (pxrb->getActorFlags().isSet(physx::PxActorFlag::eDISABLE_SIMULATION)) {
+							pxrb->setActorFlag(physx::PxActorFlag::eDISABLE_SIMULATION, false);
 						}
 					}
 				}
+
 				else throw std::runtime_error{ std::string("there is no rigidbody ") };
+
+
 
 				//getting from graphics
 				if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
@@ -147,17 +165,33 @@ namespace IGE {
 						physx::PxRigidDynamic* pxrigidbody = mRigidBodyIDs.at(rb.bodyID);
 
 						// If the entity is inactive, remove the actor if necessary.
+						//if (!ECS::Entity{ entity }.IsActive()) {
+						//	if (mInactiveActors.find(pxrigidbody) == mInactiveActors.end()) {
+						//		mScene->removeActor(*pxrigidbody);
+						//		mInactiveActors.insert(pxrigidbody);
+						//	}
+						//	continue;
+						//}
+						//else {
+						//	if (mInactiveActors.find(pxrigidbody) != mInactiveActors.end()) {
+						//		mScene->addActor(*pxrigidbody);
+						//		mInactiveActors.erase(pxrigidbody);
+						//	}
+						//}
+
+		// Instead of removing/adding actors, disable simulation for inactive entities.
 						if (!ECS::Entity{ entity }.IsActive()) {
-							if (mInactiveActors.find(pxrigidbody) == mInactiveActors.end()) {
-								mScene->removeActor(*pxrigidbody);
-								mInactiveActors.insert(pxrigidbody);
+							// If not already disabled, set the flag.
+							if (!pxrigidbody->getActorFlags().isSet(physx::PxActorFlag::eDISABLE_SIMULATION)) {
+								pxrigidbody->setActorFlag(physx::PxActorFlag::eDISABLE_SIMULATION, true);
 							}
+							// Optionally, you can skip updating transforms since the actor won’t move.
 							continue;
 						}
 						else {
-							if (mInactiveActors.find(pxrigidbody) != mInactiveActors.end()) {
-								mScene->addActor(*pxrigidbody);
-								mInactiveActors.erase(pxrigidbody);
+							// If the entity is active, ensure simulation is enabled.
+							if (pxrigidbody->getActorFlags().isSet(physx::PxActorFlag::eDISABLE_SIMULATION)) {
+								pxrigidbody->setActorFlag(physx::PxActorFlag::eDISABLE_SIMULATION, false);
 							}
 						}
 
@@ -523,11 +557,14 @@ namespace IGE {
 			if (Input::InputManager::GetInstance().IsKeyHeld(KEY_CODE::KEY_LEFT_CONTROL) &&
 				Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_D)) mDrawDebug = !mDrawDebug;
 			if (!mDrawDebug) return;
+
 			{
 				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::BoxCollider>() };
 				for (auto entity : rbsystem) {
+
 					auto& collider{ rbsystem.get<Component::BoxCollider>(entity) };
 					ECS::Entity e{ entity };
+					glm::vec4 debugactivecolor{ e.IsActive() ? glm::vec4{ 0,1,0,1 } : glm::vec4{0.5, 0.5, 0.5, 1} };
 					auto rbiter{ mRigidBodyIDs.find(e.GetComponent<Component::BoxCollider>().bodyID) };
 
 					if (rbiter != mRigidBodyIDs.end()) {
@@ -545,7 +582,8 @@ namespace IGE {
 							shape[collider.idx]->getBoxGeometry(geom);
 							auto scale{ geom.halfExtents };
 							auto shapeGlobPos(globPos * locPos);
-							Graphics::Renderer::DrawBox(ToGLMVec3(shapeGlobPos.p), ToGraphicUnits(ToGLMVec3(scale)), ToGLMQuat(shapeGlobPos.q), { 0,1,0,1 });
+
+							Graphics::Renderer::DrawBox(ToGLMVec3(shapeGlobPos.p), ToGraphicUnits(ToGLMVec3(scale)), ToGLMQuat(shapeGlobPos.q), debugactivecolor);
 						}
 					}
 
@@ -556,6 +594,8 @@ namespace IGE {
 				for (auto entity : rbsystem) {
 					auto& collider{ rbsystem.get<Component::SphereCollider>(entity) };
 					ECS::Entity e{ entity };
+					glm::vec4 debugactivecolor{ e.IsActive() ? glm::vec4{ 0,1,0,1 } : glm::vec4{0.5, 0.5, 0.5, 1} };
+
 					auto rbiter{ mRigidBodyIDs.find(e.GetComponent<Component::SphereCollider>().bodyID) };
 
 					if (rbiter != mRigidBodyIDs.end()) {
@@ -574,7 +614,7 @@ namespace IGE {
 							auto radius{ geom.radius };
 							auto shapeGlobPos(globPos * locPos);
 							//i think the radius is actually the diameter here so im gonna divide by 2
-							Graphics::Renderer::DrawWireSphere(ToGLMVec3(shapeGlobPos.p), ToGraphicUnits(radius/2.f), { 0,1,0,1 }, 16);
+							Graphics::Renderer::DrawWireSphere(ToGLMVec3(shapeGlobPos.p), ToGraphicUnits(radius/2.f), debugactivecolor, 16);
 						}
 					}
 
@@ -585,6 +625,7 @@ namespace IGE {
 				for (auto entity : rbsystem) {
 					auto& collider{ rbsystem.get<Component::CapsuleCollider>(entity) };
 					ECS::Entity e{ entity };
+					glm::vec4 debugactivecolor{ e.IsActive() ? glm::vec4{ 0,1,0,1 } : glm::vec4{0.5, 0.5, 0.5, 1} };
 					auto rbiter{ mRigidBodyIDs.find(e.GetComponent<Component::CapsuleCollider>().bodyID) };
 
 					if (rbiter != mRigidBodyIDs.end()) {
@@ -620,7 +661,7 @@ namespace IGE {
 							}
 							//same thing here i think the radius is actually diameter
 							//half height converted to height for the param
-							Graphics::Renderer::DrawWireCapsule(xfm, ToGraphicUnits(geom.radius/2.f), ToGraphicUnits(geom.halfHeight * 2.f), { 0,1,0,1 });
+							Graphics::Renderer::DrawWireCapsule(xfm, ToGraphicUnits(geom.radius/2.f), ToGraphicUnits(geom.halfHeight * 2.f), debugactivecolor);
 						}
 					}
 
@@ -717,6 +758,7 @@ namespace IGE {
 					if (!e.IsActive()) {
 						continue;
 					}
+					//std::cout << "from physsystem " << e.GetComponent<Component::Tag>().tag << " " << e.IsActive() << std::endl;
 					result.entity = e;
 					result.distance = hitBuffer.touches[idx].distance;
 					result.normal = ToGLMVec3(hitBuffer.touches[idx].normal);
