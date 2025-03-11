@@ -26,7 +26,7 @@ namespace IGE {
 		public:
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> GetInstance();
 			PhysicsSystem();
-			void UpdatePhysicsToTransform(ECS::Entity e);
+			void UpdatePhysicsToTransform(ECS::Entity e, bool updatePosition = true);
 			~PhysicsSystem();
 
 			void Update() override;
@@ -126,7 +126,7 @@ namespace IGE {
 			void RegisterRB(void* bodyID, physx::PxRigidDynamic* rbptr, ECS::Entity const& entity) noexcept;
 			void RemoveRB(void* bodyID) noexcept;
 			physx::PxRigidDynamic* GetRBIter(ECS::Entity entity);
-
+			void SetEntityActive(ECS::Entity e, physx::PxRigidDynamic* pxrb, bool kinematic);
 		private:
 			//for testing purposes only
 			PHYSICS_EVENT_LISTENER_DECL(OnContactSampleListener)

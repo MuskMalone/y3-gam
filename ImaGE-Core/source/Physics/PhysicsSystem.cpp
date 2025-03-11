@@ -66,19 +66,40 @@ namespace IGE {
 			mEventManager->AddListener(PHYSICS_METHOD_LISTENER(PhysicsEventID::TRIGGER, PhysicsSystem::OnTriggerSampleListener));
 		}
 
-		void PhysicsSystem::UpdatePhysicsToTransform(ECS::Entity e) {
+		void PhysicsSystem::SetEntityActive(ECS::Entity e, physx::PxRigidDynamic* pxrb, bool isKinematic) {
+			if (!e.IsActive()) {
+				// If not already disabled, set the flag.
+				if (!pxrb->getActorFlags().isSet(physx::PxActorFlag::eDISABLE_SIMULATION)) {
+					if (isKinematic)
+						pxrb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, false); // doesnt work for kinematic colliders
+					pxrb->setActorFlag(physx::PxActorFlag::eDISABLE_SIMULATION, true);
+				}
+				// Optionally, you can skip updating transforms since the actor won’t move.
+				return;
+			}
+			else {
+				// If the entity is active, ensure simulation is enabled.
+				if (pxrb->getActorFlags().isSet(physx::PxActorFlag::eDISABLE_SIMULATION)) {
+					pxrb->setActorFlag(physx::PxActorFlag::eDISABLE_SIMULATION, false);
+					if (isKinematic)
+						pxrb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+				}
+			}
+		}
+		void PhysicsSystem::UpdatePhysicsToTransform(ECS::Entity e, bool updatePos) {
 			auto& xfm{ e.GetComponent<Component::Transform>() };
 			if (HasAnyComponent<Component::RigidBody, Component::BoxCollider, Component::SphereCollider, Component::CapsuleCollider>(e)) {
 				physx::PxRigidDynamic* pxrb{};
+				bool isKinematic{ false };
 				auto rbiter{ mRigidBodyIDs.find(nullptr) };
 				if (e.HasComponent<Component::RigidBody>())
-					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::RigidBody>().bodyID);
+					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::RigidBody>().bodyID), isKinematic = (bool)e.GetComponent<Component::RigidBody>().motionType;
 				else if (e.HasComponent<Component::BoxCollider>())
-					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::BoxCollider>().bodyID);
+					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::BoxCollider>().bodyID), isKinematic = false;
 				else if (e.HasComponent<Component::SphereCollider>())
-					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::SphereCollider>().bodyID);
+					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::SphereCollider>().bodyID), isKinematic = false;
 				else if (e.HasComponent<Component::CapsuleCollider>())
-					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::CapsuleCollider>().bodyID);
+					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::CapsuleCollider>().bodyID), isKinematic = false;
 
 				if (rbiter != mRigidBodyIDs.end()) {
 					pxrb = rbiter->second;
@@ -97,31 +118,20 @@ namespace IGE {
 					//	}
 					//}
 					// Instead of removing/adding actors, disable simulation for inactive entities.
-					if (!e.IsActive()) {
-						// If not already disabled, set the flag.
-						if (!pxrb->getActorFlags().isSet(physx::PxActorFlag::eDISABLE_SIMULATION)) {
-							pxrb->setActorFlag(physx::PxActorFlag::eDISABLE_SIMULATION, true);
-						}
-						// Optionally, you can skip updating transforms since the actor won’t move.
-						return;
-					}
-					else {
-						// If the entity is active, ensure simulation is enabled.
-						if (pxrb->getActorFlags().isSet(physx::PxActorFlag::eDISABLE_SIMULATION)) {
-							pxrb->setActorFlag(physx::PxActorFlag::eDISABLE_SIMULATION, false);
-						}
-					}
+					SetEntityActive(e, pxrb, isKinematic);
 				}
 
 				else throw std::runtime_error{ std::string("there is no rigidbody ") };
 
 
-
-				//getting from graphics
-				if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
-					pxrb->setKinematicTarget(physx::PxTransform{ ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot) });
-				else
-					pxrb->setGlobalPose(physx::PxTransform{ ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot) });
+				if (updatePos)
+				{
+					//getting from graphics
+					if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
+						pxrb->setKinematicTarget(physx::PxTransform{ ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot) });
+					else
+						pxrb->setGlobalPose(physx::PxTransform{ ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot) });
+				}
 			}
 
 			//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
@@ -135,6 +145,12 @@ namespace IGE {
 			// (You may want to move this to a member variable if needed.)
 			static float physicsAccumulator = 0.f;
 			physicsAccumulator += Performance::FrameRateController::GetInstance().GetDeltaTime();
+
+			//set the entities to active/inactive
+			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform>() };
+			for (auto entity : rbsystem) {
+				UpdatePhysicsToTransform(entity, false);
+			}
 
 			// Run the physics simulation in fixed time steps.
 			while (physicsAccumulator >= gTimeStep) {
@@ -164,37 +180,6 @@ namespace IGE {
 					if (rbiter != mRigidBodyIDs.end()) {
 						physx::PxRigidDynamic* pxrigidbody = mRigidBodyIDs.at(rb.bodyID);
 
-						// If the entity is inactive, remove the actor if necessary.
-						//if (!ECS::Entity{ entity }.IsActive()) {
-						//	if (mInactiveActors.find(pxrigidbody) == mInactiveActors.end()) {
-						//		mScene->removeActor(*pxrigidbody);
-						//		mInactiveActors.insert(pxrigidbody);
-						//	}
-						//	continue;
-						//}
-						//else {
-						//	if (mInactiveActors.find(pxrigidbody) != mInactiveActors.end()) {
-						//		mScene->addActor(*pxrigidbody);
-						//		mInactiveActors.erase(pxrigidbody);
-						//	}
-						//}
-
-		// Instead of removing/adding actors, disable simulation for inactive entities.
-						if (!ECS::Entity{ entity }.IsActive()) {
-							// If not already disabled, set the flag.
-							if (!pxrigidbody->getActorFlags().isSet(physx::PxActorFlag::eDISABLE_SIMULATION)) {
-								pxrigidbody->setActorFlag(physx::PxActorFlag::eDISABLE_SIMULATION, true);
-							}
-							// Optionally, you can skip updating transforms since the actor won’t move.
-							continue;
-						}
-						else {
-							// If the entity is active, ensure simulation is enabled.
-							if (pxrigidbody->getActorFlags().isSet(physx::PxActorFlag::eDISABLE_SIMULATION)) {
-								pxrigidbody->setActorFlag(physx::PxActorFlag::eDISABLE_SIMULATION, false);
-							}
-						}
-
 						// Only add gravity in this fixed timestep update.
 						if (rb.motionType == Component::RigidBody::MotionType::DYNAMIC) {
 							float gravForce = gGravity * rb.gravityFactor * rb.mass;
@@ -219,6 +204,7 @@ namespace IGE {
 				// Decrement the accumulator by the fixed timestep.
 				physicsAccumulator -= gTimeStep;
 			}
+
 		}
 
 
