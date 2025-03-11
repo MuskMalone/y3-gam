@@ -95,6 +95,9 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "AudioListener": {}
+                },
+                {
                     "Tag": {
                         "tag": "MainCamera",
                         "isActive": true
@@ -168,12 +171,41 @@
             "ID": 2,
             "Parent": null,
             "Child Entities": [
-                1
+                1,
+                70
             ],
             "Components": [
                 {
                     "AudioSource": {
                         "sounds": [
+                            {
+                                "key": "BasementAmbience",
+                                "value": {
+                                    "guid": {
+                                        "ID": 234186442861606007
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.4886460304260255
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
                             {
                                 "key": "PaintingMatchObject",
                                 "value": {
@@ -192,6 +224,34 @@
                                         "mute": false,
                                         "loop": false,
                                         "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "PitAmbience",
+                                "value": {
+                                    "guid": {
+                                        "ID": 12326567394729772576
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.4886460304260255
+                                        },
+                                        "volume": 0.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
@@ -3963,6 +4023,617 @@
             ]
         },
         {
+            "ID": 70,
+            "Parent": 2,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "Plank1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 5160686553710547570
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Plank2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 10264611013981884006
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Plank3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 16503059655224956762
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Plank4_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2452816375900191713
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Plank5_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 15229678976221541807
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Plank6_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 668134652607625044
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Plank7_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7340190435680486480
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Plank8_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 3090687171211040698
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "WoodenBoard1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8408490888814234368
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "WoodenBoard2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 14420193016666216910
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "WoodenBoard3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 10107734321434936052
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "WoodenBoard4_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 18332894508649869345
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "WoodenBoard5_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 5978136309236666099
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "WoodenBoard6_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 10447493664444358619
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "WoodenBoard7_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4687023742469283671
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "WoodenBoard8_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4184706197538289614
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "SFX",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -1.2734903975797352e-7,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.3888888359069825,
+                            "y": 0.43103450536727908,
+                            "z": 1.3888888359069825
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7071068286895752,
+                            "z": 0.0,
+                            "w": 0.7071068286895752
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -90.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 33.021671295166019,
+                            "y": 0.0,
+                            "z": 1.488646149635315
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 70,
+                                "scriptName": "PlayerFootsteps",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "doorEntryTrigger"
+                                        }
+                                    },
+                                    {
+                                        "data": 8,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "footstepSoundCount"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "footstepVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "interval"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isLevel1"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "player"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMoveScript"
+                                        }
+                                    },
+                                    {
+                                        "data": 1500.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "ppPararm"
+                                        }
+                                    },
+                                    {
+                                        "data": 0,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "ppType"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "speedThreshold"
+                                        }
+                                    },
+                                    {
+                                        "data": "",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "tag"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
             "ID": 93,
             "Parent": null,
             "Child Entities": [
@@ -4657,7 +5328,7 @@
                         "position": {
                             "x": -0.2794761657714844,
                             "y": 5.360939979553223,
-                            "z": -33.027976989746097
+                            "z": -33.027984619140628
                         },
                         "scale": {
                             "x": 0.30000001192092898,
@@ -4724,6 +5395,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isFollowing"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 2,
                                             "scriptName": "Entity"
@@ -4754,9 +5432,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.00000762939453125,
-                            "y": -9.5367431640625e-7,
-                            "z": 0.000030517578125
+                            "x": -0.0000152587890625,
+                            "y": -0.0000019073486328125,
+                            "z": 0.00006103515625
                         },
                         "scale": {
                             "x": 1.0,
@@ -4775,9 +5453,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 27.626527786254884,
-                            "y": 3.709902048110962,
-                            "z": -69.54796600341797
+                            "x": 27.62652587890625,
+                            "y": 3.709901809692383,
+                            "z": -69.54795837402344
                         },
                         "worldScale": {
                             "x": 0.24000000953674317,
@@ -7317,9 +7995,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.00000762939453125,
-                            "y": -9.5367431640625e-7,
-                            "z": 0.000030517578125
+                            "x": -0.0000152587890625,
+                            "y": -0.0000019073486328125,
+                            "z": 0.00006103515625
                         },
                         "scale": {
                             "x": 1.0,
@@ -7338,9 +8016,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 27.626527786254884,
-                            "y": 3.709902048110962,
-                            "z": -69.54796600341797
+                            "x": 27.62652587890625,
+                            "y": 3.709901809692383,
+                            "z": -69.54795837402344
                         },
                         "worldScale": {
                             "x": 0.24000000953674317,
@@ -7395,9 +8073,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.00000762939453125,
-                            "y": -9.5367431640625e-7,
-                            "z": 0.000030517578125
+                            "x": -0.0000152587890625,
+                            "y": -0.0000019073486328125,
+                            "z": 0.00006103515625
                         },
                         "scale": {
                             "x": 1.0,
@@ -7416,9 +8094,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 27.626527786254884,
-                            "y": 3.709902048110962,
-                            "z": -69.54796600341797
+                            "x": 27.62652587890625,
+                            "y": 3.709901809692383,
+                            "z": -69.54795837402344
                         },
                         "worldScale": {
                             "x": 0.24000000953674317,
@@ -17827,6 +18505,7 @@
             "Child Entities": [
                 123,
                 1048693,
+                1049212,
                 4194436
             ],
             "Components": [
@@ -22595,7 +23274,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Floor Layer (Copy)",
+                        "tag": "Floor Layer",
                         "isActive": true
                     }
                 },
@@ -23114,6 +23793,128 @@
             ]
         },
         {
+            "ID": 1049212,
+            "Parent": 1048633,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "EyeballSquish2",
+                                "value": {
+                                    "guid": {
+                                        "ID": 16537121273306461994
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 27.85011100769043,
+                                            "y": -0.5788497924804688,
+                                            "z": -43.125587463378909
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "LOGARITHMIC",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "squishing_sounds",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.25,
+                            "y": 1.25,
+                            "z": 1.25
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 27.85011100769043,
+                            "y": -0.5788497924804688,
+                            "z": -43.125587463378909
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1049212,
+                                "scriptName": "EyeBallFollowSFX",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 4194436,
+                                            "scriptName": "EyeBallFollow"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "eyeball"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "vol"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1049288,
             "Parent": 1049506,
             "Child Entities": [],
@@ -23365,7 +24166,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Floor Layer (Copy)",
+                        "tag": "Floor Layer",
                         "isActive": true
                     }
                 },
@@ -27554,6 +28355,13 @@
                                         "type": "System.Numerics.Vector3",
                                         "scriptField": {
                                             "fieldName": "headOffset"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isFollowing"
                                         }
                                     },
                                     {
