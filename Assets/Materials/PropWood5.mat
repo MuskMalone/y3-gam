@@ -1,0 +1,39 @@
+{
+    "name": "PropWood",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 0.30434781312942507,
+        "y": 0.20360776782035829,
+        "z": 0.08448450267314911
+    },
+    "metalness": 0.41499999165534975,
+    "roughness": 1.0,
+    "ao": 1.0,
+      "emission": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "transparency": 1.0,
+    "tiling": {
+        "x": 1.0,
+        "y": 1.0
+    },
+    "offset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 2203736300003804932
+    },
+    "normalMap": {
+        "ID": 2203736300003804932
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}

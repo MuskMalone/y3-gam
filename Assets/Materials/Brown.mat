@@ -1,0 +1,39 @@
+{
+    "name": "NewMaterial (2)",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 0.18431372940540315,
+        "y": 0.18431372940540315,
+        "z": 0.18431372940540315
+    },
+    "metalness": 0.5,
+    "roughness": 0.5,
+    "ao": 1.0,
+    "emission": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "transparency": 1.0,
+    "tiling": {
+        "x": 1.0,
+        "y": 1.0
+    },
+    "offset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 0
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}

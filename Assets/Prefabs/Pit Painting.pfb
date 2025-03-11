@@ -1,0 +1,140 @@
+{
+    "Name": "Pit Painting",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Pit Painting",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCube1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCube1",
+                        "GUID": {
+                            "ID": 3937837836436612788
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}

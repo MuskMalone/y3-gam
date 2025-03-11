@@ -1,0 +1,217 @@
+{
+    "Name": "Painting Frame (Rect)",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Painting Frame (Rect)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -4.371138828673793e-8,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.000005008956122765085,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -4.371138828673793e-8,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Props"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Props_PaintingFrame2_Rect",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 11.020000457763672,
+                            "y": 11.020000457763672,
+                            "z": 11.020000457763672
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 4.371138828673793e-8,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.000005008956122765085,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 11.020000457763672,
+                            "y": 11.020000457763672,
+                            "z": 11.020000457763672
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 10289315563564798747
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Props_PaintingFrame2_Rect",
+                        "GUID": {
+                            "ID": 6628266431269080340
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Painting Plane",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.0000038120638237160166,
+                            "y": 0.0,
+                            "z": -0.11142661422491074
+                        },
+                        "scale": {
+                            "x": 10.13700008392334,
+                            "y": 0.9999996423721314,
+                            "z": 4.908070087432861
+                        },
+                        "rotation": {
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.0000038023226807126777,
+                            "y": 0.0,
+                            "z": -0.11142661422491074
+                        },
+                        "worldScale": {
+                            "x": 10.13700008392334,
+                            "y": 0.9999996423721314,
+                            "z": 4.908070087432861
+                        },
+                        "worldRot": {
+                            "x": 0.7071067690849304,
+                            "y": -3.0908619663705397e-8,
+                            "z": 3.0908619663705397e-8,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Props"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}

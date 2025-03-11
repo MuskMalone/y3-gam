@@ -1,0 +1,39 @@
+{
+    "name": "water",
+    "shader": "Water",
+    "albedoColor": {
+        "x": 0.7411764860153198,
+        "y": 0.9333333373069763,
+        "z": 0.929411768913269
+    },
+    "metalness": 0.5,
+    "roughness": 0.5,
+    "ao": 1.0,
+    "emission": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+    },
+    "transparency": 0.7239999771118164,
+    "tiling": {
+        "x": 8.0,
+        "y": 8.0
+    },
+    "offset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 0
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}

@@ -1,0 +1,681 @@
+{
+    "Name": "Plane",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Plane",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Body",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 5.800000190734863,
+                            "y": 1.8009999990463257,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 5.800000190734863,
+                            "y": 1.8009999990463257,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 6,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Tail",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 2.8999996185302736,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 2.8999996185302736,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 9,
+            "Parent": 6,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Entity 9",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.39999961853027346,
+                            "y": 0.49999988079071047,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.2999999523162842,
+                            "y": 1.0,
+                            "z": 0.4000000059604645
+                        },
+                        "rotation": {
+                            "x": 0.49605756998062136,
+                            "y": 0.5039116740226746,
+                            "z": 0.5039116740226746,
+                            "w": 0.49605756998062136
+                        },
+                        "eulerAngles": {
+                            "x": 90.0,
+                            "y": -0.0,
+                            "z": 90.9000244140625
+                        },
+                        "worldPos": {
+                            "x": 3.299999237060547,
+                            "y": 0.49999988079071047,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.2999999523162842,
+                            "y": 1.0,
+                            "z": 0.4000000059604645
+                        },
+                        "worldRot": {
+                            "x": 0.49605756998062136,
+                            "y": 0.5039116740226746,
+                            "z": 0.5039116740226746,
+                            "w": 0.49605756998062136
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 8,
+            "Parent": 6,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Entity 8",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.39999961853027346,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.4000000059604645,
+                            "y": 1.0,
+                            "z": 1.899999976158142
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 3.299999237060547,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.4000000059604645,
+                            "y": 1.0,
+                            "z": 1.899999976158142
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 7,
+            "Parent": 6,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Entity 7",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -4.76837158203125e-7,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.800000011920929,
+                            "y": 1.0,
+                            "z": 0.3009999990463257
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 2.8999991416931154,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.800000011920929,
+                            "y": 1.0,
+                            "z": 0.3009999990463257
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Wings",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -1.0999999046325684,
+                            "y": 0.49999988079071047,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 7.000000476837158
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -1.0999999046325684,
+                            "y": 0.49999988079071047,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 7.000000476837158
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Nose",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -2.799999475479126,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.30000001192092898,
+                            "y": 0.5,
+                            "z": 0.5
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -2.799999475479126,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.30000001192092898,
+                            "y": 0.5,
+                            "z": 0.5
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "Parent": 2,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Prop1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.5999994277954102,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.9010001420974731,
+                            "y": 0.20000000298023225,
+                            "z": 3.700000047683716
+                        },
+                        "rotation": {
+                            "x": 0.2367660403251648,
+                            "y": -0.22824352979660035,
+                            "z": 0.6798996925354004,
+                            "w": 0.6554259061813355
+                        },
+                        "eulerAngles": {
+                            "x": -0.000015251922377501615,
+                            "y": -38.400001525878909,
+                            "z": 92.0999984741211
+                        },
+                        "worldPos": {
+                            "x": -2.979999303817749,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.2703000605106354,
+                            "y": 0.10000000149011612,
+                            "z": 1.850000023841858
+                        },
+                        "worldRot": {
+                            "x": 0.2367660403251648,
+                            "y": -0.22824352979660035,
+                            "z": 0.6798996925354004,
+                            "w": 0.6554259061813355
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "Parent": 2,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Prop2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.5999994277954102,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.9010001420974731,
+                            "y": 0.20000000298023225,
+                            "z": 3.700000047683716
+                        },
+                        "rotation": {
+                            "x": -0.13725697994232179,
+                            "y": 0.1325465738773346,
+                            "z": 0.7061251997947693,
+                            "w": 0.6818937659263611
+                        },
+                        "eulerAngles": {
+                            "x": -0.00002486226185283158,
+                            "y": 21.999998092651368,
+                            "z": 92.00028228759766
+                        },
+                        "worldPos": {
+                            "x": -2.979999303817749,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.2703000605106354,
+                            "y": 0.10000000149011612,
+                            "z": 1.850000023841858
+                        },
+                        "worldRot": {
+                            "x": -0.13725697994232179,
+                            "y": 0.1325465738773346,
+                            "z": 0.7061251997947693,
+                            "w": 0.6818937659263611
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}

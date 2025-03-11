@@ -1,0 +1,51 @@
+[2025-03-11 15:45:50.829] [info] Successful FMOD System Creation
+[2025-03-11 15:45:51.164] [info] Successful FMOD System Creation
+[2025-03-11 15:45:52.795] [info] Not using Visual Studio, hotreload disabled
+[2025-03-11 15:45:52.895] [info] Shader with files ..\Assets\Shaders\PostProcessingDefault.vert.glsl, ..\Assets\Shaders\PostProcessingDefault.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:52.940] [info] [Text] FreeType successfully Initialized
+[2025-03-11 15:45:52.955] [info] Shader with files ../Assets/Shaders/Font.vert.glsl, ../Assets/Shaders/Font.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:52.982] [info] Shader with files ../Assets/Shaders/Line.vert.glsl, ../Assets/Shaders/Line.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.018] [info] Shader with files ../Assets/Shaders/Default.vert.glsl, ../Assets/Shaders/Default.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.163] [info] Shader with files ../Assets/Shaders/PBR.vert.glsl, ../Assets/Shaders/PBR.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.198] [info] Shader with files ../Assets/Shaders/Unlit.vert.glsl, ../Assets/Shaders/Unlit.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.242] [info] Shader with files ../Assets/Shaders/Water.vert.glsl, ../Assets/Shaders/Water.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.260] [info] Shader with files ../Assets/Shaders/Transition.vert.glsl, ../Assets/Shaders/Transition.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.289] [info] Shader with files ../Assets/Shaders/ShadowMap.vert.glsl, ../Assets/Shaders/ShadowMapRender.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.291] [info] Shader with files ../Assets/Shaders/FullscreenQuad.vert.glsl, ../Assets/Shaders/FullscreenQuad.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.317] [info] Shader with files ../Assets/Shaders/Tex2D.vert.glsl, ../Assets/Shaders/Tex2D.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.336] [info] Shader with files ../Assets/Shaders/Skybox\Procedural.vert.glsl, ../Assets/Shaders/Skybox\Procedural.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.353] [info] Shader with files ../Assets/Shaders/Skybox\Panoramic.vert.glsl, ../Assets/Shaders/Skybox\Panoramic.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.371] [info] Shader with files ../Assets/Shaders/Highlight.vert.glsl, ../Assets/Shaders/Highlight.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.385] [info] Shader with files ../Assets/Shaders/Fog.vert.glsl, ../Assets/Shaders/Fog.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.399] [info] Shader with files ../Assets/Shaders/Blur.vert.glsl, ../Assets/Shaders/Blur.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:45:53.431] [info] Shader with files () () sucessfully compiled and linked.
+[2025-03-11 15:45:53.735] [warning] Uniform variable 'u_Exposure' does not exist.
+[2025-03-11 15:45:53.735] [warning] Uniform variable 'u_ScreenTex' does not exist.
+[2025-03-11 15:46:08.088] [info] Entity count: 639
+[2025-03-11 15:46:08.088] [info] Loading scene: M3...
+[2025-03-11 15:46:08.089] [info] [Text] Adding Font "..\Assets\Fonts\Compiled\Sniglet-Regular.ttf"
+[2025-03-11 15:46:08.102] [info] [Text] Adding Font "..\Assets\Fonts\Compiled\PressStart2P-Regular.ttf"
+[2025-03-11 15:46:08.146] [info] Shader with files ..\Assets\Shaders\PostProcessingDefault.vert.glsl, ..\Assets\PostProcessing\chromaticabberation.frag.glsl sucessfully compiled and linked.
+[2025-03-11 15:46:09.229] [warning] Uniform variable 'u_NormalMaps' does not exist.
+[2025-03-11 15:46:09.824] [warning] Uniform variable 'u_Gamma' does not exist.
+[2025-03-11 15:46:09.824] [warning] Uniform variable 'u_ViewMtx' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_CamPos' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'numlights' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_type' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_LightDirection' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_LightColor' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_LightPos' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_InnerSpotAngle' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_OuterSpotAngle' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_LightIntensity' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_Range' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_AmbientLight' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_ShadowMap' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_ShadowBias' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_ShadowSoftness' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_AlbedoMaps' does not exist.
+[2025-03-11 15:46:09.825] [warning] Uniform variable 'u_MatIdxOffset' does not exist.
+[2025-03-11 15:46:09.832] [warning] Uniform variable 'u_Resolution' does not exist.
+[2025-03-11 15:46:09.832] [warning] Uniform variable 'u_Time' does not exist.
+[2025-03-11 15:46:09.832] [warning] Uniform variable 'u_Frame' does not exist.
+[2025-03-11 15:46:09.832] [warning] Uniform variable 'u_Mouse' does not exist.

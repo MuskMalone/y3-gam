@@ -1,0 +1,829 @@
+{
+    "Name": "Stairs (7 Steps)",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Stair Head",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 11.4093599319458,
+                            "y": 15.880000114440918,
+                            "z": 1.9564045667648316
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 11.4093599319458,
+                            "y": 15.880000114440918,
+                            "z": 1.9564045667648316
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11128135777711506320
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 5.7046799659729,
+                            "y": 7.940000057220459,
+                            "z": 0.9782022833824158
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Stair Part",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.23589608073234559,
+                            "z": -5.471369743347168
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 0.528348445892334,
+                            "z": 0.9290188550949097
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -3.746029853820801,
+                            "z": -10.70421314239502
+                        },
+                        "worldScale": {
+                            "x": 11.4093599319458,
+                            "y": 8.390172958374024,
+                            "z": 1.81753671169281
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11128135777711506320
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 5.7046799659729,
+                            "y": 4.195086479187012,
+                            "z": 0.908768355846405
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Stair Part",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.27968713641166689,
+                            "z": -6.4136881828308109
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 0.44265565276145937,
+                            "z": 0.9904837608337402
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -4.441431522369385,
+                            "z": -12.547768592834473
+                        },
+                        "worldScale": {
+                            "x": 11.4093599319458,
+                            "y": 7.029371738433838,
+                            "z": 1.9377869367599488
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11128135777711506320
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 5.7046799659729,
+                            "y": 3.514685869216919,
+                            "z": 0.9688934683799744
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Stair Part",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.044241175055503848,
+                            "z": -0.9085690379142761
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 0.9135708212852478,
+                            "z": 0.9290188550949097
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -0.7025498747825623,
+                            "z": -1.7775286436080933
+                        },
+                        "worldScale": {
+                            "x": 11.4093599319458,
+                            "y": 14.5075044631958,
+                            "z": 1.81753671169281
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11128135777711506320
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 5.7046799659729,
+                            "y": 7.2537522315979,
+                            "z": 0.908768355846405
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Stair Part",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.08497145771980286,
+                            "z": -1.8104506731033326
+                        },
+                        "scale": {
+                            "x": 0.9999657869338989,
+                            "y": 0.8317323327064514,
+                            "z": 0.9290188550949097
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -1.3493467569351197,
+                            "z": -3.5419740676879885
+                        },
+                        "worldScale": {
+                            "x": 11.40896987915039,
+                            "y": 13.20790958404541,
+                            "z": 1.81753671169281
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11128135777711506320
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 5.704484939575195,
+                            "y": 6.603954792022705,
+                            "z": 0.908768355846405
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Stair Part",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.12130396068096161,
+                            "z": -2.7381904125213625
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 0.7595766186714172,
+                            "z": 0.9290188550949097
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -1.926306962966919,
+                            "z": -5.357008457183838
+                        },
+                        "worldScale": {
+                            "x": 11.4093599319458,
+                            "y": 12.062076568603516,
+                            "z": 1.81753671169281
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11128135777711506320
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 5.7046799659729,
+                            "y": 6.031038284301758,
+                            "z": 0.908768355846405
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 6,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Stair Part",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.15512120723724366,
+                            "z": -3.651477813720703
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 0.6893160343170166,
+                            "z": 0.9290188550949097
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -2.463324785232544,
+                            "z": -7.143767833709717
+                        },
+                        "worldScale": {
+                            "x": 11.4093599319458,
+                            "y": 10.946338653564454,
+                            "z": 1.81753671169281
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11128135777711506320
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 5.7046799659729,
+                            "y": 5.473169326782227,
+                            "z": 0.908768355846405
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 7,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Stair Part",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.1899622231721878,
+                            "z": -4.574435234069824
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 0.6194678544998169,
+                            "z": 0.9290188550949097
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -3.0166001319885256,
+                            "z": -8.949445724487305
+                        },
+                        "worldScale": {
+                            "x": 11.4093599319458,
+                            "y": 9.837149620056153,
+                            "z": 1.81753671169281
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 11128135777711506320
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 5.7046799659729,
+                            "y": 4.918574810028076,
+                            "z": 0.908768355846405
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,149 @@
+{
+    "Name": "Chrysanthemum",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Chrysanthemum",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 12807705691605869654
+                        },
+                        "isTransparent": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Chrysanthemum Mirror",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071068286895752,
+                            "z": 0.0,
+                            "w": 0.7071068286895752
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 90.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 5.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071068286895752,
+                            "z": 0.0,
+                            "w": 0.7071068286895752
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 12807705691605869654
+                        },
+                        "isTransparent": true
+                    }
+                }
+            ]
+        }
+    ]
+}
