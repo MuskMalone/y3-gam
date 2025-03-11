@@ -4,6 +4,7 @@
 #include <Graphics/RenderPass/GeomPass.h>
 #include "Graphics/Renderer.h"
 #include <Events/EventManager.h>
+#include <EditorEvents.h>
 
 namespace GUI {
 
@@ -37,6 +38,10 @@ namespace GUI {
         if (mFocusWindow) {
           ImGui::SetWindowFocus();
           mFocusWindow = false;
+        }
+
+        if (ImGui::IsWindowFocused() && ImGui::IsKeyPressed(ImGuiKey_K)) {
+          QUEUE_EVENT(Events::ToggleImGui);
         }
 
         ImGui::End();
