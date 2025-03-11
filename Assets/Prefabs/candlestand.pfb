@@ -3,7 +3,7 @@
     "SubData": [
         {
             "ID": 0,
-            "Parent": null,
+            "Parent": 0,
             "Components": [
                 {
                     "Tag": {
@@ -14,9 +14,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -59.11382293701172,
-                            "y": 2.6356163024902345,
-                            "z": 10.06174373626709
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
                         "scale": {
                             "x": 11.800000190734864,
@@ -35,9 +35,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -59.11382293701172,
-                            "y": 2.6356163024902345,
-                            "z": 10.06174373626709
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
                         "worldScale": {
                             "x": 11.800000190734864,
@@ -56,6 +56,111 @@
                     "Layer": {
                         "layerName": "Default"
                     }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048576,
+                                "scriptName": "CandleFlicker",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 1048579,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "candleBloom"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048578,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "candleLight"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.6499999761581421,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "flickerSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": 1.2000000476837159,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxBloomIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.44999998807907107,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxFillIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 1.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxFlickerTime"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.6000000238418579,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxLightIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.800000011920929,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minBloomIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.20000000298023225,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minFillIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minFlickerTime"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.20000000298023225,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minLightIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048577,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "secondaryLight"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 }
             ]
         },
@@ -65,7 +170,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "SecondaryLight",
+                        "tag": "SecondaryLighT",
                         "isActive": true
                     }
                 },
@@ -93,9 +198,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -56.75200653076172,
-                            "y": 7.559593677520752,
-                            "z": 9.606706619262696
+                            "x": 2.3618152141571047,
+                            "y": 4.923977375030518,
+                            "z": -0.4550372362136841
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -126,7 +231,7 @@
                         "intensity": 0.30000001192092898,
                         "innerAngle": 5.0,
                         "outerAngle": 12.5,
-                        "range": 10.0,
+                        "range": 12.0,
                         "castShadows": false,
                         "shadowConfig": {
                             "centerPos": {
@@ -181,9 +286,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -59.10371017456055,
-                            "y": 10.206100463867188,
-                            "z": 9.930885314941407
+                            "x": 0.01011114101856947,
+                            "y": 7.570483684539795,
+                            "z": -0.13085825741291047
                         },
                         "worldScale": {
                             "x": 0.11800000071525574,
@@ -214,7 +319,7 @@
                         "intensity": 0.20000000298023225,
                         "innerAngle": 5.0,
                         "outerAngle": 12.5,
-                        "range": 22.0,
+                        "range": 24.0,
                         "castShadows": false,
                         "shadowConfig": {
                             "centerPos": {
@@ -276,9 +381,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -59.176151275634769,
-                            "y": 7.806639194488525,
-                            "z": 9.973109245300293
+                            "x": -0.062326718121767047,
+                            "y": 5.171022891998291,
+                            "z": -0.08863425254821778
                         },
                         "worldScale": {
                             "x": 0.11800000071525574,
@@ -353,9 +458,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -59.11382293701172,
-                            "y": 2.6356163024902345,
-                            "z": 10.120407104492188
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0586637519299984
                         },
                         "worldScale": {
                             "x": 11.800000190734864,
@@ -430,9 +535,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -59.11382293701172,
-                            "y": 2.6356163024902345,
-                            "z": 10.06174373626709
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
                         "worldScale": {
                             "x": 11.800000190734864,
@@ -507,9 +612,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -59.11382293701172,
-                            "y": 2.6356163024902345,
-                            "z": 10.06174373626709
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
                         },
                         "worldScale": {
                             "x": 11.800000190734864,
