@@ -258,12 +258,12 @@ void InputManager::QueueInputEvents()
 		QUEUE_EVENT(Events::WindowMinimized);
 	}
 
-	if (IsKeyPressed(IK_LEFT_CONTROL) && IsKeyTriggered(IK_O))
+	/*if (IsKeyPressed(IK_LEFT_CONTROL) && IsKeyTriggered(IK_O))
 	{
 		isCursorLocked = !isCursorLocked;
 		QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
 		QUEUE_EVENT(Events::WindowMinimized);
-	}
+	}*/
 }
 
 bool InputManager::IsKeyTriggered(KEY_CODE key)

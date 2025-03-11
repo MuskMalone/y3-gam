@@ -31,7 +31,9 @@ public class ControlPanel2 : Entity
     public float minHorizontalRotation = -36.0f;
     public float maxHorizontalRotation = 32.0f;
 
-    private bool uvLightEnabled = false; 
+    private bool uvLightEnabled = false;
+
+    public Entity LeftClickControlPanelUI;
 
     public enum StatueType
     {
@@ -78,18 +80,37 @@ public class ControlPanel2 : Entity
         hermesStatue.SetActive(false);
 
         UVLight.SetActive(false);
+
+        // Initialize the interaction UI
+        if (LeftClickControlPanelUI == null)
+        {
+            Debug.LogError("[ControlPanel2.cs] Left Click Control PanelUI Entity not found!");
+            return;
+        }
+
+        LeftClickControlPanelUI.SetActive(false); // Hide prompt at the start
     }
 
     void Update()
     {
+        bool mouseClicked = Input.GetMouseButtonTriggered(0);
+        bool isPanelHit = playerInteraction.RayHitString == "ControlPanel";
+        bool isDoorHit = playerInteraction.RayHitString == "CPDoor";
+        bool isInteractable = isPanelHit || isDoorHit;
+
+
+            LeftClickControlPanelUI.SetActive(isInteractable);
+        
+
+
         switch (currState)
         {
             case State.DEFAULT:
                 break;
 
             case State.OPEN:
-                bool mouseClicked = Input.GetMouseButtonTriggered(0);
-                bool isPanelHit = playerInteraction.RayHitString == "ControlPanel";
+                //bool mouseClicked = Input.GetMouseButtonTriggered(0);
+                //bool isPanelHit = playerInteraction.RayHitString == "ControlPanel";
 
                 if (mouseClicked && isPanelHit)
                 {

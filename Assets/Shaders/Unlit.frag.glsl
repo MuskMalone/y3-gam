@@ -8,8 +8,7 @@ struct MaterialProperties {
     float Roughness;   // Roughness factor
     float Transparency; // Transparency (alpha)
     float AO;          // Ambient occlusion
-    float Emission;
-    float Padding[3];
+    vec4 Emission;
 };
 
 layout(std430, binding = 0) buffer MaterialPropsBuffer {
@@ -18,6 +17,8 @@ layout(std430, binding = 0) buffer MaterialPropsBuffer {
 
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out int entityID;
+layout(location = 2) out vec4 viewPosition;
+layout(location = 3) out vec4 bloomColor;
 
 in vec4 v_Color;
 in vec2 v_TexCoord;

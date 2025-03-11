@@ -108,6 +108,7 @@
     <Compile Include="source\InteractableObject\Crowbar.cs" />
     <Compile Include="source\InteractableObject\DionysusPainting.cs" />
     <Compile Include="source\InteractableObject\Fragment.cs" />
+    <Compile Include="source\InteractableObject\FragmentParticleBurst.cs" />
     <Compile Include="source\InteractableObject\Hammer.cs" />
     <Compile Include="source\InteractableObject\HammerLevel3.cs" />
     <Compile Include="source\InteractableObject\Hermes.cs" />
@@ -143,10 +144,12 @@
     <Compile Include="source\Level2\HexTeleport.cs" />
     <Compile Include="source\Level2\LevelEndFade.cs" />
     <Compile Include="source\Level2\LevelStartFade.cs" />
+    <Compile Include="source\Level2\LeverPuzzle.cs" />
     <Compile Include="source\Level2\Lvl2IntroCutscene.cs" />
     <Compile Include="source\Level2\NumberPad.cs" />
     <Compile Include="source\Level2\OdysseusNoteInteraction.cs" />
     <Compile Include="source\Level2\PamphletNoteInteraction.cs" />
+    <Compile Include="source\Level2\PullLever.cs" />
     <Compile Include="source\Level2\TransitionToLevel3.cs" />
     <Compile Include="source\Level3\EyeballFollow.cs" />
     <Compile Include="source\Level3\Level3Dialogue.cs" />

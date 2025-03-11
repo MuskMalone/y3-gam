@@ -5087,6 +5087,7 @@
             "ID": 75,
             "Parent": null,
             "Child Entities": [
+                129,
                 147,
                 178,
                 199,
@@ -6814,6 +6815,212 @@
             ]
         },
         {
+            "ID": 129,
+            "Parent": 75,
+            "Child Entities": [
+                130,
+                131
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Black Borders",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 130,
+            "Parent": 129,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BlackBorder1",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 8.5,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 35.599998474121097,
+                            "y": 3.0399999618530275,
+                            "z": 3.0399999618530275
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 8.5,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 35.599998474121097,
+                            "y": 3.0399999618530275,
+                            "z": 3.0399999618530275
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11587003713487795447
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 131,
+            "Parent": 129,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BlackBorder2",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -8.5,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 35.599998474121097,
+                            "y": 3.0399999618530275,
+                            "z": 3.0399999618530275
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -8.5,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 35.599998474121097,
+                            "y": 3.0399999618530275,
+                            "z": 3.0399999618530275
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11587003713487795447
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 132,
             "Parent": 116,
             "Child Entities": [],
@@ -7611,7 +7818,7 @@
                                     "playSettings": {
                                         "position": {
                                             "x": -7.918659210205078,
-                                            "y": 3.978663921356201,
+                                            "y": 4.17370080947876,
                                             "z": -9.69514274597168
                                         },
                                         "volume": 1.0,
@@ -7643,7 +7850,7 @@
                     "Transform": {
                         "position": {
                             "x": -7.918659210205078,
-                            "y": 3.978663921356201,
+                            "y": 4.17370080947876,
                             "z": -9.69514274597168
                         },
                         "scale": {
@@ -7664,7 +7871,7 @@
                         },
                         "worldPos": {
                             "x": -7.918659210205078,
-                            "y": 3.978663921356201,
+                            "y": 4.17370080947876,
                             "z": -9.69514274597168
                         },
                         "worldScale": {
@@ -7682,7 +7889,7 @@
                 },
                 {
                     "Layer": {
-                        "layerName": "Puzzle"
+                        "layerName": "Note"
                     }
                 },
                 {
@@ -7760,6 +7967,13 @@
                                 "scriptName": "NoteInteraction",
                                 "scriptFieldInstList": [
                                     {
+                                        "data": 5.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "moveSpeed"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 164,
                                             "scriptName": "Entity"
@@ -7767,6 +7981,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "noteUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 0,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
                                         }
                                     },
                                     {
@@ -7787,6 +8011,13 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": 5.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "rotateSpeed"
                                         }
                                     },
                                     {
@@ -9421,12 +9652,42 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 130,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "BlackBorder1"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 131,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "BlackBorder2"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 415,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "GardenFragment"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 634,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ParticleBurst"
                                         }
                                     },
                                     {
@@ -9448,6 +9709,13 @@
                                         "type": "System.Numerics.Vector3",
                                         "scriptField": {
                                             "fieldName": "downPos"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "explosionWaitTime"
                                         }
                                     },
                                     {
@@ -15581,7 +15849,7 @@
                         "key": "Bloom",
                         "value": {
                             "threshold": 1.0,
-                            "intensity": 1.2000000476837159,
+                            "intensity": 0.0,
                             "range": 10.0
                         }
                     },
@@ -15589,7 +15857,7 @@
                         "key": "Material",
                         "value": {
                             "materialGUID": {
-                                "ID": 0
+                                "ID": 16148162105990453228
                             }
                         }
                     }
@@ -16052,6 +16320,28 @@
                     }
                 },
                 {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 634,
+                                "scriptName": "FragmentParticleBurst",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 415,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Fragment"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
                     "EmitterSystem": {
                         "emitters": [
                             {
@@ -16128,7 +16418,7 @@
                                 "angvel": 0.0,
                                 "lifetime": 4.0,
                                 "speed": 10.0,
-                                "frequency": 0.5,
+                                "frequency": 0.009999999776482582,
                                 "type": 1,
                                 "vCount": 1,
                                 "preset": 2,
@@ -16208,7 +16498,7 @@
                                 "angvel": 0.0,
                                 "lifetime": 4.0,
                                 "speed": 6.0,
-                                "frequency": 0.5,
+                                "frequency": 0.009999999776482582,
                                 "type": 1,
                                 "vCount": 1,
                                 "preset": 2,
@@ -16725,6 +17015,13 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "secondSilhouette"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "skipCutscene"
                                         }
                                     },
                                     {
@@ -43518,7 +43815,7 @@
             "Puzzle",
             "Lights",
             "Special Objects",
-            "",
+            "Note",
             "",
             "",
             "",
@@ -43536,7 +43833,7 @@
             1,
             1,
             1,
-            0,
+            1,
             0,
             0,
             0,
@@ -43573,6 +43870,78 @@
                 1,
                 1,
                 1,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
                 1,
                 1,
                 1,
@@ -43604,60 +43973,6 @@
                 0,
                 1,
                 0,
-                1,
-                1,
-                1,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            [
-                0,
-                1,
-                0,
-                1,
-                0,
-                1,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            [
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1,
-                1
-            ],
-            [
-                0,
-                1,
-                0,
                 0,
                 0,
                 1,
@@ -43674,25 +43989,7 @@
             ],
             [
                 0,
-                1,
                 0,
-                0,
-                0,
-                1,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            [
-                0,
-                1,
                 0,
                 0,
                 0,

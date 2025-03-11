@@ -41,6 +41,7 @@ namespace IGE {
   private:
     GUI::GUIManager mGUIManager;
     std::shared_ptr<Graphics::CameraSpec> mEditorCamera;
+    bool mHideImGuiThisFrame;
 
   private:
     /*!*********************************************************************
@@ -77,6 +78,7 @@ namespace IGE {
   ************************************************************************/
     void PrintException(std::exception& e);
 
+    EVENT_CALLBACK_DECL(OnImGuiToggle);
     EVENT_CALLBACK_DECL(SignalCallback);
 
     /*!*********************************************************************

@@ -50,7 +50,7 @@ namespace Graphics {
 		auto shouldRender = [&am, &camFrustum, &cullCount](ECS::Entity entity) {
 			if (!entity.IsActive()) { return false; }
 			// lights and entities without mesh shouldnt be culled
-			else if (entity.HasComponent<Component::Light>() || !entity.HasComponent<Component::Mesh>()) {
+			else if (entity.HasComponent<Component::Light>() || entity.HasComponent<Component::Bloom>() || !entity.HasComponent<Component::Mesh>()) {
 				return true;
 			}
 
