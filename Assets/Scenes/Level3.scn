@@ -805,6 +805,13 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "Bloom": {
+                        "threshold": 0.3400000035762787,
+                        "intensity": 1.2000000476837159,
+                        "range": 6.260000228881836
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "Wall",
                         "isActive": true
@@ -911,7 +918,7 @@
                 {
                     "Tag": {
                         "tag": "Light",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -2042,13 +2049,41 @@
                 26,
                 39,
                 58,
-                130,
-                1048636,
+                62,
+                65,
+                66,
+                70,
+                76,
+                85,
+                185,
+                233,
+                251,
+                253,
+                274,
+                284,
+                414,
+                418,
+                422,
+                431,
+                440,
+                444,
+                449,
+                453,
+                460,
+                464,
+                1048650,
+                1048653,
                 1048668,
+                1048835,
                 1048950,
                 1048951,
+                1048985,
+                1049002,
+                2097212,
                 2097264,
-                2097525
+                2097525,
+                3145934,
+                5243144
             ],
             "Components": [
                 {
@@ -3370,7 +3405,7 @@
                 {
                     "Tag": {
                         "tag": "Light (Pit)",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -3672,6 +3707,32 @@
             ]
         },
         {
+            "ID": 52,
+            "Parent": 2097212,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 53,
+            "Parent": 2097212,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 55,
             "Parent": 93,
             "Child Entities": [],
@@ -3821,6 +3882,19 @@
             ]
         },
         {
+            "ID": 59,
+            "Parent": 185,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 61,
             "Parent": 3145772,
             "Child Entities": [
@@ -3888,6 +3962,147 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 62,
+            "Parent": 21,
+            "Child Entities": [],
+            "Position": {
+                "x": -15.701934814453125,
+                "y": -12.811773300170899,
+                "z": -97.56451416015625
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 4172401694563953736
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 65,
+            "Parent": 21,
+            "Child Entities": [
+                272,
+                407,
+                408
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "newlamp (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -55.79848098754883,
+                            "y": -2.136547803878784,
+                            "z": -51.435302734375
+                        },
+                        "scale": {
+                            "x": 2.700000047683716,
+                            "y": 2.700000047683716,
+                            "z": 2.700000047683716
+                        },
+                        "rotation": {
+                            "x": -0.9764845371246338,
+                            "y": -9.42363076461561e-9,
+                            "z": 0.2155875414609909,
+                            "w": -4.2683495848905298e-8
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": 24.899999618530275,
+                            "z": -1.1220816891746241e-13
+                        },
+                        "worldPos": {
+                            "x": -55.79848098754883,
+                            "y": -2.136547803878784,
+                            "z": -51.435302734375
+                        },
+                        "worldScale": {
+                            "x": 2.700000047683716,
+                            "y": 2.700000047683716,
+                            "z": 2.700000047683716
+                        },
+                        "worldRot": {
+                            "x": -0.9764845371246338,
+                            "y": -9.42363076461561e-9,
+                            "z": 0.2155875414609909,
+                            "w": -4.2683495848905298e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 66,
+            "Parent": 21,
+            "Child Entities": [
+                133,
+                188,
+                279
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -20.22490692138672,
+                                "y": 10.927000045776368,
+                                "z": -87.354736328125
+                            },
+                            "scale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "rotation": {
+                                "x": -4.371138828673793e-8,
+                                "y": 1.0,
+                                "z": -4.371138828673793e-8,
+                                "w": 1.910685465164705e-15
+                            },
+                            "eulerAngles": {
+                                "x": -180.0,
+                                "y": -0.0,
+                                "z": -180.0
+                            },
+                            "worldPos": {
+                                "x": -20.22490692138672,
+                                "y": 10.927000045776368,
+                                "z": -87.354736328125
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": -4.371138828673793e-8,
+                                "y": 1.0,
+                                "z": -4.371138828673793e-8,
+                                "w": 1.910685465164705e-15
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 67,
@@ -4028,6 +4243,518 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 70,
+            "Parent": 21,
+            "Child Entities": [
+                71,
+                72,
+                73
+            ],
+            "Position": {
+                "x": -10.289999961853028,
+                "y": 10.927000045776368,
+                "z": -8.44025993347168
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 71,
+            "Parent": 70,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 72,
+            "Parent": 70,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 73,
+            "Parent": 70,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 76,
+            "Parent": 21,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Point Light",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -13.782999992370606,
+                            "y": 23.158817291259767,
+                            "z": -0.9713025689125061
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -13.782999992370606,
+                            "y": 23.158817291259767,
+                            "z": -0.9713025689125061
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 0.19607843458652497,
+                            "y": 0.1568627506494522,
+                            "z": 0.11764705926179886
+                        },
+                        "intensity": 0.05000000074505806,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 60.0,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 80,
+            "Parent": 253,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "candlestand",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -59.11382293701172,
+                            "y": 2.6356163024902345,
+                            "z": 10.06174373626709
+                        },
+                        "worldScale": {
+                            "x": 11.800000190734864,
+                            "y": 11.800000190734864,
+                            "z": 11.800000190734864
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 2736295656358640927
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "candlestand",
+                        "GUID": {
+                            "ID": 16059444492480042176
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 81,
+            "Parent": 253,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "candles",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -59.11382293701172,
+                            "y": 2.6356163024902345,
+                            "z": 10.06174373626709
+                        },
+                        "worldScale": {
+                            "x": 11.800000190734864,
+                            "y": 11.800000190734864,
+                            "z": 11.800000190734864
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "candles",
+                        "GUID": {
+                            "ID": 16059444492480042176
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 82,
+            "Parent": 253,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "wick",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.004971504211425781
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -59.11382293701172,
+                            "y": 2.6356163024902345,
+                            "z": 10.120407104492188
+                        },
+                        "worldScale": {
+                            "x": 11.800000190734864,
+                            "y": 11.800000190734864,
+                            "z": 11.800000190734864
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17930799073652826812
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "wick",
+                        "GUID": {
+                            "ID": 16059444492480042176
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 85,
+            "Parent": 21,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "PitCeilingLight",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -43.4098014831543,
+                            "y": 40.01015853881836,
+                            "z": -72.33097076416016
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -43.4098014831543,
+                            "y": 40.01015853881836,
+                            "z": -72.33097076416016
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 0.19607843458652497,
+                            "y": 0.1568627506494522,
+                            "z": 0.11764705926179886
+                        },
+                        "intensity": 0.20000000298023225,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 60.0,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 86,
+            "Parent": 185,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 89,
+            "Parent": 2097212,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 91,
+            "Parent": 284,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16584010385804930178
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 70,
@@ -4872,6 +5599,7 @@
             ]
         },
         {
+        {
             "ID": 93,
             "Parent": null,
             "Child Entities": [
@@ -5252,6 +5980,19 @@
             ]
         },
         {
+            "ID": 106,
+            "Parent": 233,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 111,
             "Parent": 260,
             "Child Entities": [],
@@ -5328,6 +6069,19 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 113,
+            "Parent": 185,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 122,
@@ -5670,13 +6424,13 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0000152587890625,
-                            "y": -0.0000019073486328125,
-                            "z": 0.00006103515625
+                            "x": -0.000030517578125,
+                            "y": -0.000003814697265625,
+                            "z": 0.0001220703125
                         },
                         "scale": {
                             "x": 1.0,
-                            "y": 1.0,
+                            "y": 0.9999932050704956,
                             "z": 1.0
                         },
                         "rotation": {
@@ -5691,13 +6445,13 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 27.62652587890625,
-                            "y": 3.709901809692383,
-                            "z": -69.54795837402344
+                            "x": 27.626522064208986,
+                            "y": 3.7099013328552248,
+                            "z": -69.54794311523438
                         },
                         "worldScale": {
                             "x": 0.24000000953674317,
-                            "y": 0.24000000953674317,
+                            "y": 0.23999838531017304,
                             "z": 0.24000000953674317
                         },
                         "worldRot": {
@@ -5902,84 +6656,6 @@
             ]
         },
         {
-            "ID": 130,
-            "Parent": 21,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Lamp (Pit Room)",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -60.92012023925781,
-                            "y": 10.706000328063965,
-                            "z": -98.86842346191406
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 2.4178805351257326,
-                            "z": 1.1040923595428467
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -60.92012023925781,
-                            "y": 10.706000328063965,
-                            "z": -98.86842346191406
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 2.4178805351257326,
-                            "z": 1.1040923595428467
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8767289450398112251
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 131,
             "Parent": 93,
             "Child Entities": [
@@ -6041,6 +6717,19 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 133,
+            "Parent": 66,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 134,
@@ -8233,14 +8922,14 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0000152587890625,
-                            "y": -0.0000019073486328125,
-                            "z": 0.00006103515625
+                            "x": -0.00003814697265625,
+                            "y": -0.00000476837158203125,
+                            "z": 0.000152587890625
                         },
                         "scale": {
                             "x": 1.0,
                             "y": 1.0,
-                            "z": 1.0
+                            "z": 1.0000338554382325
                         },
                         "rotation": {
                             "x": 0.0,
@@ -8254,14 +8943,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 27.62652587890625,
-                            "y": 3.709901809692383,
-                            "z": -69.54795837402344
+                            "x": 27.62652015686035,
+                            "y": 3.7099010944366457,
+                            "z": -69.54793548583985
                         },
                         "worldScale": {
                             "x": 0.24000000953674317,
                             "y": 0.24000000953674317,
-                            "z": 0.24000000953674317
+                            "z": 0.2400081306695938
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -8357,7 +9046,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 16643807743570932751
+                            "ID": 18109557668538773619
                         }
                     }
                 },
@@ -8372,8 +9061,167 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 0.16053509712219239,
+                            "y": 0.016644109040498735,
+                            "z": 0.016644109040498735
+                        },
+                        "intensity": 7.0,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 0.1599999964237213,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
                 }
             ]
+        },
+        {
+            "ID": 185,
+            "Parent": 21,
+            "Child Entities": [
+                59,
+                86,
+                113
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -23.417749404907228,
+                                "y": 10.927000045776368,
+                                "z": -99.0903549194336
+                            },
+                            "scale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "rotation": {
+                                "x": 4.371139183945161e-8,
+                                "y": -4.371138473402425e-8,
+                                "z": 4.371139183945161e-8,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.000005008956122765085,
+                                "y": -0.000005008956122765085,
+                                "z": 0.000005008956122765085
+                            },
+                            "worldPos": {
+                                "x": -23.417749404907228,
+                                "y": 10.927000045776368,
+                                "z": -99.0903549194336
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": 4.371139183945161e-8,
+                                "y": -4.371138473402425e-8,
+                                "z": 4.371139183945161e-8,
+                                "w": 1.0
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 187,
+            "Parent": 431,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 188,
+            "Parent": 66,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -20.22490692138672,
+                                "y": 10.927000045776368,
+                                "z": -87.354736328125
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": -4.371138828673793e-8,
+                                "y": 1.0,
+                                "z": -4.371138828673793e-8,
+                                "w": 1.910685465164705e-15
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 189,
@@ -10619,6 +11467,66 @@
             ]
         },
         {
+            "ID": 233,
+            "Parent": 21,
+            "Child Entities": [
+                106,
+                267,
+                271
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -49.24285125732422,
+                                "y": 51.28306579589844,
+                                "z": -155.2919464111328
+                            },
+                            "scale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.7071067690849304,
+                                "z": 0.0,
+                                "w": 0.7071067690849304
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": 89.98021697998047,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -49.24285125732422,
+                                "y": 51.28306579589844,
+                                "z": -155.2919464111328
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.7071067690849304,
+                                "z": 0.0,
+                                "w": 0.7071067690849304
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 235,
             "Parent": 313,
             "Child Entities": [],
@@ -11431,6 +12339,237 @@
             ]
         },
         {
+            "ID": 251,
+            "Parent": 21,
+            "Child Entities": [
+                411,
+                412,
+                413
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16584010385804930178
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 31.06416893005371,
+                                "y": 3.0231151580810549,
+                                "z": -99.70201110839844
+                            },
+                            "scale": {
+                                "x": 2.700000047683716,
+                                "y": 2.700000047683716,
+                                "z": 2.700000047683716
+                            },
+                            "rotation": {
+                                "x": 0.8788171410560608,
+                                "y": 2.085727146550198e-8,
+                                "z": 0.4771587550640106,
+                                "w": -3.8414317060642136e-8
+                            },
+                            "eulerAngles": {
+                                "x": -180.0,
+                                "y": -57.000003814697269,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 31.06416893005371,
+                                "y": 3.0231151580810549,
+                                "z": -99.70201110839844
+                            },
+                            "worldScale": {
+                                "x": 2.700000047683716,
+                                "y": 2.700000047683716,
+                                "z": 2.700000047683716
+                            },
+                            "worldRot": {
+                                "x": 0.8788171410560608,
+                                "y": 2.085727146550198e-8,
+                                "z": 0.4771587550640106,
+                                "w": -3.8414317060642136e-8
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 253,
+            "Parent": 21,
+            "Child Entities": [
+                80,
+                81,
+                82,
+                2097235,
+                2097236,
+                2097256
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "candlestandOG",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -59.11382293701172,
+                            "y": 2.6356163024902345,
+                            "z": 10.06174373626709
+                        },
+                        "scale": {
+                            "x": 11.800000190734864,
+                            "y": 11.800000190734864,
+                            "z": 11.800000190734864
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -59.11382293701172,
+                            "y": 2.6356163024902345,
+                            "z": 10.06174373626709
+                        },
+                        "worldScale": {
+                            "x": 11.800000190734864,
+                            "y": 11.800000190734864,
+                            "z": 11.800000190734864
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 253,
+                                "scriptName": "CandleFlicker",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 2097235,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "candleBloom"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097236,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "candleLight"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.6499999761581421,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "flickerSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": 1.2000000476837159,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxBloomIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.44999998807907107,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxFillIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 1.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxFlickerTime"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxLightIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.800000011920929,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minBloomIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.20000000298023225,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minFillIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minFlickerTime"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.20000000298023225,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minLightIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097256,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "secondaryLight"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
             "ID": 256,
             "Parent": 1049011,
             "Child Entities": [],
@@ -11643,6 +12782,269 @@
             ]
         },
         {
+            "ID": 262,
+            "Parent": 284,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16584010385804930178
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 267,
+            "Parent": 233,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 271,
+            "Parent": 233,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 272,
+            "Parent": 65,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Bloom": {
+                        "threshold": 0.44999998807907107,
+                        "intensity": 0.8299999833106995,
+                        "range": 10.369999885559082
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Light.Light",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.009500503540039063,
+                            "y": 0.0,
+                            "z": -0.02457904815673828
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 5.3290705182007517e-15,
+                            "y": 1.1920928955078126e-7,
+                            "z": -8.881784197001253e-15,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 6.106664111014959e-13,
+                            "y": 0.00001366037849948043,
+                            "z": -1.0177774421860075e-12
+                        },
+                        "worldPos": {
+                            "x": -55.79380416870117,
+                            "y": -2.136547803878784,
+                            "z": -51.36430740356445
+                        },
+                        "worldScale": {
+                            "x": 2.700000047683716,
+                            "y": 2.700000047683716,
+                            "z": 2.700000047683716
+                        },
+                        "worldRot": {
+                            "x": -0.9764845371246338,
+                            "y": -9.423644087291905e-9,
+                            "z": 0.21558742225170136,
+                            "w": -4.268348874347794e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17930799073652826812
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Light.Light",
+                        "GUID": {
+                            "ID": 13588126476089316323
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 1.0,
+                            "y": 0.6274510025978088,
+                            "z": 0.3137255012989044
+                        },
+                        "intensity": 2.200000047683716,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 8.0,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 274,
+            "Parent": 21,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "PitBottomLight",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -41.309730529785159,
+                            "y": -22.970584869384767,
+                            "z": -96.79456329345703
+                        },
+                        "scale": {
+                            "x": 0.5189999938011169,
+                            "y": 1.0800000429153443,
+                            "z": 1.8839999437332154
+                        },
+                        "rotation": {
+                            "x": -0.06657391786575318,
+                            "y": -0.5624800324440002,
+                            "z": -0.09686566889286041,
+                            "w": 0.8184137940406799
+                        },
+                        "eulerAngles": {
+                            "x": -0.0000023823922674637289,
+                            "y": -68.9999771118164,
+                            "z": -13.500000953674317
+                        },
+                        "worldPos": {
+                            "x": -41.309730529785159,
+                            "y": -22.970584869384767,
+                            "z": -96.79456329345703
+                        },
+                        "worldScale": {
+                            "x": 0.5189999938011169,
+                            "y": 1.0800000429153443,
+                            "z": 1.8839999437332154
+                        },
+                        "worldRot": {
+                            "x": -0.06657391786575318,
+                            "y": -0.5624800324440002,
+                            "z": -0.09686566889286041,
+                            "w": 0.8184137940406799
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 10579210109920632505
+                        }
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 0.3529411852359772,
+                            "y": 0.3333333432674408,
+                            "z": 0.29411765933036806
+                        },
+                        "intensity": 1.0,
+                        "innerAngle": -3.0,
+                        "outerAngle": 96.0,
+                        "range": 32.0,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 275,
+            "Parent": 431,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 278,
             "Parent": 93,
             "Child Entities": [
@@ -11703,6 +13105,19 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 279,
+            "Parent": 66,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 280,
@@ -11781,6 +13196,41 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 281,
+            "Parent": 284,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16584010385804930178
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 284,
+            "Parent": 21,
+            "Child Entities": [
+                91,
+                262,
+                281
+            ],
+            "Position": {
+                "x": -24.508045196533204,
+                "y": 2.506133556365967,
+                "z": -55.12247848510742
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 16584010385804930178
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 285,
@@ -17965,6 +19415,1624 @@
             ]
         },
         {
+            "ID": 407,
+            "Parent": 65,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Glass",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -55.79848098754883,
+                            "y": -2.136547803878784,
+                            "z": -51.435302734375
+                        },
+                        "worldScale": {
+                            "x": 2.700000047683716,
+                            "y": 2.700000047683716,
+                            "z": 2.700000047683716
+                        },
+                        "worldRot": {
+                            "x": -0.9764845371246338,
+                            "y": -9.42363076461561e-9,
+                            "z": 0.2155875414609909,
+                            "w": -4.2683495848905298e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 1255937633653368133
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Glass",
+                        "GUID": {
+                            "ID": 13588126476089316323
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 408,
+            "Parent": 65,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Mesh.015.Mesh.015.Mesh.015.Mesh.015.Mesh.015",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -55.79848098754883,
+                            "y": -2.136547803878784,
+                            "z": -51.435302734375
+                        },
+                        "worldScale": {
+                            "x": 2.700000047683716,
+                            "y": 2.700000047683716,
+                            "z": 2.700000047683716
+                        },
+                        "worldRot": {
+                            "x": -0.9764845371246338,
+                            "y": -9.42363076461561e-9,
+                            "z": 0.2155875414609909,
+                            "w": -4.2683495848905298e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 2736295656358640927
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Mesh.015.Mesh.015.Mesh.015.Mesh.015.Mesh.015",
+                        "GUID": {
+                            "ID": 13588126476089316323
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 411,
+            "Parent": 251,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16584010385804930178
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.02256488800048828,
+                                "y": 0.0,
+                                "z": 0.0247955322265625
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 1.1546319456101628e-14,
+                                "y": 1.1920928955078126e-7,
+                                "z": -7.105427357601002e-15,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 1.3231106748418098e-12,
+                                "y": 0.00001366037849948043,
+                                "z": -8.142218453285888e-13
+                            },
+                            "worldPos": {
+                                "x": 31.15349769592285,
+                                "y": 3.0231151580810549,
+                                "z": -99.6873779296875
+                            },
+                            "worldScale": {
+                                "x": 2.700000047683716,
+                                "y": 2.700000047683716,
+                                "z": 2.700000047683716
+                            },
+                            "worldRot": {
+                                "x": 0.878817081451416,
+                                "y": 2.085727857092934e-8,
+                                "z": 0.47715887427330019,
+                                "w": -3.841432771878317e-8
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 412,
+            "Parent": 251,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16584010385804930178
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 413,
+            "Parent": 251,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16584010385804930178
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 414,
+            "Parent": 21,
+            "Child Entities": [
+                415,
+                416,
+                417
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -20.22490692138672,
+                                "y": 10.927000045776368,
+                                "z": -57.597782135009769
+                            },
+                            "scale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "rotation": {
+                                "x": -4.371138828673793e-8,
+                                "y": 1.0,
+                                "z": -4.371138828673793e-8,
+                                "w": 1.910685465164705e-15
+                            },
+                            "eulerAngles": {
+                                "x": -180.0,
+                                "y": -0.0,
+                                "z": -180.0
+                            },
+                            "worldPos": {
+                                "x": -20.22490692138672,
+                                "y": 10.927000045776368,
+                                "z": -57.597782135009769
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": -4.371138828673793e-8,
+                                "y": 1.0,
+                                "z": -4.371138828673793e-8,
+                                "w": 1.910685465164705e-15
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 415,
+            "Parent": 414,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 416,
+            "Parent": 414,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -20.22490692138672,
+                                "y": 10.927000045776368,
+                                "z": -57.597782135009769
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": -4.371138828673793e-8,
+                                "y": 1.0,
+                                "z": -4.371138828673793e-8,
+                                "w": 1.910685465164705e-15
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 417,
+            "Parent": 414,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 418,
+            "Parent": 21,
+            "Child Entities": [
+                419,
+                420,
+                421
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -10.289999961853028,
+                                "y": 10.927000045776368,
+                                "z": -11.793742179870606
+                            },
+                            "scale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "rotation": {
+                                "x": -6.181723932741079e-8,
+                                "y": 0.7071067690849304,
+                                "z": -6.181723932741079e-8,
+                                "w": -0.7071067690849304
+                            },
+                            "eulerAngles": {
+                                "x": -360.0,
+                                "y": -89.98021697998047,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -10.289999961853028,
+                                "y": 10.927000045776368,
+                                "z": -11.793742179870606
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": -6.181723932741079e-8,
+                                "y": 0.7071067690849304,
+                                "z": -6.181723932741079e-8,
+                                "w": -0.7071067690849304
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 419,
+            "Parent": 418,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 420,
+            "Parent": 418,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 421,
+            "Parent": 418,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 422,
+            "Parent": 21,
+            "Child Entities": [
+                423,
+                424,
+                425
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 23.703857421875,
+                                "y": 10.927000045776368,
+                                "z": -12.545673370361329
+                            },
+                            "scale": {
+                                "x": 5.1999993324279789,
+                                "y": 5.199999809265137,
+                                "z": 5.1999993324279789
+                            },
+                            "rotation": {
+                                "x": -6.181723932741079e-8,
+                                "y": 0.7071067690849304,
+                                "z": -6.181723932741079e-8,
+                                "w": -0.7071067690849304
+                            },
+                            "eulerAngles": {
+                                "x": -360.0,
+                                "y": -89.98021697998047,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 23.703857421875,
+                                "y": 10.927000045776368,
+                                "z": -12.545673370361329
+                            },
+                            "worldScale": {
+                                "x": 5.1999993324279789,
+                                "y": 5.199999809265137,
+                                "z": 5.1999993324279789
+                            },
+                            "worldRot": {
+                                "x": -6.181723932741079e-8,
+                                "y": 0.7071067690849304,
+                                "z": -6.181723932741079e-8,
+                                "w": -0.7071067690849304
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 423,
+            "Parent": 422,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -1.855112543580617e-7,
+                                "y": -0.000008106231689453125,
+                                "z": -0.05997800827026367
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 24.015743255615236,
+                                "y": 10.926958084106446,
+                                "z": -12.545674324035645
+                            },
+                            "worldScale": {
+                                "x": 5.1999993324279789,
+                                "y": 5.199999809265137,
+                                "z": 5.1999993324279789
+                            },
+                            "worldRot": {
+                                "x": -6.181723932741079e-8,
+                                "y": 0.7071067690849304,
+                                "z": -6.181723932741079e-8,
+                                "w": -0.7071067690849304
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 424,
+            "Parent": 422,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 425,
+            "Parent": 422,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 2.7340030328559808e-7,
+                                "y": 0.0,
+                                "z": -0.028460025787353517
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 23.851848602294923,
+                                "y": 10.927000045776368,
+                                "z": -12.545672416687012
+                            },
+                            "worldScale": {
+                                "x": 5.1999993324279789,
+                                "y": 5.199999809265137,
+                                "z": 5.1999993324279789
+                            },
+                            "worldRot": {
+                                "x": -6.181723932741079e-8,
+                                "y": 0.7071067690849304,
+                                "z": -6.181723932741079e-8,
+                                "w": -0.7071067690849304
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 431,
+            "Parent": 21,
+            "Child Entities": [
+                187,
+                275,
+                432,
+                434
+            ],
+            "Position": {
+                "x": 12.223152160644532,
+                "y": 19.379535675048829,
+                "z": -107.31267547607422
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 432,
+            "Parent": 431,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 434,
+            "Parent": 431,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 440,
+            "Parent": 21,
+            "Child Entities": [
+                441,
+                442,
+                443
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 47.75205612182617,
+                                "y": 10.927000045776368,
+                                "z": -125.52890014648438
+                            },
+                            "scale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "rotation": {
+                                "x": -4.371139183945161e-8,
+                                "y": -4.371138473402425e-8,
+                                "z": -4.371139183945161e-8,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": -0.000005008956122765085,
+                                "y": -0.000005008956122765085,
+                                "z": -0.000005008956122765085
+                            },
+                            "worldPos": {
+                                "x": 47.75205612182617,
+                                "y": 10.927000045776368,
+                                "z": -125.52890014648438
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": -4.371139183945161e-8,
+                                "y": -4.371138473402425e-8,
+                                "z": -4.371139183945161e-8,
+                                "w": 1.0
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 441,
+            "Parent": 440,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 442,
+            "Parent": 440,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 47.75205612182617,
+                                "y": 10.927000045776368,
+                                "z": -125.52890014648438
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": -4.371139183945161e-8,
+                                "y": -4.371138473402425e-8,
+                                "z": -4.371139183945161e-8,
+                                "w": 1.0
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 443,
+            "Parent": 440,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 444,
+            "Parent": 21,
+            "Child Entities": [
+                445,
+                446,
+                447,
+                448
+            ],
+            "Position": {
+                "x": 12.223152160644532,
+                "y": 19.379535675048829,
+                "z": -145.5550994873047
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 445,
+            "Parent": 444,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 446,
+            "Parent": 444,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 447,
+            "Parent": 444,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "POINT",
+                            "color": {
+                                "x": 0.7843137383460999,
+                                "y": 0.6666666865348816,
+                                "z": 0.47058823704719546
+                            },
+                            "intensity": 0.30000001192092898,
+                            "innerAngle": 5.0,
+                            "outerAngle": 12.5,
+                            "range": 14.0,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.9081354141235352,
+                                "y": -14.969712257385254,
+                                "z": -1.19781494140625
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 13.131287574768067,
+                                "y": 4.409823417663574,
+                                "z": -146.75291442871095
+                            },
+                            "worldScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 448,
+            "Parent": 444,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 449,
+            "Parent": 21,
+            "Child Entities": [
+                450,
+                451,
+                452
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16584010385804930178
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -1.188564419746399,
+                                "y": 5.023441791534424,
+                                "z": -80.920654296875
+                            },
+                            "scale": {
+                                "x": 2.700000047683716,
+                                "y": 2.700000047683716,
+                                "z": 2.700000047683716
+                            },
+                            "rotation": {
+                                "x": 0.7089555859565735,
+                                "y": -3.082759292283299e-8,
+                                "z": -0.7052531242370606,
+                                "w": -3.098943324175707e-8
+                            },
+                            "eulerAngles": {
+                                "x": -180.0,
+                                "y": 89.69998931884766,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -1.188564419746399,
+                                "y": 5.023441791534424,
+                                "z": -80.920654296875
+                            },
+                            "worldScale": {
+                                "x": 2.700000047683716,
+                                "y": 2.700000047683716,
+                                "z": 2.700000047683716
+                            },
+                            "worldRot": {
+                                "x": 0.7089555859565735,
+                                "y": -3.082759292283299e-8,
+                                "z": -0.7052531242370606,
+                                "w": -3.098943324175707e-8
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 450,
+            "Parent": 449,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16584010385804930178
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 451,
+            "Parent": 449,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16584010385804930178
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 452,
+            "Parent": 449,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16584010385804930178
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 453,
+            "Parent": 21,
+            "Child Entities": [
+                454,
+                455,
+                456,
+                457,
+                458,
+                459
+            ],
+            "Position": {
+                "x": -57.804168701171878,
+                "y": 2.6640143394470217,
+                "z": 8.14768123626709
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 453,
+                                    "scriptName": "CandleFlicker",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 456,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "candleBloom"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 455,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "candleLight"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.6499999761581421,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "flickerSpeed"
+                                            }
+                                        },
+                                        {
+                                            "data": 1.2000000476837159,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxBloomIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.44999998807907107,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxFillIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 1.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxFlickerTime"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.6000000238418579,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxLightIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.800000011920929,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minBloomIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.20000000298023225,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minFillIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minFlickerTime"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.20000000298023225,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minLightIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 454,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "secondaryLight"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "candlestand3",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 454,
+            "Parent": 453,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "SecondaryLighT3",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 455,
+            "Parent": 453,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "PointFlame3",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 456,
+            "Parent": 453,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "BloomFlame3",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 457,
+            "Parent": 453,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 458,
+            "Parent": 453,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 5,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 459,
+            "Parent": 453,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 6,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 460,
+            "Parent": 21,
+            "Child Entities": [
+                461,
+                462,
+                463
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -8.867395401000977,
+                                "y": 11.246971130371094,
+                                "z": -155.6892852783203
+                            },
+                            "scale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.7071067690849304,
+                                "z": 0.0,
+                                "w": 0.7071067690849304
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": 89.98021697998047,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -8.867395401000977,
+                                "y": 11.246971130371094,
+                                "z": -155.6892852783203
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.7071067690849304,
+                                "z": 0.0,
+                                "w": 0.7071067690849304
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 461,
+            "Parent": 460,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 5.960464477539063e-8,
+                                "y": 0.0,
+                                "z": 0.009739172644913197
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -8.816751480102539,
+                                "y": 11.246971130371094,
+                                "z": -155.6892852783203
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.7071067690849304,
+                                "z": 0.0,
+                                "w": 0.7071067690849304
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 462,
+            "Parent": 460,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -8.867395401000977,
+                                "y": 11.246971130371094,
+                                "z": -155.6892852783203
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.7071067690849304,
+                                "z": 0.0,
+                                "w": 0.7071067690849304
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 463,
+            "Parent": 460,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 464,
+            "Parent": 21,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Point Light",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 8.555776596069336,
+                            "y": 0.21585525572299958,
+                            "z": -171.0719451904297
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 8.555776596069336,
+                            "y": 0.21585525572299958,
+                            "z": -171.0719451904297
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "intensity": 19.5,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 37.5,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048585,
             "Parent": null,
             "Child Entities": [
@@ -18802,82 +21870,112 @@
             ]
         },
         {
-            "ID": 1048636,
+            "ID": 1048650,
             "Parent": 21,
+            "Child Entities": [
+                1048651,
+                1048844,
+                1048845
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 20.014270782470704,
+                                "y": 10.927000045776368,
+                                "z": -8.44025993347168
+                            },
+                            "scale": {
+                                "x": 5.1999993324279789,
+                                "y": 5.199999809265137,
+                                "z": 5.1999993324279789
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.7501110434532166,
+                                "z": 0.0,
+                                "w": 0.6613118648529053
+                            },
+                            "eulerAngles": {
+                                "x": 180.0,
+                                "y": 82.79998016357422,
+                                "z": 180.0
+                            },
+                            "worldPos": {
+                                "x": 20.014270782470704,
+                                "y": 10.927000045776368,
+                                "z": -8.44025993347168
+                            },
+                            "worldScale": {
+                                "x": 5.1999993324279789,
+                                "y": 5.199999809265137,
+                                "z": 5.1999993324279789
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.7501110434532166,
+                                "z": 0.0,
+                                "w": 0.6613118648529053
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048651,
+            "Parent": 1048650,
             "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Lamp (Pit Room)",
-                        "isActive": true
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -22.694000244140626,
-                            "y": 10.706000328063965,
-                            "z": -98.86799621582031
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 2.4178805351257326,
-                            "z": 1.1040923595428467
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -22.694000244140626,
-                            "y": 10.706000328063965,
-                            "z": -98.86799621582031
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 2.4178805351257326,
-                            "z": 1.1040923595428467
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048653,
+            "Parent": 21,
+            "Child Entities": [
+                1048654,
+                1048747,
+                1048833
+            ],
+            "Position": {
+                "x": -32.18154525756836,
+                "y": 10.927000045776368,
+                "z": -8.44025993347168
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
                 },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048654,
+            "Parent": 1048653,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
                 },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8767289450398112251
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 1048655,
@@ -18958,6 +22056,75 @@
             ]
         },
         {
+            "ID": 1048664,
+            "Parent": 1048835,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048666,
+            "Parent": 1048835,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -55.66101837158203,
+                                "y": 10.927000045776368,
+                                "z": -40.62724304199219
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.7501110434532166,
+                                "z": 0.0,
+                                "w": 0.6613118648529053
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 1048668,
             "Parent": 21,
             "Child Entities": [],
@@ -18965,7 +22132,7 @@
                 {
                     "Tag": {
                         "tag": "Light",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -18973,7 +22140,7 @@
                         "position": {
                             "x": 6.66862678527832,
                             "y": 20.281940460205079,
-                            "z": -29.835773468017579
+                            "z": -69.87582397460938
                         },
                         "scale": {
                             "x": 1.0,
@@ -18994,7 +22161,7 @@
                         "worldPos": {
                             "x": 6.66862678527832,
                             "y": 20.281940460205079,
-                            "z": -29.835773468017579
+                            "z": -69.87582397460938
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -19585,6 +22752,19 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 1048697,
+            "Parent": 1049002,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 1048701,
@@ -20237,6 +23417,19 @@
             }
         },
         {
+            "ID": 1048747,
+            "Parent": 1048653,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 1048756,
             "Parent": 1048746,
             "Child Entities": [],
@@ -20768,6 +23961,80 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 1048833,
+            "Parent": 1048653,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048835,
+            "Parent": 21,
+            "Child Entities": [
+                1048664,
+                1048666,
+                1048839
+            ],
+            "Position": {
+                "x": -55.66101837158203,
+                "y": 10.927000045776368,
+                "z": -40.62724304199219
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048839,
+            "Parent": 1048835,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048844,
+            "Parent": 1048650,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048845,
+            "Parent": 1048650,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 1048863,
@@ -23610,6 +26877,155 @@
             ]
         },
         {
+            "ID": 1048985,
+            "Parent": 21,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4172401694563953736
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "SPOTLIGHT",
+                            "color": {
+                                "x": 0.7058823704719544,
+                                "y": 0.47058823704719546,
+                                "z": 0.23529411852359773
+                            },
+                            "intensity": 4.5,
+                            "innerAngle": 10.0,
+                            "outerAngle": 35.0,
+                            "range": 54.0,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -64.21106719970703,
+                                "y": -12.811773300170899,
+                                "z": -97.56451416015625
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 0.9999999403953552,
+                                "z": 0.0009999999310821295
+                            },
+                            "rotation": {
+                                "x": -0.5167241096496582,
+                                "y": -0.4826967716217041,
+                                "z": 0.4826967716217041,
+                                "w": 0.5167241096496582
+                            },
+                            "eulerAngles": {
+                                "x": -90.0,
+                                "y": -0.0,
+                                "z": 86.0999984741211
+                            },
+                            "worldPos": {
+                                "x": -64.21106719970703,
+                                "y": -12.811773300170899,
+                                "z": -97.56451416015625
+                            },
+                            "worldScale": {
+                                "x": 1.0,
+                                "y": 0.9999999403953552,
+                                "z": 0.0009999999310821295
+                            },
+                            "worldRot": {
+                                "x": -0.5167241096496582,
+                                "y": -0.4826967716217041,
+                                "z": 0.4826967716217041,
+                                "w": 0.5167241096496582
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049002,
+            "Parent": 21,
+            "Child Entities": [
+                1048697,
+                1049004,
+                1049005,
+                1049006
+            ],
+            "Position": {
+                "x": 10.034873962402344,
+                "y": 19.365068435668947,
+                "z": -46.6212158203125
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049004,
+            "Parent": 1049002,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049005,
+            "Parent": 1049002,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049006,
+            "Parent": 1049002,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14433558256379882587
+                },
+                "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 1049009,
             "Parent": 1049506,
             "Child Entities": [],
@@ -24762,6 +28178,66 @@
             ]
         },
         {
+            "ID": 2097212,
+            "Parent": 21,
+            "Child Entities": [
+                52,
+                53,
+                89
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13041017124799755331
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -60.083744049072269,
+                                "y": 10.927000045776368,
+                                "z": -97.4115219116211
+                            },
+                            "scale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "rotation": {
+                                "x": 4.371138473402425e-8,
+                                "y": -1.0,
+                                "z": 4.371138473402425e-8,
+                                "w": -4.371139183945161e-8
+                            },
+                            "eulerAngles": {
+                                "x": -180.0,
+                                "y": 0.000005008956122765085,
+                                "z": -180.0
+                            },
+                            "worldPos": {
+                                "x": -60.083744049072269,
+                                "y": 10.927000045776368,
+                                "z": -97.4115219116211
+                            },
+                            "worldScale": {
+                                "x": 5.199999809265137,
+                                "y": 5.199999809265137,
+                                "z": 5.199999809265137
+                            },
+                            "worldRot": {
+                                "x": 4.371138473402425e-8,
+                                "y": -1.0,
+                                "z": 4.371138473402425e-8,
+                                "w": -4.371139183945161e-8
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097220,
             "Parent": 61,
             "Child Entities": [],
@@ -24835,6 +28311,161 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2097235,
+            "Parent": 253,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Bloom": {
+                        "threshold": 0.4699999988079071,
+                        "intensity": 1.0299999713897706,
+                        "range": 5.889999866485596
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "BloomLight",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 9.5367431640625e-7,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.08474576473236084,
+                            "y": 0.08474576473236084,
+                            "z": 0.08474576473236084
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -59.11381149291992,
+                            "y": 2.6356163024902345,
+                            "z": 10.06174373626709
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2097236,
+            "Parent": 253,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "PointFlame",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 9.5367431640625e-7,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.08474576473236084,
+                            "y": 0.08474576473236084,
+                            "z": 0.08474576473236084
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -59.11381149291992,
+                            "y": 2.6356163024902345,
+                            "z": 10.06174373626709
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 1.0,
+                            "y": 0.5490196347236633,
+                            "z": 0.19607843458652497
+                        },
+                        "intensity": 0.18000000715255738,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 26.0,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
                     }
                 }
             ]
@@ -24989,6 +28620,95 @@
             ]
         },
         {
+            "ID": 2097256,
+            "Parent": 253,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SecondaryLight",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 9.5367431640625e-7,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.08474576473236084,
+                            "y": 0.08474576473236084,
+                            "z": 0.08474576473236084
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -59.11381149291992,
+                            "y": 2.6356163024902345,
+                            "z": 10.06174373626709
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 1.0,
+                            "y": 0.5490196347236633,
+                            "z": 0.23529411852359773
+                        },
+                        "intensity": 0.25999999046325686,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 14.0,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 2097264,
             "Parent": 21,
             "Child Entities": [],
@@ -24996,7 +28716,7 @@
                 {
                     "Tag": {
                         "tag": "Light",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -26051,13 +29771,13 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0000152587890625,
-                            "y": -0.0000019073486328125,
-                            "z": 0.000030517578125
+                            "x": -0.0000457763671875,
+                            "y": -0.0000057220458984375,
+                            "z": 0.000091552734375
                         },
                         "scale": {
                             "x": 1.0,
-                            "y": 1.0,
+                            "y": 0.999989926815033,
                             "z": 1.0
                         },
                         "rotation": {
@@ -26072,13 +29792,13 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 28.052122116088868,
-                            "y": 3.8727307319641115,
-                            "z": -69.60701751708985
+                            "x": 28.052114486694337,
+                            "y": 3.872729778289795,
+                            "z": -69.60700225830078
                         },
                         "worldScale": {
                             "x": 0.24000000953674317,
-                            "y": 0.24000000953674317,
+                            "y": 0.23999759554862977,
                             "z": 0.24000000953674317
                         },
                         "worldRot": {
@@ -26175,7 +29895,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 16643807743570932751
+                            "ID": 18109557668538773619
                         }
                     }
                 },
@@ -26189,6 +29909,36 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 0.16078431904315949,
+                            "y": 0.01568627543747425,
+                            "z": 0.01568627543747425
+                        },
+                        "intensity": 7.0,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 0.1599999964237213,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
                     }
                 }
             ]
@@ -27638,6 +31388,32 @@
             ]
         },
         {
+            "ID": 3145792,
+            "Parent": 3145934,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 6,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3145815,
+            "Parent": 3145934,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 5,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 3145843,
             "Parent": 3145965,
             "Child Entities": [],
@@ -27729,13 +31505,13 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.0000152587890625,
-                            "y": -0.0000019073486328125,
-                            "z": 0.000030517578125
+                            "x": -0.0000457763671875,
+                            "y": -0.0000057220458984375,
+                            "z": 0.000091552734375
                         },
                         "scale": {
                             "x": 1.0,
-                            "y": 1.0,
+                            "y": 0.9999920129776001,
                             "z": 1.0
                         },
                         "rotation": {
@@ -27750,13 +31526,13 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 28.052122116088868,
-                            "y": 3.8727307319641115,
-                            "z": -69.60701751708985
+                            "x": 28.052114486694337,
+                            "y": 3.872729778289795,
+                            "z": -69.60700225830078
                         },
                         "worldScale": {
                             "x": 0.24000000953674317,
-                            "y": 0.24000000953674317,
+                            "y": 0.23999808728694917,
                             "z": 0.24000000953674317
                         },
                         "worldRot": {
@@ -27950,6 +31726,216 @@
             ]
         },
         {
+            "ID": 3145920,
+            "Parent": 3145934,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3145934,
+            "Parent": 21,
+            "Child Entities": [
+                3145792,
+                3145815,
+                3145920,
+                3145937,
+                3145980,
+                3146014
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 3145934,
+                                    "scriptName": "CandleFlicker",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 3145937,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "candleBloom"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145980,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "candleLight"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.6499999761581421,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "flickerSpeed"
+                                            }
+                                        },
+                                        {
+                                            "data": 1.2000000476837159,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxBloomIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.44999998807907107,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxFillIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 1.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxFlickerTime"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.6000000238418579,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxLightIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.800000011920929,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minBloomIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.20000000298023225,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minFillIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minFlickerTime"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.20000000298023225,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minLightIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3146014,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "secondaryLight"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "candlestand2",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -35.5360221862793,
+                                "y": 0.0,
+                                "z": -153.16749572753907
+                            },
+                            "scale": {
+                                "x": 11.800000190734864,
+                                "y": 11.800000190734864,
+                                "z": 11.800000190734864
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.47700536251068118,
+                                "z": 0.0,
+                                "w": 0.878900408744812
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": 56.97999954223633,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -35.5360221862793,
+                                "y": 0.0,
+                                "z": -153.16749572753907
+                            },
+                            "worldScale": {
+                                "x": 11.800000190734864,
+                                "y": 11.800000190734864,
+                                "z": 11.800000190734864
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.47700536251068118,
+                                "z": 0.0,
+                                "w": 0.878900408744812
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3145937,
+            "Parent": 3145934,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "BloomFlame2",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 3145965,
             "Parent": 3145772,
             "Child Entities": [
@@ -28014,6 +32000,48 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 3145980,
+            "Parent": 3145934,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "PointFlame2",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3146014,
+            "Parent": 3145934,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "SecondaryLighT2",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 3146045,
@@ -28698,6 +32726,45 @@
             ]
         },
         {
+            "ID": 5242989,
+            "Parent": 5243144,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 6,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5242990,
+            "Parent": 5243144,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 5,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243064,
+            "Parent": 5243144,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 5243071,
             "Parent": 1048612,
             "Child Entities": [],
@@ -28774,6 +32841,245 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 5243082,
+            "Parent": 5243144,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "BloomFlame1",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243135,
+            "Parent": 5243144,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "PointFlame1",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243144,
+            "Parent": 21,
+            "Child Entities": [
+                5242989,
+                5242990,
+                5243064,
+                5243082,
+                5243135,
+                5243145
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 5243144,
+                                    "scriptName": "CandleFlicker",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 5243082,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "candleBloom"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 5243135,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "candleLight"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.6499999761581421,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "flickerSpeed"
+                                            }
+                                        },
+                                        {
+                                            "data": 1.2000000476837159,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxBloomIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.44999998807907107,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxFillIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 1.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxFlickerTime"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.6000000238418579,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxLightIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.800000011920929,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minBloomIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.20000000298023225,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minFillIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minFlickerTime"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.20000000298023225,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minLightIntensity"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 5243145,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "secondaryLight"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "candlestand1",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 45.97284698486328,
+                                "y": 2.720722198486328,
+                                "z": -20.051586151123048
+                            },
+                            "scale": {
+                                "x": 11.800000190734864,
+                                "y": 11.800000190734864,
+                                "z": 11.800000190734864
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": -0.4019477665424347,
+                                "z": 0.0,
+                                "w": 0.9156625866889954
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -47.39999771118164,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 45.97284698486328,
+                                "y": 2.720722198486328,
+                                "z": -20.051586151123048
+                            },
+                            "worldScale": {
+                                "x": 11.800000190734864,
+                                "y": 11.800000190734864,
+                                "z": 11.800000190734864
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": -0.4019477665424347,
+                                "z": 0.0,
+                                "w": 0.9156625866889954
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243145,
+            "Parent": 5243144,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 4745612000228907885
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "SecondaryLighT1",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         }
     ],
     "Layers": {

@@ -44,4 +44,10 @@ namespace Events {
 
     IGE::Assets::GUID mGUID;
   };
+
+  class ToggleImGui : public Event {
+  public:
+    ToggleImGui() {}
+    inline std::string GetName() const noexcept override { return "Toggling ImGui"; }
+  };
 }

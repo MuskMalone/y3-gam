@@ -341,6 +341,13 @@ namespace GUI
         modified = true;
       }
 
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0); ImGui::Text("Gamma Value: ");
+      ImGui::TableSetColumnIndex(1);
+      if (ImGui::DragFloat("##GammVal", &globalProps.gammaValue, 0.01f, 0.f, FLT_MAX, "%.3f")) {
+        modified = true;
+      }
+
       ImGui::EndTable();
     }
 

@@ -188,6 +188,19 @@
             }
         },
         {
+            "key": "PseudoLamp",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "PauseMenu",
             "value": {
                 "shaders": [],
@@ -280,6 +293,19 @@
         },
         {
             "key": "BumpyGround",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "Level4",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
