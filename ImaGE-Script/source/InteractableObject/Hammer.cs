@@ -41,7 +41,7 @@ public class Hammer : Entity, IInventoryItem
 
   public void OnUsed()
   {
-    Destroy(mEntityID);
+    Destroy();
   }
 
   void Start()
