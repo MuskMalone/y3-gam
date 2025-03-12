@@ -9196,34 +9196,6 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "..\\Assets\\Audio\\GardenAmbience_BGM.wav",
-                                "value": {
-                                    "guid": {
-                                        "ID": 1367675903760881373
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 0.00800000037997961,
-                                            "y": 6.721551418304443,
-                                            "z": -1.9971760511398316
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": true,
-                                        "playOnAwake": true,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "LINEAR",
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
-                                    }
-                                }
-                            },
-                            {
                                 "key": "BGM",
                                 "value": {
                                     "guid": {
@@ -9382,13 +9354,13 @@
                             "z": 0.0
                         },
                         "staticFriction": 1.0,
-                        "dynamicFriction": 10.0,
+                        "dynamicFriction": 1.0,
                         "restitution": 0.0,
-                        "gravityFactor": 40.0,
+                        "gravityFactor": 0.0,
                         "linearDamping": 10.0,
                         "motionType": "DYNAMIC",
                         "axisLock": 0,
-                        "angularAxisLock": 5
+                        "angularAxisLock": 7
                     }
                 },
                 {
@@ -9423,14 +9395,14 @@
                                         }
                                     },
                                     {
-                                        "data": 15.0,
+                                        "data": 1000.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "extraGravityFactorDuringDescent"
                                         }
                                     },
                                     {
-                                        "data": 5.0,
+                                        "data": 0.10000000149011612,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "initialGravityFactor"
@@ -10713,6 +10685,28 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
                     }
                 }
             ]
