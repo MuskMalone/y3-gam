@@ -37,6 +37,7 @@ namespace Mono
 		ScriptInstance mEntityBaseTemplate;
 		
 	public:
+		static std::map<std::string, MonoClass*> mMonoUtilsMap; //tch: i added this
 		static std::unordered_map<std::string, ScriptFieldType> mScriptFieldTypeMap;
 		static std::unordered_map<ScriptFieldType, std::string> mRevClassMap;			//Rev Map of Scripts, for getting the name of script based on type 
 		static std::vector < std::tuple<std::string, int, int>>mScreenShotInfo;
@@ -451,6 +452,8 @@ namespace Mono
 		static bool OnTriggerEnter(ECS::Entity trigger, ECS::Entity other);
 
 		static bool OnTriggerExit(ECS::Entity trigger, ECS::Entity other);
+
+		static MonoArray* GetContactPoints(ECS::Entity entity1, ECS::Entity entity2);
 
 		float GetShortestDistance(ECS::Entity::EntityID e1, ECS::Entity::EntityID e2);
 

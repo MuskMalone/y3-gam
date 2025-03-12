@@ -66,9 +66,10 @@ namespace IGE {
 				ECS::Entity entity, glm::vec3 const& origin, glm::vec3 const& end,
 				RaycastHit& result
 			);
-
+			bool OnTriggerPersists(ECS::Entity trigger, ECS::Entity other);
 			bool OnTriggerEnter(ECS::Entity trigger, ECS::Entity other);
 			bool OnTriggerExit(ECS::Entity trigger, ECS::Entity other);
+			std::vector<physx::PxContactPairPoint> GetContactPoints(ECS::Entity entity1, ECS::Entity entity2);
 
 			float GetShortestDistance(ECS::Entity e1, ECS::Entity e2);
 
@@ -101,6 +102,7 @@ namespace IGE {
 			std::unordered_map<void*, ECS::Entity> mRigidBodyToEntity;
 
 			std::unordered_map<void*, std::unordered_map<void*, int>> mOnTriggerPairs;
+			std::unordered_map<void*, std::unordered_map<void*, std::vector<physx::PxContactPairPoint>>> mOnContactPairs;
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> _mSelf;
 			static std::mutex _mMutex;
 			PhysicsSystem(PhysicsSystem& other) = delete;

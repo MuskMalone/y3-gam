@@ -37,7 +37,7 @@ namespace IGE {
 			mPvd{ PxCreatePvd(*mFoundation) },
 			mPhysics{ PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation, physx::PxTolerancesScale(), true, mPvd) },
 			mMaterial{ mPhysics->createMaterial(0.5f, 0.5f, 0.6f) },
-			mRigidBodyIDs{}, mRigidBodyToEntity{}, mEventManager{ new PhysicsEventManager{mRigidBodyIDs, mRigidBodyToEntity, mOnTriggerPairs} }
+			mRigidBodyIDs{}, mRigidBodyToEntity{}, mEventManager{ new PhysicsEventManager{mRigidBodyIDs, mRigidBodyToEntity, mOnTriggerPairs, mOnContactPairs} }
 			//mTempAllocator{ 10 * 1024 * 1024 },
 			//mJobSystem{ cMaxPhysicsJobs, cMaxPhysicsBarriers, static_cast<int>(thread::hardware_concurrency() - 1) }
 		{
@@ -157,7 +157,7 @@ namespace IGE {
 				// Clear any previous frame data (if needed for this physics step).
 
 				mOnTriggerPairs.clear();
-
+				mOnContactPairs.clear();
 				// Simulate one fixed time step (e.g., 1/60 second).
 				mScene->simulate(gTimeStep);
 				mScene->fetchResults(true);
@@ -689,6 +689,7 @@ namespace IGE {
 			mRigidBodyToEntity.clear();
 			mInactiveActors.clear();
 			mOnTriggerPairs.clear();
+			mOnContactPairs.clear();
 			mScene->simulate(0.0f);
 			mScene->fetchResults(true);
 			mScene->setSimulationEventCallback(mEventManager);
@@ -808,6 +809,38 @@ namespace IGE {
 					mOnTriggerPairs.find(triggerrb) != mOnTriggerPairs.end() &&
 					mOnTriggerPairs.at(triggerrb).find(otherrb) != mOnTriggerPairs.at(triggerrb).end() &&
 					mOnTriggerPairs.at(triggerrb).at(otherrb) == (int)TriggerResult::LOST
+					);
+			}
+			return false;
+		}
+
+		std::vector<physx::PxContactPairPoint> PhysicsSystem::GetContactPoints(ECS::Entity entity1, ECS::Entity entity2)
+		{
+			void* firstactor{  reinterpret_cast<void*>(GetRBIter(entity1)) };
+			void* secondactor{ reinterpret_cast<void*>(GetRBIter(entity2)) };
+			
+			if (!firstactor || !secondactor)
+				return std::vector<physx::PxContactPairPoint>();
+
+			if (mOnContactPairs.find(firstactor) != mOnContactPairs.end() && mOnContactPairs[firstactor].find(secondactor) != mOnContactPairs[firstactor].end()) {
+				return mOnContactPairs[firstactor][secondactor];
+			}
+			if (mOnContactPairs.find(secondactor) != mOnContactPairs.end() && mOnContactPairs[secondactor].find(firstactor) != mOnContactPairs[secondactor].end()) {
+				return mOnContactPairs[secondactor][firstactor];
+			}
+			return std::vector<physx::PxContactPairPoint>{};
+		}
+
+
+		bool PhysicsSystem::OnTriggerPersists(ECS::Entity trigger, ECS::Entity other)
+		{
+			auto triggerrb{ reinterpret_cast<void*>(GetRBIter(trigger)) };
+			auto otherrb{ reinterpret_cast<void*>(GetRBIter(other)) };
+			if (triggerrb && otherrb) {
+				return (
+					mOnTriggerPairs.find(triggerrb) != mOnTriggerPairs.end() &&
+					mOnTriggerPairs.at(triggerrb).find(otherrb) != mOnTriggerPairs.at(triggerrb).end() &&
+					mOnTriggerPairs.at(triggerrb).at(otherrb) == (int)TriggerResult::PERSISTS
 					);
 			}
 			return false;
@@ -1108,8 +1141,10 @@ namespace IGE {
 			physx::PxPairFlag::eCONTACT_DEFAULT |
 			physx::PxPairFlag::eNOTIFY_TOUCH_FOUND |
 			physx::PxPairFlag::eNOTIFY_TOUCH_LOST |
+			physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS | 
 			physx::PxPairFlag::eNOTIFY_CONTACT_POINTS |
-			physx::PxPairFlag::eTRIGGER_DEFAULT;
+			physx::PxPairFlag::eTRIGGER_DEFAULT |
+			physx::PxPairFlag::eDETECT_DISCRETE_CONTACT;
 
 		return IGE_LAYERMGR.LayerFilterShader(
 				attributes0, filterData0, attributes1, filterData1, pairFlags, constantBlock, constantBlockSize);

@@ -15,15 +15,20 @@
 namespace IGE {
 	namespace Physics {
 		enum class TriggerResult : int {
-			LOST, FOUND, NONE
+			NONE = 0, LOST, FOUND, PERSISTS
+		};
+		enum class ContactResult {
+			NONE = 0, FOUND, LOST, PERSISTS
 		};
 		class PhysicsEventManager : public physx::PxSimulationEventCallback {
 		public:
 			PhysicsEventManager(
 				std::unordered_map<void*, physx::PxRigidDynamic*>& rbid,
 				std::unordered_map<void*, ECS::Entity>& rbToEntity,
-				std::unordered_map<void*, std::unordered_map<void*, int>>& triggerpairs
-			) : mRigidBodyIDs{ rbid }, mRigidBodyToEntity{ rbToEntity }, mOnTriggerPairs{triggerpairs} {}
+				std::unordered_map<void*, std::unordered_map<void*, int>>& triggerpairs,
+				std::unordered_map<void*, std::unordered_map<void*, std::vector<physx::PxContactPairPoint>>>& contactpairs
+			) : mRigidBodyIDs{ rbid }, mRigidBodyToEntity{ rbToEntity }, mOnTriggerPairs{ triggerpairs }, mOnContactPairs{ contactpairs } {
+			}
 		private:
 			PhysicsEventManager() = delete;
 
@@ -183,6 +188,7 @@ namespace IGE {
 			std::unordered_map<void*, physx::PxRigidDynamic*> const& mRigidBodyIDs;
 			std::unordered_map<void*, ECS::Entity> const& mRigidBodyToEntity;
 			std::unordered_map<void*, std::unordered_map<void*, int>>& mOnTriggerPairs;
+			std::unordered_map<void*, std::unordered_map<void*, std::vector<physx::PxContactPairPoint>>>& mOnContactPairs;
 
 		};
 	}
