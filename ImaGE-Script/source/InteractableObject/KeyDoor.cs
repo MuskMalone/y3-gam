@@ -110,8 +110,7 @@ public class KeyDoor : Entity
         if (isZoomingOut)
         {
           elapsedTime += Time.deltaTime;
-          float t = elapsedTime / zoomOutDuration;
-          t = t * t * (3 - 2 * t); // SmoothStep easing
+          float t = Mathf.SmoothStep(elapsedTime / zoomOutDuration);
           Vector3 newPos = Vector3.Lerp(zoomInPos, zoomOutPos, t);
           InternalCalls.SetPosition(keyCamera.mEntityID, ref newPos);
 
