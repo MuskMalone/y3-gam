@@ -3964,13 +3964,13 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 36.70000076293945,
-                            "y": 1.850000023841858,
+                            "x": 41.0,
+                            "y": 2.1500000953674318,
                             "z": 13.640000343322754
                         },
                         "positionOffset": {
                             "x": 2.799999952316284,
-                            "y": -6.599999904632568,
+                            "y": -9.100000381469727,
                             "z": 54.0
                         },
                         "degreeRotationOffsetEuler": {
@@ -18366,6 +18366,7 @@
                 531,
                 1048756,
                 1049046,
+                1049209,
                 1049503
             ],
             "Components": [
@@ -34430,6 +34431,26 @@
             ]
         },
         {
+            "ID": 1048861,
+            "Parent": 1049288,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 15,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 1048890,
             "Parent": 313,
             "Child Entities": [],
@@ -38761,6 +38782,26 @@
             ]
         },
         {
+            "ID": 1049172,
+            "Parent": 2098172,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 52,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 1049182,
             "Parent": 376,
             "Child Entities": [
@@ -38780,6 +38821,932 @@
                 },
                 "subDataId": 0,
                 "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049183,
+            "Parent": 6291685,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 68,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 7.485260009765625,
+                                "y": 15.164756774902344,
+                                "z": -78.15217590332031
+                            },
+                            "scale": {
+                                "x": 89.50900268554688,
+                                "y": 30.829999923706056,
+                                "z": 20.973541259765626
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 368.2536926269531,
+                                "y": 117.90055084228516,
+                                "z": -177.72540283203126
+                            },
+                            "worldScale": {
+                                "x": 89.50900268554688,
+                                "y": 30.829999923706056,
+                                "z": 20.973541259765626
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049194,
+            "Parent": 1049697,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 64,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049195,
+            "Parent": 1049697,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 65,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049196,
+            "Parent": 1049697,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 66,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049200,
+            "Parent": 3146839,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 80,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049206,
+            "Parent": 5243226,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 8,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049209,
+            "Parent": 394,
+            "Child Entities": [
+                1049238,
+                4195104
+            ],
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 8976916535523586720
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "[Folder] Black Borders",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049213,
+            "Parent": 1049745,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 24,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049221,
+            "Parent": 1049639,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Bloom": {
+                        "threshold": 1.0,
+                        "intensity": 1.2000000476837159,
+                        "range": 10.0
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Puzzle_PaintingFragment2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.05699920654296875,
+                            "y": 0.7352066040039063,
+                            "z": 0.167999267578125
+                        },
+                        "scale": {
+                            "x": 0.189361110329628,
+                            "y": 0.18637323379516602,
+                            "z": 0.12600000202655793
+                        },
+                        "rotation": {
+                            "x": -0.17209097743034364,
+                            "y": -0.3502432107925415,
+                            "z": 0.10440273582935333,
+                            "w": 0.9147756695747376
+                        },
+                        "eulerAngles": {
+                            "x": -29.157289505004884,
+                            "y": -37.21836853027344,
+                            "z": 23.031599044799806
+                        },
+                        "worldPos": {
+                            "x": 67.0093002319336,
+                            "y": 64.7839584350586,
+                            "z": -428.8207092285156
+                        },
+                        "worldScale": {
+                            "x": 0.189361110329628,
+                            "y": 0.18637323379516602,
+                            "z": 0.12600000202655793
+                        },
+                        "worldRot": {
+                            "x": -0.17209097743034364,
+                            "y": -0.3502432107925415,
+                            "z": 0.10440273582935333,
+                            "w": 0.9147756695747376
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 16148162105990453228
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Puzzle_PaintingFragment2",
+                        "GUID": {
+                            "ID": 13853952119863121254
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.7950000166893005,
+                            "y": 1.399999976158142,
+                            "z": 0.6629999876022339
+                        },
+                        "positionOffset": {
+                            "x": 0.5,
+                            "y": -0.30000001192092898,
+                            "z": 0.10000000149011612
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 22.0,
+                            "y": 35.0,
+                            "z": -5.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.19468018412590028,
+                            "y": 0.28696227073669436,
+                            "z": -0.09815899282693863,
+                            "w": 0.9328007102012634
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1049221,
+                                "scriptName": "Fragment",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 1049238,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "BlackBorder1"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4195104,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "BlackBorder2"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 415,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "GardenFragment"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 634,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ParticleBurst"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 26,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Particles"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 6.400000095367432,
+                                            "y": 15.0,
+                                            "z": -22.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "downPos"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "explosionWaitTime"
+                                        }
+                                    },
+                                    {
+                                        "data": "FlyIn",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "fragAnimNameEnterBox"
+                                        }
+                                    },
+                                    {
+                                        "data": "FlyUp",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "fragAnimNameFlyUp"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 118,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fragmentCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 123,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fragmentPickupUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 0,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 6.400000095367432,
+                                            "y": 24.0,
+                                            "z": -22.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "startPos"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 75,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 6.400000095367432,
+                                            "y": 15.0,
+                                            "z": -27.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "zoomPos"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "FlyUp",
+                                "value": {
+                                    "ID": 12704832680008719980
+                                }
+                            },
+                            {
+                                "key": "Hover",
+                                "value": {
+                                    "ID": 7795434828334433536
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "Hover",
+                            "second": {
+                                "ID": 7795434828334433536
+                            }
+                        },
+                        "repeat": true
+                    }
+                },
+                {
+                    "EmitterSystem": {
+                        "emitters": [
+                            {
+                                "vertices": [
+                                    {
+                                        "x": 0.5,
+                                        "y": 0.0,
+                                        "z": 0.5,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    }
+                                ],
+                                "col": {
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0,
+                                    "w": 1.0
+                                },
+                                "vel": {
+                                    "x": 0.5,
+                                    "y": 0.0,
+                                    "z": -0.5
+                                },
+                                "gravity": {
+                                    "x": 0.0,
+                                    "y": 0.019999999552965165,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "angvel": 0.0,
+                                "lifetime": 3.0,
+                                "speed": 1.5,
+                                "frequency": 1.0,
+                                "type": 1,
+                                "vCount": 1,
+                                "preset": 2,
+                                "particlesPerFrame": 2
+                            },
+                            {
+                                "vertices": [
+                                    {
+                                        "x": 0.5,
+                                        "y": 0.699999988079071,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    }
+                                ],
+                                "col": {
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0,
+                                    "w": 1.0
+                                },
+                                "vel": {
+                                    "x": 0.5,
+                                    "y": 0.0,
+                                    "z": -0.5
+                                },
+                                "gravity": {
+                                    "x": 0.0,
+                                    "y": 0.019999999552965165,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "angvel": 0.0,
+                                "lifetime": 3.0,
+                                "speed": 1.5,
+                                "frequency": 1.0,
+                                "type": 1,
+                                "vCount": 1,
+                                "preset": 2,
+                                "particlesPerFrame": 2
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049224,
+            "Parent": 1049749,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 45,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049228,
+            "Parent": 2098172,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 51,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049229,
+            "Parent": 3146839,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 78,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049230,
+            "Parent": 5243226,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 6,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049238,
+            "Parent": 1049209,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8976916535523586720
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "BlackBorder1",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049282,
+            "Parent": 7340321,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 61,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049284,
+            "Parent": 2098172,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 50,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049288,
+            "Parent": 2097866,
+            "Child Entities": [
+                1048861,
+                1049623,
+                1049703,
+                1049713,
+                2098168,
+                6291849,
+                9437241,
+                10486318
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 10,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049337,
+            "Parent": 7340321,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 58,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049375,
+            "Parent": 5243226,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 9,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049380,
+            "Parent": 1049720,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 28,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -40499,6 +41466,321 @@
             ]
         },
         {
+            "ID": 1049617,
+            "Parent": 1049745,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 20,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049623,
+            "Parent": 1049288,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 17,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049639,
+            "Parent": null,
+            "Child Entities": [
+                1049221
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Puzzle_PaintingFragments",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 67.06629943847656,
+                            "y": 64.04875183105469,
+                            "z": -428.98870849609377
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 67.06629943847656,
+                            "y": 64.04875183105469,
+                            "z": -428.98870849609377
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049697,
+            "Parent": 2097486,
+            "Child Entities": [
+                1049194,
+                1049195,
+                1049196,
+                3146834
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 63,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049703,
+            "Parent": 1049288,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 12,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049710,
+            "Parent": 1049745,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 21,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049712,
+            "Parent": 1049745,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 22,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049713,
+            "Parent": 1049288,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 18,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049716,
+            "Parent": 1049745,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 23,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049717,
+            "Parent": 1049745,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 25,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049718,
+            "Parent": 1049745,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 26,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049720,
+            "Parent": 2097866,
+            "Child Entities": [
+                1049380,
+                1049721,
+                1049725,
+                1049734,
+                1049736,
+                1049737,
+                3146844,
+                6291543
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 27,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049721,
+            "Parent": 1049720,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 29,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 1049724,
             "Parent": 385,
             "Child Entities": [],
@@ -40569,6 +41851,285 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 1049725,
+            "Parent": 1049720,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 32,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049734,
+            "Parent": 1049720,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 33,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049736,
+            "Parent": 1049720,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 34,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049737,
+            "Parent": 1049720,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 35,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049740,
+            "Parent": 2097866,
+            "Child Entities": [
+                3146058
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 36,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049741,
+            "Parent": 6291685,
+            "Child Entities": [
+                1049742,
+                1049744,
+                2098206
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 38,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049742,
+            "Parent": 1049741,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 40,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049744,
+            "Parent": 1049741,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 41,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049745,
+            "Parent": 2097866,
+            "Child Entities": [
+                1049213,
+                1049617,
+                1049710,
+                1049712,
+                1049716,
+                1049717,
+                1049718
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 19,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049748,
+            "Parent": 6291685,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 42,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 7.342681884765625,
+                                "y": 4.3000030517578129,
+                                "z": -40.30101013183594
+                            },
+                            "scale": {
+                                "x": 81.66000366210938,
+                                "y": 8.479999542236329,
+                                "z": 25.10099983215332
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 368.1111145019531,
+                                "y": 107.03579711914063,
+                                "z": -139.87423706054688
+                            },
+                            "worldScale": {
+                                "x": 81.66000366210938,
+                                "y": 8.479999542236329,
+                                "z": 25.10099983215332
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1049749,
+            "Parent": 6291685,
+            "Child Entities": [
+                1049224,
+                2097469
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 43,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 2097157,
@@ -41104,6 +42665,26 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 2097208,
+            "Parent": 7340321,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 62,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 2097214,
@@ -41750,6 +43331,50 @@
             ]
         },
         {
+            "ID": 2097469,
+            "Parent": 1049749,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 44,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097486,
+            "Parent": 6291685,
+            "Child Entities": [
+                1049697,
+                2098172,
+                7340321
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 46,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097493,
             "Parent": 2097203,
             "Child Entities": [
@@ -42306,6 +43931,52 @@
             ]
         },
         {
+            "ID": 2097817,
+            "Parent": 6292013,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 4,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097866,
+            "Parent": 6291685,
+            "Child Entities": [
+                1049288,
+                1049720,
+                1049740,
+                1049745,
+                6292013
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097870,
             "Parent": 1048897,
             "Child Entities": [],
@@ -42384,6 +44055,227 @@
             ]
         },
         {
+            "ID": 2097905,
+            "Parent": 6291685,
+            "Child Entities": [
+                2097908,
+                2097909,
+                2097912,
+                2098075,
+                3146832
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 69,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097908,
+            "Parent": 2097905,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 70,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "PseudoLampBloom",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097909,
+            "Parent": 2097905,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 72,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097912,
+            "Parent": 2097905,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 73,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2098075,
+            "Parent": 2097905,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 74,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2098127,
+            "Parent": 3146839,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 79,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2098168,
+            "Parent": 1049288,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 16,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2098172,
+            "Parent": 2097486,
+            "Child Entities": [
+                1049172,
+                1049228,
+                1049284,
+                2098211,
+                3146809,
+                5243628,
+                6291521
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 47,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2098206,
+            "Parent": 1049741,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 39,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2098211,
+            "Parent": 2098172,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 48,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2098275,
             "Parent": 9437476,
             "Child Entities": [],
@@ -42460,6 +44352,66 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 2098276,
+            "Parent": 7340321,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 59,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2098278,
+            "Parent": 7340321,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 57,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2098344,
+            "Parent": 7340321,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 60,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 3145735,
@@ -42921,6 +44873,26 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 3146058,
+            "Parent": 1049740,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 37,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 3146073,
@@ -43412,6 +45384,26 @@
             ]
         },
         {
+            "ID": 3146300,
+            "Parent": 7340321,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 56,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 3146345,
             "Parent": 3146369,
             "Child Entities": [],
@@ -43642,6 +45634,170 @@
             ]
         },
         {
+            "ID": 3146809,
+            "Parent": 2098172,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 49,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3146832,
+            "Parent": 2097905,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 71,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    },
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "POINT",
+                            "color": {
+                                "x": 0.9813225269317627,
+                                "y": 0.9933110475540161,
+                                "z": 0.7175759077072144
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 5.0,
+                            "outerAngle": 12.5,
+                            "range": 10.0,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3146834,
+            "Parent": 1049697,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 67,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3146839,
+            "Parent": 6291685,
+            "Child Entities": [
+                1049200,
+                1049229,
+                2098127,
+                3146840,
+                4195192
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 75,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3146840,
+            "Parent": 3146839,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 76,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3146844,
+            "Parent": 1049720,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 30,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 4194351,
             "Parent": 3146099,
             "Child Entities": [],
@@ -43868,6 +46024,119 @@
             ]
         },
         {
+            "ID": 4194871,
+            "Parent": 6292013,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 4195104,
+            "Parent": 1049209,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8976916535523586720
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "BlackBorder2",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 4195192,
+            "Parent": 3146839,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 77,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "PseudoLampBloom",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243226,
+            "Parent": 6292013,
+            "Child Entities": [
+                1049206,
+                1049230,
+                1049375,
+                6291708
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 5,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243628,
+            "Parent": 2098172,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 53,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 5243924,
             "Parent": 9437476,
             "Child Entities": [],
@@ -43944,6 +46213,144 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 6291521,
+            "Parent": 2098172,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 54,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 6291543,
+            "Parent": 1049720,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 31,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 6291685,
+            "Parent": null,
+            "Child Entities": [
+                1049183,
+                1049741,
+                1049748,
+                1049749,
+                2097486,
+                2097866,
+                2097905,
+                3146839
+            ],
+            "Position": {
+                "x": 360.7684326171875,
+                "y": 102.73579406738281,
+                "z": -99.57322692871094
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 6291708,
+            "Parent": 5243226,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 6291849,
+            "Parent": 1049288,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 11,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 6292013,
+            "Parent": 2097866,
+            "Child Entities": [
+                2097817,
+                4194871,
+                5243226
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 6292286,
@@ -44024,6 +46431,54 @@
             ]
         },
         {
+            "ID": 7340321,
+            "Parent": 2097486,
+            "Child Entities": [
+                1049282,
+                1049337,
+                2097208,
+                2098276,
+                2098278,
+                2098344,
+                3146300
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 55,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 9437241,
+            "Parent": 1049288,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 13,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 9437476,
             "Parent": 248,
             "Child Entities": [
@@ -44085,6 +46540,26 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 10486318,
+            "Parent": 1049288,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 11535938628542336772
+                },
+                "subDataId": 14,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "AltarArea"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         }
     ],
     "Layers": {
@@ -44093,7 +46568,7 @@
             "Player",
             "UI",
             "",
-            "",
+            "AltarArea",
             "",
             "",
             "",
@@ -44111,7 +46586,7 @@
             0,
             1,
             0,
-            0,
+            1,
             0,
             0,
             0,

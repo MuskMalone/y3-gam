@@ -1,0 +1,540 @@
+{
+    "Name": "Puzzle_Fragment",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Puzzle_PaintingFragments",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 17.231910705566408,
+                            "y": 7.3809638023376469,
+                            "z": -17.49724006652832
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 17.231910705566408,
+                            "y": 7.3809638023376469,
+                            "z": -17.49724006652832
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Bloom": {
+                        "threshold": 1.0,
+                        "intensity": 1.2000000476837159,
+                        "range": 10.0
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Puzzle_PaintingFragment1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 54.542625427246097,
+                            "y": 4.908152103424072,
+                            "z": 15.86824893951416
+                        },
+                        "scale": {
+                            "x": 0.189361110329628,
+                            "y": 0.18637323379516602,
+                            "z": 0.12600000202655793
+                        },
+                        "rotation": {
+                            "x": -0.17209097743034364,
+                            "y": -0.3502432107925415,
+                            "z": 0.10440273582935333,
+                            "w": 0.9147756695747376
+                        },
+                        "eulerAngles": {
+                            "x": -29.157289505004884,
+                            "y": -37.21836853027344,
+                            "z": 23.031599044799806
+                        },
+                        "worldPos": {
+                            "x": 71.7745361328125,
+                            "y": 12.289115905761719,
+                            "z": -1.6289911270141602
+                        },
+                        "worldScale": {
+                            "x": 0.189361110329628,
+                            "y": 0.18637323379516602,
+                            "z": 0.12600000202655793
+                        },
+                        "worldRot": {
+                            "x": -0.17209097743034364,
+                            "y": -0.3502432107925415,
+                            "z": 0.10440273582935333,
+                            "w": 0.9147756695747376
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 16148162105990453228
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Puzzle_PaintingFragment1",
+                        "GUID": {
+                            "ID": 13853952119863121254
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.7950000166893005,
+                            "y": 1.399999976158142,
+                            "z": 0.6629999876022339
+                        },
+                        "positionOffset": {
+                            "x": 0.6000000238418579,
+                            "y": 0.800000011920929,
+                            "z": 0.10000000149011612
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 22.0,
+                            "y": 35.0,
+                            "z": -5.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.19468018412590028,
+                            "y": 0.28696227073669436,
+                            "z": -0.09815899282693863,
+                            "w": 0.9328007102012634
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 203,
+                                "scriptName": "Fragment",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 130,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "BlackBorder1"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 131,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "BlackBorder2"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 415,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "GardenFragment"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 634,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ParticleBurst"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 26,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Particles"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 6.400000095367432,
+                                            "y": 15.0,
+                                            "z": -22.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "downPos"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "explosionWaitTime"
+                                        }
+                                    },
+                                    {
+                                        "data": "FlyIn",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "fragAnimNameEnterBox"
+                                        }
+                                    },
+                                    {
+                                        "data": "FlyUp",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "fragAnimNameFlyUp"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 118,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fragmentCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 123,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fragmentPickupUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 0,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 6.400000095367432,
+                                            "y": 24.0,
+                                            "z": -22.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "startPos"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 75,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 6.400000095367432,
+                                            "y": 15.0,
+                                            "z": -27.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "zoomPos"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "FlyUp",
+                                "value": {
+                                    "ID": 12704832680008719980
+                                }
+                            },
+                            {
+                                "key": "Hover",
+                                "value": {
+                                    "ID": 7795434828334433536
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "Hover",
+                            "second": {
+                                "ID": 7795434828334433536
+                            }
+                        },
+                        "repeat": true
+                    }
+                },
+                {
+                    "EmitterSystem": {
+                        "emitters": [
+                            {
+                                "vertices": [
+                                    {
+                                        "x": 0.5,
+                                        "y": 0.0,
+                                        "z": 0.5,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    }
+                                ],
+                                "col": {
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0,
+                                    "w": 1.0
+                                },
+                                "vel": {
+                                    "x": 0.5,
+                                    "y": 0.0,
+                                    "z": -0.5
+                                },
+                                "gravity": {
+                                    "x": 0.0,
+                                    "y": 0.019999999552965165,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "angvel": 0.0,
+                                "lifetime": 3.0,
+                                "speed": 1.5,
+                                "frequency": 1.0,
+                                "type": 1,
+                                "vCount": 1,
+                                "preset": 2,
+                                "particlesPerFrame": 2
+                            },
+                            {
+                                "vertices": [
+                                    {
+                                        "x": 0.5,
+                                        "y": 0.699999988079071,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    }
+                                ],
+                                "col": {
+                                    "x": 1.0,
+                                    "y": 1.0,
+                                    "z": 1.0,
+                                    "w": 1.0
+                                },
+                                "vel": {
+                                    "x": 0.5,
+                                    "y": 0.0,
+                                    "z": -0.5
+                                },
+                                "gravity": {
+                                    "x": 0.0,
+                                    "y": 0.019999999552965165,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                },
+                                "angvel": 0.0,
+                                "lifetime": 3.0,
+                                "speed": 1.5,
+                                "frequency": 1.0,
+                                "type": 1,
+                                "vCount": 1,
+                                "preset": 2,
+                                "particlesPerFrame": 2
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
