@@ -12,10 +12,10 @@
                 115,
                 135,
                 1048618,
+                1049184,
                 2097595,
                 2097603,
-                4194315,
-                4194535
+                5243111
             ],
             "Components": [
                 {
@@ -71,9 +71,20 @@
                     }
                 },
                 {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 37,
+                                "scriptName": "Transition",
+                                "scriptFieldInstList": []
+                            }
+                        ]
+                    }
+                },
+                {
                     "Canvas": {
                         "isVisible": true,
-                        "hasTransition": false,
+                        "hasTransition": true,
                         "transitionProgress": 1.0,
                         "transitionSpeed": 1.0,
                         "fadeColor": {
@@ -91,8 +102,8 @@
             "ID": 52,
             "Parent": 37,
             "Child Entities": [
-                63,
-                1048615
+                1048615,
+                1048639
             ],
             "Components": [
                 {
@@ -145,78 +156,6 @@
                 {
                     "Layer": {
                         "layerName": "UI"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 63,
-            "Parent": 52,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "DialogueBox",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 1.9000000953674317,
-                            "y": -6.400000095367432,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 16.65999984741211,
-                            "y": 5.340000152587891,
-                            "z": -0.4000000059604645
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 1.9000000953674317,
-                            "y": -6.400000095367432,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 16.65999984741211,
-                            "y": 5.340000152587891,
-                            "z": -0.4000000059604645
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 0.8627451062202454
-                        },
-                        "textureAssetGUID": {
-                            "ID": 18060467368391342928
-                        }
                     }
                 }
             ]
@@ -353,6 +292,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "fadeSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isFading"
                                         }
                                     },
                                     {
@@ -883,7 +829,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             },
@@ -908,7 +857,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             }
@@ -1876,7 +1828,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             },
@@ -1901,7 +1856,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             },
@@ -1926,7 +1884,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             },
@@ -1951,7 +1912,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             },
@@ -1976,7 +1940,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             },
@@ -2001,7 +1968,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             }
@@ -2068,10 +2038,41 @@
                                 "scriptName": "PlayerFootsteps",
                                 "scriptFieldInstList": [
                                     {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "doorEntryTrigger"
+                                        }
+                                    },
+                                    {
+                                        "data": 8,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "footstepSoundCount"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "footstepVolume"
+                                        }
+                                    },
+                                    {
                                         "data": 0.6000000238418579,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "interval"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isLevel1"
                                         }
                                     },
                                     {
@@ -2092,6 +2093,27 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerMoveScript"
+                                        }
+                                    },
+                                    {
+                                        "data": 1500.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "ppPararm"
+                                        }
+                                    },
+                                    {
+                                        "data": 0,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "ppType"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "speedThreshold"
                                         }
                                     }
                                 ]
@@ -2134,7 +2156,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             }
@@ -2428,18 +2453,6 @@
                         "materialGUID": {
                             "ID": 9989484729768110263
                         }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Frame3",
-                        "GUID": {
-                            "ID": 1205933146232742357
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
@@ -3408,7 +3421,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             }
@@ -3718,13 +3734,13 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 4.099999904632568,
-                            "y": 4.5,
-                            "z": 3.5999999046325685
+                            "x": 2.5,
+                            "y": 3.9000000953674318,
+                            "z": 1.899999976158142
                         },
                         "positionOffset": {
                             "x": 10.199999809265137,
-                            "y": -5.099999904632568,
+                            "y": -5.5,
                             "z": 14.600000381469727
                         },
                         "degreeRotationOffsetEuler": {
@@ -3822,9 +3838,9 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 2.5,
+                            "x": 1.899999976158142,
                             "y": 3.0,
-                            "z": 2.5
+                            "z": 1.899999976158142
                         },
                         "positionOffset": {
                             "x": -7.599999904632568,
@@ -5436,7 +5452,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             }
@@ -5446,7 +5465,7 @@
                 {
                     "Tag": {
                         "tag": "DialogueText",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -5504,7 +5523,7 @@
                             "z": 0.0,
                             "w": 1.0
                         },
-                        "scale": 0.009999999776482582,
+                        "scale": 0.006000000052154064,
                         "textAssetGUID": {
                             "ID": 11715672305158928427
                         },
@@ -5528,7 +5547,7 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
-                                            "entityID": 63,
+                                            "entityID": 1048639,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -5538,7 +5557,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 4194738,
+                                            "entityID": 5243118,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -5548,7 +5567,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 4194737,
+                                            "entityID": 5243157,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -5558,7 +5577,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 1048616,
+                                            "entityID": 2097193,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -5568,7 +5587,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 2097601,
+                                            "entityID": 3146177,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -5578,7 +5597,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 4194542,
+                                            "entityID": 5243314,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -5588,7 +5607,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 4194581,
+                                            "entityID": 5243313,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -5598,7 +5617,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 1048617,
+                                            "entityID": 2097192,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -5640,150 +5659,6 @@
                                 ]
                             }
                         ]
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048616,
-            "Parent": 4194535,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Neutral",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -8.902999877929688,
-                            "y": -5.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -8.902999877929688,
-                            "y": -5.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 11605399919160481108
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048617,
-            "Parent": 4194535,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Thinking",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -8.902999877929688,
-                            "y": -5.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -8.902999877929688,
-                            "y": -5.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 1233074818290280070
-                        }
                     }
                 }
             ]
@@ -6730,9 +6605,9 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 2.5,
-                            "y": 3.0,
-                            "z": 2.5
+                            "x": 1.899999976158142,
+                            "y": 3.0999999046325685,
+                            "z": 1.2999999523162842
                         },
                         "positionOffset": {
                             "x": -1.7000000476837159,
@@ -6910,6 +6785,32 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 1048639,
+            "Parent": 52,
+            "Child Entities": [],
+            "Position": {
+                "x": 1.899999976158142,
+                "y": -6.400000095367432,
+                "z": 0.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 14337001799689692424
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "DialogueBox",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 1048643,
@@ -7380,9 +7281,9 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 3.5,
+                            "x": 2.700000047683716,
                             "y": 2.5,
-                            "z": 3.5
+                            "z": 2.5999999046325685
                         },
                         "positionOffset": {
                             "x": -7.099999904632568,
@@ -8212,9 +8113,9 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 4.5,
-                            "y": 3.0,
-                            "z": 7.0
+                            "x": 3.5,
+                            "y": 3.200000047683716,
+                            "z": 5.599999904632568
                         },
                         "positionOffset": {
                             "x": 2.4000000953674318,
@@ -9110,6 +9011,24 @@
             ]
         },
         {
+            "ID": 1049184,
+            "Parent": 37,
+            "Child Entities": [],
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 1015828374232023724
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097152,
             "Parent": 1048581,
             "Child Entities": [],
@@ -9297,7 +9216,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "LINEAR"
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             },
@@ -9322,7 +9244,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             },
@@ -9347,7 +9272,10 @@
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
-                                        "rolloffType": "NONE"
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
                                     }
                                 }
                             }
@@ -9421,7 +9349,7 @@
                 {
                     "CapsuleCollider": {
                         "radius": 0.5,
-                        "halfheight": 2.299999952316284,
+                        "halfheight": 3.299999952316284,
                         "positionOffset": {
                             "x": 0.0,
                             "y": 0.0,
@@ -9495,6 +9423,20 @@
                                         }
                                     },
                                     {
+                                        "data": 15.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "extraGravityFactorDuringDescent"
+                                        }
+                                    },
+                                    {
+                                        "data": 5.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "initialGravityFactor"
+                                        }
+                                    },
+                                    {
                                         "data": 4.5,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -9549,13 +9491,10 @@
                                 "scriptName": "TutorialFade",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": {
-                                            "entityID": 4194315,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
+                                        "data": 3.0,
+                                        "type": "System.Single",
                                         "scriptField": {
-                                            "fieldName": "fadeImageEntity"
+                                            "fieldName": "fadeDuration"
                                         }
                                     },
                                     {
@@ -9563,6 +9502,16 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "isFading"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 37,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
                                         }
                                     }
                                 ]
@@ -9927,6 +9876,40 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 2097192,
+            "Parent": 5243111,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 12754032475676556068
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Thinking",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097193,
+            "Parent": 5243111,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 12754032475676556068
+                },
+                "subDataId": 6,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 2097230,
@@ -11323,78 +11306,6 @@
             ]
         },
         {
-            "ID": 2097601,
-            "Parent": 4194535,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Sad",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -8.902999877929688,
-                            "y": -5.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -8.902999877929688,
-                            "y": -5.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 7494685273356301810
-                        }
-                    }
-                }
-            ]
-        },
-        {
             "ID": 2097603,
             "Parent": 37,
             "Child Entities": [
@@ -11540,6 +11451,13 @@
                                         "scriptField": {
                                             "fieldName": "finish"
                                         }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "wasBigPaintingActive"
+                                        }
                                     }
                                 ]
                             }
@@ -11667,431 +11585,17 @@
             ]
         },
         {
-            "ID": 4194315,
-            "Parent": 37,
+            "ID": 3146177,
+            "Parent": 5243111,
             "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "FadeImage",
-                        "isActive": true
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 12754032475676556068
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 73.0,
-                            "y": 32.0,
-                            "z": 8.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 73.0,
-                            "y": 32.0,
-                            "z": 8.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 11422530766509655204
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 4194535,
-            "Parent": 37,
-            "Child Entities": [
-                1048616,
-                1048617,
-                2097601,
-                4194542,
-                4194581,
-                4194737,
-                4194738
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "EmotionsOfTara",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 4194542,
-            "Parent": 4194535,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Shocked",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -8.902999877929688,
-                            "y": -5.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -8.902999877929688,
-                            "y": -5.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 13863339516529885375
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 4194581,
-            "Parent": 4194535,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Surprised",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -8.902999877929688,
-                            "y": -6.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -8.902999877929688,
-                            "y": -6.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 12235583251651195842
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 4194737,
-            "Parent": 4194535,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Happy",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -8.902999877929688,
-                            "y": -5.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -8.902999877929688,
-                            "y": -5.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 11411763348412290564
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 4194738,
-            "Parent": 4194535,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Disturbed",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -8.902999877929688,
-                            "y": -5.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -8.902999877929688,
-                            "y": -5.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 17618773469114924600
-                        }
-                    }
-                }
-            ]
+                "subDataId": 5,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 5243107,
@@ -12164,6 +11668,84 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 5243111,
+            "Parent": 37,
+            "Child Entities": [
+                2097192,
+                2097193,
+                3146177,
+                5243118,
+                5243157,
+                5243313,
+                5243314
+            ],
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 12754032475676556068
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243118,
+            "Parent": 5243111,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 12754032475676556068
+                },
+                "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243157,
+            "Parent": 5243111,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 12754032475676556068
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243313,
+            "Parent": 5243111,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 12754032475676556068
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243314,
+            "Parent": 5243111,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 12754032475676556068
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
         }
     ],
     "Layers": {
@@ -12187,7 +11769,7 @@
         ],
         "layerVisibility": [
             1,
-            1,
+            0,
             1,
             1,
             1,
@@ -12500,6 +12082,7 @@
             "y": 1.0,
             "z": 1.0
         },
-        "ambIntensity": 0.0
+        "ambIntensity": 0.0,
+        "gammaValue": 1.7999999523162842
     }
 }
