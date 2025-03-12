@@ -1896,7 +1896,6 @@
                 85,
                 185,
                 233,
-                253,
                 284,
                 414,
                 418,
@@ -1907,15 +1906,14 @@
                 464,
                 1048650,
                 1048653,
-                1048668,
                 1048835,
                 1048950,
                 1048951,
-                1049002,
                 2097212,
                 2097264,
                 2097525,
                 3145934,
+                3146154,
                 5243144
             ],
             "Components": [
@@ -3996,240 +3994,6 @@
                 "componentData": [],
                 "removedComponents": []
             }
-        },
-        {
-            "ID": 80,
-            "Parent": 253,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "candlestand",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -59.11382293701172,
-                            "y": 2.6356163024902345,
-                            "z": 10.06174373626709
-                        },
-                        "worldScale": {
-                            "x": 11.800000190734864,
-                            "y": 11.800000190734864,
-                            "z": 11.800000190734864
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 2736295656358640927
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "candlestand",
-                        "GUID": {
-                            "ID": 16059444492480042176
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 81,
-            "Parent": 253,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "candles",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -59.11382293701172,
-                            "y": 2.6356163024902345,
-                            "z": 10.06174373626709
-                        },
-                        "worldScale": {
-                            "x": 11.800000190734864,
-                            "y": 11.800000190734864,
-                            "z": 11.800000190734864
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "candles",
-                        "GUID": {
-                            "ID": 16059444492480042176
-                        },
-                        "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 82,
-            "Parent": 253,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "wick",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.004971504211425781
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -59.11382293701172,
-                            "y": 2.6356163024902345,
-                            "z": 10.120407104492188
-                        },
-                        "worldScale": {
-                            "x": 11.800000190734864,
-                            "y": 11.800000190734864,
-                            "z": 11.800000190734864
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 17930799073652826812
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "wick",
-                        "GUID": {
-                            "ID": 16059444492480042176
-                        },
-                        "submeshIdx": 2,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
         },
         {
             "ID": 85,
@@ -10975,177 +10739,6 @@
                 {
                     "Layer": {
                         "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 253,
-            "Parent": 21,
-            "Child Entities": [
-                80,
-                81,
-                82,
-                2097235,
-                2097236,
-                2097256
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "candlestandOG",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -59.11382293701172,
-                            "y": 2.6356163024902345,
-                            "z": 10.06174373626709
-                        },
-                        "scale": {
-                            "x": 11.800000190734864,
-                            "y": 11.800000190734864,
-                            "z": 11.800000190734864
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -59.11382293701172,
-                            "y": 2.6356163024902345,
-                            "z": 10.06174373626709
-                        },
-                        "worldScale": {
-                            "x": 11.800000190734864,
-                            "y": 11.800000190734864,
-                            "z": 11.800000190734864
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 253,
-                                "scriptName": "CandleFlicker",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 2097235,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "candleBloom"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 2097236,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "candleLight"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.6499999761581421,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "flickerSpeed"
-                                        }
-                                    },
-                                    {
-                                        "data": 1.2000000476837159,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "maxBloomIntensity"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.44999998807907107,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "maxFillIntensity"
-                                        }
-                                    },
-                                    {
-                                        "data": 1.5,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "maxFlickerTime"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.5,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "maxLightIntensity"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.800000011920929,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "minBloomIntensity"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.20000000298023225,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "minFillIntensity"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.5,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "minFlickerTime"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.20000000298023225,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "minLightIntensity"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 2097256,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "secondaryLight"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
                     }
                 }
             ]
@@ -19960,95 +19553,6 @@
             }
         },
         {
-            "ID": 1048668,
-            "Parent": 21,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Light",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 6.66862678527832,
-                            "y": 20.281940460205079,
-                            "z": -69.87582397460938
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.66862678527832,
-                            "y": 20.281940460205079,
-                            "z": -69.87582397460938
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Light": {
-                        "lightType": "POINT",
-                        "color": {
-                            "x": 0.7324414849281311,
-                            "y": 0.6970159411430359,
-                            "z": 0.5070748925209045
-                        },
-                        "intensity": 0.20000000298023225,
-                        "innerAngle": 5.0,
-                        "outerAngle": 12.5,
-                        "range": 80.0,
-                        "castShadows": false,
-                        "shadowConfig": {
-                            "centerPos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "softness": 1,
-                            "bias": 0.004999999888241291,
-                            "nearPlane": -100.0,
-                            "farPlane": 200.0,
-                            "scenesBounds": 1.0,
-                            "isStatic": true,
-                            "shadowModified": true,
-                            "customCenter": false
-                        }
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1048674,
             "Parent": 96,
             "Child Entities": [],
@@ -20587,19 +20091,6 @@
                     }
                 }
             ]
-        },
-        {
-            "ID": 1048697,
-            "Parent": 1049002,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 14433558256379882587
-                },
-                "subDataId": 1,
-                "componentData": [],
-                "removedComponents": []
-            }
         },
         {
             "ID": 1048701,
@@ -24712,68 +24203,6 @@
             ]
         },
         {
-            "ID": 1049002,
-            "Parent": 21,
-            "Child Entities": [
-                1048697,
-                1049004,
-                1049005,
-                1049006
-            ],
-            "Position": {
-                "x": 10.034873962402344,
-                "y": 19.365068435668947,
-                "z": -46.6212158203125
-            },
-            "Prefab": {
-                "GUID": {
-                    "ID": 14433558256379882587
-                },
-                "subDataId": 0,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1049004,
-            "Parent": 1049002,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 14433558256379882587
-                },
-                "subDataId": 2,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1049005,
-            "Parent": 1049002,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 14433558256379882587
-                },
-                "subDataId": 3,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1049006,
-            "Parent": 1049002,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 14433558256379882587
-                },
-                "subDataId": 4,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1049009,
             "Parent": 1049506,
             "Child Entities": [],
@@ -25942,161 +25371,6 @@
             ]
         },
         {
-            "ID": 2097235,
-            "Parent": 253,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Bloom": {
-                        "threshold": 0.4699999988079071,
-                        "intensity": 1.0299999713897706,
-                        "range": 5.889999866485596
-                    }
-                },
-                {
-                    "Tag": {
-                        "tag": "BloomLight",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 9.5367431640625e-7,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 0.08474576473236084,
-                            "y": 0.08474576473236084,
-                            "z": 0.08474576473236084
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -59.11381149291992,
-                            "y": 2.6356163024902345,
-                            "z": 10.06174373626709
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 2097236,
-            "Parent": 253,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "PointFlame",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 9.5367431640625e-7,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 0.08474576473236084,
-                            "y": 0.08474576473236084,
-                            "z": 0.08474576473236084
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -59.11381149291992,
-                            "y": 2.6356163024902345,
-                            "z": 10.06174373626709
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Light": {
-                        "lightType": "POINT",
-                        "color": {
-                            "x": 1.0,
-                            "y": 0.5490196347236633,
-                            "z": 0.19607843458652497
-                        },
-                        "intensity": 0.18000000715255738,
-                        "innerAngle": 5.0,
-                        "outerAngle": 12.5,
-                        "range": 26.0,
-                        "castShadows": false,
-                        "shadowConfig": {
-                            "centerPos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "softness": 1,
-                            "bias": 0.004999999888241291,
-                            "nearPlane": -100.0,
-                            "farPlane": 200.0,
-                            "scenesBounds": 1.0,
-                            "isStatic": true,
-                            "shadowModified": true,
-                            "customCenter": false
-                        }
-                    }
-                }
-            ]
-        },
-        {
             "ID": 2097251,
             "Parent": 93,
             "Child Entities": [],
@@ -26241,95 +25515,6 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 2097256,
-            "Parent": 253,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "SecondaryLight",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 9.5367431640625e-7,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 0.08474576473236084,
-                            "y": 0.08474576473236084,
-                            "z": 0.08474576473236084
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -59.11381149291992,
-                            "y": 2.6356163024902345,
-                            "z": 10.06174373626709
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Light": {
-                        "lightType": "POINT",
-                        "color": {
-                            "x": 1.0,
-                            "y": 0.5490196347236633,
-                            "z": 0.23529411852359773
-                        },
-                        "intensity": 0.25999999046325686,
-                        "innerAngle": 5.0,
-                        "outerAngle": 12.5,
-                        "range": 14.0,
-                        "castShadows": false,
-                        "shadowConfig": {
-                            "centerPos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "softness": 1,
-                            "bias": 0.004999999888241291,
-                            "nearPlane": -100.0,
-                            "farPlane": 200.0,
-                            "scenesBounds": 1.0,
-                            "isStatic": true,
-                            "shadowModified": true,
-                            "customCenter": false
-                        }
                     }
                 }
             ]
@@ -28237,6 +27422,95 @@
             ]
         },
         {
+            "ID": 2097580,
+            "Parent": 3146154,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SecondaryLight",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.17403030395507813,
+                            "y": -16.70175552368164,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 30.009716033935548,
+                            "y": 5.028837203979492,
+                            "z": -64.65364837646485
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 0.4901960790157318,
+                            "y": 0.3333333432674408,
+                            "z": 0.19607843458652497
+                        },
+                        "intensity": 2.0,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 23.0,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 2097666,
             "Parent": 250,
             "Child Entities": [
@@ -29816,6 +29090,232 @@
                         "meshName": "pasted__pasted__pCube43",
                         "GUID": {
                             "ID": 15103043447677058457
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3146154,
+            "Parent": 21,
+            "Child Entities": [
+                2097580,
+                3146157,
+                3146158
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Props_CeilingLight",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 30.183746337890626,
+                            "y": 21.730592727661134,
+                            "z": -64.65364837646485
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 30.183746337890626,
+                            "y": 21.730592727661134,
+                            "z": -64.65364837646485
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3146157,
+            "Parent": 3146154,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Bloom": {
+                        "threshold": 0.36000001430511477,
+                        "intensity": 1.4900000095367432,
+                        "range": 12.050000190734864
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "pSphere1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.09432411193847656,
+                            "y": -0.04760551452636719,
+                            "z": 0.0294952392578125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 30.2780704498291,
+                            "y": 21.682987213134767,
+                            "z": -64.62415313720703
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8112644679735523075
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pSphere1",
+                        "GUID": {
+                            "ID": 12467580282968539768
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3146158,
+            "Parent": 3146154,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pCylinder10",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 30.183746337890626,
+                            "y": 21.730592727661134,
+                            "z": -64.65364837646485
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8767289450398112251
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pCylinder10",
+                        "GUID": {
+                            "ID": 12467580282968539768
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": true,
