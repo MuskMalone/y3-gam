@@ -123,7 +123,7 @@ using IGE.Utils;
     public void Destroy(uint entityID)  //Function to destroy entities
     {
       OnDestroy();
-      InternalCalls.DestroyEntity(entityID);
+      InternalCalls.DestroyEntity(mEntityID);
     }
 
     public void Destroy(Entity entity)  //Function to destroy script instances (these scripts must inherit from entity)

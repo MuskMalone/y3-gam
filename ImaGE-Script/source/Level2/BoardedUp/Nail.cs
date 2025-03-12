@@ -112,7 +112,7 @@ public class Nail : Entity
     // if 3rd or last nail, destroy the plank too
     if (nailId == 3 || nailId == 5)
     {
-      Destroy(plankHeld.mEntityID);
+      InternalCalls.DestroyEntity(plankHeld.mEntityID);
     }
 
     Destroy(mEntityID); // destroy self

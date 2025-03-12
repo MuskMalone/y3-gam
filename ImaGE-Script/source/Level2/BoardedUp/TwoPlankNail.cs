@@ -68,7 +68,7 @@ public class TwoPlankNail : Entity
         // done, destroy self and 1st plank
         if (timeElapsed >= timeTillDespawn)
         {
-          Destroy(Plank1.mEntityID);
+          InternalCalls.DestroyEntity(Plank1.mEntityID);
           Destroy(mEntityID);
         }
 
