@@ -93,7 +93,8 @@ namespace Mono
     { "KeyDoor", ScriptFieldType::KEYDOOR },
     { "PictureAlign", ScriptFieldType::PICTUREALIGN },
     { "ControlPanel2", ScriptFieldType::CONTROLPANEL },
-    { "Transition", ScriptFieldType::TRANSITION }
+    { "Transition", ScriptFieldType::TRANSITION },
+    { "HammerLevel3", ScriptFieldType::HAMMER_L3 }
   };
 }
 

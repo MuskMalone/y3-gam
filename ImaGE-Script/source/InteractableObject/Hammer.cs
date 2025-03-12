@@ -2,7 +2,7 @@ using IGE.Utils;
 using System;
 using static Dialogue;
 
-public class Hammer : Entity, IInventoryItem
+public class L3Hammer : Entity, IInventoryItem
 {
   // Script to be placed in the Hammer Entity (Parent)
   public Entity _Image; // Selection UI
@@ -41,7 +41,7 @@ public class Hammer : Entity, IInventoryItem
 
   public void OnUsed()
   {
-    Destroy(mEntityID);
+    Destroy();
   }
 
   void Start()

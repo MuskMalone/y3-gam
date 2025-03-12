@@ -145,7 +145,7 @@ public class Fragment : Entity
           playerMove.UnfreezePlayer();
           BlackBorder1.SetActive(false);
           BlackBorder2.SetActive(false);
-          Destroy(mEntityID);
+          Destroy();
 
           break;
         }

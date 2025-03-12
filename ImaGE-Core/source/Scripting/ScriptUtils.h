@@ -56,7 +56,8 @@ namespace Mono {
 		KEYDOOR,
 		PICTUREALIGN,
 		CONTROLPANEL,
-		TRANSITION
+		TRANSITION,
+		HAMMER_L3
 	};
 
 

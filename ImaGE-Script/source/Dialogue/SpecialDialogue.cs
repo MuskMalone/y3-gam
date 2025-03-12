@@ -56,7 +56,7 @@ public class SpecialDialogue : Entity
 
   void Start()
   {
-    if (skipCutscene) { Destroy(mEntityID); }
+    if (skipCutscene) { Destroy(); }
 
     // Workaround
     BeginningSilhouetteSequence = new Entity[4];
@@ -289,6 +289,6 @@ public class SpecialDialogue : Entity
         mainDialogueFontScale);
 
     InternalCalls.SetShaderState(0, false);
-    Destroy(mEntityID);
+    Destroy();
   }
 }

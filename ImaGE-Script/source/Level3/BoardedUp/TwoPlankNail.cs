@@ -69,7 +69,7 @@ public class TwoPlankNail : Entity
         if (timeElapsed >= timeTillDespawn)
         {
           InternalCalls.DestroyEntity(Plank1.mEntityID);
-          Destroy(mEntityID);
+          Destroy();
         }
 
         break;

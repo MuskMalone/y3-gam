@@ -38,7 +38,7 @@ public class CorrdiorPainting : Entity, IInventoryItem
 
   public void OnUsed()
   {
-    Destroy(mEntityID);
+    Destroy();
   }
 
   void Start()
