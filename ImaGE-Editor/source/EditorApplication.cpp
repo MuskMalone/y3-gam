@@ -90,17 +90,19 @@ namespace IGE {
       if (GetApplicationSpecification().EnableImGui) {
         if (mHideImGuiThisFrame) {
           ToggleImGuiEnabled();
+          mHideImGuiThisFrame = false;
         }
       }
       else {
         if (inputManager.IsKeyTriggered(IK_K)) {
           ToggleImGuiEnabled();
         }
-        //if (inputManager.IsKeyHeld(IK_LEFT_CONTROL) && inputManager.IsKeyPressed(IK_P)) {
-        //  //bool const newLockState{ !inputManager.GetisCursorLocked() };
-        //  inputManager.SetisCursorLocked(false);
-        //  eventManager.DispatchImmediateEvent<Events::LockMouseEvent>(false);
-        //}
+        if (inputManager.IsKeyHeld(IK_LEFT_CONTROL) && inputManager.IsKeyPressed(IK_P)) {
+          sceneManager.StopScene();
+          inputManager.SetisCursorLocked(false);
+          eventManager.DispatchImmediateEvent<Events::LockMouseEvent>(false);
+          ToggleImGuiEnabled();
+        }
       }
 
       frameRateController.Start();

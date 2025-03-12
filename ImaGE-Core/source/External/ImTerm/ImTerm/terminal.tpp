@@ -311,7 +311,7 @@ bool terminal<TerminalHelper>::show(const std::vector<config_panels>& panels_ord
 	try_lock();
 	display_messages();
 	try_unlock();
-	display_command_line();
+	//display_command_line();
 
 	ImGui::End();
 	ImGui::PopStyleColor(pop_count);
@@ -626,7 +626,7 @@ template <typename TerminalHelper>
 void terminal<TerminalHelper>::display_messages() noexcept {
 
 	ImVec2 avail_space = ImGui::GetContentRegionAvail();
-	float commandline_height = ImGui::CalcTextSize("a").y + ImGui::GetStyle().FramePadding.y * 4.f;
+	float commandline_height = 0.f;//ImGui::CalcTextSize("a").y + ImGui::GetStyle().FramePadding.y * 4.f;
 	if (avail_space.y > commandline_height) {
 
 		int style_push_count = try_push_style(ImGuiCol_ChildBg, m_colors.message_panel);
