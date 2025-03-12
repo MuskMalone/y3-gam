@@ -830,14 +830,13 @@ namespace IGE {
 
 			// Helper lambda: Given a point and a collider (its geometry and pose),
 			// query the squared distance and closest point on the collider.
-			bool debug = mDrawDebug;
-			auto queryPointToCollider = [&bestSqDist, &bestStart, &bestEnd, &found, &debug](const physx::PxVec3& point,
+			auto queryPointToCollider = [&bestSqDist, &bestStart, &bestEnd, &found](const physx::PxVec3& point,
 				const physx::PxGeometry& geom, const physx::PxTransform& pose)
 				{
 					physx::PxVec3 closestPt;
 					// pointDistance returns the squared distance.
 					physx::PxReal sqDist = physx::PxGeometryQuery::pointDistance(point, geom, pose, &closestPt);
-					if (sqDist >= 0.f && sqDist < bestSqDist && debug)
+					if (sqDist >= 0.f && sqDist < bestSqDist)
 					{
 						bestSqDist = sqDist;
 						bestStart = ToGLMVec3(point);
