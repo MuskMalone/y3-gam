@@ -406,6 +406,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "climbing"
+                                        }
+                                    },
+                                    {
                                         "data": 15.0,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -4031,6 +4038,230 @@
                     "AudioSource": {
                         "sounds": [
                             {
+                                "key": "Ladder1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 15949479062741041655
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Ladder2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 5283145706459750620
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Ladder3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4447800507248096669
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Ladder4_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2698760815770065173
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Ladder5_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 6087620141520034907
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Ladder6_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 18417310994949944681
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Ladder7_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8072348378916508494
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Ladder8_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 3084777086110517231
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 33.021671295166019,
+                                            "y": 0.0,
+                                            "z": 1.488646149635315
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
                                 "key": "Plank1_SFX.wav",
                                 "value": {
                                     "guid": {
@@ -4569,6 +4800,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "interval"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isGrounded"
                                         }
                                     },
                                     {
@@ -23820,8 +24058,8 @@
                                         "playOnAwake": true,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "LOGARITHMIC",
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
                                         "postProcessingParameter": 1500.0

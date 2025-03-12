@@ -42,13 +42,18 @@ public class PlayerFootsteps : Entity
 
     Vector3 position = InternalCalls.GetPosition(player.mEntityID);
     uint entityHit = InternalCalls.RaycastFromEntity(player.mEntityID, position, position + (new Vector3(0, -200, 0)));
-    if (isGrounded && magnitude > speedThreshold)
+
+    if (timePassed >= interval)
     {
-      if (timePassed >= interval)
+      if (playerMoveScript.climbing && (InternalCalls.IsKeyHeld(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.S)))
+      {
+        PlayClimbingSound();
+      }
+      else if (isGrounded && magnitude > speedThreshold)
       {
         PlayFootstepSound();
-        timePassed = 0;
       }
+      timePassed = 0;
     }
     if (isLevel1)
     {
@@ -138,6 +143,14 @@ public class PlayerFootsteps : Entity
   {
     footstepCount = footstepCount % footstepSoundCount;
     string soundName = $"Gravel{footstepCount + 1}.wav";
+    InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
+    InternalCalls.PlaySound(mEntityID, soundName);
+    footstepCount++;
+  }
+  void PlayClimbingSound()
+  {
+    footstepCount = footstepCount % footstepSoundCount;
+    string soundName = $"Ladder{footstepCount + 1}_SFX.wav";
     InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
     InternalCalls.PlaySound(mEntityID, soundName);
     footstepCount++;
