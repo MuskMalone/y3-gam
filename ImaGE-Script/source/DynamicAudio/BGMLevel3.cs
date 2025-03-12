@@ -32,31 +32,37 @@ public class BGMLevel3 : Entity
   public float currTiming = 0.0f;
 
   public float dist = 0f;
+  private float deathPitToDoorDist = float.MaxValue;
 
   public float pitLoudnessThreshold = 5f;
   public float pitLowestVolume = 0.1f;
   public float pitHighestVolume = 1f;
   private bool pitRoomStartLerp = false;
+  private bool isRecordingLastDist = true;
   void Start()
   {
+    isRecordingLastDist = true;
   }
 
   void Update()
   {
 
-    InternalCalls.SetSoundVolume(player.mEntityID, "BGM", bgmVolume);
-    InternalCalls.SetSoundVolume(player.mEntityID, "Ambience", ambienceVolume);
-    InternalCalls.SetSoundVolume(player.mEntityID, "PitAmbience", pitAmbienceVolume);
     Vector3 playerLoc = InternalCalls.GetWorldPosition(player.mEntityID);
     { //for pit room
       
       Vector3 doorLoc = InternalCalls.GetWorldPosition(entryToPitTrigger.mEntityID);
-      bool isEntered = playerLoc.Z < doorLoc.Z;
+      bool isEntered = playerLoc.Z < doorLoc.Z && playerLoc.X < -21f;
+      dist = InternalCalls.GetShortestDistance(player.mEntityID, deathTrigger.mEntityID);
 
+      if (isRecordingLastDist)
+      {
+        deathPitToDoorDist = dist;
+
+      }
       if (InternalCalls.OnTriggerExit(entryToPitTrigger.mEntityID, player.mEntityID))
       {
         pitRoomStartLerp = true;
-
+        isRecordingLastDist = false;
       }
       if (pitRoomStartLerp)
       {
@@ -80,10 +86,21 @@ public class BGMLevel3 : Entity
         }
 
       }
-      dist = InternalCalls.GetShortestDistance(player.mEntityID, deathTrigger.mEntityID);
       if (isEntered ) // for pit Reverb
       {
-        pitAmbienceVolume = (pitLoudnessThreshold - dist) / pitLoudnessThreshold;
+        // 1. Normalize the distance
+        double normalized = (deathPitToDoorDist - dist) / (deathPitToDoorDist - pitLoudnessThreshold);
+
+        // 2. Clamp between 0 and 1
+        normalized = Math.Max(0.0, Math.Min(1.0, normalized));
+
+        // 3. Exponential curve (tweak exponent for more/less sharpness)
+        double exponent = 7.0; // Try 3, 4, 5 depending on how sharp you want the curve
+        double adjusted = Math.Pow(normalized, exponent);
+
+        // 4. Final volume interpolation
+        pitAmbienceVolume = (float)(pitLowestVolume + adjusted * (pitHighestVolume - pitLowestVolume));
+
         if (pitAmbienceVolume < pitLowestVolume) pitAmbienceVolume = pitLowestVolume;
         if (pitAmbienceVolume > pitHighestVolume) pitAmbienceVolume = pitHighestVolume;
       }else
@@ -92,5 +109,9 @@ public class BGMLevel3 : Entity
       }
 
     }
+
+    InternalCalls.SetSoundVolume(player.mEntityID, "BGM", bgmVolume);
+    InternalCalls.SetSoundVolume(player.mEntityID, "Ambience", ambienceVolume);
+    InternalCalls.SetSoundVolume(player.mEntityID, "PitAmbience", pitAmbienceVolume);
   }
 }

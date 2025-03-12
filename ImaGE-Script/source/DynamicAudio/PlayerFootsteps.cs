@@ -127,6 +127,7 @@ public class PlayerFootsteps : Entity
     InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
     InternalCalls.PlaySound(mEntityID, soundName);
     soundName = $"Plank{footstepCount + 1}_SFX.wav";
+    InternalCalls.DisableSoundPostProcessing(mEntityID, soundName);
     InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
     InternalCalls.PlaySound(mEntityID, soundName);
     footstepCount++;
@@ -135,6 +136,7 @@ public class PlayerFootsteps : Entity
   {
     footstepCount = footstepCount % footstepSoundCount;
     string soundName = $"Plank{footstepCount + 1}_SFX.wav";
+    InternalCalls.EnableSoundPostProcessing(mEntityID, soundName, 0, 1500f);
     InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
     InternalCalls.PlaySound(mEntityID, soundName);
     footstepCount++;
