@@ -10209,7 +10209,43 @@
                     "ID": 9387073128678747964
                 },
                 "subDataId": 1,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "AudioSource",
+                        "value": {
+                            "sounds": [
+                                {
+                                    "key": "FloatUpSFX",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 15163778055169858728
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 71.7745361328125,
+                                                "y": 12.289115905761719,
+                                                "z": -1.6289911270141602
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -13164,6 +13200,40 @@
             "Parent": 630,
             "Child Entities": [],
             "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "FlyInSFX",
+                                "value": {
+                                    "guid": {
+                                        "ID": 3358506407145469047
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 6.3177170753479,
+                                            "y": 23.433916091918947,
+                                            "z": -36.58473205566406
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
                 {
                     "Bloom": {
                         "threshold": 1.0,
