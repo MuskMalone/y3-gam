@@ -57,9 +57,12 @@ namespace Scenes
   }
 
   void SceneManager::PlayScene() {
-    TemporarySave(false);
+    if (mSceneState != SceneState::PAUSED) {
+      TemporarySave(false);
+      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::STARTED, mSceneName);
+    }
+
     mSceneState = SceneState::PLAYING;
-    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::STARTED, mSceneName);
   }
 
   void SceneManager::StopScene() {
