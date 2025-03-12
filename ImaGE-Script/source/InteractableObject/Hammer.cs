@@ -2,7 +2,7 @@ using IGE.Utils;
 using System;
 using static Dialogue;
 
-public class L3Hammer : Entity, IInventoryItem
+public class Hammer : Entity, IInventoryItem
 {
   // Script to be placed in the Hammer Entity (Parent)
   public Entity _Image; // Selection UI
