@@ -181,6 +181,7 @@ public class Fragment : Entity
     transition.StartTransition(true, 0.5f, Transition.TransitionType.WIPE);
     uint parent = InternalCalls.GetParentByID(GardenFragment.mEntityID);
     InternalCalls.PlayAnimation(parent, fragAnimNameEnterBox, false);
+    Debug.Log("Playing animation: " + fragAnimNameEnterBox);
     SetFragmentCameraAsMain();
   }
 }
