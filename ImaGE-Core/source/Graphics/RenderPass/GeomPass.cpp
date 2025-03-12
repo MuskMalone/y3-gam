@@ -75,7 +75,7 @@ namespace Graphics {
         shader->Use();
 
         // Set the gamma uniform
-        shader->SetUniform("u_Gamma", 2.2f); // Default gamma value
+        //shader->SetUniform("u_Gamma", 2.2f); // Default gamma value
 
         bool isWaterShader = (shader == ShaderLibrary::Get("Water"));
 
@@ -372,5 +372,7 @@ namespace {
 
     Component::LightGlobalProps& globalProps{ Component::Light::sGlobalProps };
     shader->SetUniform("u_AmbientLight", globalProps.ambColor * globalProps.ambIntensity);
+    shader->SetUniform("u_Gamma", globalProps.gammaValue);
+
   }
 }

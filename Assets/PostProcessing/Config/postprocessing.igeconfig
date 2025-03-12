@@ -110,19 +110,6 @@
             }
         },
         {
-            "key": "PitLights",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
             "key": "Table",
             "value": {
                 "shaders": [],
@@ -201,6 +188,19 @@
             }
         },
         {
+            "key": "PseudoLamp",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "PauseMenu",
             "value": {
                 "shaders": [],
@@ -228,19 +228,6 @@
         },
         {
             "key": "Small Pillar",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "wall_lamp",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -318,7 +305,7 @@
             }
         },
         {
-            "key": "candlestand",
+            "key": "Level4",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,

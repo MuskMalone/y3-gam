@@ -76,7 +76,7 @@ namespace GUI
             if (ImGui::Button(ICON_FA_STOP) || (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_P, false))) {
               wasRunning = true;
               Input::InputManager::GetInstance().SetisCursorLocked(false);
-              QUEUE_EVENT(Events::LockMouseEvent, Input::InputManager::GetInstance().GetisCursorLocked());
+              QUEUE_EVENT(Events::LockMouseEvent, false);
               mSceneManager.StopScene();
             }
           }
@@ -111,7 +111,7 @@ namespace GUI
             if (mSceneManager.GetSceneState() != Scenes::SceneState::PLAYING && !wasRunning) {
               if (ImGui::Button(ICON_FA_PLAY) || (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_P, false))) {
                 Input::InputManager::GetInstance().SetisCursorLocked(true);
-                QUEUE_EVENT(Events::LockMouseEvent, Input::InputManager::GetInstance().GetisCursorLocked());
+                QUEUE_EVENT(Events::LockMouseEvent, true);
                 mSceneManager.PlayScene();
               }
             }
