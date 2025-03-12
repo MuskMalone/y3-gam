@@ -344,6 +344,9 @@ namespace IGE.Utils
     internal extern static void LockRigidBody(uint entity, bool toLock);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void LockRigidBodyRotation(uint entity, bool x, bool y, bool z);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static Entity FindScript(string s);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
