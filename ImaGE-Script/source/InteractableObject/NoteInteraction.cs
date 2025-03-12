@@ -10,14 +10,17 @@ public class NoteInteraction : Entity
   public PlayerInteraction playerInteraction;
   public Entity viewNoteUI;
   public Entity playerCamera;
+  public float finalDistanceAwayFromCam = 2f;
 
-  public float moveSpeed = 0.0001f;
-  public float rotateSpeed = 0.1f;
+  public float moveSpeed = 5f;
+  public float rotateSpeed = 5f;
 
   private bool isMoving = false;
   private bool isReset = false;
   private Vector3 originalPos;
   private Quaternion originalRot;
+  private string noteTag;
+  private bool noteInteractedWith = false;
 
   public NoteInteraction() : base()
   {
@@ -43,12 +46,14 @@ public class NoteInteraction : Entity
 
     originalPos = InternalCalls.GetWorldPosition(mEntityID);
     originalRot = InternalCalls.GetWorldRotation(mEntityID);
+
+    noteTag = InternalCalls.GetTag(mEntityID);
   }
 
   void Update()
   {
     bool mouseClicked = Input.GetMouseButtonTriggered(0);
-    bool isNoteHit = playerInteraction.RayHitString == "Mom's Note";
+    bool isNoteHit = playerInteraction.RayHitString == noteTag;
 
     bool noteIsActive = noteUI.IsActive();
 
@@ -57,6 +62,8 @@ public class NoteInteraction : Entity
       if (isNoteHit && !noteIsActive)
       {
         isMoving = true;
+        noteInteractedWith = true;
+        viewNoteUI.SetActive(false);
       }
       else if (noteIsActive)
       {
@@ -65,7 +72,8 @@ public class NoteInteraction : Entity
       }
     }
 
-    viewNoteUI.SetActive(isNoteHit);
+    if (!noteInteractedWith)
+      viewNoteUI.SetActive(isNoteHit);
 
     if (isMoving)
     {
@@ -108,7 +116,7 @@ public class NoteInteraction : Entity
     Quaternion currRot = InternalCalls.GetWorldRotation(mEntityID);
 
     // Target Position (Adjust forward offset to place in front of the camera)    
-    Vector3 targetPos = InternalCalls.GetWorldPosition(playerCamera.mEntityID) + InternalCalls.GetCameraForward() * 2f; // Adjust the multiplier to place the note at the desired distance
+    Vector3 targetPos = InternalCalls.GetWorldPosition(playerCamera.mEntityID) + InternalCalls.GetCameraForward() * finalDistanceAwayFromCam;
 
     // Calculate the direction from the note to the camera
     Vector3 directionToCamera = Vector3.Normalize(InternalCalls.GetWorldPosition(playerCamera.mEntityID) - targetPos);
@@ -179,6 +187,7 @@ public class NoteInteraction : Entity
       InternalCalls.SetWorldRotation(mEntityID, ref targetRot);
       InternalCalls.UpdatePhysicsToTransform(mEntityID);
       playerMove.UnfreezePlayer();
+      noteInteractedWith = false;
       isReset = false;
     }
   }

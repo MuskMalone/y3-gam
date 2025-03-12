@@ -40,8 +40,8 @@ namespace GUI {
           mFocusWindow = false;
         }
 
-        if (ImGui::IsWindowFocused() && ImGui::IsKeyPressed(ImGuiKey_K)) {
-          QUEUE_EVENT(Events::ToggleImGui);
+        if (ImGui::IsWindowFocused() && ImGui::IsKeyReleased(ImGuiKey_K)) {
+          IGE_EVENTMGR.DispatchImmediateEvent<Events::ToggleImGui>();
         }
 
         ImGui::End();

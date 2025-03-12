@@ -40,8 +40,9 @@ namespace Systems {
     IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
 
     for (ECS::Entity entity : mEntityManager.GetAllEntitiesWithComponents<Component::Animation>()) {
+      if (!entity.IsActive()) { continue; }
+      
       Component::Animation& animation{ entity.GetComponent<Component::Animation>() };
-
       if (!animation.currentAnimation.second || animation.paused) { continue; }
 
       try {

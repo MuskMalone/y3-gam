@@ -1,0 +1,93 @@
+{
+    "Name": "GardenDirectiona;Light",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Garden Light",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 43.5,
+                            "y": 73.5,
+                            "z": -40.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.19019611179828645,
+                            "y": 0.3068833649158478,
+                            "z": 0.8370584845542908,
+                            "w": -0.4110730290412903
+                        },
+                        "eulerAngles": {
+                            "x": 25.799999237060548,
+                            "y": -34.79999923706055,
+                            "z": 224.10000610351563
+                        },
+                        "worldPos": {
+                            "x": 43.5,
+                            "y": 73.5,
+                            "z": -40.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.19019611179828645,
+                            "y": 0.3068833649158478,
+                            "z": 0.8370584845542908,
+                            "w": -0.4110730290412903
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "DIRECTIONAL",
+                        "color": {
+                            "x": 0.9840046763420105,
+                            "y": 1.0,
+                            "z": 0.6321070194244385
+                        },
+                        "intensity": 1.5,
+                        "innerAngle": 48.0,
+                        "outerAngle": 360.0,
+                        "range": 237.5,
+                        "castShadows": true,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 20.700000762939454,
+                                "y": 18.600000381469728,
+                                "z": -52.5
+                            },
+                            "softness": 3,
+                            "bias": 0.004000000189989805,
+                            "nearPlane": -134.75,
+                            "farPlane": 53.79999923706055,
+                            "scenesBounds": 1.909999966621399,
+                            "isStatic": true,
+                            "shadowModified": false,
+                            "customCenter": true
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
