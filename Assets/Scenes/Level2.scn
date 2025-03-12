@@ -14392,6 +14392,78 @@
             ]
         },
         {
+            "ID": 311,
+            "Parent": 394,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "ViewNote3",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 6.959552764892578,
+                            "y": 3.3562421798706056,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 6.959552764892578,
+                            "y": 3.3562421798706056,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 2965171751674092586
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 313,
             "Parent": 2097203,
             "Child Entities": [
@@ -18280,6 +18352,7 @@
             "Parent": null,
             "Child Entities": [
                 186,
+                311,
                 385,
                 397,
                 468,
@@ -23351,7 +23424,7 @@
                 {
                     "Tag": {
                         "tag": "PamphletUI",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -23398,19 +23471,6 @@
                 {
                     "Layer": {
                         "layerName": "UI"
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 7292143259675969607
-                        }
                     }
                 }
             ]
@@ -36171,8 +36231,22 @@
                         "scriptList": [
                             {
                                 "entityID": 1048984,
-                                "scriptName": "PamphletNoteInteraction",
+                                "scriptName": "NoteInteraction",
                                 "scriptFieldInstList": [
+                                    {
+                                        "data": 5.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "finalDistanceAwayFromCam"
+                                        }
+                                    },
+                                    {
+                                        "data": 5.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "moveSpeed"
+                                        }
+                                    },
                                     {
                                         "data": {
                                             "entityID": 468,
@@ -36180,7 +36254,17 @@
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
-                                            "fieldName": "odysseusUI"
+                                            "fieldName": "noteUI"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
                                         }
                                     },
                                     {
@@ -36204,8 +36288,15 @@
                                         }
                                     },
                                     {
+                                        "data": 5.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "rotateSpeed"
+                                        }
+                                    },
+                                    {
                                         "data": {
-                                            "entityID": 1049046,
+                                            "entityID": 311,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
