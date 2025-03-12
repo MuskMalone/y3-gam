@@ -231,6 +231,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetGravityFactor);
   ADD_INTERNAL_CALL(SetGravityFactor);
   ADD_INTERNAL_CALL(LockRigidBody);
+  ADD_INTERNAL_CALL(LockRigidBodyRotation);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -1081,6 +1082,23 @@ void Mono::LockRigidBody(ECS::Entity::EntityID entityId, bool lock) {
     rigidBody.axisLock = 0;
     rigidBody.angularAxisLock = 0;
   }
+  IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LOCK);
+}
+
+void Mono::LockRigidBodyRotation(ECS::Entity::EntityID entityId, bool x, bool y, bool z) {
+  ECS::Entity entity{ entityId };
+  if (!entity.HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity " + entity.GetTag() + " does not have the RigidBody component");
+    return;
+  }
+
+  Component::RigidBody& rigidBody{ entity.GetComponent<Component::RigidBody>() };
+  rigidBody.angularAxisLock = 0;
+  rigidBody.SetAngleAxisLock(
+    (x ? (int)Component::RigidBody::Axis::X : 0) |
+    (y ? (int)Component::RigidBody::Axis::Y : 0) |
+    (z ? (int)Component::RigidBody::Axis::Z : 0)
+  );
   IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LOCK);
 }
 

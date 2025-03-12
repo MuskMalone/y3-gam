@@ -138,6 +138,7 @@
     <Compile Include="source\Inventory\Level3Inventory.cs" />
     <Compile Include="source\Inventory\TutorialLevelHUD.cs" />
     <Compile Include="source\Inventory\TutorialLevelInventory.cs" />
+    <Compile Include="source\Level2\BoardedUp\TwoPlankNail.cs" />
     <Compile Include="source\Level2\ControlPanel2.cs" />
     <Compile Include="source\Level2\ControlPanelDoor.cs" />
     <Compile Include="source\Level2\CorridorTransitionFade.cs" />
@@ -146,11 +147,13 @@
     <Compile Include="source\Level2\LevelStartFade.cs" />
     <Compile Include="source\Level2\LeverPuzzle.cs" />
     <Compile Include="source\Level2\Lvl2IntroCutscene.cs" />
+    <Compile Include="source\Level2\BoardedUp\Nail.cs" />
     <Compile Include="source\Level2\NumberPad.cs" />
     <Compile Include="source\Level2\OdysseusNoteInteraction.cs" />
     <Compile Include="source\Level2\PamphletNoteInteraction.cs" />
     <Compile Include="source\Level2\PullLever.cs" />
     <Compile Include="source\Level2\TransitionToLevel3.cs" />
+    <Compile Include="source\Level2\BoardedUp\UseHammer.cs" />
     <Compile Include="source\Level3\EyeballFollow.cs" />
     <Compile Include="source\Level3\Level3Dialogue.cs" />
     <Compile Include="source\Level3\PitPuzzle.cs" />
