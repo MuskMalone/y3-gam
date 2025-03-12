@@ -304,6 +304,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(HideCursor);
   ADD_INTERNAL_CALL(OnTriggerEnter);
   ADD_INTERNAL_CALL(OnTriggerExit);
+  ADD_INTERNAL_CALL(GetShortestDistance);
   ADD_INTERNAL_CALL(ChangeToolsPainting);
   ADD_INTERNAL_CALL(SpawnToolBox);
   ADD_INTERNAL_CALL(SpawnOpenDoor);
@@ -1866,6 +1867,17 @@ bool Mono::OnTriggerExit(ECS::Entity trigger, ECS::Entity other) {
   }
 
   return IGE::Physics::PhysicsSystem::GetInstance().get()->OnTriggerExit(trigger, other);
+}
+
+//only works if there is a box, sphere, capsule, or rb
+float Mono::GetShortestDistance(ECS::Entity::EntityID id1, ECS::Entity::EntityID id2) {
+    ECS::Entity e1{ id1 };
+    ECS::Entity e2{ id2 };
+    if ((e1.HasComponent<Component::BoxCollider>() || e1.HasComponent<Component::CapsuleCollider>() || e1.HasComponent<Component::SphereCollider>() || e1.HasComponent<Component::RigidBody>()) && 
+        (e2.HasComponent<Component::BoxCollider>() || e2.HasComponent<Component::CapsuleCollider>() || e2.HasComponent<Component::SphereCollider>() || e2.HasComponent<Component::RigidBody>())) {
+        return IGE::Physics::PhysicsSystem::GetInstance()->GetShortestDistance(e1, e2);
+    }
+    return -1.f;
 }
 
 void Mono::SetBloomIntensity(ECS::Entity::EntityID entity, float intensity) {

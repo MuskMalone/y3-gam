@@ -451,6 +451,8 @@ namespace Mono
 
 		static bool OnTriggerExit(ECS::Entity trigger, ECS::Entity other);
 
+		float GetShortestDistance(ECS::Entity::EntityID e1, ECS::Entity::EntityID e2);
+
 		static void SetBloomIntensity(ECS::Entity::EntityID bloomEntity, float intensity);
 		static float GetBloomIntensity(ECS::Entity::EntityID bloomEntity);
 		static void SetLightIntensity(ECS::Entity::EntityID lightEntity, float intensity);

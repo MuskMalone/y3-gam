@@ -166,7 +166,7 @@ public class PlayerFootsteps : Entity
     {
       // Check the layer name of the object hit by the raycast
       tag = InternalCalls.GetTag(entityHit);
-      InternalCalls.Log(tag);
+      //InternalCalls.Log(tag);
       switch (tag)
       {
         case "BumpyGround":

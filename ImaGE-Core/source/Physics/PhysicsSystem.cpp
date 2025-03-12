@@ -665,6 +665,15 @@ namespace IGE {
 					Graphics::Renderer::DrawLine(ray.origin, ray.end, { 0, 1, 0, 1 });
 				}
 			}
+			for (auto const& ray : mGeneralRays) {
+				//draw three lines
+				auto dir{ glm::normalize(ray.end - ray.start) };
+				Graphics::Renderer::DrawLine(ray.start, ray.end, { 1, 0, 1, 1 });
+				Graphics::Renderer::DrawWireSphere(ray.start, 0.1, { 1, 0, 1, 1 });
+				Graphics::Renderer::DrawWireSphere(ray.end, 0.1, { 1, 0, 1, 1 });
+
+			}
+			mGeneralRays.clear();
 			mRays.clear();
 		}
 
@@ -802,6 +811,165 @@ namespace IGE {
 					);
 			}
 			return false;
+		}
+
+		float PhysicsSystem::GetShortestDistance(ECS::Entity e1, ECS::Entity e2)
+		{
+			// Require both entities to have a Transform.
+			if (!e1.HasComponent<Component::Transform>() || !e2.HasComponent<Component::Transform>())
+				return -1.f;
+
+			// Get the transforms.
+			auto t1 = e1.GetComponent<Component::Transform>();
+			auto t2 = e2.GetComponent<Component::Transform>();
+
+			float bestSqDist = FLT_MAX;
+			glm::vec3 bestStart{ 0.f };
+			glm::vec3 bestEnd{ 0.f };
+			bool found = false;
+
+			// Helper lambda: Given a point and a collider (its geometry and pose),
+			// query the squared distance and closest point on the collider.
+			bool debug = mDrawDebug;
+			auto queryPointToCollider = [&bestSqDist, &bestStart, &bestEnd, &found, &debug](const physx::PxVec3& point,
+				const physx::PxGeometry& geom, const physx::PxTransform& pose)
+				{
+					physx::PxVec3 closestPt;
+					// pointDistance returns the squared distance.
+					physx::PxReal sqDist = physx::PxGeometryQuery::pointDistance(point, geom, pose, &closestPt);
+					if (sqDist >= 0.f && sqDist < bestSqDist && debug)
+					{
+						bestSqDist = sqDist;
+						bestStart = ToGLMVec3(point);
+						bestEnd = ToGLMVec3(closestPt);
+						found = true;
+					}
+				};
+
+			// For each collider component on e1, compare against each collider component on e2.
+			// We consider the "center" of each collider to be: transform.worldPos + collider.positionOffset.
+			// And we build the collider’s world pose using the entity’s rotation combined with the collider’s rotation offset.
+
+			// --- e1: BoxCollider
+			if (e1.HasComponent<Component::BoxCollider>())
+			{
+				auto box1 = e1.GetComponent<Component::BoxCollider>();
+				physx::PxBoxGeometry geom1(box1.scale); // 'scale' is assumed to be the half-extents.
+				physx::PxVec3 center1 = ToPxVec3(t1.worldPos) + box1.positionOffset;
+				physx::PxTransform pose1(center1, ToPxQuat(t1.worldRot) * box1.rotationOffset);
+
+				// Compare with e2's colliders.
+				if (e2.HasComponent<Component::BoxCollider>())
+				{
+					auto box2 = e2.GetComponent<Component::BoxCollider>();
+					physx::PxBoxGeometry geom2(box2.scale);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + box2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * box2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+				if (e2.HasComponent<Component::SphereCollider>())
+				{
+					auto sphere2 = e2.GetComponent<Component::SphereCollider>();
+					physx::PxSphereGeometry geom2(sphere2.radius);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + sphere2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * sphere2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+				if (e2.HasComponent<Component::CapsuleCollider>())
+				{
+					auto capsule2 = e2.GetComponent<Component::CapsuleCollider>();
+					physx::PxCapsuleGeometry geom2(capsule2.radius, capsule2.halfheight);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + capsule2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * capsule2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+			}
+
+			// --- e1: SphereCollider
+			if (e1.HasComponent<Component::SphereCollider>())
+			{
+				auto sphere1 = e1.GetComponent<Component::SphereCollider>();
+				physx::PxSphereGeometry geom1(sphere1.radius);
+				physx::PxVec3 center1 = ToPxVec3(t1.worldPos) + sphere1.positionOffset;
+				physx::PxTransform pose1(center1, ToPxQuat(t1.worldRot) * sphere1.rotationOffset);
+
+				if (e2.HasComponent<Component::BoxCollider>())
+				{
+					auto box2 = e2.GetComponent<Component::BoxCollider>();
+					physx::PxBoxGeometry geom2(box2.scale);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + box2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * box2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+				if (e2.HasComponent<Component::SphereCollider>())
+				{
+					auto sphere2 = e2.GetComponent<Component::SphereCollider>();
+					physx::PxSphereGeometry geom2(sphere2.radius);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + sphere2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * sphere2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+				if (e2.HasComponent<Component::CapsuleCollider>())
+				{
+					auto capsule2 = e2.GetComponent<Component::CapsuleCollider>();
+					physx::PxCapsuleGeometry geom2(capsule2.radius, capsule2.halfheight);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + capsule2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * capsule2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+			}
+
+			// --- e1: CapsuleCollider
+			if (e1.HasComponent<Component::CapsuleCollider>())
+			{
+				auto capsule1 = e1.GetComponent<Component::CapsuleCollider>();
+				physx::PxCapsuleGeometry geom1(capsule1.radius, capsule1.halfheight);
+				physx::PxVec3 center1 = ToPxVec3(t1.worldPos) + capsule1.positionOffset;
+				physx::PxTransform pose1(center1, ToPxQuat(t1.worldRot) * capsule1.rotationOffset);
+
+				if (e2.HasComponent<Component::BoxCollider>())
+				{
+					auto box2 = e2.GetComponent<Component::BoxCollider>();
+					physx::PxBoxGeometry geom2(box2.scale);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + box2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * box2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+				if (e2.HasComponent<Component::SphereCollider>())
+				{
+					auto sphere2 = e2.GetComponent<Component::SphereCollider>();
+					physx::PxSphereGeometry geom2(sphere2.radius);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + sphere2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * sphere2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+				if (e2.HasComponent<Component::CapsuleCollider>())
+				{
+					auto capsule2 = e2.GetComponent<Component::CapsuleCollider>();
+					physx::PxCapsuleGeometry geom2(capsule2.radius, capsule2.halfheight);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + capsule2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * capsule2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+			}
+
+			// (Optionally, you could also run the symmetric queries – from each collider in e2 against those in e1 –
+			// but since distance is symmetric, this is omitted for brevity.)
+
+			// If no valid query was made or the computed gap is non-positive, return -1.
+			if (!found || bestSqDist <= 0.f || bestSqDist == FLT_MAX)
+				return -1.f;
+
+			float bestDistance = sqrtf(bestSqDist);
+
+			// Add the two points as a GeneralRay.
+			// (Assuming mGeneralRays is a data member of this class and accessible here.)
+			GeneralRay ray;
+			ray.start = bestStart;
+			ray.end = bestEnd;
+			mGeneralRays.push_back(ray);
+
+			return bestDistance;
 		}
 
 		template<typename _physx_type, typename _collider_component>
