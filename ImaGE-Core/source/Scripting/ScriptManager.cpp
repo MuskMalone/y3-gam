@@ -40,6 +40,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace Mono
 {
   std::map<std::string, ScriptClassInfo> ScriptManager::mMonoClassMap{};
+  std::map<std::string, MonoClass*> ScriptManager::mMonoUtilsMap{};
   std::shared_ptr<MonoDomain> ScriptManager::mRootDomain{ nullptr };
   MonoDomain* ScriptManager::mAppDomain{ nullptr };
   std::vector<std::string> ScriptManager::mAllScriptNames;
@@ -307,6 +308,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(HideCursor);
   ADD_INTERNAL_CALL(OnTriggerEnter);
   ADD_INTERNAL_CALL(OnTriggerExit);
+  ADD_INTERNAL_CALL(GetContactPoints);
   ADD_INTERNAL_CALL(GetShortestDistance);
   ADD_INTERNAL_CALL(ChangeToolsPainting);
   ADD_INTERNAL_CALL(SpawnToolBox);
@@ -382,6 +384,9 @@ void ScriptManager::LoadAllMonoClass()
 #ifdef DEBUG_MONO
       std::cout << "----------------------------------\n\n";
 #endif 
+    }
+    else { //tch: i added this for my own custom class
+        mMonoUtilsMap[className] = GetClassInAssembly(coreAssembly, classNameSpace.c_str(), className.c_str());
     }
   }
   std::sort(mAllScriptNames.begin(), mAllScriptNames.end());
@@ -1887,6 +1892,57 @@ bool Mono::OnTriggerExit(ECS::Entity trigger, ECS::Entity other) {
   }
 
   return IGE::Physics::PhysicsSystem::GetInstance().get()->OnTriggerExit(trigger, other);
+}
+
+MonoArray* Mono::GetContactPoints(ECS::Entity entity1, ECS::Entity entity2)
+{
+    auto contactPoints{ IGE::Physics::PhysicsSystem::GetInstance()->GetContactPoints(entity1, entity2) };
+    //Get the MonoClass for your C# ContactPoint struct.
+    MonoClass* contactPointClass = ScriptManager::mMonoUtilsMap["ContactPoint"];
+    if (!contactPointClass)
+    {
+        // Handle error: you might log and return nullptr
+        Debug::DebugLogger::GetInstance().LogError("No such class ContactPoint");
+        return nullptr;
+    }
+
+    // Get the current app domain (assumed to be stored in your ScriptManager)
+    MonoDomain* domain = ScriptManager::mAppDomain;  // adjust if needed
+
+    // Create a new managed array of the ContactPoint struct
+    MonoArray* managedArray = mono_array_new(domain, contactPointClass, contactPoints.size());
+
+    // For each contact point, fill in a ContactPoint instance and write it into the array.
+    for (size_t i = 0; i < contactPoints.size(); ++i)
+    {
+        // Create a local ContactPoint instance.
+        physx::PxContactPairPoint cp;
+        cp.position[0] = contactPoints[i].position.x;
+        cp.position[1] = contactPoints[i].position.y;
+        cp.position[2] = contactPoints[i].position.z;
+
+        cp.separation = contactPoints[i].separation;
+
+        cp.normal[0] = contactPoints[i].normal.x;
+        cp.normal[1] = contactPoints[i].normal.y;
+        cp.normal[2] = contactPoints[i].normal.z;
+
+        cp.internalFaceIndex0 = contactPoints[i].internalFaceIndex0;
+
+        cp.impulse[0] = contactPoints[i].impulse.x;
+        cp.impulse[1] = contactPoints[i].impulse.y;
+        cp.impulse[2] = contactPoints[i].impulse.z;
+
+        cp.internalFaceIndex1 = contactPoints[i].internalFaceIndex1;
+
+        // Obtain a pointer to the array element’s storage.
+        // Calculate the element size from the MonoClass information.
+        void* elementAddr = mono_array_addr_with_size(managedArray, mono_class_value_size(contactPointClass, nullptr), i);
+        // Copy our local instance into the managed array.
+        memcpy(elementAddr, &cp, sizeof(physx::PxContactPairPoint));
+    }
+
+    return managedArray;
 }
 
 //only works if there is a box, sphere, capsule, or rb

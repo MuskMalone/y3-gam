@@ -2796,7 +2796,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Wall  (Pit)",
+                        "tag": "Wall",
                         "isActive": true
                     }
                 },
@@ -6934,13 +6934,24 @@
                                         }
                                     },
                                     {
-                                        "data": {
-                                            "entityID": 320,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
+                                        "data": 30.0,
+                                        "type": "System.Single",
                                         "scriptField": {
-                                            "fieldName": "invisibleBarrier"
+                                            "fieldName": "ladderSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": 55.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxLadderHeight"
+                                        }
+                                    },
+                                    {
+                                        "data": -0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minLadderHeight"
                                         }
                                     },
                                     {
