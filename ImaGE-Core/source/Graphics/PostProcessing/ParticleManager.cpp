@@ -3,7 +3,8 @@
 #include <random>
 #include "Graphics/Shader.h"
 #include <Events/EventManager.h>
-
+#include "Input/InputManager.h"
+#include "Graphics/Renderer.h"
 namespace Graphics {
     void ParticleManager::Initialize()
     {
@@ -123,6 +124,7 @@ namespace Graphics {
             // Set the other uniform values individually
             emitterShader->SetUniform("emitter.col", emitter.col);
             emitterShader->SetUniform("emitter.vel", emitter.vel);
+            emitterShader->SetUniform("emitter.spreadAngle", emitter.spreadAngle);
             emitterShader->SetUniform("emitter.gravity", emitter.gravity);
             emitterShader->SetUniform("emitter.size", emitter.size);
 
@@ -168,6 +170,67 @@ namespace Graphics {
         //glBindBuffer(GL_SHADER_STORAGE_BUFFER, mVariableSSbo);
         //GLuint* idx = (GLuint*)glMapBufferRange(GL_SHADER_STORAGE_BUFFER, 0, sizeof(GLuint), GL_MAP_READ_BIT);
         //glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
+    }
+
+
+    void ParticleManager::Debug()
+    {
+        if (Input::InputManager::GetInstance().IsKeyHeld(KEY_CODE::KEY_LEFT_CONTROL) &&
+            Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_D))
+            mDebug = !mDebug;
+        if (!mDebug) return;
+
+        for (auto const& emittervecs : mDebugEmitters) {
+            for (auto const& emitter : emittervecs) {
+                if (emitter.vCount < 8) {
+                    for (int i = 0; i < emitter.vCount; ++i) {
+                        // Get the position from the vertex (using the first 3 components of vec4)
+                        glm::vec3 pos(emitter.vertices[i].x, emitter.vertices[i].y, emitter.vertices[i].z);
+                        // Draw a sphere at the vertex with a radius of 0.1 and the emitter's color.
+                        Graphics::Renderer::DrawWireSphere(pos, 0.1f, emitter.col);
+
+                        // Determine the next vertex index (wrap-around to form a closed shape)
+                        int nextIndex = (i + 1) % emitter.vCount;
+                        glm::vec3 nextPos(emitter.vertices[nextIndex].x, emitter.vertices[nextIndex].y, emitter.vertices[nextIndex].z);
+                        // Draw a line connecting this vertex to the next vertex.
+                        Graphics::Renderer::DrawLine(pos, nextPos, emitter.col);
+                    }
+                }
+                else {
+                    // For an irregular cube (vCount == 8) assume vertices are ordered as:
+                    //  0: near top left, 1: near top right, 2: far top right, 3: far top left,
+                    //  4: near bottom left, 5: near bottom right, 6: far bottom right, 7: far bottom left.
+                    glm::vec3 v[8];
+                    for (int i = 0; i < 8; ++i) {
+                        v[i] = glm::vec3(emitter.vertices[i].x, emitter.vertices[i].y, emitter.vertices[i].z);
+                        // Draw each vertex.
+                        Graphics::Renderer::DrawWireSphere(v[i], 0.1f, emitter.col);
+                    }
+
+                    // Draw top face edges.
+                    Graphics::Renderer::DrawLine(v[0], v[1], emitter.col); // near top left -> near top right
+                    Graphics::Renderer::DrawLine(v[1], v[2], emitter.col); // near top right -> far top right
+                    Graphics::Renderer::DrawLine(v[2], v[3], emitter.col); // far top right -> far top left
+                    Graphics::Renderer::DrawLine(v[3], v[0], emitter.col); // far top left -> near top left
+
+                    // Draw bottom face edges.
+                    Graphics::Renderer::DrawLine(v[4], v[5], emitter.col); // near bottom left -> near bottom right
+                    Graphics::Renderer::DrawLine(v[5], v[6], emitter.col); // near bottom right -> far bottom right
+                    Graphics::Renderer::DrawLine(v[6], v[7], emitter.col); // far bottom right -> far bottom left
+                    Graphics::Renderer::DrawLine(v[7], v[4], emitter.col); // far bottom left -> near bottom left
+
+                    // Draw vertical edges connecting top and bottom.
+                    Graphics::Renderer::DrawLine(v[0], v[4], emitter.col); // near top left -> near bottom left
+                    Graphics::Renderer::DrawLine(v[1], v[5], emitter.col); // near top right -> near bottom right
+                    Graphics::Renderer::DrawLine(v[2], v[6], emitter.col); // far top right -> far bottom right
+                    Graphics::Renderer::DrawLine(v[3], v[7], emitter.col); // far top left -> far bottom left
+                }
+
+
+            }
+        }
+
+        mDebugEmitters.clear();
     }
 
     void ParticleManager::Bind()

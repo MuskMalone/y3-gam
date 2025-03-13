@@ -46,9 +46,10 @@ namespace Graphics {
 		}
 
 		//temp physics debug hack
-		if (cam.isEditor) 
+		if (cam.isEditor) {
 			IGE::Physics::PhysicsSystem::GetInstance()->Debug();
-
+			Graphics::ParticleManager::GetInstance().Debug();
+		}
 		if (cam.isEditor) {
 			for (auto const& camera : entities ) {
 				if (!camera.HasComponent<Component::Camera>()) continue;

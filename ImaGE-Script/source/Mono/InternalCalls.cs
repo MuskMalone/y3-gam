@@ -374,6 +374,9 @@ namespace IGE.Utils
     extern public static bool OnTriggerExit(uint entityTrigger, uint entityOther);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static ContactPoint[] GetContactPoints(uint entity1, uint entity2);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetShortestDistance(uint e1, uint e2);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

@@ -46,26 +46,6 @@ vec3 randDir(float startAngle, float endAngle, float magnitude) {
     // return vec3(0);
 }
 
-// vec2 randDirInRange(vec2 baseDir, float angleDegree, float magnitude) {
-    
-//     float angleRange = radians(angleDegree);
-//     // Normalize the base direction
-//     vec2 normBaseDir = normalize(baseDir);
-
-//     // Generate a random angle offset within the specified range
-//     float angleOffset = randRange(vec2(-angleRange / 2.0, angleRange / 2.0));
-
-//     // Create a rotation matrix
-//     float s = sin(angleOffset);
-//     float c = cos(angleOffset);
-//     mat2 rotMat = mat2(
-//         c, -s,
-//         s, c
-//     );
-
-//     // Apply the rotation and scale by magnitude
-//     return (normBaseDir * rotMat) * magnitude;
-// }
 void spawnParticle(Particle pctl){
     uint idx = atomicAdd(Variables[VARIABLE_PARTICLE_COUNT], uint(1));
     Particles[idx % bufferMaxCount] = pctl;
@@ -86,120 +66,228 @@ void spawnParticlePoint(uint emtidx){
     ));
 }
 
-//emtidz is the indx of the Emitter
-//vtx1 and vtx2 are the indices of the vertices
-//angleRange is the range of angles in degrees wrt to normal
-// void spawnParticleRange(uint emtidx, int vtx1, int vtx2, float angleRange){
-//     //rotate by 90 degrees to find normal;
-//     vec2 vec = vec2(Emitters[emtidx].vertices[vtx2] - Emitters[emtidx].vertices[vtx1]);
-//     vec2 nml = normalize(vec2(-vec.y, vec.x));
-//     vec2 point = vec2(Emitters[emtidx].vertices[vtx1]) + (rand() * vec);
+// Helper: generates a random direction within a cone around a base direction.
+// Uses rand() (already defined) and the spread angle in degrees.
+vec3 randomConeDirection(vec3 baseDir, float spreadAngle) {
+    vec3 normDir = normalize(baseDir);
+    // Build an orthonormal basis (u,v,normDir)
+    vec3 up = abs(normDir.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
+    vec3 u = normalize(cross(up, normDir));
+    vec3 v = cross(normDir, u);
     
-//     spawnParticle(Particle(
-//         Emitters[emtidx].col, //
-//         vec4(point, 0, 1),
-//         randDirInRange(nml, angleRange, Emitters[emtidx].speed), // velocity
-//         Emitters[emtidx].gravity,
-//         Emitters[emtidx].size,
-//         Emitters[emtidx].gravity, 
-//         0, 
-//         Emitters[emtidx].lifetime, 
-//         Emitters[emtidx].angvel, 
-//         int(emtidx),
-//         true
-//     ));
-// }
+    // Interpolate between cos(spreadAngle) and 1.0 to get a random cone offset.
+    float cosTheta = mix(cos(radians(spreadAngle)), 1.0, rand());
+    float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
+    float phi = 2.0 * 3.14159265 * rand();
+    return (sinTheta * cos(phi)) * u + (sinTheta * sin(phi)) * v + (cosTheta) * normDir;
+}
 
-void spawnEmitterParticle(uint emtidx){
-    int type = Emitters[emtidx].type;
+// For 1-vertex (point) cone preset.
+// If the emitter’s velocity has significant magnitude, use it as the base direction.
+void spawnConeEmitterParticlePoint(uint emtidx) {
+    const float EPSILON = 1e-6;
+    vec3 baseVel = Emitters[emtidx].vel;
+    vec3 particleVel = (length(baseVel) >= EPSILON)
+        ? randomConeDirection(baseVel, Emitters[emtidx].spreadAngle) * Emitters[emtidx].speed
+        : randDir(0.0, 360.0, Emitters[emtidx].speed);
+    spawnParticle(Particle(
+        Emitters[emtidx].col,
+        vec3(Emitters[emtidx].vertices[0]),
+        particleVel,
+        Emitters[emtidx].gravity,
+        Emitters[emtidx].size,
+        Emitters[emtidx].angvel,
+        0,
+        Emitters[emtidx].lifetime,
+        int(emtidx),
+        true
+    ));
+}
+
+// For 2-vertex (line) emitter preset: default version.
+// Picks a random point on the line between vertices[0] and vertices[1] and
+// emits a particle in a random direction perpendicular to the line (with spread).
+void spawnLineEmitterParticle(uint emtidx) {
+    // Random point along the line.
+    vec3 pos = mix(vec3(Emitters[emtidx].vertices[0]), vec3(Emitters[emtidx].vertices[1]), rand());
+    // Compute the line direction.
+    vec3 lineDir = vec3(Emitters[emtidx].vertices[1]) - vec3(Emitters[emtidx].vertices[0]);
+    vec3 normLine = normalize(lineDir);
+    // Pick an arbitrary perpendicular base direction.
+    vec3 up = abs(normLine.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
+    vec3 perp = normalize(cross(normLine, up));
+    // Use the cone helper to add some spread around the perpendicular.
+    vec3 particleVel = randomConeDirection(perp, Emitters[emtidx].spreadAngle) * Emitters[emtidx].speed;
+    spawnParticle(Particle(
+        Emitters[emtidx].col,
+        pos,
+        particleVel,
+        Emitters[emtidx].gravity,
+        Emitters[emtidx].size,
+        Emitters[emtidx].angvel,
+        0,
+        Emitters[emtidx].lifetime,
+        int(emtidx),
+        true
+    ));
+}
+
+// For 2-vertex (line) cone preset:
+// Like the point cone preset but with the emitter’s base position chosen along the line.
+void spawnLineConeEmitterParticle(uint emtidx) {
+    vec3 pos = mix(vec3(Emitters[emtidx].vertices[0]), vec3(Emitters[emtidx].vertices[1]), rand());
+    const float EPSILON = 1e-6;
+    vec3 baseVel = Emitters[emtidx].vel;
+    vec3 particleVel = (length(baseVel) >= EPSILON)
+        ? randomConeDirection(baseVel, Emitters[emtidx].spreadAngle) * Emitters[emtidx].speed
+        : randDir(0.0, 360.0, Emitters[emtidx].speed);
+    spawnParticle(Particle(
+        Emitters[emtidx].col,
+        pos,
+        particleVel,
+        Emitters[emtidx].gravity,
+        Emitters[emtidx].size,
+        Emitters[emtidx].angvel,
+        0,
+        Emitters[emtidx].lifetime,
+        int(emtidx),
+        true
+    ));
+}
+
+// Helper: returns a random point on a quadrilateral plane (assumes vertices 0,1,2,3 form the plane).
+vec3 randomPointOnPlane(uint emtidx) {
+    float s = rand();
+    float t = rand();
+    vec3 v0 = vec3(Emitters[emtidx].vertices[0]);
+    vec3 v1 = vec3(Emitters[emtidx].vertices[1]);
+    vec3 v2 = vec3(Emitters[emtidx].vertices[2]);
+    vec3 v3 = vec3(Emitters[emtidx].vertices[3]);
+    // Bilinear interpolation:
+    return mix(mix(v0, v1, s), mix(v3, v2, s), t);
+}
+
+// For 4-vertex (plane) emitter preset: default version.
+// Emits from a random point on the plane, with a direction given by the plane’s normal (plus spread).
+void spawnPlaneEmitterParticle(uint emtidx) {
+    vec3 pos = randomPointOnPlane(emtidx);
+    // Compute plane normal from vertices 0,1,3.
+    vec3 v0 = vec3(Emitters[emtidx].vertices[0]);
+    vec3 v1 = vec3(Emitters[emtidx].vertices[1]);
+    vec3 v3 = vec3(Emitters[emtidx].vertices[3]);
+    vec3 normal = normalize(cross(v1 - v0, v3 - v0));
+    vec3 particleVel = randomConeDirection(normal, Emitters[emtidx].spreadAngle) * Emitters[emtidx].speed;
+    spawnParticle(Particle(
+        Emitters[emtidx].col,
+        pos,
+        particleVel,
+        Emitters[emtidx].gravity,
+        Emitters[emtidx].size,
+        Emitters[emtidx].angvel,
+        0,
+        Emitters[emtidx].lifetime,
+        int(emtidx),
+        true
+    ));
+}
+
+// For 4-vertex (plane) cone preset:
+// Like the cone preset for points but with the base position chosen on the plane.
+void spawnPlaneConeEmitterParticle(uint emtidx) {
+    vec3 pos = randomPointOnPlane(emtidx);
+    const float EPSILON = 1e-6;
+    vec3 baseVel = Emitters[emtidx].vel;
+    vec3 particleVel = (length(baseVel) >= EPSILON)
+        ? randomConeDirection(baseVel, Emitters[emtidx].spreadAngle) * Emitters[emtidx].speed
+        : randDir(0.0, 360.0, Emitters[emtidx].speed);
+    spawnParticle(Particle(
+        Emitters[emtidx].col,
+        pos,
+        particleVel,
+        Emitters[emtidx].gravity,
+        Emitters[emtidx].size,
+        Emitters[emtidx].angvel,
+        0,
+        Emitters[emtidx].lifetime,
+        int(emtidx),
+        true
+    ));
+}
+
+// Helper: returns a random point inside an irregular cube.
+// Assumes vertices 0-3 form the top face and 4-7 form the bottom face.
+vec3 randomPointInCube(uint emtidx) {
+    float s = rand();
+    float t = rand();
+    float u = rand();
+    vec3 v0 = vec3(Emitters[emtidx].vertices[0]);
+    vec3 v1 = vec3(Emitters[emtidx].vertices[1]);
+    vec3 v2 = vec3(Emitters[emtidx].vertices[2]);
+    vec3 v3 = vec3(Emitters[emtidx].vertices[3]);
+    // top face via bilinear interpolation.
+    vec3 top = mix(mix(v0, v1, s), mix(v3, v2, s), t);
+    vec3 v4 = vec3(Emitters[emtidx].vertices[4]);
+    vec3 v5 = vec3(Emitters[emtidx].vertices[5]);
+    vec3 v6 = vec3(Emitters[emtidx].vertices[6]);
+    vec3 v7 = vec3(Emitters[emtidx].vertices[7]);
+    // bottom face.
+    vec3 bottom = mix(mix(v4, v5, s), mix(v7, v6, s), t);
+    return mix(bottom, top, u);
+}
+
+// For 8-vertex (cube) emitter preset.
+// Spawns a particle at a random point inside the cube, with a random direction.
+void spawnCubeEmitterParticle(uint emtidx) {
+    vec3 pos = randomPointInCube(emtidx);
+    vec3 particleVel = randDir(0.0, 360.0, Emitters[emtidx].speed);
+    spawnParticle(Particle(
+        Emitters[emtidx].col,
+        pos,
+        particleVel,
+        Emitters[emtidx].gravity,
+        Emitters[emtidx].size,
+        Emitters[emtidx].angvel,
+        0,
+        Emitters[emtidx].lifetime,
+        int(emtidx),
+        true
+    ));
+}
+
+// New version of spawnEmitterParticle: dispatches based on vertex count and type.
+// For 1 vertex: if type is EMT_TYPE_GRADUAL, use the original point preset;
+// otherwise use the cone preset.
+// For 2 vertices: if type is EMT_TYPE_RAIN, use line emitter; else use line cone emitter.
+// For 4 vertices: if type is EMT_TYPE_DUST, use plane emitter; else use plane cone emitter.
+// For 8 vertices: always use the cube preset.
+void spawnEmitterParticle(uint emtidx) {
     int vCount = Emitters[emtidx].vCount;
     int particlesPerFrame = Emitters[emtidx].particlesPerFrame;
-    // if (vCount == 1){ // is point
-        // if (type == EMT_TYPE_GRADUAL){
-            //inside the if block so that lesser comparisions per loop
-            for (int i = 0; i < particlesPerFrame; ++i){
+    for (int i = 0; i < particlesPerFrame; ++i) {
+        if(vCount == VCOUNT_POINT) { // 1 vertex
+            if(Emitters[emtidx].type == EMT_TYPE_GRADUAL) {
                 spawnParticlePoint(emtidx);
+            } else {
+                spawnConeEmitterParticlePoint(emtidx);
             }
-        // }
-    // }
-    // else if (vCount == 2){// is line
-    //     if (type == EMT_TYPE_GRADUAL){
-    //         for (int i = 0; i < particlesPerFrame; ++i){
-    //             spawnParticleRange(emtidx, 0, 1, 360);
-    //         }
-    //     }
-    //     else if (type == EMT_TYPE_RAIN){
-    //         for (int i = 0; i < particlesPerFrame; ++i){
-    //             spawnParticleRange(emtidx, 0, 1, 30);}
-    //     }
-	// 	else if (type == EMT_TYPE_LAZER){
-    //         for (int i = 0; i < particlesPerFrame; ++i){
-    //             spawnParticleRange(emtidx, 0, 1, 0);}
-    //     }
-    // }
-    // else if (vCount == 4){// is quad
-    //     if (type == EMT_TYPE_GRADUAL){
-    //         for (int i = 0; i < particlesPerFrame; ++i){
-    //             int randCode = int(randRange(vec2(1, 4.99)));
-    //             int start, end, angle;
-    //             if (randCode == 1) {start = 0; end = 1;}
-    //             else if (randCode == 2) {start = 1; end = 2;}
-    //             else if (randCode == 3) {start = 2; end = 3;}
-    //             else if (randCode == 4) {start = 3; end = 0;}
-    //             spawnParticleRange(emtidx, start, end, 180);}
-    //     }
-    //     else if (type == EMT_TYPE_DUST){
-    //         vec4 maxVert = max(Emitters[emtidx].vertices[0], Emitters[emtidx].vertices[2]); // max values from top left and bottom right
-    //         vec4 minVert = min(Emitters[emtidx].vertices[0], Emitters[emtidx].vertices[2]); // min values from top left and bottom right
-
-    //         for (int i = 0; i < particlesPerFrame; ++i){
-                
-    //             vec2 point = vec2(randRange(vec2(minVert.x, maxVert.x)), randRange(vec2(minVert.y, maxVert.y)));
-    //             spawnParticle(Particle(
-	// 			    Emitters[emtidx].col, //
-	// 			    vec4(point, 0, 1),
-	// 			    randDir(0, 360, Emitters[emtidx].speed), // velocity
-	// 			    Emitters[emtidx].gravity,
-	// 			    Emitters[emtidx].size,
-	// 			    Emitters[emtidx].gravity, 
-	// 			    0, 
-	// 			    Emitters[emtidx].lifetime, 
-	// 			    Emitters[emtidx].angvel, 
-	// 			    int(emtidx),
-	// 			    true
-	// 		    ));}
-    //     }
-    //     else if (type == EMT_TYPE_DISINTEGRATE){
-            
-    //         vec2 maxVert = vec2(max(Emitters[emtidx].vertices[0], Emitters[emtidx].vertices[2])); // max values from top left and bottom right
-    //         vec2 minVert = vec2(min(Emitters[emtidx].vertices[0], Emitters[emtidx].vertices[2])); // min values from top left and bottom right
-    //         vec2 center = (maxVert + minVert) / 2;
-    //         vec2 dims = maxVert - minVert;
-    //         vec2 invdims = dims / float(particlesPerFrame);
-
-    //         for (int i = 0; i < particlesPerFrame; ++i){
-    //             for (int j = 0; j < particlesPerFrame; ++j){
-    //                 vec2 point = vec2(minVert) + (vec2(invdims) * vec2(float(i), float(j)) + vec2(invdims * 0.5));
-    //                 spawnParticle(Particle(
-	// 			        Emitters[emtidx].col, //
-	// 			        vec4(point, 0, 1),
-	// 			        randDir(0, 360, Emitters[emtidx].speed),
-	// 			        Emitters[emtidx].gravity,
-	// 			        invdims,
-	// 			        Emitters[emtidx].gravity, 
-	// 			        0, 
-	// 			        Emitters[emtidx].lifetime, 
-	// 			        Emitters[emtidx].angvel, 
-	// 			        int(emtidx),
-	// 			        true
-	// 		        ));
-    //             }
-    //         }
-    //     }
-
-
-    // }
+        } else if(vCount == VCOUNT_LINE) { // 2 vertices
+            if(Emitters[emtidx].type == EMT_TYPE_RAIN) {
+                spawnLineEmitterParticle(emtidx);
+            } else {
+                spawnLineConeEmitterParticle(emtidx);
+            }
+        } else if(vCount == VCOUNT_QUAD) { // 4 vertices
+            if(Emitters[emtidx].type == EMT_TYPE_DUST) {
+                spawnPlaneEmitterParticle(emtidx);
+            } else {
+                spawnPlaneConeEmitterParticle(emtidx);
+            }
+        } else if(vCount == VCOUNT_IRREGULAR) { // irregular cube emitter
+            spawnCubeEmitterParticle(emtidx);
+        }
+    }
 }
+
 
 void main() {
     // gid used as index into SSBO to find the particle

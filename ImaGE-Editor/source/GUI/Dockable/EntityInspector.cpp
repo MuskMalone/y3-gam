@@ -2159,10 +2159,39 @@ namespace GUI {
               bool isOpenEmitter = ImGui::CollapsingHeader(emitterLabel.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
 
               if (isOpenEmitter) {
+                  // Dropdown for vCount selection
+                  const char* vCountTitles[] = {
+                      "Point",      // 1 vertex
+                      "Line",       // 2 vertices
+                      "Plane",      // 4 vertices
+                      "Irregular"   // 8 vertices
+                  };
+
+                  // Temporary index for ImGui Combo based on emitter.vCount
+                  // Map 1 -> 0, 2 -> 1, 4 -> 2, 8 -> 3
+                  int vCountIndex = 0;
+                  switch (emitter.vCount) {
+                  case 1: vCountIndex = 0; break;
+                  case 2: vCountIndex = 1; break;
+                  case 4: vCountIndex = 2; break;
+                  case 8: vCountIndex = 3; break;
+                  default: vCountIndex = 0; break; // fallback to point
+                  }
+
+                  if (ImGui::Combo(("Vertex Count##" + std::to_string(i)).c_str(), &vCountIndex, vCountTitles, IM_ARRAYSIZE(vCountTitles))) {
+                      // Map selected index back to vCount value
+                      switch (vCountIndex) {
+                      case 0: emitter.vCount = 1; break;
+                      case 1: emitter.vCount = 2; break;
+                      case 2: emitter.vCount = 4; break;
+                      case 3: emitter.vCount = 8; break;
+                      default: emitter.vCount = 1; break;
+                      }
+                      modified = true;
+                  }
                   // Show vertices based on vCount
                   for (int j = 0; j < emitter.vCount; ++j) {
-                      ImGui::Text("Vertex %d: X: %.2f, Y: %.2f, Z: %.2f, W: %.2f", j, emitter.vertices[j].x, emitter.vertices[j].y, emitter.vertices[j].z, emitter.vertices[j].w);
-                      if (ImGui::DragFloat4(("##Vertex_" + std::to_string(i) + "_" + std::to_string(j)).c_str(), &emitter.vertices[j][0], 0.1f, -FLT_MAX, FLT_MAX)) {
+                      if (ImGui::DragFloat3(("Vertex " + std::to_string(j + 1) + "##" + std::to_string(i) + "_" + std::to_string(j)).c_str(), &emitter.vertices[j][0], 0.1f, -FLT_MAX, FLT_MAX)) {
                           modified = true;
                       }
                   }
@@ -2174,6 +2203,11 @@ namespace GUI {
 
                   // Edit velocity
                   if (ImGui::DragFloat3(("Velocity##" + std::to_string(i)).c_str(), &emitter.vel[0], 0.1f, -FLT_MAX, FLT_MAX)) {
+                      modified = true;
+                  }
+
+                  // Edit lifetime
+                  if (ImGui::DragFloat(("Spread Angle##" + std::to_string(i)).c_str(), &emitter.spreadAngle, 0.0f, 0.1f, 180.f)) {
                       modified = true;
                   }
 

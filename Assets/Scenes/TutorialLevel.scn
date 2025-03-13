@@ -12,6 +12,7 @@
                 115,
                 135,
                 1048618,
+                1048713,
                 1049184,
                 2097595,
                 2097603,
@@ -368,6 +369,36 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "targetY"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 103,
+                                "scriptName": "GlowingLight",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 120,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "BloomObject"
+                                        }
+                                    },
+                                    {
+                                        "data": 4.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "duration"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "targetIntensity"
                                         }
                                     }
                                 ]
@@ -1605,7 +1636,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 121,
+                                            "entityID": 1048713,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -1654,8 +1685,15 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "Bloom": {
+                        "threshold": 1.0,
+                        "intensity": 1.0,
+                        "range": 100.0
+                    }
+                },
+                {
                     "Tag": {
-                        "tag": "pCylinder18",
+                        "tag": "BloomObject",
                         "isActive": true
                     }
                 },
@@ -1708,7 +1746,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 16148162105990453228
                         }
                     }
                 },
@@ -1734,7 +1772,7 @@
                 {
                     "Tag": {
                         "tag": "Mother",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -2072,6 +2110,13 @@
                                         "data": false,
                                         "type": "System.Boolean",
                                         "scriptField": {
+                                            "fieldName": "isGrounded"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
                                             "fieldName": "isLevel1"
                                         }
                                     },
@@ -2114,6 +2159,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "speedThreshold"
+                                        }
+                                    },
+                                    {
+                                        "data": "",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "tag"
                                         }
                                     }
                                 ]
@@ -8793,6 +8845,78 @@
             ]
         },
         {
+            "ID": 1048713,
+            "Parent": 37,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "CutMom",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 2.2850000858306886,
+                            "y": -2.940000057220459,
+                            "z": -0.30000001192092898
+                        },
+                        "scale": {
+                            "x": 3.6449999809265138,
+                            "y": 6.014999866485596,
+                            "z": -6.0699944496154789
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 2.2850000858306886,
+                            "y": -2.940000057220459,
+                            "z": -0.30000001192092898
+                        },
+                        "worldScale": {
+                            "x": 3.6449999809265138,
+                            "y": 6.014999866485596,
+                            "z": -6.0699944496154789
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 5774957819343618220
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1049042,
             "Parent": 2097593,
             "Child Entities": [
@@ -9392,6 +9516,13 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "canMove"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "climbing"
                                         }
                                     },
                                     {

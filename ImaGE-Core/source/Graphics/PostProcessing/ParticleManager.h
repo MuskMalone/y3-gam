@@ -4,6 +4,7 @@
 #include <array>
 #include "Singleton/ThreadSafeSingleton.h"
 #include "Events/EventCallback.h"
+#include "Core/Systems/ParticleSystem/ParticleSystem.h"
 #define MAX_BUFFER 1000000
 #define WORK_GROUP 1000 //max buffer should be divisible by work group
 namespace Graphics {
@@ -18,8 +19,8 @@ namespace Graphics {
             glm::vec4 vertices[8]; // 8 vec4s, 64 bytes
             glm::vec4 col;                    // Color, 16 bytes
 
-            glm::vec3 vel;                    // Velocity, 12 bytes
-            float _padding1;                  // Padding for 16-byte alignment
+            glm::vec3 vel;                    // Velocity, the vector that all particles follow
+            float spreadAngle;                // the angle in which the velocity is spread randomly
 
             glm::vec3 gravity;                    // Rotation, 12 bytes
             float _padding2;                  // Padding for 16-byte alignment
@@ -73,6 +74,7 @@ namespace Graphics {
         //color
         glm::vec4 col{ 1,1,1,1 };          // 16 bytes
         glm::vec3 vel{ .5f, .0f, -0.5f };          // vec3
+        float spreadAngle{ 0 };
         glm::vec3 gravity{ 0,0,0 };
         glm::vec2 size{ 1,1 };         // vec2
 
@@ -104,12 +106,16 @@ namespace Graphics {
         void MultiEmitterAction(std::vector<EmitterInstance>& emitters, int action);
         void EmitterAction(EmitterInstance& emitter, int action);
         void DebugSSBO();
+        void Debug();
         void Bind();
         void Unbind();
     private:
         EVENT_CALLBACK_DECL(HandleSystemEvents);
         void ClearParticleBuffer();
     private:
+        bool mDebug{ false };
+        std::vector<std::vector<Graphics::EmitterInstance>> mDebugEmitters;
+
         GLuint mEmitterSSbo;
         GLuint mParticleSSbo;
         GLuint mParticleStartSSbo;
@@ -119,5 +125,7 @@ namespace Graphics {
         GLuint mVariableSSbo;
 
         std::queue<GLuint> mEmitterIdxQueue;
+        
+        friend Systems::ParticleSystem;
     };
 }

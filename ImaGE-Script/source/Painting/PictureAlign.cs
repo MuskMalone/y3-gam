@@ -215,6 +215,7 @@ public class PictureAlign : Entity
         {
           Console.WriteLine("Tut");
           FadeOut();
+          FindScript<GlowingLight>()?.StartBlooming();
           InternalCalls.SpawnOpenDoor();
             if (hasFaded)
             {
