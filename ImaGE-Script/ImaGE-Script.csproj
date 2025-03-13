@@ -99,6 +99,7 @@
     <Compile Include="source\DynamicAudio\EyeBallFollowSFX.cs" />
     <Compile Include="source\DynamicAudio\PlayerFootsteps.cs" />
     <Compile Include="source\DynamicAudio\TransitionHintLevel1.cs" />
+    <Compile Include="source\Engine Tools\Serializer.cs" />
     <Compile Include="source\Engine Tools\Easing.cs" />
     <Compile Include="source\Engine Tools\FPS.cs" />
     <Compile Include="source\Engine Tools\Transition.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="source\Triggers\DeathTrigger.cs" />
     <Compile Include="source\Triggers\DeathtriggerPit.cs" />
     <Compile Include="source\Triggers\FinishLineTrigger.cs" />
+    <Compile Include="source\Tutorial\GlowingLight.cs" />
     <Compile Include="source\Tutorial\InventoryTutorial.cs" />
     <Compile Include="source\Tutorial\TutorialDialogue.cs" />
     <Compile Include="source\Tutorial\TutorialFade.cs" />

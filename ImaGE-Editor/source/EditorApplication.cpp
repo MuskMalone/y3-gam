@@ -97,11 +97,18 @@ namespace IGE {
         if (inputManager.IsKeyTriggered(IK_K)) {
           ToggleImGuiEnabled();
         }
-        if (inputManager.IsKeyHeld(IK_LEFT_CONTROL) && inputManager.IsKeyPressed(IK_P)) {
-          sceneManager.StopScene();
-          inputManager.SetisCursorLocked(false);
-          eventManager.DispatchImmediateEvent<Events::LockMouseEvent>(false);
-          ToggleImGuiEnabled();
+        if (inputManager.IsKeyHeld(IK_LEFT_CONTROL) && inputManager.IsKeyReleased(IK_P)) {
+          if (sceneManager.IsSceneInProgress()) {
+            sceneManager.StopScene();
+            inputManager.SetisCursorLocked(false);
+            eventManager.DispatchImmediateEvent<Events::LockMouseEvent>(false);
+            ToggleImGuiEnabled();
+          }
+          else if (!sceneManager.NoSceneSelected()) {
+            sceneManager.PlayScene();
+            inputManager.SetisCursorLocked(true);
+            eventManager.DispatchImmediateEvent<Events::LockMouseEvent>(true);
+          }
         }
       }
 
