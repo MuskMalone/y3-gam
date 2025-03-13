@@ -14,7 +14,7 @@ namespace Events
     {
       NEW,
       CHANGED,
-      STARTED,
+      STARTED, 
       PAUSED,
       STOPPED
     };
