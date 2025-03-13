@@ -75,6 +75,15 @@ namespace IGE {
 
     SUBSCRIBE_CLASS_FUNC(Events::SignalEvent, &EditorApplication::SignalCallback, this);
     SUBSCRIBE_CLASS_FUNC(Events::ToggleImGui, &EditorApplication::OnImGuiToggle, this);
+    SUBSCRIBE_CLASS_FUNC(Events::QuitApplication, &EditorApplication::OnApplicationQuit, this);
+
+    glfwSetWindowCloseCallback(
+      mWindow.get(),
+      [](GLFWwindow* window) {
+        glfwSetWindowShouldClose(window, GLFW_FALSE); // Prevent closing immediately
+        IGE_EVENTMGR.DispatchImmediateEvent<Events::QuitApplicationConfirmation>();
+      }
+    );
   }
 
   void EditorApplication::Run() {
@@ -315,6 +324,10 @@ namespace IGE {
     ImGui::NewFrame();
     ImGuizmo::BeginFrame();
     ImGui::DockSpaceOverViewport();
+  }
+
+  EVENT_CALLBACK_DEF(EditorApplication, OnApplicationQuit) {
+    glfwSetWindowShouldClose(mWindow.get(), GLFW_TRUE);
   }
 
   void EditorApplication::Shutdown()

@@ -79,6 +79,10 @@ namespace GUI {
     SUBSCRIBE_CLASS_FUNC(Events::LoadSceneEvent, &GUIManager::OnSceneLoad, this);
     // ensure GUIManager is the last subscriber
     SUBSCRIBE_CLASS_FUNC(Events::CollectEditorSceneData, &GUIManager::OnCollectEditorData, this);
+
+    // subscribe events for GUIVault
+    SUBSCRIBE_STATIC_FUNC(Events::SceneModifiedEvent, GUIVault::OnSceneModified);
+    SUBSCRIBE_STATIC_FUNC(Events::SceneStateChange, GUIVault::OnSceneStateChange);
   }
 
   void GUIManager::UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer, std::shared_ptr<Graphics::Texture> const& tex) {
@@ -115,8 +119,12 @@ namespace GUI {
 
   EVENT_CALLBACK_DEF(GUIManager, OnCollectEditorData) {
     auto editorDataEvent{ CAST_TO_EVENT(Events::CollectEditorSceneData) };
+    std::string const sceneName{ editorDataEvent->mSceneName.back() == '*' ?
+      editorDataEvent->mSceneName.substr(0, editorDataEvent->mSceneName.size() - 2)
+      : editorDataEvent->mSceneName
+    };
     Serialization::Serializer::SerializeAny(editorDataEvent->mSceneConfig,
-      gEditorAssetsDirectory + std::string(".Scenes\\") + editorDataEvent->mSceneName);
+      gEditorAssetsDirectory + std::string(".Scenes\\") + sceneName);
   }
 
   EVENT_CALLBACK_DEF(GUIManager, OnSceneSave) {

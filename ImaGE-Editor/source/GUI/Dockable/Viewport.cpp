@@ -39,6 +39,7 @@ namespace {
   static glm::vec3 sTargetPosition, sMoveDir;
   static float sDistToCover;
   static ECS::Entity sPrevSelectedEntity{}, sPrevSelectedLeaf{};
+  static std::unique_ptr<GUI::AssetPayload> sDroppedPayload{};
 
   // for multi-select
   static bool sCtrlHeld{ false };
@@ -95,6 +96,24 @@ namespace GUI
       // only register input if viewport is focused
       bool const checkInput{ (ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || mRightClickHeld || mIsPanning || sMovingToEntity };
       if (checkInput) {
+        // check for delete key
+        if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIVault::GetSelectedEntity()) {
+          ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+          auto entities{ GUIVault::GetSelectedEntities() };
+          if (!entities.empty()) {
+            for (ECS::Entity e : entities) {
+              em.RemoveEntity(e);
+            }
+            GUIVault::ClearSelectedEntities();
+          }
+          else {
+            em.RemoveEntity(GUIVault::GetSelectedEntity());
+          }
+
+          GUIVault::SetSelectedEntity(ECS::Entity());
+          IGE_EVENTMGR.DispatchImmediateEvent<Events::SceneModifiedEvent>();
+        }
+
         ProcessCameraInputs();
       }
       // auto focus window when middle or right-clicked upon
@@ -199,8 +218,9 @@ namespace GUI
         mEditorCam->modified = false;
       }
       
-
       ReceivePayload();
+
+      UnsavedChangesPopup();
 
       ImGui::End();
   }
@@ -517,8 +537,18 @@ namespace GUI
         switch (assetPayload.mAssetType)
         {
         case AssetPayload::SCENE:
-          QUEUE_EVENT(Events::LoadSceneEvent, assetPayload.GetFileName(), assetPayload.GetFilePath());
+        {
+          // if scene has unsaved changes, trigger popup
+          if (GUIVault::IsSceneModified()) {
+            // temporarily save the current payload
+            sDroppedPayload = std::make_unique<GUI::AssetPayload>(std::move(assetPayload));
+            ImGui::OpenPopup(sUnsavedChangesPopupTitle);
+          }
+          else {
+            QUEUE_EVENT(Events::LoadSceneEvent, assetPayload.GetFileName(), assetPayload.GetFilePath());
+          }
           break;
+        }
         case AssetPayload::PREFAB:
         {
           if (noScene) {
@@ -562,6 +592,51 @@ namespace GUI
       }
       ImGui::EndDragDropTarget();
     }
+  }
+
+  void Viewport::UnsavedChangesPopup() {
+    ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    if (!ImGui::BeginPopupModal(sUnsavedChangesPopupTitle, NULL, ImGuiWindowFlags_AlwaysAutoResize)) { return; }
+    
+    bool close{ false };
+    {
+      ImGui::Text("Would you like to save your changes to ");
+      ImGui::SameLine();
+      float const denom{ 1 / 255.f };
+      ImGui::TextColored(ImVec4(167.f * denom, 90 * denom, 35 * denom, 255), (IGE_SCENEMGR.GetSceneName() + ".scn").c_str());
+      ImGui::SameLine();
+      ImGui::Text("?");
+    }
+
+    ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x * 0.5f - ImGui::CalcTextSize("Save Discard Ch").x);
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.55f, 0.f, 1.f));
+    if (ImGui::Button("Save"))
+    {
+      IGE_EVENTMGR.DispatchImmediateEvent<Events::SaveSceneEvent>(GUIVault::sSerializePrettyScene);
+      QUEUE_EVENT(Events::LoadSceneEvent, sDroppedPayload->GetFileName(), sDroppedPayload->GetFilePath());
+      close = true;
+    }
+    ImGui::PopStyleColor();
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.65f, 0.2f, 0.2f, 1.f));
+    ImGui::SameLine();
+    
+    if (ImGui::Button("Discard Changes")) {
+      QUEUE_EVENT(Events::LoadSceneEvent, sDroppedPayload->GetFileName(), sDroppedPayload->GetFilePath());
+      close = true;
+    }
+    ImGui::PopStyleColor();
+    ImGui::SameLine();
+
+    if (ImGui::Button("Cancel")) {
+      close = true;
+    }
+
+    if (close) {
+      sDroppedPayload.reset();
+      ImGui::CloseCurrentPopup();
+    }
+
+    ImGui::EndPopup();
   }
 
   EVENT_CALLBACK_DEF(Viewport, OnCollectEditorData) {
