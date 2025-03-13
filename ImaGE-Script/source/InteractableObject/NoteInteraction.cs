@@ -4,7 +4,6 @@ using System.Numerics;
 
 public class NoteInteraction : Entity
 {
-
   public PlayerMove playerMove;
   public Entity noteUI;
   public PlayerInteraction playerInteraction;
@@ -14,6 +13,7 @@ public class NoteInteraction : Entity
 
   public float moveSpeed = 5f;
   public float rotateSpeed = 5f;
+  public bool hideOriginalObject; // using this cause in M3 scene, sometimes it can be seen behind the UI image
 
   private bool isMoving = false;
   private bool isReset = false;
@@ -96,6 +96,11 @@ public class NoteInteraction : Entity
       playerMove.FreezePlayer();
       viewNoteUI.SetActive(false);
     }
+
+    if (hideOriginalObject)
+    {
+      SetActive(false);
+    }
   }
 
   private void HideNoteUI()
@@ -104,6 +109,11 @@ public class NoteInteraction : Entity
     if (noteUI != null && playerMove != null)
     {
       noteUI.SetActive(false);
+    }
+
+    if (hideOriginalObject)
+    {
+      SetActive(true);
     }
   }
 
