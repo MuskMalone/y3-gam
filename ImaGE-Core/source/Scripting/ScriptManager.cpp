@@ -94,6 +94,7 @@ namespace Mono
     { "PictureAlign", ScriptFieldType::PICTUREALIGN },
     { "ControlPanel2", ScriptFieldType::CONTROLPANEL },
     { "Transition", ScriptFieldType::TRANSITION },
+    { "PlayerArise",ScriptFieldType::PLAYER_ARISE},
     { "EyeBallFollow", ScriptFieldType::EYEBALLFOLLOW },
     { "HammerLevel3", ScriptFieldType::HAMMER_L3 }
   };
