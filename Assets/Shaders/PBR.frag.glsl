@@ -56,7 +56,7 @@ uniform sampler2D[16] u_AlbedoMaps;
 const int typeDir = 0;
 const int typeSpot = 1;
 const int typePoint = 2;
-const int maxLights = 30;
+const int maxLights = 100;
 uniform vec3 u_CamPos;       // Camera position in world space
 uniform int numlights;
 uniform vec3 u_AmbientLight;

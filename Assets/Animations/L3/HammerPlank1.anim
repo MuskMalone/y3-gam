@@ -1,0 +1,332 @@
+{
+    "rootKeyframe": {
+        "startPos": {
+            "x": 48.53289031982422,
+            "y": 7.665257453918457,
+            "z": -122.16154479980469
+        },
+        "startRot": {
+            "x": -173.7455291748047,
+            "y": 17.832218170166017,
+            "z": -174.7161407470703
+        },
+        "startScale": {
+            "x": 0.3199999928474426,
+            "y": 0.3199999928474426,
+            "z": 0.3199999928474426
+        },
+        "nextNodes": [
+            1,
+            20
+        ]
+    },
+    "keyframes": [
+        {
+            "nodeId": 1,
+            "endValue": {
+                "x": -181.54600524902345,
+                "y": 16.031999588012697,
+                "z": -186.71600341796876
+            },
+            "type": "ROTATION",
+            "interpolationType": "LINEAR",
+            "startTime": 0.0,
+            "duration": 0.30000001192092898,
+            "nextNodes": [
+                2
+            ]
+        },
+        {
+            "nodeId": 2,
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "interpolationType": "LINEAR",
+            "startTime": 0.30000001192092898,
+            "duration": 0.10000000149011612,
+            "nextNodes": [
+                3,
+                18
+            ]
+        },
+        {
+            "nodeId": 3,
+            "endValue": {
+                "x": -181.5500030517578,
+                "y": 16.030000686645509,
+                "z": -208.91600036621095
+            },
+            "type": "ROTATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 0.4000000059604645,
+            "duration": 0.20000000298023225,
+            "nextNodes": [
+                4
+            ]
+        },
+        {
+            "nodeId": 4,
+            "endValue": {
+                "x": -181.5500030517578,
+                "y": 16.030000686645509,
+                "z": -223.1199951171875
+            },
+            "type": "ROTATION",
+            "interpolationType": "EASE_OUT",
+            "startTime": 0.6000000238418579,
+            "duration": 0.20000000298023225,
+            "nextNodes": [
+                5
+            ]
+        },
+        {
+            "nodeId": 5,
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "interpolationType": "LINEAR",
+            "startTime": 0.800000011920929,
+            "duration": 0.10000000149011612,
+            "nextNodes": [
+                6
+            ]
+        },
+        {
+            "nodeId": 6,
+            "endValue": {
+                "x": 48.53289031982422,
+                "y": 200.0,
+                "z": -122.16154479980469
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "LINEAR",
+            "startTime": 0.9000000357627869,
+            "duration": 0.0,
+            "nextNodes": [
+                7
+            ]
+        },
+        {
+            "nodeId": 7,
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "interpolationType": "LINEAR",
+            "startTime": 0.9000000357627869,
+            "duration": 0.4000000059604645,
+            "nextNodes": [
+                8,
+                17
+            ]
+        },
+        {
+            "nodeId": 8,
+            "endValue": {
+                "x": -159.04600524902345,
+                "y": 2.8320000171661379,
+                "z": -174.7161407470703
+            },
+            "type": "ROTATION",
+            "interpolationType": "LINEAR",
+            "startTime": 1.3000000715255738,
+            "duration": 0.0,
+            "nextNodes": [
+                9
+            ]
+        },
+        {
+            "nodeId": 9,
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "interpolationType": "LINEAR",
+            "startTime": 1.3000000715255738,
+            "duration": 0.10000000149011612,
+            "nextNodes": [
+                10,
+                16
+            ]
+        },
+        {
+            "nodeId": 10,
+            "endValue": {
+                "x": -159.0500030517578,
+                "y": 2.8299999237060549,
+                "z": -198.1199951171875
+            },
+            "type": "ROTATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 1.4000000953674317,
+            "duration": 0.4000000059604645,
+            "nextNodes": [
+                11,
+                12
+            ]
+        },
+        {
+            "nodeId": 11,
+            "endValue": {
+                "x": -159.0500030517578,
+                "y": 2.8299999237060549,
+                "z": -230.52000427246095
+            },
+            "type": "ROTATION",
+            "interpolationType": "LINEAR",
+            "startTime": 1.8000000715255738,
+            "duration": 0.30000001192092898,
+            "nextNodes": []
+        },
+        {
+            "nodeId": 12,
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "interpolationType": "LINEAR",
+            "startTime": 1.8000000715255738,
+            "duration": 0.10000000149011612,
+            "nextNodes": [
+                13
+            ]
+        },
+        {
+            "nodeId": 13,
+            "endValue": {
+                "x": 47.491455078125,
+                "y": 3.948071241378784,
+                "z": -128.70257568359376
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "EASE_OUT",
+            "startTime": 1.9000000953674317,
+            "duration": 0.20000000298023225,
+            "nextNodes": [
+                14
+            ]
+        },
+        {
+            "nodeId": 14,
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "interpolationType": "LINEAR",
+            "startTime": 2.1000001430511476,
+            "duration": 0.10000000149011612,
+            "nextNodes": [
+                15
+            ]
+        },
+        {
+            "nodeId": 15,
+            "endValue": {
+                "x": 48.53289031982422,
+                "y": 200.0,
+                "z": -122.16154479980469
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "LINEAR",
+            "startTime": 2.200000047683716,
+            "duration": 0.0,
+            "nextNodes": []
+        },
+        {
+            "nodeId": 16,
+            "endValue": {
+                "x": 48.36333084106445,
+                "y": 3.948071241378784,
+                "z": -128.81272888183595
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 1.4000000953674317,
+            "duration": 0.4000000059604645,
+            "nextNodes": []
+        },
+        {
+            "nodeId": 17,
+            "endValue": {
+                "x": 48.03300094604492,
+                "y": 4.391770839691162,
+                "z": -128.98004150390626
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "LINEAR",
+            "startTime": 1.3000000715255738,
+            "duration": 0.0,
+            "nextNodes": []
+        },
+        {
+            "nodeId": 18,
+            "endValue": {
+                "x": 48.83321762084961,
+                "y": 7.034094333648682,
+                "z": -122.16154479980469
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 0.4000000059604645,
+            "duration": 0.20000000298023225,
+            "nextNodes": [
+                19
+            ]
+        },
+        {
+            "nodeId": 19,
+            "endValue": {
+                "x": 48.220001220703128,
+                "y": 7.028196334838867,
+                "z": -122.16154479980469
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "EASE_OUT",
+            "startTime": 0.6000000238418579,
+            "duration": 0.20000000298023225,
+            "nextNodes": []
+        },
+        {
+            "nodeId": 20,
+            "endValue": {
+                "x": 48.79999923706055,
+                "y": 7.1362786293029789,
+                "z": -122.16154479980469
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "LINEAR",
+            "startTime": 0.0,
+            "duration": 0.30000001192092898,
+            "nextNodes": [
+                21
+            ]
+        },
+        {
+            "nodeId": 21,
+            "endValue": {
+                "x": 48.79696273803711,
+                "y": 7.061931610107422,
+                "z": -122.16154479980469
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "LINEAR",
+            "startTime": 0.30000001192092898,
+            "duration": 0.10000000149011612,
+            "nextNodes": []
+        }
+    ]
+}
