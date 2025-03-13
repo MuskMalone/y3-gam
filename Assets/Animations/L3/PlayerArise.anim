@@ -32,12 +32,12 @@
             "startTime": 0.0,
             "duration": 2.75,
             "nextNodes": [
-                3,
-                13
+                2,
+                3
             ]
         },
         {
-            "nodeId": 3,
+            "nodeId": 2,
             "endValue": {
                 "x": 25.0,
                 "y": 0.0,
@@ -50,7 +50,7 @@
             "nextNodes": []
         },
         {
-            "nodeId": 13,
+            "nodeId": 3,
             "endValue": {
                 "x": -40.0,
                 "y": 80.0,
@@ -61,11 +61,11 @@
             "startTime": 2.75,
             "duration": 2.75,
             "nextNodes": [
-                15
+                4
             ]
         },
         {
-            "nodeId": 15,
+            "nodeId": 4,
             "endValue": {
                 "x": 0.0,
                 "y": 90.0,
