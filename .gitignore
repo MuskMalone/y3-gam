@@ -4,9 +4,10 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 # Extra ImaGE-specific files
-.temp
-.backup
-.Scenes
+ImaGE-Editor/.temp/*
+ImaGE-Editor/.backup/*
+ImaGE-Editor/logs/*
+Assets/.Editor/.Scenes/*
 
 # User-specific files
 *.rsuser

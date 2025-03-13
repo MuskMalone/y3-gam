@@ -80,6 +80,7 @@ namespace IGE {
 
     EVENT_CALLBACK_DECL(OnImGuiToggle);
     EVENT_CALLBACK_DECL(SignalCallback);
+    EVENT_CALLBACK_DECL(OnApplicationQuit);
 
     /*!*********************************************************************
     \brief

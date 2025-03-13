@@ -36,63 +36,72 @@ public class Test : Entity
 
   //// VARIABLES HERE SHOULD ONLY BE MODFIED THROUGH EDITOR
   //  public Entity testEnt;
-
+  //public Entity entity1;
+  public Entity entity2;
   public int TestInt = 10;
   public int TestInt3 = 20;
-    public float TestFloat = 0.1f;
+  public float TestFloat = 0.1f;
 
-    public float TestFloat2 = 1.0f;
-    public bool TestBool = false;
-    //public float TestFloat = 22f;
-    //public double TestDouble = 30.0;
-    //public Vector3 dVec3 = new Vector3(336.318f, 100f, 0f);
-
-
+  public float TestFloat2 = 1.0f;
+  public bool TestBool = false;
+  //public float TestFloat = 22f;
+  //public double TestDouble = 30.0;
+  //public Vector3 dVec3 = new Vector3(336.318f, 100f, 0f);
 
 
 
-    public Test() : base()
+
+
+  public Test() : base()
+  {
+
+    //AddComponent<Transform>(new Transform());
+  }
+
+  /*!*********************************************************************
+  \brief
+    Initializes deck and combo managers based on the character type.
+  ************************************************************************/
+
+
+
+  public void OnCreate()
+  {
+
+  }
+
+  /*!*********************************************************************
+  \brief  
+    Initializes character's hand with the correct number of cards
+  ************************************************************************/
+  public void Init()
+  {
+  }
+
+  /*!*********************************************************************
+  \brief  
+    Update function for the class. Takes in the deltaTime from GameManager
+    and updates the relevant members with it.
+  ************************************************************************/
+  public void Update()
+  {
+
+    //Console.WriteLine("TEST INT:" + TestInt);
+    ContactPoint[] cps = InternalCalls.GetContactPoints(mEntityID, entity2.mEntityID);
+    foreach (ContactPoint cp in cps)
     {
-      
-      //AddComponent<Transform>(new Transform());
+      if (cp.impulse.Length() > 2f)
+      {
+        Console.WriteLine("Contact Point:");
+        Console.WriteLine($"  Position:        ({cp.position.X}, {cp.position.Y}, {cp.position.Z})");
+        Console.WriteLine($"  Separation:      {cp.separation}");
+        Console.WriteLine($"  Normal:          ({cp.normal.X}, {cp.normal.Y}, {cp.normal.Z})");
+        Console.WriteLine($"  Face Index 0:    {cp.internalFaceIndex0}");
+        Console.WriteLine($"  Impulse:         ({cp.impulse.X}, {cp.impulse.Y}, {cp.impulse.Z})");
+        Console.WriteLine($"  Face Index 1:    {cp.internalFaceIndex1}");
+        Console.WriteLine();
+      }
     }
-
-    /*!*********************************************************************
-    \brief
-      Initializes deck and combo managers based on the character type.
-    ************************************************************************/
-
-   
-
-    public void OnCreate()
-    {
-
-    }
-
-    /*!*********************************************************************
-    \brief  
-      Initializes character's hand with the correct number of cards
-    ************************************************************************/
-    public void Init()
-    {
-    }
-
-    /*!*********************************************************************
-    \brief  
-      Update function for the class. Takes in the deltaTime from GameManager
-      and updates the relevant members with it.
-    ************************************************************************/
-    public void Update()
-    {
-
-        //Console.WriteLine("TEST INT:" + TestInt);
-
-        InternalCalls.SetSoundPitch(mEntityID, "BGM", TestFloat);
-        InternalCalls.SetSoundVolume(mEntityID, "BGM", TestFloat2);
-        if (Input.GetKeyDown(KeyCode.SPACE))
-        {
-            InternalCalls.SetShaderState(0, TestBool);
-        }
     //Console.WriteLine("TEST INT2:" + TestInt3);
     //  Console.WriteLine(testEnt.mEntityID.ToString());
     // Console.WriteLine("Hit\n");
@@ -104,51 +113,52 @@ public class Test : Entity
     //GetComponent<Transform>().Position = new Vec3<float>(1,1,2);
     //  Console.WriteLine(Position.X + "," + Position.Y + "," + Position.Z);
 
-        //  bool isChanged = false;
+    //  bool isChanged = false;
 
-        //  currTrans.Y += (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ? (speed * (float)dt) : 0;
-        //  currTrans.X -= (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ? (speed * (float)dt) : 0;
-        //  currTrans.Y -= (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ? (speed * (float)dt) : 0;
-        //  currTrans.X += (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D)) ? (speed * (float)dt) : 0;
+    //  currTrans.Y += (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ? (speed * (float)dt) : 0;
+    //  currTrans.X -= (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ? (speed * (float)dt) : 0;
+    //  currTrans.Y -= (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ? (speed * (float)dt) : 0;
+    //  currTrans.X += (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D)) ? (speed * (float)dt) : 0;
 
 
-        //  isChanged =
-        //      (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ||
-        //      (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ||
-        //      (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ||
-        //      (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D));
+    //  isChanged =
+    //      (InternalCalls.IsKeyTriggered(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.W)) ||
+    //      (InternalCalls.IsKeyTriggered(KeyCode.A) || InternalCalls.IsKeyHeld(KeyCode.A)) ||
+    //      (InternalCalls.IsKeyTriggered(KeyCode.S) || InternalCalls.IsKeyHeld(KeyCode.S)) ||
+    //      (InternalCalls.IsKeyTriggered(KeyCode.D) || InternalCalls.IsKeyHeld(KeyCode.D));
 
-        //if(isChanged)
-        //  {
-        //    InternalCalls.SetPosition(mEntityID, ref currTrans);
-        //  }
+    //if(isChanged)
+    //  {
+    //    InternalCalls.SetPosition(mEntityID, ref currTrans);
+    //  }
 
 
 
   }
 
-    public void OnPointerEnter() {
-        string tag = InternalCalls.GetTag(mEntityID);
-        Console.WriteLine("From MONO Enter" + tag);
-    }
+  public void OnPointerEnter()
+  {
+    string tag = InternalCalls.GetTag(mEntityID);
+    Console.WriteLine("From MONO Enter" + tag);
+  }
 
-    public void OnPointerExit()
-    {
-        string tag = InternalCalls.GetTag(mEntityID);
-        Console.WriteLine("From MONO Exit" + tag);
-    }
+  public void OnPointerExit()
+  {
+    string tag = InternalCalls.GetTag(mEntityID);
+    Console.WriteLine("From MONO Exit" + tag);
+  }
 
-    public void OnPointerDown()
-    {
-        string tag = InternalCalls.GetTag(mEntityID);
-        Console.WriteLine("From MONO Down" + tag);
-    }
+  public void OnPointerDown()
+  {
+    string tag = InternalCalls.GetTag(mEntityID);
+    Console.WriteLine("From MONO Down" + tag);
+  }
 
-    public void OnPointerUp()
-    {
-        string tag = InternalCalls.GetTag(mEntityID);
-        Console.WriteLine("From MONO Up" + tag);
-    }
+  public void OnPointerUp()
+  {
+    string tag = InternalCalls.GetTag(mEntityID);
+    Console.WriteLine("From MONO Up" + tag);
+  }
 
 }
 

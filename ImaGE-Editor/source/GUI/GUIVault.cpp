@@ -7,4 +7,19 @@ namespace GUI {
     sSelectedEntity = entity;
     QUEUE_EVENT(Events::EntitySelectedInEditor, entity);
   }
+
+  EVENT_CALLBACK_DEF(GUIVault, OnSceneModified) {
+    sSceneModified = true;
+  }
+
+  EVENT_CALLBACK_DEF(GUIVault, OnSceneStateChange) {
+    switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState) {
+      case Events::SceneStateChange::NEW:
+      case Events::SceneStateChange::CHANGED:
+        sSceneModified = false;
+        break;
+      default:
+        break;
+    }
+  }
 }

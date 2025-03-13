@@ -205,6 +205,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .property("vertices", &Graphics::EmitterInstance::vertices)  // 8 vec4s
           .property("col", &Graphics::EmitterInstance::col)            // Color
           .property("vel", &Graphics::EmitterInstance::vel)            // Velocity
+          .property("spreadAngle", &Graphics::EmitterInstance::spreadAngle)      //angle of spread
           .property("gravity", &Graphics::EmitterInstance::gravity)            // Gravity
           .property("size", &Graphics::EmitterInstance::size)          // Size
           .property("angvel", &Graphics::EmitterInstance::angvel)      // Angular velocity

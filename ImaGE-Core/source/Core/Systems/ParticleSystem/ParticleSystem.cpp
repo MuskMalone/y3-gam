@@ -33,13 +33,101 @@ namespace Systems {
 				else {
 					emitproxy.active = false;
 				}
-				for (int j{}; j < emitproxy.vCount; ++j)
-					emitproxy.vertices[j][0] += pos.x, emitproxy.vertices[j][1] += pos.y, emitproxy.vertices[j ][2] += pos.z;
-				Graphics::ParticleManager::GetInstance().EmitterAction(emitproxy, 0);
+                if (emitproxy.vCount < 8) {
+                    for (int j = 0; j < emitproxy.vCount; ++j) {
+                        emitproxy.vertices[j][0] += pos.x;
+                        emitproxy.vertices[j][1] += pos.y;
+                        emitproxy.vertices[j][2] += pos.z;
+                    }
+                }
+                else {
+                    // Reorder the 8 unordered vertices into the canonical cube order.
+                    // For simplicity we assume the following:
+                    //   - The top face is determined by the 4 vertices with y >= center.y
+                    //   - The bottom face is the remaining 4 vertices.
+                    //   - Within each group, sort by z (near to far) then by x (left to right).
+                    // This gives:
+                    //   Top Face: 0: near top left, 1: near top right, 2: far top right, 3: far top left
+                    //   Bottom Face: 4: near bottom left, 5: near bottom right, 6: far bottom right, 7: far bottom left
+
+                    // Compute center
+                    glm::vec3 center(0.0f);
+                    for (int i = 0; i < 8; ++i) {
+                        center += glm::vec3(emitproxy.vertices[i]);
+                    }
+                    center /= 8.0f;
+
+                    std::vector<glm::vec4> topVerts, bottomVerts;
+                    for (int i = 0; i < 8; ++i) {
+                        glm::vec3 v = glm::vec3(emitproxy.vertices[i]);
+                        if (v.y >= center.y)
+                            topVerts.push_back(emitproxy.vertices[i]);
+                        else
+                            bottomVerts.push_back(emitproxy.vertices[i]);
+                    }
+
+                    // If grouping fails, fallback to simply applying offset.
+                    if (topVerts.size() != 4 || bottomVerts.size() != 4) {
+                        for (int i = 0; i < 8; ++i) {
+                            emitproxy.vertices[i][0] += pos.x;
+                            emitproxy.vertices[i][1] += pos.y;
+                            emitproxy.vertices[i][2] += pos.z;
+                        }
+                    }
+                    else {
+                        auto sortByZ = [](const glm::vec4& a, const glm::vec4& b) {
+                            return glm::vec3(a).z < glm::vec3(b).z;
+                            };
+                        std::sort(topVerts.begin(), topVerts.end(), sortByZ);
+                        std::sort(bottomVerts.begin(), bottomVerts.end(), sortByZ);
+
+                        // Split each group into near (first two) and far (last two)
+                        std::vector<glm::vec4> topNear = { topVerts[0], topVerts[1] };
+                        std::vector<glm::vec4> topFar = { topVerts[2], topVerts[3] };
+                        std::vector<glm::vec4> bottomNear = { bottomVerts[0], bottomVerts[1] };
+                        std::vector<glm::vec4> bottomFar = { bottomVerts[2], bottomVerts[3] };
+
+                        auto sortByX = [](const glm::vec4& a, const glm::vec4& b) {
+                            return glm::vec3(a).x < glm::vec3(b).x;
+                            };
+                        std::sort(topNear.begin(), topNear.end(), sortByX);
+                        std::sort(topFar.begin(), topFar.end(), sortByX);
+                        std::sort(bottomNear.begin(), bottomNear.end(), sortByX);
+                        std::sort(bottomFar.begin(), bottomFar.end(), sortByX);
+
+                        // Order the top face: near left, near right, far right, far left.
+                        std::vector<glm::vec4> orderedTop;
+                        orderedTop.push_back(topNear[0]);   // near top left
+                        orderedTop.push_back(topNear[1]);   // near top right
+                        orderedTop.push_back(topFar[1]);    // far top right
+                        orderedTop.push_back(topFar[0]);    // far top left
+
+                        // Order the bottom face similarly.
+                        std::vector<glm::vec4> orderedBottom;
+                        orderedBottom.push_back(bottomNear[0]); // near bottom left
+                        orderedBottom.push_back(bottomNear[1]); // near bottom right
+                        orderedBottom.push_back(bottomFar[1]);  // far bottom right
+                        orderedBottom.push_back(bottomFar[0]);  // far bottom left
+
+                        // Combine top and bottom.
+                        std::vector<glm::vec4> orderedVertices;
+                        orderedVertices.insert(orderedVertices.end(), orderedTop.begin(), orderedTop.end());
+                        orderedVertices.insert(orderedVertices.end(), orderedBottom.begin(), orderedBottom.end());
+
+                        // Write the ordered vertices back, applying the global offset.
+                        for (int i = 0; i < 8; ++i) {
+                            emitproxy.vertices[i][0] = orderedVertices[i].x + pos.x;
+                            emitproxy.vertices[i][1] = orderedVertices[i].y + pos.y;
+                            emitproxy.vertices[i][2] = orderedVertices[i].z + pos.z;
+                            emitproxy.vertices[i][3] = orderedVertices[i].w; // preserve w
+                        }
+                    }
+                }
+                Graphics::ParticleManager::GetInstance().EmitterAction(emitproxy, 0);
 				//e.GetComponent<Component::EmitterSystem>().emitters[i].active = false;
 			}
-			//updates the emitters
-			//Graphics::ParticleManager::GetInstance().MultiEmitterAction(vecProxy, 0);
+			if (Graphics::ParticleManager::GetInstance().mDebug)
+				Graphics::ParticleManager::GetInstance().mDebugEmitters.push_back(std::move(vecProxy));
 		}
 		//Graphics::ParticleManager::GetInstance().Bind();
 		float dt{ Performance::FrameRateController::GetInstance().GetDeltaTime() };

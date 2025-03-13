@@ -9,6 +9,7 @@
 #include <queue>
 #include <Asset/RemapData.h>
 #include <Scenes/SceneManager.h>
+#include <EditorEvents.h>
 
 namespace {
   static std::unordered_map<IGE::Assets::GUID, IGE::Assets::RemapData> sGUIDDataMap;  // unique entries of remap data
@@ -22,12 +23,14 @@ namespace {
 
 namespace GUI {
   PopupHelper::PopupHelper(const char* windowName) : GUIWindow(windowName) {
-    mPopupFunctions.reserve(2);
+    mPopupFunctions.reserve(3);
     mPopupFunctions.emplace_back(std::bind(&PopupHelper::GUIDRemapPopup, this));
     mPopupFunctions.emplace_back(std::bind(&PopupHelper::GUIDCompletePopup, this));
+    mPopupFunctions.emplace_back(std::bind(&PopupHelper::WindowCloseConfirmationPopup, this));
 
     SUBSCRIBE_CLASS_FUNC(Events::GUIDInvalidated, &PopupHelper::OnGUIDInvalidated, this);
     SUBSCRIBE_CLASS_FUNC(Events::TriggerGUIDRemap, &PopupHelper::OnGUIDRemap, this);
+    SUBSCRIBE_CLASS_FUNC(Events::QuitApplicationConfirmation, &PopupHelper::OnQuitAppPopupTrigger, this);
   }
 
   void PopupHelper::Run() {
@@ -72,6 +75,16 @@ namespace GUI {
 
     // trigger the popup
     InitGUIDPopup();
+  }
+
+  EVENT_CALLBACK_DEF(PopupHelper, OnQuitAppPopupTrigger) {
+    if (GUIVault::IsSceneModified()) {
+      sCurrentPopup = sWindowClosePopupTitle;
+      sOpenPopup = true;
+    }
+    else {
+      IGE_EVENTMGR.DispatchImmediateEvent<Events::QuitApplication>();
+    }
   }
 
 
@@ -252,6 +265,44 @@ namespace GUI {
     ImGui::PopFont();
     ImGui::EndPopup();
     ImGui::PopFont();
+  }
+
+  void PopupHelper::WindowCloseConfirmationPopup() {
+    ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    if (!ImGui::BeginPopupModal(sWindowClosePopupTitle, NULL, ImGuiWindowFlags_AlwaysAutoResize)) { return; }
+
+    bool close{ false };
+    {
+      ImGui::Text("Would you like to save your changes to ");
+      ImGui::SameLine();
+      float const denom{ 1 / 255.f };
+      ImGui::TextColored(ImVec4(167.f * denom, 90 * denom, 35 * denom, 255), (IGE_SCENEMGR.GetSceneName() + ".scn").c_str());
+      ImGui::SameLine();
+      ImGui::Text("?");
+    }
+
+    ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x * 0.5f - ImGui::CalcTextSize("Save Discard Ch").x);
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.55f, 0.f, 1.f));
+    if (ImGui::Button("Save"))
+    {
+      IGE_EVENTMGR.DispatchImmediateEvent<Events::SaveSceneEvent>(GUIVault::sSerializePrettyScene);
+      IGE_EVENTMGR.DispatchImmediateEvent<Events::QuitApplication>();
+    }
+    ImGui::PopStyleColor();
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.65f, 0.2f, 0.2f, 1.f));
+    ImGui::SameLine();
+
+    if (ImGui::Button("Discard Changes")) {
+      IGE_EVENTMGR.DispatchImmediateEvent<Events::QuitApplication>();
+    }
+    ImGui::PopStyleColor();
+    ImGui::SameLine();
+
+    if (ImGui::Button("Cancel")) {
+      ImGui::CloseCurrentPopup();
+    }
+
+    ImGui::EndPopup();
   }
 
 } // namespace GUI

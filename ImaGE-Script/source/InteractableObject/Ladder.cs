@@ -1,29 +1,15 @@
-﻿//using System.Numerics;
-//using System;
-//using IGE.Utils;
-
-//public class Ladder : Entity
-//{
-//    public PlayerMove playerMove;
-//    public PlayerInteraction playerInteraction;
-//    private bool isOnLadder = false;
-//    private float ladderSpeed = 30f; // Adjust speed as needed
-//    private float maxLadderHeight = 55f; // Max Y height player can climb
-//    public Entity invisibleBarrier;
-//    public Entity ClickUI;
-
-//    public Ladder() : base()
+﻿//    public Ladder() : base()
 //    {
 //    }
 
 //    void Start()
 //    {
-//        //invisibleBarrier.SetActive(true);
 //        if (playerMove == null)
 //        {
 //            Debug.LogError("[Ladder.cs] PlayerMove Script Entity not found!");
 //            return;
 //        }
+//        // Initially hide the ClickUI.
 //        ClickUI?.SetActive(false);
 //    }
 
@@ -33,9 +19,33 @@
 //        bool isLadderHit = playerInteraction.RayHitString == "Ladder";
 //        Vector3 playerPosition = InternalCalls.GetWorldPosition(playerMove.mEntityID);
 
-//        if (mouseClicked && (isLadderHit || playerPosition.Y >= maxLadderHeight))
+//        // When not on the ladder, show the ClickUI if the player's ray is hitting the ladder.
+//        if (!isOnLadder)
 //        {
-//            ToggleLadderState();
+//            ClickUI?.SetActive(isLadderHit);
+//        }
+//        else
+//        {
+//            // When on the ladder, show the ClickUI if at the top or bottom.
+//            if (playerPosition.Y >= maxLadderHeight || playerPosition.Y <= minLadderHeight)
+//                ClickUI?.SetActive(true);
+//            else
+//                ClickUI?.SetActive(false);
+//        }
+
+//        // Toggle ladder state:
+//        // - If NOT on the ladder, require the player to be looking at the ladder (isLadderHit).
+//        // - If already on the ladder, allow toggling if at the top or bottom (max or min height).
+//        if (mouseClicked)
+//        {
+//            if (!isOnLadder && isLadderHit)
+//            {
+//                ToggleLadderState();
+//            }
+//            else if (isOnLadder && (playerPosition.Y >= maxLadderHeight || playerPosition.Y <= minLadderHeight))
+//            {
+//                ToggleLadderState();
+//            }
 //        }
 
 //        if (isOnLadder)
@@ -46,60 +56,55 @@
 
 //    private void ToggleLadderState()
 //    {
+//        // Toggle the ladder state.
 //        isOnLadder = !isOnLadder;
+//        playerMove.climbing = isOnLadder;
 //        Vector3 playerPosition = InternalCalls.GetWorldPosition(playerMove.mEntityID);
 
 //        if (isOnLadder)
 //        {
-//            playerMove.FreezePlayer(); // Disable normal movement
-//            playerMove.canLook = true; // Allow looking around
-//            InternalCalls.SetGravityFactor(playerMove.mEntityID, 0f); // Disable gravity while climbing
+//            // When starting to climb, hide the ClickUI and disable normal movement.
+//            ClickUI?.SetActive(false);
+//            playerMove.FreezePlayer();
+//            playerMove.canLook = true;
+//            InternalCalls.SetGravityFactor(playerMove.mEntityID, 0f);
 //        }
 //        else
 //        {
-//            // Check if the player is at the max height before getting off
+//            // When leaving the ladder, if at the top, offset the player forward so they land on the platform.
 //            if (playerPosition.Y >= maxLadderHeight)
 //            {
-//                // Move the player slightly forward to ensure they land on the platform
 //                Vector3 forwardOffset = playerMove.GetComponent<Transform>().forward * 8.0f; // Adjust offset if needed
 //                playerPosition += forwardOffset;
-
-//                // Set new position so they land on the platform instead of falling
 //                InternalCalls.SetWorldPosition(playerMove.mEntityID, ref playerPosition);
 //            }
-
-//            // Restore normal movement
 //            playerMove.UnfreezePlayer();
 //            InternalCalls.SetGravityFactor(playerMove.mEntityID, playerMove.initialGravityFactor);
+//            // Hide the ClickUI when not on the ladder.
+//            ClickUI?.SetActive(false);
 //        }
 //    }
 
-
 //    private void HandleLadderMovement()
 //    {
-//        float verticalInput = Input.GetAxis("Vertical"); // W (1), S (-1)
+//        float verticalInput = Input.GetAxis("Vertical"); // W (1) for up, S (-1) for down
 //        Vector3 playerPosition = InternalCalls.GetWorldPosition(playerMove.mEntityID);
 
-//        if (Math.Abs(verticalInput) > float.Epsilon) // Only move if input is given
+//        if (Math.Abs(verticalInput) > float.Epsilon)
 //        {
-//            // Prevent climbing above max height
+//            // Prevent climbing above max height.
 //            if (verticalInput > 0 && playerPosition.Y >= maxLadderHeight)
-//            {
-//                return; // Stop upward movement at max height
-//            }
+//                return;
 
-//            // Modify only the Y position (up/down)
+//            // Only modify the Y position.
 //            playerPosition.Y += verticalInput * ladderSpeed * InternalCalls.GetDeltaTime();
 
-//            // Ensure player does not go above max height
 //            if (playerPosition.Y > maxLadderHeight)
-//            {
 //                playerPosition.Y = maxLadderHeight;
-//            }
 
 //            InternalCalls.SetWorldPosition(playerMove.mEntityID, ref playerPosition);
 
-//            // Optionally, apply a slight downward force to prevent weird floaty behavior
+//            // Optionally apply a slight downward force to stabilize movement.
 //            InternalCalls.MoveCharacter(playerMove.mEntityID, new Vector3(0, -0.1f, 0));
 //        }
 //    }
@@ -110,116 +115,133 @@ using IGE.Utils;
 
 public class Ladder : Entity
 {
-  public PlayerMove playerMove;
-  public PlayerInteraction playerInteraction;
-  private bool isOnLadder = false;
-  private float ladderSpeed = 30f; // Adjust speed as needed
-  private float maxLadderHeight = 55f; // Max Y height player can climb
-  public Entity invisibleBarrier;
-  public Entity ClickUI;  // This UI will show when hovering over the ladder or at the top
+    public PlayerMove playerMove;
+    public PlayerInteraction playerInteraction;
+    private bool isOnLadder = false;
+    public float ladderSpeed = 30f; // Adjust speed as needed
+    public float maxLadderHeight = 55f; // Max Y height player can climb
+    public float minLadderHeight = 0f;  // Min Y height (bottom of the ladder)
+    public Entity ClickUI;  // This UI will show when hovering over the ladder or at the top/bottom
 
-  public Ladder() : base()
-  {
-  }
-
-  void Start()
-  {
-    if (playerMove == null)
+    public Ladder() : base()
     {
-      Debug.LogError("[Ladder.cs] PlayerMove Script Entity not found!");
-      return;
     }
-    // Initially hide the ClickUI.
-    ClickUI?.SetActive(false);
-  }
 
-  void Update()
-  {
-    bool mouseClicked = Input.GetMouseButtonTriggered(0);
-    bool isLadderHit = playerInteraction.RayHitString == "Ladder";
-    Vector3 playerPosition = InternalCalls.GetWorldPosition(playerMove.mEntityID);
-
-    // When not on the ladder, show the ClickUI if the player's ray is hitting the ladder.
-    if (!isOnLadder)
+    void Start()
     {
-      if (isLadderHit)
-        ClickUI?.SetActive(true);
-      else
-        ClickUI?.SetActive(false);
-    }
-    else
-    {
-      // When on the ladder, if the player is at (or above) max height, show the ClickUI.
-      if (playerPosition.Y >= maxLadderHeight)
-        ClickUI?.SetActive(true);
-      else
+        if (playerMove == null)
+        {
+            Debug.LogError("[Ladder.cs] PlayerMove Script Entity not found!");
+            return;
+        }
+        // Initially hide the ClickUI.
         ClickUI?.SetActive(false);
     }
 
-    // Toggle ladder state if the player clicks while hovering over the ladder or when at the top.
-    if (mouseClicked && (isLadderHit || playerPosition.Y >= maxLadderHeight))
+    void Update()
     {
-      ToggleLadderState();
+        bool mouseClicked = Input.GetMouseButtonTriggered(0);
+        bool isLadderHit = playerInteraction.RayHitString == "Ladder";
+        Vector3 playerPosition = InternalCalls.GetWorldPosition(playerMove.mEntityID);
+
+        // When not on the ladder, show the ClickUI if the player's ray is hitting the ladder.
+        if (!isOnLadder)
+        {
+            ClickUI?.SetActive(isLadderHit);
+        }
+        else
+        {
+            // When on the ladder, show the ClickUI if at the top or bottom.
+            if (playerPosition.Y >= maxLadderHeight || playerPosition.Y <= minLadderHeight)
+                ClickUI?.SetActive(true);
+            else
+                ClickUI?.SetActive(false);
+        }
+
+        // Toggle ladder state:
+        // - If NOT on the ladder, require the player to be looking at the ladder (isLadderHit).
+        // - If already on the ladder, allow toggling if at the top or bottom (max or min height).
+        if (mouseClicked)
+        {
+            if (!isOnLadder && isLadderHit)
+            {
+                ToggleLadderState();
+            }
+            else if (isOnLadder && (playerPosition.Y >= maxLadderHeight || playerPosition.Y <= minLadderHeight))
+            {
+                ToggleLadderState();
+            }
+        }
+
+        if (isOnLadder)
+        {
+            HandleLadderMovement();
+        }
     }
 
-    if (isOnLadder)
+    private void ToggleLadderState()
     {
-      HandleLadderMovement();
+        // Toggle the ladder state.
+        isOnLadder = !isOnLadder;
+        playerMove.climbing = isOnLadder;
+        Vector3 playerPosition = InternalCalls.GetWorldPosition(playerMove.mEntityID);
+
+        if (isOnLadder)
+        {
+            // When starting to climb, hide the ClickUI and disable normal movement.
+            ClickUI?.SetActive(false);
+            playerMove.FreezePlayer();
+            playerMove.canLook = true;
+            InternalCalls.SetGravityFactor(playerMove.mEntityID, 0f);
+        }
+        else
+        {
+            // When leaving the ladder, if at the top, offset the player so they land on the platform.
+            if (playerPosition.Y >= maxLadderHeight)
+            {
+                // Check what the player is looking at.
+                // If the player's raycast is hitting a wall or ladder, launch them backwards.
+                Vector3 direction;
+                if (playerInteraction.RayHitString == "Wall" || playerInteraction.RayHitString == "Ladder")
+                {
+                    direction = -playerMove.GetComponent<Transform>().forward;
+                }
+                else
+                {
+                    direction = playerMove.GetComponent<Transform>().forward;
+                }
+                Vector3 offset = direction * 8.0f; // Adjust offset if needed
+                playerPosition += offset;
+                InternalCalls.SetWorldPosition(playerMove.mEntityID, ref playerPosition);
+            }
+            playerMove.UnfreezePlayer();
+            InternalCalls.SetGravityFactor(playerMove.mEntityID, playerMove.initialGravityFactor);
+            // Hide the ClickUI when not on the ladder.
+            ClickUI?.SetActive(false);
+        }
     }
-  }
 
-  private void ToggleLadderState()
-  {
-    // Toggle the ladder state.
-    isOnLadder = !isOnLadder;
-    playerMove.climbing = isOnLadder;
-    Vector3 playerPosition = InternalCalls.GetWorldPosition(playerMove.mEntityID);
-
-    if (isOnLadder)
+    private void HandleLadderMovement()
     {
-      // When starting to climb, hide the ClickUI and disable normal movement.
-      ClickUI?.SetActive(false);
-      playerMove.FreezePlayer();
-      playerMove.canLook = true;
-      InternalCalls.SetGravityFactor(playerMove.mEntityID, 0f);
+        float verticalInput = Input.GetAxis("Vertical"); // W (1) for up, S (-1) for down
+        Vector3 playerPosition = InternalCalls.GetWorldPosition(playerMove.mEntityID);
+
+        if (Math.Abs(verticalInput) > float.Epsilon)
+        {
+            // Prevent climbing above max height.
+            if (verticalInput > 0 && playerPosition.Y >= maxLadderHeight)
+                return;
+
+            // Only modify the Y position.
+            playerPosition.Y += verticalInput * ladderSpeed * InternalCalls.GetDeltaTime();
+
+            if (playerPosition.Y > maxLadderHeight)
+                playerPosition.Y = maxLadderHeight;
+
+            InternalCalls.SetWorldPosition(playerMove.mEntityID, ref playerPosition);
+
+            // Optionally apply a slight downward force to stabilize movement.
+            InternalCalls.MoveCharacter(playerMove.mEntityID, new Vector3(0, -0.1f, 0));
+        }
     }
-    else
-    {
-      // When leaving the ladder, if at the top, offset the player forward so they land on the platform.
-      if (playerPosition.Y >= maxLadderHeight)
-      {
-        Vector3 forwardOffset = playerMove.GetComponent<Transform>().forward * 8.0f; // Adjust offset if needed
-        playerPosition += forwardOffset;
-        InternalCalls.SetWorldPosition(playerMove.mEntityID, ref playerPosition);
-      }
-      playerMove.UnfreezePlayer();
-      InternalCalls.SetGravityFactor(playerMove.mEntityID, playerMove.initialGravityFactor);
-      // Hide the ClickUI when not on the ladder.
-      ClickUI?.SetActive(false);
-    }
-  }
-
-  private void HandleLadderMovement()
-  {
-    float verticalInput = Input.GetAxis("Vertical"); // W (1) for up, S (-1) for down
-    Vector3 playerPosition = InternalCalls.GetWorldPosition(playerMove.mEntityID);
-
-    if (Math.Abs(verticalInput) > float.Epsilon)
-    {
-      // Prevent climbing above max height.
-      if (verticalInput > 0 && playerPosition.Y >= maxLadderHeight)
-        return;
-
-      // Only modify the Y position.
-      playerPosition.Y += verticalInput * ladderSpeed * InternalCalls.GetDeltaTime();
-
-      if (playerPosition.Y > maxLadderHeight)
-        playerPosition.Y = maxLadderHeight;
-
-      InternalCalls.SetWorldPosition(playerMove.mEntityID, ref playerPosition);
-
-      // Optionally apply a slight downward force to stabilize movement.
-      InternalCalls.MoveCharacter(playerMove.mEntityID, new Vector3(0, -0.1f, 0));
-    }
-  }
 }

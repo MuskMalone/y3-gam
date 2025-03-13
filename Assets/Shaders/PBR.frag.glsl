@@ -160,18 +160,17 @@ void main(){
         vec3 n = N;
         vec3 h = normalize(V + l);
 
-        float NdotL = max(dot(n, l), 0.0);
+         // Replace standard Lambertian NdotL with Half-Lambert
+        float NdotL = 0.5 + 0.5 * dot(n, l); // Half-Lambert shading
         float NdotV = max(dot(n, V), 0.0);
         float NdotH = max(dot(n, h), 0.0);
         float HdotV = max(dot(h, V), 0.0);
-        vec3 fLambert = pow(albedo, vec3(2.2)); // Gamma correction
+
+        vec3 fLambert = pow(albedo, vec3(u_Gamma)); // Gamma correction
         vec3 F0 = vec3(0);
 
-        if( mat.Metalness > 0.f)
+        if (mat.Metalness > 0.0)
             F0 = mix(vec3(0.04), fLambert, mat.Metalness);
-
-
-
 
         vec3 F = fresnelSchlick(HdotV, F0);
         vec3 kS = F;
@@ -179,15 +178,14 @@ void main(){
 
         float Roughness = mat.Roughness;
 
-        vec3 SpecBRDF_nom  = DistributionGGX(N, h, mat.Roughness) * F * geomSmith(NdotL , mat.Roughness) * geomSmith(NdotV, mat.Roughness);
-
+        vec3 SpecBRDF_nom = DistributionGGX(N, h, mat.Roughness) * F * geomSmith(NdotL, mat.Roughness) * geomSmith(NdotV, mat.Roughness);
         float SpecBRDF_denom = 4.0 * NdotV * NdotL + 0.0001;
-
         vec3 SpecBRDF = SpecBRDF_nom / SpecBRDF_denom;
 
-        vec3 DiffuseBRDF = kD * fLambert / PI;
+        // Apply Half-Lambert to the diffuse term
+        vec3 DiffuseBRDF = kD * fLambert / PI * NdotL; // NdotL is already Half-Lambert
 
-        vec3 FinalColor = (DiffuseBRDF + SpecBRDF) * LightIntensity * NdotL;
+        vec3 FinalColor = (DiffuseBRDF + SpecBRDF) * LightIntensity;
 
         TotalLight += FinalColor * (1.0 - shadow);
     }

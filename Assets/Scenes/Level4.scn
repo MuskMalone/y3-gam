@@ -875,6 +875,7 @@
                                     "y": 0.0,
                                     "z": 0.0
                                 },
+                                "spreadAngle": 0.0,
                                 "gravity": {
                                     "x": 0.0,
                                     "y": 0.0,
@@ -955,6 +956,7 @@
                                     "y": 0.0,
                                     "z": -0.5
                                 },
+                                "spreadAngle": 0.0,
                                 "gravity": {
                                     "x": 0.0,
                                     "y": 0.0,
@@ -1035,6 +1037,7 @@
                                     "y": 0.0,
                                     "z": -0.5
                                 },
+                                "spreadAngle": 0.0,
                                 "gravity": {
                                     "x": 0.0,
                                     "y": 0.0,
@@ -1963,6 +1966,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "climbing"
+                                        }
+                                    },
+                                    {
                                         "data": 15.0,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -1995,6 +2005,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "speed"
+                                        }
+                                    },
+                                    {
+                                        "data": true,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "useScriptRotation"
                                         }
                                     },
                                     {
@@ -3887,6 +3904,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isGrounded"
+                                        }
+                                    },
+                                    {
                                         "data": true,
                                         "type": "System.Boolean",
                                         "scriptField": {
@@ -3932,6 +3956,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "speedThreshold"
+                                        }
+                                    },
+                                    {
+                                        "data": "",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "tag"
                                         }
                                     }
                                 ]
@@ -7839,6 +7870,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "hideOriginalObject"
+                                        }
+                                    },
+                                    {
                                         "data": 5.0,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -9550,6 +9588,7 @@
                                     "y": 0.0,
                                     "z": -0.5
                                 },
+                                "spreadAngle": 0.0,
                                 "gravity": {
                                     "x": 0.0,
                                     "y": 0.019999999552965165,
@@ -9630,6 +9669,7 @@
                                     "y": 0.0,
                                     "z": -0.5
                                 },
+                                "spreadAngle": 0.0,
                                 "gravity": {
                                     "x": 0.0,
                                     "y": 0.019999999552965165,
@@ -17172,6 +17212,7 @@
                                     "y": 0.0,
                                     "z": -0.5
                                 },
+                                "spreadAngle": 0.0,
                                 "gravity": {
                                     "x": 0.0,
                                     "y": 0.0,
@@ -17252,6 +17293,7 @@
                                     "y": 0.0,
                                     "z": -0.5
                                 },
+                                "spreadAngle": 0.0,
                                 "gravity": {
                                     "x": 0.0,
                                     "y": 0.0,
@@ -25044,6 +25086,7 @@
                                     "y": 14.5,
                                     "z": -174.89999389648438
                                 },
+                                "spreadAngle": 0.0,
                                 "gravity": {
                                     "x": 0.0,
                                     "y": -1.4800000190734864,
@@ -25058,7 +25101,7 @@
                                 "speed": 35.20000076293945,
                                 "frequency": 0.009999999776482582,
                                 "type": 1,
-                                "vCount": 1,
+                                "vCount": 4,
                                 "preset": 0,
                                 "particlesPerFrame": 63
                             }

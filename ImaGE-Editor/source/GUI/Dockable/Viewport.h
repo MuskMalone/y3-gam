@@ -34,10 +34,12 @@ namespace GUI
     void Render(std::shared_ptr<Graphics::Framebuffer> const& framebuffer);
 
   private:
+    static inline constexpr const char* sUnsavedChangesPopupTitle = "WARNING: Scene has been Modified!";
     static inline constexpr float sEntityScaleFactor = 1.f; // for camera zooming
 
     std::shared_ptr<Graphics::EditorCamera> mEditorCam;
     bool mIsPanning, mRightClickHeld, mFocusWindow;
+    bool mUnsavedChangesPopup;
 
     /*!*********************************************************************
     \brief
@@ -61,6 +63,8 @@ namespace GUI
       accordingly
     ************************************************************************/
     void ReceivePayload();
+
+    void UnsavedChangesPopup();
 
     EVENT_CALLBACK_DECL(OnEntityDoubleClicked);
     EVENT_CALLBACK_DECL(OnSceneStart);
