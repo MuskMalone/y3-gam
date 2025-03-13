@@ -62,7 +62,7 @@ public class ImageDisintegratingTool : Entity
     }
     else
     {
-      Destroy(mEntityID);
+      Destroy();
     }
   }
 

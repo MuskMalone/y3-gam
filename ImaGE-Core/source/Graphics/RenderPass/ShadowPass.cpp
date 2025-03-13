@@ -33,6 +33,8 @@ namespace Graphics {
       Layers::LayerManager& layerMan{ IGE_LAYERMGR };
       // iterate all entities in the ECS since this is from the light's perspective
       for (ECS::Entity entity : IGE_ENTITYMGR.GetAllEntitiesWithComponents<Component::Mesh>()) {
+        if (!entity.IsActive()) { continue; }
+
         // skip lights and layers that arent visible
         if (entity.HasComponent<Component::Light>()
           || !layerMan.IsLayerVisible(entity.GetComponent<Component::Layer>().name)) { continue; }

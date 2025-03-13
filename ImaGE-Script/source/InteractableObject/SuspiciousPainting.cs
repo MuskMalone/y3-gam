@@ -68,7 +68,7 @@ public class SuspiciousPainting : Entity
         // if time has exceeded, destroy the entire painting entity
         if (timeElapsed >= timeUntilDespawn)
         {
-          Destroy(InternalCalls.GetParentByID(mEntityID));
+          InternalCalls.DestroyEntity(InternalCalls.GetParentByID(mEntityID));
         }
         break;
     }

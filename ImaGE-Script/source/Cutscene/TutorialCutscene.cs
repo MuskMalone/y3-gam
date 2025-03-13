@@ -30,8 +30,6 @@ using IGE.Utils;
 
 public class TutorialCutscene : Entity
 {
-
-
     public Entity mother;
     public Entity openDoor;
     public Entity closeDoor;

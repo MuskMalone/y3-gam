@@ -1,14 +1,18 @@
 ﻿using IGE.Utils;
 using System;
-using System.Runtime.CompilerServices;
 
 public class PullLever : Entity
 {
     public PlayerInteraction playerInteraction;
     private bool leverPulled = false; // Track if this lever has been pulled
+    private LeverManager leverManager; // Reference to the manager
 
     public PullLever() : base() { }
 
+    void Start()
+    {
+        leverManager = FindObjectOfType<LeverManager>();
+    }
     void Update()
     {
         if (!leverPulled && Input.GetMouseButtonTriggered(0))
@@ -18,15 +22,20 @@ public class PullLever : Entity
 
             if (hitObjectTag == thisLeverTag) // Check if player clicked this lever
             {
-                Bitch();
+                ActivateLever();
             }
         }
     }
 
-    private void Bitch()
+    private void ActivateLever()
     {
         InternalCalls.PlaySound(mEntityID, "IncoherentWhispers");
-        InternalCalls.PlayAnimation(mEntityID, "SwitchOn");
+        InternalCalls.PlayAnimation(mEntityID, "SwitchOff");
         leverPulled = true; // Prevent future interaction
+
+        if (leverManager != null)
+        {
+            leverManager.LeverPulled(); // Notify the manager
+        }
     }
 }

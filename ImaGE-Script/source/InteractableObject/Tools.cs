@@ -40,6 +40,6 @@ public class Tools : Entity, IInventoryItem
 
   public void OnUsed()
   {
-    Destroy(mEntityID);
+    Destroy();
   }
 }

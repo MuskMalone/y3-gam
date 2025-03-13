@@ -37,7 +37,7 @@ public class ArtemisPainting : Entity, IInventoryItem
 
     public void OnUsed()
     {
-        Destroy(mEntityID);
+        Destroy();
     }
 
     void Start()

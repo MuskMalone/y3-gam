@@ -44,7 +44,7 @@ public class KeyDoor : Entity
     if (doorInteraction)
     {
       bool isDoorHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-      if (Input.GetMouseButtonTriggered(0) && isDoorHit && !doorFlag)
+      if (isDoorHit && Input.GetMouseButtonTriggered(0) && !doorFlag)
       {
         if (!inventoryScript.keyEquipped && !dialogueSystem.isInDialogueMode)
         {
@@ -101,8 +101,6 @@ public class KeyDoor : Entity
       {
         if (initialAnimation)
         {
-          Console.WriteLine("Start");
-          Debug.Log("Start");
           zoomInPos = InternalCalls.GetPosition(keyCamera.mEntityID);
           zoomOutPos = zoomInPos + new Vector3(-15, 0, 0);
           initialAnimation = false;
@@ -111,17 +109,13 @@ public class KeyDoor : Entity
 
         if (isZoomingOut)
         {
-          Console.WriteLine("Zooming");
-          Debug.Log("Zooming");
           elapsedTime += Time.deltaTime;
-          float t = elapsedTime / zoomOutDuration;
-          t = t * t * (3 - 2 * t); // SmoothStep easing
+          float t = Mathf.SmoothStep(elapsedTime / zoomOutDuration);
           Vector3 newPos = Vector3.Lerp(zoomInPos, zoomOutPos, t);
           InternalCalls.SetPosition(keyCamera.mEntityID, ref newPos);
 
           if (elapsedTime >= zoomOutDuration)
           {
-            Console.WriteLine("Zooming End");
             elapsedTime = 0.0f;
             isZoomingOut = false;
           }
@@ -129,8 +123,6 @@ public class KeyDoor : Entity
 
         // end of animation sequence, clear the current anim
         if (!InternalCalls.IsPlayingAnimation(parent)) {
-          Console.WriteLine("End");
-          Debug.Log("End");
           currentAnim = null;
           initialAnimation = true;
           SetPlayerCameraAsMain();
