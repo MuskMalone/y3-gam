@@ -66,44 +66,72 @@ namespace IGE {
 			mEventManager->AddListener(PHYSICS_METHOD_LISTENER(PhysicsEventID::TRIGGER, PhysicsSystem::OnTriggerSampleListener));
 		}
 
-		void PhysicsSystem::UpdatePhysicsToTransform(ECS::Entity e) {
+		void PhysicsSystem::SetEntityActive(ECS::Entity e, physx::PxRigidDynamic* pxrb, bool isKinematic) {
+			if (!e.IsActive()) {
+				// If not already disabled, set the flag.
+				if (!pxrb->getActorFlags().isSet(physx::PxActorFlag::eDISABLE_SIMULATION)) {
+					if (isKinematic)
+						pxrb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, false); // doesnt work for kinematic colliders
+					pxrb->setActorFlag(physx::PxActorFlag::eDISABLE_SIMULATION, true);
+				}
+				// Optionally, you can skip updating transforms since the actor won’t move.
+				return;
+			}
+			else {
+				// If the entity is active, ensure simulation is enabled.
+				if (pxrb->getActorFlags().isSet(physx::PxActorFlag::eDISABLE_SIMULATION)) {
+					pxrb->setActorFlag(physx::PxActorFlag::eDISABLE_SIMULATION, false);
+					if (isKinematic)
+						pxrb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+				}
+			}
+		}
+		void PhysicsSystem::UpdatePhysicsToTransform(ECS::Entity e, bool updatePos) {
 			auto& xfm{ e.GetComponent<Component::Transform>() };
 			if (HasAnyComponent<Component::RigidBody, Component::BoxCollider, Component::SphereCollider, Component::CapsuleCollider>(e)) {
 				physx::PxRigidDynamic* pxrb{};
+				bool isKinematic{ false };
 				auto rbiter{ mRigidBodyIDs.find(nullptr) };
 				if (e.HasComponent<Component::RigidBody>())
-					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::RigidBody>().bodyID);
+					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::RigidBody>().bodyID), isKinematic = (bool)e.GetComponent<Component::RigidBody>().motionType;
 				else if (e.HasComponent<Component::BoxCollider>())
-					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::BoxCollider>().bodyID);
+					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::BoxCollider>().bodyID), isKinematic = false;
 				else if (e.HasComponent<Component::SphereCollider>())
-					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::SphereCollider>().bodyID);
+					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::SphereCollider>().bodyID), isKinematic = false;
 				else if (e.HasComponent<Component::CapsuleCollider>())
-					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::CapsuleCollider>().bodyID);
+					rbiter = mRigidBodyIDs.find(e.GetComponent<Component::CapsuleCollider>().bodyID), isKinematic = false;
 
 				if (rbiter != mRigidBodyIDs.end()) {
 					pxrb = rbiter->second;
 
-					if (!e.IsActive()) {
-						if (mInactiveActors.find(pxrb) == mInactiveActors.end()) {
-							mScene->removeActor(*pxrb);
-							mInactiveActors.insert(pxrb);
-						}
-						return;
-					}
-					else {
-						if (mInactiveActors.find(pxrb) != mInactiveActors.end()) {
-							mScene->addActor(*pxrb);
-							mInactiveActors.erase(pxrb);
-						}
-					}
+					//if (!e.IsActive()) {
+					//	if (mInactiveActors.find(pxrb) == mInactiveActors.end()) {
+					//		mScene->removeActor(*pxrb);
+					//		mInactiveActors.insert(pxrb);
+					//	}
+					//	return;
+					//}
+					//else {
+					//	if (mInactiveActors.find(pxrb) != mInactiveActors.end()) {
+					//		mScene->addActor(*pxrb);
+					//		mInactiveActors.erase(pxrb);
+					//	}
+					//}
+					// Instead of removing/adding actors, disable simulation for inactive entities.
+					SetEntityActive(e, pxrb, isKinematic);
 				}
+
 				else throw std::runtime_error{ std::string("there is no rigidbody ") };
 
-				//getting from graphics
-				if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
-					pxrb->setKinematicTarget(physx::PxTransform{ ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot) });
-				else
-					pxrb->setGlobalPose(physx::PxTransform{ ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot) });
+
+				if (updatePos)
+				{
+					//getting from graphics
+					if (pxrb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
+						pxrb->setKinematicTarget(physx::PxTransform{ ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot) });
+					else
+						pxrb->setGlobalPose(physx::PxTransform{ ToPxVec3(xfm.worldPos), ToPxQuat(xfm.worldRot) });
+				}
 			}
 
 			//JPH::BodyInterface& bodyInterface { mPhysicsSystem.GetBodyInterface() };
@@ -117,6 +145,12 @@ namespace IGE {
 			// (You may want to move this to a member variable if needed.)
 			static float physicsAccumulator = 0.f;
 			physicsAccumulator += Performance::FrameRateController::GetInstance().GetDeltaTime();
+
+			//set the entities to active/inactive
+			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Transform>() };
+			for (auto entity : rbsystem) {
+				UpdatePhysicsToTransform(entity, false);
+			}
 
 			// Run the physics simulation in fixed time steps.
 			while (physicsAccumulator >= gTimeStep) {
@@ -146,21 +180,6 @@ namespace IGE {
 					if (rbiter != mRigidBodyIDs.end()) {
 						physx::PxRigidDynamic* pxrigidbody = mRigidBodyIDs.at(rb.bodyID);
 
-						// If the entity is inactive, remove the actor if necessary.
-						if (!ECS::Entity{ entity }.IsActive()) {
-							if (mInactiveActors.find(pxrigidbody) == mInactiveActors.end()) {
-								mScene->removeActor(*pxrigidbody);
-								mInactiveActors.insert(pxrigidbody);
-							}
-							continue;
-						}
-						else {
-							if (mInactiveActors.find(pxrigidbody) != mInactiveActors.end()) {
-								mScene->addActor(*pxrigidbody);
-								mInactiveActors.erase(pxrigidbody);
-							}
-						}
-
 						// Only add gravity in this fixed timestep update.
 						if (rb.motionType == Component::RigidBody::MotionType::DYNAMIC) {
 							float gravForce = gGravity * rb.gravityFactor * rb.mass;
@@ -185,6 +204,7 @@ namespace IGE {
 				// Decrement the accumulator by the fixed timestep.
 				physicsAccumulator -= gTimeStep;
 			}
+
 		}
 
 
@@ -523,11 +543,14 @@ namespace IGE {
 			if (Input::InputManager::GetInstance().IsKeyHeld(KEY_CODE::KEY_LEFT_CONTROL) &&
 				Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_D)) mDrawDebug = !mDrawDebug;
 			if (!mDrawDebug) return;
+
 			{
 				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::BoxCollider>() };
 				for (auto entity : rbsystem) {
+
 					auto& collider{ rbsystem.get<Component::BoxCollider>(entity) };
 					ECS::Entity e{ entity };
+					glm::vec4 debugactivecolor{ e.IsActive() ? glm::vec4{ 0,1,0,1 } : glm::vec4{0.5, 0.5, 0.5, 1} };
 					auto rbiter{ mRigidBodyIDs.find(e.GetComponent<Component::BoxCollider>().bodyID) };
 
 					if (rbiter != mRigidBodyIDs.end()) {
@@ -545,7 +568,8 @@ namespace IGE {
 							shape[collider.idx]->getBoxGeometry(geom);
 							auto scale{ geom.halfExtents };
 							auto shapeGlobPos(globPos * locPos);
-							Graphics::Renderer::DrawBox(ToGLMVec3(shapeGlobPos.p), ToGraphicUnits(ToGLMVec3(scale)), ToGLMQuat(shapeGlobPos.q), { 0,1,0,1 });
+
+							Graphics::Renderer::DrawBox(ToGLMVec3(shapeGlobPos.p), ToGraphicUnits(ToGLMVec3(scale)), ToGLMQuat(shapeGlobPos.q), debugactivecolor);
 						}
 					}
 
@@ -556,6 +580,8 @@ namespace IGE {
 				for (auto entity : rbsystem) {
 					auto& collider{ rbsystem.get<Component::SphereCollider>(entity) };
 					ECS::Entity e{ entity };
+					glm::vec4 debugactivecolor{ e.IsActive() ? glm::vec4{ 0,1,0,1 } : glm::vec4{0.5, 0.5, 0.5, 1} };
+
 					auto rbiter{ mRigidBodyIDs.find(e.GetComponent<Component::SphereCollider>().bodyID) };
 
 					if (rbiter != mRigidBodyIDs.end()) {
@@ -574,7 +600,7 @@ namespace IGE {
 							auto radius{ geom.radius };
 							auto shapeGlobPos(globPos * locPos);
 							//i think the radius is actually the diameter here so im gonna divide by 2
-							Graphics::Renderer::DrawWireSphere(ToGLMVec3(shapeGlobPos.p), ToGraphicUnits(radius/2.f), { 0,1,0,1 }, 16);
+							Graphics::Renderer::DrawWireSphere(ToGLMVec3(shapeGlobPos.p), ToGraphicUnits(radius/2.f), debugactivecolor, 16);
 						}
 					}
 
@@ -585,6 +611,7 @@ namespace IGE {
 				for (auto entity : rbsystem) {
 					auto& collider{ rbsystem.get<Component::CapsuleCollider>(entity) };
 					ECS::Entity e{ entity };
+					glm::vec4 debugactivecolor{ e.IsActive() ? glm::vec4{ 0,1,0,1 } : glm::vec4{0.5, 0.5, 0.5, 1} };
 					auto rbiter{ mRigidBodyIDs.find(e.GetComponent<Component::CapsuleCollider>().bodyID) };
 
 					if (rbiter != mRigidBodyIDs.end()) {
@@ -620,7 +647,7 @@ namespace IGE {
 							}
 							//same thing here i think the radius is actually diameter
 							//half height converted to height for the param
-							Graphics::Renderer::DrawWireCapsule(xfm, ToGraphicUnits(geom.radius/2.f), ToGraphicUnits(geom.halfHeight * 2.f), { 0,1,0,1 });
+							Graphics::Renderer::DrawWireCapsule(xfm, ToGraphicUnits(geom.radius/2.f), ToGraphicUnits(geom.halfHeight * 2.f), debugactivecolor);
 						}
 					}
 
@@ -638,6 +665,15 @@ namespace IGE {
 					Graphics::Renderer::DrawLine(ray.origin, ray.end, { 0, 1, 0, 1 });
 				}
 			}
+			for (auto const& ray : mGeneralRays) {
+				//draw three lines
+				auto dir{ glm::normalize(ray.end - ray.start) };
+				Graphics::Renderer::DrawLine(ray.start, ray.end, { 1, 0, 1, 1 });
+				Graphics::Renderer::DrawWireSphere(ray.start, 0.1, { 1, 0, 1, 1 });
+				Graphics::Renderer::DrawWireSphere(ray.end, 0.1, { 1, 0, 1, 1 });
+
+			}
+			mGeneralRays.clear();
 			mRays.clear();
 		}
 
@@ -717,6 +753,7 @@ namespace IGE {
 					if (!e.IsActive()) {
 						continue;
 					}
+					//std::cout << "from physsystem " << e.GetComponent<Component::Tag>().tag << " " << e.IsActive() << std::endl;
 					result.entity = e;
 					result.distance = hitBuffer.touches[idx].distance;
 					result.normal = ToGLMVec3(hitBuffer.touches[idx].normal);
@@ -774,6 +811,164 @@ namespace IGE {
 					);
 			}
 			return false;
+		}
+
+		float PhysicsSystem::GetShortestDistance(ECS::Entity e1, ECS::Entity e2)
+		{
+			// Require both entities to have a Transform.
+			if (!e1.HasComponent<Component::Transform>() || !e2.HasComponent<Component::Transform>())
+				return -1.f;
+
+			// Get the transforms.
+			auto t1 = e1.GetComponent<Component::Transform>();
+			auto t2 = e2.GetComponent<Component::Transform>();
+
+			float bestSqDist = FLT_MAX;
+			glm::vec3 bestStart{ 0.f };
+			glm::vec3 bestEnd{ 0.f };
+			bool found = false;
+
+			// Helper lambda: Given a point and a collider (its geometry and pose),
+			// query the squared distance and closest point on the collider.
+			auto queryPointToCollider = [&bestSqDist, &bestStart, &bestEnd, &found](const physx::PxVec3& point,
+				const physx::PxGeometry& geom, const physx::PxTransform& pose)
+				{
+					physx::PxVec3 closestPt;
+					// pointDistance returns the squared distance.
+					physx::PxReal sqDist = physx::PxGeometryQuery::pointDistance(point, geom, pose, &closestPt);
+					if (sqDist >= 0.f && sqDist < bestSqDist)
+					{
+						bestSqDist = sqDist;
+						bestStart = ToGLMVec3(point);
+						bestEnd = ToGLMVec3(closestPt);
+						found = true;
+					}
+				};
+
+			// For each collider component on e1, compare against each collider component on e2.
+			// We consider the "center" of each collider to be: transform.worldPos + collider.positionOffset.
+			// And we build the collider’s world pose using the entity’s rotation combined with the collider’s rotation offset.
+
+			// --- e1: BoxCollider
+			if (e1.HasComponent<Component::BoxCollider>())
+			{
+				auto box1 = e1.GetComponent<Component::BoxCollider>();
+				physx::PxBoxGeometry geom1(box1.scale); // 'scale' is assumed to be the half-extents.
+				physx::PxVec3 center1 = ToPxVec3(t1.worldPos) + box1.positionOffset;
+				physx::PxTransform pose1(center1, ToPxQuat(t1.worldRot) * box1.rotationOffset);
+
+				// Compare with e2's colliders.
+				if (e2.HasComponent<Component::BoxCollider>())
+				{
+					auto box2 = e2.GetComponent<Component::BoxCollider>();
+					physx::PxBoxGeometry geom2(box2.scale);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + box2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * box2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+				if (e2.HasComponent<Component::SphereCollider>())
+				{
+					auto sphere2 = e2.GetComponent<Component::SphereCollider>();
+					physx::PxSphereGeometry geom2(sphere2.radius);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + sphere2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * sphere2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+				if (e2.HasComponent<Component::CapsuleCollider>())
+				{
+					auto capsule2 = e2.GetComponent<Component::CapsuleCollider>();
+					physx::PxCapsuleGeometry geom2(capsule2.radius, capsule2.halfheight);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + capsule2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * capsule2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+			}
+
+			// --- e1: SphereCollider
+			if (e1.HasComponent<Component::SphereCollider>())
+			{
+				auto sphere1 = e1.GetComponent<Component::SphereCollider>();
+				physx::PxSphereGeometry geom1(sphere1.radius);
+				physx::PxVec3 center1 = ToPxVec3(t1.worldPos) + sphere1.positionOffset;
+				physx::PxTransform pose1(center1, ToPxQuat(t1.worldRot) * sphere1.rotationOffset);
+
+				if (e2.HasComponent<Component::BoxCollider>())
+				{
+					auto box2 = e2.GetComponent<Component::BoxCollider>();
+					physx::PxBoxGeometry geom2(box2.scale);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + box2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * box2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+				if (e2.HasComponent<Component::SphereCollider>())
+				{
+					auto sphere2 = e2.GetComponent<Component::SphereCollider>();
+					physx::PxSphereGeometry geom2(sphere2.radius);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + sphere2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * sphere2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+				if (e2.HasComponent<Component::CapsuleCollider>())
+				{
+					auto capsule2 = e2.GetComponent<Component::CapsuleCollider>();
+					physx::PxCapsuleGeometry geom2(capsule2.radius, capsule2.halfheight);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + capsule2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * capsule2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+			}
+
+			// --- e1: CapsuleCollider
+			if (e1.HasComponent<Component::CapsuleCollider>())
+			{
+				auto capsule1 = e1.GetComponent<Component::CapsuleCollider>();
+				physx::PxCapsuleGeometry geom1(capsule1.radius, capsule1.halfheight);
+				physx::PxVec3 center1 = ToPxVec3(t1.worldPos) + capsule1.positionOffset;
+				physx::PxTransform pose1(center1, ToPxQuat(t1.worldRot) * capsule1.rotationOffset);
+
+				if (e2.HasComponent<Component::BoxCollider>())
+				{
+					auto box2 = e2.GetComponent<Component::BoxCollider>();
+					physx::PxBoxGeometry geom2(box2.scale);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + box2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * box2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+				if (e2.HasComponent<Component::SphereCollider>())
+				{
+					auto sphere2 = e2.GetComponent<Component::SphereCollider>();
+					physx::PxSphereGeometry geom2(sphere2.radius);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + sphere2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * sphere2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+				if (e2.HasComponent<Component::CapsuleCollider>())
+				{
+					auto capsule2 = e2.GetComponent<Component::CapsuleCollider>();
+					physx::PxCapsuleGeometry geom2(capsule2.radius, capsule2.halfheight);
+					physx::PxVec3 center2 = ToPxVec3(t2.worldPos) + capsule2.positionOffset;
+					physx::PxTransform pose2(center2, ToPxQuat(t2.worldRot) * capsule2.rotationOffset);
+					queryPointToCollider(center1, geom2, pose2);
+				}
+			}
+
+			// (Optionally, you could also run the symmetric queries – from each collider in e2 against those in e1 –
+			// but since distance is symmetric, this is omitted for brevity.)
+
+			// If no valid query was made or the computed gap is non-positive, return -1.
+			if (!found || bestSqDist <= 0.f || bestSqDist == FLT_MAX)
+				return -1.f;
+
+			float bestDistance = sqrtf(bestSqDist);
+
+			// Add the two points as a GeneralRay.
+			// (Assuming mGeneralRays is a data member of this class and accessible here.)
+			GeneralRay ray;
+			ray.start = bestStart;
+			ray.end = bestEnd;
+			mGeneralRays.push_back(ray);
+
+			return bestDistance;
 		}
 
 		template<typename _physx_type, typename _collider_component>

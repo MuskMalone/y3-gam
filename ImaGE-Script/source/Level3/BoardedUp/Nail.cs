@@ -115,7 +115,7 @@ public class Nail : Entity
       InternalCalls.DestroyEntity(plankHeld.mEntityID);
     }
 
-    Destroy(mEntityID); // destroy self
+    Destroy(); // destroy self
   }
 
   public void TriggerAnim()
