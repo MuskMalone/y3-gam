@@ -40,7 +40,7 @@ public class  PlayerMove : Entity
   public float initialGravityFactor = 5f;
   public float extraGravityFactorDuringDescent = 15f;
 
-  public bool canLook = true, canMove = true;
+  public bool canLook = true, canMove = true, useScriptRotation = true;
   private bool skipNextMouseDelta = false;  // to skip the jump in delta when unfreezing player
   private double currTime = 0.0;
   private double targetTime = 1.0;
@@ -73,7 +73,11 @@ public class  PlayerMove : Entity
     }
 
     // Skip look processing if the player is frozen
-    ProcessLook();
+    if(useScriptRotation)
+    {
+      ProcessLook();
+    }
+    
 
     if (canMove)
       PlayerMovement();
