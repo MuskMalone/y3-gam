@@ -667,6 +667,9 @@
     <ClInclude Include="source\Graphics\Mesh\MeshFactory.h">
       <Filter>Graphics\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\Mesh\MeshImport.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\Mesh\MeshMatValues.h">
       <Filter>Graphics\Mesh</Filter>
     </ClInclude>
@@ -839,7 +842,6 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Graphics\Mesh\MeshImport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
