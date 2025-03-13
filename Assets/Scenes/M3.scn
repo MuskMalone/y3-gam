@@ -8378,6 +8378,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "hideOriginalObject"
+                                        }
+                                    },
+                                    {
                                         "data": 5.0,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -20595,7 +20602,7 @@
                                         }
                                     },
                                     {
-                                        "data": true,
+                                        "data": false,
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "skipCutscene"
