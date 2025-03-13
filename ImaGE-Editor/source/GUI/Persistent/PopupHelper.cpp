@@ -78,10 +78,13 @@ namespace GUI {
   }
 
   EVENT_CALLBACK_DEF(PopupHelper, OnQuitAppPopupTrigger) {
-    if (!GUIVault::IsSceneModified()) { return; }
-
-    sCurrentPopup = sWindowClosePopupTitle;
-    sOpenPopup = true;
+    if (GUIVault::IsSceneModified()) {
+      sCurrentPopup = sWindowClosePopupTitle;
+      sOpenPopup = true;
+    }
+    else {
+      IGE_EVENTMGR.DispatchImmediateEvent<Events::QuitApplication>();
+    }
   }
 
 
