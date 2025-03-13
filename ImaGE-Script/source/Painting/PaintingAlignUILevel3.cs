@@ -55,13 +55,13 @@ public class PaintingAlignUILevel3 : Entity
     void Update()
     {
         // Ensure UI does not show if no valid item is selected
-        if (level3inventoryScript.GetCurrentItem() == null || !level3inventoryScript.highlighted)
+        if (level3inventoryScript.GetCurrentItem() == null || !level3inventoryScript.highlighted || !isPainting)
         {
             disableAlignUI();
             return;
         }
 
-        if (holdupUIScript.isBigPaintingActive && isPainting)
+        if (holdupUIScript.isBigPaintingActive)
         {
             if (pictureAlignScript.IsAligned())
             {

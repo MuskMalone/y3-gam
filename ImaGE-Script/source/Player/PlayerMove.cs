@@ -26,6 +26,7 @@ public class  PlayerMove : Entity
   public float walkingSpeed = 750f;
   public float runSpeed = 1300f;
   public float isGroundedRayHeight = 3f;
+  
   public Entity cam;
 
   private float yaw = 0f;                                   // Rotation around the Y-axis (horizontal, for player)
@@ -40,11 +41,12 @@ public class  PlayerMove : Entity
   public float initialGravityFactor = 5f;
   public float extraGravityFactorDuringDescent = 15f;
 
-  public bool canLook = true, canMove = true, useScriptRotation = true;
+  public bool canLook = true, canMove = true, useScriptRotation = true, climbing = false;
   private bool skipNextMouseDelta = false;  // to skip the jump in delta when unfreezing player
   private double currTime = 0.0;
   private double targetTime = 1.0;
   private bool startTimer = false;
+
 
   public PlayerMove() : base()
   {
@@ -166,6 +168,7 @@ public class  PlayerMove : Entity
     // Ray ends slightly beneath the entity
     Vector3 rayEnd = entityPosition + new Vector3(0, 0 - isGroundedRayHeight, 0);
     uint entityIDHit = InternalCalls.RaycastFromEntity(mEntityID, rayStart, rayEnd);
+    //Console.WriteLine(InternalCalls.GetTag(entityIDHit));
     return entityIDHit != 0;
 
   }

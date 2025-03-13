@@ -92,6 +92,10 @@ namespace IGE.Utils
       t = Clamp((t - a) / (b - a), 0f, 1f);
       return t * t * (3f - 2f * t);
     }
+    public static float SmoothStep(float t)
+    {
+      return t * t * (3 - 2 * t);
+    }
 
     public static float CopySign(float magnitude, float sign)
     {

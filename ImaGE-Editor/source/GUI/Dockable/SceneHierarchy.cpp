@@ -344,6 +344,11 @@ namespace GUI
     }
     if (ImGui::InputText("##EntityRename", &entityName, ImGuiInputTextFlags_AutoSelectAll)) {
       entity.GetComponent<Component::Tag>().tag = entityName;
+
+      if (entity.HasComponent<Component::PrefabOverrides>()) {
+        entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Tag>();
+      }
+
       SceneModified();
     }
     ImGui::PopStyleVar();

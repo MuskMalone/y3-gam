@@ -1,0 +1,39 @@
+{
+    "name": "hexTable",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 0.9411764740943909,
+        "y": 0.9019607901573181,
+        "z": 0.8235294222831726
+    },
+    "metalness": 0.0,
+    "roughness": 0.8980000019073486,
+    "ao": 1.0,
+    "emission": {
+        "x": 0.9866220951080322,
+        "y": 0.9866220951080322,
+        "z": 0.9866220951080322,
+        "w": 0.0
+    },
+    "transparency": 1.0,
+    "tiling": {
+        "x": 1.0,
+        "y": 1.0
+    },
+    "offset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 0
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}

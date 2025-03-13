@@ -120,7 +120,7 @@ using IGE.Utils;
 
     }
 
-    public void Destroy(uint entityID)  //Function to destroy entities
+    public void Destroy()  //Function to destroy entities
     {
       OnDestroy();
       InternalCalls.DestroyEntity(mEntityID);

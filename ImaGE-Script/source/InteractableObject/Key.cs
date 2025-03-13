@@ -57,7 +57,7 @@ public class Key : Entity, IInventoryItem
     {
       inventoryScript.ToggleInventoryVisibility();
     }
-    Destroy(mEntityID);
+    Destroy();
   }
 
   void Start()

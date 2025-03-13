@@ -4,7 +4,6 @@ using System.Numerics;
 
 public class NoteInteraction : Entity
 {
-
   public PlayerMove playerMove;
   public Entity noteUI;
   public PlayerInteraction playerInteraction;
@@ -14,6 +13,7 @@ public class NoteInteraction : Entity
 
   public float moveSpeed = 5f;
   public float rotateSpeed = 5f;
+  public bool hideOriginalObject; // using this cause in M3 scene, sometimes it can be seen behind the UI image
 
   private bool isMoving = false;
   private bool isReset = false;
@@ -96,6 +96,11 @@ public class NoteInteraction : Entity
       playerMove.FreezePlayer();
       viewNoteUI.SetActive(false);
     }
+
+    if (hideOriginalObject)
+    {
+      SetActive(false);
+    }
   }
 
   private void HideNoteUI()
@@ -104,6 +109,11 @@ public class NoteInteraction : Entity
     if (noteUI != null && playerMove != null)
     {
       noteUI.SetActive(false);
+    }
+
+    if (hideOriginalObject)
+    {
+      SetActive(true);
     }
   }
 
@@ -127,11 +137,11 @@ public class NoteInteraction : Entity
 
     //Quaternion additionalRotation = AxisAngleToQuaternion(new Vector3(1,0,0), 90);
     Quaternion additionalRotation = new Quaternion(-0.7071f, 0f, 0f, 0.7071f); // I am hard coding this for now, it's -90deg in quat
-    Debug.Log("Additional Rotation: " + additionalRotation);
+    //Debug.Log("Additional Rotation: " + additionalRotation);
     float debugAngle = 2 * Mathf.Acos(additionalRotation.W) * Mathf.Rad2Deg;
-    Debug.Log("Additional Rotation Angle: " + debugAngle + " degrees");
+    //Debug.Log("Additional Rotation Angle: " + debugAngle + " degrees");
     targetRot = targetRot * additionalRotation;
-    Debug.Log("Final Target Rotation: " + targetRot);
+    //Debug.Log("Final Target Rotation: " + targetRot);
 
     // Move towards the target position
     Vector3 newPos = Vector3.Lerp(currPos, targetPos, Time.deltaTime * moveSpeed);
@@ -146,7 +156,7 @@ public class NoteInteraction : Entity
     // Stop moving when close enough
     if (Vector3.Distance(newPos, targetPos) < 0.1f)
     {
-      Debug.Log("Finished");
+      //Debug.Log("Finished");
       InternalCalls.SetWorldPosition(mEntityID, ref targetPos);
       InternalCalls.SetWorldRotation(mEntityID, ref targetRot);
       InternalCalls.UpdatePhysicsToTransform(mEntityID);
@@ -182,7 +192,7 @@ public class NoteInteraction : Entity
     // Stop moving when close enough
     if (Vector3.Distance(newPos, targetPos) < 0.1f)
     {
-      Debug.Log("Finished");
+      //Debug.Log("Finished");
       InternalCalls.SetWorldPosition(mEntityID, ref targetPos);
       InternalCalls.SetWorldRotation(mEntityID, ref targetRot);
       InternalCalls.UpdatePhysicsToTransform(mEntityID);
@@ -229,7 +239,7 @@ public class NoteInteraction : Entity
         forward.X, forward.Y, forward.Z, 0,
         0, 0, 0, 1
     );
-    
+
     // Convert the rotation matrix to a quaternion
     return Quaternion.CreateFromRotationMatrix(rotationMatrix);
   }
