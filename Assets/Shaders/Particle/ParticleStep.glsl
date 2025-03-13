@@ -36,7 +36,7 @@ void main() {
         
     if (Particles[gid].alive == true){
         Particles[gid].age += DT;
-        Particles[gid].vel += Particles[gid].gravity;
+        Particles[gid].vel += Particles[gid].gravity * DT;
         Particles[gid].pos += Particles[gid].vel * DT;
         // Particles[gid].rot += Particles[gid].angvel * DT;
         
