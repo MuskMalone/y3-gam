@@ -37,15 +37,31 @@ public class PamphletInteraction : Entity
   {
     IDLE,
     FLIPPING,
-    MOVING,
-    OPENED
+    MOVING
   }
   private State currState = State.IDLE;
 
   // Start is called before the first frame update
   void Start()
   {
+    if (noteUI == null)
+    {
+      Debug.LogError("[NoteInteraction.cs] Note UI Entity not found!");
+      return;
+    }
 
+    noteUI?.SetActive(false);
+    viewNoteUI?.SetActive(false);
+
+    if (playerMove == null)
+    {
+      Debug.LogError("[NoteInteraction.cs] PlayerMove Script Entity not found!");
+      return;
+    }
+
+    originalPos = InternalCalls.GetWorldPosition(mEntityID);
+    originalRot = InternalCalls.GetWorldRotation(mEntityID);
+    noteTag = InternalCalls.GetTag(mEntityID);
   }
 
   // Update is called once per frame
@@ -61,18 +77,19 @@ public class PamphletInteraction : Entity
           {
             bool noteIsActive = noteUI.IsActive();
             
-            if (noteIsActive && isNoteHit)
+            if (!noteIsActive && isNoteHit)
             {
-              isOpening = true;
               noteInteractedWith = true;
               viewNoteUI.SetActive(false);
+              currState = State.MOVING;
+              isOpening = true;
+              playerMove.FreezePlayer();
             }
             else if (noteIsActive)
             {
               HideNoteUI();
-              isOpening = false;
+              currState = State.FLIPPING;
             }
-            currState = State.MOVING;
           }
 
           if (!noteInteractedWith)
@@ -88,7 +105,6 @@ public class PamphletInteraction : Entity
           if (isOpening)
           {
             MoveToTarget();
-            playerMove.FreezePlayer();
           }
           else
           {
@@ -104,11 +120,20 @@ public class PamphletInteraction : Entity
 
           if (timeElapsed >= animationTime)
           {
+            // this is the last stage for opening sequence
+            if (isOpening)
+            {
+              ShowNoteUI();
+              currState = State.IDLE;
+              isOpening = false;
+            }
+            // if closing, move back next
+            else
+            {
+              currState = State.MOVING;
+            }
             timeElapsed = 0f;
-            currState = State.IDLE;
-            ShowNoteUI();
-            Debug.Log("Changing to " + (isOpening ? "Closing" : "Opening"));
-            isOpening = !isOpening;
+
             return;
           }
 
@@ -132,7 +157,6 @@ public class PamphletInteraction : Entity
 
   private void ShowNoteUI()
   {
-    InternalCalls.PlaySound(mEntityID, "ViewNote");
     if (noteUI != null && playerMove != null)
     {
       noteUI.SetActive(true);
@@ -170,11 +194,11 @@ public class PamphletInteraction : Entity
 
     //Quaternion additionalRotation = AxisAngleToQuaternion(new Vector3(1,0,0), 90);
     Quaternion additionalRotation = new Quaternion(-0.7071f, 0f, 0f, 0.7071f); // I am hard coding this for now, it's -90deg in quat
-    Debug.Log("Additional Rotation: " + additionalRotation);
+    //Debug.Log("Additional Rotation: " + additionalRotation);
     float debugAngle = 2 * Mathf.Acos(additionalRotation.W) * Mathf.Rad2Deg;
-    Debug.Log("Additional Rotation Angle: " + debugAngle + " degrees");
+    //Debug.Log("Additional Rotation Angle: " + debugAngle + " degrees");
     targetRot = targetRot * additionalRotation;
-    Debug.Log("Final Target Rotation: " + targetRot);
+    //Debug.Log("Final Target Rotation: " + targetRot);
 
     // Move towards the target position
     Vector3 newPos = Vector3.Lerp(currPos, targetPos, Time.deltaTime * moveSpeed);
@@ -189,11 +213,12 @@ public class PamphletInteraction : Entity
     // Stop moving when close enough
     if (Vector3.Distance(newPos, targetPos) < 0.1f)
     {
-      Debug.Log("Finished");
+      //Debug.Log("Finished");
       InternalCalls.SetWorldPosition(mEntityID, ref targetPos);
       InternalCalls.SetWorldRotation(mEntityID, ref targetRot);
       InternalCalls.UpdatePhysicsToTransform(mEntityID);
       currState = State.FLIPPING;
+      InternalCalls.PlaySound(mEntityID, "ViewNote");
     }
   }
 
@@ -224,13 +249,13 @@ public class PamphletInteraction : Entity
     // Stop moving when close enough
     if (Vector3.Distance(newPos, targetPos) < 0.1f)
     {
-      Debug.Log("Finished");
+      //Debug.Log("Finished");
       InternalCalls.SetWorldPosition(mEntityID, ref targetPos);
       InternalCalls.SetWorldRotation(mEntityID, ref targetRot);
       InternalCalls.UpdatePhysicsToTransform(mEntityID);
       playerMove.UnfreezePlayer();
       noteInteractedWith = false;
-      currState = State.FLIPPING;
+      currState = State.IDLE;
     }
   }
 
