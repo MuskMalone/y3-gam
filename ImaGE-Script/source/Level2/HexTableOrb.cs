@@ -21,7 +21,7 @@ public class HexTableOrb : Entity
   static readonly float riseVelocity = 4f;
   static readonly float intensity = 0.002f; // How much it vibrates
   static readonly float frequency = 0.05f;  // How fast it vibrates
-  static readonly float violentIntensity = intensity * 4f; // How much it vibrates
+  static readonly float violentIntensity = 0.01f; // How much it vibrates
   static readonly float violentFrequency = frequency * 0.5f;  // How fast it vibrates
 
   private enum State
