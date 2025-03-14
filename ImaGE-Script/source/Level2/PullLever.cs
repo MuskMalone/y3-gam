@@ -3,39 +3,60 @@ using System;
 
 public class PullLever : Entity
 {
-    public PlayerInteraction playerInteraction;
-    private bool leverPulled = false; // Track if this lever has been pulled
-    private LeverManager leverManager; // Reference to the manager
+  public PlayerInteraction playerInteraction;
+  public HexTableOrb orb;
+  public Entity leverLight;
+  public float timeBeforeCamSwitch = 0.1f;
 
-    public PullLever() : base() { }
+  private LeverManager leverManager; // Reference to the manager
+  private string thisLeverTag;
 
-    void Start()
+  private bool leverPulled = false;
+  private float timeElapsed = 0f;
+  public PullLever() : base() { }
+
+  void Start()
+  {
+    thisLeverTag = InternalCalls.GetTag(mEntityID);
+    leverManager = FindObjectOfType<LeverManager>();
+    InternalCalls.SetLightIntensity(leverLight.mEntityID, 0.0f);
+  }
+  void Update()
+  {
+    if (!leverPulled)
     {
-        leverManager = FindObjectOfType<LeverManager>();
-    }
-    void Update()
-    {
-        if (!leverPulled && Input.GetMouseButtonTriggered(0))
+      if (Input.GetMouseButtonTriggered(0))
+      {
+        string hitObjectTag = playerInteraction.RayHitString; // Object the player clicked on
+
+        if (hitObjectTag == thisLeverTag) // Check if player clicked this lever
         {
-            string hitObjectTag = playerInteraction.RayHitString; // Object the player clicked on
-            string thisLeverTag = InternalCalls.GetTag(mEntityID); // This lever's tag
-
-            if (hitObjectTag == thisLeverTag) // Check if player clicked this lever
-            {
-                ActivateLever();
-            }
+          ActivateLever();
         }
+      }
+
+      return;
     }
 
-    private void ActivateLever()
+    // when animation has finished, notify lever manager
+    if (!InternalCalls.IsPlayingAnimation(mEntityID))
     {
-        InternalCalls.PlaySound(mEntityID, "IncoherentWhispers");
-        InternalCalls.PlayAnimation(mEntityID, "SwitchOff");
-        leverPulled = true; // Prevent future interaction
+      timeElapsed += Time.deltaTime;
 
-        if (leverManager != null)
-        {
-            leverManager.LeverPulled(); // Notify the manager
-        }
+      if (timeElapsed >= timeBeforeCamSwitch)
+      {
+        orb.Rise();
+        leverManager?.LeverPulled();
+        InternalCalls.SetLightIntensity(leverLight.mEntityID, 5.0f);
+        Destroy(this);  // we no longer need this script
+      }
     }
+  }
+
+  private void ActivateLever()
+  {
+    InternalCalls.PlaySound(mEntityID, "IncoherentWhispers");
+    InternalCalls.PlayAnimation(mEntityID, "SwitchOff");
+    leverPulled = true;
+  }
 }
