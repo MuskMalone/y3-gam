@@ -95,6 +95,9 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "AudioListener": {}
+                },
+                {
                     "Tag": {
                         "tag": "MainCamera",
                         "isActive": true
@@ -367,7 +370,7 @@
                         "gravityFactor": 40.0,
                         "linearDamping": 5.0,
                         "motionType": "DYNAMIC",
-                        "axisLock": 0,
+                        "axisLock": 2,
                         "angularAxisLock": 7
                     }
                 },
@@ -886,6 +889,28 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
                     }
                 }
             ]
@@ -3824,6 +3849,40 @@
             ],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "EyeballMove2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9532725443809291607
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 28.052125930786134,
+                                            "y": 3.8727312088012697,
+                                            "z": -69.60702514648438
+                                        },
+                                        "volume": 0.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "eyeball",
                         "isActive": true
@@ -4451,6 +4510,40 @@
             ],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PlankClack1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8408490888814234368
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 48.73713684082031,
+                                            "y": 1.955855131149292,
+                                            "z": -122.12167358398438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "Plank2Collider",
                         "isActive": true
@@ -4459,7 +4552,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 49.0989990234375,
+                            "x": 48.73713684082031,
                             "y": 1.955855131149292,
                             "z": -122.12167358398438
                         },
@@ -4469,18 +4562,18 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 0.13187257945537568,
-                            "y": 0.03149384632706642,
-                            "z": 0.03800707682967186,
-                            "w": 0.9900370240211487
+                            "x": 0.13214373588562013,
+                            "y": 0.03864537924528122,
+                            "z": 0.037053294479846957,
+                            "w": 0.9897836446762085
                         },
                         "eulerAngles": {
-                            "x": 15.300000190734864,
-                            "y": 3.0,
-                            "z": 4.800000190734863
+                            "x": 15.369428634643555,
+                            "y": 3.824950695037842,
+                            "z": 4.804121494293213
                         },
                         "worldPos": {
-                            "x": 49.0989990234375,
+                            "x": 48.73713684082031,
                             "y": 1.955855131149292,
                             "z": -122.12167358398438
                         },
@@ -4490,10 +4583,10 @@
                             "z": 1.0
                         },
                         "worldRot": {
-                            "x": 0.13187257945537568,
-                            "y": 0.03149384632706642,
-                            "z": 0.03800707682967186,
-                            "w": 0.9900370240211487
+                            "x": 0.13214373588562013,
+                            "y": 0.03864537924528122,
+                            "z": 0.037053294479846957,
+                            "w": 0.9897836446762085
                         }
                     }
                 },
@@ -4540,14 +4633,70 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
                         "restitution": 0.0,
                         "gravityFactor": 10.0,
-                        "linearDamping": 0.9800000190734863,
+                        "linearDamping": 10.0,
                         "motionType": "DYNAMIC",
                         "axisLock": 7,
                         "angularAxisLock": 7
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 77,
+                                "scriptName": "WoodenPlankSFXLevel3",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 3,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "floor"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 78,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "otherPlank1"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 263,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "otherPlank2"
+                                        }
+                                    },
+                                    {
+                                        "data": true,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "pair1Exists"
+                                        }
+                                    },
+                                    {
+                                        "data": true,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "pair2Exists"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -4560,6 +4709,40 @@
             ],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PlankClack1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 14420193016666216910
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.07292175292969,
+                                            "y": 3.726356029510498,
+                                            "z": -128.80087280273438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "Plank1Collider",
                         "isActive": true
@@ -4568,7 +4751,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 49.09909439086914,
+                            "x": 49.07292175292969,
                             "y": 3.726356029510498,
                             "z": -128.80087280273438
                         },
@@ -4589,7 +4772,7 @@
                             "z": 0.000012778807104041335
                         },
                         "worldPos": {
-                            "x": 49.09909439086914,
+                            "x": 49.07292175292969,
                             "y": 3.726356029510498,
                             "z": -128.80087280273438
                         },
@@ -4614,7 +4797,7 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 0.20000000298023225,
+                            "x": 0.30000001192092898,
                             "y": 0.6499999761581421,
                             "z": 4.699999809265137
                         },
@@ -4649,14 +4832,70 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
                         "restitution": 0.0,
                         "gravityFactor": 10.0,
-                        "linearDamping": 0.9800000190734863,
+                        "linearDamping": 10.0,
                         "motionType": "DYNAMIC",
                         "axisLock": 7,
                         "angularAxisLock": 7
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 78,
+                                "scriptName": "WoodenPlankSFXLevel3",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 3,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "floor"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 263,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "otherPlank1"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "otherPlank2"
+                                        }
+                                    },
+                                    {
+                                        "data": true,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "pair1Exists"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "pair2Exists"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -5523,6 +5762,11 @@
                 178
             ],
             "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": []
+                    }
+                },
                 {
                     "Tag": {
                         "tag": "eyeball2",
@@ -8071,9 +8315,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.00003814697265625,
-                            "y": 0.014838218688964844,
-                            "z": 3.657742738723755
+                            "x": -0.0895233154296875,
+                            "y": 0.01482248306274414,
+                            "z": 3.657999277114868
                         },
                         "scale": {
                             "x": 9.774688720703125,
@@ -8081,20 +8325,20 @@
                             "z": 2.4434001445770265
                         },
                         "rotation": {
-                            "x": -0.5052075982093811,
+                            "x": -0.5052076578140259,
                             "y": 0.5052093863487244,
-                            "z": 0.4947362244129181,
+                            "z": 0.49473628401756289,
                             "w": 0.49473705887794497
                         },
                         "eulerAngles": {
                             "x": 179.9974822998047,
-                            "y": 88.79975128173828,
+                            "y": 88.80007934570313,
                             "z": -90.00273895263672
                         },
                         "worldPos": {
-                            "x": 49.099056243896487,
-                            "y": 5.348865509033203,
-                            "z": -125.52265167236328
+                            "x": 48.9833984375,
+                            "y": 5.348964214324951,
+                            "z": -125.52241516113281
                         },
                         "worldScale": {
                             "x": 9.774688720703125,
@@ -8102,9 +8346,9 @@
                             "z": 2.4434001445770265
                         },
                         "worldRot": {
-                            "x": -0.6038720607757568,
-                            "y": 0.6038735508918762,
-                            "z": 0.36788210272789,
+                            "x": -0.6038721203804016,
+                            "y": 0.603873610496521,
+                            "z": 0.3678821623325348,
                             "w": 0.36788299679756167
                         }
                     }
@@ -10390,6 +10634,40 @@
             ],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PlankClack1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8408490888814234368
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.099063873291019,
+                                            "y": -1.0074751377105713,
+                                            "z": -129.08963012695313
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "Plank3Collider",
                         "isActive": true
@@ -10479,14 +10757,70 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
                         "restitution": 0.0,
                         "gravityFactor": 10.0,
-                        "linearDamping": 0.9800000190734863,
+                        "linearDamping": 10.0,
                         "motionType": "DYNAMIC",
                         "axisLock": 7,
                         "angularAxisLock": 7
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 263,
+                                "scriptName": "WoodenPlankSFXLevel3",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 3,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "floor"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 78,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "otherPlank1"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 77,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "otherPlank2"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "pair1Exists"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "pair2Exists"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -20747,8 +21081,7 @@
             "Child Entities": [
                 53,
                 123,
-                1048693,
-                1049212
+                1048693
             ],
             "Components": [
                 {
@@ -26833,128 +27166,6 @@
             ]
         },
         {
-            "ID": 1049212,
-            "Parent": 1048633,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "AudioSource": {
-                        "sounds": [
-                            {
-                                "key": "EyeballSquish2",
-                                "value": {
-                                    "guid": {
-                                        "ID": 16537121273306461994
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 27.85011100769043,
-                                            "y": -0.5788497924804688,
-                                            "z": -43.125587463378909
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": true,
-                                        "playOnAwake": true,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 50.0,
-                                        "rolloffType": "LINEAR",
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    "Tag": {
-                        "tag": "squishing_sounds",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.25,
-                            "y": 1.25,
-                            "z": 1.25
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 27.85011100769043,
-                            "y": -0.5788497924804688,
-                            "z": -43.125587463378909
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 1049212,
-                                "scriptName": "EyeBallFollowSFX",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 4194436,
-                                            "scriptName": "EyeBallFollow"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "eyeball"
-                                        }
-                                    },
-                                    {
-                                        "data": 2.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "vol"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1049288,
             "Parent": 1049506,
             "Child Entities": [],
@@ -30695,7 +30906,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 49.21099853515625,
+                            "x": 48.80495834350586,
                             "y": 6.946382999420166,
                             "z": -122.22464752197266
                         },
@@ -30716,7 +30927,7 @@
                             "z": 97.5
                         },
                         "worldPos": {
-                            "x": 49.21099853515625,
+                            "x": 48.80495834350586,
                             "y": 6.946382999420166,
                             "z": -122.22464752197266
                         },
@@ -32428,7 +32639,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 49.21099853515625,
+                            "x": 49.005741119384769,
                             "y": 1.9913228750228882,
                             "z": -122.15182495117188
                         },
@@ -32449,7 +32660,7 @@
                             "z": 83.0999984741211
                         },
                         "worldPos": {
-                            "x": 49.21099853515625,
+                            "x": 49.005741119384769,
                             "y": 1.9913228750228882,
                             "z": -122.15182495117188
                         },
@@ -32609,9 +32820,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.031833648681640628,
-                            "y": -0.0060961246490478519,
-                            "z": -3.5097274780273439
+                            "x": 0.03183746337890625,
+                            "y": -0.006066083908081055,
+                            "z": -3.5107758045196535
                         },
                         "scale": {
                             "x": 9.774688720703125,
@@ -32619,20 +32830,20 @@
                             "z": 2.4434001445770265
                         },
                         "rotation": {
-                            "x": -0.4986887574195862,
-                            "y": 0.49868980050086977,
-                            "z": 0.5013065338134766,
-                            "w": 0.5013081431388855
+                            "x": -0.4981059730052948,
+                            "y": 0.4991929531097412,
+                            "z": 0.5016520023345947,
+                            "w": 0.5010409355163574
                         },
                         "eulerAngles": {
-                            "x": -0.006196112837642431,
-                            "y": 89.70130157470703,
-                            "z": 89.99380493164063
+                            "x": 17.487529754638673,
+                            "y": 89.6749496459961,
+                            "z": 107.46055603027344
                         },
                         "worldPos": {
-                            "x": 48.877037048339847,
-                            "y": 2.8606977462768556,
-                            "z": -125.5056381225586
+                            "x": 48.466217041015628,
+                            "y": 2.8609981536865236,
+                            "z": -125.50308227539063
                         },
                         "worldScale": {
                             "x": 9.774688720703125,
@@ -32640,10 +32851,10 @@
                             "z": 2.4434001445770265
                         },
                         "worldRot": {
-                            "x": -0.4307771921157837,
-                            "y": 0.4244472086429596,
-                            "z": 0.5968344807624817,
-                            "w": 0.5273181200027466
+                            "x": -0.42591792345046999,
+                            "y": 0.4287092983722687,
+                            "z": 0.6003069281578064,
+                            "w": 0.5238642692565918
                         }
                     }
                 },
@@ -33383,7 +33594,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 48.781490325927737,
+                            "x": 48.38858413696289,
                             "y": 3.7643604278564455,
                             "z": -128.81607055664063
                         },
@@ -33404,7 +33615,7 @@
                             "z": 90.0
                         },
                         "worldPos": {
-                            "x": 48.781490325927737,
+                            "x": 48.38858413696289,
                             "y": 3.7643604278564455,
                             "z": -128.81607055664063
                         },

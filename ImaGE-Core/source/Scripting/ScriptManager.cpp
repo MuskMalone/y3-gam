@@ -1171,6 +1171,7 @@ void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v)
 {
     std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
+    //printf("%s is setting volume", entity.GetComponent<Component::Tag>().tag.c_str());
     entity.GetComponent<Component::AudioSource>().SetSoundVolume(name, v);
 }
 

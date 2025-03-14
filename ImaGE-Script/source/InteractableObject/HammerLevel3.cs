@@ -20,6 +20,7 @@ public class HammerLevel3 : Entity, IInventoryItem
   private Entity[] nails; // nails in sets of 2
   private int currIndex = -1;
 
+  private int nailCount = 0;
   public enum HammerState
   {
     IDLE,
@@ -61,6 +62,14 @@ public class HammerLevel3 : Entity, IInventoryItem
   {
     SetActive(true);
     currState = HammerState.USING;
+  }
+
+  public void PlayNailSound()
+  {
+    nailCount %= 5;
+    InternalCalls.SetSoundVolume(mEntityID, $"..\\Assets\\Audio\\NailPull{nailCount}_SFX.wav", 0.5f);
+    InternalCalls.PlaySound(mEntityID, $"..\\Assets\\Audio\\NailPull{nailCount}_SFX.wav");
+    nailCount++;
   }
 
   void Start()
@@ -117,13 +126,17 @@ public class HammerLevel3 : Entity, IInventoryItem
 
           // also trigger the anim for both nails
           int offset = currIndex * 2;
+
+          PlayNailSound();
           nails[offset]?.FindScript<Nail>().TriggerAnim();
           if (offset == 0)
           {
+            PlayNailSound();
             nails[offset + 1]?.FindScript<TwoPlankNail>().TriggerAnim();
           }
           else
           {
+            PlayNailSound();
             nails[offset + 1]?.FindScript<Nail>().TriggerAnim();
           }
 
