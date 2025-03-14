@@ -399,6 +399,8 @@ namespace Mono
 
 		static MonoArray* GetAllChildren(ECS::Entity::EntityID entity);
 
+		static void UnparentEntity(ECS::Entity::EntityID entityId);
+
 		static glm::vec3 GetMainCameraPosition(ECS::Entity::EntityID cameraEntity);
 
 		static glm::vec3 GetMainCameraDirection(ECS::Entity::EntityID cameraEntity);

@@ -11267,6 +11267,56 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 1049273,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "holderCollider1"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 699,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "holderCollider2"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 700,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "holderCollider3"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 701,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "holderCollider4"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 698,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "holderCollider5"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 1,
                                             "scriptName": "Entity"
                                         },
@@ -11293,6 +11343,13 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "tableCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "timeBeforeOrbsDrop"
                                         }
                                     }
                                 ]
@@ -11540,7 +11597,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 2,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -13120,7 +13184,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 3,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -16705,7 +16776,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 2,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -29965,6 +30043,12 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
                         "key": "ScriptComponent",
                         "value": {
                             "scriptList": [
@@ -29972,6 +30056,16 @@
                                     "entityID": 583,
                                     "scriptName": "HexTableOrb",
                                     "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 2097319,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "brokenOrb"
+                                            }
+                                        },
                                         {
                                             "data": {
                                                 "entityID": 3145870,
@@ -29990,6 +30084,16 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "glowingOrb"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 660,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSensor"
                                             }
                                         }
                                     ]
@@ -30061,6 +30165,12 @@
                 "subDataId": 4,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Glow4",
@@ -30086,6 +30196,12 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
                         "key": "ScriptComponent",
                         "value": {
                             "scriptList": [
@@ -30093,6 +30209,16 @@
                                     "entityID": 590,
                                     "scriptName": "HexTableOrb",
                                     "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 2097318,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "brokenOrb"
+                                            }
+                                        },
                                         {
                                             "data": {
                                                 "entityID": 1049180,
@@ -30111,6 +30237,16 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "glowingOrb"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 660,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSensor"
                                             }
                                         }
                                     ]
@@ -30180,7 +30316,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 3,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -30258,6 +30401,76 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 600,
+            "Parent": 1048733,
+            "Child Entities": [
+                693,
+                694,
+                695,
+                696,
+                698,
+                699,
+                700,
+                701,
+                702,
+                1049273
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Colliders",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 63.42916488647461,
+                            "y": 61.69769287109375,
+                            "z": -425.3419189453125
+                        },
+                        "worldScale": {
+                            "x": 42.0,
+                            "y": 42.0,
+                            "z": 42.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
                     }
                 }
             ]
@@ -30408,7 +30621,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 1,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -32057,6 +32277,91 @@
             ]
         },
         {
+            "ID": 660,
+            "Parent": 1048733,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "TableSensor",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 5.364418029785156e-7,
+                            "y": 0.24256110191345216,
+                            "z": 9.5367431640625e-7
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 63.429203033447269,
+                            "y": 71.88526153564453,
+                            "z": -425.3419494628906
+                        },
+                        "worldScale": {
+                            "x": 42.0,
+                            "y": 42.0,
+                            "z": 42.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "HexTable"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 4.599999904632568,
+                            "y": 5.099999904632568,
+                            "z": 5.199999809265137
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 661,
             "Parent": 385,
             "Child Entities": [],
@@ -32571,6 +32876,12 @@
                 "subDataId": 4,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Glow1",
@@ -32596,6 +32907,12 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
                         "key": "ScriptComponent",
                         "value": {
                             "scriptList": [
@@ -32603,6 +32920,16 @@
                                     "entityID": 672,
                                     "scriptName": "HexTableOrb",
                                     "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 2097316,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "brokenOrb"
+                                            }
+                                        },
                                         {
                                             "data": {
                                                 "entityID": 5243225,
@@ -32621,6 +32948,16 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "glowingOrb"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 660,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSensor"
                                             }
                                         }
                                     ]
@@ -32690,7 +33027,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 1,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -32703,7 +33047,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 2,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -32716,7 +33067,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 3,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -32730,6 +33088,12 @@
                 },
                 "subDataId": 4,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
                     {
                         "key": "Tag",
                         "value": {
@@ -32756,6 +33120,12 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
                         "key": "ScriptComponent",
                         "value": {
                             "scriptList": [
@@ -32763,6 +33133,16 @@
                                     "entityID": 677,
                                     "scriptName": "HexTableOrb",
                                     "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 2097235,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "brokenOrb"
+                                            }
+                                        },
                                         {
                                             "data": {
                                                 "entityID": 4194648,
@@ -32781,6 +33161,16 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "glowingOrb"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 660,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSensor"
                                             }
                                         }
                                     ]
@@ -32850,7 +33240,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 1,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -32863,7 +33260,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 3,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -32877,6 +33281,12 @@
                 },
                 "subDataId": 4,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
                     {
                         "key": "Tag",
                         "value": {
@@ -32903,6 +33313,12 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
                         "key": "ScriptComponent",
                         "value": {
                             "scriptList": [
@@ -32910,6 +33326,16 @@
                                     "entityID": 682,
                                     "scriptName": "HexTableOrb",
                                     "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 2097539,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "brokenOrb"
+                                            }
+                                        },
                                         {
                                             "data": {
                                                 "entityID": 1049038,
@@ -32928,6 +33354,16 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "glowingOrb"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 660,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSensor"
                                             }
                                         }
                                     ]
@@ -32997,7 +33433,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 1,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -33010,7 +33453,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 2,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -33023,7 +33473,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 3,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -33036,7 +33493,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 1,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -33049,7 +33513,14 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 2,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -33064,6 +33535,12 @@
                 "subDataId": 4,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Glow5",
@@ -33073,6 +33550,755 @@
                 ],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 693,
+            "Parent": 600,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SurfaceCollider1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.10425794124603272,
+                            "z": 0.0014952421188354493
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 63.491943359375,
+                            "y": 66.07652282714844,
+                            "z": -425.34356689453127
+                        },
+                        "worldScale": {
+                            "x": 42.0,
+                            "y": 42.0,
+                            "z": 42.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 4.800000190734863,
+                            "y": 0.6000000238418579,
+                            "z": 2.8499999046325685
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 694,
+            "Parent": 600,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SurfaceCollider2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0002751946449279785,
+                            "y": 0.10425794124603272,
+                            "z": 0.000008106231689453125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.5,
+                            "z": 0.0,
+                            "w": 0.8660255074501038
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -60.00001525878906,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 63.429203033447269,
+                            "y": 66.07652282714844,
+                            "z": -425.3534851074219
+                        },
+                        "worldScale": {
+                            "x": 42.0,
+                            "y": 42.0,
+                            "z": 42.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.2714405357837677,
+                            "z": 0.0,
+                            "w": 0.9624552726745606
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 4.699999809265137,
+                            "y": 0.6000000238418579,
+                            "z": 2.8499999046325685
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 695,
+            "Parent": 600,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SurfaceCollider3",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.001810964196920395,
+                            "y": 0.10425794124603272,
+                            "z": -0.00400090217590332
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.8775649070739746,
+                            "z": 0.0,
+                            "w": 0.4794579744338989
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": -57.30002975463867,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 63.26317596435547,
+                            "y": 66.07652282714844,
+                            "z": -425.2615051269531
+                        },
+                        "worldScale": {
+                            "x": 42.0,
+                            "y": 42.0,
+                            "z": 42.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.2689197361469269,
+                            "z": 0.0,
+                            "w": 0.9631626605987549
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 4.699999809265137,
+                            "y": 0.6000000238418579,
+                            "z": 2.75
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 696,
+            "Parent": 600,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BaseCollider",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 5.364418029785156e-7,
+                            "y": -0.08539330959320069,
+                            "z": 9.5367431640625e-7
+                        },
+                        "scale": {
+                            "x": 0.02380952425301075,
+                            "y": 0.02380952425301075,
+                            "z": 0.02380952425301075
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": -88.50001525878906,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 63.429203033447269,
+                            "y": 58.111175537109378,
+                            "z": -425.3419494628906
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 4.300000190734863,
+                            "y": 1.5,
+                            "z": 3.5999999046325685
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 698,
+            "Parent": 600,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HolderCollider5",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0796394944190979,
+                            "y": 0.11935305595397949,
+                            "z": -0.0456007719039917
+                        },
+                        "scale": {
+                            "x": 0.02112000249326229,
+                            "y": 0.02112000249326229,
+                            "z": 0.02112000249326229
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": -88.50001525878906,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 61.42702865600586,
+                            "y": 66.71051788330078,
+                            "z": -428.635498046875
+                        },
+                        "worldScale": {
+                            "x": 0.8870400786399841,
+                            "y": 0.8870400786399841,
+                            "z": 0.8870400786399841
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "SphereCollider": {
+                        "radius": 0.5,
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 699,
+            "Parent": 600,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HolderCollider2",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.007033310830593109,
+                            "y": 0.12039828300476074,
+                            "z": 0.0934675931930542
+                        },
+                        "scale": {
+                            "x": 0.02112000249326229,
+                            "y": 0.02112000249326229,
+                            "z": 0.02112000249326229
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": -88.50001525878906,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 67.3457260131836,
+                            "y": 66.7544174194336,
+                            "z": -425.7399597167969
+                        },
+                        "worldScale": {
+                            "x": 0.8870400786399841,
+                            "y": 0.8870400786399841,
+                            "z": 0.8870400786399841
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "SphereCollider": {
+                        "radius": 0.5,
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 700,
+            "Parent": 600,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HolderCollider3",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.07947499305009842,
+                            "y": 0.11999738216400147,
+                            "z": 0.00040280818939208984
+                        },
+                        "scale": {
+                            "x": 0.02112000249326229,
+                            "y": 0.02112000249326229,
+                            "z": 0.02112000249326229
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": -88.50001525878906,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 63.53345489501953,
+                            "y": 66.73757934570313,
+                            "z": -422.0055847167969
+                        },
+                        "worldScale": {
+                            "x": 0.8870400786399841,
+                            "y": 0.8870400786399841,
+                            "z": 0.8870400786399841
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "SphereCollider": {
+                        "radius": 0.5,
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 701,
+            "Parent": 600,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HolderCollider4",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.00010822713375091553,
+                            "y": 0.11940920352935791,
+                            "z": -0.09041821956634522
+                        },
+                        "scale": {
+                            "x": 0.02112000249326229,
+                            "y": 0.02112000249326229,
+                            "z": 0.02112000249326229
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": -88.50001525878906,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 59.633018493652347,
+                            "y": 66.71287536621094,
+                            "z": -425.23797607421877
+                        },
+                        "worldScale": {
+                            "x": 0.8870400786399841,
+                            "y": 0.8870400786399841,
+                            "z": 0.8870400786399841
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "SphereCollider": {
+                        "radius": 0.5,
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 702,
+            "Parent": 600,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "TempFloor",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 5.364418029785156e-7,
+                            "y": -0.17107975482940675,
+                            "z": 9.5367431640625e-7
+                        },
+                        "scale": {
+                            "x": 0.02380952425301075,
+                            "y": 0.02380952425301075,
+                            "z": 0.02380952425301075
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": -88.50001525878906,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 63.429203033447269,
+                            "y": 54.51234436035156,
+                            "z": -425.3419494628906
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "HexTable"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 21.399999618530275,
+                            "y": 1.600000023841858,
+                            "z": 21.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
         },
         {
             "ID": 1048579,
@@ -35287,12 +36513,14 @@
             "ID": 1048733,
             "Parent": 248,
             "Child Entities": [
+                600,
                 602,
                 623,
                 629,
                 631,
                 632,
                 649,
+                660,
                 1049247,
                 2097201
             ],
@@ -39379,6 +40607,12 @@
                 "subDataId": 6,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Dimmed4",
@@ -41470,6 +42704,12 @@
                 },
                 "subDataId": 6,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
                     {
                         "key": "Tag",
                         "value": {
@@ -43799,7 +45039,88 @@
                 },
                 {
                     "Layer": {
+                        "layerName": "HexTable"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049273,
+            "Parent": 600,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HolderCollider1",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.07899370789527893,
+                            "y": 0.11894106864929199,
+                            "z": 0.046846747398376468
+                        },
+                        "scale": {
+                            "x": 0.021004799753427507,
+                            "y": 0.021004799753427507,
+                            "z": 0.021004799753427507
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": -88.50001525878906,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 65.30921173095703,
+                            "y": 66.6932144165039,
+                            "z": -428.71002197265627
+                        },
+                        "worldScale": {
+                            "x": 0.882201611995697,
+                            "y": 0.882201611995697,
+                            "z": 0.882201611995697
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
                         "layerName": "Default"
+                    }
+                },
+                {
+                    "SphereCollider": {
+                        "radius": 0.5,
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -49046,7 +50367,21 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 5,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "BrokenOrb3",
+                            "isActive": false
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -49192,7 +50527,21 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 5,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "BrokenOrb2",
+                            "isActive": false
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -49209,7 +50558,21 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 5,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "BrokenOrb5",
+                            "isActive": false
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -49226,7 +50589,21 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 5,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "BrokenOrb1",
+                            "isActive": false
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -49946,7 +51323,21 @@
                     "ID": 889344484952321313
                 },
                 "subDataId": 5,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "BrokenOrb4",
+                            "isActive": false
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -52381,6 +53772,12 @@
                 "subDataId": 6,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Dimmed1",
@@ -54710,6 +56107,12 @@
                 "subDataId": 6,
                 "componentData": [
                     {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Dimmed3",
@@ -54950,6 +56353,12 @@
                 },
                 "subDataId": 6,
                 "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "HexTable"
+                        }
+                    },
                     {
                         "key": "Tag",
                         "value": {
@@ -56311,7 +57720,7 @@
             "UI",
             "",
             "AltarArea",
-            "",
+            "HexTable",
             "",
             "",
             "",
@@ -56329,7 +57738,7 @@
             1,
             0,
             1,
-            0,
+            1,
             0,
             0,
             0,
@@ -56348,7 +57757,7 @@
                 0,
                 0,
                 0,
-                0,
+                1,
                 0,
                 0,
                 0,
@@ -56433,12 +57842,12 @@
                 0
             ],
             [
+                1,
                 0,
                 0,
                 0,
                 0,
-                0,
-                0,
+                1,
                 0,
                 0,
                 0,

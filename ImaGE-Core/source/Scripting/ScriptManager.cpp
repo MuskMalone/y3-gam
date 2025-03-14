@@ -263,6 +263,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(FindChildByTag);
   ADD_INTERNAL_CALL(FindParentByTag);
   ADD_INTERNAL_CALL(GetAllChildren);
+  ADD_INTERNAL_CALL(UnparentEntity);
   ADD_INTERNAL_CALL(GetMainCameraPosition);
   ADD_INTERNAL_CALL(GetMainCameraDirection);
   ADD_INTERNAL_CALL(GetMainCameraRotation);
@@ -1447,6 +1448,12 @@ MonoArray* Mono::GetAllChildren(ECS::Entity::EntityID entity)
     mono_array_set(newArray, ECS::Entity::EntityID, i, allChildren[i]);
   }
   return newArray;
+}
+
+void Mono::UnparentEntity(ECS::Entity::EntityID entityId) {
+  ECS::Entity entity{ entityId };
+  IGE_ENTITYMGR.RemoveParent(entity);
+  TransformHelpers::UpdateLocalTransform(entity);
 }
 
 glm::vec3 Mono::GetMainCameraPosition(ECS::Entity::EntityID cameraEntity) {

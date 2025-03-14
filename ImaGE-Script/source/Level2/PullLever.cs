@@ -19,6 +19,7 @@ public class PullLever : Entity
   {
     thisLeverTag = InternalCalls.GetTag(mEntityID);
     leverManager = FindObjectOfType<LeverManager>();
+    leverManager?.AddOrb(ref orb);  // pass ref to leverManager
     InternalCalls.SetLightIntensity(leverLight.mEntityID, 0.0f);
   }
   void Update()
