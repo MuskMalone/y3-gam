@@ -9,6 +9,7 @@ public class Key : Entity, IInventoryItem
   public PlayerInteraction playerInteraction;
   public Entity EToPickUpUI;
   public KeyDoor keyDoor;
+  public BlackBorder blackBorder;
 
   public PlayerMove playerMove;
   public Entity playerCamera;
@@ -53,10 +54,6 @@ public class Key : Entity, IInventoryItem
   public void OnUsed()
   {
     keyDoor.UnlockDoor();
-    if (inventoryScript.isVisible)
-    {
-      inventoryScript.ToggleInventoryVisibility();
-    }
     Destroy();
   }
 
@@ -102,6 +99,11 @@ public class Key : Entity, IInventoryItem
     // one-time flag to start animation
     if (!startedAnimation)
     {
+      if (inventoryScript.isVisible)
+      {
+        inventoryScript.ToggleInventoryVisibility();
+      }
+      blackBorder.DisplayBlackBorders();
       keyDoor.unlockDoorUI.SetActive(false);  // hide the Unlock UI during the animation
       TriggerAnimation();
       startedAnimation = true;
