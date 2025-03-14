@@ -7885,6 +7885,23 @@
                                             "scriptField": {
                                                 "fieldName": "playerMove"
                                             }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 4294967295,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "transitionDuration"
+                                            }
                                         }
                                     ]
                                 }
@@ -8874,26 +8891,6 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
-                                            "entityID": 130,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "BlackBorder1"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 131,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "BlackBorder2"
-                                        }
-                                    },
-                                    {
-                                        "data": {
                                             "entityID": 415,
                                             "scriptName": "Entity"
                                         },
@@ -8920,6 +8917,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "Particles"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "BlackBorder"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorder"
                                         }
                                     },
                                     {
@@ -8992,16 +8999,6 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 40,
-                                            "scriptName": "PlayerMove"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerMove"
                                         }
                                     },
                                     {
@@ -24650,7 +24647,7 @@
                                     {
                                         "x": -55.900001525878909,
                                         "y": 0.0,
-                                        "z": 59.400001525878909,
+                                        "z": 50.79999923706055,
                                         "w": 0.0
                                     },
                                     {
@@ -24668,7 +24665,7 @@
                                     {
                                         "x": 39.099998474121097,
                                         "y": 0.0,
-                                        "z": 59.400001525878909,
+                                        "z": 50.79999923706055,
                                         "w": 0.0
                                     },
                                     {
