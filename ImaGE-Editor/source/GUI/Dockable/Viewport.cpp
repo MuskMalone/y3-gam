@@ -150,16 +150,7 @@ namespace GUI
         bool const viewManipulateWindowClicked{ ImGui::IsMouseClicked(ImGuiMouseButton_Left)
           && ImGui::IsMouseHoveringRect(topLeft, { windowRight, vpStartPos.y + 128.f }) };
 
-        Component::Transform oldTrans{};
-        ECS::Entity selectedEntity{ GUIVault::GetSelectedEntity() };
-        if (selectedEntity) {
-          oldTrans = selectedEntity.GetComponent<Component::Transform>();  // old cpy for undo/redo
-        }
-
         if (UpdateGuizmos()) {
-          if (selectedEntity) {
-            IGE_CMDMGR.AddCommand("Transform", selectedEntity, std::move(oldTrans));
-          }
           guizmosUsed = true;
         }
 
@@ -410,7 +401,8 @@ namespace GUI
     float const windowWidth{ ImGui::GetWindowWidth() };
     float const windowHeight{ ImGui::GetWindowHeight() };
     ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
-    Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() };
+    Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() },
+      oldTrans{ transform };  // old cpy for undo/redo;
 
     glm::mat4 const& viewMatrix{ mEditorCam->viewMatrix };
     glm::mat4 const projMatrix{ mEditorCam->GetProjMatrix() };
@@ -533,6 +525,10 @@ namespace GUI
           if (lightComp.type == Component::DIRECTIONAL && lightComp.castShadows) {
             lightComp.shadowConfig.shadowModified = true;
           }
+        }
+
+        if (!IGE_SCENEMGR.IsSceneInProgress()) {
+          IGE_CMDMGR.AddCommand("Transform", selectedEntity, std::move(oldTrans));
         }
       }
     }
