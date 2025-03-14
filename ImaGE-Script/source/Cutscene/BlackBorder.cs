@@ -7,6 +7,7 @@ public class BlackBorder : Entity
   public Entity blackBorder1;
   public Entity blackBorder2;
   public Entity centerDot;
+  public PlayerMove playerMove;
   
   void Start()
   {
@@ -25,6 +26,7 @@ public class BlackBorder : Entity
     blackBorder1?.SetActive(true);
     blackBorder2?.SetActive(true);
     centerDot?.SetActive(false);
+    playerMove.FreezePlayer();
   }
 
   public void HideBlackBorders()
@@ -32,6 +34,7 @@ public class BlackBorder : Entity
     blackBorder1?.SetActive(false);
     blackBorder2?.SetActive(false);
     centerDot?.SetActive(true);
+    playerMove.UnfreezePlayer();
   }
 }
 
