@@ -86,7 +86,7 @@ public class Level3Inventory : Entity
 
         Vector3 startPosition = new Vector3(12.0f, -4.0f, 0f);
         InternalCalls.SetPosition(pitPaintingUI.mEntityID, ref startPosition);
-        InternalCalls.SetPosition(hammerUI.mEntityID, ref startPosition);
+        //InternalCalls.SetPosition(hammerUI.mEntityID, ref startPosition);
 
         pictureAlignscript = FindObjectOfType<PictureAlign>();
 
@@ -144,7 +144,7 @@ public class Level3Inventory : Entity
         return mItems.Find(item => item != null && item.Name == itemName);
     }
 
-    private void ToggleInventoryVisibility()
+    public void ToggleInventoryVisibility()
     {
         if (isSliding) return;
         isVisible = !isVisible;

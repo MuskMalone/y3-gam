@@ -59,7 +59,8 @@ namespace Mono {
 		TRANSITION,
 		PLAYER_ARISE,
 		EYEBALLFOLLOW,
-		HAMMER_L3
+		HAMMER_L3,
+		BLACKBORDER
 	};
 
 

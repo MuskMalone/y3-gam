@@ -144,7 +144,7 @@ namespace GUI {
     EVENT_CALLBACK_DECL(OnSceneStateChange);
     EVENT_CALLBACK_DECL(OnPrefabEdit);
 
-    void RunDragDropInspector(ECS::Entity entity);
+    bool RunDragDropInspector(ECS::Entity entity);
 
     /*!*********************************************************************
     \brief

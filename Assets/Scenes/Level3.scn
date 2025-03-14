@@ -367,7 +367,7 @@
                         "gravityFactor": 40.0,
                         "linearDamping": 5.0,
                         "motionType": "DYNAMIC",
-                        "axisLock": 0,
+                        "axisLock": 2,
                         "angularAxisLock": 7
                     }
                 },
@@ -905,7 +905,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Floor",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -2248,7 +2248,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Lights",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -3427,7 +3427,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Pillars",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -4113,7 +4113,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Pit Room Items",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -4238,6 +4238,67 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 65,
+            "Parent": 250,
+            "Child Entities": [
+                408
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Triggers",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
                     }
                 }
             ]
@@ -4853,7 +4914,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Props",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -6701,7 +6762,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Triggers",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -8363,6 +8424,164 @@
             ]
         },
         {
+            "ID": 215,
+            "Parent": 217,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "ArmlessStatueTears",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.0007314682006835938,
+                            "y": -0.02490246295928955,
+                            "z": -0.0019483566284179688
+                        },
+                        "scale": {
+                            "x": 0.05400000140070915,
+                            "y": 0.04999999701976776,
+                            "z": 0.05400000140070915
+                        },
+                        "rotation": {
+                            "x": -0.03663044422864914,
+                            "y": -0.05292552709579468,
+                            "z": 0.02974182926118374,
+                            "w": 0.9974831342697144
+                        },
+                        "eulerAngles": {
+                            "x": -4.395201683044434,
+                            "y": -5.935321807861328,
+                            "z": 3.643716812133789
+                        },
+                        "worldPos": {
+                            "x": 46.42793273925781,
+                            "y": 5.936108589172363,
+                            "z": -119.18306732177735
+                        },
+                        "worldScale": {
+                            "x": 0.0005399930523708463,
+                            "y": 0.0004999935044907033,
+                            "z": 0.0005400574300438166
+                        },
+                        "worldRot": {
+                            "x": -0.049724407494068149,
+                            "y": -0.4226672947406769,
+                            "z": -0.017305459827184678,
+                            "w": 0.9047543406486511
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17715913249894061526
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "ArmlessStatueTears",
+                        "GUID": {
+                            "ID": 12469942730608677137
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 217,
+            "Parent": 1048985,
+            "Child Entities": [
+                215
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Tears Pivot",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.07083368301391602,
+                            "y": 0.42347240447998049,
+                            "z": 0.019557476043701173
+                        },
+                        "scale": {
+                            "x": 0.0009999871253967286,
+                            "y": 0.0009999871253967286,
+                            "z": 0.0010001063346862794
+                        },
+                        "rotation": {
+                            "x": -0.0145411416888237,
+                            "y": 0.00040587782859802246,
+                            "z": -0.027898626402020456,
+                            "w": 0.9995049238204956
+                        },
+                        "eulerAngles": {
+                            "x": -1.6669999361038209,
+                            "y": -1.1339181327230108e-7,
+                            "z": -3.197700262069702
+                        },
+                        "worldPos": {
+                            "x": 46.42793655395508,
+                            "y": 5.936357021331787,
+                            "z": -119.18304443359375
+                        },
+                        "worldScale": {
+                            "x": 0.009999871253967286,
+                            "y": 0.009999871253967286,
+                            "z": 0.010001063346862793
+                        },
+                        "worldRot": {
+                            "x": -0.0029709041118621828,
+                            "y": -0.3758316934108734,
+                            "z": -0.031320150941610339,
+                            "w": 0.9261537790298462
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "Cry",
+                                "value": {
+                                    "ID": 15065181676557779243
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
+                }
+            ]
+        },
+        {
             "ID": 220,
             "Parent": 2097254,
             "Child Entities": [],
@@ -9931,6 +10150,7 @@
             "ID": 250,
             "Parent": null,
             "Child Entities": [
+                65,
                 305,
                 323,
                 324,
@@ -9950,7 +10170,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Secret Room",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -12120,9 +12340,10 @@
                 357,
                 360,
                 368,
-                1048701,
                 1049011,
-                1049013
+                1049013,
+                1049105,
+                5242962
             ],
             "Components": [
                 {
@@ -12437,12 +12658,42 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 5242962,
+                                            "scriptName": "BlackBorder"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorder"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049050,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "hammerCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 369,
                                             "scriptName": "Level3Inventory"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "inventoryScript"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
                                         }
                                     },
                                     {
@@ -12661,7 +12912,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Puzzle",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -17297,6 +17548,227 @@
             ]
         },
         {
+            "ID": 408,
+            "Parent": 65,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "ArmlessStatue Trigger",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 41.62200164794922,
+                            "y": -2.240000009536743,
+                            "z": -126.95800018310547
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 41.62200164794922,
+                            "y": -2.240000009536743,
+                            "z": -126.95800018310547
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Interactables"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 6.199999809265137,
+                            "y": 1.0,
+                            "z": 6.300000190734863
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": true
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 408,
+                                "scriptName": "ArmlessStatueTrigger",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 411,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Head"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Player"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 217,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Tears"
+                                        }
+                                    },
+                                    {
+                                        "data": "Cry",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "tearsAnimName"
+                                        }
+                                    },
+                                    {
+                                        "data": "Tilt",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "tiltAnimName"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 411,
+            "Parent": 4194541,
+            "Child Entities": [
+                1048985
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Head Pivot",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.00006508827209472656,
+                            "y": 0.33882567286491396,
+                            "z": -0.0000400543212890625
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 47.072689056396487,
+                            "y": 5.089890480041504,
+                            "z": -118.82904052734375
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.3763940632343292,
+                            "z": 0.0,
+                            "w": 0.9264596700668335
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "Tilt",
+                                "value": {
+                                    "ID": 8509973040042037967
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
+                }
+            ]
+        },
+        {
             "ID": 414,
             "Parent": 21,
             "Child Entities": [
@@ -18881,7 +19353,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] SFX",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -20147,7 +20619,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Walls",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -20472,7 +20944,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Ceiling",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -21439,7 +21911,7 @@
         },
         {
             "ID": 1048701,
-            "Parent": 326,
+            "Parent": 5242962,
             "Child Entities": [],
             "Components": [
                 {
@@ -26165,6 +26637,86 @@
             ]
         },
         {
+            "ID": 1048985,
+            "Parent": 411,
+            "Child Entities": [
+                217
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Head",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.00006246566772460938,
+                            "y": -0.3388257622718811,
+                            "z": 0.000039577484130859378
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 47.07196807861328,
+                            "y": 1.7016329765319825,
+                            "z": -118.82919311523438
+                        },
+                        "worldScale": {
+                            "x": 10.0,
+                            "y": 10.0,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.3763940632343292,
+                            "z": 0.0,
+                            "w": 0.9264596700668335
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Head",
+                        "GUID": {
+                            "ID": 682622220265398931
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1049007,
             "Parent": 1049506,
             "Child Entities": [],
@@ -26833,6 +27385,209 @@
             ]
         },
         {
+            "ID": 1049050,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HammerDoorCamera",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 28.448753356933595,
+                            "y": 3.7540249824523927,
+                            "z": -125.09567260742188
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 28.448753356933595,
+                            "y": 3.7540249824523927,
+                            "z": -125.09567260742188
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Camera": {
+                        "projType": "PERSP",
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -10.0
+                        },
+                        "yaw": 0.0,
+                        "pitch": 0.0,
+                        "fov": 55.74599838256836,
+                        "aspectRatio": 1.7777777910232545,
+                        "nearClip": 0.10000000149011612,
+                        "farClip": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049105,
+            "Parent": 326,
+            "Child Entities": [
+                1049639,
+                1049650,
+                2098282
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "PauseMenu",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 35.599998474121097,
+                            "y": 20.040000915527345,
+                            "z": 20.079999923706056
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 35.599998474121097,
+                            "y": 20.040000915527345,
+                            "z": 20.079999923706056
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1049105,
+                                "scriptName": "PauseMenu",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 1049650,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "MainMenuButton"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2098282,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ResumeButton"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049639,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "SettingsButton"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 5831806178521839330
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1049212,
             "Parent": 1048633,
             "Child Entities": [],
@@ -27291,6 +28046,255 @@
             }
         },
         {
+            "ID": 1049609,
+            "Parent": 5242962,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BlackBorder1",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 8.5,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 35.599998474121097,
+                            "y": 3.0399999618530275,
+                            "z": 3.0399999618530275
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 8.5,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 35.599998474121097,
+                            "y": 3.0399999618530275,
+                            "z": 3.0399999618530275
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11587003713487795447
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049611,
+            "Parent": 5242962,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BlackBorder2",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -8.5,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 35.599998474121097,
+                            "y": 3.0399999618530275,
+                            "z": 3.0399999618530275
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -8.5,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 35.599998474121097,
+                            "y": 3.0399999618530275,
+                            "z": 3.0399999618530275
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11587003713487795447
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049639,
+            "Parent": 1049105,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SettingsHover",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.010999999940395356,
+                            "y": -0.011999999172985554,
+                            "z": 3.999999761581421
+                        },
+                        "scale": {
+                            "x": 0.2199999988079071,
+                            "y": 0.0820000022649765,
+                            "z": 0.049800798296928409
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.39159998297691347,
+                            "y": -0.2404799908399582,
+                            "z": 80.31999206542969
+                        },
+                        "worldScale": {
+                            "x": 7.831999778747559,
+                            "y": 1.6432801485061646,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1049639,
+                                "scriptName": "PauseMenuButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": true,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "TriggerButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 4557617938621859577
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1049641,
             "Parent": 1049542,
             "Child Entities": [],
@@ -27302,6 +28306,111 @@
                 "componentData": [],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 1049650,
+            "Parent": 1049105,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "MainMenuHover",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.004000000189989805,
+                            "y": -0.1420000046491623,
+                            "z": 3.999999761581421
+                        },
+                        "scale": {
+                            "x": 0.2199999988079071,
+                            "y": 0.0820000022649765,
+                            "z": 0.049800798296928409
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.14239999651908875,
+                            "y": -2.8456802368164064,
+                            "z": 80.31999206542969
+                        },
+                        "worldScale": {
+                            "x": 7.831999778747559,
+                            "y": 1.6432801485061646,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1049650,
+                                "scriptName": "PauseMenuButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "TriggerButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 2464312753618505060
+                        }
+                    }
+                }
+            ]
         },
         {
             "ID": 1049654,
@@ -30022,7 +31131,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Structure",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -30863,6 +31972,111 @@
             ]
         },
         {
+            "ID": 2098282,
+            "Parent": 1049105,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "ResumeHover",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.004999999888241291,
+                            "y": 0.10999999940395355,
+                            "z": 3.999999761581421
+                        },
+                        "scale": {
+                            "x": 0.2199999988079071,
+                            "y": 0.0820000022649765,
+                            "z": 0.049800798296928409
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.17799998819828034,
+                            "y": 2.204400062561035,
+                            "z": 80.31999206542969
+                        },
+                        "worldScale": {
+                            "x": 7.831999778747559,
+                            "y": 1.6432801485061646,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 2098282,
+                                "scriptName": "PauseMenuButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "TriggerButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6804212942469185314
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 3145769,
             "Parent": 2097554,
             "Child Entities": [],
@@ -30981,7 +32195,7 @@
                 {
                     "Tag": {
                         "tag": "[Folder] Pit Room",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -33077,7 +34291,7 @@
             "ID": 4194541,
             "Parent": 93,
             "Child Entities": [
-                4194621,
+                411,
                 4194622
             ],
             "Components": [
@@ -33101,13 +34315,13 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": -0.37639033794403078,
+                            "y": -0.3763940632343292,
                             "z": 0.0,
-                            "w": 0.9264611601829529
+                            "w": 0.9264596700668335
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -44.220542907714847,
+                            "y": -44.22100067138672,
                             "z": 0.0
                         },
                         "worldPos": {
@@ -33122,93 +34336,15 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.37639033794403078,
+                            "y": -0.3763940632343292,
                             "z": 0.0,
-                            "w": 0.9264611601829529
+                            "w": 0.9264596700668335
                         }
                     }
                 },
                 {
                     "Layer": {
                         "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 4194621,
-            "Parent": 4194541,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "tears",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -4.76837158203125e-7,
-                            "y": 1.4901161193847657e-8,
-                            "z": 4.76837158203125e-7
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 47.071937561035159,
-                            "y": 1.7016336917877198,
-                            "z": -118.8292007446289
-                        },
-                        "worldScale": {
-                            "x": 10.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": -0.37639033794403078,
-                            "z": 0.0,
-                            "w": 0.9264611601829529
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 17715913249894061526
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "tears",
-                        "GUID": {
-                            "ID": 682622220265398931
-                        },
-                        "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
@@ -33259,9 +34395,9 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": -0.37639033794403078,
+                            "y": -0.3763940632343292,
                             "z": 0.0,
-                            "w": 0.9264611601829529
+                            "w": 0.9264596700668335
                         }
                     }
                 },
@@ -33549,6 +34685,121 @@
                             }
                         },
                         "repeat": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5242962,
+            "Parent": 326,
+            "Child Entities": [
+                1048701,
+                1049609,
+                1049611
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Black Borders",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 5242962,
+                                "scriptName": "BlackBorder",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 1049609,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorder1"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049611,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorder2"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048701,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "centerDot"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]

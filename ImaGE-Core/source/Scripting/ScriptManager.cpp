@@ -97,7 +97,8 @@ namespace Mono
     { "Transition", ScriptFieldType::TRANSITION },
     { "PlayerArise",ScriptFieldType::PLAYER_ARISE},
     { "EyeBallFollow", ScriptFieldType::EYEBALLFOLLOW },
-    { "HammerLevel3", ScriptFieldType::HAMMER_L3 }
+    { "HammerLevel3", ScriptFieldType::HAMMER_L3 },
+    { "BlackBorder", ScriptFieldType::BLACKBORDER }
   };
 }
 

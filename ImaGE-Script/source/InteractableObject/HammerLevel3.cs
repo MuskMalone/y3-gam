@@ -9,6 +9,10 @@ public class HammerLevel3 : Entity, IInventoryItem
   public Level3Inventory inventoryScript;
   public PlayerInteraction playerInteraction;
   public Entity EToPickUpUI;
+  public BlackBorder blackBorder;
+  public Entity hammerCamera;
+  public Entity playerCamera;
+
   //public Dialogue dialogueSystem;
   //public string[] hammerDialogue;
 
@@ -60,7 +64,13 @@ public class HammerLevel3 : Entity, IInventoryItem
   public void OnUsed()
   {
     SetActive(true);
+    blackBorder.DisplayBlackBorders();
+    SetHammerCameraAsMain();
     currState = HammerState.USING;
+    if (inventoryScript.isVisible)
+    {
+      inventoryScript.ToggleInventoryVisibility();
+    }
   }
 
   void Start()
@@ -84,7 +94,7 @@ public class HammerLevel3 : Entity, IInventoryItem
           bool isHammerHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
           if (Input.GetKeyTriggered(KeyCode.E) && isHammerHit)
           {
-            InternalCalls.PlaySound(mEntityID, "PickupObjects");
+            InternalCalls.PlaySound(mEntityID, "PickUpObjects");
             inventoryScript.Additem(this);
             EToPickUpUI.SetActive(false);
             return;
@@ -107,6 +117,8 @@ public class HammerLevel3 : Entity, IInventoryItem
           if (++currIndex >= animations.Length)
           {
             SetActive(false);
+            blackBorder.HideBlackBorders();
+            SetPlayerCameraAsMain();
             currState = HammerState.COMPLETE;
             return;
           }
@@ -136,4 +148,16 @@ public class HammerLevel3 : Entity, IInventoryItem
   }
 
   public HammerState GetState() { return currState; }
+
+  private void SetHammerCameraAsMain()
+  {
+    InternalCalls.SetTag(playerCamera.mEntityID, "PlayerCamera");
+    InternalCalls.SetTag(hammerCamera.mEntityID, "MainCamera");
+  }
+
+  private void SetPlayerCameraAsMain()
+  {
+    InternalCalls.SetTag(playerCamera.mEntityID, "MainCamera");
+    InternalCalls.SetTag(hammerCamera.mEntityID, "HammerDoorCamera");
+  }
 }

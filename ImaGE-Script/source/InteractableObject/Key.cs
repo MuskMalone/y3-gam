@@ -9,8 +9,7 @@ public class Key : Entity, IInventoryItem
   public PlayerInteraction playerInteraction;
   public Entity EToPickUpUI;
   public KeyDoor keyDoor;
-
-  public PlayerMove playerMove;
+  public BlackBorder blackBorder;
   public Entity playerCamera;
   public Entity keyCamera;
 
@@ -53,21 +52,11 @@ public class Key : Entity, IInventoryItem
   public void OnUsed()
   {
     keyDoor.UnlockDoor();
-    if (inventoryScript.isVisible)
-    {
-      inventoryScript.ToggleInventoryVisibility();
-    }
     Destroy();
   }
 
   void Start()
   {
-    if (playerMove == null)
-    {
-      Debug.LogError("[Key.cs] PlayerMove Script Entity not found!");
-      return;
-    }
-
     if (keyCamera == null)
     {
       Debug.LogError("[Key.cs] Key Camera not found");
@@ -102,6 +91,11 @@ public class Key : Entity, IInventoryItem
     // one-time flag to start animation
     if (!startedAnimation)
     {
+      if (inventoryScript.isVisible)
+      {
+        inventoryScript.ToggleInventoryVisibility();
+      }
+      blackBorder.DisplayBlackBorders();
       keyDoor.unlockDoorUI.SetActive(false);  // hide the Unlock UI during the animation
       TriggerAnimation();
       startedAnimation = true;
@@ -141,7 +135,6 @@ public class Key : Entity, IInventoryItem
     SetActive(true);
     InternalCalls.PlayAnimation(mEntityID, keyAnimName);
     isPlayingAnimation = true;
-    playerMove.FreezePlayer();
     SetKeyCameraAsMain();
   }
 
