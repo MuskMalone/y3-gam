@@ -41,11 +41,13 @@ public class CDDragAndDrop : Entity
 
     public Entity fadeImageEntity; // Entity containing the fade Image
     private Image fadeImage; // Image used for the fade effect
+    public Transition transition;
 
     private Vec3<float> originalScale;
     private Vec3<float> hoverScale;
     public Vector3 outOfTheWay = new Vector3(10.0f, 10.0f, 10.0f);
 
+  private bool initial = true;
     private bool isFading = false;
     private float fadeDuration = 3f;
     private float fadeElapsed = 0f;
@@ -142,6 +144,11 @@ public class CDDragAndDrop : Entity
         //Console.WriteLine("Entity " + InternalCalls.GetTag(hitEntity) + " hit ");
         //Console.WriteLine(MousePos.ToString() + " " + MousPosRayEnd.ToString());
             //string tag = InternalCalls.GetTag(mEntityID);
+        if (initial)
+        {
+          transition.StartTransition(true, 3f, Transition.TransitionType.TV_SWITCH);
+          initial = false;
+        }
         if (isHovered && !isBeingDragged)
         {
             //Console.WriteLine("Entered isHovered");
