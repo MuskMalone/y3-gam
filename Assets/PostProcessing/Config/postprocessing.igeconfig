@@ -1,32 +1,6 @@
 {
     "configs": [
         {
-            "key": "Level2",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "Altar Painting",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
             "key": "",
             "value": {
                 "shaders": [],
@@ -53,7 +27,20 @@
             }
         },
         {
-            "key": "LargeSafe",
+            "key": "Level2",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "Altar Painting",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -74,6 +61,19 @@
                         "shader": 7488299143892968521
                     }
                 ],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "LargeSafe",
+            "value": {
+                "shaders": [],
                 "fogMinDist": 1.0,
                 "fogMaxDist": 1000.0,
                 "fogColor": {
@@ -110,7 +110,7 @@
             }
         },
         {
-            "key": "Table",
+            "key": "Control Room Prototype",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -123,7 +123,7 @@
             }
         },
         {
-            "key": "emission test",
+            "key": "Table",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -149,6 +149,19 @@
             }
         },
         {
+            "key": "emission test",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "Painting Frame (Rect)",
             "value": {
                 "shaders": [],
@@ -162,7 +175,7 @@
             }
         },
         {
-            "key": "PseudoLamp",
+            "key": "Credits",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -188,7 +201,7 @@
             }
         },
         {
-            "key": "Credits",
+            "key": "PseudoLamp",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -293,6 +306,19 @@
         },
         {
             "key": "BumpyGround",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "contacttest",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
