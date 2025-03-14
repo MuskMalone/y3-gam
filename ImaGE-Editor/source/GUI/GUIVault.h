@@ -71,6 +71,7 @@ namespace GUI {
 
     static EVENT_CALLBACK_DECL(OnSceneModified);
     static EVENT_CALLBACK_DECL(OnSceneStateChange);
+    static EVENT_CALLBACK_DECL(OnSceneSave);
   };
 
 } // namespace GUI

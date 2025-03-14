@@ -563,6 +563,8 @@ namespace GUI
           else {
             QUEUE_EVENT(Events::LoadSceneEvent, assetPayload.GetFileName(), assetPayload.GetFilePath());
           }
+
+          GUIVault::SetSelectedEntity({});
           break;
         }
         case AssetPayload::PREFAB:

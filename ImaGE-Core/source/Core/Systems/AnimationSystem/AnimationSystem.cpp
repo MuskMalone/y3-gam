@@ -105,7 +105,7 @@ namespace Systems {
             trans.scale = std::get<glm::vec3>(keyframe.endValue);
           }
           else {
-            interpToApply(keyframe.startValue, keyframe.endValue, normalizedTime);
+            trans.scale = interpToApply(keyframe.startValue, keyframe.endValue, normalizedTime);
           }
           trans.modified = true;
           break;
@@ -228,7 +228,7 @@ namespace Systems {
           trans.scale = std::get<glm::vec3>(keyframe.endValue);
         }
         else {
-          interpToApply(keyframe.startValue, keyframe.endValue, normalizedTime);
+          trans.scale = interpToApply(keyframe.startValue, keyframe.endValue, normalizedTime);
         }
         trans.modified = true;
         break;

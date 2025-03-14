@@ -83,6 +83,7 @@ namespace GUI {
     // subscribe events for GUIVault
     SUBSCRIBE_STATIC_FUNC(Events::SceneModifiedEvent, GUIVault::OnSceneModified);
     SUBSCRIBE_STATIC_FUNC(Events::SceneStateChange, GUIVault::OnSceneStateChange);
+    SUBSCRIBE_STATIC_FUNC(Events::SaveSceneEvent, GUIVault::OnSceneSave);
   }
 
   void GUIManager::UpdateGUI(std::shared_ptr<Graphics::Framebuffer> const& framebuffer, std::shared_ptr<Graphics::Texture> const& tex) {
