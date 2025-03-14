@@ -13,6 +13,7 @@ public class KeyDoor : Entity
   public bool doorInteraction = true;
   public string doorAnimName;  // input from inspector based on name in anim component
   public string doorSlamAnimName;
+  public BlackBorder blackBorder;
 
   public PlayerMove playerMove;
   public Entity playerCamera;
@@ -127,6 +128,7 @@ public class KeyDoor : Entity
           initialAnimation = true;
           SetPlayerCameraAsMain();
           playerMove.UnfreezePlayer();
+          blackBorder.HideBlackBorders();
         }
       }
     }
