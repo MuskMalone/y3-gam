@@ -62,7 +62,7 @@ namespace GUI
       Checks the viewport for any DragDrop operations and handles them
       accordingly
     ************************************************************************/
-    void ReceivePayload();
+    bool ReceivePayload();
 
     void UnsavedChangesPopup();
 

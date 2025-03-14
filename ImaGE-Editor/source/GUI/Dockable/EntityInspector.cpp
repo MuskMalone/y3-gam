@@ -10,24 +10,27 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "Inspector.h"
-#include <typeindex>
 #include <imgui/imgui.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
+#include <functional>
+#include <typeindex>
+#include <malloc.h>
+
+#include <Core/LayerManager/LayerManager.h>
+#include <Commands/CommandManager.h>
+#include <Events/EventManager.h>
+#include <Physics/PhysicsSystem.h>
+#include <Scenes/SceneManager.h>
+
 #include "Color.h"
 #include "GUI/Helpers/ImGuiHelpers.h"
 #include <GUI/Helpers/AssetPayload.h>
+#include <Physics/PhysicsHelpers.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
-#include "Physics/PhysicsSystem.h"
-#include <functional>
 #include <Reflection/ComponentTypes.h>
-#include <Events/EventManager.h>
 #include <Graphics/Mesh/MeshFactory.h>
 #include <Graphics/Mesh/Mesh.h>
 #include "Asset/IGEAssets.h"
-#include <Core/LayerManager/LayerManager.h>
-#include <Physics/PhysicsHelpers.h>
-#include <malloc.h>
-#include <Commands/CommandManager.h>
 
 #define ICON_PADDING "   "
 
@@ -127,12 +130,14 @@ namespace GUI {
     SaveLastEditedFile();
   }
 
-  void Inspector::RunDragDropInspector(ECS::Entity entity) {
-    if (!entity) { return; }
+  bool Inspector::RunDragDropInspector(ECS::Entity entity) {
+    if (!entity) { return false; }
 
     if (ImGuiHelpers::BeginDrapDropTargetWindow(AssetPayload::sAssetDragDropPayload)) {
-      ImGuiHelpers::AssetDragDropBehavior(entity);
+      return ImGuiHelpers::AssetDragDropBehavior(entity);
     }
+
+    return false;
   }
 
   void Inspector::Run() {
@@ -499,13 +504,15 @@ namespace GUI {
     ImGui::PopFont();
     style.ItemSpacing.x = oldItemSpacingX;
     style.CellPadding.x = oldCellPaddingX;
-
-    RunDragDropInspector(currentEntity);
+    
+    if (RunDragDropInspector(currentEntity) && !mFirstEdit) {
+      mFirstEdit = true;
+    }
 
     ImGui::End();
 
     // if edit is the first of this session, dispatch a SceneModifiedEvent
-    if (!mFirstEdit && mIsComponentEdited) {
+    if (!mFirstEdit && mIsComponentEdited && !IGE_SCENEMGR.IsSceneInProgress()) {
       QUEUE_EVENT(Events::SceneModifiedEvent);
       mFirstEdit = true;
     }

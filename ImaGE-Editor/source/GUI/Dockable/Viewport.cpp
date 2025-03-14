@@ -88,6 +88,7 @@ namespace GUI
   {
       ImGui::Begin(mWindowName.c_str());
 
+      bool const sceneStopped{ !IGE_SCENEMGR.IsSceneInProgress() };
       ImVec2 const vpSize = ImGui::GetContentRegionAvail();
       ImVec2 const vpStartPos{ ImGui::GetCursorScreenPos() };
 
@@ -111,7 +112,10 @@ namespace GUI
           }
 
           GUIVault::SetSelectedEntity(ECS::Entity());
-          IGE_EVENTMGR.DispatchImmediateEvent<Events::SceneModifiedEvent>();
+
+          if (sceneStopped) {
+            IGE_EVENTMGR.DispatchImmediateEvent<Events::SceneModifiedEvent>();
+          }
         }
 
         ProcessCameraInputs();
@@ -137,15 +141,29 @@ namespace GUI
 
       float const windowRight{ vpStartPos.x + vpSize.x };
       ImVec2 const topLeft{ windowRight - 128.f , vpStartPos.y }, size{ 128.f, 128.f };
-
+      bool guizmosUsed{ false };
       if (UpdateViewManipulate(topLeft, size)) {
         mEditorCam->UpdateFromViewMtx(mEditorCam->viewMatrix);
+        guizmosUsed = true;
       }
       else {
         bool const viewManipulateWindowClicked{ ImGui::IsMouseClicked(ImGuiMouseButton_Left)
-        && ImGui::IsMouseHoveringRect(topLeft, { windowRight, vpStartPos.y + 128.f }) };
+          && ImGui::IsMouseHoveringRect(topLeft, { windowRight, vpStartPos.y + 128.f }) };
 
-        if (!viewManipulateWindowClicked && !UpdateGuizmos() && checkInput) {
+        Component::Transform oldTrans{};
+        ECS::Entity selectedEntity{ GUIVault::GetSelectedEntity() };
+        if (selectedEntity) {
+          oldTrans = selectedEntity.GetComponent<Component::Transform>();  // old cpy for undo/redo
+        }
+
+        if (UpdateGuizmos()) {
+          if (selectedEntity) {
+            IGE_CMDMGR.AddCommand("Transform", selectedEntity, std::move(oldTrans));
+          }
+          guizmosUsed = true;
+        }
+
+        if (!viewManipulateWindowClicked && !guizmosUsed && checkInput) {
           // object picking
           if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
             ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
@@ -212,13 +230,14 @@ namespace GUI
         }
       } // else block UpdateViewManipulate
 
-
       if (mEditorCam->modified) {
         mEditorCam->UpdateMatrices();
         mEditorCam->modified = false;
       }
       
-      ReceivePayload();
+      if ((ReceivePayload() || guizmosUsed) && sceneStopped) {
+        QUEUE_EVENT(Events::SceneModifiedEvent);
+      }
 
       UnsavedChangesPopup();
 
@@ -391,8 +410,7 @@ namespace GUI
     float const windowWidth{ ImGui::GetWindowWidth() };
     float const windowHeight{ ImGui::GetWindowHeight() };
     ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
-    Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() },
-      oldTrans{ transform };  // old cpy for undo/redo
+    Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() };
 
     glm::mat4 const& viewMatrix{ mEditorCam->viewMatrix };
     glm::mat4 const projMatrix{ mEditorCam->GetProjMatrix() };
@@ -517,16 +535,14 @@ namespace GUI
           }
         }
       }
-
-      IGE_CMDMGR.AddCommand("Transform", selectedEntity, std::move(oldTrans));
-      QUEUE_EVENT(Events::SceneModifiedEvent);
     }
 
     return usingGuizmos;
   }
 
-  void Viewport::ReceivePayload()
+  bool Viewport::ReceivePayload()
   {
+    bool modified{ false };
     bool const noScene{ IGE_SCENEMGR.NoSceneSelected() };
     if (ImGui::BeginDragDropTarget())
     {
@@ -553,7 +569,7 @@ namespace GUI
         {
           if (noScene) {
             ImGui::EndDragDropTarget();
-            return;
+            return false;
           }
 
           // @TODO: Convert screen to world pos when viewport is up
@@ -563,6 +579,7 @@ namespace GUI
 
             ECS::Entity newEntity{ assetMan.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData.Construct(guid, {}) };
             GUIVault::SetSelectedEntity(newEntity);
+            modified = true;
           }
           catch (Debug::ExceptionBase&) {
             IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
@@ -573,13 +590,14 @@ namespace GUI
         {
           if (noScene) {
             ImGui::EndDragDropTarget();
-            return;
+            return false;
           }
 
           try {
             IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
             ECS::Entity const newEntity{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource.ConstructEntity(meshSrc, assetPayload.GetFileName()) };
             GUIVault::SetSelectedEntity(newEntity);
+            modified = true;
           }
           catch (Debug::ExceptionBase&) {
             IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
@@ -592,6 +610,8 @@ namespace GUI
       }
       ImGui::EndDragDropTarget();
     }
+
+    return modified;
   }
 
   void Viewport::UnsavedChangesPopup() {
