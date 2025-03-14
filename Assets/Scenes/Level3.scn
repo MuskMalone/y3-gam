@@ -5361,6 +5361,32 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.3859879672527313,
+                            "y": 4.791099548339844,
+                            "z": 2.055098533630371
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
                 }
             ]
         },
@@ -5494,6 +5520,32 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.3859879672527313,
+                            "y": 4.791099548339844,
+                            "z": 2.055000066757202
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -23979,6 +24031,32 @@
                         "castShadows": true,
                         "receiveShadows": true
                     }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.3859879672527313,
+                            "y": 4.791099548339844,
+                            "z": 2.055098533630371
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
                 }
             ]
         },
@@ -28365,6 +28443,32 @@
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.800000190734864,
+                            "y": 1.2999999523162842,
+                            "z": 5.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -41271,6 +41375,32 @@
                     "Layer": {
                         "layerName": "Default"
                     }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 2.0,
+                            "y": 3.5,
+                            "z": 2.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
                 }
             ]
         },
@@ -45325,7 +45455,7 @@
             "y": 1.0,
             "z": 1.0
         },
-        "ambIntensity": 0.07800000160932541,
+        "ambIntensity": 0.0,
         "gammaValue": 1.7999999523162842
     }
 }
