@@ -21,6 +21,10 @@ public class HammerLevel3 : Entity, IInventoryItem
   private int currIndex = -1;
 
   private int nailCount = 0;
+  private int delayCount = 0;
+  private float[] sfxDelays = new float[] { 0f, 1.5f, 1.3f, .8f, 1.2f};
+  private float sfxTimeElapsed = 0f;
+  private bool startSFX = false;
   public enum HammerState
   {
     IDLE,
@@ -66,9 +70,9 @@ public class HammerLevel3 : Entity, IInventoryItem
 
   public void PlayNailSound()
   {
-    nailCount %= 5;
-    InternalCalls.SetSoundVolume(mEntityID, $"..\\Assets\\Audio\\NailPull{nailCount}_SFX.wav", 0.5f);
-    InternalCalls.PlaySound(mEntityID, $"..\\Assets\\Audio\\NailPull{nailCount}_SFX.wav");
+    nailCount %= 4;
+    InternalCalls.SetSoundVolume(mEntityID, $"..\\Assets\\Audio\\NailPull{nailCount+1}_SFX.wav", 0.2f);
+    InternalCalls.PlaySound(mEntityID, $"..\\Assets\\Audio\\NailPull{nailCount+1}_SFX.wav");
     nailCount++;
   }
 
@@ -86,6 +90,21 @@ public class HammerLevel3 : Entity, IInventoryItem
 
   void Update()
   {
+    Console.WriteLine($"{sfxTimeElapsed} |||| {delayCount} ||||| {startSFX}");
+    if (startSFX && delayCount < 5)
+    {
+      if (sfxTimeElapsed < sfxDelays[delayCount])
+      {
+        sfxTimeElapsed += InternalCalls.GetDeltaTime();
+      }
+      else
+      {
+        PlayNailSound();
+        sfxTimeElapsed = 0f;
+        delayCount++;
+      }
+    }
+
     switch (currState)
     {
       case HammerState.IDLE:
@@ -110,6 +129,8 @@ public class HammerLevel3 : Entity, IInventoryItem
 
       case HammerState.USING:
         {
+          startSFX = true;
+          
           if (InternalCalls.IsPlayingAnimation(mEntityID)) { return; }
 
           // if no more animations, go back to inactive
@@ -120,23 +141,22 @@ public class HammerLevel3 : Entity, IInventoryItem
             return;
           }
 
-
           // trigger hammer anim
           InternalCalls.PlayAnimation(mEntityID, animations[currIndex]);
 
           // also trigger the anim for both nails
           int offset = currIndex * 2;
 
-          PlayNailSound();
+          //PlayNailSound();
           nails[offset]?.FindScript<Nail>().TriggerAnim();
           if (offset == 0)
           {
-            PlayNailSound();
+            //PlayNailSound();
             nails[offset + 1]?.FindScript<TwoPlankNail>().TriggerAnim();
           }
           else
           {
-            PlayNailSound();
+            //PlayNailSound();
             nails[offset + 1]?.FindScript<Nail>().TriggerAnim();
           }
 
@@ -146,6 +166,7 @@ public class HammerLevel3 : Entity, IInventoryItem
       default:
         return;
     } // end switch (currState)
+
   }
 
   public HammerState GetState() { return currState; }

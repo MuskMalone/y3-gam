@@ -370,7 +370,7 @@
                         "gravityFactor": 40.0,
                         "linearDamping": 5.0,
                         "motionType": "DYNAMIC",
-                        "axisLock": 2,
+                        "axisLock": 0,
                         "angularAxisLock": 7
                     }
                 },
@@ -4513,10 +4513,10 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "PlankClack1_SFX.wav",
+                                "key": "..\\Assets\\Audio\\PlankHit1_SFX.wav",
                                 "value": {
                                     "guid": {
-                                        "ID": 8408490888814234368
+                                        "ID": 16242833355957429427
                                     },
                                     "playSettings": {
                                         "position": {
@@ -4532,8 +4532,260 @@
                                         "playOnAwake": false,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHit2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 13254567221262798407
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 48.73713684082031,
+                                            "y": 1.955855131149292,
+                                            "z": -122.12167358398438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHit3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 1921821040155742065
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 48.73713684082031,
+                                            "y": 1.955855131149292,
+                                            "z": -122.12167358398438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHit4_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 17624892965552935008
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 48.73713684082031,
+                                            "y": 1.955855131149292,
+                                            "z": -122.12167358398438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitHeavy1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9398500156076413158
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 48.73713684082031,
+                                            "y": 1.955855131149292,
+                                            "z": -122.12167358398438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitHeavy2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 6905070728491400227
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 48.73713684082031,
+                                            "y": 1.955855131149292,
+                                            "z": -122.12167358398438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitHeavy3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11206429644575689309
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 48.73713684082031,
+                                            "y": 1.955855131149292,
+                                            "z": -122.12167358398438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitLight1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4563862957063532953
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 48.73713684082031,
+                                            "y": 1.955855131149292,
+                                            "z": -122.12167358398438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitLight2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9857823998896637602
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 48.73713684082031,
+                                            "y": 1.955855131149292,
+                                            "z": -122.12167358398438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitLight3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8043416986584541379
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 48.73713684082031,
+                                            "y": 1.955855131149292,
+                                            "z": -122.12167358398438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
                                         "postProcessingParameter": 1500.0
@@ -4712,10 +4964,10 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "PlankClack1_SFX.wav",
+                                "key": "..\\Assets\\Audio\\PlankHit1_SFX.wav",
                                 "value": {
                                     "guid": {
-                                        "ID": 14420193016666216910
+                                        "ID": 16242833355957429427
                                     },
                                     "playSettings": {
                                         "position": {
@@ -4731,8 +4983,260 @@
                                         "playOnAwake": false,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHit2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 13254567221262798407
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.07292175292969,
+                                            "y": 3.726356029510498,
+                                            "z": -128.80087280273438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHit3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 1921821040155742065
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.07292175292969,
+                                            "y": 3.726356029510498,
+                                            "z": -128.80087280273438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHit4_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 17624892965552935008
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.07292175292969,
+                                            "y": 3.726356029510498,
+                                            "z": -128.80087280273438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitHeavy1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9398500156076413158
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.07292175292969,
+                                            "y": 3.726356029510498,
+                                            "z": -128.80087280273438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitHeavy2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 6905070728491400227
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.07292175292969,
+                                            "y": 3.726356029510498,
+                                            "z": -128.80087280273438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitHeavy3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11206429644575689309
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.07292175292969,
+                                            "y": 3.726356029510498,
+                                            "z": -128.80087280273438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitLight1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4563862957063532953
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.07292175292969,
+                                            "y": 3.726356029510498,
+                                            "z": -128.80087280273438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitLight2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9857823998896637602
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.07292175292969,
+                                            "y": 3.726356029510498,
+                                            "z": -128.80087280273438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitLight3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8043416986584541379
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.07292175292969,
+                                            "y": 3.726356029510498,
+                                            "z": -128.80087280273438
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
                                         "postProcessingParameter": 1500.0
@@ -10637,10 +11141,10 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "PlankClack1_SFX.wav",
+                                "key": "..\\Assets\\Audio\\PlankHit1_SFX.wav",
                                 "value": {
                                     "guid": {
-                                        "ID": 8408490888814234368
+                                        "ID": 16242833355957429427
                                     },
                                     "playSettings": {
                                         "position": {
@@ -10656,8 +11160,260 @@
                                         "playOnAwake": false,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHit2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 13254567221262798407
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.099063873291019,
+                                            "y": -1.0074751377105713,
+                                            "z": -129.08963012695313
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHit3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 1921821040155742065
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.099063873291019,
+                                            "y": -1.0074751377105713,
+                                            "z": -129.08963012695313
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHit4_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 17624892965552935008
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.099063873291019,
+                                            "y": -1.0074751377105713,
+                                            "z": -129.08963012695313
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitHeavy1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9398500156076413158
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.099063873291019,
+                                            "y": -1.0074751377105713,
+                                            "z": -129.08963012695313
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitHeavy2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 6905070728491400227
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.099063873291019,
+                                            "y": -1.0074751377105713,
+                                            "z": -129.08963012695313
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitHeavy3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11206429644575689309
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.099063873291019,
+                                            "y": -1.0074751377105713,
+                                            "z": -129.08963012695313
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitLight1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4563862957063532953
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.099063873291019,
+                                            "y": -1.0074751377105713,
+                                            "z": -129.08963012695313
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitLight2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9857823998896637602
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.099063873291019,
+                                            "y": -1.0074751377105713,
+                                            "z": -129.08963012695313
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\PlankHitLight3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8043416986584541379
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 49.099063873291019,
+                                            "y": -1.0074751377105713,
+                                            "z": -129.08963012695313
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
                                         "postProcessingParameter": 1500.0
@@ -12550,6 +13306,118 @@
                 {
                     "AudioSource": {
                         "sounds": [
+                            {
+                                "key": "..\\Assets\\Audio\\NailPull1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 16337442528596504514
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -27.33049201965332,
+                                            "y": 6.539999961853027,
+                                            "z": -151.4770050048828
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.7599999904632569,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\NailPull2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 3082171602022266793
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -27.33049201965332,
+                                            "y": 6.539999961853027,
+                                            "z": -151.4770050048828
+                                        },
+                                        "volume": 0.2199999988079071,
+                                        "pitch": 1.6299999952316285,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\NailPull3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 10378567804351446915
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -27.33049201965332,
+                                            "y": 6.539999961853027,
+                                            "z": -151.4770050048828
+                                        },
+                                        "volume": 0.2199999988079071,
+                                        "pitch": 1.6200000047683716,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\NailPull4_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7397417920981631758
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -27.33049201965332,
+                                            "y": 6.539999961853027,
+                                            "z": -151.4770050048828
+                                        },
+                                        "volume": 0.8700000047683716,
+                                        "pitch": 1.4600000381469727,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
                             {
                                 "key": "PickUpObjects",
                                 "value": {
