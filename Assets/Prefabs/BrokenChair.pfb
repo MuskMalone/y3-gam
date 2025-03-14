@@ -1,0 +1,108 @@
+{
+    "Name": "BrokenChair",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BrokenChair",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 15.836197853088379,
+                            "y": 0.0,
+                            "z": -78.31172180175781
+                        },
+                        "scale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 15.836197853088379,
+                            "y": 0.0,
+                            "z": -78.31172180175781
+                        },
+                        "worldScale": {
+                            "x": 6.0,
+                            "y": 6.0,
+                            "z": 6.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 856761417764871326
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "BrokenChair",
+                        "GUID": {
+                            "ID": 585306545926347906
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.600000023841858,
+                            "y": 3.0999999046325685,
+                            "z": 1.7000000476837159
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        }
+    ]
+}
