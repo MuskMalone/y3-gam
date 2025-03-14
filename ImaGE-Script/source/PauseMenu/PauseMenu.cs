@@ -7,9 +7,10 @@ public class PauseMenu : Entity
   public Entity ResumeButton;
   public Entity MainMenuButton;
   public Entity SettingsButton;
-  //public Transition transition;
-  //public float transitionDuration = 2f;
+  public Transition transition;
+  public float transitionDuration = 0.5f;
 
+  private float transitionTimer = 0f;
   private PauseMenuButtons ResumeButtonScript;
   private PauseMenuButtons MainMenuButtonScript;
   private PauseMenuButtons SettingsButtonScript;
@@ -22,7 +23,17 @@ public class PauseMenu : Entity
   private float OriginalTargetZMenu = -2f;
   private float OriginalTargetZButton = -2f;
 
-    void Start()
+  private enum State
+  {
+    NONE,
+    RESUME,
+    MAIN_MENU,
+    SETTINGS,
+    PAUSE
+  }
+  private State currState = State.NONE;
+
+  void Start()
     {
         Console.WriteLine("1: Hiding ResumeButton.");
         ResumeButton?.SetActive(false);
@@ -83,7 +94,10 @@ public class PauseMenu : Entity
     void Update()
   {
     if (!InternalCalls.GetIsPaused() && InternalCalls.IsKeyTriggered(KeyCode.P)) {
-      PauseGame();
+      transition.StartTransitionInOut(transitionDuration, Transition.TransitionType.FADE);
+      currState = State.PAUSE;
+      InternalCalls.PauseGame();
+      playerMove.FreezePlayer();
     }
 
     if (InternalCalls.GetIsPaused())
@@ -97,40 +111,96 @@ public class PauseMenu : Entity
       }
       */
 
-      if (ResumeButtonScript.IsVisible)
+      switch (currState)
       {
-        ResumeButton.SetActive(true);
-        if (ResumeButtonScript.TriggerButton)
-        {
-          ResumeButtonScript.TriggerButton = false;
+        case State.NONE:
+          {
+            if (ResumeButtonScript.IsVisible)
+            {
+              ResumeButton.SetActive(true);
+              if (ResumeButtonScript.TriggerButton)
+              {
+                ResumeButtonScript.TriggerButton = false;
 
-          // Resume Game
-          ResumeGame();
-        }
-      }
+                // Resume Game
+                transition.StartTransitionInOut(transitionDuration, Transition.TransitionType.FADE);
+                currState = State.RESUME;
+              }
+            }
 
-      else if (MainMenuButtonScript.IsVisible)
-      {
-        MainMenuButton.SetActive(true);
-        if (MainMenuButtonScript.TriggerButton)
-        {
-          MainMenuButtonScript.TriggerButton = false;
+            else if (MainMenuButtonScript.IsVisible)
+            {
+              MainMenuButton.SetActive(true);
+              if (MainMenuButtonScript.TriggerButton)
+              {
+                MainMenuButtonScript.TriggerButton = false;
 
-          // Go to Main Menu
-          InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\mainmenu.scn");
-        }
-      }
+                // Go to Main Menu
+                transition.StartTransitionInOut(transitionDuration, Transition.TransitionType.FADE);
+                currState = State.MAIN_MENU;
+                
+              }
+            }
 
-      else if (SettingsButtonScript.IsVisible)
-      {
-        SettingsButton.SetActive(true);
-        if (SettingsButtonScript.TriggerButton)
-        {
-          SettingsButtonScript.TriggerButton = false;
+            else if (SettingsButtonScript.IsVisible)
+            {
+              SettingsButton.SetActive(true);
+              if (SettingsButtonScript.TriggerButton)
+              {
+                SettingsButtonScript.TriggerButton = false;
 
-          // Go to Settings
+                // Go to Settings
+                transition.StartTransitionInOut(transitionDuration, Transition.TransitionType.FADE);
+                currState = State.SETTINGS;
+              }
+            }
+            break;
+          }
+        case State.PAUSE:
+          {
+            transitionTimer += Time.deltaTime;
+            if (transitionTimer >= transitionDuration)
+            {
+              Reset();
+              PauseGame();
+            }
+            break;
+          }
 
-        }
+        case State.RESUME:
+          {
+            transitionTimer += Time.deltaTime;
+            if (transitionTimer >= transitionDuration)
+            {
+              Reset();
+              ResumeGame();
+            }
+            break;
+          }
+
+        case State.MAIN_MENU:
+          {
+            transitionTimer += Time.deltaTime;
+            if (transitionTimer >= transitionDuration)
+            {
+              Reset();
+              InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\mainmenu.scn");
+            }
+            break;
+          }
+
+        case State.SETTINGS:
+          {
+            transitionTimer += Time.deltaTime;
+            if (transitionTimer >= transitionDuration)
+            {
+              Reset();
+            }
+            break;
+          }
+
+        default:
+          break;
       }
     }
   }
@@ -144,8 +214,6 @@ public class PauseMenu : Entity
 
   private void PauseGame()
   {
-    InternalCalls.PauseGame();
-    playerMove.FreezePlayer();
     SetActive(true);
     InternalCalls.ShowCursor();
     Debug.Log("Game Paused");
@@ -191,5 +259,11 @@ public class PauseMenu : Entity
     Vector3 originalMainMenu = InternalCalls.GetPosition(MainMenuButtonScript.mEntityID);
     Vector3 newPosMainMenu = new Vector3(originalMainMenu.X, originalMainMenu.Y, OriginalTargetZButton);
     InternalCalls.SetPosition(MainMenuButtonScript.mEntityID, ref newPosMainMenu);
+  }
+
+  private void Reset()
+  {
+    transitionTimer = 0f;
+    currState = State.NONE;
   }
 }

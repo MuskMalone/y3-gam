@@ -1,5 +1,6 @@
 ﻿using IGE.Utils;
 using System;
+using static Transition;
 
 // This script is to be placed in the Canvas entity
 public class Transition : Entity
@@ -17,6 +18,17 @@ public class Transition : Entity
   private float transitionTimer = 0f;
   private bool finished = false;
   private float transitionProgress = 0f;
+  private TransitionType transitionTypeInternal;
+
+  private enum State
+  {
+    NONE,
+    NORMAL,
+    INOUT,
+    OUTIN
+  }
+  private State currState = State.NONE;
+  private State selectedState = State.NONE;
 
   void Start()
   {
@@ -39,6 +51,18 @@ public class Transition : Entity
       {
         finished = true;
       }
+
+      if (finished && selectedState == State.INOUT)
+      {
+        StartTransition(false, totalTime, transitionTypeInternal);
+        selectedState = State.NONE;
+      }
+
+      if (finished && selectedState == State.OUTIN)
+      {
+        StartTransition(true, totalTime, transitionTypeInternal);
+        selectedState = State.NONE;
+      }
     }
   }
 
@@ -53,7 +77,20 @@ public class Transition : Entity
     transitionProgress = fadeIn ? 1f : 0f;                 // Initialize based on fade type
     InternalCalls.EnableCanvasTransition(mEntityID, true); // Ensure transition is enabled
     InternalCalls.SetCanvasTransitionProgress(mEntityID, transitionProgress);
-    InternalCalls.SetCanvasTransitionType(mEntityID, (int)transitionType);
+    transitionTypeInternal = transitionType;
+    InternalCalls.SetCanvasTransitionType(mEntityID, (int)transitionTypeInternal);
+  }
+
+  public void StartTransitionInOut(float duration, TransitionType transitionType)
+  {
+    selectedState = State.INOUT;
+    StartTransition(true, duration, transitionType);
+  }
+
+  public void StartTransitionOutIn(float duration, TransitionType transitionType)
+  {
+    selectedState = State.OUTIN;
+    StartTransition(false, duration, transitionType);
   }
 
   public bool IsFinished()

@@ -27566,6 +27566,23 @@
                                         "scriptField": {
                                             "fieldName": "playerMove"
                                         }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 326,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "transitionDuration"
+                                        }
                                     }
                                 ]
                             }
