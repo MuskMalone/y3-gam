@@ -12,7 +12,6 @@ public class HammerLevel3 : Entity, IInventoryItem
   public BlackBorder blackBorder;
   public Entity hammerCamera;
   public Entity playerCamera;
-  public PlayerMove playerMove;
 
   //public Dialogue dialogueSystem;
   //public string[] hammerDialogue;
@@ -66,7 +65,6 @@ public class HammerLevel3 : Entity, IInventoryItem
   {
     SetActive(true);
     blackBorder.DisplayBlackBorders();
-    playerMove.FreezePlayer();
     SetHammerCameraAsMain();
     currState = HammerState.USING;
     if (inventoryScript.isVisible)
@@ -120,7 +118,6 @@ public class HammerLevel3 : Entity, IInventoryItem
           {
             SetActive(false);
             blackBorder.HideBlackBorders();
-            playerMove.UnfreezePlayer();
             SetPlayerCameraAsMain();
             currState = HammerState.COMPLETE;
             return;

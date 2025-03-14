@@ -7,6 +7,8 @@ public class PauseMenu : Entity
   public Entity ResumeButton;
   public Entity MainMenuButton;
   public Entity SettingsButton;
+  //public Transition transition;
+  //public float transitionDuration = 2f;
 
   private PauseMenuButtons ResumeButtonScript;
   private PauseMenuButtons MainMenuButtonScript;

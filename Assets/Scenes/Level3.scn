@@ -12705,16 +12705,6 @@
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
                                         }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 2,
-                                            "scriptName": "PlayerMove"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerMove"
-                                        }
                                     }
                                 ]
                             }
@@ -34579,6 +34569,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "centerDot"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
                                         }
                                     }
                                 ]

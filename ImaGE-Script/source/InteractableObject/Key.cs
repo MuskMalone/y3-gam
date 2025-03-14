@@ -10,8 +10,6 @@ public class Key : Entity, IInventoryItem
   public Entity EToPickUpUI;
   public KeyDoor keyDoor;
   public BlackBorder blackBorder;
-
-  public PlayerMove playerMove;
   public Entity playerCamera;
   public Entity keyCamera;
 
@@ -59,12 +57,6 @@ public class Key : Entity, IInventoryItem
 
   void Start()
   {
-    if (playerMove == null)
-    {
-      Debug.LogError("[Key.cs] PlayerMove Script Entity not found!");
-      return;
-    }
-
     if (keyCamera == null)
     {
       Debug.LogError("[Key.cs] Key Camera not found");
@@ -143,7 +135,6 @@ public class Key : Entity, IInventoryItem
     SetActive(true);
     InternalCalls.PlayAnimation(mEntityID, keyAnimName);
     isPlayingAnimation = true;
-    playerMove.FreezePlayer();
     SetKeyCameraAsMain();
   }
 
