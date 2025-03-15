@@ -152,12 +152,12 @@ namespace IGE {
 				UpdatePhysicsToTransform(entity, false);
 			}
 
+			mOnTriggerPairs.clear();
+			mOnContactPairs.clear();
 			// Run the physics simulation in fixed time steps.
 			while (physicsAccumulator >= gTimeStep) {
 				// Clear any previous frame data (if needed for this physics step).
 
-				mOnTriggerPairs.clear();
-				mOnContactPairs.clear();
 				// Simulate one fixed time step (e.g., 1/60 second).
 				mScene->simulate(gTimeStep);
 				mScene->fetchResults(true);

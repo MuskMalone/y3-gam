@@ -1,0 +1,82 @@
+{
+    "Name": "bustpillar",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "bustpillar",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 14.702664375305176,
+                            "y": 3.851994276046753,
+                            "z": -45.26450729370117
+                        },
+                        "scale": {
+                            "x": 21.0,
+                            "y": 10.0,
+                            "z": 21.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 14.702664375305176,
+                            "y": 3.851994276046753,
+                            "z": -45.26450729370117
+                        },
+                        "worldScale": {
+                            "x": 21.0,
+                            "y": 10.0,
+                            "z": 21.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 6780903368929483309
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pillar",
+                        "GUID": {
+                            "ID": 14350824966065430967
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}
