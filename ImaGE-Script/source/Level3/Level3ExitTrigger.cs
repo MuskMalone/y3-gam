@@ -57,7 +57,7 @@ public class Level3ExitTrigger : Entity
           // Dialogue ended
           if (!dialogueSystem.isInDialogueMode)
           {
-            transition.StartTransition(false, transitionTime, Transition.TransitionType.FADE);
+            transition.StartTransition(false, transitionTime, Transition.TransitionType.WIPE);
             blackBorder.DisplayBlackBorders();
             blackBorder.playerMove.useScriptRotation = false;
             currState = State.IN_ANIMATION;
@@ -72,7 +72,7 @@ public class Level3ExitTrigger : Entity
           if (transitionTimer > transitionTime && animationPlaying == false)
           {
             animationPlaying = true;
-            
+            transition.StartTransition(true, 0.25f, Transition.TransitionType.WIPE);
             InternalCalls.PlayAnimation(blackBorder.playerMove.mEntityID, turnAroundAnimationName);
             InternalCalls.UpdatePhysicsToTransform(blackBorder.playerMove.mEntityID);
             blackBorder.playerMove.useScriptRotation = false;
