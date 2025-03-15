@@ -16655,8 +16655,8 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -15.899999618530274,
-                                            "y": 0.0,
+                                            "x": -14.399999618530274,
+                                            "y": -0.10000000149011612,
                                             "z": -2.0
                                         },
                                         "volume": 1.0,
@@ -16683,8 +16683,8 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -15.899999618530274,
-                                            "y": 0.0,
+                                            "x": -14.399999618530274,
+                                            "y": -0.10000000149011612,
                                             "z": -2.0
                                         },
                                         "volume": 1.0,
@@ -16715,14 +16715,14 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -15.899999618530274,
-                            "y": 0.0,
+                            "x": -14.399999618530274,
+                            "y": -0.10000000149011612,
                             "z": -2.0
                         },
                         "scale": {
-                            "x": 3.9010000228881838,
-                            "y": 17.900999069213868,
-                            "z": -1.0989999771118165
+                            "x": 5.801000118255615,
+                            "y": 20.141000747680665,
+                            "z": 0.14100000262260438
                         },
                         "rotation": {
                             "x": 0.0,
@@ -16736,14 +16736,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -15.899999618530274,
-                            "y": 0.0,
+                            "x": -14.399999618530274,
+                            "y": -0.10000000149011612,
                             "z": -2.0
                         },
                         "worldScale": {
-                            "x": 3.9010000228881838,
-                            "y": 17.900999069213868,
-                            "z": -1.0989999771118165
+                            "x": 5.801000118255615,
+                            "y": 20.141000747680665,
+                            "z": 0.14100000262260438
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -16766,7 +16766,7 @@
                                 "scriptName": "Level3Inventory",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": -15.850000381469727,
+                                        "data": -14.399999618530274,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "endScreenPosX"
@@ -16878,7 +16878,7 @@
                                         }
                                     },
                                     {
-                                        "data": -20.0,
+                                        "data": -25.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "startScreenPosX"
@@ -16914,7 +16914,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 8394662900419204535
+                            "ID": 16677283266576248656
                         }
                     }
                 }
@@ -17011,8 +17011,8 @@
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 2.0799999237060549,
-                            "y": 1.899999976158142,
+                            "x": 1.809999942779541,
+                            "y": 1.909999966621399,
                             "z": -1.440000057220459
                         },
                         "rotation": {
@@ -17032,8 +17032,8 @@
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 2.0799999237060549,
-                            "y": 1.899999976158142,
+                            "x": 1.809999942779541,
+                            "y": 1.909999966621399,
                             "z": -1.440000057220459
                         },
                         "worldRot": {
@@ -17058,7 +17058,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 5662221334067653333
+                            "ID": 15167728305292783555
                         }
                     }
                 }
@@ -25027,50 +25027,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 527,
+                                                "entityID": 560,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 527,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 1048777,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 1048777,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 557,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 557,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 563,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 563,
+                                                        "data": 560,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -25092,11 +25053,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 560,
+                                                "entityID": 563,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 560,
+                                                        "data": 563,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 557,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 557,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 1048777,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 1048777,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 527,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 527,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
