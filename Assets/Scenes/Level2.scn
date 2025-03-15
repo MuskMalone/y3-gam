@@ -10193,56 +10193,6 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
-                                            "entityID": 1049273,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "holderCollider1"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 699,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "holderCollider2"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 700,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "holderCollider3"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 701,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "holderCollider4"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 698,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "holderCollider5"
-                                        }
-                                    },
-                                    {
-                                        "data": {
                                             "entityID": 1,
                                             "scriptName": "Entity"
                                         },
@@ -10272,7 +10222,7 @@
                                         }
                                     },
                                     {
-                                        "data": 0.0,
+                                        "data": 2.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "timeBeforeOrbsDrop"
@@ -28389,6 +28339,16 @@
                                             "scriptField": {
                                                 "fieldName": "tableSensor"
                                             }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 694,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSurface"
+                                            }
                                         }
                                     ]
                                 }
@@ -28627,6 +28587,16 @@
                                             "scriptField": {
                                                 "fieldName": "tableSensor"
                                             }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 693,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSurface"
+                                            }
                                         }
                                     ]
                                 }
@@ -28792,12 +28762,7 @@
                 694,
                 695,
                 696,
-                698,
-                699,
-                700,
-                701,
-                702,
-                1049273
+                702
             ],
             "Components": [
                 {
@@ -30702,7 +30667,7 @@
                     "Transform": {
                         "position": {
                             "x": 5.364418029785156e-7,
-                            "y": 0.24256110191345216,
+                            "y": 0.08614456653594971,
                             "z": 9.5367431640625e-7
                         },
                         "scale": {
@@ -30723,7 +30688,7 @@
                         },
                         "worldPos": {
                             "x": 63.429203033447269,
-                            "y": 71.88526153564453,
+                            "y": 65.31576538085938,
                             "z": -425.3419494628906
                         },
                         "worldScale": {
@@ -30747,9 +30712,9 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 4.599999904632568,
-                            "y": 5.099999904632568,
-                            "z": 5.199999809265137
+                            "x": 7.599999904632568,
+                            "y": 1.0,
+                            "z": 7.400000095367432
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -31370,6 +31335,16 @@
                                             "scriptField": {
                                                 "fieldName": "tableSensor"
                                             }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 694,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSurface"
+                                            }
                                         }
                                     ]
                                 }
@@ -31583,6 +31558,16 @@
                                             "scriptField": {
                                                 "fieldName": "tableSensor"
                                             }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 693,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSurface"
+                                            }
                                         }
                                     ]
                                 }
@@ -31775,6 +31760,16 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "tableSensor"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 694,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSurface"
                                             }
                                         }
                                     ]
@@ -31976,8 +31971,8 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": 0.10425794124603272,
+                            "x": 5.327165126800537e-7,
+                            "y": 0.10485470294952393,
                             "z": 0.0014952421188354493
                         },
                         "scale": {
@@ -31986,20 +31981,20 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 0.0,
+                            "x": 0.008726534433662892,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.9999619722366333
                         },
                         "eulerAngles": {
-                            "x": 0.0,
+                            "x": 0.9999998807907105,
                             "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
                             "x": 63.491943359375,
-                            "y": 66.07652282714844,
-                            "z": -425.34356689453127
+                            "y": 66.10159301757813,
+                            "z": -425.3435974121094
                         },
                         "worldScale": {
                             "x": 42.0,
@@ -32007,10 +32002,10 @@
                             "z": 42.0
                         },
                         "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7163019776344299,
-                            "z": 0.0,
-                            "w": 0.6977904438972473
+                            "x": 0.006089292466640472,
+                            "y": 0.7162747383117676,
+                            "z": -0.006250834092497826,
+                            "w": 0.6977639198303223
                         }
                     }
                 },
@@ -32044,6 +32039,28 @@
                         },
                         "sensor": false
                     }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
+                    }
                 }
             ]
         },
@@ -32062,7 +32079,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0002751946449279785,
-                            "y": 0.10425794124603272,
+                            "y": 0.10499999672174454,
                             "z": 0.000008106231689453125
                         },
                         "scale": {
@@ -32072,9 +32089,9 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": -0.5,
+                            "y": -0.5000001192092896,
                             "z": 0.0,
-                            "w": 0.8660255074501038
+                            "w": 0.8660253286361694
                         },
                         "eulerAngles": {
                             "x": 0.0,
@@ -32083,7 +32100,7 @@
                         },
                         "worldPos": {
                             "x": 63.429203033447269,
-                            "y": 66.07652282714844,
+                            "y": 66.10769653320313,
                             "z": -425.3534851074219
                         },
                         "worldScale": {
@@ -32093,7 +32110,7 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.2714405357837677,
+                            "y": 0.271440327167511,
                             "z": 0.0,
                             "w": 0.9624552726745606
                         }
@@ -32129,6 +32146,28 @@
                         },
                         "sensor": false
                     }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
+                    }
                 }
             ]
         },
@@ -32146,8 +32185,8 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.001810964196920395,
-                            "y": 0.10425794124603272,
+                            "x": -0.0018100105226039887,
+                            "y": 0.10461568832397461,
                             "z": -0.00400090217590332
                         },
                         "scale": {
@@ -32168,8 +32207,8 @@
                         },
                         "worldPos": {
                             "x": 63.26317596435547,
-                            "y": 66.07652282714844,
-                            "z": -425.2615051269531
+                            "y": 66.091552734375,
+                            "z": -425.26153564453127
                         },
                         "worldScale": {
                             "x": 42.0,
@@ -32213,6 +32252,28 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
                     }
                 }
             ]
@@ -32303,330 +32364,6 @@
             ]
         },
         {
-            "ID": 698,
-            "Parent": 600,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "HolderCollider5",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0796394944190979,
-                            "y": 0.11935305595397949,
-                            "z": -0.0456007719039917
-                        },
-                        "scale": {
-                            "x": 0.02112000249326229,
-                            "y": 0.02112000249326229,
-                            "z": 0.02112000249326229
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": -0.7163019776344299,
-                            "z": 0.0,
-                            "w": 0.6977904438972473
-                        },
-                        "eulerAngles": {
-                            "x": 180.0,
-                            "y": -88.50001525878906,
-                            "z": 180.0
-                        },
-                        "worldPos": {
-                            "x": 61.42702865600586,
-                            "y": 66.71051788330078,
-                            "z": -428.635498046875
-                        },
-                        "worldScale": {
-                            "x": 0.8870400786399841,
-                            "y": 0.8870400786399841,
-                            "z": 0.8870400786399841
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "SphereCollider": {
-                        "radius": 0.5,
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 699,
-            "Parent": 600,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "HolderCollider2",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.007033310830593109,
-                            "y": 0.12039828300476074,
-                            "z": 0.0934675931930542
-                        },
-                        "scale": {
-                            "x": 0.02112000249326229,
-                            "y": 0.02112000249326229,
-                            "z": 0.02112000249326229
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": -0.7163019776344299,
-                            "z": 0.0,
-                            "w": 0.6977904438972473
-                        },
-                        "eulerAngles": {
-                            "x": 180.0,
-                            "y": -88.50001525878906,
-                            "z": 180.0
-                        },
-                        "worldPos": {
-                            "x": 67.3457260131836,
-                            "y": 66.7544174194336,
-                            "z": -425.7399597167969
-                        },
-                        "worldScale": {
-                            "x": 0.8870400786399841,
-                            "y": 0.8870400786399841,
-                            "z": 0.8870400786399841
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "SphereCollider": {
-                        "radius": 0.5,
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 700,
-            "Parent": 600,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "HolderCollider3",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.07947499305009842,
-                            "y": 0.11999738216400147,
-                            "z": 0.00040280818939208984
-                        },
-                        "scale": {
-                            "x": 0.02112000249326229,
-                            "y": 0.02112000249326229,
-                            "z": 0.02112000249326229
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": -0.7163019776344299,
-                            "z": 0.0,
-                            "w": 0.6977904438972473
-                        },
-                        "eulerAngles": {
-                            "x": 180.0,
-                            "y": -88.50001525878906,
-                            "z": 180.0
-                        },
-                        "worldPos": {
-                            "x": 63.53345489501953,
-                            "y": 66.73757934570313,
-                            "z": -422.0055847167969
-                        },
-                        "worldScale": {
-                            "x": 0.8870400786399841,
-                            "y": 0.8870400786399841,
-                            "z": 0.8870400786399841
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "SphereCollider": {
-                        "radius": 0.5,
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 701,
-            "Parent": 600,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "HolderCollider4",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.00010822713375091553,
-                            "y": 0.11940920352935791,
-                            "z": -0.09041821956634522
-                        },
-                        "scale": {
-                            "x": 0.02112000249326229,
-                            "y": 0.02112000249326229,
-                            "z": 0.02112000249326229
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": -0.7163019776344299,
-                            "z": 0.0,
-                            "w": 0.6977904438972473
-                        },
-                        "eulerAngles": {
-                            "x": 180.0,
-                            "y": -88.50001525878906,
-                            "z": 180.0
-                        },
-                        "worldPos": {
-                            "x": 59.633018493652347,
-                            "y": 66.71287536621094,
-                            "z": -425.23797607421877
-                        },
-                        "worldScale": {
-                            "x": 0.8870400786399841,
-                            "y": 0.8870400786399841,
-                            "z": 0.8870400786399841
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "SphereCollider": {
-                        "radius": 0.5,
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                }
-            ]
-        },
-        {
             "ID": 702,
             "Parent": 600,
             "Child Entities": [],
@@ -32641,7 +32378,7 @@
                     "Transform": {
                         "position": {
                             "x": 5.364418029785156e-7,
-                            "y": -0.17107975482940675,
+                            "y": -0.14875435829162599,
                             "z": 9.5367431640625e-7
                         },
                         "scale": {
@@ -32662,7 +32399,7 @@
                         },
                         "worldPos": {
                             "x": 63.429203033447269,
-                            "y": 54.51234436035156,
+                            "y": 55.450008392333987,
                             "z": -425.3419494628906
                         },
                         "worldScale": {
@@ -32707,6 +32444,28 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.20000000298023225,
+                        "dynamicFriction": 0.20000000298023225,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
                     }
                 }
             ]
@@ -44267,87 +44026,6 @@
                 {
                     "Layer": {
                         "layerName": "HexTable"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1049273,
-            "Parent": 600,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "HolderCollider1",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.07899370789527893,
-                            "y": 0.11894106864929199,
-                            "z": 0.046846747398376468
-                        },
-                        "scale": {
-                            "x": 0.021004799753427507,
-                            "y": 0.021004799753427507,
-                            "z": 0.021004799753427507
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": -0.7163019776344299,
-                            "z": 0.0,
-                            "w": 0.6977904438972473
-                        },
-                        "eulerAngles": {
-                            "x": 180.0,
-                            "y": -88.50001525878906,
-                            "z": 180.0
-                        },
-                        "worldPos": {
-                            "x": 65.30921173095703,
-                            "y": 66.6932144165039,
-                            "z": -428.71002197265627
-                        },
-                        "worldScale": {
-                            "x": 0.882201611995697,
-                            "y": 0.882201611995697,
-                            "z": 0.882201611995697
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "SphereCollider": {
-                        "radius": 0.5,
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
                     }
                 }
             ]
