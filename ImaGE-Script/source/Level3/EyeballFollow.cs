@@ -86,5 +86,14 @@ public class EyeBallFollow : Entity
           RotationSpeed * Time.deltaTime
       );
     }
+
+    if (isFollowing)
+    {
+      InternalCalls.SetSoundVolume(mEntityID, "EyeballMove2_SFX.wav", 1f);
+    }
+    else
+    {
+      InternalCalls.SetSoundVolume(mEntityID, "EyeballMove2_SFX.wav", 0.0f);
+    }
   }
 }

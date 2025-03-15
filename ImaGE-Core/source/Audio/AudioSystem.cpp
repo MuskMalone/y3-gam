@@ -30,6 +30,7 @@ namespace IGE {
                                 channel->setVolume(0);
                             }
                             else {
+                                //std::cout << ECS::Entity{ entity }.GetComponent<Component::Tag>().tag << " setting volume" << std::endl;
                                 channel->setVolume(sound.second.playSettings.volume);
                             }
 

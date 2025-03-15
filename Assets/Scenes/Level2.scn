@@ -46124,6 +46124,28 @@
                     }
                 },
                 {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1049742,
+                                "scriptName": "FragmentParticleBurst",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 1049744,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Fragment"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
                     "EmitterSystem": {
                         "emitters": [
                             {
@@ -46184,9 +46206,9 @@
                                     "w": 1.0
                                 },
                                 "vel": {
-                                    "x": 0.5,
+                                    "x": 0.0,
                                     "y": 0.0,
-                                    "z": -0.5
+                                    "z": 0.0
                                 },
                                 "spreadAngle": 0.0,
                                 "gravity": {
@@ -46265,9 +46287,9 @@
                                     "w": 1.0
                                 },
                                 "vel": {
-                                    "x": 0.5,
+                                    "x": 0.0,
                                     "y": 0.0,
-                                    "z": -0.5
+                                    "z": 0.0
                                 },
                                 "spreadAngle": 0.0,
                                 "gravity": {
