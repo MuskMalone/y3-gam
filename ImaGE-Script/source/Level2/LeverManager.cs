@@ -1,16 +1,14 @@
 ﻿using IGE.Utils;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 public class LeverManager : Entity
 {
   public Entity playerCamera;
   public Entity tableCamera;
   public PlayerMove playerMove;
-  public Entity holderCollider1, holderCollider2, 
-    holderCollider3, holderCollider4, holderCollider5;
   //public Entity door; // The door to unlock
-
 
   public float timeBeforeOrbsDrop;  // how much time to wait after all levers pulled
 
@@ -32,7 +30,6 @@ public class LeverManager : Entity
 
   void Start()
   {
-    SetHolderCollidersActive(false);
     Console.WriteLine("Lever Manager Initialized. Waiting for levers to be pulled.");
   }
 
@@ -101,8 +98,6 @@ public class LeverManager : Entity
             orb.LosePower();
           }
 
-          SetHolderCollidersActive(true);
-
           // not sure if theres anything else to do after this
           currState = State.IDLE;
           break;
@@ -125,14 +120,6 @@ public class LeverManager : Entity
     SetTableCameraAsMain(); // Switch to table camera
     currState = State.TABLE_CAM;
     switchBackTime = Time.gameTime + switchDuration; // Set when to switch back
-  }
-
-
-  private void SetHolderCollidersActive(bool active)
-  {
-    holderCollider1.SetActive(active); holderCollider2.SetActive(active);
-    holderCollider3.SetActive(active); holderCollider4.SetActive(active);
-    holderCollider5.SetActive(active);
   }
 
   private void SetPlayerCameraAsMain()
