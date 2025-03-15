@@ -99,7 +99,9 @@ namespace Mono
     { "EyeBallFollow", ScriptFieldType::EYEBALL_FOLLOW },
     { "HammerLevel3", ScriptFieldType::HAMMER_L3 },
     { "BlackBorder", ScriptFieldType::BLACK_BORDER },
-    { "HexTableOrb", ScriptFieldType::HEX_TABLE_ORB }
+    { "HexTableOrb", ScriptFieldType::HEX_TABLE_ORB },
+    { "Level3Dialogue", ScriptFieldType::LEVEL3_DIALOGUE },
+    { "Fragment", ScriptFieldType::FRAGMENT }
   };
 }
 

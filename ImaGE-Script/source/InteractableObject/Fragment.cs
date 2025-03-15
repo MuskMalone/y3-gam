@@ -15,6 +15,7 @@ public class Fragment : Entity
   public Entity ParticleBurst;  // boom
   public Transition transition;
   public BlackBorder blackBorder;
+  private bool fragmentCollected = false;
 
   public Vector3 startPos;
   public Vector3 downPos;
@@ -140,6 +141,7 @@ public class Fragment : Entity
           SetPlayerCameraAsMain();
           blackBorder.HideBlackBorders();
           Destroy();
+          fragmentCollected = true;
 
           break;
         }
@@ -177,5 +179,10 @@ public class Fragment : Entity
     InternalCalls.PlayAnimation(parent, fragAnimNameEnterBox, false);
     Debug.Log("Playing animation: " + fragAnimNameEnterBox);
     SetFragmentCameraAsMain();
+  }
+
+  public bool IsFragmentCollected()
+  {
+    return fragmentCollected;
   }
 }
