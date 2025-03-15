@@ -27560,6 +27560,84 @@
             ]
         },
         {
+            "ID": 575,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "pillar",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 14.702664375305176,
+                            "y": 3.851994276046753,
+                            "z": -45.26450729370117
+                        },
+                        "scale": {
+                            "x": 21.0,
+                            "y": 10.0,
+                            "z": 21.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 14.702664375305176,
+                            "y": 3.851994276046753,
+                            "z": -45.26450729370117
+                        },
+                        "worldScale": {
+                            "x": 21.0,
+                            "y": 10.0,
+                            "z": 21.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 6780903368929483309
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "pillar",
+                        "GUID": {
+                            "ID": 14350824966065430967
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 577,
             "Parent": 1048897,
             "Child Entities": [
@@ -29954,6 +30032,84 @@
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 659,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "bust2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 11.546743392944336,
+                            "y": 14.421695709228516,
+                            "z": -46.29383087158203
+                        },
+                        "scale": {
+                            "x": 7.0,
+                            "y": 7.0,
+                            "z": 7.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 11.546743392944336,
+                            "y": 14.421695709228516,
+                            "z": -46.29383087158203
+                        },
+                        "worldScale": {
+                            "x": 7.0,
+                            "y": 7.0,
+                            "z": 7.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 6780903368929483309
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "bust2",
+                        "GUID": {
+                            "ID": 18392438731678935451
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
                     }
