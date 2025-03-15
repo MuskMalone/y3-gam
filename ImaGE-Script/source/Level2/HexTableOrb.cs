@@ -15,14 +15,17 @@ public class HexTableOrb : Entity
 {
   public Entity glowingOrb, dimmedOrb;
   public Entity brokenOrb;
+  public Entity tableSurface;
   public Entity tableSensor;
 
   static readonly float violentDuration = 5f;
   static readonly float riseVelocity = 4f;
   static readonly float intensity = 0.002f; // How much it vibrates
   static readonly float frequency = 0.05f;  // How fast it vibrates
-  static readonly float violentIntensity = 0.01f; // How much it vibrates
-  static readonly float violentFrequency = frequency * 0.5f;  // How fast it vibrates
+  static readonly float violentIntensity = intensity * 3f; // How much it vibrates
+  static readonly float violentFrequency = frequency * 0.3f;  // How fast it vibrates
+  static readonly Vector3 tableSurfaceMidpoint = new Vector3(63.429f, 67.564f, -425.342f);
+  static readonly float pushOffStrength = 45f;
 
   private enum State
   {
@@ -30,12 +33,15 @@ public class HexTableOrb : Entity
     RISING,
     HOVERING,
     VIOLENT,
-    FALLING
+    FALLING,
+    ROLLING,
+    OFF_TABLE,
   } 
 
   private State currState = State.INACTIVE;
   private Vector3 originalPos;
   private float timeElapsed = 0f, violentTimer = 0f;
+  private bool firstFrameAfterFall = true;
 
   // Start is called before the first frame update
   void Start()
@@ -72,7 +78,6 @@ public class HexTableOrb : Entity
           {
             // Generate a small random offset
             float x = Mathf.RandRange(-intensity, intensity);
-            float y = Mathf.RandRange(-intensity, intensity);
             float z = Mathf.RandRange(-intensity, intensity);
 
             // Apply the offset but always return to the original position
@@ -81,7 +86,7 @@ public class HexTableOrb : Entity
             InternalCalls.SetPosition(mEntityID, ref newPos);
             InternalCalls.UpdatePhysicsToTransform(mEntityID);
             InternalCalls.SetAngularVelocity(mEntityID, new Vector3(999f, 999f, 999f));
-            timeElapsed = 0f;
+            timeElapsed -= frequency;
           }
 
           break;
@@ -100,17 +105,20 @@ public class HexTableOrb : Entity
           }
           else if (violentTimer >= violentFrequency)
           {
+            float currIntensity = Mathf.Lerp(intensity, violentIntensity, timeElapsed / violentDuration);
+
             // Generate a small random offset
-            float x = Mathf.RandRange(-violentIntensity, violentIntensity);
-            float y = Mathf.RandRange(-violentIntensity, violentIntensity);
-            float z = Mathf.RandRange(-violentIntensity, violentIntensity);
+            float x = Mathf.RandRange(-currIntensity, currIntensity);
+            float y = Mathf.RandRange(-currIntensity, currIntensity);
+            float z = Mathf.RandRange(-currIntensity, currIntensity);
 
             // Apply the offset but always return to the original position
-            Vector3 newPos = originalPos + new Vector3(x, 0f, z);
+            Vector3 newPos = originalPos + new Vector3(x, y, z);
 
             InternalCalls.SetPosition(mEntityID, ref newPos);
+            InternalCalls.UpdatePhysicsToTransform(mEntityID);
             InternalCalls.SetAngularVelocity(mEntityID, new Vector3(999f, 999f, 999f));
-            violentTimer = 0f;
+            violentTimer -= violentFrequency;
           }
 
           break;
@@ -119,21 +127,60 @@ public class HexTableOrb : Entity
       // in this state, the orb slowly rolls off the table
       case State.FALLING:
         {
-          // align all colliders to their pieces
-          //foreach (uint id in InternalCalls.GetAllChildren(brokenOrb.mEntityID))
-          //{
-          //  InternalCalls.UpdatePhysicsToTransform(id);
-          //}
+          // wait until orb lands on table
+          if (InternalCalls.GetContactPoints(tableSurface.mEntityID, mEntityID).Length > 0)
+          {
+            currState = State.ROLLING;
+          }
 
-          // if orb hasn't left the table, do nothing
-          if (!InternalCalls.OnTriggerExit(tableSensor.mEntityID, mEntityID)) { return; }
+          break;
+        }
 
-          // orb is falliing off now, swap to brokenOrb
-          SetActive(false);
-          brokenOrb.SetActive(true);  // activate the broken orb and all its pieces
-          InternalCalls.UnparentEntity(brokenOrb.mEntityID);
+      case State.ROLLING:
+        {
+          // if orb has rolled off
+          if (InternalCalls.GetVelocity(mEntityID).Y < -2f)
+          {
+            // orb is falliing off now, swap to brokenOrb
+            SetActive(false);
+            brokenOrb.SetActive(true);  // activate the broken orb and all its pieces
+            InternalCalls.UnparentEntity(brokenOrb.mEntityID);
+            currState = State.OFF_TABLE;
 
-          Destroy(this);  // we are done here
+            // align all colliders to their pieces
+            foreach (uint id in InternalCalls.GetAllChildren(brokenOrb.mEntityID))
+            {
+              InternalCalls.UpdatePhysicsToTransform(id);
+            }
+            return;
+          }
+
+          Vector3 forceDir = InternalCalls.GetWorldPosition(mEntityID) - tableSurfaceMidpoint;
+          forceDir = Vector3.Normalize(new Vector3(forceDir.X, 0f, forceDir.Z));
+          InternalCalls.SetVelocity(mEntityID, forceDir * pushOffStrength);
+
+          Vector3 angularDirection = Vector3.Normalize(Vector3.Cross(Vector3.UnitY, forceDir));
+          InternalCalls.SetAngularVelocity(mEntityID, angularDirection * pushOffStrength);
+
+
+          break;
+        }
+
+      case State.OFF_TABLE:
+        {
+          if (firstFrameAfterFall)
+          {
+            firstFrameAfterFall = false;
+            return;
+          }
+
+          foreach (uint id in InternalCalls.GetAllChildren(brokenOrb.mEntityID))
+          {
+            InternalCalls.LockRigidBody(id, false);
+          }
+
+          currState = State.INACTIVE;
+          //Destroy(this);  // we are done here
 
           break;
         }
@@ -158,10 +205,11 @@ public class HexTableOrb : Entity
   {
     StopGlowing();
 
-    // remove all velocity
-    InternalCalls.SetVelocity(mEntityID, Vector3.Zero);
-    InternalCalls.SetAngularVelocity(mEntityID, Vector3.Zero);
-    InternalCalls.SetGravityFactor(mEntityID, 10f);
+    Vector3 zeroes = Vector3.Zero;
+    InternalCalls.SetRotationEuler(mEntityID, ref zeroes);
+    InternalCalls.SetVelocity(mEntityID, zeroes);
+    InternalCalls.SetAngularVelocity(mEntityID, zeroes);
+    InternalCalls.SetGravityFactor(mEntityID, 20f);
 
     currState = State.FALLING;
   }
