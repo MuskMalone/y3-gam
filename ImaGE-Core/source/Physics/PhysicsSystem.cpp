@@ -266,7 +266,7 @@ namespace IGE {
 
 			}
 			rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, (bool)rigidbody.motionType);
-
+			rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eENABLE_CCD, true);
 
 			rigidbody.bodyID = reinterpret_cast<void*>(rb);
 			//mRigidBodyIDs.emplace(rigidbody.bodyID, rb);
@@ -351,6 +351,7 @@ namespace IGE {
 			mScene->addActor(*rb);
 			collider.idx = 0;
 			rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, true);
+			rb->setRigidBodyFlag(physx::PxRigidBodyFlag::eENABLE_CCD, true);
 			//getting from graphics
 			if (rb->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
 				rb->setKinematicTarget(physx::PxTransform{ ToPxVec3(transform.worldPos), ToPxQuat(transform.worldRot) });
@@ -1144,7 +1145,7 @@ namespace IGE {
 			physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS | 
 			physx::PxPairFlag::eNOTIFY_CONTACT_POINTS |
 			physx::PxPairFlag::eTRIGGER_DEFAULT |
-			physx::PxPairFlag::eDETECT_DISCRETE_CONTACT;
+			physx::PxPairFlag::eDETECT_CCD_CONTACT;
 
 		return IGE_LAYERMGR.LayerFilterShader(
 				attributes0, filterData0, attributes1, filterData1, pairFlags, constantBlock, constantBlockSize);
