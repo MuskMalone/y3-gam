@@ -33,7 +33,7 @@
             "duration": 6.0,
             "nextNodes": [
                 2,
-                4
+                3
             ]
         },
         {
@@ -48,11 +48,11 @@
             "startTime": 6.0,
             "duration": 0.10000000149011612,
             "nextNodes": [
-                3
+                4
             ]
         },
         {
-            "nodeId": 3,
+            "nodeId": 4,
             "endValue": {
                 "x": 0.0,
                 "y": 0.0,
@@ -61,11 +61,11 @@
             "type": "NONE",
             "interpolationType": "LINEAR",
             "startTime": 6.099999904632568,
-            "duration": 1.0,
+            "duration": 0.30000001192092898,
             "nextNodes": []
         },
         {
-            "nodeId": 4,
+            "nodeId": 3,
             "endValue": {
                 "x": 1.0,
                 "y": 1.0,
