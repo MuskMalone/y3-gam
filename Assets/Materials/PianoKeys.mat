@@ -1,13 +1,13 @@
 {
-    "name": "ControlPanelR",
+    "name": "PianoKeys",
     "shader": "PBR",
     "albedoColor": {
-        "x": 0.7491638660430908,
-        "y": 0.0,
-        "z": 0.0
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
     },
-    "metalness": 0.8679999709129334,
-    "roughness": 0.6489999890327454,
+    "metalness": 0.5,
+    "roughness": 0.5,
     "ao": 1.0,
     "emission": {
         "x": 0.0,
