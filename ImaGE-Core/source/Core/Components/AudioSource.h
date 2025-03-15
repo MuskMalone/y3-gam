@@ -23,6 +23,7 @@ namespace Component{
 		void PlaySound(std::string const&) const;
 		void PauseSound(std::string const& id) const;
 		void StopSound(std::string const& id) const;
+		void StopAllSounds() const;
 		uint32_t GetPlaybackTime(std::string const& id) const;
 		void SetPlaybackTime(std::string const& id, uint32_t time);
 		void RemoveSound(std::string const&);

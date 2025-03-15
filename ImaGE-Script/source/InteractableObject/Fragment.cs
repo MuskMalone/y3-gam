@@ -10,13 +10,12 @@ public class Fragment : Entity
   public Entity fragmentPickupUI;
   public string fragAnimNameFlyUp;
   public string fragAnimNameEnterBox;
-  public PlayerMove playerMove;
   public Entity playerCamera, fragmentCamera;
   public Entity GardenFragment, Particles;
   public Entity ParticleBurst;  // boom
   public Transition transition;
-  public Entity BlackBorder1;
-  public Entity BlackBorder2;
+  public BlackBorder blackBorder;
+  private bool fragmentCollected = false;
 
   public Vector3 startPos;
   public Vector3 downPos;
@@ -42,8 +41,6 @@ public class Fragment : Entity
   void Start()
   {
     fragmentPickupUI?.SetActive(false);
-    BlackBorder1.SetActive(false);
-    BlackBorder2.SetActive(false);
   }
 
   void Update()
@@ -142,10 +139,9 @@ public class Fragment : Entity
 
           transition.StartTransition(true, 0.5f, Transition.TransitionType.WIPE);
           SetPlayerCameraAsMain();
-          playerMove.UnfreezePlayer();
-          BlackBorder1.SetActive(false);
-          BlackBorder2.SetActive(false);
+          blackBorder.HideBlackBorders();
           Destroy();
+          fragmentCollected = true;
 
           break;
         }
@@ -170,11 +166,9 @@ public class Fragment : Entity
   {
     InternalCalls.PlayAnimation(mEntityID, fragAnimNameFlyUp, false);
     InternalCalls.PlaySound(mEntityID, "FloatUpSFX");
-    playerMove.FreezePlayer();
     GardenFragment.SetActive(true);
     Particles.SetActive(true);
-    BlackBorder1.SetActive(true);
-    BlackBorder2.SetActive(true);
+    blackBorder.DisplayBlackBorders();
   }
 
   void TriggerFlyinAnimation()
@@ -185,5 +179,10 @@ public class Fragment : Entity
     InternalCalls.PlayAnimation(parent, fragAnimNameEnterBox, false);
     Debug.Log("Playing animation: " + fragAnimNameEnterBox);
     SetFragmentCameraAsMain();
+  }
+
+  public bool IsFragmentCollected()
+  {
+    return fragmentCollected;
   }
 }

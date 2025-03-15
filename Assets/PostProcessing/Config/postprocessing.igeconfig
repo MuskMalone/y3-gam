@@ -84,6 +84,19 @@
             }
         },
         {
+            "key": "Control Room Prototype",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "TutorialLevelNew",
             "value": {
                 "shaders": [],
@@ -253,6 +266,19 @@
             }
         },
         {
+            "key": "Bootup",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
             "key": "TutorialLevel",
             "value": {
                 "shaders": [],
@@ -280,6 +306,19 @@
         },
         {
             "key": "MaterialTest",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "contacttest",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -331,7 +370,7 @@
             }
         },
         {
-            "key": "HexTableOrb",
+            "key": "candlestand",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,

@@ -47,7 +47,8 @@ namespace Component {
 		//play sound
 		if (sounds.find(id) != sounds.end()) {
 			auto const& sound{ sounds.at(id) };
-			IGE::Audio::AudioManager::GetInstance().PlaySound(sound.guid, sound.playSettings, channelGroup);
+			sound.playSettings.name = id;
+			IGE::Audio::AudioManager::GetInstance().PlaySound(sound.guid, sound.playSettings, channelGroup, id);
 		}
 	}
 
@@ -60,6 +61,12 @@ namespace Component {
 	void AudioSource::StopSound(std::string const& id) const {
 		if (sounds.find(id) != sounds.end()) {
 			auto const& sound{ sounds.at(id) };
+			IGE::Audio::AudioManager::GetInstance().StopSound(sound.guid, sound.playSettings);
+		}
+	}
+	void AudioSource::StopAllSounds() const
+	{
+		for (auto const& [name, sound] : sounds) {
 			IGE::Audio::AudioManager::GetInstance().StopSound(sound.guid, sound.playSettings);
 		}
 	}

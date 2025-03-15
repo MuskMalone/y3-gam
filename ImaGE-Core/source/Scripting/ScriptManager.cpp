@@ -99,7 +99,9 @@ namespace Mono
     { "EyeBallFollow", ScriptFieldType::EYEBALL_FOLLOW },
     { "HammerLevel3", ScriptFieldType::HAMMER_L3 },
     { "BlackBorder", ScriptFieldType::BLACK_BORDER },
-    { "HexTableOrb", ScriptFieldType::HEX_TABLE_ORB }
+    { "HexTableOrb", ScriptFieldType::HEX_TABLE_ORB },
+    { "Level3Dialogue", ScriptFieldType::LEVEL3_DIALOGUE },
+    { "Fragment", ScriptFieldType::FRAGMENT }
   };
 }
 
@@ -1174,6 +1176,7 @@ void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v)
 {
     std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
+    //printf("%s is setting volume", entity.GetComponent<Component::Tag>().tag.c_str());
     entity.GetComponent<Component::AudioSource>().SetSoundVolume(name, v);
 }
 

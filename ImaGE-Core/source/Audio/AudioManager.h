@@ -54,7 +54,8 @@ namespace IGE {
 			mutable std::unordered_set<FMOD::Channel*> channels; // not for imgui
 			mutable bool paused{ false }; // not fo rimgui
 			mutable bool manualStop{ false }; // not for imgui
-		};
+			mutable std::string name; // toremove
+		}; 
 
 		struct Sound {
 
@@ -62,7 +63,7 @@ namespace IGE {
 			const uint32_t mKeyhash;
 			~Sound();
 			Sound(std::string const& fp);
-			void PlaySound(SoundInvokeSetting const&, FMOD::ChannelGroup* group);
+			void PlaySound(SoundInvokeSetting const&, FMOD::ChannelGroup* group, std::string const& name);
 		};
 
 		class AudioManager : public ThreadSafeSingleton<AudioManager> {
@@ -97,10 +98,10 @@ namespace IGE {
 			//Add a sound to FMOD and audio manager
 			 FMOD::Sound* AddSound(std::string const& path, uint32_t name);
 
-			 void PlaySound(uint32_t sound, SoundInvokeSetting const& settings, FMOD::ChannelGroup* group);
+			 void PlaySound(uint32_t sound, SoundInvokeSetting const& settings, FMOD::ChannelGroup* group, std::string const& name);
 
 			//Free a speciifc sound from FMOD and audio manager, free up memory when a sound is no longer needed
-			 void PlaySound(IGE::Assets::GUID const& guid, SoundInvokeSetting const&, uint64_t group);
+			 void PlaySound(IGE::Assets::GUID const& guid, SoundInvokeSetting const&, uint64_t group, std::string const& name);
 			 void PauseSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const&);
 			 void StopSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const&);
 			 void FreeSound(uint32_t sound);
@@ -130,6 +131,8 @@ namespace IGE {
 			//for managing groups of audio channels by grouping different sound effects, ambient sounds, etc., 
 			 std::unordered_map<ChannelGroupGUID, FMOD::ChannelGroup*> mGroup;
 			// std::unordered_map<std::string, std::list<FMOD::Channel*>> _mChannels;
+			 EVENT_CALLBACK_DECL(HandleRemoveComponent);
+			 EVENT_CALLBACK_DECL(HandleRemoveEntity);
 			 EVENT_CALLBACK_DECL(HandleSystemEvents);
 			 bool mSceneStarted{false};
 			 bool mSceneStopped{true}; // scene starts from a stopped state

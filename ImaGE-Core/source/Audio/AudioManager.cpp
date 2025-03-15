@@ -303,7 +303,7 @@ namespace IGE {
             return mData[namehash];
         }
 
-        void AudioManager::PlaySound(uint32_t sound, SoundInvokeSetting const& settings, FMOD::ChannelGroup* group)
+        void AudioManager::PlaySound(uint32_t sound, SoundInvokeSetting const& settings, FMOD::ChannelGroup* group, std::string const& name)
         {
             FMOD_RESULT result;
 
@@ -436,11 +436,13 @@ namespace IGE {
             temp->setCallback(
                 settings.FMODChannelCallback
             );
+
+            //settings.name = name;
             temp->setUserData(const_cast<SoundInvokeSetting*>(&settings));
             settings.channels.insert(temp);
         }
 
-        void AudioManager::PlaySound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& settings, uint64_t group)
+        void AudioManager::PlaySound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& settings, uint64_t group, std::string const& name)
         {
             if (settings.paused) {
                 for (auto& channel : settings.channels) {
@@ -456,7 +458,7 @@ namespace IGE {
             if (IGE::Assets::AssetManager::GetInstance().IsGUIDValid<IGE::Assets::AudioAsset>(guid)) {
                 auto audioref{ IGE_ASSETMGR.GetAsset<IGE::Assets::AudioAsset>(guid) };
                 auto& sound{ audioref->mSound };
-                sound.PlaySound(settings, mGroup.at(group));
+                sound.PlaySound(settings, mGroup.at(group), name);
             }
             else {
                 Debug::DebugLogger::GetInstance().LogError("sound " + std::to_string(guid) + " does not exist");
@@ -525,7 +527,20 @@ namespace IGE {
         {
 
         }
-
+        EVENT_CALLBACK_DEF(AudioManager, HandleRemoveComponent) {
+            auto e{ CAST_TO_EVENT(Events::RemoveComponentEvent) };
+            if (e->mType == rttr::type::get<Component::AudioSource>()) {
+                //std::cout << e->mEntity.GetComponent<Component::Tag>().tag << " removing audio" << std::endl;
+                e->mEntity.GetComponent<Component::AudioSource>().StopAllSounds();
+            }
+        }
+        EVENT_CALLBACK_DEF(AudioManager, HandleRemoveEntity) {
+            auto e{ CAST_TO_EVENT(Events::RemoveEntityEvent) };
+            if (e->mEntity.HasComponent<Component::AudioSource>()) {
+                //std::cout << e->mEntity.GetComponent<Component::Tag>().tag << " removing audio" << std::endl;
+                e->mEntity.GetComponent<Component::AudioSource>().StopAllSounds();
+            }
+        }
         EVENT_CALLBACK_DEF(AudioManager, HandleSystemEvents) {
             auto const& state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
             if (state == Events::SceneStateChange::NewSceneState::STARTED) {
@@ -565,8 +580,8 @@ namespace IGE {
               IGE_DBGLOGGER.LogError("[AudioManager] Failed to free sound" + mKey);
             }
         }
-        void Sound::PlaySound(SoundInvokeSetting const& settings, FMOD::ChannelGroup* group) {
-            AudioManager::GetInstance().PlaySound(mKeyhash, settings, group);
+        void Sound::PlaySound(SoundInvokeSetting const& settings, FMOD::ChannelGroup* group, std::string const& name) {
+            AudioManager::GetInstance().PlaySound(mKeyhash, settings, group, name);
         }
         FMOD_RESULT SoundInvokeSetting::FMODChannelCallback(
             FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type, 
@@ -585,6 +600,10 @@ namespace IGE {
                 SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
                 if (userData && !IGE::Audio::AudioManager::GetInstance().mSceneStopped) {
                     if (loopCount == 0)
+                        if (settings->name == "") { // good enough detection ig
+                            std::cout << "soundsetting has no name\n";
+                            return FMOD_OK;
+                        }
                         settings->channels.erase(channel); // Remove channel from active list
                 }
 #ifdef AUDIO_VERBOSE

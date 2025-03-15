@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="source\Credits\CreditsText.cs" />
     <Compile Include="source\Cutscene\BlackBorder.cs" />
+    <Compile Include="source\Cutscene\BootupSequence.cs" />
     <Compile Include="source\Cutscene\EndSceneFadeToBlack.cs" />
     <Compile Include="source\Cutscene\TutorialCutscene.cs" />
     <Compile Include="source\Dialogue\Dialogue.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="source\DynamicAudio\EyeBallFollowSFX.cs" />
     <Compile Include="source\DynamicAudio\PlayerFootsteps.cs" />
     <Compile Include="source\DynamicAudio\TransitionHintLevel1.cs" />
+    <Compile Include="source\DynamicAudio\WoodenPlanksSFXLevel3.cs" />
     <Compile Include="source\Engine Tools\Serializer.cs" />
     <Compile Include="source\Engine Tools\Easing.cs" />
     <Compile Include="source\Engine Tools\FPS.cs" />
@@ -167,6 +169,7 @@
     <Compile Include="source\Level3\EyeballFollow.cs" />
     <Compile Include="source\Level2\HexTableOrb.cs" />
     <Compile Include="source\Level3\Level3Dialogue.cs" />
+    <Compile Include="source\Level3\Level3ExitTrigger.cs" />
     <Compile Include="source\Level3\PitPuzzle.cs" />
     <Compile Include="source\MainMenu\CDDragAndDrop.cs" />
     <Compile Include="source\MainMenu\ContinueCD.cs" />

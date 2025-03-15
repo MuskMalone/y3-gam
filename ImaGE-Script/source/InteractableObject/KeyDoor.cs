@@ -15,7 +15,6 @@ public class KeyDoor : Entity
   public string doorSlamAnimName;
   public BlackBorder blackBorder;
 
-  public PlayerMove playerMove;
   public Entity playerCamera;
   public Entity keyCamera;
   float elapsedTime = 0.0f;
@@ -67,7 +66,7 @@ public class KeyDoor : Entity
 
     else if (!doorInteraction && triggerInteraction)
     {
-      if (InternalCalls.OnTriggerEnter(corridorTrigger.mEntityID, playerMove.mEntityID))
+      if (InternalCalls.OnTriggerEnter(corridorTrigger.mEntityID, blackBorder.playerMove.mEntityID))
       {
         SlamDoor();
         triggerInteraction = false;
@@ -127,7 +126,6 @@ public class KeyDoor : Entity
           currentAnim = null;
           initialAnimation = true;
           SetPlayerCameraAsMain();
-          playerMove.UnfreezePlayer();
           blackBorder.HideBlackBorders();
         }
       }
