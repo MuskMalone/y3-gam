@@ -25,7 +25,7 @@ public class HexTeleport : Entity
         else if (Input.GetKeyDown(KeyCode.EQUAL)) TeleportPlayer(teleportPosition6);
     }
 
-    private void TeleportPlayer(Vector3 newPosition)
+    public void TeleportPlayer(Vector3 newPosition)
     {
         playerMove.FreezePlayer(); // Temporarily freeze player to ensure teleportation is applied
         InternalCalls.SetPosition(playerMove.mEntityID, ref newPosition); // Set the player's new position
