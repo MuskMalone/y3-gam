@@ -22,4 +22,8 @@ namespace GUI {
         break;
     }
   }
+
+  EVENT_CALLBACK_DEF(GUIVault, OnSceneSave) {
+    sSceneModified = false;
+  }
 }

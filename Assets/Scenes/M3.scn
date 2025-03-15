@@ -5256,7 +5256,6 @@
                 129,
                 147,
                 178,
-                199,
                 231,
                 589,
                 597,
@@ -6277,40 +6276,316 @@
             "ID": 111,
             "Parent": 178,
             "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 9061078318612854985
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "MainMenuHover",
+                        "isActive": false
+                    }
                 },
-                "subDataId": 3,
-                "componentData": [],
-                "removedComponents": []
-            }
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.004000000189989805,
+                            "y": -0.1420000046491623,
+                            "z": 4.0
+                        },
+                        "scale": {
+                            "x": 0.2199999988079071,
+                            "y": 0.0820000022649765,
+                            "z": 0.049800798296928409
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.14239999651908875,
+                            "y": -2.8456802368164064,
+                            "z": 80.31999969482422
+                        },
+                        "worldScale": {
+                            "x": 7.831999778747559,
+                            "y": 1.6432801485061646,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 111,
+                                "scriptName": "PauseMenuButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "TriggerButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 2464312753618505060
+                        }
+                    }
+                }
+            ]
         },
         {
             "ID": 112,
             "Parent": 178,
             "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 9061078318612854985
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "ResumeHover",
+                        "isActive": false
+                    }
                 },
-                "subDataId": 2,
-                "componentData": [],
-                "removedComponents": []
-            }
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.004999999888241291,
+                            "y": 0.10999999940395355,
+                            "z": 4.0
+                        },
+                        "scale": {
+                            "x": 0.2199999988079071,
+                            "y": 0.0820000022649765,
+                            "z": 0.049800798296928409
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.17799998819828034,
+                            "y": 2.204400062561035,
+                            "z": 80.31999969482422
+                        },
+                        "worldScale": {
+                            "x": 7.831999778747559,
+                            "y": 1.6432801485061646,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 112,
+                                "scriptName": "PauseMenuButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "TriggerButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6804212942469185314
+                        }
+                    }
+                }
+            ]
         },
         {
             "ID": 113,
             "Parent": 178,
             "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 9061078318612854985
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SettingsHover",
+                        "isActive": false
+                    }
                 },
-                "subDataId": 1,
-                "componentData": [],
-                "removedComponents": []
-            }
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.010999999940395356,
+                            "y": -0.012000000104308129,
+                            "z": 4.0
+                        },
+                        "scale": {
+                            "x": 0.2199999988079071,
+                            "y": 0.0820000022649765,
+                            "z": 0.049800798296928409
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.39159998297691347,
+                            "y": -0.24048000574111939,
+                            "z": 80.31999969482422
+                        },
+                        "worldScale": {
+                            "x": 7.831999778747559,
+                            "y": 1.6432801485061646,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 113,
+                                "scriptName": "PauseMenuButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "TriggerButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 4557617938621859577
+                        }
+                    }
+                }
+            ]
         },
         {
             "ID": 114,
@@ -7233,7 +7508,8 @@
             "Parent": 75,
             "Child Entities": [
                 130,
-                131
+                131,
+                199
             ],
             "Components": [
                 {
@@ -7286,6 +7562,58 @@
                 {
                     "Layer": {
                         "layerName": "UI"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 129,
+                                "scriptName": "BlackBorder",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 130,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorder1"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 131,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorder2"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 199,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "centerDot"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -8977,73 +9305,142 @@
                 112,
                 113
             ],
-            "Position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "Prefab": {
-                "GUID": {
-                    "ID": 9061078318612854985
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "PauseMenu",
+                        "isActive": false
+                    }
                 },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "ScriptComponent",
-                        "value": {
-                            "scriptList": [
-                                {
-                                    "entityID": 178,
-                                    "scriptName": "PauseMenu",
-                                    "scriptFieldInstList": [
-                                        {
-                                            "data": {
-                                                "entityID": 111,
-                                                "scriptName": "Entity"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "MainMenuButton"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 112,
-                                                "scriptName": "Entity"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "ResumeButton"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 113,
-                                                "scriptName": "Entity"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "SettingsButton"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 40,
-                                                "scriptName": "PlayerMove"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "playerMove"
-                                            }
-                                        }
-                                    ]
-                                }
-                            ]
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 35.599998474121097,
+                            "y": 20.040000915527345,
+                            "z": 20.079999923706056
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 35.599998474121097,
+                            "y": 20.040000915527345,
+                            "z": 20.079999923706056
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
                         }
                     }
-                ],
-                "removedComponents": []
-            }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 178,
+                                "scriptName": "PauseMenu",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 111,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "MainMenuButton"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 112,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ResumeButton"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 113,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "SettingsButton"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 75,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "transitionDuration"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 5831806178521839330
+                        }
+                    }
+                }
+            ]
         },
         {
             "ID": 180,
@@ -9799,7 +10196,7 @@
         },
         {
             "ID": 199,
-            "Parent": 75,
+            "Parent": 129,
             "Child Entities": [],
             "Components": [
                 {
@@ -9828,7 +10225,7 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
@@ -10245,6 +10642,163 @@
                                 }
                             ]
                         }
+                    },
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 203,
+                                    "scriptName": "Fragment",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 415,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "GardenFragment"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 634,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "ParticleBurst"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 26,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Particles"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 129,
+                                                "scriptName": "BlackBorder"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "blackBorder"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "x": 6.400000095367432,
+                                                "y": 15.0,
+                                                "z": -22.0
+                                            },
+                                            "type": "System.Numerics.Vector3",
+                                            "scriptField": {
+                                                "fieldName": "downPos"
+                                            }
+                                        },
+                                        {
+                                            "data": 2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "explosionWaitTime"
+                                            }
+                                        },
+                                        {
+                                            "data": "FlyIn",
+                                            "type": "System.String",
+                                            "scriptField": {
+                                                "fieldName": "fragAnimNameEnterBox"
+                                            }
+                                        },
+                                        {
+                                            "data": "FlyUp",
+                                            "type": "System.String",
+                                            "scriptField": {
+                                                "fieldName": "fragAnimNameFlyUp"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 118,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "fragmentCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 123,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "fragmentPickupUI"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 0,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 40,
+                                                "scriptName": "PlayerInteraction"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "x": 6.400000095367432,
+                                                "y": 24.0,
+                                                "z": -22.0
+                                            },
+                                            "type": "System.Numerics.Vector3",
+                                            "scriptField": {
+                                                "fieldName": "startPos"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 75,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "x": 6.400000095367432,
+                                                "y": 15.0,
+                                                "z": -27.0
+                                            },
+                                            "type": "System.Numerics.Vector3",
+                                            "scriptField": {
+                                                "fieldName": "zoomPos"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
                     }
                 ],
                 "removedComponents": []
@@ -10390,7 +10944,7 @@
                         "scale": {
                             "x": 21.350000381469728,
                             "y": 10.755208969116211,
-                            "z": 0.7599999904632568
+                            "z": 3.9600000381469728
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -21915,6 +22469,16 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 129,
+                                            "scriptName": "BlackBorder"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorder"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 76,
                                             "scriptName": "Inventory"
                                         },
@@ -21968,16 +22532,6 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 40,
-                                            "scriptName": "PlayerMove"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerMove"
                                         }
                                     }
                                 ]
@@ -44438,7 +44992,7 @@
                                 "key": "DoorSlam",
                                 "value": {
                                     "guid": {
-                                        "ID": 17224807134642633715
+                                        "ID": 14529905657129758092
                                     },
                                     "playSettings": {
                                         "position": {
@@ -44495,6 +45049,34 @@
                                 "value": {
                                     "guid": {
                                         "ID": 17970498899727066841
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 53.93427276611328,
+                                            "y": 14.157228469848633,
+                                            "z": 54.15336227416992
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "MotherHumming",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11294076012291334009
                                     },
                                     "playSettings": {
                                         "position": {
@@ -44630,6 +45212,16 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 129,
+                                            "scriptName": "BlackBorder"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorder"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 210,
                                             "scriptName": "Entity"
                                         },
@@ -44726,16 +45318,6 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 40,
-                                            "scriptName": "PlayerMove"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerMove"
                                         }
                                     },
                                     {

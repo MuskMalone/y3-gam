@@ -153,6 +153,7 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void DestroyEntity(uint EntityID);
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void DestroyScript(Entity obj, uint EntityID);
 
@@ -169,6 +170,8 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static uint FindParentByTag(string s);
 
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void UnparentEntity(uint entityID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static uint GetParentByID(uint EntityID);

@@ -1,0 +1,701 @@
+{
+    "Name": "HexTableOrb",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HexTableOrb",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.8820000290870667,
+                            "y": 0.8820000290870667,
+                            "z": 0.8820000290870667
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": 88.50001525878906,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.8820000290870667,
+                            "y": 0.8820000290870667,
+                            "z": 0.8820000290870667
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "SphereCollider": {
+                        "radius": 0.4410000145435333,
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "DYNAMIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Bloom": {
+                        "threshold": 0.7900000214576721,
+                        "intensity": 1.2000000476837159,
+                        "range": 10.0
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Glow",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.8820000290870667,
+                            "y": 0.8820000290870667,
+                            "z": 0.8820000290870667
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 935372323414567374
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "NonShatteredBall",
+                        "GUID": {
+                            "ID": 16809276307212552965
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BrokenOrb",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.8820000290870667,
+                            "y": 0.8820000290870667,
+                            "z": 0.8820000290870667
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 5,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Piece1",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.8820000290870667,
+                            "y": 0.8820000290870667,
+                            "z": 0.8820000290870667
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8188596919608343912
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "light5.006",
+                        "GUID": {
+                            "ID": 17679160167059989235
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.10000000149011612,
+                            "y": 0.10000000149011612,
+                            "z": 0.20000000298023225
+                        },
+                        "positionOffset": {
+                            "x": -0.25,
+                            "y": 0.10000000149011612,
+                            "z": -0.10000000149011612
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": -9.0,
+                            "z": -23.0
+                        },
+                        "rotationOffset": {
+                            "x": -0.015642227604985238,
+                            "y": -0.07688400894403458,
+                            "z": -0.19875334203243257,
+                            "w": 0.9769038558006287
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 10.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "DYNAMIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Parent": 5,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Piece2",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.8820000290870667,
+                            "y": 0.8820000290870667,
+                            "z": 0.8820000290870667
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8188596919608343912
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "light5.004",
+                        "GUID": {
+                            "ID": 17679160167059989235
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.30000001192092898,
+                            "y": 0.05000000074505806,
+                            "z": 0.10000000149011612
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": -0.2800000011920929,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 16.0,
+                            "y": -200.0,
+                            "z": -178.0
+                        },
+                        "rotationOffset": {
+                            "x": -0.9754968881607056,
+                            "y": 0.007143499329686165,
+                            "z": 0.17432408034801484,
+                            "w": 0.13403679430484773
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 10.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "DYNAMIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "Parent": 5,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Piece3",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.8820000290870667,
+                            "y": 0.8820000290870667,
+                            "z": 0.8820000290870667
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8188596919608343912
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "light5.005",
+                        "GUID": {
+                            "ID": 17679160167059989235
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.10000000149011612,
+                            "y": 0.10000000149011612,
+                            "z": 0.20000000298023225
+                        },
+                        "positionOffset": {
+                            "x": 0.20000000298023225,
+                            "y": 0.15000000596046449,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 2.0,
+                            "y": -16.0,
+                            "z": -57.0
+                        },
+                        "rotationOffset": {
+                            "x": -0.05120934545993805,
+                            "y": -0.13053561747074128,
+                            "z": -0.4703085422515869,
+                            "w": 0.8712909817695618
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 10.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "DYNAMIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 6,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Dimmed",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.8820000290870667,
+                            "y": 0.8820000290870667,
+                            "z": 0.8820000290870667
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7163019776344299,
+                            "z": 0.0,
+                            "w": 0.6977904438972473
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8188596919608343912
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "NonShatteredBall",
+                        "GUID": {
+                            "ID": 16809276307212552965
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}

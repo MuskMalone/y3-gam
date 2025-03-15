@@ -21,6 +21,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Events/EventManager.h>
 #include <Serialization/Serializer.h>
 #include <Serialization/Deserializer.h>
+#include <Scenes/SceneManager.h>
 
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <imgui/imgui.h>
@@ -955,9 +956,10 @@ namespace GUI
   }
 
   void SceneHierarchy::SceneModified() {
-    if (mSceneModified) { return; }
+    if (mSceneModified || IGE_SCENEMGR.IsSceneInProgress()) { return; }
 
     QUEUE_EVENT(Events::SceneModifiedEvent);
+    mSceneModified = true;
   }
 
 } // namespace GUI

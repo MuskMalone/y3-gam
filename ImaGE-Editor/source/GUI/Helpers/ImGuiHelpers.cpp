@@ -46,6 +46,7 @@ namespace ImGuiHelpers
     ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(GUI::AssetPayload::sAssetDragDropPayload);
     if (!drop) { return false; }
 
+    bool modified{ false };
     GUI::AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
     switch (assetPayload.mAssetType)
     {
@@ -67,6 +68,8 @@ namespace ImGuiHelpers
         if (entity.HasComponent<Component::PrefabOverrides>()) {
           entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Material>();
         }
+
+        modified = true;
       }
       catch (Debug::ExceptionBase&) {
         IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
@@ -113,6 +116,8 @@ namespace ImGuiHelpers
             entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Sprite2D>();
           }
         }
+
+        modified = true;
       }
       catch (Debug::ExceptionBase&) {
         IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
@@ -139,6 +144,8 @@ namespace ImGuiHelpers
         if (entity.HasComponent<Component::PrefabOverrides>()) {
           entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Text>();
         }
+
+        modified = true;
       }
       catch (Debug::ExceptionBase&) {
         IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
@@ -161,7 +168,8 @@ namespace ImGuiHelpers
       if (entity.HasComponent<Component::PrefabOverrides>()) {
         entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::AudioSource>();
       }
-      
+
+      modified = true;
       break;
     }
     case GUI::AssetPayload::ANIMATION:
@@ -182,6 +190,8 @@ namespace ImGuiHelpers
         if (entity.HasComponent<Component::PrefabOverrides>()) {
           entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Animation>();
         }
+
+        modified = true;
       }
       catch (Debug::ExceptionBase&) {
         IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
@@ -192,7 +202,7 @@ namespace ImGuiHelpers
       break;
     }
 
-    return true;
+    return modified;
   }
 
   ImGuiID GetTreeNodeId(std::string const& nodeName, ImGuiID parentPath) {

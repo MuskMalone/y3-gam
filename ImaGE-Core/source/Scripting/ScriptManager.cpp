@@ -83,21 +83,23 @@ namespace Mono
     { "Inside", ScriptFieldType::INSIDE},
     { "Test", ScriptFieldType::TEST},
     { "InsideB", ScriptFieldType::INSIDEB},
-    { "PlayerMove", ScriptFieldType::PLAYERMOVE},
+    { "PlayerMove", ScriptFieldType::PLAYER_MOVE},
     { "Dialogue", ScriptFieldType::DIALOGUE},
-    { "PlayerInteraction", ScriptFieldType::PLAYERINTERACTION },
+    { "PlayerInteraction", ScriptFieldType::PLAYER_INTERACTION },
     { "Inventory", ScriptFieldType::INVENTORY },
-    { "TutorialLevelInventory", ScriptFieldType::TUTORIALLEVELINVENTORY },
-    { "Level2Inventory", ScriptFieldType::LEVEL2INVENTORY },
-    { "Level3Inventory", ScriptFieldType::LEVEL3INVENTORY },
-    { "SpecialDialogue", ScriptFieldType::SPECIALDIALOGUE },
-    { "KeyDoor", ScriptFieldType::KEYDOOR },
-    { "PictureAlign", ScriptFieldType::PICTUREALIGN },
-    { "ControlPanel2", ScriptFieldType::CONTROLPANEL },
+    { "TutorialLevelInventory", ScriptFieldType::TUTORIAL_LEVEL_INVENTORY },
+    { "Level2Inventory", ScriptFieldType::LEVEL2_INVENTORY },
+    { "Level3Inventory", ScriptFieldType::LEVEL3_INVENTORY },
+    { "SpecialDialogue", ScriptFieldType::SPECIAL_DIALOGUE },
+    { "KeyDoor", ScriptFieldType::KEY_DOOR },
+    { "PictureAlign", ScriptFieldType::PICTURE_ALIGN },
+    { "ControlPanel2", ScriptFieldType::CONTROL_PANEL },
     { "Transition", ScriptFieldType::TRANSITION },
     { "PlayerArise",ScriptFieldType::PLAYER_ARISE},
-    { "EyeBallFollow", ScriptFieldType::EYEBALLFOLLOW },
-    { "HammerLevel3", ScriptFieldType::HAMMER_L3 }
+    { "EyeBallFollow", ScriptFieldType::EYEBALL_FOLLOW },
+    { "HammerLevel3", ScriptFieldType::HAMMER_L3 },
+    { "BlackBorder", ScriptFieldType::BLACK_BORDER },
+    { "HexTableOrb", ScriptFieldType::HEX_TABLE_ORB }
   };
 }
 
@@ -261,6 +263,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(FindChildByTag);
   ADD_INTERNAL_CALL(FindParentByTag);
   ADD_INTERNAL_CALL(GetAllChildren);
+  ADD_INTERNAL_CALL(UnparentEntity);
   ADD_INTERNAL_CALL(GetMainCameraPosition);
   ADD_INTERNAL_CALL(GetMainCameraDirection);
   ADD_INTERNAL_CALL(GetMainCameraRotation);
@@ -1446,6 +1449,12 @@ MonoArray* Mono::GetAllChildren(ECS::Entity::EntityID entity)
     mono_array_set(newArray, ECS::Entity::EntityID, i, allChildren[i]);
   }
   return newArray;
+}
+
+void Mono::UnparentEntity(ECS::Entity::EntityID entityId) {
+  ECS::Entity entity{ entityId };
+  IGE_ENTITYMGR.RemoveParent(entity);
+  TransformHelpers::UpdateLocalTransform(entity);
 }
 
 glm::vec3 Mono::GetMainCameraPosition(ECS::Entity::EntityID cameraEntity) {

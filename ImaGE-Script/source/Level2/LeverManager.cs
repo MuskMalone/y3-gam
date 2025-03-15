@@ -4,151 +4,152 @@ using System.Collections.Generic;
 
 public class LeverManager : Entity
 {
-    public Entity leverLight1;
-    public Entity leverLight2;
-    public Entity leverLight3;
-    public Entity leverLight4;
-    public Entity leverLight5;
+  public Entity playerCamera;
+  public Entity tableCamera;
+  public PlayerMove playerMove;
+  public Entity holderCollider1, holderCollider2, 
+    holderCollider3, holderCollider4, holderCollider5;
+  //public Entity door; // The door to unlock
 
-    public Entity leverBallGray1, leverBallGold1;
-    public Entity leverBallGray2, leverBallGold2;
-    public Entity leverBallGray3, leverBallGold3;
-    public Entity leverBallGray4, leverBallGold4;
-    public Entity leverBallGray5, leverBallGold5;
 
-    public Entity playerCamera;
-    public Entity tableCamera;
-    public PlayerMove playerMove;
-    //public Entity door; // The door to unlock
-    private int leversPulled = 0;
-    private int totalLevers = 5; // Set total number of levers required
-    private bool isCameraSwitched = false;  // Track if we're in table view
-    private float switchBackTime = 0f;      // Store when to switch back
-    private float switchDuration = 4.0f;
+  public float timeBeforeOrbsDrop;  // how much time to wait after all levers pulled
 
-    public LeverManager() : base() { }
+  private int leversPulled = 0;
+  private int totalLevers = 5; // Set total number of levers required
+  private float switchBackTime = 0f;      // Store when to switch back
+  private float switchDuration = 4.5f;
+  private List<HexTableOrb> orbs = new List<HexTableOrb>();
 
-    void Start()
+  private enum State
+  {
+    IDLE,
+    TABLE_CAM,
+    DEACTIVATE_ORBS
+  }
+  private State currState = State.IDLE;
+
+  public LeverManager() : base() { }
+
+  void Start()
+  {
+    SetHolderCollidersActive(false);
+    Console.WriteLine("Lever Manager Initialized. Waiting for levers to be pulled.");
+  }
+
+
+  //public void LeverPulled()
+  //{
+  //    leversPulled++;
+  //    Console.WriteLine($"Lever pulled! {leversPulled}/{totalLevers} levers activated.");
+  //    if (playerMove != null)
+  //    {
+  //        playerMove.FreezePlayer(); // Freeze player
+  //    }
+
+
+  //    SetTableCameraAsMain(); // Instantly switch camera
+
+  //    ActivateLeverLight(leversPulled); // Activate the correct lever light
+
+  //    SetPlayerCameraAsMain(); // Instantly switch back
+
+  //    if (playerMove != null)
+  //    {
+  //        playerMove.UnfreezePlayer(); // Unfreeze player
+  //    }
+  //}
+
+  void Update()
+  {
+    switch (currState)
     {
-        Console.WriteLine("Lever Manager Initialized. Waiting for levers to be pulled.");
+      case State.IDLE:
 
-        InternalCalls.SetLightIntensity(leverLight1.mEntityID, 0.0f);
-        InternalCalls.SetLightIntensity(leverLight2.mEntityID, 0.0f);
-        InternalCalls.SetLightIntensity(leverLight3.mEntityID, 0.0f);
-        InternalCalls.SetLightIntensity(leverLight4.mEntityID, 0.0f);
-        InternalCalls.SetLightIntensity(leverLight5.mEntityID, 0.0f);
+        break;
 
-        leverBallGray1.SetActive(true);
-        leverBallGray2.SetActive(true); leverBallGray3.SetActive(true);
-        leverBallGray4.SetActive(true); leverBallGray5.SetActive(true);
-        leverBallGold1.SetActive(false);
-        leverBallGold2.SetActive(false); leverBallGold3.SetActive(false); leverBallGold4.SetActive(false);
-        leverBallGold5.SetActive(false);
-    }
-
-
-    //public void LeverPulled()
-    //{
-    //    leversPulled++;
-    //    Console.WriteLine($"Lever pulled! {leversPulled}/{totalLevers} levers activated.");
-    //    if (playerMove != null)
-    //    {
-    //        playerMove.FreezePlayer(); // Freeze player
-    //    }
-
-
-    //    SetTableCameraAsMain(); // Instantly switch camera
-
-    //    ActivateLeverLight(leversPulled); // Activate the correct lever light
-
-    //    SetPlayerCameraAsMain(); // Instantly switch back
-
-    //    if (playerMove != null)
-    //    {
-    //        playerMove.UnfreezePlayer(); // Unfreeze player
-    //    }
-    //}
-
-    void Update()
-    {
-        // Check if we're in table view and if the switch-back time has been reached
-        if (isCameraSwitched && Time.gameTime >= switchBackTime)
+      case State.TABLE_CAM:
         {
+          // Check if we're in table view and if the switch-back time has been reached
+          if (Time.gameTime >= switchBackTime)
+          {
             SetPlayerCameraAsMain();  // Switch back to player view
-            isCameraSwitched = false; // Reset flag
+            currState = State.IDLE;
 
             if (playerMove != null)
             {
-                playerMove.UnfreezePlayer(); // Allow player to move again
+              playerMove.UnfreezePlayer(); // Allow player to move again
             }
+
+            // if all levers pulled, transition to next phase
+            if (leversPulled >= totalLevers)
+            {
+              switchBackTime = Time.gameTime + timeBeforeOrbsDrop;  // just gonna reuse switchBackTime
+              currState = State.DEACTIVATE_ORBS;
+            }
+          }
+
+          break;
         }
-    }
 
-    public void LeverPulled()
-    {
-        leversPulled++;
-        Console.WriteLine($"Lever pulled! {leversPulled}/{totalLevers} levers activated.");
-
-        if (playerMove != null)
+      case State.DEACTIVATE_ORBS:
         {
-            playerMove.FreezePlayer(); // Freeze player movement
-        }
+          if (Time.gameTime < switchBackTime) { return; }
 
-        SetTableCameraAsMain(); // Switch to table camera
-        isCameraSwitched = true; // Set flag
-        switchBackTime = Time.gameTime + switchDuration; // Set when to switch back
+          // trigger the next sequence for the orbs
+          foreach (HexTableOrb orb in orbs)
+          {
+            orb.LosePower();
+          }
 
-        ActivateLeverLight(leversPulled); // Activate correct lever light
-    }
+          SetHolderCollidersActive(true);
 
-    private void ActivateLeverLight(int leverIndex)
-    {
-        switch (leverIndex)
-        {
-            case 1:
-                InternalCalls.SetLightIntensity(leverLight1.mEntityID, 5.0f);
-                leverBallGray1.SetActive(false);
-                leverBallGold1.SetActive(true);
-                break;
-            case 2:
-                InternalCalls.SetLightIntensity(leverLight2.mEntityID, 5.0f);
-                leverBallGray2.SetActive(false);
-                leverBallGold2.SetActive(true);
-                break;
-            case 3:
-                InternalCalls.SetLightIntensity(leverLight3.mEntityID, 5.0f);
-                leverBallGray3.SetActive(false);
-                leverBallGold3.SetActive(true);
-                break;
-            case 4:
-                InternalCalls.SetLightIntensity(leverLight4.mEntityID, 5.0f);
-                leverBallGray4.SetActive(false);
-                leverBallGold4.SetActive(true);
-                break;
-            case 5:
-                InternalCalls.SetLightIntensity(leverLight5.mEntityID, 5.0f);
-                leverBallGray5.SetActive(false);
-                leverBallGold5.SetActive(true);
-                UnlockFrag();
-                break;
+          // not sure if theres anything else to do after this
+          currState = State.IDLE;
+          break;
         }
     }
+  }
 
-    private void SetPlayerCameraAsMain()
+  public void AddOrb(ref HexTableOrb orb) { orbs.Add(orb); }
+
+  public void LeverPulled()
+  {
+    ++leversPulled;
+    Console.WriteLine($"Lever pulled! {leversPulled}/{totalLevers} levers activated.");
+
+    if (playerMove != null)
     {
-        Console.WriteLine("Entered SetCamera as Main");
-        InternalCalls.SetTag(playerCamera.mEntityID, "MainCamera");
-        InternalCalls.SetTag(tableCamera.mEntityID, "hexTableCamera");
+      playerMove.FreezePlayer(); // Freeze player movement
     }
 
-    private void SetTableCameraAsMain()
-    {
-        InternalCalls.SetTag(playerCamera.mEntityID, "hexTableCamera");
-        InternalCalls.SetTag(tableCamera.mEntityID, "MainCamera");
-    }
+    SetTableCameraAsMain(); // Switch to table camera
+    currState = State.TABLE_CAM;
+    switchBackTime = Time.gameTime + switchDuration; // Set when to switch back
+  }
 
-    private void UnlockFrag()
-    {
-        Console.WriteLine("All levers pulled! The door unlocks...");
-    }
+
+  private void SetHolderCollidersActive(bool active)
+  {
+    holderCollider1.SetActive(active); holderCollider2.SetActive(active);
+    holderCollider3.SetActive(active); holderCollider4.SetActive(active);
+    holderCollider5.SetActive(active);
+  }
+
+  private void SetPlayerCameraAsMain()
+  {
+    Console.WriteLine("Entered SetCamera as Main");
+    InternalCalls.SetTag(playerCamera.mEntityID, "MainCamera");
+    InternalCalls.SetTag(tableCamera.mEntityID, "hexTableCamera");
+  }
+
+  private void SetTableCameraAsMain()
+  {
+    InternalCalls.SetTag(playerCamera.mEntityID, "hexTableCamera");
+    InternalCalls.SetTag(tableCamera.mEntityID, "MainCamera");
+  }
+
+  private void UnlockFrag()
+  {
+    Console.WriteLine("All levers pulled! The door unlocks...");
+  }
 }

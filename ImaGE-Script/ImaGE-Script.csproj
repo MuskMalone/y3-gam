@@ -90,6 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="source\Credits\CreditsText.cs" />
+    <Compile Include="source\Cutscene\BlackBorder.cs" />
+    <Compile Include="source\Cutscene\BootupSequence.cs" />
     <Compile Include="source\Cutscene\EndSceneFadeToBlack.cs" />
     <Compile Include="source\Cutscene\TutorialCutscene.cs" />
     <Compile Include="source\Dialogue\Dialogue.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="source\Level3\BoardedUp\WoodenPlanks.cs" />
     <Compile Include="source\Level3\CandleFlicker.cs" />
     <Compile Include="source\Level3\EyeballFollow.cs" />
+    <Compile Include="source\Level2\HexTableOrb.cs" />
     <Compile Include="source\Level3\Level3Dialogue.cs" />
     <Compile Include="source\Level3\PitPuzzle.cs" />
     <Compile Include="source\MainMenu\CDDragAndDrop.cs" />
@@ -215,6 +218,7 @@
     <Compile Include="source\ToolsPuzzle\ImageDisintegratingTools.cs" />
     <Compile Include="source\ToolsPuzzle\PictureAlignTools.cs" />
     <Compile Include="source\ToolsPuzzle\RotationGuidanceToolsPainting.cs" />
+    <Compile Include="source\Triggers\ArmlessStatueTrigger.cs" />
     <Compile Include="source\Triggers\DeathTrigger.cs" />
     <Compile Include="source\Triggers\DeathtriggerPit.cs" />
     <Compile Include="source\Triggers\FinishLineTrigger.cs" />
