@@ -3,7 +3,7 @@
         "startPos": {
             "x": -8.770999908447266,
             "y": 1.7669999599456788,
-            "z": -152.53900146484376
+            "z": -141.5399932861328
         },
         "startRot": {
             "x": 0.0,
@@ -24,13 +24,43 @@
             "nodeId": 1,
             "endValue": {
                 "x": 0.0,
-                "y": 180.0,
+                "y": -105.0,
                 "z": 0.0
             },
             "type": "ROTATION",
-            "interpolationType": "LINEAR",
+            "interpolationType": "EASE_IN",
             "startTime": 0.0,
             "duration": 3.0,
+            "nextNodes": [
+                3
+            ]
+        },
+        {
+            "nodeId": 3,
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "interpolationType": "LINEAR",
+            "startTime": 3.0,
+            "duration": 2.0,
+            "nextNodes": [
+                4
+            ]
+        },
+        {
+            "nodeId": 4,
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "EASE_IN",
+            "startTime": 5.0,
+            "duration": 2.0,
             "nextNodes": []
         }
     ]
