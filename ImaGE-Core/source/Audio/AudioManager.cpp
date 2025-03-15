@@ -599,12 +599,13 @@ namespace IGE {
             try {
                 SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
                 if (userData && !IGE::Audio::AudioManager::GetInstance().mSceneStopped) {
-                    if (loopCount == 0)
+                    if (loopCount == 0) {
                         if (settings->name == "") { // good enough detection ig
                             std::cout << "soundsetting has no name\n";
                             return FMOD_OK;
                         }
                         settings->channels.erase(channel); // Remove channel from active list
+                    }
                 }
 #ifdef AUDIO_VERBOSE
                 Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
