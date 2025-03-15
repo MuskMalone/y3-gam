@@ -370,7 +370,7 @@
                         "gravityFactor": 40.0,
                         "linearDamping": 5.0,
                         "motionType": "DYNAMIC",
-                        "axisLock": 2,
+                        "axisLock": 0,
                         "angularAxisLock": 7
                     }
                 },
@@ -3925,7 +3925,7 @@
                                             "y": 3.8727312088012697,
                                             "z": -69.60702514648438
                                         },
-                                        "volume": 0.0,
+                                        "volume": 0.7599999904632568,
                                         "pitch": 1.0,
                                         "pan": 0.0,
                                         "mute": false,
@@ -13205,9 +13205,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -27.33049201965332,
-                                            "y": 6.539999961853027,
-                                            "z": -151.4770050048828
+                                            "x": -26.77523422241211,
+                                            "y": -0.44873613119125368,
+                                            "z": -152.0157928466797
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.7599999904632569,
@@ -13233,9 +13233,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -27.33049201965332,
-                                            "y": 6.539999961853027,
-                                            "z": -151.4770050048828
+                                            "x": -26.77523422241211,
+                                            "y": -0.44873613119125368,
+                                            "z": -152.0157928466797
                                         },
                                         "volume": 0.2199999988079071,
                                         "pitch": 1.6299999952316285,
@@ -13261,9 +13261,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -27.33049201965332,
-                                            "y": 6.539999961853027,
-                                            "z": -151.4770050048828
+                                            "x": -26.77523422241211,
+                                            "y": -0.44873613119125368,
+                                            "z": -152.0157928466797
                                         },
                                         "volume": 0.2199999988079071,
                                         "pitch": 1.6200000047683716,
@@ -13289,9 +13289,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -27.33049201965332,
-                                            "y": 6.539999961853027,
-                                            "z": -151.4770050048828
+                                            "x": -26.77523422241211,
+                                            "y": -0.44873613119125368,
+                                            "z": -152.0157928466797
                                         },
                                         "volume": 0.8700000047683716,
                                         "pitch": 1.4600000381469727,
@@ -33547,128 +33547,6 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1049212,
-            "Parent": 1048633,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "AudioSource": {
-                        "sounds": [
-                            {
-                                "key": "EyeballSquish2",
-                                "value": {
-                                    "guid": {
-                                        "ID": 16537121273306461994
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 27.85011100769043,
-                                            "y": -0.5788497924804688,
-                                            "z": -43.125587463378909
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": true,
-                                        "playOnAwake": true,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 50.0,
-                                        "rolloffType": "LINEAR",
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    "Tag": {
-                        "tag": "squishing_sounds",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.25,
-                            "y": 1.25,
-                            "z": 1.25
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 27.85011100769043,
-                            "y": -0.5788497924804688,
-                            "z": -43.125587463378909
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 1049212,
-                                "scriptName": "EyeBallFollowSFX",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 4194436,
-                                            "scriptName": "EyeBallFollow"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "eyeball"
-                                        }
-                                    },
-                                    {
-                                        "data": 2.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "vol"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
                     }
                 }
             ]
