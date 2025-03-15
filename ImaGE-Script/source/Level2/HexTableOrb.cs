@@ -15,6 +15,7 @@ public class HexTableOrb : Entity
 {
   public Entity glowingOrb, dimmedOrb;
   public Entity brokenOrb;
+  public Entity tableSurface;
   public Entity tableSensor;
 
   static readonly float violentDuration = 5f;
@@ -24,7 +25,7 @@ public class HexTableOrb : Entity
   static readonly float violentIntensity = intensity * 3f; // How much it vibrates
   static readonly float violentFrequency = frequency * 0.3f;  // How fast it vibrates
   static readonly Vector3 tableSurfaceMidpoint = new Vector3(63.429f, 67.564f, -425.342f);
-  static readonly float pushOffStrength = 30f;
+  static readonly float pushOffStrength = 45f;
 
   private enum State
   {
@@ -127,7 +128,7 @@ public class HexTableOrb : Entity
       case State.FALLING:
         {
           // wait until orb lands on table
-          if (Mathf.Abs(InternalCalls.GetVelocity(mEntityID).Y) <= 0.01f)
+          if (InternalCalls.GetContactPoints(tableSurface.mEntityID, mEntityID).Length > 0)
           {
             currState = State.ROLLING;
           }
@@ -138,7 +139,7 @@ public class HexTableOrb : Entity
       case State.ROLLING:
         {
           // if orb has rolled off
-          if (InternalCalls.OnTriggerEnter(tableSensor.mEntityID, mEntityID)/*InternalCalls.GetVelocity(mEntityID).Y < -1f*/)
+          if (InternalCalls.GetVelocity(mEntityID).Y < -2f)
           {
             // orb is falliing off now, swap to brokenOrb
             SetActive(false);

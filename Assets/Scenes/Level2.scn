@@ -30045,6 +30045,16 @@
                                             "scriptField": {
                                                 "fieldName": "tableSensor"
                                             }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 694,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSurface"
+                                            }
                                         }
                                     ]
                                 }
@@ -30197,6 +30207,16 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "tableSensor"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 693,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSurface"
                                             }
                                         }
                                     ]
@@ -32904,6 +32924,16 @@
                                             "scriptField": {
                                                 "fieldName": "tableSensor"
                                             }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 694,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSurface"
+                                            }
                                         }
                                     ]
                                 }
@@ -33117,6 +33147,16 @@
                                             "scriptField": {
                                                 "fieldName": "tableSensor"
                                             }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 693,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSurface"
+                                            }
                                         }
                                     ]
                                 }
@@ -33309,6 +33349,16 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "tableSensor"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 694,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "tableSurface"
                                             }
                                         }
                                     ]
@@ -33510,8 +33560,8 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": 0.10425794124603272,
+                            "x": 5.327165126800537e-7,
+                            "y": 0.10485470294952393,
                             "z": 0.0014952421188354493
                         },
                         "scale": {
@@ -33520,20 +33570,20 @@
                             "z": 1.0
                         },
                         "rotation": {
-                            "x": 0.0,
+                            "x": 0.008726534433662892,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.9999619722366333
                         },
                         "eulerAngles": {
-                            "x": 0.0,
+                            "x": 0.9999998807907105,
                             "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
                             "x": 63.491943359375,
-                            "y": 66.07652282714844,
-                            "z": -425.34356689453127
+                            "y": 66.10159301757813,
+                            "z": -425.3435974121094
                         },
                         "worldScale": {
                             "x": 42.0,
@@ -33541,10 +33591,10 @@
                             "z": 42.0
                         },
                         "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7163019776344299,
-                            "z": 0.0,
-                            "w": 0.6977904438972473
+                            "x": 0.006089292466640472,
+                            "y": 0.7162747383117676,
+                            "z": -0.006250834092497826,
+                            "w": 0.6977639198303223
                         }
                     }
                 },
@@ -33578,6 +33628,28 @@
                         },
                         "sensor": false
                     }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
+                    }
                 }
             ]
         },
@@ -33596,7 +33668,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0002751946449279785,
-                            "y": 0.10425794124603272,
+                            "y": 0.10499999672174454,
                             "z": 0.000008106231689453125
                         },
                         "scale": {
@@ -33606,9 +33678,9 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": -0.5,
+                            "y": -0.5000001192092896,
                             "z": 0.0,
-                            "w": 0.8660255074501038
+                            "w": 0.8660253286361694
                         },
                         "eulerAngles": {
                             "x": 0.0,
@@ -33617,7 +33689,7 @@
                         },
                         "worldPos": {
                             "x": 63.429203033447269,
-                            "y": 66.07652282714844,
+                            "y": 66.10769653320313,
                             "z": -425.3534851074219
                         },
                         "worldScale": {
@@ -33627,7 +33699,7 @@
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.2714405357837677,
+                            "y": 0.271440327167511,
                             "z": 0.0,
                             "w": 0.9624552726745606
                         }
@@ -33663,6 +33735,28 @@
                         },
                         "sensor": false
                     }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
+                    }
                 }
             ]
         },
@@ -33680,8 +33774,8 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.001810964196920395,
-                            "y": 0.10425794124603272,
+                            "x": -0.0018100105226039887,
+                            "y": 0.10461568832397461,
                             "z": -0.00400090217590332
                         },
                         "scale": {
@@ -33702,8 +33796,8 @@
                         },
                         "worldPos": {
                             "x": 63.26317596435547,
-                            "y": 66.07652282714844,
-                            "z": -425.2615051269531
+                            "y": 66.091552734375,
+                            "z": -425.26153564453127
                         },
                         "worldScale": {
                             "x": 42.0,
@@ -33747,6 +33841,28 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 1.0,
+                        "dynamicFriction": 1.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
                     }
                 }
             ]
@@ -33917,6 +34033,28 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.20000000298023225,
+                        "dynamicFriction": 0.20000000298023225,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
                     }
                 }
             ]
