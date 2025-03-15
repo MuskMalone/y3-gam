@@ -13,19 +13,24 @@ public class ArmlessStatueTrigger : Entity
 {
   public Entity Player;
   public Entity Head, Tears;
+  public Entity ShoulderCollider1, ShoulderCollider2;
+  public Entity FloorCollider;
   public string tiltAnimName, tearsAnimName;
 
   private enum State
   {
     WAITING,
-    HEAD_TILT
+    HEAD_TILT,
+    TEARS,
+    FALLING
   }
   private State currState = State.WAITING;
 
   // Start is called before the first frame update
   void Start()
   {
-
+    ShoulderCollider1.SetActive(false);
+    ShoulderCollider2.SetActive(false);
   }
 
   // Update is called once per frame
@@ -43,13 +48,49 @@ public class ArmlessStatueTrigger : Entity
         break;
 
       case State.HEAD_TILT:
-        if (InternalCalls.IsPlayingAnimation(Head.mEntityID)) { return; }
+        if (InternalCalls.IsPlayingAnimation(Head.mEntityID))
+        {
+          InternalCalls.UpdatePhysicsToTransform(Head.mEntityID);
+          return;
+        }
 
-        // after first animation, trigger 2nd and destroy self
+        // after first animation, trigger tears falling
         InternalCalls.PlayAnimation(Tears.mEntityID, tearsAnimName);
-        Destroy();
+        currState = State.TEARS;
+
+
+        break;
+
+      case State.TEARS:
+        if (InternalCalls.IsPlayingAnimation(Tears.mEntityID)) { return; }
+
+        // activate support colliders
+        ShoulderCollider1.SetActive(true);
+        ShoulderCollider2.SetActive(true);
+
+        // now the head needs to fall. Let gravity do its work
+        InternalCalls.SetGravityFactor(Head.mEntityID, 10f);
+        InternalCalls.LockRigidBody(Head.mEntityID, false);
+        currState = State.FALLING;
+
+        break;
+
+      case State.FALLING:
+        // check for head's collision with ground
+        if (InternalCalls.GetContactPoints(FloorCollider.mEntityID, Head.mEntityID).Length > 0)
+        {
+          InternalCalls.LockRigidBody(Head.mEntityID, true);  // prevent it from moving further
+          CleanUp();  // we are done
+        }
 
         break;
     }
+  }
+
+  private void CleanUp()
+  {
+    InternalCalls.DestroyEntity(ShoulderCollider1.mEntityID);
+    InternalCalls.DestroyEntity(ShoulderCollider2.mEntityID);
+    Destroy();
   }
 }

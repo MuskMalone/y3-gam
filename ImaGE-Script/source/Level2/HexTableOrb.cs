@@ -179,8 +179,7 @@ public class HexTableOrb : Entity
             InternalCalls.LockRigidBody(id, false);
           }
 
-          currState = State.INACTIVE;
-          //Destroy(this);  // we are done here
+          Destroy();  // we are done here
 
           break;
         }
