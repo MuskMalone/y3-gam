@@ -151,6 +151,10 @@ namespace Graphics {
               unsigned batchEnd = std::min(batchStart + MaterialTable::sMaterialsPerBatch - 1, matCount - 1);
               MaterialTable::ApplyMaterialTextures(shader, batchStart, batchEnd);
 
+              // Calculate and set the offset uniform for material indices
+              int offset = (matGrpIndex == 0) ? 0 : -static_cast<int>(batchStart);
+              shader->SetUniform("u_MatIdxOffset", offset);
+
               for (const auto& [worldMtx, entity, matIdx] : entityData) {
                   auto const& mesh = entity.GetComponent<Component::Mesh>();
                   Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE,
@@ -176,6 +180,10 @@ namespace Graphics {
               unsigned batchStart = matGrpIndex * MaterialTable::sMaterialsPerBatch;
               unsigned batchEnd = std::min(batchStart + MaterialTable::sMaterialsPerBatch - 1, matCount - 1);
               MaterialTable::ApplyMaterialTextures(shader, batchStart, batchEnd);
+
+              // Calculate and set the offset uniform for material indices
+              int offset = (matGrpIndex == 0) ? 0 : -static_cast<int>(batchStart);
+              shader->SetUniform("u_MatIdxOffset", offset);
 
               for (const auto& [worldMtx, entity, matIdx] : entityData) {
                   auto const& mesh = entity.GetComponent<Component::Mesh>();
