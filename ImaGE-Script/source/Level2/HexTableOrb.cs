@@ -95,7 +95,7 @@ public class HexTableOrb : Entity
       case State.HOVERING:
         {
           timeElapsed += Time.deltaTime;
-          InternalCalls.SetSoundVolume(mEntityID, "Spin", 0.2f);
+          InternalCalls.SetSoundVolume(mEntityID, "Spin", 0.4f);
           if (timeElapsed >= frequency)
           {
             // Generate a small random offset
@@ -117,7 +117,7 @@ public class HexTableOrb : Entity
       case State.VIOLENT:
         {
           timeElapsed += Time.deltaTime;
-          InternalCalls.SetSoundVolume(mEntityID, "SpinFaster", 0.3f);
+          InternalCalls.SetSoundVolume(mEntityID, "SpinFaster", 0.5f);
 
           timeElapsed += Time.deltaTime;
           violentTimer += Time.deltaTime;
@@ -158,7 +158,7 @@ public class HexTableOrb : Entity
           if (InternalCalls.GetContactPoints(tableSurface.mEntityID, mEntityID).Length > 0)
           {
             currState = State.ROLLING;
-            InternalCalls.SetSoundVolume(mEntityID, "Roll", 0.05f);
+            InternalCalls.SetSoundVolume(mEntityID, "Roll", 0.5f);
             InternalCalls.PlaySound(mEntityID, "Roll");
           }
 
@@ -220,6 +220,7 @@ public class HexTableOrb : Entity
           {
 
             leverManager.OrbShattered();
+            
             InternalCalls.PlaySound(mEntityID, "Break");
             Destroy();  // no longer needs this entity
           }
