@@ -246,6 +246,7 @@ public class PlayerFootsteps : Entity
         case "BridgeCollider1 (Copy)":
         case "BottomCollider":
         case "baseCollidert":
+        case "MainFloor":
           PlayRandomEchoeyPavementSound();
           break;
         case "Hallway Floor":
