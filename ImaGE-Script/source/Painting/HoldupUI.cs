@@ -118,6 +118,15 @@ public class HoldupUI : Entity
     associatedItem = i;
     if (pictureAlignscript != null)
     {
+      if (dataFilePath == "../Assets/GameImg/HexPaintingDestructible2to1New.txt")
+      {
+        pictureAlignscript.preventAlignment = true;
+      }
+      else
+      {
+        pictureAlignscript.preventAlignment = false;
+      }
+
       pictureAlignscript.SetActive(true);
       pictureAlignscript.SetTarget(savedPosition, savedCameraRotation, saveCamEuler,s,this);
       pictureAlignscript.SetBorder(isBigPaintingActive);

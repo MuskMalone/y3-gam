@@ -18146,6 +18146,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "preventAlignment"
+                                        }
+                                    },
+                                    {
                                         "data": 0.5,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -57817,6 +57824,35 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "isPainting"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 530,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "level2Dialogue"
+                                        }
+                                    },
+                                    {
+                                        "data": [
+                                            "I should pull the lightswitch first before using this..."
+                                        ],
+                                        "type": "System.String[]",
+                                        "scriptField": {
+                                            "fieldName": "lever2Dialogue"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048896,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "leverTwo"
                                         }
                                     },
                                     {

@@ -30,6 +30,7 @@ public class PictureAlign : Entity
   private PlayerMove playerMove;          // Reference to the PlayerLook script
   public bool isFrozen = false;           // Check if the player is frozen
   public bool alignCheck = false;
+  public bool preventAlignment = false;
 
   private Vector3 savedPosition;
   private Vector3 savedCameraEuler;
@@ -142,7 +143,7 @@ public class PictureAlign : Entity
     if (!toStop)
     {
       // Perform alignment checks and freeze the player if aligned
-      if (IsActive() && isBigPic && IsAligned())
+      if (IsActive() && isBigPic && IsAligned() && !preventAlignment)
       {
         //if (LeftClickText != null)
         //  LeftClickText.SetActive(true);
