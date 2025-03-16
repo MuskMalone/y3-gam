@@ -7,6 +7,7 @@ public class LeverManager : Entity
 {
   public Entity playerCamera;
   public Entity tableCamera;
+  public Entity fragmentGlass;
   public PlayerMove playerMove;
   //public Entity door; // The door to unlock
 
@@ -66,6 +67,7 @@ public class LeverManager : Entity
 
       case State.TABLE_CAM:
         {
+          Console.WriteLine(Time.gameTime.ToString());
           // Check if we're in table view and if the switch-back time has been reached
           if (Time.gameTime >= switchBackTime)
           {
@@ -97,6 +99,7 @@ public class LeverManager : Entity
           {
             orb.LosePower();
           }
+          orbs = null;  // we dont need the list anymore
 
           // not sure if theres anything else to do after this
           currState = State.IDLE;
@@ -105,7 +108,7 @@ public class LeverManager : Entity
     }
   }
 
-  public void AddOrb(ref HexTableOrb orb) { orbs.Add(orb); }
+  public void AddOrb(HexTableOrb orb) { orbs.Add(orb); }
 
   public void LeverPulled()
   {
@@ -120,6 +123,15 @@ public class LeverManager : Entity
     SetTableCameraAsMain(); // Switch to table camera
     currState = State.TABLE_CAM;
     switchBackTime = Time.gameTime + switchDuration; // Set when to switch back
+  }
+
+  public void OrbShattered()
+  {
+    // if all orbs shattered, unlock fragment
+    if (--leversPulled <= 0)
+    {
+      fragmentGlass.SetActive(false);
+    }
   }
 
   private void SetPlayerCameraAsMain()
