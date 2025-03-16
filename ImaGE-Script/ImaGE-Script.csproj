@@ -175,6 +175,8 @@
     <Compile Include="source\Level3\PropParty.cs" />
     <Compile Include="source\Level4\InitialSequence.cs" />
     <Compile Include="source\Level4\Lvl4Dialogue.cs" />
+    <Compile Include="source\Level4\MomAngryTrigger.cs" />
+    <Compile Include="source\Level4\PickupCompletedPainting.cs" />
     <Compile Include="source\MainMenu\CDDragAndDrop.cs" />
     <Compile Include="source\MainMenu\ContinueCD.cs" />
     <Compile Include="source\MainMenu\NewGameCD.cs" />
