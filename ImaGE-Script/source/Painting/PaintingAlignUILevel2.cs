@@ -32,12 +32,17 @@ public class PaintingAlignUILevel2 : Entity
     private HoldupUI holdupUIScript;
     private Level2Inventory level2inventoryScript;
     private PictureAlign pictureAlignScript;
+    public Entity level2Dialogue;
 
     public Entity bigPaintingUI;
     public Entity smallPaintingUI;
     public Entity alignmentUI;
+    public Entity leverTwo;
+    public string[] lever2Dialogue;
 
     public bool isPainting = false;
+    private PullLever leverTwoScript;
+    private TutorialDialogue dialogueScript;
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +54,10 @@ public class PaintingAlignUILevel2 : Entity
         bigPaintingUI.SetActive(false);
         smallPaintingUI.SetActive(false);
         alignmentUI.SetActive(false);
-    }
+
+      leverTwoScript = leverTwo.FindScript<PullLever>();
+    dialogueScript = level2Dialogue.FindScript<TutorialDialogue>();
+  }
 
     // Update is called once per frame
     void Update()
@@ -65,6 +73,15 @@ public class PaintingAlignUILevel2 : Entity
         {
             if (pictureAlignScript.IsAligned())
             {
+                if (leverTwoScript.LeverPulled())
+                {
+                    pictureAlignScript.preventAlignment = false;
+                }
+                else if (Input.GetMouseButtonDown(0) && !dialogueScript.isInDialogueMode)
+                {
+                  dialogueScript.SetDialogue(lever2Dialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking });
+                }
+
                 bigPaintingUI.SetActive(false);
                 smallPaintingUI.SetActive(false);
                 alignmentUI.SetActive(true);
