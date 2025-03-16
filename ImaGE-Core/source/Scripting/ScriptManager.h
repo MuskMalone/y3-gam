@@ -19,6 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "mono/metadata/threads.h"
 #include "FileWatch.h"
 #include <Scripting/ScriptInstance.h>
+//#include "Physics/PhysicsSystem.h"
 
 #include <string>
 #include <memory>
@@ -27,7 +28,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <vector>
 
 #define IGE_SCRIPTMGR Mono::ScriptManager::GetInstance()
-
+namespace IGE {
+	namespace Physics {
+		struct RaycastHitInfo; // fwd decl
+	}
+}
 namespace Mono
 {
 	class ScriptManager : public ThreadSafeSingleton<ScriptManager>
@@ -336,6 +341,8 @@ namespace Mono
 		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
 
 		static ECS::Entity::EntityID RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3 start, glm::vec3 end);
+
+		static IGE::Physics::RaycastHitInfo RaycastFromEntityInfo(ECS::Entity::EntityID e, glm::vec3 start, glm::vec3 end);
 
 		static void SetSoundPitch(ECS::Entity::EntityID, MonoString*, float);
 		static void SetSoundVolume(ECS::Entity::EntityID, MonoString*, float);

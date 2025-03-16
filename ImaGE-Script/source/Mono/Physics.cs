@@ -45,4 +45,13 @@ namespace IGE.Utils
     /// </summary>
     public uint internalFaceIndex1;
   }
+  [StructLayout(LayoutKind.Sequential)]
+  public struct RaycastHitInfo
+  {
+    public Vector3 position;
+    public Vector3 normal;
+    public float distance;
+  };
+
+
 }

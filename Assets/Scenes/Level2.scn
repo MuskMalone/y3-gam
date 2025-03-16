@@ -124,9 +124,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 60.703433990478519,
-                            "y": 91.41189575195313,
-                            "z": -366.0082092285156
+                            "x": 68.2778549194336,
+                            "y": 72.24828338623047,
+                            "z": -220.2117156982422
                         },
                         "worldScale": {
                             "x": 0.7200000286102295,
@@ -150,9 +150,9 @@
                     "Camera": {
                         "projType": "PERSP",
                         "position": {
-                            "x": 60.703433990478519,
-                            "y": 91.41189575195313,
-                            "z": -366.0082092285156
+                            "x": 68.2778549194336,
+                            "y": 72.24828338623047,
+                            "z": -220.2117156982422
                         },
                         "yaw": 0.0,
                         "pitch": 0.0,
@@ -13907,10 +13907,10 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "IncoherentWhispers",
+                                "key": "LeverUp",
                                 "value": {
                                     "guid": {
-                                        "ID": 11018935099233621270
+                                        "ID": 15466202925208512019
                                     },
                                     "playSettings": {
                                         "position": {
@@ -14622,10 +14622,38 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "LightSwitch",
+                                "key": "LeverDown",
                                 "value": {
                                     "guid": {
-                                        "ID": 2481602759363630806
+                                        "ID": 16975383616013872283
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 74.7302017211914,
+                                            "y": 34.65415954589844,
+                                            "z": -176.70379638671876
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "LeverUp",
+                                "value": {
+                                    "guid": {
+                                        "ID": 15466202925208512019
                                     },
                                     "playSettings": {
                                         "position": {
@@ -14740,37 +14768,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 25,
+                                                "entityID": 184,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 25,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 26,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 26,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 40,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 40,
+                                                        "data": 184,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -14792,11 +14794,37 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 184,
+                                                "entityID": 40,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 184,
+                                                        "data": 40,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 26,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 26,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 25,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 25,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16050,6 +16078,34 @@
                     "AudioSource": {
                         "sounds": [
                             {
+                                "key": "OpenDoor",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9894350434451811531
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 80.67549896240235,
+                                            "y": 35.53260040283203,
+                                            "z": -188.09547424316407
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 50.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 100.0
+                                    }
+                                }
+                            },
+                            {
                                 "key": "UVLight",
                                 "value": {
                                     "guid": {
@@ -16239,50 +16295,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 192,
+                                                "entityID": 187,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 192,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 191,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 191,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 190,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 190,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 189,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 189,
+                                                        "data": 187,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16304,11 +16321,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 187,
+                                                "entityID": 189,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 187,
+                                                        "data": 189,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 190,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 190,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 191,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 191,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 192,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 192,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16325,50 +16381,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 198,
+                                                "entityID": 193,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 198,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 197,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 197,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 196,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 196,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 1048771,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 1048771,
+                                                        "data": 193,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16390,11 +16407,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 193,
+                                                "entityID": 1048771,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 193,
+                                                        "data": 1048771,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 196,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 196,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 197,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 197,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 198,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 198,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16411,50 +16467,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 258,
+                                                "entityID": 253,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 258,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 257,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 257,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 256,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 256,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 255,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 255,
+                                                        "data": 253,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16476,11 +16493,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 253,
+                                                "entityID": 255,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 253,
+                                                        "data": 255,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 256,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 256,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 257,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 257,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 258,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 258,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16497,50 +16553,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 264,
+                                                "entityID": 259,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 264,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 263,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 263,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 262,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 262,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 261,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 261,
+                                                        "data": 259,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16562,11 +16579,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 259,
+                                                "entityID": 261,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 259,
+                                                        "data": 261,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 262,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 262,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 263,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 263,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 264,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 264,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -30203,10 +30259,10 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "IncoherentWhispers",
+                                "key": "LeverUp",
                                 "value": {
                                     "guid": {
-                                        "ID": 11018935099233621270
+                                        "ID": 15466202925208512019
                                     },
                                     "playSettings": {
                                         "position": {
@@ -34450,6 +34506,855 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 736,
+            "Parent": 3145735,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepCarpet1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 3155223666664604657
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepCarpet2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 10943320241737175899
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepCarpet3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 14755574761529493767
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepCarpet4_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8099419029006925598
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepCarpet5_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2349392743102941607
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepCarpet6_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8249755053661640562
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepCarpet7_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11204651812204161611
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepCarpet8_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 12515891785047112
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepLinoleum1_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 10753769549263936803
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepLinoleum2_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 13367947746331815598
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepLinoleum3_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 9032292266960447161
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepLinoleum4_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 3061300193637246575
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepLinoleum5_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11647720453656595574
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepLinoleum6_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8082586324677414750
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepLinoleum7_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 17661353791209925766
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\FootstepLinoleum8_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8128917836648258450
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement1.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4955641416371614883
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 3.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 2000.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement2.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 18373504474476726282
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 3.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 2000.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement3.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 6181049485091842257
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 3.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 2000.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement4.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8768364786788707371
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 3.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 2000.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement5.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 10413802835623003819
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 3.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 2000.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement6.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4019337102815573269
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 3.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 2000.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement7.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 3405729475038925477
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 3.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 2000.0
+                                    }
+                                }
+                            },
+                            {
+                                "key": "Pavement8.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4858532950681142497
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 68.22817993164063,
+                                            "y": 64.1282730102539,
+                                            "z": -219.56298828125
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 3.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 2000.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "SFX",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.00000762939453125,
+                            "y": -0.000003814697265625,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.3888888359069825,
+                            "y": 0.43103450536727908,
+                            "z": 1.3888888359069825
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 68.22817993164063,
+                            "y": 64.1282730102539,
+                            "z": -219.56298828125
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 736,
+                                "scriptName": "PlayerFootsteps",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "doorEntryTrigger"
+                                        }
+                                    },
+                                    {
+                                        "data": 3.0999999046325685,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "footstepPitch"
+                                        }
+                                    },
+                                    {
+                                        "data": 8,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "footstepSoundCount"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "footstepVolume"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "interval"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isGrounded"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isLevel1"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "player"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMoveScript"
+                                        }
+                                    },
+                                    {
+                                        "data": 1500.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "ppPararm"
+                                        }
+                                    },
+                                    {
+                                        "data": 0,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "ppType"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "speedThreshold"
+                                        }
+                                    },
+                                    {
+                                        "data": "",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "tag"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -39699,10 +40604,10 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "IncoherentWhispers",
+                                "key": "LeverUp",
                                 "value": {
                                     "guid": {
-                                        "ID": 11018935099233621270
+                                        "ID": 15466202925208512019
                                     },
                                     "playSettings": {
                                         "position": {
@@ -51121,10 +52026,10 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "IncoherentWhispers",
+                                "key": "LeverUp",
                                 "value": {
                                     "guid": {
-                                        "ID": 11018935099233621270
+                                        "ID": 15466202925208512019
                                     },
                                     "playSettings": {
                                         "position": {
@@ -56351,7 +57256,8 @@
             "ID": 3145735,
             "Parent": null,
             "Child Entities": [
-                1
+                1,
+                736
             ],
             "Components": [
                 {
@@ -56365,9 +57271,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 60.65375518798828,
-                                            "y": 83.2918930053711,
-                                            "z": -365.3594970703125
+                                            "x": 68.2281723022461,
+                                            "y": 64.12828063964844,
+                                            "z": -219.56298828125
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -56393,9 +57299,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 60.65375518798828,
-                                            "y": 83.2918930053711,
-                                            "z": -365.3594970703125
+                                            "x": 68.2281723022461,
+                                            "y": 64.12828063964844,
+                                            "z": -219.56298828125
                                         },
                                         "volume": 0.6000000238418579,
                                         "pitch": 1.0,
@@ -56421,9 +57327,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 60.65375518798828,
-                                            "y": 83.2918930053711,
-                                            "z": -365.3594970703125
+                                            "x": 68.2281723022461,
+                                            "y": 64.12828063964844,
+                                            "z": -219.56298828125
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -56453,9 +57359,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 60.65375518798828,
-                            "y": 83.2918930053711,
-                            "z": -365.3594970703125
+                            "x": 68.2281723022461,
+                            "y": 64.12828063964844,
+                            "z": -219.56298828125
                         },
                         "scale": {
                             "x": 0.7200000286102295,
@@ -56474,9 +57380,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 60.65375518798828,
-                            "y": 83.2918930053711,
-                            "z": -365.3594970703125
+                            "x": 68.2281723022461,
+                            "y": 64.12828063964844,
+                            "z": -219.56298828125
                         },
                         "worldScale": {
                             "x": 0.7200000286102295,
@@ -56606,10 +57512,17 @@
                                         }
                                     },
                                     {
-                                        "data": 4.5,
+                                        "data": 10.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "isGroundedRayHeight"
+                                        }
+                                    },
+                                    {
+                                        "data": 5.599999904632568,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minIsGroundedDistance"
                                         }
                                     },
                                     {
@@ -57387,10 +58300,10 @@
                     "AudioSource": {
                         "sounds": [
                             {
-                                "key": "IncoherentWhispers",
+                                "key": "LeverUp",
                                 "value": {
                                     "guid": {
-                                        "ID": 11018935099233621270
+                                        "ID": 15466202925208512019
                                     },
                                     "playSettings": {
                                         "position": {

@@ -11,6 +11,7 @@ public class PlayerFootsteps : Entity
   public Entity doorEntryTrigger;
   public float interval = 0.5f;
   public float footstepVolume = 2f;
+  public float footstepPitch = 1f;
   public int footstepSoundCount = 8;
   public float speedThreshold = 0.5f;
 
@@ -41,8 +42,7 @@ public class PlayerFootsteps : Entity
     float magnitude = velocity.X * velocity.X + velocity.Y * velocity.Y + velocity.Z * velocity.Z;
 
     Vector3 position = InternalCalls.GetPosition(player.mEntityID);
-    uint entityHit = InternalCalls.RaycastFromEntity(player.mEntityID, position, position + (new Vector3(0, -200, 0)));
-
+    //Console.WriteLine($"ISGROUNDED {isGrounded}");
     if (timePassed >= interval)
     {
       if (playerMoveScript.climbing && (InternalCalls.IsKeyHeld(KeyCode.W) || InternalCalls.IsKeyHeld(KeyCode.S)))
@@ -101,6 +101,7 @@ public class PlayerFootsteps : Entity
     footstepCount = footstepCount % footstepSoundCount;
     string soundName = $"Pavement{footstepCount + 1}.wav";
     InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
+    InternalCalls.SetSoundPitch(mEntityID, soundName, footstepPitch);
     InternalCalls.PlaySound(mEntityID, soundName);
     footstepCount++;
   }
@@ -149,6 +150,36 @@ public class PlayerFootsteps : Entity
     InternalCalls.PlaySound(mEntityID, soundName);
     footstepCount++;
   }
+  public void PlayRandomLinoleumSound(bool pp = false)
+  {
+    footstepCount = footstepCount % footstepSoundCount;
+    string soundName = $"..\\Assets\\Audio\\FootstepLinoleum{footstepCount + 1}_SFX.wav";
+    if (pp)
+      InternalCalls.EnableSoundPostProcessing(mEntityID, soundName, 0, 2000f);
+    InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
+    InternalCalls.PlaySound(mEntityID, soundName);
+    footstepCount++;
+    if (pp)
+      InternalCalls.DisableSoundPostProcessing(mEntityID, soundName);
+  }
+
+  public void PlayRandomCarpetSound()
+  {
+    footstepCount = footstepCount % footstepSoundCount;
+    string soundName = $"..\\Assets\\Audio\\FootstepCarpet{footstepCount + 1}_SFX.wav";
+    InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume * 4f);
+    InternalCalls.PlaySound(mEntityID, soundName);
+    footstepCount++;
+  }
+  public void PlayRandomEchoeyPavementSound()
+  {
+    footstepCount = footstepCount % footstepSoundCount;
+    string soundName = $"Pavement{footstepCount + 1}.wav";
+    InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
+    InternalCalls.EnableSoundPostProcessing(mEntityID, soundName, 0, 2000f);
+    InternalCalls.PlaySound(mEntityID, soundName);
+    footstepCount++;
+  }
   void PlayClimbingSound()
   {
     footstepCount = footstepCount % footstepSoundCount;
@@ -159,12 +190,14 @@ public class PlayerFootsteps : Entity
   }
   void PlayFootstepSound()
   {
+
     // Raycast downward to detect the ground surface
     Vector3 position = InternalCalls.GetPosition(player.mEntityID);
     Vector3 scale = InternalCalls.GetScale(player.mEntityID);
     uint entityHit = InternalCalls.RaycastFromEntity(player.mEntityID, position, position + (new Vector3(0, -200, 0)));
     tag = "";
-    if (entityHit != 0)
+    Console.WriteLine($"IMPLAYING {tag}");
+    if (entityHit != uint.MaxValue)
     {
       // Check the layer name of the object hit by the raycast
       tag = InternalCalls.GetTag(entityHit);
@@ -181,6 +214,7 @@ public class PlayerFootsteps : Entity
         case "Stair Head":
         case "Stair Part":
         case "Altar Platform":
+        case "newstairs":
           PlayRandomPavementSound();
           break;
         case "Crossroads":
@@ -200,6 +234,22 @@ public class PlayerFootsteps : Entity
         case "Floorboard3":
         case "Floorboard7":
           PlayRandomPlankSound();
+          break;
+        case "Floor2":
+        case "Floor2 (Copy)":
+          PlayRandomLinoleumSound();
+          break;
+        case "Floor4":
+          PlayRandomLinoleumSound(true);
+          break;
+        case "BridgeCollider1":
+        case "BridgeCollider1 (Copy)":
+        case "BottomCollider":
+        case "baseCollidert":
+          PlayRandomEchoeyPavementSound();
+          break;
+        case "Hallway Floor":
+          PlayRandomCarpetSound();
           break;
         //case "Metal Pipes":
         //    PlayRandomMetalSound();
