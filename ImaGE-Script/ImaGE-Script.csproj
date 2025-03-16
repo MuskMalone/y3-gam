@@ -119,6 +119,7 @@
     <Compile Include="source\InteractableObject\Hammer.cs" />
     <Compile Include="source\InteractableObject\HammerLevel3.cs" />
     <Compile Include="source\InteractableObject\Hermes.cs" />
+    <Compile Include="source\InteractableObject\HexPaintingDescructible2to1.cs" />
     <Compile Include="source\InteractableObject\Key.cs" />
     <Compile Include="source\InteractableObject\KeyDoor.cs" />
     <Compile Include="source\InteractableObject\Ladder.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="source\Level3\CandleFlicker.cs" />
     <Compile Include="source\Level3\EyeballFollow.cs" />
     <Compile Include="source\Level2\HexTableOrb.cs" />
+    <Compile Include="source\Level3\GlitchSequence.cs" />
     <Compile Include="source\Level3\Level3Dialogue.cs" />
     <Compile Include="source\Level3\Level3ExitTrigger.cs" />
     <Compile Include="source\Level3\PitPuzzle.cs" />

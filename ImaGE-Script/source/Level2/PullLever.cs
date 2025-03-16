@@ -8,20 +8,25 @@ public class PullLever : Entity
   public Entity leverLight;
   public float timeBeforeCamSwitch = 0.1f;
 
-  private LeverManager leverManager; // Reference to the manager
+  public Entity platformLight;
+  private static LeverManager leverManager; // Reference to the manager
   private string thisLeverTag;
-
   private bool leverPulled = false;
   private float timeElapsed = 0f;
+
   public PullLever() : base() { }
 
   void Start()
   {
+    if (leverManager == null)
+    {
+      leverManager = FindObjectOfType<LeverManager>();
+    }
+
     thisLeverTag = InternalCalls.GetTag(mEntityID);
-    leverManager = FindObjectOfType<LeverManager>();
-    leverManager?.AddOrb(ref orb);  // pass ref to leverManager
     InternalCalls.SetLightIntensity(leverLight.mEntityID, 0.0f);
-  }
+    InternalCalls.SetLightIntensity(platformLight.mEntityID, 51.0f);
+    }
   void Update()
   {
     if (!leverPulled)
@@ -49,7 +54,8 @@ public class PullLever : Entity
         orb.Rise();
         leverManager?.LeverPulled();
         InternalCalls.SetLightIntensity(leverLight.mEntityID, 5.0f);
-        Destroy(this);  // we no longer need this script
+                InternalCalls.SetLightIntensity(platformLight.mEntityID, 0.0f);
+                Destroy(this);  // we no longer need this script
       }
     }
   }

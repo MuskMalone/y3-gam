@@ -7,6 +7,7 @@ public class LeverManager : Entity
 {
   public Entity playerCamera;
   public Entity tableCamera;
+  public Entity fragmentGlass;
   public PlayerMove playerMove;
   //public Entity door; // The door to unlock
 
@@ -18,7 +19,10 @@ public class LeverManager : Entity
   private float switchDuration = 4.5f;
   private List<HexTableOrb> orbs = new List<HexTableOrb>();
 
-  private enum State
+    private Vector3 teleportPositionTable = new Vector3(64.307f, 60.942f, -390.26f);
+    private HexTeleport hexTeleport;
+
+    private enum State
   {
     IDLE,
     TABLE_CAM,
@@ -31,7 +35,8 @@ public class LeverManager : Entity
   void Start()
   {
     Console.WriteLine("Lever Manager Initialized. Waiting for levers to be pulled.");
-  }
+        hexTeleport = FindObjectOfType<HexTeleport>();
+    }
 
 
   //public void LeverPulled()
@@ -81,6 +86,7 @@ public class LeverManager : Entity
             if (leversPulled >= totalLevers)
             {
               switchBackTime = Time.gameTime + timeBeforeOrbsDrop;  // just gonna reuse switchBackTime
+                            hexTeleport.TeleportPlayer(teleportPositionTable);
               currState = State.DEACTIVATE_ORBS;
             }
           }
@@ -97,6 +103,7 @@ public class LeverManager : Entity
           {
             orb.LosePower();
           }
+          orbs = null;  // we dont need the list anymore
 
           // not sure if theres anything else to do after this
           currState = State.IDLE;
@@ -105,7 +112,7 @@ public class LeverManager : Entity
     }
   }
 
-  public void AddOrb(ref HexTableOrb orb) { orbs.Add(orb); }
+  public void AddOrb(HexTableOrb orb) { orbs.Add(orb); }
 
   public void LeverPulled()
   {
@@ -114,12 +121,24 @@ public class LeverManager : Entity
 
     if (playerMove != null)
     {
+      Debug.Log("FREEZE");
       playerMove.FreezePlayer(); // Freeze player movement
     }
 
+    Debug.Log("SWITCH CAM");
     SetTableCameraAsMain(); // Switch to table camera
     currState = State.TABLE_CAM;
     switchBackTime = Time.gameTime + switchDuration; // Set when to switch back
+  }
+
+  public void OrbShattered()
+  {
+    // if all orbs shattered, unlock fragment
+    if (--leversPulled <= 0)
+    {
+      fragmentGlass.SetActive(false);
+    }
+    Debug.Log("Orbs left: " + leversPulled);
   }
 
   private void SetPlayerCameraAsMain()
