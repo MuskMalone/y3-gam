@@ -588,33 +588,33 @@ namespace IGE {
             FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type, 
             FMOD_CHANNELCONTROL_CALLBACK_TYPE callbackType, void* commanddata1, void* commanddata2) 
         {
-            // Retrieve the instance pointer from user data
-            FMOD::Channel* channel = reinterpret_cast<FMOD::Channel*>(chanCtrl);
-            int loopCount{ };
-            channel->getLoopCount(&loopCount);
-            //if (channel->getLoopCount())
-            void* userData = nullptr;
-            channel->getUserData(&userData);
-            
-
-            try {
-                SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
-                if (userData && !IGE::Audio::AudioManager::GetInstance().mSceneStopped) {
-                    if (loopCount == 0) {
-                        if (settings->name == "") { // good enough detection ig
-                            std::cout << "soundsetting has no name\n";
-                            return FMOD_OK;
-                        }
-                        settings->channels.erase(channel); // Remove channel from active list
-                    }
-                }
-#ifdef AUDIO_VERBOSE
-                Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
-#endif
-            }
-            catch (...) {
-                Debug::DebugLogger::GetInstance().LogWarning("audio instance doesnt exist");
-            }
+//            // Retrieve the instance pointer from user data
+//            FMOD::Channel* channel = reinterpret_cast<FMOD::Channel*>(chanCtrl);
+//            int loopCount{ };
+//            channel->getLoopCount(&loopCount);
+//            //if (channel->getLoopCount())
+//            void* userData = nullptr;
+//            channel->getUserData(&userData);
+//            
+//
+//            try {
+//                SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
+//                if (userData && !IGE::Audio::AudioManager::GetInstance().mSceneStopped) {
+//                    if (loopCount == 0) {
+//                        if (settings->name == "") { // good enough detection ig
+//                            std::cout << "soundsetting has no name\n";
+//                            return FMOD_OK;
+//                        }
+//                        settings->channels.erase(channel); // Remove channel from active list
+//                    }
+//                }
+//#ifdef AUDIO_VERBOSE
+//                Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
+//#endif
+//            }
+//            catch (...) {
+//                Debug::DebugLogger::GetInstance().LogWarning("audio instance doesnt exist");
+//            }
             return FMOD_OK;
         }
 
