@@ -1,5 +1,5 @@
 ﻿using IGE.Utils;
-
+using System.Numerics;
 public class Level3ExitTrigger : Entity
 {
   public Level3Dialogue dialogueSystem;
@@ -57,7 +57,7 @@ public class Level3ExitTrigger : Entity
           // Dialogue ended
           if (!dialogueSystem.isInDialogueMode)
           {
-            transition.StartTransition(false, transitionTime, Transition.TransitionType.FADE);
+            transition.StartTransition(false, transitionTime, Transition.TransitionType.WIPE);
             blackBorder.DisplayBlackBorders();
             blackBorder.playerMove.useScriptRotation = false;
             currState = State.IN_ANIMATION;
@@ -71,8 +71,14 @@ public class Level3ExitTrigger : Entity
 
           if (transitionTimer > transitionTime && animationPlaying == false)
           {
+            Quaternion quat = Quaternion.Identity;
+            InternalCalls.SetWorldRotation(blackBorder.playerMove.mEntityID, ref quat);
+            InternalCalls.SetWorldRotation(blackBorder.playerMove.cam.mEntityID, ref quat);
+            InternalCalls.UpdatePhysicsToTransform(blackBorder.playerMove.mEntityID);
+            InternalCalls.UpdatePhysicsToTransform(blackBorder.playerMove.cam.mEntityID);
+
             animationPlaying = true;
-            
+            transition.StartTransition(true, 0.25f, Transition.TransitionType.WIPE);
             InternalCalls.PlayAnimation(blackBorder.playerMove.mEntityID, turnAroundAnimationName);
             InternalCalls.UpdatePhysicsToTransform(blackBorder.playerMove.mEntityID);
             blackBorder.playerMove.useScriptRotation = false;
