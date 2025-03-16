@@ -40,7 +40,7 @@ public class  PlayerMove : Entity
   private Quaternion cameraRotation = Quaternion.Identity;  // Camera rotation (pitch only)
   public float initialGravityFactor = 5f;
   public float extraGravityFactorDuringDescent = 15f;
-
+  public float minIsGroundedDistance = 4.35f;
   public bool canLook = true, canMove = true, useScriptRotation = true, climbing = false;
   private bool skipNextMouseDelta = false;  // to skip the jump in delta when unfreezing player
   private double currTime = 0.0;
@@ -167,10 +167,13 @@ public class  PlayerMove : Entity
     Vector3 rayStart = entityPosition;
     // Ray ends slightly beneath the entity
     Vector3 rayEnd = entityPosition + new Vector3(0, 0 - isGroundedRayHeight, 0);
-    uint entityIDHit = InternalCalls.RaycastFromEntity(mEntityID, rayStart, rayEnd);
-    //Console.WriteLine(InternalCalls.GetTag(entityIDHit));
-    return entityIDHit != 0;
+    RaycastHitInfo hitInfo = InternalCalls.RaycastFromEntityInfo(mEntityID, rayStart, rayEnd);
 
+    uint entityIDHit = InternalCalls.RaycastFromEntity(mEntityID, rayStart, rayEnd);
+    //Console.WriteLine($"distance {hitInfo.distance} tag {InternalCalls.GetTag(entityIDHit)} >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    //return entityIDHit != uint.MaxValue;
+    return hitInfo.distance < minIsGroundedDistance;
+    //return true;
   }
 
   // Called by other scripts to Freeze/Unfreeze Player

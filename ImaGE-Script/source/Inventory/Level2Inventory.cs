@@ -438,5 +438,16 @@ public class Level2Inventory : Entity
         return currentItem;
     }
 
-  
+    public bool HasAllPaintings()
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            if (mItems[i] == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

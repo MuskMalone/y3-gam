@@ -387,7 +387,8 @@
                 2097869,
                 3145740,
                 3145797,
-                3146002
+                3146002,
+                4195023
             ],
             "Components": [
                 {
@@ -6886,7 +6887,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 2097869,
+                                            "entityID": 4195023,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -43050,6 +43051,84 @@
                 ],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 4195023,
+            "Parent": 11,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cereus",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -6.536351203918457,
+                            "y": 6.729538917541504,
+                            "z": -12.221896171569825
+                        },
+                        "scale": {
+                            "x": 4.0,
+                            "y": 4.0,
+                            "z": 4.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -6.536351203918457,
+                            "y": 6.729538917541504,
+                            "z": -12.221896171569825
+                        },
+                        "worldScale": {
+                            "x": 4.0,
+                            "y": 4.0,
+                            "z": 4.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 6094928404620233416
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Reuploaded_Cereus",
+                        "GUID": {
+                            "ID": 14760659303595227349
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
         },
         {
             "ID": 4195024,
