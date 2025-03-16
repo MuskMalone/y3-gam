@@ -8,10 +8,15 @@ namespace IGE {
 	namespace Physics {
 		const float gDeltaTime = 1.f / 60.f;
 		struct RaycastHit {
-			ECS::Entity entity;
+			ECS::Entity entity{};
 			glm::vec3 position;
 			glm::vec3 normal;
 			float distance;
+		};
+		struct RaycastHitInfo {
+			glm::vec3 position{std::numeric_limits<float>::max()};
+			glm::vec3 normal{};
+			float distance{ std::numeric_limits<float>::max() };
 		};
 		struct GeneralRay {
 			glm::vec3 start;

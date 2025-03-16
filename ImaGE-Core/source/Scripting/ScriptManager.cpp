@@ -299,8 +299,10 @@ void ScriptManager::AddInternalCalls()
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
   ADD_INTERNAL_CALL(RaycastFromEntity);
+  ADD_INTERNAL_CALL(RaycastFromEntityInfo);
   ADD_INTERNAL_CALL(SetSoundPitch);
   ADD_INTERNAL_CALL(SetSoundVolume);
+  ADD_INTERNAL_CALL(SetSoundGlobalVolume);
   ADD_INTERNAL_CALL(EnableSoundPostProcessing);
   ADD_INTERNAL_CALL(DisableSoundPostProcessing);
   ADD_INTERNAL_CALL(PlaySound);
@@ -1189,7 +1191,7 @@ ECS::Entity::EntityID Mono::Raycast(glm::vec3 start, glm::vec3 end)
     if (IGE::Physics::PhysicsSystem::GetInstance()->RayCastSingular(start, end, hit)) {
         ECS::Entity::EntityID out {hit.entity.GetEntityID()};
         return out;
-    }return static_cast<ECS::Entity::EntityID>(0);
+    }return static_cast<ECS::Entity::EntityID>(static_cast<unsigned>(-1));
 }
 
 ECS::Entity::EntityID Mono::RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3 start, glm::vec3 end) {
@@ -1197,7 +1199,16 @@ ECS::Entity::EntityID Mono::RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3
     if (IGE::Physics::PhysicsSystem::GetInstance()->RayCastFromEntity(e, start, end, hit)) {
         ECS::Entity::EntityID out {hit.entity.GetEntityID()};
         return out;
-    }return static_cast<ECS::Entity::EntityID>(0);
+    }return static_cast<ECS::Entity::EntityID>(static_cast<unsigned>(-1));
+}
+
+IGE::Physics::RaycastHitInfo Mono::RaycastFromEntityInfo(ECS::Entity::EntityID e, glm::vec3 start, glm::vec3 end) {
+    IGE::Physics::RaycastHit hit{};
+    if (IGE::Physics::PhysicsSystem::GetInstance()->RayCastFromEntity(e, start, end, hit)) {
+        ECS::Entity::EntityID out{ hit.entity.GetEntityID() };
+
+        return IGE::Physics::RaycastHitInfo{ hit.position, hit.normal, hit.distance };
+    }return IGE::Physics::RaycastHitInfo{};
 }
 
 void Mono::SetSoundPitch(ECS::Entity::EntityID e, MonoString* s, float p)
@@ -1213,6 +1224,10 @@ void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v)
     ECS::Entity entity{ e };
     //printf("%s is setting volume", entity.GetComponent<Component::Tag>().tag.c_str());
     entity.GetComponent<Component::AudioSource>().SetSoundVolume(name, v);
+}
+
+void Mono::SetSoundGlobalVolume(float vol) {
+    IGE::Audio::AudioManager::GetInstance().mGlobalVolume = vol;
 }
 
 void Mono::EnableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s, unsigned type, float param)

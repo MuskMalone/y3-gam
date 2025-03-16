@@ -31,7 +31,7 @@ namespace IGE {
                             }
                             else {
                                 //std::cout << ECS::Entity{ entity }.GetComponent<Component::Tag>().tag << " setting volume" << std::endl;
-                                channel->setVolume(sound.second.playSettings.volume);
+                                channel->setVolume(sound.second.playSettings.volume * AudioManager::GetInstance().mGlobalVolume);
                             }
 
                         }
@@ -39,21 +39,23 @@ namespace IGE {
                 }
             }
             {//only accounts for one audio listener
-                auto listenersystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioListener, Component::Transform, Component::Camera>() };
-                //gets the first listener
+                auto listenersystem{ mEntityManager.GetAllEntitiesWithComponents<Component::Transform, Component::Camera>() };
+                //gets the main camera
                 for (auto entity : listenersystem){
                     ECS::Entity e{ entity };
-                    auto& xfm{ e.GetComponent<Component::Transform>() };
-                    auto& camera{ e.GetComponent<Component::Camera>() };
-                    auto forwardVec{ camera.GetForwardVector() };
-                    auto upVec{ camera.GetUpVector() };
-                    // Listener setup
-                    FMOD_VECTOR listenerPos = { xfm.worldPos.x, xfm.worldPos.y, xfm.worldPos.z };
-                    FMOD_VECTOR listenerVel = { 0.0f, 0.0f, 0.0f };
-                    FMOD_VECTOR listenerForward = { forwardVec.x, forwardVec.y, forwardVec.z };
-                    FMOD_VECTOR listenerUp = { upVec.x, upVec.y, upVec.z };
-                    mgr.mSystem->set3DListenerAttributes(0, &listenerPos, &listenerVel, &listenerForward, &listenerUp);
-                    break;
+                    if (e.GetTag() == "MainCamera") {
+                        auto& xfm{ e.GetComponent<Component::Transform>() };
+                        auto& camera{ e.GetComponent<Component::Camera>() };
+                        auto forwardVec{ camera.GetForwardVector() };
+                        auto upVec{ camera.GetUpVector() };
+                        // Listener setup
+                        FMOD_VECTOR listenerPos = { xfm.worldPos.x, xfm.worldPos.y, xfm.worldPos.z };
+                        FMOD_VECTOR listenerVel = { 0.0f, 0.0f, 0.0f };
+                        FMOD_VECTOR listenerForward = { forwardVec.x, forwardVec.y, forwardVec.z };
+                        FMOD_VECTOR listenerUp = { upVec.x, upVec.y, upVec.z };
+                        mgr.mSystem->set3DListenerAttributes(0, &listenerPos, &listenerVel, &listenerForward, &listenerUp);
+                        break;
+                    }
                 }
 
             }

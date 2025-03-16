@@ -62,7 +62,7 @@ public class PullLever : Entity
 
   private void ActivateLever()
   {
-    InternalCalls.PlaySound(mEntityID, "IncoherentWhispers");
+    InternalCalls.PlaySound(mEntityID, "LeverUp");
     InternalCalls.PlayAnimation(mEntityID, "SwitchOff");
     leverPulled = true;
   }
