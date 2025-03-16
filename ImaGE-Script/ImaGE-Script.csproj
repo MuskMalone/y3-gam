@@ -225,6 +225,8 @@
     <Compile Include="source\Painting\RotationGuidanceNightPainting.cs" />
     <Compile Include="source\PauseMenu\PauseMenu.cs" />
     <Compile Include="source\PauseMenu\PauseMenuButtons.cs" />
+    <Compile Include="source\PauseMenu\SettingsButton.cs" />
+    <Compile Include="source\PauseMenu\SettingsPage.cs" />
     <Compile Include="source\Player\CameraCapture.cs" />
     <Compile Include="source\Player\InputManager.cs" />
     <Compile Include="source\Player\PlayerArise.cs" />

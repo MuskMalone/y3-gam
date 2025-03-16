@@ -105,6 +105,15 @@ namespace IGE.Utils
     internal extern static Vector3 GetMousePos();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static float GetScreenWidth();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetBrightness(float fraction);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static float GetGammaNorm();
+
+  [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMousePosWorld(float depth);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -283,6 +292,10 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetSoundGlobalVolume(float volume);
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetSoundGlobalVolume();
 
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

@@ -347,6 +347,7 @@ namespace Mono
 		static void SetSoundPitch(ECS::Entity::EntityID, MonoString*, float);
 		static void SetSoundVolume(ECS::Entity::EntityID, MonoString*, float);
 		static void SetSoundGlobalVolume(float vol);
+		static float GetSoundGlobalVolume();
 		static void EnableSoundPostProcessing(ECS::Entity::EntityID, MonoString*, unsigned, float);
 		static void DisableSoundPostProcessing(ECS::Entity::EntityID, MonoString*);
 		static void PlaySound(ECS::Entity::EntityID, MonoString*);
@@ -392,6 +393,14 @@ namespace Mono
 		static bool IsActive(ECS::Entity::EntityID entity);
 
 		static glm::vec3 GetMousePos();
+
+		static float GetScreenWidth();
+
+		static void SetBrightness(float fraction);
+
+		static void SetBGM(float fraction);
+
+		static float GetGammaNorm();
 
 		static glm::vec3 GetMousePosWorld(float depth);
 

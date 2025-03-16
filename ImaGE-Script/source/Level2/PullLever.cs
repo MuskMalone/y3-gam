@@ -60,6 +60,8 @@ public class PullLever : Entity
     }
   }
 
+  public bool LeverPulled() { return leverPulled; }
+
   private void ActivateLever()
   {
     InternalCalls.PlaySound(mEntityID, "LeverUp");

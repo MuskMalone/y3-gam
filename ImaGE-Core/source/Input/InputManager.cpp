@@ -86,6 +86,12 @@ void InputManager::SetDim(int width, int height)
 	mWidth = width;
 }
 
+glm::vec2 InputManager::GetDim()
+{
+	return glm::vec2(mWidth, mHeight);
+}
+
+
 void InputManager::UpdateInput()
 {
 	mPrevMousePos = mCurrMousePos;

@@ -126,7 +126,7 @@ public class LeverManager : Entity
   public void LeverPulled()
   {
     ++leversPulled;
-    Console.WriteLine($"Lever pulled! {leversPulled}/{totalLevers} levers activated.");
+    //Console.WriteLine($"Lever pulled! {leversPulled}/{totalLevers} levers activated.");
 
     if (playerMove != null)
     {
@@ -135,7 +135,8 @@ public class LeverManager : Entity
 
     SetTableCameraAsMain(); // Switch to table camera
     currState = State.TABLE_CAM;
-    timeElapsed = 0f;
+    //timeElapsed = 0f;
+    //Debug.Log("STATE CHANGED TO " + currState.ToString());
   }
 
   public void OrbShattered()
