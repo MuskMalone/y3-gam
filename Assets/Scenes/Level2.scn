@@ -10387,6 +10387,16 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 1048665,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fragmentGlass"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 1,
                                             "scriptName": "Entity"
                                         },
@@ -28813,12 +28823,12 @@
                                         },
                                         {
                                             "data": {
-                                                "entityID": 660,
+                                                "entityID": 702,
                                                 "scriptName": "Entity"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
-                                                "fieldName": "tableSensor"
+                                                "fieldName": "hexFloor"
                                             }
                                         },
                                         {
@@ -29061,12 +29071,12 @@
                                         },
                                         {
                                             "data": {
-                                                "entityID": 660,
+                                                "entityID": 702,
                                                 "scriptName": "Entity"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
-                                                "fieldName": "tableSensor"
+                                                "fieldName": "hexFloor"
                                             }
                                         },
                                         {
@@ -30634,9 +30644,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.6403554081916809,
-                            "y": 0.903417706489563,
-                            "z": -0.014111161231994629
+                            "x": -0.5569999814033508,
+                            "y": 0.7879999876022339,
+                            "z": -0.035999998450279239
                         },
                         "scale": {
                             "x": 0.023255813866853715,
@@ -30644,20 +30654,20 @@
                             "z": 0.023255813866853715
                         },
                         "rotation": {
-                            "x": -0.6429269909858704,
-                            "y": 0.2943548858165741,
-                            "z": 0.6429270505905151,
-                            "w": 0.2943548560142517
+                            "x": -0.6519629955291748,
+                            "y": 0.29015979170799258,
+                            "z": 0.6337621808052063,
+                            "w": 0.2984912097454071
                         },
                         "eulerAngles": {
-                            "x": -130.80001831054688,
-                            "y": 89.9720230102539,
-                            "z": 0.0
+                            "x": -130.8040008544922,
+                            "y": 88.37799835205078,
+                            "z": -0.004000000189989805
                         },
                         "worldPos": {
-                            "x": 63.54072952270508,
-                            "y": 99.6412353515625,
-                            "z": -398.4407043457031
+                            "x": 62.530067443847659,
+                            "y": 94.79369354248047,
+                            "z": -401.9163513183594
                         },
                         "worldScale": {
                             "x": 0.9767441749572754,
@@ -30665,10 +30675,10 @@
                             "z": 0.9767441749572754
                         },
                         "worldRot": {
-                            "x": 0.011901617050170899,
-                            "y": 0.4162449836730957,
-                            "z": 0.9091582298278809,
-                            "w": -0.005448982119560242
+                            "x": -0.0009684562683105469,
+                            "y": 0.4162805676460266,
+                            "z": 0.9092355966567993,
+                            "w": 0.0004422813653945923
                         }
                     }
                 },
@@ -30687,7 +30697,7 @@
                         },
                         "yaw": 0.0,
                         "pitch": 0.0,
-                        "fov": 24.402999877929689,
+                        "fov": 34.25299835205078,
                         "aspectRatio": 1.7777777910232545,
                         "nearClip": 0.10000000149011612,
                         "farClip": 100.0
@@ -31922,12 +31932,12 @@
                                         },
                                         {
                                             "data": {
-                                                "entityID": 660,
+                                                "entityID": 702,
                                                 "scriptName": "Entity"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
-                                                "fieldName": "tableSensor"
+                                                "fieldName": "hexFloor"
                                             }
                                         },
                                         {
@@ -32145,12 +32155,12 @@
                                         },
                                         {
                                             "data": {
-                                                "entityID": 660,
+                                                "entityID": 702,
                                                 "scriptName": "Entity"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
-                                                "fieldName": "tableSensor"
+                                                "fieldName": "hexFloor"
                                             }
                                         },
                                         {
@@ -32348,12 +32358,12 @@
                                         },
                                         {
                                             "data": {
-                                                "entityID": 660,
+                                                "entityID": 702,
                                                 "scriptName": "Entity"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
-                                                "fieldName": "tableSensor"
+                                                "fieldName": "hexFloor"
                                             }
                                         },
                                         {
@@ -45071,7 +45081,7 @@
                 {
                     "Bloom": {
                         "threshold": 1.0,
-                        "intensity": 1.2000000476837159,
+                        "intensity": 0.0,
                         "range": 10.0
                     }
                 },

@@ -15,19 +15,20 @@ public class HexTableOrb : Entity
 {
   public Entity glowingOrb, dimmedOrb;
   public Entity brokenOrb;
-  public Entity tableSurface;
-  public Entity tableSensor;
+  public Entity tableSurface, hexFloor;
 
-  static readonly float violentDuration = 5f;
-  static readonly float riseVelocity = 4f;
-  static readonly float intensity = 0.002f; // How much it vibrates
-  static readonly float frequency = 0.05f;  // How fast it vibrates
-  static readonly float violentIntensity = intensity * 3f; // How much it vibrates
-  static readonly float violentFrequency = frequency * 0.3f;  // How fast it vibrates
-  static readonly Vector3 tableSurfaceMidpoint = new Vector3(63.429f, 67.564f, -425.342f);
-  static readonly float pushOffStrength = 45f;
+  private static readonly float violentDuration = 5f;
+  private static readonly float riseVelocity = 4f;
+  private static readonly float intensity = 0.002f; // How much it vibrates
+  private static readonly float frequency = 0.05f;  // How fast it vibrates
+  private static readonly float violentIntensity = intensity * 3f; // How much it vibrates
+  private static readonly float violentFrequency = frequency * 0.3f;  // How fast it vibrates
+  private static readonly Vector3 tableSurfaceMidpoint = new Vector3(63.429f, 67.564f, -425.342f);
+  private static readonly float pushOffStrength = 45f;
 
-  private enum State
+  private static LeverManager leverManager;
+
+  public enum State
   {
     INACTIVE,
     RISING,
@@ -36,8 +37,10 @@ public class HexTableOrb : Entity
     FALLING,
     ROLLING,
     OFF_TABLE,
-  } 
+    SHATTERED
+  }
 
+  private uint firstBrokenPiece;
   private State currState = State.INACTIVE;
   private Vector3 originalPos;
   private float timeElapsed = 0f, violentTimer = 0f;
@@ -46,8 +49,15 @@ public class HexTableOrb : Entity
   // Start is called before the first frame update
   void Start()
   {
+    if (leverManager == null)
+    {
+      leverManager = FindObjectOfType<LeverManager>();
+    }
+
     StopGlowing();
     brokenOrb.SetActive(false);
+    leverManager.AddOrb(this);  // give leverManager a ref
+    firstBrokenPiece = InternalCalls.GetAllChildren(brokenOrb.mEntityID)[0];
   }
 
   // Update is called once per frame
@@ -55,9 +65,6 @@ public class HexTableOrb : Entity
   {
     switch (currState)
     {
-      case State.INACTIVE:
-        return;
-
       case State.RISING:
         {
           // when orb comes to a stop
@@ -178,11 +185,25 @@ public class HexTableOrb : Entity
           {
             InternalCalls.LockRigidBody(id, false);
           }
-
-          Destroy();  // we are done here
+          currState = State.SHATTERED;
 
           break;
         }
+
+      case State.SHATTERED:
+        {
+          // if pieces touched the ground
+          if (InternalCalls.GetContactPoints(firstBrokenPiece, hexFloor.mEntityID).Length > 0)
+          {
+            leverManager.OrbShattered();
+            Destroy();  // no longer needs this entity
+          }
+
+          break;
+        }
+
+      default:
+        return;
     }
   }
 

@@ -7,6 +7,7 @@ public class LeverManager : Entity
 {
   public Entity playerCamera;
   public Entity tableCamera;
+  public Entity fragmentGlass;
   public PlayerMove playerMove;
   //public Entity door; // The door to unlock
 
@@ -102,6 +103,7 @@ public class LeverManager : Entity
           {
             orb.LosePower();
           }
+          orbs = null;  // we dont need the list anymore
 
           // not sure if theres anything else to do after this
           currState = State.IDLE;
@@ -110,7 +112,7 @@ public class LeverManager : Entity
     }
   }
 
-  public void AddOrb(ref HexTableOrb orb) { orbs.Add(orb); }
+  public void AddOrb(HexTableOrb orb) { orbs.Add(orb); }
 
   public void LeverPulled()
   {
@@ -119,12 +121,24 @@ public class LeverManager : Entity
 
     if (playerMove != null)
     {
+      Debug.Log("FREEZE");
       playerMove.FreezePlayer(); // Freeze player movement
     }
 
+    Debug.Log("SWITCH CAM");
     SetTableCameraAsMain(); // Switch to table camera
     currState = State.TABLE_CAM;
     switchBackTime = Time.gameTime + switchDuration; // Set when to switch back
+  }
+
+  public void OrbShattered()
+  {
+    // if all orbs shattered, unlock fragment
+    if (--leversPulled <= 0)
+    {
+      fragmentGlass.SetActive(false);
+    }
+    Debug.Log("Orbs left: " + leversPulled);
   }
 
   private void SetPlayerCameraAsMain()
