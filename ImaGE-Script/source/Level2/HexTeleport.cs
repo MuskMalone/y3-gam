@@ -14,18 +14,41 @@ public class HexTeleport : Entity
     public Vector3 teleportPosition5 = new Vector3(140.922f, 196.080f, -442.446f); //5
     public Vector3 teleportPosition1 = new Vector3(116.756f, 123.739f, -366.274f); //1
 
+    private TutorialDialogue tutorialDialogue;
+    private string[] Dialogue1 = { "I should probably pull this light switch first" };
+    //public Entity Lever1;
+    //public PullLever pullLever;
+    private CheckLeverBeforeTeleport leverChecker;
 
-
+    void Start()
+    {
+         leverChecker = FindObjectOfType<CheckLeverBeforeTeleport>();
+        tutorialDialogue = FindObjectOfType<TutorialDialogue>();
+    }
     void Update()
     {
-    if (Input.GetKeyDown(KeyCode.B)) TeleportPlayer(teleportPosition7); //7
-    else if (Input.GetKeyDown(KeyCode.N)) TeleportPlayer(teleportPosition2); //2
-    else if (Input.GetKeyDown(KeyCode.M)) TeleportPlayer(teleportPosition6); //6 
-    else if (Input.GetKeyDown(KeyCode.APOSTROPHE)) TeleportPlayer(teleportPosition3); //3
-    else if (Input.GetKeyDown(KeyCode.H)) TeleportPlayer(teleportPosition4);//4
-    else if (Input.GetKeyDown(KeyCode.BACKSLASH)) TeleportPlayer(teleportPosition5); //5
-    else if (Input.GetKeyDown(KeyCode.EQUAL)) TeleportPlayer(teleportPosition1); //1
-    else if (Input.GetKeyTriggered(KeyCode.MINUS)) TeleportPlayer(InternalCalls.GetPosition(playerMove.mEntityID) - new Vector3(0f, -5f, 0.5f));
+        if (Input.GetKeyDown(KeyCode.B)) TeleportPlayer(teleportPosition7); //7
+        else if (Input.GetKeyDown(KeyCode.N)) TeleportPlayer(teleportPosition2); //2
+        else if (Input.GetKeyDown(KeyCode.M)) TeleportPlayer(teleportPosition6); //6 
+        else if (Input.GetKeyDown(KeyCode.APOSTROPHE)) TeleportPlayer(teleportPosition3); //3
+        else if (Input.GetKeyDown(KeyCode.H)) TeleportPlayer(teleportPosition4);//4
+        else if (Input.GetKeyDown(KeyCode.BACKSLASH)) TeleportPlayer(teleportPosition5); //5
+        else if (Input.GetKeyDown(KeyCode.EQUAL))
+        {
+
+            if (leverChecker != null && !leverChecker.IsLever1Hit())
+            {
+                //TODO
+                //From bringing the painting to the full screen to equip state 
+                Console.WriteLine("DIDNT PRESS LEVER BOZO");
+                tutorialDialogue.SetDialogue(Dialogue1, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Neutral })
+
+                return;
+            }
+            TeleportPlayer(teleportPosition1); //1
+        }
+        
+        else if (Input.GetKeyTriggered(KeyCode.MINUS)) TeleportPlayer(InternalCalls.GetPosition(playerMove.mEntityID) - new Vector3(0f, -5f, 0.5f));
     }
 
     public void TeleportPlayer(Vector3 newPosition)
@@ -37,4 +60,7 @@ public class HexTeleport : Entity
 
         Debug.Log($"Teleported player to: {newPosition}");
     }
+
+    
+
 }

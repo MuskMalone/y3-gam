@@ -160,15 +160,28 @@ public class ControlPanel2 : Entity
                     playerMove.UnfreezePlayer();
                     SetPlayerCameraAsMain();
 
-                    
-                    if (defaultStateActive)
+
+                    //if (defaultStateActive)
+                    //{
+                    //    SetDefaultHiddenText(false);
+                    //}
+                    //else
+                    //{
+                    //    SetHiddenText(currStatue, false);
+                    //}
+
+                    if (areLightsOn)
                     {
-                        SetDefaultHiddenText(false);
+                        if (defaultStateActive)
+                        {
+                            SetDefaultHiddenText(false);
+                        }
+                        else
+                        {
+                            SetHiddenText(currStatue, false);
+                        }
                     }
-                    else
-                    {
-                        SetHiddenText(currStatue, false);
-                    }
+
 
                     currState = State.OPEN;
                 }
@@ -260,6 +273,19 @@ public class ControlPanel2 : Entity
     public void LightsToggled(bool isOn)
     {
         areLightsOn = isOn;
+        if (isOn)
+        {
+            // If the lights are on, hide the hidden text immediately
+            if (defaultStateActive)
+            {
+                SetDefaultHiddenText(false);
+            }
+            else
+            {
+                SetHiddenText(currStatue, false);
+            }
+            uvLightEnabled = false; // Optionally reset this flag if it’s used only when lights are off
+        }
     }
 
     public void Unlock()

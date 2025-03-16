@@ -11,22 +11,29 @@ public class PullLever : Entity
   public Entity platformLight;
   private static LeverManager leverManager; // Reference to the manager
   private string thisLeverTag;
-  private bool leverPulled = false;
+  public bool leverPulled = false;
   private float timeElapsed = 0f;
 
-  public PullLever() : base() { }
+ //private TutorialDialogue tutorialDialogue;
+
+    public PullLever() : base() { }
 
   void Start()
   {
-    if (leverManager == null)
-    {
-      leverManager = FindObjectOfType<LeverManager>();
-    }
+        //if (tutorialDialogue == null)
+        //{
+        //    tutorialDialogue = FindObjectOfType<TutorialDialogue>();
+        //}
+
+        if (leverManager == null)
+        {
+          leverManager = FindObjectOfType<LeverManager>();
+        }
 
     thisLeverTag = InternalCalls.GetTag(mEntityID);
     InternalCalls.SetLightIntensity(leverLight.mEntityID, 0.0f);
     InternalCalls.SetLightIntensity(platformLight.mEntityID, 51.0f);
-    }
+  }
   void Update()
   {
     if (!leverPulled)
@@ -60,7 +67,26 @@ public class PullLever : Entity
     }
   }
 
-  private void ActivateLever()
+    //public bool CheckLeverBeforeTeleport()
+    //{
+    //    // If the lever hasn't been pulled
+    //    if (!leverPulled)
+    //    {
+    //        // 1. Play a short dialogue
+    //        string[] lines = { "I think I should pull this switch first" };
+    //        TutorialDialogue.Emotion[] emotions = { TutorialDialogue.Emotion.Neutral };
+    //        tutorialDialogue.SetDialogue(lines, emotions);
+
+    //        // 2. TODO: un-equip the painting
+    //        // paintingManager.UnequipPainting();
+
+    //        return false; // Let caller know the lever is NOT pulled
+    //    }
+
+    //    return true; // The lever is pulled; safe to continue
+    //}
+
+    private void ActivateLever()
   {
     InternalCalls.PlaySound(mEntityID, "IncoherentWhispers");
     InternalCalls.PlayAnimation(mEntityID, "SwitchOff");
