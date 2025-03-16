@@ -385,6 +385,14 @@ namespace Mono
 
 		static glm::vec3 GetMousePos();
 
+		static float GetScreenWidth();
+
+		static void SetBrightness(float fraction);
+
+		static void SetBGM(float fraction);
+
+		static float GetGammaNorm();
+
 		static glm::vec3 GetMousePosWorld(float depth);
 
 		static glm::vec3 GetCameraForward();

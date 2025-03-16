@@ -1,0 +1,264 @@
+﻿/******************************************************************************/
+/*!
+\par        Image Engine
+\file       .cs
+
+\author     
+\date       
+
+\brief      
+
+
+Copyright (C) 2024 DigiPen Institute of Technology. Reproduction
+or disclosure of this file or its contents without the prior
+written consent of DigiPen Institute of Technology is prohibited.
+*/
+/******************************************************************************/
+
+
+using IGE.Utils;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using static System.TimeZoneInfo;
+
+public class SettingsPage : Entity
+{
+  private bool isPageActive = false;
+  public PauseMenu pauseMenu;
+
+  public SettingsButtons VolumeSlider;
+  public SettingsButtons BrightnessSlider;
+  public PauseMenuButtons BackButton;
+  public Transition transition;
+  public float transitionDuration = 0.5f;
+  private bool isTransitioning = false;
+  private float transitionTimer = 0f;
+
+  public float CanvasmaxX = 0.5f;
+  public float CanvasminX = -0.5f;
+  public float maxX = 10f;
+  public float minX = -10f;
+
+  public float TargetZMenu = 2f;
+  public float TargetZButton = 3f;
+
+  public float OriginalTargetZMenu = -2f;
+  public float OriginalTargetZButton = -2f;
+
+  SettingsPage() : base()
+  {
+
+  }
+  // Start is called before the first frame update
+  void Start()
+  {
+    Console.WriteLine("7: Getting original menu position.");
+    Vector3 originalMenu = InternalCalls.GetPosition(mEntityID);
+
+    Console.WriteLine($"8: Original Menu Position -> X: {originalMenu.X}, Y: {originalMenu.Y}, Z: {originalMenu.Z}");
+    Vector3 newPosMenu = new Vector3(originalMenu.X, originalMenu.Y, OriginalTargetZMenu);
+
+    Console.WriteLine($"9: Setting Menu Position to -> X: {newPosMenu.X}, Y: {newPosMenu.Y}, Z: {newPosMenu.Z}");
+    InternalCalls.SetPosition(mEntityID, ref newPosMenu);
+
+    Console.WriteLine("10: Getting original ResumeButton position.");
+    Vector3 originalVol = InternalCalls.GetPosition(VolumeSlider.mEntityID);
+
+    Console.WriteLine($"11: Original ResumeButton Position -> X: {originalVol.X}, Y: {originalVol.Y}, Z: {originalVol.Z}");
+    Vector3 newPosVol = new Vector3(originalVol.X, originalVol.Y, OriginalTargetZButton);
+
+    Console.WriteLine($"12: Setting ResumeButton Position to -> X: {newPosVol.X}, Y: {newPosVol.Y}, Z: {newPosVol.Z}");
+    InternalCalls.SetPosition(VolumeSlider.mEntityID, ref newPosVol);
+
+    Console.WriteLine("13: Getting original SettingsButton position.");
+    Vector3 originalBright = InternalCalls.GetPosition(BrightnessSlider.mEntityID);
+
+    Console.WriteLine($"14: Original SettingsButton Position -> X: {originalBright.X}, Y: {originalBright.Y}, Z: {originalBright.Z}");
+    Vector3 newPosSettings = new Vector3(originalBright.X, originalBright.Y, OriginalTargetZButton);
+
+    Console.WriteLine($"15: Setting SettingsButton Position to -> X: {newPosSettings.X}, Y: {newPosSettings.Y}, Z: {newPosSettings.Z}");
+    InternalCalls.SetPosition(BrightnessSlider.mEntityID, ref newPosSettings);
+
+
+
+    Console.WriteLine("16: Getting original MainMenuButton position.");
+    Vector3 originalBack = InternalCalls.GetPosition(BackButton.mEntityID);
+
+    Console.WriteLine($"17: Original MainMenuButton Position -> X: {originalBack.X}, Y: {originalBack.Y}, Z: {originalBack.Z}");
+    Vector3 newPosMainMenu = new Vector3(originalBack.X, originalBack.Y, OriginalTargetZButton);
+
+    Console.WriteLine($"18: Setting MainMenuButton Position to -> X: {newPosMainMenu.X}, Y: {newPosMainMenu.Y}, Z: {newPosMainMenu.Z}");
+    InternalCalls.SetPosition(BackButton.mEntityID, ref newPosMainMenu);
+  
+}
+
+  // Update is called once per frame
+  void Update()
+  {
+    if (isPageActive)
+    {
+      if (isTransitioning)
+      {
+        transitionTimer += Time.deltaTime;
+        if (transitionTimer >= transitionDuration)
+        {
+          GoBackToPauseMenu();
+        }
+
+      }
+
+      else if (isPageActive && !isTransitioning)
+      {
+        if (VolumeSlider.IsClicked)
+        {
+
+          Vector3 originalResume = InternalCalls.GetPosition(VolumeSlider.mEntityID);
+          float NewXPos = screenToCanvas(Input.mousePosition.X, Input.screenWidth);
+          Vector3 newPosResume = new Vector3(NewXPos, originalResume.Y, originalResume.Z);
+          newPosResume.X = (newPosResume.X < minX) ? minX : (newPosResume.X > maxX) ? maxX : newPosResume.X;
+          InternalCalls.SetPosition(VolumeSlider.mEntityID, ref newPosResume);
+          float fraction = normalize(NewXPos, minX, maxX);
+          //InternalCalls.SetSoundVolume(fraction);
+        }
+
+        if (BrightnessSlider.IsClicked)
+        {
+          Vector3 originalResume = InternalCalls.GetPosition(BrightnessSlider.mEntityID);
+          float NewXPos = screenToCanvas(Input.mousePosition.X, Input.screenWidth);
+          Vector3 newPosResume = new Vector3(NewXPos, originalResume.Y, originalResume.Z);
+          newPosResume.X = (newPosResume.X < minX) ? minX : (newPosResume.X > maxX) ? maxX : newPosResume.X;
+          InternalCalls.SetPosition(BrightnessSlider.mEntityID, ref newPosResume);
+          float fraction = normalize(NewXPos, minX, maxX);
+          InternalCalls.SetBrightness(fraction);
+
+        }
+
+        if (BackButton.IsVisible)
+        {
+          BackButton.SetActive(true);
+          if (BackButton.IsClicked)
+          {
+            isTransitioning = true;
+            transition.StartTransitionInOut(transitionDuration, Transition.TransitionType.FADE);
+
+          }
+        }
+        else
+        {
+          BackButton.SetActive(false);
+        }
+
+      }
+
+    }
+
+
+  }
+
+
+  //Function to set this script Active. 
+  public void SetPageActive()
+  {
+    isPageActive = true;
+    BackButton.SetActive(false);
+    isTransitioning = false;
+    transitionTimer = 0f;
+    Vector3 originalMenu = InternalCalls.GetPosition(mEntityID);
+    Vector3 newPosMenu = new Vector3(originalMenu.X, originalMenu.Y, TargetZMenu);
+    InternalCalls.SetPosition(mEntityID, ref newPosMenu);
+
+    Vector3 originalResume = InternalCalls.GetPosition(VolumeSlider.mEntityID);
+    Vector3 newPosResume = new Vector3(originalResume.X, originalResume.Y, TargetZButton);
+    InternalCalls.SetPosition(VolumeSlider.mEntityID, ref newPosResume);
+
+    Vector3 originalSettings = InternalCalls.GetPosition(BrightnessSlider.mEntityID);
+    float gammaNorm = InternalCalls.GetGammaNorm();
+    float NewXPos = minX + ((1- gammaNorm) * (maxX - minX));
+    Vector3 newPosSettings = new Vector3(NewXPos, originalSettings.Y, TargetZButton);
+    InternalCalls.SetPosition(BrightnessSlider.mEntityID, ref newPosSettings);
+
+
+
+
+
+    Vector3 originalMainMenu = InternalCalls.GetPosition(BackButton.mEntityID);
+    Vector3 newPosMainMenu = new Vector3(originalMainMenu.X, originalMainMenu.Y, TargetZButton);
+    InternalCalls.SetPosition(BackButton.mEntityID, ref newPosMainMenu);
+  }
+
+  public void GoBackToPauseMenu()
+  {
+    if (pauseMenu != null)
+    {
+      pauseMenu.GoBackToPauseMenu();
+      SetAllInactive();
+      SetActive(false);
+      isPageActive = false;
+
+
+      Vector3 originalMenu = InternalCalls.GetPosition(mEntityID);
+      Vector3 newPosMenu = new Vector3(originalMenu.X, originalMenu.Y, OriginalTargetZMenu);
+      InternalCalls.SetPosition(mEntityID, ref newPosMenu);
+
+      Vector3 originalResume = InternalCalls.GetPosition(VolumeSlider.mEntityID);
+      Vector3 newPosResume = new Vector3(originalResume.X, originalResume.Y, OriginalTargetZButton);
+      InternalCalls.SetPosition(VolumeSlider.mEntityID, ref newPosResume);
+
+      Vector3 originalSettings = InternalCalls.GetPosition(BrightnessSlider.mEntityID);
+      Vector3 newPosSettings = new Vector3(originalSettings.X, originalSettings.Y, OriginalTargetZButton);
+      InternalCalls.SetPosition(BrightnessSlider.mEntityID, ref newPosSettings);
+
+      Vector3 originalMainMenu = InternalCalls.GetPosition(BackButton.mEntityID);
+      Vector3 newPosMainMenu = new Vector3(originalMainMenu.X, originalMainMenu.Y, OriginalTargetZButton);
+      InternalCalls.SetPosition(BackButton.mEntityID, ref newPosMainMenu);
+    }
+  }
+
+  private void SetAllInactive()
+  {
+      BackButton.IsVisible = false;
+      BackButton.IsClicked = false;
+      VolumeSlider.IsClicked = false;
+      VolumeSlider.IsClicked = false;
+      VolumeSlider.SetActive(false);
+      BrightnessSlider.SetActive(false);
+      BackButton.SetActive(false);
+
+  }
+
+
+  float screenToCanvas(float screenX, float screenMaxX, float screenMinX = 0f)
+  {
+    // Calculate screen and canvas widths
+    float screenWidth = screenMaxX - screenMinX;
+    float canvasWidth = CanvasmaxX - CanvasminX;
+    
+    Debug.Log("SX: " + screenX.ToString());
+    Debug.Log("SW: " + screenWidth.ToString());
+    Debug.Log("CW: " + canvasWidth.ToString());
+
+    // Normalize screenX to [0, 1] range, then scale to canvas width
+    float normalizedX = (screenX - screenMinX) / screenWidth;
+    float canvasX = CanvasminX + (normalizedX * canvasWidth);
+    Debug.Log("NX: " + normalizedX.ToString());
+    Debug.Log("CX: " + canvasX.ToString());
+
+
+    return canvasX;
+  }
+
+  float normalize(float value, float min, float max)
+  {
+    return 1 - ((value - min) / (max - min));
+  }
+}
+
+

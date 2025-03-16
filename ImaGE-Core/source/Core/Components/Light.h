@@ -49,9 +49,11 @@ namespace Component {
 		glm::vec3 ambColor;
 		float ambIntensity;
 		float gammaValue;
+		float MaxGammvalue;
+		float MinGammaValue;
 
-		LightGlobalProps() : ambColor{ 1.f, 1.f, 1.f }, ambIntensity{}, gammaValue{ 1.8f } {}
-		LightGlobalProps(glm::vec3 const& _ambClr, float _ambIntensity, float gammaVal) : ambColor{ _ambClr }, ambIntensity{ _ambIntensity }, gammaValue{ gammaVal } {}
+		LightGlobalProps() : ambColor{ 1.f, 1.f, 1.f }, ambIntensity{}, gammaValue{ 1.8f }, MaxGammvalue{ 1.f }, MinGammaValue{ 4.f } {}
+		LightGlobalProps(glm::vec3 const& _ambClr, float _ambIntensity, float gammaVal) : ambColor{ _ambClr }, ambIntensity{ _ambIntensity }, gammaValue{ gammaVal }, MaxGammvalue{ 1.f }, MinGammaValue{ 4.f } {}
 	};
 
 

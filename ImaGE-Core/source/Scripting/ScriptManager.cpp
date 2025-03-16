@@ -103,7 +103,12 @@ namespace Mono
     { "Level3Dialogue", ScriptFieldType::LEVEL3_DIALOGUE },
     { "Fragment", ScriptFieldType::FRAGMENT },
     { "BootupText", ScriptFieldType::BOOTUPTEXT },
-    { "Lvl4Dialogue", ScriptFieldType::LVL4_DIALOGUE }
+    { "Lvl4Dialogue", ScriptFieldType::LVL4_DIALOGUE },
+    { "SettingsPage", ScriptFieldType::SETTINGS },
+    { "PauseMenu", ScriptFieldType::PAUSEMENU },
+    { "SettingsButtons", ScriptFieldType::SETTINGSBUTTON },
+    { "PauseMenuButtons", ScriptFieldType::PAUSEMENUBUTTON }
+
   };
 }
 
@@ -209,6 +214,7 @@ void ScriptManager::AddInternalCalls()
   ADD_CLASS_INTERNAL_CALL(AnyKeyDown, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(AnyKeyTriggered, Input::InputManager::GetInstance());
   ADD_INTERNAL_CALL(GetMousePos);
+  ADD_INTERNAL_CALL(GetScreenWidth);
   ADD_INTERNAL_CALL(GetMousePosWorld);
   ADD_INTERNAL_CALL(GetMouseDelta);
   ADD_INTERNAL_CALL(GetCameraForward);
@@ -328,6 +334,9 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetCanvasTransitionProgress);
   ADD_INTERNAL_CALL(EnableCanvasTransition);
   ADD_INTERNAL_CALL(SetCanvasTransitionType);
+  ADD_INTERNAL_CALL(SetBrightness);
+  ADD_INTERNAL_CALL(SetBGM);
+  ADD_INTERNAL_CALL(GetGammaNorm);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -985,6 +994,8 @@ void Mono::SetTag(ECS::Entity::EntityID entity, MonoString* tag) {
     ECS::Entity(entity).GetComponent<Component::Tag>().tag = convertedTag;
 }
 
+
+
 void Mono::Log(MonoString*s)
 {
   std::string msg{ MonoStringToSTD(s) };
@@ -1126,7 +1137,29 @@ glm::vec3 Mono::GetMouseDelta()
 
 glm::vec3 Mono::GetMousePos()
 {
+
   return glm::vec3(Input::InputManager::GetInstance().GetMousePos(), 0);
+}
+
+float Mono::GetScreenWidth()
+{
+  return Input::InputManager::GetInstance().GetDim().x;
+}
+
+void Mono::SetBrightness(float fraction)
+{
+  float newValue = Component::Light::sGlobalProps.MinGammaValue + (fraction * (Component::Light::sGlobalProps.MaxGammvalue - Component::Light::sGlobalProps.MinGammaValue));
+  Component::Light::sGlobalProps.gammaValue = newValue;
+}
+
+void Mono::SetBGM(float fraction)
+{
+
+}
+
+float Mono::GetGammaNorm()
+{
+  return (Component::Light::sGlobalProps.gammaValue - Component::Light::sGlobalProps.MinGammaValue) / (Component::Light::sGlobalProps.MaxGammvalue - Component::Light::sGlobalProps.MinGammaValue);
 }
 
 glm::vec3 Mono::GetMousePosWorld(float depth)
@@ -1949,7 +1982,7 @@ MonoArray* Mono::GetContactPoints(ECS::Entity entity1, ECS::Entity entity2)
 
         cp.internalFaceIndex1 = contactPoints[i].internalFaceIndex1;
 
-        // Obtain a pointer to the array element’s storage.
+        // Obtain a pointer to the array elementï¿½s storage.
         // Calculate the element size from the MonoClass information.
         void* elementAddr = mono_array_addr_with_size(managedArray, mono_class_value_size(contactPointClass, nullptr), i);
         // Copy our local instance into the managed array.
