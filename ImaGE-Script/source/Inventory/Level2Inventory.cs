@@ -25,6 +25,7 @@ public class Level2Inventory : Entity
     public Entity onetofivePaintingUI;
     public Entity onetosixPaintingUI;
     public Entity threetoonePaintingUI;
+    public Entity fourtoonePaintingUI;
 
     // Inventory Item Selection (Image in the inventory bar)
     public Entity dionysusPaintingSelection;
@@ -35,6 +36,7 @@ public class Level2Inventory : Entity
     public Entity onetofivePaintingSelection;
     public Entity onetosixPaintingSelection;
     public Entity threetoonePaintingSelection;
+    public Entity fourtoonePaintingSelection;
 
     // Inventory Tools
     public Entity inventorySelectSquare;
@@ -374,6 +376,11 @@ public class Level2Inventory : Entity
                 threetoonePaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingIndestructible3to1", GetItemByName("HexPaintingIndestructible3to1"));
                 paintingAlignUILevel2Script.isPainting = true;
                 break;
+            case "HexPaintingIndestructible4to1":
+                fourtoonePaintingUI?.SetActive(true);
+                fourtoonePaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingIndestructible4to1", GetItemByName("HexPaintingIndestructible4to1"));
+                paintingAlignUILevel2Script.isPainting = true;
+                break;
 
         }
     }
@@ -388,6 +395,7 @@ public class Level2Inventory : Entity
         onetofivePaintingUI?.SetActive(false);
         onetosixPaintingUI?.SetActive(false);
         threetoonePaintingUI?.SetActive(false);
+        fourtoonePaintingUI?.SetActive(false);
         paintingAlignUILevel2Script.isPainting = false;
         pictureAlignscript.ClearUI();
 
