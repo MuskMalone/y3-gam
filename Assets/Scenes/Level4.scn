@@ -9102,7 +9102,7 @@
         },
         {
             "ID": 210,
-            "Parent": null,
+            "Parent": 2098217,
             "Child Entities": [],
             "Components": [
                 {
@@ -9645,6 +9645,91 @@
             }
         },
         {
+            "ID": 255,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "GateBlocker",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -8.241867065429688,
+                            "y": 18.669057846069337,
+                            "z": -46.04254150390625
+                        },
+                        "scale": {
+                            "x": 10.020000457763672,
+                            "y": 19.3799991607666,
+                            "z": 0.800000011920929
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.3774609863758087,
+                            "z": 0.0,
+                            "w": 0.9260255098342896
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -44.352996826171878,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -8.241867065429688,
+                            "y": 18.669057846069337,
+                            "z": -46.04254150390625
+                        },
+                        "worldScale": {
+                            "x": 10.020000457763672,
+                            "y": 19.3799991607666,
+                            "z": 0.800000011920929
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.3774609863758087,
+                            "z": 0.0,
+                            "w": 0.9260255098342896
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 5.010000228881836,
+                            "y": 9.6899995803833,
+                            "z": 0.4000000059604645
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
             "ID": 257,
             "Parent": 3146528,
             "Child Entities": [],
@@ -9901,6 +9986,81 @@
                         "motionType": "KINEMATIC",
                         "axisLock": 7,
                         "angularAxisLock": 7
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 279,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "GateCamera",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 25.936504364013673,
+                            "y": 23.707351684570314,
+                            "z": -21.484451293945314
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.42540815472602847,
+                            "z": 0.0,
+                            "w": 0.9050015807151794
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 50.35300064086914,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 25.936504364013673,
+                            "y": 23.707351684570314,
+                            "z": -21.484451293945314
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.42540815472602847,
+                            "z": 0.0,
+                            "w": 0.9050015807151794
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Camera": {
+                        "projType": "PERSP",
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -10.0
+                        },
+                        "yaw": 0.0,
+                        "pitch": 0.0,
+                        "fov": 96.26899719238281,
+                        "aspectRatio": 1.7777777910232545,
+                        "nearClip": 0.10000000149011612,
+                        "farClip": 100.0
                     }
                 }
             ]
@@ -10966,7 +11126,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 7398324319315129017
                         }
                     }
                 },
@@ -11044,7 +11204,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 7398324319315129017
                         }
                     }
                 },
@@ -11064,7 +11224,7 @@
                     "Animation": {
                         "animations": [
                             {
-                                "key": "OpenGateLeft",
+                                "key": "OpenLeftGate",
                                 "value": {
                                     "ID": 322384851228645914
                                 }
@@ -22085,6 +22245,40 @@
             ],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PickupObjects",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7072180673722841169
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 6.321000099182129,
+                                            "y": 14.520000457763672,
+                                            "z": -36.41400146484375
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "Altar Painting",
                         "isActive": true
@@ -22209,6 +22403,80 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "blackBorder"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 197,
+                                            "scriptName": "Lvl4Dialogue"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "dialogue"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097815,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "exitTrigger"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049658,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "gateBloom"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 279,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "gateCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 374,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "leftGate"
+                                        }
+                                    },
+                                    {
+                                        "data": "OpenLeftGate",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "leftGateAnimationName"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maximumBloom"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 0,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
                                         }
                                     },
                                     {
@@ -24909,9 +25177,9 @@
                             "z": -37.104957580566409
                         },
                         "scale": {
-                            "x": 3.433799982070923,
+                            "x": 3.2852492332458498,
                             "y": 3.433799982070923,
-                            "z": 3.433799982070923
+                            "z": 3.4337992668151857
                         },
                         "rotation": {
                             "x": -7.450580596923828e-9,
@@ -24930,9 +25198,9 @@
                             "z": -37.104957580566409
                         },
                         "worldScale": {
-                            "x": 3.433799982070923,
+                            "x": 3.2852492332458498,
                             "y": 3.433799982070923,
-                            "z": 3.433799982070923
+                            "z": 3.4337992668151857
                         },
                         "worldRot": {
                             "x": -7.450580596923828e-9,
@@ -27357,8 +27625,15 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "Bloom": {
+                        "threshold": 1.0,
+                        "intensity": 0.0,
+                        "range": 40.0
+                    }
+                },
+                {
                     "Tag": {
-                        "tag": "pPlane1",
+                        "tag": "pPlane1Gate",
                         "isActive": true
                     }
                 },
@@ -27411,7 +27686,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 9907430074531686588
+                            "ID": 16148162105990453228
                         }
                     }
                 },
@@ -27425,6 +27700,32 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 17.799999237060548,
+                            "y": 18.299999237060548,
+                            "z": 0.4000000059604645
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
                     }
                 }
             ]
@@ -31114,6 +31415,130 @@
             ]
         },
         {
+            "ID": 2097815,
+            "Parent": 2098217,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "ExitTrigger",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 1.7785407304763795,
+                            "y": 17.93833351135254,
+                            "z": -48.94440841674805
+                        },
+                        "scale": {
+                            "x": 7.639999866485596,
+                            "y": 18.520000457763673,
+                            "z": 7.4832634925842289
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 1.7785407304763795,
+                            "y": 17.93833351135254,
+                            "z": -48.94440841674805
+                        },
+                        "worldScale": {
+                            "x": 7.639999866485596,
+                            "y": 18.520000457763673,
+                            "z": 7.4832634925842289
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 3.819999933242798,
+                            "y": 9.260000228881836,
+                            "z": 3.7416317462921144
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": true
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 2097815,
+                                "scriptName": "GameEndTrigger",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 75,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "transitionTime"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
             "ID": 2097830,
             "Parent": 3146842,
             "Child Entities": [],
@@ -31896,6 +32321,68 @@
                 ],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 2098217,
+            "Parent": null,
+            "Child Entities": [
+                210,
+                2097815
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Triggers",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
         },
         {
             "ID": 2098233,

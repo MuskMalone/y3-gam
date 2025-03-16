@@ -17,7 +17,7 @@
         },
         "nextNodes": [
             1,
-            2
+            3
         ]
     },
     "keyframes": [
@@ -31,11 +31,26 @@
             "type": "TRANSLATION",
             "interpolationType": "LINEAR",
             "startTime": 0.0,
-            "duration": 3.0,
-            "nextNodes": []
+            "duration": 4.0,
+            "nextNodes": [
+                2
+            ]
         },
         {
             "nodeId": 2,
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "interpolationType": "LINEAR",
+            "startTime": 4.0,
+            "duration": 2.0,
+            "nextNodes": []
+        },
+        {
+            "nodeId": 3,
             "endValue": {
                 "x": 0.0,
                 "y": -27.256000518798829,
@@ -44,7 +59,7 @@
             "type": "ROTATION",
             "interpolationType": "LINEAR",
             "startTime": 0.0,
-            "duration": 3.0,
+            "duration": 4.0,
             "nextNodes": []
         }
     ]
