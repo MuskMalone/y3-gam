@@ -291,12 +291,12 @@ public class PictureAlign : Entity
             }
         }
 
-        else if (picture == "HexPaintingDescructible2to1")
+        else if (picture == "HexPaintingDescructible2to1") 
         {
             FadeOut();
-            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition1);
             if (hasFaded)
             {
+                HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition1);
                 currentImg.SetActive(false);
                 SetActive(false);
                 playerMove.UnfreezePlayer();
@@ -383,6 +383,7 @@ public class PictureAlign : Entity
                 currentImg.Level3RemoveItself();
                 currentImg = null;
                 hasFaded = false;
+                
             }
         }
         else

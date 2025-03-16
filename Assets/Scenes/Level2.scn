@@ -46491,6 +46491,76 @@
                     }
                 },
                 {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1049305,
+                                "scriptName": "HoldupUI",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "x": 0.0,
+                                            "y": 0.6000000238418579,
+                                            "z": 0.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "bigPicPos"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 12.979999542236329,
+                                            "y": 13.800000190734864,
+                                            "z": 12.979999542236329
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "bigPicScale"
+                                        }
+                                    },
+                                    {
+                                        "data": "HexPaintingDestructible2to1.txt",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "dataFilePath"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isBigPaintingActive"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 10.0,
+                                            "y": 0.0,
+                                            "z": 0.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "smallPicPos"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 6.0,
+                                            "y": 6.0,
+                                            "z": 6.0
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "smallPicScale"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
                     "Image": {
                         "color": {
                             "x": 1.0,

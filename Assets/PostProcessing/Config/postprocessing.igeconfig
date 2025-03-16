@@ -1,32 +1,6 @@
 {
     "configs": [
         {
-            "key": "Level2",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "Altar Painting",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
             "key": "",
             "value": {
                 "shaders": [],
@@ -41,6 +15,32 @@
         },
         {
             "key": "test",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "Level2",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "Altar Painting",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -118,9 +118,14 @@
             }
         },
         {
-            "key": "Table",
+            "key": "Level3",
             "value": {
-                "shaders": [],
+                "shaders": [
+                    {
+                        "active": false,
+                        "shader": 13294960607296803192
+                    }
+                ],
                 "fogMinDist": 1.0,
                 "fogMaxDist": 1000.0,
                 "fogColor": {
@@ -144,24 +149,6 @@
             }
         },
         {
-            "key": "Level3",
-            "value": {
-                "shaders": [
-                    {
-                        "active": false,
-                        "shader": 13294960607296803192
-                    }
-                ],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
             "key": "Painting Frame (Rect)",
             "value": {
                 "shaders": [],
@@ -175,7 +162,7 @@
             }
         },
         {
-            "key": "PseudoLamp",
+            "key": "Credits",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -201,7 +188,7 @@
             }
         },
         {
-            "key": "Credits",
+            "key": "PseudoLamp",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -240,19 +227,6 @@
             }
         },
         {
-            "key": "wall_lamp",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
             "key": "Small Pillar",
             "value": {
                 "shaders": [],
@@ -266,7 +240,7 @@
             }
         },
         {
-            "key": "Large Pillar",
+            "key": "wall_lamp",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -280,6 +254,19 @@
         },
         {
             "key": "Bootup",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "Large Pillar",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -331,7 +318,7 @@
             }
         },
         {
-            "key": "contacttest",
+            "key": "BumpyGround",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -344,7 +331,7 @@
             }
         },
         {
-            "key": "BumpyGround",
+            "key": "contacttest",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
