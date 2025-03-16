@@ -24,7 +24,7 @@ public class NumberPad : Entity
     private Dictionary<string, Entity> numberButtons;
     private Dictionary<string, SafeButtons> buttonScripts;
     private string typedCode = "";
-    private string correctCode = "7828";
+    private string correctCode = "2862";
     private bool keypadActive = false;
     private float lastPressTime = 0f;
     private float inputDelay = 0.3f; // Prevents multiple rapid inputs
