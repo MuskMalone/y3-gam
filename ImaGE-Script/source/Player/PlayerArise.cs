@@ -46,7 +46,6 @@ public class PlayerArise  : Entity
       {
         playerMove.useScriptRotation = false;
       }
-
       InternalCalls.PlayAnimation(mEntityID, PLayerAriseAnim);
       InternalCalls.UpdatePhysicsToTransform(mEntityID);
       hasArsied = true;
