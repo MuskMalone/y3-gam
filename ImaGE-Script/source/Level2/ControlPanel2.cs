@@ -260,6 +260,19 @@ public class ControlPanel2 : Entity
     public void LightsToggled(bool isOn)
     {
         areLightsOn = isOn;
+        if (isOn)
+        {
+            // If the lights are on, hide the hidden text immediately
+            if (defaultStateActive)
+            {
+                SetDefaultHiddenText(false);
+            }
+            else
+            {
+                SetHiddenText(currStatue, false);
+            }
+            uvLightEnabled = false; // Optionally reset this flag if it’s used only when lights are off
+        }
     }
 
     public void Unlock()
