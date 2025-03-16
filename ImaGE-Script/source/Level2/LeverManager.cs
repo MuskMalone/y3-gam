@@ -1,4 +1,5 @@
 ﻿using IGE.Utils;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -15,14 +16,14 @@ public class LeverManager : Entity
 
   private int leversPulled = 0;
   private int totalLevers = 5; // Set total number of levers required
-  private float switchBackTime = 0f;      // Store when to switch back
   private float switchDuration = 4.5f;
+  private float timeElapsed = 0f;
   private List<HexTableOrb> orbs = new List<HexTableOrb>();
 
-    private Vector3 teleportPositionTable = new Vector3(64.307f, 60.942f, -390.26f);
-    private HexTeleport hexTeleport;
+  private Vector3 teleportPositionTable = new Vector3(64.307f, 60.942f, -390.26f);
+  private HexTeleport hexTeleport;
 
-    private enum State
+  private enum State
   {
     IDLE,
     TABLE_CAM,
@@ -71,9 +72,12 @@ public class LeverManager : Entity
 
       case State.TABLE_CAM:
         {
+          timeElapsed += Time.deltaTime;
+
           // Check if we're in table view and if the switch-back time has been reached
-          if (Time.gameTime >= switchBackTime)
+          if (timeElapsed >= switchDuration)
           {
+            timeElapsed = 0f;
             SetPlayerCameraAsMain();  // Switch back to player view
             currState = State.IDLE;
 
@@ -85,8 +89,7 @@ public class LeverManager : Entity
             // if all levers pulled, transition to next phase
             if (leversPulled >= totalLevers)
             {
-              switchBackTime = Time.gameTime + timeBeforeOrbsDrop;  // just gonna reuse switchBackTime
-                            hexTeleport.TeleportPlayer(teleportPositionTable);
+              hexTeleport.TeleportPlayer(teleportPositionTable);
               currState = State.DEACTIVATE_ORBS;
             }
           }
@@ -96,8 +99,11 @@ public class LeverManager : Entity
 
       case State.DEACTIVATE_ORBS:
         {
-          if (Time.gameTime < switchBackTime) { return; }
+          timeElapsed += Time.deltaTime;
 
+          if (timeElapsed < timeBeforeOrbsDrop) { return; }
+
+          timeElapsed = 0f;
           // trigger the next sequence for the orbs
           foreach (HexTableOrb orb in orbs)
           {
@@ -121,14 +127,11 @@ public class LeverManager : Entity
 
     if (playerMove != null)
     {
-      Debug.Log("FREEZE");
       playerMove.FreezePlayer(); // Freeze player movement
     }
 
-    Debug.Log("SWITCH CAM");
     SetTableCameraAsMain(); // Switch to table camera
     currState = State.TABLE_CAM;
-    switchBackTime = Time.gameTime + switchDuration; // Set when to switch back
   }
 
   public void OrbShattered()
@@ -138,7 +141,6 @@ public class LeverManager : Entity
     {
       fragmentGlass.SetActive(false);
     }
-    Debug.Log("Orbs left: " + leversPulled);
   }
 
   private void SetPlayerCameraAsMain()
@@ -152,10 +154,5 @@ public class LeverManager : Entity
   {
     InternalCalls.SetTag(playerCamera.mEntityID, "hexTableCamera");
     InternalCalls.SetTag(tableCamera.mEntityID, "MainCamera");
-  }
-
-  private void UnlockFrag()
-  {
-    Console.WriteLine("All levers pulled! The door unlocks...");
   }
 }

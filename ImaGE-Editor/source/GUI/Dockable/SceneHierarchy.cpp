@@ -959,7 +959,6 @@ namespace GUI
     if (mSceneModified || IGE_SCENEMGR.IsSceneInProgress()) { return; }
 
     QUEUE_EVENT(Events::SceneModifiedEvent);
-    mSceneModified = true;
   }
 
 } // namespace GUI
