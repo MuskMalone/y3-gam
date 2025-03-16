@@ -63,7 +63,8 @@ namespace Mono {
 		BLACK_BORDER,
 		HEX_TABLE_ORB,
 		LEVEL3_DIALOGUE,
-		FRAGMENT
+		FRAGMENT,
+		BOOTUPTEXT
 	};
 
 
