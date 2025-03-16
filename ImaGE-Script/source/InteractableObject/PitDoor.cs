@@ -4,6 +4,7 @@ public class PitDoor : Entity
 {
   public PlayerInteraction playerInteraction;
   public Entity gapCollider;
+  public Entity unlockDoorUI = null;
   public string openAnimName;
 
   private string entityTag;
@@ -22,11 +23,17 @@ public class PitDoor : Entity
     // if player hasn't interacted with door
     if (!playerInteracted)
     {
-      if (Input.GetMouseButtonTriggered(0) && playerInteraction.RayHitString == entityTag)
+      bool isDoorHit = playerInteraction.RayHitString == entityTag;
+      if (Input.GetMouseButtonTriggered(0) && isDoorHit)
       {
         InternalCalls.PlayAnimation(mEntityID, openAnimName);
         InternalCalls.DestroyEntity(gapCollider.mEntityID);
         playerInteracted = true;
+        unlockDoorUI?.SetActive(false);
+      }
+      else
+      {
+        unlockDoorUI?.SetActive(isDoorHit);
       }
     }
     // else animation in progress
