@@ -5080,7 +5080,6 @@
                 129,
                 147,
                 178,
-                199,
                 231,
                 589,
                 597,
@@ -6700,7 +6699,8 @@
             "Parent": 75,
             "Child Entities": [
                 130,
-                131
+                131,
+                199
             ],
             "Components": [
                 {
@@ -6753,6 +6753,58 @@
                 {
                     "Layer": {
                         "layerName": "UI"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 129,
+                                "scriptName": "BlackBorder",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 130,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorder1"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 131,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorder2"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 199,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "centerDot"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -8259,7 +8311,7 @@
                         "scriptList": [
                             {
                                 "entityID": 197,
-                                "scriptName": "Dialogue",
+                                "scriptName": "Lvl4Dialogue",
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
@@ -8349,6 +8401,62 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isLineComplete"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.009999999776482582,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "textSpeed"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 197,
+                                "scriptName": "InitialSequence",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 197,
+                                            "scriptName": "Lvl4Dialogue"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "dialogue"
+                                        }
+                                    },
+                                    {
+                                        "data": 3.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "fadeDuration"
+                                        }
+                                    },
+                                    {
+                                        "data": [
+                                            "Let's place the fragments down and complete\nmum's painting."
+                                        ],
+                                        "type": "System.String[]",
+                                        "scriptField": {
+                                            "fieldName": "initialText"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 40,
                                             "scriptName": "PlayerMove"
@@ -8360,19 +8468,12 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 668,
-                                            "scriptName": "SpecialDialogue"
+                                            "entityID": 75,
+                                            "scriptName": "Transition"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
-                                            "fieldName": "specialDialogue"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.009999999776482582,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "textSpeed"
+                                            "fieldName": "transition"
                                         }
                                     }
                                 ]
@@ -8384,7 +8485,7 @@
         },
         {
             "ID": 199,
-            "Parent": 75,
+            "Parent": 129,
             "Child Entities": [],
             "Components": [
                 {
@@ -8413,7 +8514,7 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
@@ -9374,8 +9475,7 @@
             "Child Entities": [
                 2,
                 164,
-                197,
-                668
+                197
             ],
             "Components": [
                 {
@@ -15284,10 +15384,26 @@
                 "subDataId": 4,
                 "componentData": [
                     {
+                        "key": "Bloom",
+                        "value": {
+                            "threshold": 1.0,
+                            "intensity": 1.0,
+                            "range": 10.0
+                        }
+                    },
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 16148162105990453228
+                            }
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Puzzle_PaintingFragment1",
-                            "isActive": false
+                            "isActive": true
                         }
                     }
                 ],
@@ -15305,10 +15421,26 @@
                 "subDataId": 5,
                 "componentData": [
                     {
+                        "key": "Bloom",
+                        "value": {
+                            "threshold": 1.0,
+                            "intensity": 1.0,
+                            "range": 10.0
+                        }
+                    },
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 16148162105990453228
+                            }
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Puzzle_PaintingFragment2",
-                            "isActive": false
+                            "isActive": true
                         }
                     }
                 ],
@@ -15329,7 +15461,7 @@
                         "key": "Bloom",
                         "value": {
                             "threshold": 1.0,
-                            "intensity": 0.0,
+                            "intensity": 1.0,
                             "range": 10.0
                         }
                     },
@@ -15356,10 +15488,26 @@
                 "subDataId": 7,
                 "componentData": [
                     {
+                        "key": "Bloom",
+                        "value": {
+                            "threshold": 1.0,
+                            "intensity": 1.0,
+                            "range": 10.0
+                        }
+                    },
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 16148162105990453228
+                            }
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Puzzle_PaintingFragment4",
-                            "isActive": false
+                            "isActive": true
                         }
                     }
                 ],
@@ -16453,123 +16601,6 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 668,
-            "Parent": 231,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "AudioSource": {
-                        "sounds": [
-                            {
-                                "key": "BootUploadingText",
-                                "value": {
-                                    "guid": {
-                                        "ID": 7518709902889426159
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": -17.100000381469728,
-                                            "y": -7.5,
-                                            "z": 0.0
-                                        },
-                                        "volume": 0.699999988079071,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    "Tag": {
-                        "tag": "SpecialDialogue",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -17.100000381469728,
-                            "y": -7.5,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -17.100000381469728,
-                            "y": -7.5,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Text": {
-                        "textContent": "",
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "scale": 0.004000000189989805,
-                        "textAssetGUID": {
-                            "ID": 10355075193979688064
-                        },
-                        "fontFamilyName": "PressStart2P-Regular",
-                        "alignment": 0,
-                        "multiLineSpacingOffset": 0.0,
-                        "textBoxEnabledFlag": false,
-                        "textBoxDimensions": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 0.0
-                        }
                     }
                 }
             ]
