@@ -429,7 +429,7 @@
                 151,
                 214,
                 383,
-                1049198,
+                516,
                 1049706,
                 2097156,
                 3145740
@@ -1912,6 +1912,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "isGroundedRayHeight"
+                                        }
+                                    },
+                                    {
+                                        "data": 4.349999904632568,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minIsGroundedDistance"
                                         }
                                     },
                                     {
@@ -3801,6 +3808,13 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "doorEntryTrigger"
+                                        }
+                                    },
+                                    {
+                                        "data": 1.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "footstepPitch"
                                         }
                                     },
                                     {
@@ -13152,6 +13166,84 @@
                         "meshName": "statue_acceptance_new",
                         "GUID": {
                             "ID": 14442940544284623106
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 516,
+            "Parent": 11,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Reuploaded_Cereus",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -6.493000030517578,
+                            "y": 6.265999794006348,
+                            "z": -12.35099983215332
+                        },
+                        "scale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -6.493000030517578,
+                            "y": 6.265999794006348,
+                            "z": -12.35099983215332
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 6094928404620233416
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Reuploaded_Cereus",
+                        "GUID": {
+                            "ID": 14760659303595227349
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": true,
@@ -24241,84 +24333,6 @@
                         "meshName": "Periwinkle_dead",
                         "GUID": {
                             "ID": 6007523300324202638
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1049198,
-            "Parent": 11,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Cereus_new",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -6.492652893066406,
-                            "y": 6.265999794006348,
-                            "z": -12.35099983215332
-                        },
-                        "scale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -6.492652893066406,
-                            "y": 6.265999794006348,
-                            "z": -12.35099983215332
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 6094928404620233416
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cereus_new",
-                        "GUID": {
-                            "ID": 11538155488495313612
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": true,
