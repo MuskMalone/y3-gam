@@ -64,6 +64,7 @@ public class LeverManager : Entity
 
   void Update()
   {
+    //Debug.Log(currState.ToString());
     switch (currState)
     {
       case State.IDLE:
@@ -72,6 +73,8 @@ public class LeverManager : Entity
 
       case State.TABLE_CAM:
         {
+          //Debug.Log(timeElapsed.ToString() + " / " + switchDuration.ToString());
+
           timeElapsed += Time.deltaTime;
 
           // Check if we're in table view and if the switch-back time has been reached
@@ -132,6 +135,7 @@ public class LeverManager : Entity
 
     SetTableCameraAsMain(); // Switch to table camera
     currState = State.TABLE_CAM;
+    timeElapsed = 0f;
   }
 
   public void OrbShattered()

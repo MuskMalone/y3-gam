@@ -15,8 +15,11 @@ public class WoodenPlanks : Entity
   public Level3Inventory inventoryScript;
   public PlayerInteraction playerInteraction;
   public HammerLevel3 Hammer;
+  public Level3Dialogue dialogue;
+  public Entity interactUI;
   public Entity Door;
   public string doorAnimName;
+  public string[] notStrongEnoughDialogue;
 
   private enum State
   {
@@ -40,22 +43,30 @@ public class WoodenPlanks : Entity
     {
       case State.BLOCKED:
         {
-          bool isDoorHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-          if (isDoorHit && Input.GetMouseButtonTriggered(0))
+          bool isPlanksHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+          if (Input.GetMouseButtonTriggered(0) && isPlanksHit)
           {
-            // some E to pick up UI stuff
-
-            if (!inventoryScript.hammerEquipped)
+            if (!inventoryScript.hammerEquipped && !dialogue.isInDialogueMode)
             {
               // Play locked sound
-              // Dialogue?
-
+              dialogue.SetDialogue(notStrongEnoughDialogue, new Level3Dialogue.Emotion[] {
+                Level3Dialogue.Emotion.Sad, Level3Dialogue.Emotion.Thinking
+              });
               return;
             }
 
-            inventoryScript.RemoveItem(Hammer);
-            currState = State.USING_HAMMER;
+            if (inventoryScript.hammerEquipped)
+            {
+              inventoryScript.RemoveItem(Hammer);
+              currState = State.USING_HAMMER;
+              interactUI.SetActive(false);
+            }
           }
+          else
+          {
+            interactUI?.SetActive(isPlanksHit);
+          }
+
           break;
         }
 
