@@ -1,0 +1,37 @@
+{
+    "rootKeyframe": {
+        "startPos": {
+            "x": 0.2853403091430664,
+            "y": -0.21506285667419434,
+            "z": 9.5367431640625e-7
+        },
+        "startRot": {
+            "x": 0.0,
+            "y": -0.0,
+            "z": 0.0
+        },
+        "startScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "nextNodes": [
+            1
+        ]
+    },
+    "keyframes": [
+        {
+            "nodeId": 1,
+            "endValue": {
+                "x": 0.0,
+                "y": -75.0,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 0.0,
+            "duration": 1.7999999523162842,
+            "nextNodes": []
+        }
+    ]
+}

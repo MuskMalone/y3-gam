@@ -15,6 +15,7 @@ namespace IGE {
 
             //track updates to position
             //track whether guids are valid
+            //remove any channels that are invalid
             {
                 auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
                 for (auto entity : rbsystem) {
@@ -23,7 +24,14 @@ namespace IGE {
                     for (auto& sound : audiosource.sounds) {
                         auto& setting{ sound.second.playSettings };
                         setting.position = xfm.worldPos;
-
+                        // Remove channels that are no longer playing
+                        std::erase_if(setting.channels, [](FMOD::Channel* channel) {
+                            bool isPlaying = false;
+                            if (channel) {
+                                channel->isPlaying(&isPlaying);
+                            }
+                            return !isPlaying;
+                            });
                         for (auto channel : sound.second.playSettings.channels) {
                             channel->setPitch(sound.second.playSettings.pitch);
                             if (sound.second.playSettings.mute) {
