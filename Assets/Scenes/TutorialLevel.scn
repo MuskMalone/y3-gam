@@ -11,6 +11,7 @@
                 114,
                 115,
                 135,
+                141,
                 1048618,
                 1048713,
                 1048908,
@@ -1608,6 +1609,16 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 141,
+                                            "scriptName": "BootupText"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "bootup"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 2097182,
                                             "scriptName": "Entity"
                                         },
@@ -1625,7 +1636,7 @@
                                     },
                                     {
                                         "data": [
-                                            "Mom... She always seemed to exist on the\nperiphery of the dream."
+                                            "I have a recurring dream of my mum,\nstanding at an open doorway."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -1664,7 +1675,7 @@
                                     },
                                     {
                                         "data": [
-                                            "No... Where are you going? Please come back!"
+                                            "My legs are frozen, and no matter how much \nI beg... How much I cry... \nI can't stop here from slipping away."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -1673,7 +1684,7 @@
                                     },
                                     {
                                         "data": [
-                                            "Wait, the painting! It feels so familiar."
+                                            "Wait, the painting! Let's use it..."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -2355,8 +2366,8 @@
                                     },
                                     {
                                         "data": [
-                                            "I won't lose her again. I've already waited for so long..",
-                                            "If I can align the painting with the door... \nIt doesn't have to end here."
+                                            "Let's not lose her again.",
+                                            "I have to align this painting with the door."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -2941,6 +2952,166 @@
                         "textureAssetGUID": {
                             "ID": 3449897380420308920
                         }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 141,
+            "Parent": 37,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "BootUploadingText",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7518709902889426159
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -17.100000381469728,
+                                            "y": -7.5,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "BootStartupText",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -17.100000381469728,
+                            "y": -7.5,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -17.100000381469728,
+                            "y": -7.5,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "",
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "scale": 0.009999999776482582,
+                        "textAssetGUID": {
+                            "ID": 10355075193979688064
+                        },
+                        "fontFamilyName": "PressStart2P-Regular",
+                        "alignment": 0,
+                        "multiLineSpacingOffset": 0.0,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 141,
+                                "scriptName": "BootupText",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "fadeDuration"
+                                        }
+                                    },
+                                    {
+                                        "data": "Player.EnterLevel([\"PICTUREPERFECT\"]\nbackgroundProcesses:\n[\"SOULLINK.EXE\"])",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "introMessage"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.03999999910593033,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "typewriterSpeed"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -12156,7 +12327,7 @@
                 {
                     "Tag": {
                         "tag": "PickupTutorialPaintingUI",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
@@ -12168,7 +12339,7 @@
                         },
                         "scale": {
                             "x": 7.7769999504089359,
-                            "y": 3.325000047683716,
+                            "y": 2.2049999237060549,
                             "z": 8.258000373840332
                         },
                         "rotation": {
@@ -12189,7 +12360,7 @@
                         },
                         "worldScale": {
                             "x": 7.7769999504089359,
-                            "y": 3.325000047683716,
+                            "y": 2.2049999237060549,
                             "z": 8.258000373840332
                         },
                         "worldRot": {
