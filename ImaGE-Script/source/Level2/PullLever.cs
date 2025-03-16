@@ -23,7 +23,8 @@ public class PullLever : Entity
 
     thisLeverTag = InternalCalls.GetTag(mEntityID);
     InternalCalls.SetLightIntensity(leverLight.mEntityID, 0.0f);
-  }
+    InternalCalls.SetLightIntensity(platformLight.mEntityID, 51.0f);
+    }
   void Update()
   {
     if (!leverPulled)
@@ -51,7 +52,8 @@ public class PullLever : Entity
         orb.Rise();
         leverManager?.LeverPulled();
         InternalCalls.SetLightIntensity(leverLight.mEntityID, 5.0f);
-        Destroy(this);  // we no longer need this script
+                InternalCalls.SetLightIntensity(platformLight.mEntityID, 0.0f);
+                Destroy(this);  // we no longer need this script
       }
     }
   }

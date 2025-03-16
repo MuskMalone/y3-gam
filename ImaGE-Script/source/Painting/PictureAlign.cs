@@ -77,6 +77,9 @@ public class PictureAlign : Entity
     //For pit puzzle
     private PitPuzzle pitPuzzleScript;
 
+    //For hex puzzle
+    private HexTeleport HexTeleportScript;
+
     void Start()
     {
         //tutorialFade = FindObjectOfType<TutorialFade>();
@@ -89,6 +92,7 @@ public class PictureAlign : Entity
         if (playerMove == null) Debug.LogError("PlayerMove component not found!");
 
         pitPuzzleScript = FindObjectOfType<PitPuzzle>();
+        HexTeleportScript = FindObjectOfType<HexTeleport>();
 
     }
 
@@ -285,6 +289,24 @@ public class PictureAlign : Entity
 
                 //ClearUI();
             }
+        }
+
+        else if (picture == "HexPaintingDescructible2to1")
+        {
+            FadeOut();
+            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition1);
+            if (hasFaded)
+            {
+                currentImg.SetActive(false);
+                SetActive(false);
+                playerMove.UnfreezePlayer();
+                isTransitioning = false;
+                currentImg.Level2RemoveItself();
+                currentImg = null;
+                startFade = true;
+                hasFaded = false;
+            }
+
         }
 
         //else if (picture == "DionysusPainting")

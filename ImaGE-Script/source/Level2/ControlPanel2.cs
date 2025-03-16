@@ -37,12 +37,13 @@ public class ControlPanel2 : Entity
 
     public enum StatueType
     {
-        ZEUS = 0,
+        ODYSSEUS = 0,
+        ZEUS,
         ATHENA,
         POSEIDON,
         HERMES
     }
-    private StatueType currStatue = StatueType.ZEUS;
+    private StatueType currStatue = StatueType.ODYSSEUS;
 
     private enum State
     {
@@ -227,6 +228,9 @@ public class ControlPanel2 : Entity
         DisableAllStatues();
         switch (statue)
         {
+            case StatueType.ODYSSEUS:
+                odysseusStatue.SetActive(true);
+                break;
             case StatueType.ZEUS:
                 zeusStatue.SetActive(true);
                 break;
@@ -285,6 +289,17 @@ public class ControlPanel2 : Entity
 
     public void SetHiddenText(StatueType statue, bool active)
     {
+
+        if (statue == StatueType.ODYSSEUS)
+        {
+            odysseusStatue.SetActive(active);
+            SetDefaultHiddenText(active);
+            return;
+        }
+
+        // For other statues, use the hiddenTexts array.
+        int index = (int)statue;
+
         foreach (Entity text in hiddenTexts[(int)statue])
         {
             text?.SetActive(active);

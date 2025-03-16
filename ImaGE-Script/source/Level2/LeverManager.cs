@@ -19,7 +19,10 @@ public class LeverManager : Entity
   private float switchDuration = 4.5f;
   private List<HexTableOrb> orbs = new List<HexTableOrb>();
 
-  private enum State
+    private Vector3 teleportPositionTable = new Vector3(64.307f, 60.942f, -390.26f);
+    private HexTeleport hexTeleport;
+
+    private enum State
   {
     IDLE,
     TABLE_CAM,
@@ -32,7 +35,8 @@ public class LeverManager : Entity
   void Start()
   {
     Console.WriteLine("Lever Manager Initialized. Waiting for levers to be pulled.");
-  }
+        hexTeleport = FindObjectOfType<HexTeleport>();
+    }
 
 
   //public void LeverPulled()
@@ -83,6 +87,7 @@ public class LeverManager : Entity
             if (leversPulled >= totalLevers)
             {
               switchBackTime = Time.gameTime + timeBeforeOrbsDrop;  // just gonna reuse switchBackTime
+                            hexTeleport.TeleportPlayer(teleportPositionTable);
               currState = State.DEACTIVATE_ORBS;
             }
           }

@@ -1,0 +1,39 @@
+{
+    "name": "ControlPanelMetal",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+    },
+    "metalness": 0.8679999709129334,
+    "roughness": 0.35600000619888308,
+    "ao": 1.0,
+    "emission": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "transparency": 1.0,
+    "tiling": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "offset": {
+        "x": -0.3799999952316284,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 415701126059748868
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}
