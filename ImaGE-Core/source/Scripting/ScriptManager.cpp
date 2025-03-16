@@ -303,6 +303,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetSoundPitch);
   ADD_INTERNAL_CALL(SetSoundVolume);
   ADD_INTERNAL_CALL(SetSoundGlobalVolume);
+  ADD_INTERNAL_CALL(GetSoundGlobalVolume);
   ADD_INTERNAL_CALL(EnableSoundPostProcessing);
   ADD_INTERNAL_CALL(DisableSoundPostProcessing);
   ADD_INTERNAL_CALL(PlaySound);
@@ -1228,6 +1229,11 @@ void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v)
 
 void Mono::SetSoundGlobalVolume(float vol) {
     IGE::Audio::AudioManager::GetInstance().mGlobalVolume = vol;
+}
+
+
+float Mono::GetSoundGlobalVolume() {
+  return IGE::Audio::AudioManager::GetInstance().mGlobalVolume;
 }
 
 void Mono::EnableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s, unsigned type, float param)

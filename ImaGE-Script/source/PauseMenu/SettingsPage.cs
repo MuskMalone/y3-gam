@@ -125,8 +125,8 @@ public class SettingsPage : Entity
           Vector3 newPosResume = new Vector3(NewXPos, originalResume.Y, originalResume.Z);
           newPosResume.X = (newPosResume.X < minX) ? minX : (newPosResume.X > maxX) ? maxX : newPosResume.X;
           InternalCalls.SetPosition(VolumeSlider.mEntityID, ref newPosResume);
-          float fraction = normalize(NewXPos, minX, maxX);
-          //InternalCalls.SetSoundVolume(fraction);
+          float fraction = 1 - normalize(NewXPos, minX, maxX);
+          InternalCalls.SetSoundGlobalVolume(fraction);
         }
 
         if (BrightnessSlider.IsClicked)
@@ -175,9 +175,13 @@ public class SettingsPage : Entity
     Vector3 newPosMenu = new Vector3(originalMenu.X, originalMenu.Y, TargetZMenu);
     InternalCalls.SetPosition(mEntityID, ref newPosMenu);
 
-    Vector3 originalResume = InternalCalls.GetPosition(VolumeSlider.mEntityID);
-    Vector3 newPosResume = new Vector3(originalResume.X, originalResume.Y, TargetZButton);
-    InternalCalls.SetPosition(VolumeSlider.mEntityID, ref newPosResume);
+    Vector3 originaVol = InternalCalls.GetPosition(VolumeSlider.mEntityID);
+    float volNorm = 1 - InternalCalls.GetSoundGlobalVolume();
+    float VNewXPos = minX + ((1 - volNorm) * (maxX - minX));
+    Vector3 VnewPosSettings = new Vector3(VNewXPos, originaVol.Y, TargetZButton);
+    InternalCalls.SetPosition(VolumeSlider.mEntityID, ref VnewPosSettings);
+
+
 
     Vector3 originalSettings = InternalCalls.GetPosition(BrightnessSlider.mEntityID);
     float gammaNorm = InternalCalls.GetGammaNorm();
