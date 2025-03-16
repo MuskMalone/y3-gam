@@ -66,14 +66,22 @@
             }
         },
         {
-            "key": "M3",
+            "key": "Control Room Prototype",
             "value": {
-                "shaders": [
-                    {
-                        "active": false,
-                        "shader": 7488299143892968521
-                    }
-                ],
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "TutorialLevelNew",
+            "value": {
+                "shaders": [],
                 "fogMinDist": 1.0,
                 "fogMaxDist": 1000.0,
                 "fogColor": {
@@ -97,20 +105,7 @@
             }
         },
         {
-            "key": "Control Room Prototype",
-            "value": {
-                "shaders": [],
-                "fogMinDist": 1.0,
-                "fogMaxDist": 1000.0,
-                "fogColor": {
-                    "x": 1.0,
-                    "y": 1.0,
-                    "z": 1.0
-                }
-            }
-        },
-        {
-            "key": "TutorialLevelNew",
+            "key": "Table",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -151,7 +146,12 @@
         {
             "key": "Level3",
             "value": {
-                "shaders": [],
+                "shaders": [
+                    {
+                        "active": false,
+                        "shader": 13294960607296803192
+                    }
+                ],
                 "fogMinDist": 1.0,
                 "fogMaxDist": 1000.0,
                 "fogColor": {
@@ -240,7 +240,7 @@
             }
         },
         {
-            "key": "Small Pillar",
+            "key": "wall_lamp",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
@@ -253,7 +253,7 @@
             }
         },
         {
-            "key": "wall_lamp",
+            "key": "Small Pillar",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
