@@ -22,6 +22,8 @@ public class Level2Inventory : Entity
     public Entity zeusPaintingUI;
     public Entity poseidonPaintingUI;
     public Entity twotoonePaintingUI;
+    public Entity onetofivePaintingUI;
+    public Entity onetosixPaintingUI;
 
     // Inventory Item Selection (Image in the inventory bar)
     public Entity dionysusPaintingSelection;
@@ -29,6 +31,8 @@ public class Level2Inventory : Entity
     public Entity zeusPaintingSelection;
     public Entity poseidonPaintingSelection;
     public Entity twotoonePaintingSelection;
+    public Entity onetofivePaintingSelection;
+    public Entity onetosixPaintingSelection;
 
     // Inventory Tools
     public Entity inventorySelectSquare;
@@ -353,6 +357,16 @@ public class Level2Inventory : Entity
                 twotoonePaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingDescructible2to1", GetItemByName("HexPaintingDescructible2to1"));
                 paintingAlignUILevel2Script.isPainting = true;
                 break;
+            case "HexPaintingIndestructible1to5":
+                onetofivePaintingUI?.SetActive(true);
+                onetofivePaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingIndestructible1to5", GetItemByName("HexPaintingIndestructible1to5"));
+                paintingAlignUILevel2Script.isPainting = true;
+                break;
+            case "HexPaintingIndestructible1to6":
+                onetosixPaintingUI?.SetActive(true);
+                onetosixPaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingIndestructible1to6", GetItemByName("HexPaintingIndestructible1to6"));
+                paintingAlignUILevel2Script.isPainting = true;
+                break;
 
         }
     }
@@ -364,6 +378,8 @@ public class Level2Inventory : Entity
         zeusPaintingUI?.SetActive(false);
         poseidonPaintingUI?.SetActive(false);
         twotoonePaintingUI?.SetActive(false);
+        onetofivePaintingUI?.SetActive(false);
+        onetosixPaintingUI?.SetActive(false);
         paintingAlignUILevel2Script.isPainting = false;
         pictureAlignscript.ClearUI();
 
