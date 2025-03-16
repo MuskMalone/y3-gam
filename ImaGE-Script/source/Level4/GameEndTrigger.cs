@@ -37,7 +37,7 @@ public class GameEndTrigger : Entity
       transitionTimer += Time.deltaTime;
       if (transitionTimer > transitionTime)
       {
-        InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Credits.scn");
+        InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\MonstersAteMyMom.scn");
       }
     }
   }
