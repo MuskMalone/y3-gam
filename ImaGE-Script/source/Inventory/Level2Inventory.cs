@@ -22,6 +22,13 @@ public class Level2Inventory : Entity
     public Entity zeusPaintingUI;
     public Entity poseidonPaintingUI;
     public Entity twotoonePaintingUI;
+    public Entity onetofivePaintingUI;
+    public Entity onetosixPaintingUI;
+    public Entity threetoonePaintingUI;
+    public Entity fourtoonePaintingUI;
+    public Entity sixtofourPaintingUI;
+    public Entity sixtosevenPaintingUI;
+    public Entity seventothreePaintingUI;
 
     // Inventory Item Selection (Image in the inventory bar)
     public Entity dionysusPaintingSelection;
@@ -29,6 +36,12 @@ public class Level2Inventory : Entity
     public Entity zeusPaintingSelection;
     public Entity poseidonPaintingSelection;
     public Entity twotoonePaintingSelection;
+    public Entity onetofivePaintingSelection;
+    public Entity onetosixPaintingSelection;
+    public Entity threetoonePaintingSelection;
+    public Entity fourtoonePaintingSelection;
+    public Entity sixtofourPaintingSelection;
+    public Entity seventothreePaintingSelection;
 
     // Inventory Tools
     public Entity inventorySelectSquare;
@@ -42,13 +55,13 @@ public class Level2Inventory : Entity
     // Workaround for lack of Vec3<float>[]
     private List<Vec2<float>> iconPosition = new List<Vec2<float>>
   {
-      new Vec2<float>(-15.9f, 7.2f),
-      new Vec2<float>(-15.9f, 4.7f),
-      new Vec2<float>(-15.9f, 2.4f),
-      new Vec2<float>(-15.9f, 0.1f),
-      new Vec2<float>(-15.9f, -2.3f),
-      new Vec2<float>(-15.9f, -4.6f),
-      new Vec2<float>(-15.9f, -7.0f)
+      new Vec2<float>(-14.745f, 6.530f),
+      new Vec2<float>(-15.140f, 4.259f),
+      new Vec2<float>(-15.241f, 1.980f),
+      new Vec2<float>(-15.290f, -0.320f),
+      new Vec2<float>(-15.340f, -2.599f),
+      new Vec2<float>(-15.190f, -4.890f),
+      new Vec2<float>(-14.869f, -7.180f)
   };
 
 
@@ -353,6 +366,41 @@ public class Level2Inventory : Entity
                 twotoonePaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingDescructible2to1", GetItemByName("HexPaintingDescructible2to1"));
                 paintingAlignUILevel2Script.isPainting = true;
                 break;
+            case "HexPaintingIndestructible1to5":
+                onetofivePaintingUI?.SetActive(true);
+                onetofivePaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingIndestructible1to5", GetItemByName("HexPaintingIndestructible1to5"));
+                paintingAlignUILevel2Script.isPainting = true;
+                break;
+            case "HexPaintingIndestructible1to6":
+                onetosixPaintingUI?.SetActive(true);
+                onetosixPaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingIndestructible1to6", GetItemByName("HexPaintingIndestructible1to6"));
+                paintingAlignUILevel2Script.isPainting = true;
+                break;
+            case "HexPaintingIndestructible3to1":
+                threetoonePaintingUI?.SetActive(true);
+                threetoonePaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingIndestructible3to1", GetItemByName("HexPaintingIndestructible3to1"));
+                paintingAlignUILevel2Script.isPainting = true;
+                break;
+            case "HexPaintingIndestructible4to1":
+                fourtoonePaintingUI?.SetActive(true);
+                fourtoonePaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingIndestructible4to1", GetItemByName("HexPaintingIndestructible4to1"));
+                paintingAlignUILevel2Script.isPainting = true;
+                break;
+            case "HexPaintingIndestructible6to4":
+                sixtofourPaintingUI?.SetActive(true);
+                sixtofourPaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingIndestructible6to4", GetItemByName("HexPaintingIndestructible6to4"));
+                paintingAlignUILevel2Script.isPainting = true;
+                break;
+            case "HexPaintingIndestructible6to7":
+                sixtosevenPaintingUI?.SetActive(true);
+                sixtosevenPaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingIndestructible6to7", GetItemByName("HexPaintingIndestructible6to7"));
+                paintingAlignUILevel2Script.isPainting = true;
+                break;
+            case "HexPaintingIndestructible7to3":
+                seventothreePaintingUI?.SetActive(true);
+                seventothreePaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingIndestructible7to3", GetItemByName("HexPaintingIndestructible7to3"));
+                paintingAlignUILevel2Script.isPainting = true;
+                break;
 
         }
     }
@@ -364,6 +412,13 @@ public class Level2Inventory : Entity
         zeusPaintingUI?.SetActive(false);
         poseidonPaintingUI?.SetActive(false);
         twotoonePaintingUI?.SetActive(false);
+        onetofivePaintingUI?.SetActive(false);
+        onetosixPaintingUI?.SetActive(false);
+        threetoonePaintingUI?.SetActive(false);
+        fourtoonePaintingUI?.SetActive(false);
+        sixtofourPaintingUI?.SetActive(false);
+        sixtosevenPaintingUI?.SetActive(false);
+        seventothreePaintingUI?.SetActive(false);
         paintingAlignUILevel2Script.isPainting = false;
         pictureAlignscript.ClearUI();
 
@@ -373,4 +428,17 @@ public class Level2Inventory : Entity
     {
         return currentItem;
     }
+
+    public bool HasAllPaintings()
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            if (mItems[i] == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

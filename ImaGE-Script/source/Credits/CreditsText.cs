@@ -37,6 +37,9 @@ public class CreditsText : Entity
   public Entity ProgrammersName;
   public float speed;
 
+  private float transitionTimer = 0f;
+  public float transitionTime = 7f;
+
   CreditsText() : base()
   {
 
@@ -50,6 +53,8 @@ public class CreditsText : Entity
   // Update is called once per frame
   void Update()
   {
+    transitionTimer += Time.deltaTime;
+
     Credits.GetComponent<Transform>().position = Credits.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
     Designer.GetComponent<Transform>().position = Designer.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
     DesignerName.GetComponent<Transform>().position = DesignerName.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
@@ -57,6 +62,11 @@ public class CreditsText : Entity
     ProgrammersName.GetComponent<Transform>().position = ProgrammersName.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
 
     if(Input.GetKeyTriggered(KeyCode.ESCAPE))
+    {
+      InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\mainmenu.scn");
+    }
+
+    if (transitionTimer >= transitionTime)
     {
       InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\mainmenu.scn");
     }

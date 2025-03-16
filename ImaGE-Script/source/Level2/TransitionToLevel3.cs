@@ -1,36 +1,46 @@
 ﻿using IGE.Utils;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
 
 public class TransitionToLevel3 : Entity
 {
-    public PlayerInteraction playerInteraction; // Handles raycasting
-    public string targetObjectName = "Level2Frag"; 
-    public string nextScenePath = "..\\Assets\\Scenes\\Level3.scn"; // Path to next scene
+  public Entity player;
+  public string nextScenePath = "..\\Assets\\Scenes\\Level3.scn"; // Path to next scene
+  public Transition transition;
 
-    public TransitionToLevel3() : base() { }
+  private bool playerEntered = false;
 
-    void Start()
+  // Start is called before the first frame update
+  void Start()
+  {
+
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+    if (!playerEntered)
     {
-        if (playerInteraction == null)
-        {
-            Debug.LogError("[TransitionToLevel3.cs] PlayerInteraction Script not found!");
-            return;
-        }
+      if (InternalCalls.OnTriggerEnter(mEntityID, player.mEntityID))
+      {
+        transition.StartTransition(true, 1.5f, Transition.TransitionType.FADE);
+        playerEntered = true;
+      }
+
+      return;
     }
 
-    void Update()
+    if (transition.IsFinished())
     {
-        bool mouseClicked = Input.GetMouseButtonTriggered(0);
-        bool isObjectHit = playerInteraction.RayHitString == targetObjectName;
-
-        if (mouseClicked && isObjectHit)
-        {
-            LoadNextScene();
-        }
+      InternalCalls.SetCurrentScene(nextScenePath); // Load next scene
     }
-
-    private void LoadNextScene()
-    {
-        //InternalCalls.PlaySound(mEntityID, "ConfirmClick"); // Optional click sound
-        InternalCalls.SetCurrentScene(nextScenePath); // Load next scene
-    }
+  }
 }
