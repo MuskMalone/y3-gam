@@ -150,6 +150,15 @@ public class Level2Inventory : Entity
         }
     }
 
+    public void ClearInventory()
+    {
+      foreach (IInventoryItem item in mItems)
+      {
+        if (item != null)
+          RemoveItem(item);
+      }
+    }
+
     public IInventoryItem GetItemByName(string itemName)
     {
         return mItems.Find(item => item != null && item.Name == itemName);
@@ -428,4 +437,6 @@ public class Level2Inventory : Entity
     {
         return currentItem;
     }
+
+  
 }
