@@ -39,6 +39,16 @@ public class TheTwinDoors : Entity
       return;
     }
 
+    if (InternalCalls.IsPlayingAnimation(leftDoor.mEntityID))
+    {
+      InternalCalls.UpdatePhysicsToTransform(leftDoor.mEntityID);
+      InternalCalls.UpdatePhysicsToTransform(rightDoor.mEntityID);
+    }
+    else
+    {
+      Destroy(this);
+    }
+
     // align collider here
   }
 }
