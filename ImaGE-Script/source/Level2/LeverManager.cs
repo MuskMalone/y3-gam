@@ -71,7 +71,6 @@ public class LeverManager : Entity
 
       case State.TABLE_CAM:
         {
-          Console.WriteLine(Time.gameTime.ToString());
           // Check if we're in table view and if the switch-back time has been reached
           if (Time.gameTime >= switchBackTime)
           {
@@ -122,9 +121,11 @@ public class LeverManager : Entity
 
     if (playerMove != null)
     {
+      Debug.Log("FREEZE");
       playerMove.FreezePlayer(); // Freeze player movement
     }
 
+    Debug.Log("SWITCH CAM");
     SetTableCameraAsMain(); // Switch to table camera
     currState = State.TABLE_CAM;
     switchBackTime = Time.gameTime + switchDuration; // Set when to switch back
@@ -137,6 +138,7 @@ public class LeverManager : Entity
     {
       fragmentGlass.SetActive(false);
     }
+    Debug.Log("Orbs left: " + leversPulled);
   }
 
   private void SetPlayerCameraAsMain()

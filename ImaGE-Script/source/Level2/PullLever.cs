@@ -8,10 +8,12 @@ public class PullLever : Entity
   public Entity leverLight;
   public float timeBeforeCamSwitch = 0.1f;
 
+  public Entity platformLight;
   private static LeverManager leverManager; // Reference to the manager
   private string thisLeverTag;
-  
+  private bool leverPulled = false;
   private float timeElapsed = 0f;
+
   public PullLever() : base() { }
 
   void Start()
@@ -62,5 +64,6 @@ public class PullLever : Entity
   {
     InternalCalls.PlaySound(mEntityID, "IncoherentWhispers");
     InternalCalls.PlayAnimation(mEntityID, "SwitchOff");
+    leverPulled = true;
   }
 }
