@@ -13,7 +13,10 @@ namespace IGE {
 			glm::vec3 normal;
 			float distance;
 		};
-
+		struct GeneralRay {
+			glm::vec3 start;
+			glm::vec3 end;
+		};
 		class PhysicsSystem : public Systems::System {
 		private:
 			struct RayCastResult {
@@ -26,6 +29,7 @@ namespace IGE {
 		public:
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> GetInstance();
 			PhysicsSystem();
+			void UpdatePhysicsToTransform(ECS::Entity e, bool updatePosition = true);
 			~PhysicsSystem();
 
 			void Update() override;
@@ -62,10 +66,12 @@ namespace IGE {
 				ECS::Entity entity, glm::vec3 const& origin, glm::vec3 const& end,
 				RaycastHit& result
 			);
-
+			bool OnTriggerPersists(ECS::Entity trigger, ECS::Entity other);
 			bool OnTriggerEnter(ECS::Entity trigger, ECS::Entity other);
 			bool OnTriggerExit(ECS::Entity trigger, ECS::Entity other);
+			std::vector<physx::PxContactPairPoint> GetContactPoints(ECS::Entity entity1, ECS::Entity entity2);
 
+			float GetShortestDistance(ECS::Entity e1, ECS::Entity e2);
 
 		//private:
 		//	const uint32_t cMaxBodies = 65536;
@@ -96,12 +102,14 @@ namespace IGE {
 			std::unordered_map<void*, ECS::Entity> mRigidBodyToEntity;
 
 			std::unordered_map<void*, std::unordered_map<void*, int>> mOnTriggerPairs;
+			std::unordered_map<void*, std::unordered_map<void*, std::vector<physx::PxContactPairPoint>>> mOnContactPairs;
 			static std::shared_ptr<IGE::Physics::PhysicsSystem> _mSelf;
 			static std::mutex _mMutex;
 			PhysicsSystem(PhysicsSystem& other) = delete;
 			void operator=(const PhysicsSystem&) = delete;
 			static std::unordered_set<physx::PxRigidDynamic*> mInactiveActors;
 			std::vector<RayCastResult> mRays;
+			std::vector<GeneralRay> mGeneralRays;
 			bool mDrawDebug{ false };
 
 		public:
@@ -125,7 +133,7 @@ namespace IGE {
 			void RegisterRB(void* bodyID, physx::PxRigidDynamic* rbptr, ECS::Entity const& entity) noexcept;
 			void RemoveRB(void* bodyID) noexcept;
 			physx::PxRigidDynamic* GetRBIter(ECS::Entity entity);
-
+			void SetEntityActive(ECS::Entity e, physx::PxRigidDynamic* pxrb, bool kinematic);
 		private:
 			//for testing purposes only
 			PHYSICS_EVENT_LISTENER_DECL(OnContactSampleListener)

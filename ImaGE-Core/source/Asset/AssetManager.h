@@ -44,7 +44,7 @@ namespace IGE {
           using RefAny = std::any;
           using TypeKey = std::uint64_t;
           using TypeAssetKey = std::uint64_t;
-          using ImportFunc = std::function<GUID(std::string const&)>;
+          using ImportFunc = std::function<GUID(std::string const&, AssetMetadata::AssetProps)>;
           using DeleteFunc = std::function<void(GUID const&)>;
       private: 
           template <typename T>
@@ -84,10 +84,14 @@ namespace IGE {
                   mRegisteredTypeNames.emplace(
                       name
                   );
+                  // using lambda to get around default arg (can't specify that in an std::function decl)
                   mRegisterTypeImports.emplace(
-                      name,
-                      std::bind(&AssetManager::ImportAsset<T>, this, std::placeholders::_1)
+                    name,
+                    [this](const std::string& filepath, AssetMetadata::AssetProps metadata = {}) {
+                      return this->ImportAsset<T>(filepath, metadata);
+                    }
                   );
+
                   mRegisterTypeDeletes.emplace(
                       name,
                       std::bind(&AssetManager::DeleteAsset<T>, this, std::placeholders::_1)
@@ -96,9 +100,10 @@ namespace IGE {
                   , ...
                   );
           }
-          template <typename T>
           //returns the guid seeded by the absolute path to the folder in assets
-          GUID ImportAsset(std::string const& filepathstr){//std::filesystem::path const& filepath) { //
+          // CE: added 2nd arg to allow for importing with metadata
+          template <typename T>
+          GUID ImportAsset(std::string const& filepathstr, AssetMetadata::AssetProps metadata = {}) {
               //get the absolute file path so that there cant be any duplicates
               //std::string absolutepath{filepathstr};
               GUID guid{};
@@ -126,7 +131,6 @@ namespace IGE {
                   // newFp represents the file that is non compiled, 
                   // not the compiled file that will be used during load time
                   std::string newFp{};
-                  AssetMetadata::AssetProps metadata{};
                   metadata.modified = true;
                   // this is to get the new FP
                   guid = T::Import(filepathstr, newFp, metadata); 

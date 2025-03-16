@@ -4,8 +4,12 @@
 #include <filesystem>
 #include <Core/Entity.h>
 #include "Styles/Styler.h"
+#include <Events/SceneEvents.h>
+#include <Events/EventCallback.h>
 
 namespace GUI {
+  class GUIManager;
+
   class GUIVault {
   public:
     /*!*********************************************************************
@@ -41,6 +45,8 @@ namespace GUI {
     static inline void SetSelectedFile(std::filesystem::path const& file) { mSelectedFile = file; sSelectedEntity = {}; }
     static inline std::filesystem::path const& GetSelectedFile() noexcept { return mSelectedFile; }
 
+    static inline bool IsSceneModified() noexcept { return sSceneModified; }
+
     /*!*********************************************************************
     \brief
       Gets the styler of the engine
@@ -54,11 +60,18 @@ namespace GUI {
     inline static bool sSerializePrettyScene = true, sSerializePrettyPrefab = true; // serialization formats
 
   private:
+    friend class GUIManager;  // allow GUIManager to subscribe events for this class
+
     inline static Styler mStyler; // handles editor's styles
 
     inline static std::unordered_set<ECS::Entity::EntityID> sSelectedEntities;
     inline static std::filesystem::path mSelectedFile;  // @TODO: should change to GUID in future
     inline static ECS::Entity sSelectedEntity; // currently selected entity
+    inline static bool sSceneModified = false;
+
+    static EVENT_CALLBACK_DECL(OnSceneModified);
+    static EVENT_CALLBACK_DECL(OnSceneStateChange);
+    static EVENT_CALLBACK_DECL(OnSceneSave);
   };
 
 } // namespace GUI

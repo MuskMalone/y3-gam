@@ -7,6 +7,9 @@
 #include <Core/Components/Components.h>
 #include <Events/EventManager.h>
 #include "Scenes/SceneManager.h"
+
+//#define AUDIO_VERBOSE
+
 namespace IGE {
     namespace Audio {
         AudioManager::AudioManager()
@@ -16,6 +19,7 @@ namespace IGE {
         }
         AudioManager::~AudioManager()
         {
+            std::cerr << "audio destructed>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n";
             Release();
         }
         //std::unordered_map<std::string, std::list<FMOD::Channel*>> AudioManager::_mChannels;
@@ -58,6 +62,7 @@ namespace IGE {
             FMOD_VECTOR forwardDirection = { 0.0f, 0.0f, 1.0f };    // Forward vector (direction listener is facing)
             FMOD_VECTOR upDirection = { 0.0f, 1.0f, 0.0f };         // Up vector
 
+            //remove for 2d audio
             result = mSystem->set3DListenerAttributes(0, &listenerPosition, &listenerVelocity, &forwardDirection, &upDirection);
             if (result != FMOD_OK)
             {
@@ -65,16 +70,11 @@ namespace IGE {
                 Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! Could not set listener attributes: " + str, true);
                 return false;
             }
-
+            //remove for 2d audio
             mSystem->set3DSettings(1.0f, 1.0f, 1.0f); // Distance factor, rolloff scale, Doppler scale
-            //fetching the master channel group, to control the volume and other properties of all sounds globally
-            
-            //_mSystem->getMasterChannelGroup(&_mGroup["Master"]);
 
             return true;
         }
-
-
         void AudioManager::Release()
         {
             FMOD_RESULT result;
@@ -112,10 +112,12 @@ namespace IGE {
                 std::string str(FMOD_ErrorString(result));
                 Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
             }
+#ifdef AUDIO_VERBOSE
             else
             {
                 Debug::DebugLogger::GetInstance().LogInfo("Successful FMOD Channel Group Creation", true);
             }
+#endif
             return groupguid;//return the channel group
         }
 
@@ -132,10 +134,12 @@ namespace IGE {
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
             }
+#ifdef AUDIO_VERBOSE
             else
             {
                 Debug::DebugLogger::GetInstance().LogInfo("Set group volume to " + std::to_string(volume), true);
             }
+#endif
         }
 
         float AudioManager::GetGroupVolume(std::string const& name)
@@ -152,10 +156,12 @@ namespace IGE {
                     std::string str(FMOD_ErrorString(result));
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
+#ifdef AUDIO_VERBOSE
                 else
                 {
                     Debug::DebugLogger::GetInstance().LogInfo("Group Volume is" + std::to_string(volume), true);
                 }
+#endif
             }
             else
             {
@@ -175,10 +181,12 @@ namespace IGE {
                     std::string str(FMOD_ErrorString(result));
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
+#ifdef AUDIO_VERBOSE
                 else
                 {
                     Debug::DebugLogger::GetInstance().LogInfo("Stop Group", true);
                 }
+#endif
             }
             else
             {
@@ -197,10 +205,12 @@ namespace IGE {
                     std::string str(FMOD_ErrorString(result));
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
+#ifdef AUDIO_VERBOSE
                 else
                 {
                     Debug::DebugLogger::GetInstance().LogInfo("Resume Group", true);
                 }
+#endif
             }
             else
             {
@@ -219,10 +229,12 @@ namespace IGE {
                     std::string str(FMOD_ErrorString(result));
                     Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
                 }
+#ifdef AUDIO_VERBOSE
                 else
                 {
                     Debug::DebugLogger::GetInstance().LogInfo("Pause Group", true);
                 }
+#endif
             }
             else
             {
@@ -272,7 +284,8 @@ namespace IGE {
                 return mData[namehash];
             }
 
-            //FMOD_RESULT result = system->createSound(filepath, FMOD_DEFAULT, 0, &data[name]); //non-3D sound
+            //remove for 2d audio
+            //FMOD_RESULT result = mSystem->createSound(filepath.c_str(), FMOD_DEFAULT | FMOD_2D, 0, &mData[namehash]); //non-3D sound
             FMOD_RESULT result = mSystem->createSound(filepath.c_str(), FMOD_3D, 0, &mData[namehash]);//create 3D sound
 
             if (result != FMOD_OK)
@@ -280,15 +293,17 @@ namespace IGE {
                 std::string str(FMOD_ErrorString(result));
                 Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
             }
+#ifdef AUDIO_VERBOSE
             else
             {
                 Debug::DebugLogger::GetInstance().LogInfo("Successfully added sound: " + std::string(filepath), true);
             }
+#endif
 
             return mData[namehash];
         }
 
-        void AudioManager::PlaySound(uint32_t sound, SoundInvokeSetting const& settings, FMOD::ChannelGroup* group)
+        void AudioManager::PlaySound(uint32_t sound, SoundInvokeSetting const& settings, FMOD::ChannelGroup* group, std::string const& name)
         {
             FMOD_RESULT result;
 
@@ -323,7 +338,8 @@ namespace IGE {
 
                 // Convert position to FMOD_VECTOR
                 FMOD_VECTOR fmodPosition = { settings.position.x, settings.position.y, settings.position.z };
-
+                //remove for 2d audio
+                //temp->setMode(FMOD_2D);
                 temp->setMode(FMOD_3D); // Set the channel to 3D mode
                 temp->set3DAttributes(&fmodPosition, nullptr); // Set the 3D position
                 temp->set3DMinMaxDistance(settings.minDistance, settings.maxDistance); // Set min/max distance
@@ -343,6 +359,68 @@ namespace IGE {
                 }
             }
 
+            if (settings.enablePostProcessing)  // <-- You'll need to add this bool flag in SoundInvokeSetting
+            {
+                FMOD::DSP* dsp = nullptr;
+
+                switch (settings.processingType)
+                {
+                case SoundInvokeSetting::PostProcessingType::REVERB:
+                    result = mSystem->createDSPByType(FMOD_DSP_TYPE_SFXREVERB, &dsp);
+                    if (result == FMOD_OK && dsp)
+                    {
+                        // Set reverb-specific parameters (e.g., decay time)
+                        dsp->setParameterFloat(FMOD_DSP_SFXREVERB_DECAYTIME, settings.postProcessingParameter);
+                        // Additional reverb parameters can be set here
+                    }
+                    break;
+
+                case SoundInvokeSetting::PostProcessingType::ECHO:
+                    result = mSystem->createDSPByType(FMOD_DSP_TYPE_ECHO, &dsp);
+                    if (result == FMOD_OK && dsp)
+                    {
+                        dsp->setParameterFloat(FMOD_DSP_ECHO_DELAY, settings.postProcessingParameter);
+                        // You can adjust other echo parameters if desired
+                    }
+                    break;
+
+                case SoundInvokeSetting::PostProcessingType::DISTORTION:
+                    result = mSystem->createDSPByType(FMOD_DSP_TYPE_DISTORTION, &dsp);
+                    if (result == FMOD_OK && dsp)
+                    {
+                        dsp->setParameterFloat(FMOD_DSP_DISTORTION_LEVEL, settings.postProcessingParameter);
+                        // Set additional distortion parameters as needed
+                    }
+                    break;
+
+                case SoundInvokeSetting::PostProcessingType::CHORUS:
+                    result = mSystem->createDSPByType(FMOD_DSP_TYPE_CHORUS, &dsp);
+                    if (result == FMOD_OK && dsp)
+                    {
+                        dsp->setParameterFloat(FMOD_DSP_CHORUS_RATE, settings.postProcessingParameter);
+                    }
+                    break;
+
+                default:
+                    break;
+                }
+
+                if (result == FMOD_OK && dsp)
+                {
+                    // Attach the DSP to the channel at position 0 in the chain.
+                    result = temp->addDSP(0, dsp);
+                    if (result != FMOD_OK)
+                    {
+                        Debug::DebugLogger::GetInstance().LogError("FMOD ERROR adding DSP effect", true);
+                    }
+                    // Note: You might want to store the dsp pointer if you plan to remove or modify it later.
+                }
+                else
+                {
+                    Debug::DebugLogger::GetInstance().LogError("Failed to create DSP effect", true);
+                }
+            }
+
             // Unpause the channel to start playback
             result = temp->setPaused(false);
             if (result != FMOD_OK)
@@ -352,15 +430,19 @@ namespace IGE {
                 return;
             }
 
+#ifdef AUDIO_VERBOSE
             Debug::DebugLogger::GetInstance().LogInfo("Playing sound: " + std::to_string(sound), true);
+#endif
             temp->setCallback(
                 settings.FMODChannelCallback
             );
+
+            //settings.name = name;
             temp->setUserData(const_cast<SoundInvokeSetting*>(&settings));
             settings.channels.insert(temp);
         }
 
-        void AudioManager::PlaySound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& settings, uint64_t group)
+        void AudioManager::PlaySound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& settings, uint64_t group, std::string const& name)
         {
             if (settings.paused) {
                 for (auto& channel : settings.channels) {
@@ -376,7 +458,7 @@ namespace IGE {
             if (IGE::Assets::AssetManager::GetInstance().IsGUIDValid<IGE::Assets::AudioAsset>(guid)) {
                 auto audioref{ IGE_ASSETMGR.GetAsset<IGE::Assets::AudioAsset>(guid) };
                 auto& sound{ audioref->mSound };
-                sound.PlaySound(settings, mGroup.at(group));
+                sound.PlaySound(settings, mGroup.at(group), name);
             }
             else {
                 Debug::DebugLogger::GetInstance().LogError("sound " + std::to_string(guid) + " does not exist");
@@ -397,7 +479,8 @@ namespace IGE {
 
         void AudioManager::StopSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& setting)
         {
-            while (setting.channels.size()) {
+            auto sz = setting.channels.size();
+            for (uint64_t i{}; i < sz; ++i) {
                 (*setting.channels.begin())->stop();
             }
             setting.paused = false;
@@ -433,11 +516,6 @@ namespace IGE {
             }
             //after releasing the sounds, the data map is cleared 
             mData.clear();
-            //_mCurrentBGM.clear();
-            //_mOriginalBGM.clear();
-            //_mCurrentAmbience.clear();
-
-            //Debug::DebugLogger::GetInstance().LogInfo("Successfully released " + std::to_string(soundCount) + " sounds.", true);
         }
 
         FMOD::System* AudioManager::GetSystem()
@@ -449,7 +527,20 @@ namespace IGE {
         {
 
         }
-
+        EVENT_CALLBACK_DEF(AudioManager, HandleRemoveComponent) {
+            auto e{ CAST_TO_EVENT(Events::RemoveComponentEvent) };
+            if (e->mType == rttr::type::get<Component::AudioSource>()) {
+                //std::cout << e->mEntity.GetComponent<Component::Tag>().tag << " removing audio" << std::endl;
+                e->mEntity.GetComponent<Component::AudioSource>().StopAllSounds();
+            }
+        }
+        EVENT_CALLBACK_DEF(AudioManager, HandleRemoveEntity) {
+            auto e{ CAST_TO_EVENT(Events::RemoveEntityEvent) };
+            if (e->mEntity.HasComponent<Component::AudioSource>()) {
+                //std::cout << e->mEntity.GetComponent<Component::Tag>().tag << " removing audio" << std::endl;
+                e->mEntity.GetComponent<Component::AudioSource>().StopAllSounds();
+            }
+        }
         EVENT_CALLBACK_DEF(AudioManager, HandleSystemEvents) {
             auto const& state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
             if (state == Events::SceneStateChange::NewSceneState::STARTED) {
@@ -486,11 +577,11 @@ namespace IGE {
                 AudioManager::GetInstance().FreeSound(mKeyhash);
             }
             catch (...) {
-                
+              IGE_DBGLOGGER.LogError("[AudioManager] Failed to free sound" + mKey);
             }
         }
-        void Sound::PlaySound(SoundInvokeSetting const& settings, FMOD::ChannelGroup* group) {
-            AudioManager::GetInstance().PlaySound(mKeyhash, settings, group);
+        void Sound::PlaySound(SoundInvokeSetting const& settings, FMOD::ChannelGroup* group, std::string const& name) {
+            AudioManager::GetInstance().PlaySound(mKeyhash, settings, group, name);
         }
         FMOD_RESULT SoundInvokeSetting::FMODChannelCallback(
             FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type, 
@@ -500,20 +591,28 @@ namespace IGE {
             FMOD::Channel* channel = reinterpret_cast<FMOD::Channel*>(chanCtrl);
             int loopCount{ };
             channel->getLoopCount(&loopCount);
-            if (loopCount != 0) return FMOD_OK;
             //if (channel->getLoopCount())
             void* userData = nullptr;
             channel->getUserData(&userData);
             
-            if (userData && !IGE::Audio::AudioManager::GetInstance().mSceneStopped) {
-                try {
-                    SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
-                    settings->channels.erase(channel); // Remove channel from active list
-                    Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
+
+            try {
+                SoundInvokeSetting* settings = static_cast<SoundInvokeSetting*>(userData);
+                if (userData && !IGE::Audio::AudioManager::GetInstance().mSceneStopped) {
+                    if (loopCount == 0) {
+                        if (settings->name == "") { // good enough detection ig
+                            std::cout << "soundsetting has no name\n";
+                            return FMOD_OK;
+                        }
+                        settings->channels.erase(channel); // Remove channel from active list
+                    }
                 }
-                catch (...) {
-                    Debug::DebugLogger::GetInstance().LogWarning("audio instance doesnt exist");
-                }
+#ifdef AUDIO_VERBOSE
+                Debug::DebugLogger::GetInstance().LogInfo("sound has finished playing, removing channel ptr");
+#endif
+            }
+            catch (...) {
+                Debug::DebugLogger::GetInstance().LogWarning("audio instance doesnt exist");
             }
             return FMOD_OK;
         }

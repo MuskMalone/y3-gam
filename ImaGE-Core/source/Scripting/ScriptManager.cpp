@@ -35,12 +35,14 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Asset/AssetManager.h"
 #include "Physics/PhysicsSystem.h"
 #include "Graphics/RenderSystem.h"
+#include "Graphics/PostProcessing/PostProcessingManager.h"
 //#define DEBUG_MONO
 namespace Mono
 {
   std::map<std::string, ScriptClassInfo> ScriptManager::mMonoClassMap{};
+  std::map<std::string, MonoClass*> ScriptManager::mMonoUtilsMap{};
   std::shared_ptr<MonoDomain> ScriptManager::mRootDomain{ nullptr };
-  std::shared_ptr<MonoDomain> ScriptManager::mAppDomain{ nullptr };
+  MonoDomain* ScriptManager::mAppDomain{ nullptr };
   std::vector<std::string> ScriptManager::mAllScriptNames;
   std::string ScriptManager::mCoreAssFilePath{};
   std::string ScriptManager::mAppDomFilePath{};
@@ -81,14 +83,26 @@ namespace Mono
     { "Inside", ScriptFieldType::INSIDE},
     { "Test", ScriptFieldType::TEST},
     { "InsideB", ScriptFieldType::INSIDEB},
-    { "PlayerMove", ScriptFieldType::PLAYERMOVE},
+    { "PlayerMove", ScriptFieldType::PLAYER_MOVE},
     { "Dialogue", ScriptFieldType::DIALOGUE},
-    { "PlayerInteraction", ScriptFieldType::PLAYERINTERACTION },
+    { "PlayerInteraction", ScriptFieldType::PLAYER_INTERACTION },
     { "Inventory", ScriptFieldType::INVENTORY },
-    { "TutorialLevelInventory", ScriptFieldType::TUTORIALLEVELINVENTORY },
-    { "SpecialDialogue", ScriptFieldType::SPECIALDIALOGUE },
-    { "KeyDoor", ScriptFieldType::KEYDOOR },
-    { "PictureAlign", ScriptFieldType::PICTUREALIGN },
+    { "TutorialLevelInventory", ScriptFieldType::TUTORIAL_LEVEL_INVENTORY },
+    { "Level2Inventory", ScriptFieldType::LEVEL2_INVENTORY },
+    { "Level3Inventory", ScriptFieldType::LEVEL3_INVENTORY },
+    { "SpecialDialogue", ScriptFieldType::SPECIAL_DIALOGUE },
+    { "KeyDoor", ScriptFieldType::KEY_DOOR },
+    { "PictureAlign", ScriptFieldType::PICTURE_ALIGN },
+    { "ControlPanel2", ScriptFieldType::CONTROL_PANEL },
+    { "Transition", ScriptFieldType::TRANSITION },
+    { "PlayerArise",ScriptFieldType::PLAYER_ARISE},
+    { "EyeBallFollow", ScriptFieldType::EYEBALL_FOLLOW },
+    { "HammerLevel3", ScriptFieldType::HAMMER_L3 },
+    { "BlackBorder", ScriptFieldType::BLACK_BORDER },
+    { "HexTableOrb", ScriptFieldType::HEX_TABLE_ORB },
+    { "Level3Dialogue", ScriptFieldType::LEVEL3_DIALOGUE },
+    { "Fragment", ScriptFieldType::FRAGMENT },
+    { "BootupText", ScriptFieldType::BOOTUPTEXT }
   };
 }
 
@@ -175,8 +189,8 @@ ScriptManager::ScriptManager()
 
 void ScriptManager::LoadAppDomain()
 {
-  mAppDomain = std::shared_ptr<MonoDomain>(mono_domain_create_appdomain(const_cast<char*>(mAppDomFilePath.c_str()), nullptr), mono_domain_unload);
-  mono_domain_set(mAppDomain.get(), true);
+  mAppDomain = mono_domain_create_appdomain(const_cast<char*>(mAppDomFilePath.c_str()), nullptr);
+  mono_domain_set(mAppDomain, true);
 }
 
 #define ADD_INTERNAL_CALL(func) mono_add_internal_call("IGE.Utils.InternalCalls::"#func, Mono::func);
@@ -197,6 +211,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetMousePosWorld);
   ADD_INTERNAL_CALL(GetMouseDelta);
   ADD_INTERNAL_CALL(GetCameraForward);
+  ADD_INTERNAL_CALL(GetCameraRight);
 
 
   //// Get Functions
@@ -224,6 +239,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetVelocity);
   ADD_INTERNAL_CALL(GetGravityFactor);
   ADD_INTERNAL_CALL(SetGravityFactor);
+  ADD_INTERNAL_CALL(LockRigidBody);
+  ADD_INTERNAL_CALL(LockRigidBodyRotation);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -241,6 +258,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetTag);
   ADD_INTERNAL_CALL(FindScript);
   ADD_INTERNAL_CALL(FindScriptInEntity);
+  ADD_INTERNAL_CALL(GetParentByID);
   ADD_INTERNAL_CALL(DestroyEntity);
   ADD_INTERNAL_CALL(DestroyScript);
   ADD_INTERNAL_CALL(SetActive);
@@ -248,6 +266,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(FindChildByTag);
   ADD_INTERNAL_CALL(FindParentByTag);
   ADD_INTERNAL_CALL(GetAllChildren);
+  ADD_INTERNAL_CALL(UnparentEntity);
   ADD_INTERNAL_CALL(GetMainCameraPosition);
   ADD_INTERNAL_CALL(GetMainCameraDirection);
   ADD_INTERNAL_CALL(GetMainCameraRotation);
@@ -255,23 +274,38 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetTextColor);
   ADD_INTERNAL_CALL(GetTextScale);
   ADD_INTERNAL_CALL(SetTextScale);
+  ADD_INTERNAL_CALL(SetBloomIntensity);
+  ADD_INTERNAL_CALL(GetBloomIntensity);
+  ADD_INTERNAL_CALL(SetLightIntensity);
+  ADD_INTERNAL_CALL(GetLightIntensity);
   ADD_INTERNAL_CALL(GetText);
   ADD_INTERNAL_CALL(SetText);
   ADD_INTERNAL_CALL(AppendText);
+  ADD_INTERNAL_CALL(SetTextFont);
   ADD_INTERNAL_CALL(GetImageColor);
   ADD_INTERNAL_CALL(SetImageColor);
   ADD_INTERNAL_CALL(GetSprite2DColor);
   ADD_INTERNAL_CALL(SetSprite2DColor);
   ADD_INTERNAL_CALL(SetDaySkyBox);
+  ADD_INTERNAL_CALL(UpdatePhysicsToTransform);
 
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
   ADD_INTERNAL_CALL(RaycastFromEntity);
   ADD_INTERNAL_CALL(SetSoundPitch);
   ADD_INTERNAL_CALL(SetSoundVolume);
+  ADD_INTERNAL_CALL(EnableSoundPostProcessing);
+  ADD_INTERNAL_CALL(DisableSoundPostProcessing);
   ADD_INTERNAL_CALL(PlaySound);
   ADD_INTERNAL_CALL(PauseSound);
   ADD_INTERNAL_CALL(StopSound);
+  ADD_INTERNAL_CALL(PlaySoundFromPosition);
+  ADD_INTERNAL_CALL(GetSoundPlaybackPosition);
+  ADD_INTERNAL_CALL(PlayAnimation);
+  ADD_INTERNAL_CALL(IsPlayingAnimation);
+  ADD_INTERNAL_CALL(PauseAnimation);
+  ADD_INTERNAL_CALL(ResumeAnimation);
+  ADD_INTERNAL_CALL(StopAnimationLoop);
   ADD_INTERNAL_CALL(GetLayerName);
   ADD_INTERNAL_CALL(GetCurrentScene);
   ADD_INTERNAL_CALL(SetCurrentScene);
@@ -280,9 +314,19 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(HideCursor);
   ADD_INTERNAL_CALL(OnTriggerEnter);
   ADD_INTERNAL_CALL(OnTriggerExit);
+  ADD_INTERNAL_CALL(GetContactPoints);
+  ADD_INTERNAL_CALL(GetShortestDistance);
   ADD_INTERNAL_CALL(ChangeToolsPainting);
   ADD_INTERNAL_CALL(SpawnToolBox);
   ADD_INTERNAL_CALL(SpawnOpenDoor);
+  ADD_INTERNAL_CALL(SpawnTaraSilhouette);
+  ADD_INTERNAL_CALL(SetShaderState);
+  ADD_INTERNAL_CALL(PauseGame);
+  ADD_INTERNAL_CALL(ResumeGame);
+  ADD_INTERNAL_CALL(GetIsPaused);
+  ADD_INTERNAL_CALL(SetCanvasTransitionProgress);
+  ADD_INTERNAL_CALL(EnableCanvasTransition);
+  ADD_INTERNAL_CALL(SetCanvasTransitionType);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -346,6 +390,9 @@ void ScriptManager::LoadAllMonoClass()
 #ifdef DEBUG_MONO
       std::cout << "----------------------------------\n\n";
 #endif 
+    }
+    else { //tch: i added this for my own custom class
+        mMonoUtilsMap[className] = GetClassInAssembly(coreAssembly, classNameSpace.c_str(), className.c_str());
     }
   }
   std::sort(mAllScriptNames.begin(), mAllScriptNames.end());
@@ -658,25 +705,54 @@ void ScriptManager::ReloadAssembly()
 #ifdef _DEBUG
   std::cout << "ASSReload\n";
 #endif
-  mono_domain_set(mono_get_root_domain(), false);
-  mAppDomain.reset();
-  mMonoClassMap.clear();
-  mAllScriptNames.clear();
 
+  mono_domain_set(mono_get_root_domain(), false);
+#ifdef _DEBUG
+  std::cout << " mono_domain_set(mono_get_root_domain(), false); Done\n";
+#endif
+//  if(mAppDomain)
+//    mAppDomain.reset();
+//
+//#ifdef _DEBUG
+//  std::cout << " mAppDomain.reset(); Done\n";
+//#endif
+  mMonoClassMap.clear();
+
+#ifdef _DEBUG
+  std::cout << "  mMonoClassMap.clear(); Done\n";
+#endif
+  mAllScriptNames.clear();
+#ifdef _DEBUG
+  std::cout << " mAllScriptNames.clear(); Done\n";
+#endif
   LoadAppDomain();
   //Assets::AssetManager& assetManager{ Assets::AssetManager::GetInstance() };
   mFileWatcher = std::make_unique < filewatch::FileWatch < std::string>>("../Assets/Scripts/ImaGE-Script.dll", AssemblyFileSystemEvent);
   mAssemblyReloadPending = false;
-
+#ifdef _DEBUG
+  std::cout << "loadAp domain Reload Done\n";
+#endif
   ReloadScripts();
 
+#ifdef _DEBUG
+  std::cout << "ASS Reload Done\n";
+#endif
 }
 
 void ScriptManager::ReloadScripts()
 {
   AddInternalCalls();
+#ifdef _DEBUG
+  std::cout << "Addinternal call Done\n";
+#endif
   LoadAllMonoClass();
+#ifdef _DEBUG
+  std::cout << "load mono class Done\n";
+#endif
   ReloadAllScripts();
+#ifdef _DEBUG
+  std::cout << "load all scripts Done\n";
+#endif
 }
 
 
@@ -696,7 +772,7 @@ ScriptManager::~ScriptManager()
     mono_domain_set(mono_get_root_domain(), false);
 
  
-    mAppDomain.reset();
+    mono_domain_unload(mAppDomain);
 
   
     //mono_jit_cleanup(mRootDomain.get());
@@ -723,7 +799,7 @@ MonoObject* Mono::ScriptManager::InstantiateClass(const char* className, std::ve
       throw Debug::Exception<ScriptManager>(Debug::LVL_CRITICAL, Msg("Unable to fetch script: " + std::string(className)));
     }
 
-    MonoObject* classInstance = mono_object_new(mAppDomain.get(), currClass);  //Get a reference to the class we want to instantiate
+    MonoObject* classInstance = mono_object_new(mAppDomain, currClass);  //Get a reference to the class we want to instantiate
 
 
     if (classInstance == nullptr)
@@ -943,13 +1019,16 @@ void Mono::MoveCharacter(ECS::Entity::EntityID entity, glm::vec3 dVec) {
     Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
     return;
   }
-
+  
+  if (glm::length(dVec) < FLT_EPSILON) { // dont move anything if velocity is 0
+    return;
+  }
   Performance::FrameRateController::TimeType dt = Performance::FrameRateController::GetInstance().GetDeltaTime();
-  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.x = dVec.x * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().force.x = dVec.x;
   //ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.y = dVec.y * dt;
-  ECS::Entity(entity).GetComponent<Component::RigidBody>().velocity.z = dVec.z * dt;
+  ECS::Entity(entity).GetComponent<Component::RigidBody>().force.z = dVec.z;
      
-  IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
+  IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::FORCE);
 }
 
 void Mono::SetAngularVelocity(ECS::Entity::EntityID entity, glm::vec3 angularVelocity) {
@@ -989,13 +1068,53 @@ float Mono::GetGravityFactor(ECS::Entity::EntityID entity) {
   return ECS::Entity(entity).GetComponent<Component::RigidBody>().gravityFactor;
 }
 
-void Mono::SetGravityFactor(ECS::Entity::EntityID entity, float gravity) {
-  if (!ECS::Entity(entity).HasComponent<Component::RigidBody>()) {
-    Debug::DebugLogger::GetInstance().LogError("Entity does not have the RigidBody component");
+void Mono::SetGravityFactor(ECS::Entity::EntityID entityId, float gravity) {
+  ECS::Entity entity{ entityId };
+  if (!entity.HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity " + entity.GetTag() + " does not have the RigidBody component");
     return;
   }
-  ECS::Entity(entity).GetComponent<Component::RigidBody>().gravityFactor = gravity;
+  entity.GetComponent<Component::RigidBody>().gravityFactor = gravity;
   IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
+}
+
+void Mono::LockRigidBody(ECS::Entity::EntityID entityId, bool lock) {
+  ECS::Entity entity{ entityId };
+  if (!entity.HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity " + entity.GetTag() + " does not have the RigidBody component");
+    return;
+  }
+
+  Component::RigidBody& rigidBody{ entity.GetComponent<Component::RigidBody>() };
+  if (lock) {
+    int const combinedAxes{ 
+      (int)Component::RigidBody::Axis::X | (int)Component::RigidBody::Axis::Y | (int)Component::RigidBody::Axis::Z
+    };
+    rigidBody.SetAxisLock(combinedAxes);
+    rigidBody.SetAngleAxisLock(combinedAxes);
+  }
+  else {
+    rigidBody.axisLock = 0;
+    rigidBody.angularAxisLock = 0;
+  }
+  IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LOCK);
+}
+
+void Mono::LockRigidBodyRotation(ECS::Entity::EntityID entityId, bool x, bool y, bool z) {
+  ECS::Entity entity{ entityId };
+  if (!entity.HasComponent<Component::RigidBody>()) {
+    Debug::DebugLogger::GetInstance().LogError("Entity " + entity.GetTag() + " does not have the RigidBody component");
+    return;
+  }
+
+  Component::RigidBody& rigidBody{ entity.GetComponent<Component::RigidBody>() };
+  rigidBody.angularAxisLock = 0;
+  rigidBody.SetAngleAxisLock(
+    (x ? (int)Component::RigidBody::Axis::X : 0) |
+    (y ? (int)Component::RigidBody::Axis::Y : 0) |
+    (z ? (int)Component::RigidBody::Axis::Z : 0)
+  );
+  IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LOCK);
 }
 
 glm::vec3 Mono::GetMouseDelta()
@@ -1022,6 +1141,14 @@ glm::vec3 Mono::GetCameraForward()
     return { 1,0,0 };
 }
 
+glm::vec3 Mono::GetCameraRight()
+{
+  if (Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
+    return Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent().GetRightVector();
+  }
+  return { 1,0,0 };
+}
+
 ECS::Entity::EntityID Mono::Raycast(glm::vec3 start, glm::vec3 end)
 {
     IGE::Physics::RaycastHit hit{};
@@ -1041,37 +1168,106 @@ ECS::Entity::EntityID Mono::RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3
 
 void Mono::SetSoundPitch(ECS::Entity::EntityID e, MonoString* s, float p)
 {
-    std::string name{ MonoStringToSTD(s) };
+    std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
     entity.GetComponent<Component::AudioSource>().SetSoundPitch(name, p);
 }
 
 void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v) 
 {
-    std::string name{ MonoStringToSTD(s) };
+    std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
+    //printf("%s is setting volume", entity.GetComponent<Component::Tag>().tag.c_str());
     entity.GetComponent<Component::AudioSource>().SetSoundVolume(name, v);
+}
+
+void Mono::EnableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s, unsigned type, float param)
+{
+    std::string const name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().EnablePostProcessing(name, static_cast<IGE::Audio::SoundInvokeSetting::PostProcessingType>(type), param);
+}
+
+void Mono::DisableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s)
+{
+    std::string const name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().DisablePostProcessing(name);
 }
 
 void Mono::PlaySound(ECS::Entity::EntityID e, MonoString* s)
 {
-    std::string name{ MonoStringToSTD(s) };
+    std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
     entity.GetComponent<Component::AudioSource>().PlaySound(name);
 }
 
 void Mono::PauseSound(ECS::Entity::EntityID e, MonoString* s)
 {
-    std::string name{ MonoStringToSTD(s) };
+    std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
     entity.GetComponent<Component::AudioSource>().PauseSound(name);
 }
 
+void Mono::PlaySoundFromPosition(ECS::Entity::EntityID e, MonoString* s, unsigned time)
+{
+    std::string const name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    entity.GetComponent<Component::AudioSource>().SetPlaybackTime(name, time);
+}
+
+unsigned Mono::GetSoundPlaybackPosition(ECS::Entity::EntityID e, MonoString* s)
+{
+    std::string const name{ MonoStringToSTD(s) };
+    ECS::Entity entity{ e };
+    return entity.GetComponent<Component::AudioSource>().GetPlaybackTime(name);
+}
+
 void Mono::StopSound(ECS::Entity::EntityID e, MonoString* s)
 {
-    std::string name{ MonoStringToSTD(s) };
+    std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
     entity.GetComponent<Component::AudioSource>().StopSound(name);
+}
+
+void Mono::PlayAnimation(ECS::Entity::EntityID entity, MonoString* str, bool loop) {
+  std::string const name{ MonoStringToSTD(str) };
+  ECS::Entity(entity).GetComponent<Component::Animation>().PlayAnimation(name, loop);
+}
+bool Mono::IsPlayingAnimation(ECS::Entity::EntityID entityId) {
+  ECS::Entity const entity{ entityId };
+  if (!entity.HasComponent<Component::Animation>()) {
+    IGE_DBGLOGGER.LogError("IsPlayingAnimation(): Entity " + entity.GetTag() + " does not have an animation component!");
+    return false;
+  }
+
+  return entity.GetComponent<Component::Animation>().IsPlayingAnimation();
+}
+
+MonoString* GetCurrentAnimation(ECS::Entity::EntityID entityId) {
+  ECS::Entity const entity{ entityId };
+  if (!entity.HasComponent<Component::Animation>()) {
+    IGE_DBGLOGGER.LogError("IsPlayingAnimation(): Entity " + entity.GetTag() + " does not have an animation component!");
+    return nullptr;
+  }
+
+  return STDToMonoString(entity.GetComponent<Component::Animation>().currentAnimation.first);
+}
+
+void Mono::PauseAnimation(ECS::Entity::EntityID entity) {
+  ECS::Entity(entity).GetComponent<Component::Animation>().Pause();
+}
+void Mono::ResumeAnimation(ECS::Entity::EntityID entity) {
+  ECS::Entity(entity).GetComponent<Component::Animation>().Resume();
+}
+
+void Mono::StopAnimationLoop(ECS::Entity::EntityID entity) {
+  ECS::Entity(entity).GetComponent<Component::Animation>().repeat = false;
+}
+
+void Mono::SetShaderState(unsigned idx, bool active)
+{
+    Graphics::PostProcessingManager::GetInstance().SetShaderState(idx, active);
 }
 
 glm::vec3 Mono::GetVelocity(ECS::Entity::EntityID e)
@@ -1082,6 +1278,10 @@ glm::vec3 Mono::GetVelocity(ECS::Entity::EntityID e)
         return glm::vec3{ rb.velocity.x, rb.velocity.y, rb.velocity.z };
     }
     return glm::vec3();
+}
+
+void Mono::UpdatePhysicsToTransform(ECS::Entity::EntityID entity) {
+  IGE::Physics::PhysicsSystem::GetInstance()->UpdatePhysicsToTransform(entity);
 }
 
 MonoString* Mono::GetLayerName(ECS::Entity::EntityID e)
@@ -1146,6 +1346,7 @@ ECS::Entity::EntityID Mono::FindChildByTag(ECS::Entity::EntityID entity, MonoStr
   return static_cast<ECS::Entity::EntityID>(std::numeric_limits<std::uint32_t>::max());
 }
 
+
 ECS::Entity::EntityID Mono::FindParentByTag(MonoString* s) {
   std::string msg{ MonoStringToSTD(s) };
   for (ECS::Entity e : ECS::EntityManager::GetInstance().GetAllEntities()) {
@@ -1154,6 +1355,17 @@ ECS::Entity::EntityID Mono::FindParentByTag(MonoString* s) {
       }
   }
   return ECS::Entity::EntityID();
+}
+
+
+ECS::Entity::EntityID Mono::GetParentByID(ECS::Entity::EntityID entity)
+{
+  if (ECS::Entity(entity) && ECS::EntityManager::GetInstance().HasParent(entity))
+  {
+    return ECS::EntityManager::GetInstance().GetParentEntity(entity).GetRawEnttEntityID();
+  }
+  Debug::DebugLogger::GetInstance().LogError("You are trying to find the parent of an entity that doesnt have one");
+  return static_cast<ECS::Entity::EntityID>(std::numeric_limits<std::uint32_t>::max());
 }
 
 void Mono::DestroyEntity(ECS::Entity::EntityID entity)
@@ -1240,6 +1452,12 @@ MonoArray* Mono::GetAllChildren(ECS::Entity::EntityID entity)
     mono_array_set(newArray, ECS::Entity::EntityID, i, allChildren[i]);
   }
   return newArray;
+}
+
+void Mono::UnparentEntity(ECS::Entity::EntityID entityId) {
+  ECS::Entity entity{ entityId };
+  IGE_ENTITYMGR.RemoveParent(entity);
+  TransformHelpers::UpdateLocalTransform(entity);
 }
 
 glm::vec3 Mono::GetMainCameraPosition(ECS::Entity::EntityID cameraEntity) {
@@ -1354,6 +1572,19 @@ void Mono::AppendText(ECS::Entity::EntityID textEntity, MonoString* textContent)
   Component::Text& TextComponent{ ECS::Entity{ textEntity }.GetComponent<Component::Text>() };
   TextComponent.textContent += scriptTextContent;
   TextComponent.newLineIndicesUpdatedFlag = false;
+}
+
+void Mono::SetTextFont(ECS::Entity::EntityID textEntity, MonoString* s) {
+  std::string scriptTextFont{ MonoStringToSTD(s) };
+
+  if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+    Debug::DebugLogger::GetInstance().LogError("You are trying to set the font of an entity that does not have the Text Component");
+    return;
+  }
+
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().textAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::FontAsset>(scriptTextFont);
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().fontFamilyName = scriptTextFont;
+  ECS::Entity{ textEntity }.GetComponent<Component::Text>().newLineIndicesUpdatedFlag = false;
 }
 
 
@@ -1487,8 +1718,8 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
 }
 
 bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
-
-  ECS::Entity e = ECS::EntityManager::GetInstance().GetEntityFromTag("[Folder] Outdoorlight");
+  //
+  ECS::Entity e = ECS::EntityManager::GetInstance().GetEntityFromTag("[Folder] Lights");
   if (ECS::Entity(e))
   {
     for (ECS::Entity child : ECS::EntityManager::GetInstance().GetChildEntity(e))
@@ -1501,12 +1732,20 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
           {
             Component::Light& l = gchild.GetComponent<Component::Light>();
             l.mRange = 21.f;
-            l.mLightIntensity += (2.0f - l.mLightIntensity) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
-            if (l.mLightIntensity >= 1.96f)
+            l.color.r += (0.67f - l.color.r) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            l.color.g += (1.f - l.color.g) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            l.color.b += (0.96f - l.color.b) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+            if (l.color.r > 0.67 || l.color.g > 1.f || l.color.b > 0.96f)
             {
-              //std::cout << "Faster?\n";
-              l.mLightIntensity = 2.f;
+              l.color.r = 0.67f;
+              l.color.g = 1.f;
+              l.color.b = 0.96f;
             }
+            std::cout << l.color.r << "\n";
+          }
+
+          if (gchild.GetTag() == "CeilingLightBloom") {
+            gchild.SetIsActive(true);
           }
         }
       }
@@ -1531,15 +1770,32 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
     }
   }
   else
-    Debug::DebugLogger::GetInstance().LogError("Unable to find entity: [Folder] Outdoorlight");
+    Debug::DebugLogger::GetInstance().LogError("Unable to find entity: [Folder] Lights");
+
+  ECS::Entity es = ECS::EntityManager::GetInstance().GetEntityFromTag("Garden Light");
+  if (ECS::Entity(es))
+  {
+    ECS::Entity(es).SetIsActive(false);
+  }
+  else
+    Debug::DebugLogger::GetInstance().LogError("Unable to find entity: Garden Light");
    
   for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
   {
+    ECS::Entity parentEntity = ECS::EntityManager::GetInstance().GetParentEntity(child);
+    parentEntity.SetIsActive(true);
+    ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(parentEntity);
+    /*
     std::string n = child.GetTag();
     if (n == "Light")
     {
       child.SetIsActive(true);
     }
+
+    if (n == "PseudoLampBloom") {
+      child.SetIsActive(true);
+    }
+    */
   }
 
 
@@ -1615,6 +1871,16 @@ void Mono::SpawnOpenDoor() {
 
 }
 
+void Mono::SpawnTaraSilhouette() {
+    ECS::Entity taraSilhouette = ECS::EntityManager::GetInstance().GetEntityFromTag("TaraSilhouette");
+    if (ECS::EntityManager::GetInstance().IsValidEntity(taraSilhouette))
+    {
+        taraSilhouette.SetIsActive(true);
+        ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(taraSilhouette);
+    }
+
+}
+
 
 
 bool Mono::OnTriggerEnter(ECS::Entity trigger, ECS::Entity other) {
@@ -1639,6 +1905,174 @@ bool Mono::OnTriggerExit(ECS::Entity trigger, ECS::Entity other) {
   }
 
   return IGE::Physics::PhysicsSystem::GetInstance().get()->OnTriggerExit(trigger, other);
+}
+
+MonoArray* Mono::GetContactPoints(ECS::Entity entity1, ECS::Entity entity2)
+{
+    auto contactPoints{ IGE::Physics::PhysicsSystem::GetInstance()->GetContactPoints(entity1, entity2) };
+    //Get the MonoClass for your C# ContactPoint struct.
+    MonoClass* contactPointClass = ScriptManager::mMonoUtilsMap["ContactPoint"];
+    if (!contactPointClass)
+    {
+        // Handle error: you might log and return nullptr
+        Debug::DebugLogger::GetInstance().LogError("No such class ContactPoint");
+        return nullptr;
+    }
+
+    // Get the current app domain (assumed to be stored in your ScriptManager)
+    MonoDomain* domain = ScriptManager::mAppDomain;  // adjust if needed
+
+    // Create a new managed array of the ContactPoint struct
+    MonoArray* managedArray = mono_array_new(domain, contactPointClass, contactPoints.size());
+
+    // For each contact point, fill in a ContactPoint instance and write it into the array.
+    for (size_t i = 0; i < contactPoints.size(); ++i)
+    {
+        // Create a local ContactPoint instance.
+        physx::PxContactPairPoint cp;
+        cp.position[0] = contactPoints[i].position.x;
+        cp.position[1] = contactPoints[i].position.y;
+        cp.position[2] = contactPoints[i].position.z;
+
+        cp.separation = contactPoints[i].separation;
+
+        cp.normal[0] = contactPoints[i].normal.x;
+        cp.normal[1] = contactPoints[i].normal.y;
+        cp.normal[2] = contactPoints[i].normal.z;
+
+        cp.internalFaceIndex0 = contactPoints[i].internalFaceIndex0;
+
+        cp.impulse[0] = contactPoints[i].impulse.x;
+        cp.impulse[1] = contactPoints[i].impulse.y;
+        cp.impulse[2] = contactPoints[i].impulse.z;
+
+        cp.internalFaceIndex1 = contactPoints[i].internalFaceIndex1;
+
+        // Obtain a pointer to the array element’s storage.
+        // Calculate the element size from the MonoClass information.
+        void* elementAddr = mono_array_addr_with_size(managedArray, mono_class_value_size(contactPointClass, nullptr), i);
+        // Copy our local instance into the managed array.
+        memcpy(elementAddr, &cp, sizeof(physx::PxContactPairPoint));
+    }
+
+    return managedArray;
+}
+
+//only works if there is a box, sphere, capsule, or rb
+float Mono::GetShortestDistance(ECS::Entity::EntityID id1, ECS::Entity::EntityID id2) {
+    ECS::Entity e1{ id1 };
+    ECS::Entity e2{ id2 };
+    if ((e1.HasComponent<Component::BoxCollider>() || e1.HasComponent<Component::CapsuleCollider>() || e1.HasComponent<Component::SphereCollider>() || e1.HasComponent<Component::RigidBody>()) && 
+        (e2.HasComponent<Component::BoxCollider>() || e2.HasComponent<Component::CapsuleCollider>() || e2.HasComponent<Component::SphereCollider>() || e2.HasComponent<Component::RigidBody>())) {
+        return IGE::Physics::PhysicsSystem::GetInstance()->GetShortestDistance(e1, e2);
+    }
+    return -1.f;
+}
+
+void Mono::SetBloomIntensity(ECS::Entity::EntityID entity, float intensity) {
+  if (ECS::Entity(entity))
+  {
+    if (ECS::Entity(entity).HasComponent<Component::Bloom>())
+      ECS::Entity(entity).GetComponent<Component::Bloom>().intensity = intensity;
+    else
+      Debug::DebugLogger::GetInstance().LogError("SetBloomIntensity: Entity " + ECS::Entity(entity).GetTag() + " does not have a Bloom component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetBloomIntensity: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+}
+
+float Mono::GetBloomIntensity(ECS::Entity::EntityID entity) {
+  if (ECS::Entity(entity)) {
+    if (ECS::Entity(entity).HasComponent<Component::Bloom>())
+      return ECS::Entity(entity).GetComponent<Component::Bloom>().intensity;
+    else
+      Debug::DebugLogger::GetInstance().LogError("GetBloomIntensity: Entity " + ECS::Entity(entity).GetTag() + " does not have a Bloom component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("GetBloomIntensity: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+  return 0.0f;
+}
+
+void Mono::SetLightIntensity(ECS::Entity::EntityID entity, float intensity) {
+  if (ECS::Entity(entity))
+  {
+    if (ECS::Entity(entity).HasComponent<Component::Light>())
+      ECS::Entity(entity).GetComponent<Component::Light>().mLightIntensity = intensity;
+    else
+      Debug::DebugLogger::GetInstance().LogError("SetLightIntensity: Entity " + ECS::Entity(entity).GetTag() + " does not have a Light component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetLightIntensity: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+}
+
+float Mono::GetLightIntensity(ECS::Entity::EntityID entity) {
+  if (ECS::Entity(entity)) {
+    if (ECS::Entity(entity).HasComponent<Component::Light>())
+      return ECS::Entity(entity).GetComponent<Component::Light>().mLightIntensity;
+    else
+      Debug::DebugLogger::GetInstance().LogError("GetLightIntensity: Entity " + ECS::Entity(entity).GetTag() + " does not have a Light component");
+  }
+  else {
+    Debug::DebugLogger::GetInstance().LogError("GetLightIntensity: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+  }
+  return 0.0f;
+}
+
+void Mono::PauseGame() {
+  gIsGamePaused = true;
+}
+
+void Mono::ResumeGame() {
+  gIsGamePaused = false;
+}
+
+bool Mono::GetIsPaused() {
+  return gIsGamePaused;
+}
+
+void Mono::SetCanvasTransitionProgress(ECS::Entity::EntityID canvasEntity, float progress) {
+  if (ECS::Entity(canvasEntity)) {
+    if (ECS::Entity(canvasEntity).HasComponent<Component::Canvas>())
+      ECS::Entity(canvasEntity).GetComponent<Component::Canvas>().transitionProgress = progress;
+
+    else
+      Debug::DebugLogger::GetInstance().LogError("SetCanvasTransitionProgress: Entity " + ECS::Entity(canvasEntity).GetTag() + " does not have a Canvas component");
+  }
+
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetCanvasTransitionProgress: No entity with ID: " + std::to_string(static_cast<uint32_t>(canvasEntity)));
+  }
+}
+
+void Mono::EnableCanvasTransition(ECS::Entity::EntityID canvasEntity, bool isEnabled) {
+  if (ECS::Entity(canvasEntity)) {
+    if (ECS::Entity(canvasEntity).HasComponent<Component::Canvas>())
+      ECS::Entity(canvasEntity).GetComponent<Component::Canvas>().hasTransition = isEnabled;
+
+    else
+      Debug::DebugLogger::GetInstance().LogError("EnableCanvasTransition: Entity " + ECS::Entity(canvasEntity).GetTag() + " does not have a Canvas component");
+  }
+
+  else {
+    Debug::DebugLogger::GetInstance().LogError("EnableCanvasTransition: No entity with ID: " + std::to_string(static_cast<uint32_t>(canvasEntity)));
+  }
+}
+
+void Mono::SetCanvasTransitionType(ECS::Entity::EntityID canvasEntity, int transitionType) {
+  if (ECS::Entity(canvasEntity)) {
+    if (ECS::Entity(canvasEntity).HasComponent<Component::Canvas>())
+      ECS::Entity(canvasEntity).GetComponent<Component::Canvas>().transitionType = static_cast<Component::Canvas::TransitionType>(transitionType);
+
+    else
+      Debug::DebugLogger::GetInstance().LogError("SetCanvasTransitionType: Entity " + ECS::Entity(canvasEntity).GetTag() + " does not have a Canvas component");
+  }
+
+  else {
+    Debug::DebugLogger::GetInstance().LogError("SetCanvasTransitionType: No entity with ID: " + std::to_string(static_cast<uint32_t>(canvasEntity)));
+  }
 }
 
 /*!**********************************************************************
@@ -1682,6 +2116,6 @@ std::string Mono::MonoStringToSTD(MonoString* str)
 MonoString* Mono::STDToMonoString(const std::string& str)
 {
   Mono::ScriptManager* sm = &Mono::ScriptManager::GetInstance();
-  return (mono_string_new(sm->mAppDomain.get(), str.c_str()));
+  return (mono_string_new(sm->mAppDomain, str.c_str()));
 
 }

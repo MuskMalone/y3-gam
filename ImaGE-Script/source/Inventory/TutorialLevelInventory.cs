@@ -13,7 +13,7 @@ public class TutorialLevelInventory : Entity
     public event EventHandler<InventoryEventArgs> ItemRemoved;
 
     private IInventoryItem currentItem;
-    private bool highlighted = false;
+    public bool highlighted = false;
     public bool isVisible = false;
 
     // Inventory Item UI (Image at the bottom right)
@@ -32,13 +32,13 @@ public class TutorialLevelInventory : Entity
     // Workaround for lack of Vec3<float>[]
     private List<Vec2<float>> iconPosition = new List<Vec2<float>>
   {
-      new Vec2<float>(-15.9f, 7.2f),
-      new Vec2<float>(-15.9f, 4.7f),
-      new Vec2<float>(-15.9f, 2.4f),
-      new Vec2<float>(-15.9f, 0.1f),
-      new Vec2<float>(-15.9f, -2.3f),
-      new Vec2<float>(-15.9f, -4.6f),
-      new Vec2<float>(-15.9f, -7.0f)
+      new Vec2<float>(-14.745f, 6.530f),
+      new Vec2<float>(-15.140f, 4.259f),
+      new Vec2<float>(-15.241f, 1.980f),
+      new Vec2<float>(-15.290f, -0.320f),
+      new Vec2<float>(-15.340f, -2.599f),
+      new Vec2<float>(-15.190f, -4.890f),
+      new Vec2<float>(-14.869f, -7.180f)
   };
 
 
@@ -171,7 +171,7 @@ public class TutorialLevelInventory : Entity
             ToggleInventoryVisibility();
         }
 
-        if (Input.anyKeyTriggered)
+        if (!pictureAlignscript.isFading && Input.anyKeyTriggered)
         {
             switch (Input.inputString)
             {
@@ -284,14 +284,15 @@ public class TutorialLevelInventory : Entity
 
         if (!highlighted || currentItem != selectedItem)
         {
-            if (isVisible)
-            {
-                Vector3 handPosition = new Vector3(iconPosition.X + selectionHandXOffset, iconPosition.Y, 1f);
-                InternalCalls.SetPosition(selectionHand.mEntityID, ref handPosition);
-                selectionHand.SetActive(true);
+            Vector3 inventorySelectPosition = new Vector3(iconPosition.X, iconPosition.Y, 0.5f);
+            InternalCalls.SetPosition(inventorySelectSquare.mEntityID, ref inventorySelectPosition);
 
-                Vector3 inventorySelectPosition = new Vector3(iconPosition.X, iconPosition.Y, 0.5f);
-                InternalCalls.SetPosition(inventorySelectSquare.mEntityID, ref inventorySelectPosition);
+            Vector3 handPosition = new Vector3(iconPosition.X + selectionHandXOffset, iconPosition.Y, 1f);
+            InternalCalls.SetPosition(selectionHand.mEntityID, ref handPosition);
+
+      if (isVisible)
+            {
+                selectionHand.SetActive(true);
                 inventorySelectSquare.SetActive(true);
             }
 
@@ -327,4 +328,10 @@ public class TutorialLevelInventory : Entity
         pictureAlignscript.ClearUI();
 
     }
+
+    public IInventoryItem GetCurrentItem()
+    {
+        return currentItem;
+    }
+
 }

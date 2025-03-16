@@ -20,6 +20,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -30,26 +31,26 @@ using IGE.Utils;
 
 public class TutorialCutscene : Entity
 {
-
-
     public Entity mother;
     public Entity openDoor;
     public Entity closeDoor;
     public Entity glow;
+    public BootupText bootup;
 
     private PlayerMove playerMove;
 
     private bool firstCutscenePlaying = false;
     private bool secondCutscenePlaying = false;
     public bool cutsceneFinish = false;
+    private bool initialTrigger = true;
 
     //dialogue
     private TutorialDialogue tutorialDialogue;
     public string[] firstCutsceneDialogue;
     public string[] secondCutsceneDialogue;
     public string[] thirdCutsceneDialogue;
-    // Start is called before the first frame update
-    void Start()
+
+  void Start()
     {
         tutorialDialogue = FindObjectOfType<TutorialDialogue>();
         playerMove = FindObjectOfType<PlayerMove>();
@@ -89,21 +90,25 @@ public class TutorialCutscene : Entity
         {
             Debug.LogError("glow entity is missing.");
         }
-
-        StartFirstCutscene();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (firstCutscenePlaying && Input.GetMouseButtonDown(0) && tutorialDialogue.isLineComplete) // Left mouse click
-        {
-            EndFirstCutscene();
-        }
-        else if (secondCutscenePlaying && Input.GetMouseButtonDown(0) && tutorialDialogue.isLineComplete) // Left mouse click
-        {
-            EndSecondCutscene();
-        }
+    if (initialTrigger && bootup.IsBootupTextCompleted())
+    {
+      StartFirstCutscene();
+      initialTrigger = false;
+    }
+
+    if (firstCutscenePlaying && Input.GetMouseButtonDown(0) && tutorialDialogue.isLineComplete) // Left mouse click
+      {
+          EndFirstCutscene();
+      }
+      else if (secondCutscenePlaying && Input.GetMouseButtonDown(0) && tutorialDialogue.isLineComplete) // Left mouse click
+      {
+          EndSecondCutscene();
+      }
     }
 
     void StartFirstCutscene()
@@ -137,5 +142,4 @@ public class TutorialCutscene : Entity
         secondCutscenePlaying = false;
         cutsceneFinish = true;
     }
-
 }

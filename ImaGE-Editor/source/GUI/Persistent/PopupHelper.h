@@ -27,15 +27,18 @@ namespace GUI {
 
     inline static constexpr char sGUIDPopupTitle[] = "Did you just merge??? Unlucky.";
     inline static constexpr char sGUIDCompletePopupTitle[] = "GUID Repair Complete";
+    inline static constexpr char sWindowClosePopupTitle[] = "WARNING: Scene has been Modified!";
 
     std::vector<PopupFn> mPopupFunctions;
 
     EVENT_CALLBACK_DECL(OnGUIDInvalidated);
     EVENT_CALLBACK_DECL(OnGUIDRemap);
+    EVENT_CALLBACK_DECL(OnQuitAppPopupTrigger);
     
     void InitGUIDPopup();
     void GUIDRemapPopup();
     void GUIDCompletePopup();
 
+    void WindowCloseConfirmationPopup();
   };
 } // namespace GUI

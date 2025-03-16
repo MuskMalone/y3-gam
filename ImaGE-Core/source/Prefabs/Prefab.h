@@ -31,7 +31,6 @@ namespace Prefabs
   // this should only be instantiated for use with a Prefab
   struct PrefabSubData
   {
-    PrefabSubData();
     PrefabSubData(SubDataId id, SubDataId parent = BasePrefabId);
 
     rttr::variant GetComponent(rttr::type const& type) const;
@@ -149,7 +148,7 @@ namespace Prefabs
 
     /*!*********************************************************************
     \brief
-      Creates a sub-object of given the set of entity IDs from the ECS and
+      Creates a sub-object given the set of entity IDs from the ECS and
       adds it to mObjects vector. Calling this function does not require
       the 2nd argument to be used. This function is recursively called 
       downwards for each child in the set until an entity without

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Animation">
+      <UniqueIdentifier>{859E00A2-F108-B518-3A47-66BEA6F0926D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Asset">
       <UniqueIdentifier>{253FD80C-9153-00BE-5AD5-A31DC6A8FCEE}</UniqueIdentifier>
     </Filter>
     <Filter Include="Asset\Assetables">
       <UniqueIdentifier>{DB2290B9-C71B-AF0B-F04D-9490DCA58E17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asset\Assetables\Animation">
+      <UniqueIdentifier>{8A69C6C1-7679-7292-DF32-D7B0CB61612B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Asset\Assetables\Audio">
       <UniqueIdentifier>{1C29302E-0823-5980-F18F-EF90DD28BFEC}</UniqueIdentifier>
@@ -34,9 +40,6 @@
     <Filter Include="BoundingVolumes">
       <UniqueIdentifier>{06DECC74-7269-3A39-7B7A-BD2DE7849639}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Commands">
-      <UniqueIdentifier>{17269CB7-03F3-F6C2-2C0C-E56A18382C51}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
@@ -48,6 +51,12 @@
     </Filter>
     <Filter Include="Core\Systems">
       <UniqueIdentifier>{35582E35-21BB-BDD9-CA40-F68FB682895C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Systems\AnimationSystem">
+      <UniqueIdentifier>{095E821E-F518-72CA-9ED0-EA148A6ABC5A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Systems\ParticleSystem">
+      <UniqueIdentifier>{7D756784-E982-956A-7269-9155DE756121}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Systems\PlayerControllerSystem">
       <UniqueIdentifier>{FA988342-6652-EEEC-EFB1-08C75B6AA45C}</UniqueIdentifier>
@@ -99,6 +108,9 @@
     </Filter>
     <Filter Include="External\ImGuizmo">
       <UniqueIdentifier>{683857F5-D44E-558B-1DC6-E0AC891B2613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\ImNodes">
+      <UniqueIdentifier>{26E65ED9-12DF-7D2B-3B11-63B027695D37}</UniqueIdentifier>
     </Filter>
     <Filter Include="External\filewatch">
       <UniqueIdentifier>{0EBB171D-FA9E-D872-63FF-D2C54F02C3F4}</UniqueIdentifier>
@@ -189,6 +201,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Animation\AnimationData.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Animation\Keyframe.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
     <ClInclude Include="source\Application.h" />
     <ClInclude Include="source\Asset\AssetManager.h">
       <Filter>Asset</Filter>
@@ -198,6 +216,9 @@
     </ClInclude>
     <ClInclude Include="source\Asset\AssetUtils.h">
       <Filter>Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Animation\AnimationAsset.h">
+      <Filter>Asset\Assetables\Animation</Filter>
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\AssetExtensions.h">
       <Filter>Asset\Assetables</Filter>
@@ -254,13 +275,16 @@
       <Filter>BoundingVolumes</Filter>
     </ClInclude>
     <ClInclude Include="source\Color.h" />
-    <ClInclude Include="source\Commands\CommandManager.h">
-      <Filter>Commands</Filter>
+    <ClInclude Include="source\Core\Components\Animation.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Components\AudioListener.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Components\AudioSource.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Components\Bloom.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Components\Camera.h">
@@ -276,6 +300,9 @@
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Components\Components.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Components\EmitterSystem.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Components\Image.h">
@@ -331,6 +358,12 @@
     </ClInclude>
     <ClInclude Include="source\Core\LayerManager\LayerManager.h">
       <Filter>Core\LayerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Systems\AnimationSystem\AnimationSystem.h">
+      <Filter>Core\Systems\AnimationSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Systems\ParticleSystem\ParticleSystem.h">
+      <Filter>Core\Systems\ParticleSystem</Filter>
     </ClInclude>
     <ClInclude Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.h">
       <Filter>Core\Systems\PlayerControllerSystem</Filter>
@@ -446,6 +479,12 @@
     </ClInclude>
     <ClInclude Include="source\External\ImGuizmo\ImZoomSlider.h">
       <Filter>External\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImNodes\imnodes.h">
+      <Filter>External\ImNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="source\External\ImNodes\imnodes_internal.h">
+      <Filter>External\ImNodes</Filter>
     </ClInclude>
     <ClInclude Include="source\External\filewatch\FileWatch.h">
       <Filter>External\filewatch</Filter>
@@ -628,6 +667,9 @@
     <ClInclude Include="source\Graphics\Mesh\MeshFactory.h">
       <Filter>Graphics\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\Mesh\MeshImport.h">
+      <Filter>Graphics\Mesh</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\Mesh\MeshMatValues.h">
       <Filter>Graphics\Mesh</Filter>
     </ClInclude>
@@ -640,6 +682,9 @@
     <ClInclude Include="source\Graphics\Pipeline.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="source\Graphics\PostProcessing\ParticleManager.h">
+      <Filter>Graphics\PostProcessing</Filter>
+    </ClInclude>
     <ClInclude Include="source\Graphics\PostProcessing\PostProcessingManager.h">
       <Filter>Graphics\PostProcessing</Filter>
     </ClInclude>
@@ -650,6 +695,9 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\GeomPass.h">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Graphics\RenderPass\ParticlePass.h">
       <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
     <ClInclude Include="source\Graphics\RenderPass\PostProcessPass.h">
@@ -794,13 +842,6 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Core\Components\Animation.h" />
-    <ClInclude Include="source\External\ImNodes\imnodes.h" />
-    <ClInclude Include="source\External\ImNodes\imnodes_internal.h" />
-    <ClInclude Include="source\Core\Systems\AnimationSystem\AnimationSystem.h" />
-    <ClInclude Include="source\Asset\Assetables\Animation\AnimationAsset.h" />
-    <ClInclude Include="source\Animation\Keyframe.h" />
-    <ClInclude Include="source\Animation\AnimationData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -809,6 +850,9 @@
     </ClCompile>
     <ClCompile Include="source\Asset\AssetUtils.cpp">
       <Filter>Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Animation\AnimationAsset.cpp">
+      <Filter>Asset\Assetables\Animation</Filter>
     </ClCompile>
     <ClCompile Include="source\Asset\Assetables\Audio\AudioAsset.cpp">
       <Filter>Asset\Assetables\Audio</Filter>
@@ -843,10 +887,10 @@
     <ClCompile Include="source\BoundingVolumes\IntersectionTests.cpp">
       <Filter>BoundingVolumes</Filter>
     </ClCompile>
-    <ClCompile Include="source\Commands\CommandManager.cpp">
-      <Filter>Commands</Filter>
-    </ClCompile>
     <ClCompile Include="source\Core\Components\AudioSource.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Components\EmitterSystem.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Components\RigidBody.cpp">
@@ -863,6 +907,12 @@
     </ClCompile>
     <ClCompile Include="source\Core\LayerManager\LayerManager.cpp">
       <Filter>Core\LayerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Systems\AnimationSystem\AnimationSystem.cpp">
+      <Filter>Core\Systems\AnimationSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Systems\ParticleSystem\ParticleSystem.cpp">
+      <Filter>Core\Systems\ParticleSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Systems\PlayerControllerSystem\PlayerControllerSystem.cpp">
       <Filter>Core\Systems\PlayerControllerSystem</Filter>
@@ -936,6 +986,9 @@
     <ClCompile Include="source\External\ImGuizmo\ImSequencer.cpp">
       <Filter>External\ImGuizmo</Filter>
     </ClCompile>
+    <ClCompile Include="source\External\ImNodes\imnodes.cpp">
+      <Filter>External\ImNodes</Filter>
+    </ClCompile>
     <ClCompile Include="source\External\glad.c">
       <Filter>External</Filter>
     </ClCompile>
@@ -978,6 +1031,9 @@
     <ClCompile Include="source\Graphics\Pipeline.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="source\Graphics\PostProcessing\ParticleManager.cpp">
+      <Filter>Graphics\PostProcessing</Filter>
+    </ClCompile>
     <ClCompile Include="source\Graphics\PostProcessing\PostProcessingManager.cpp">
       <Filter>Graphics\PostProcessing</Filter>
     </ClCompile>
@@ -985,6 +1041,9 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\GeomPass.cpp">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Graphics\RenderPass\ParticlePass.cpp">
       <Filter>Graphics\RenderPass</Filter>
     </ClCompile>
     <ClCompile Include="source\Graphics\RenderPass\PostProcessPass.cpp">
@@ -1081,13 +1140,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\External\ImNodes\imnodes.cpp" />
-    <ClCompile Include="source\Core\Systems\AnimationSystem\AnimationSystem.cpp" />
-    <ClCompile Include="source\Asset\Assetables\Animation\AnimationAsset.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Build-ImaGE-Core.lua" />
-    <None Include="source\External\ImNodes\LICENSE.md" />
-    <None Include="source\External\ImNodes\README.md" />
   </ItemGroup>
 </Project>

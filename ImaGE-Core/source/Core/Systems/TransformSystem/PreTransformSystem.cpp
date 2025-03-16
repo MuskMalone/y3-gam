@@ -46,8 +46,13 @@ namespace Systems {
     Transform& trans{ entity.GetComponent<Transform>() };
     bool modified{ false };
 
-    // dont bother computing if nothing changed
+    // transform or parent modified: update local based on world
     if (trans.modified || parentModified) {
+      if (trans.scale.x == 0.f || trans.scale.y == 0.f || trans.scale.z == 0.f) {
+        throw Debug::Exception<PreTransformSystem>(Debug::LVL_CRITICAL,
+          Msg("Entity " + entity.GetTag() + "'s scale is 0!"));
+      }
+
       Transform const& parentTrans{ mEntityManager.GetParentEntity(entity).GetComponent<Transform>() };
 
       // update local to world with parent xform

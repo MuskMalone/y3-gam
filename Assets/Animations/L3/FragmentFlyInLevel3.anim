@@ -1,0 +1,155 @@
+{
+    "rootKeyframe": {
+        "startPos": {
+            "x": 5.863999843597412,
+            "y": 25.0,
+            "z": -36.0
+        },
+        "startRot": {
+            "x": 6.599999904632568,
+            "y": -0.0,
+            "z": 0.0
+        },
+        "startScale": {
+            "x": 0.07954000681638718,
+            "y": 0.07954000681638718,
+            "z": 0.07954000681638718
+        },
+        "nextNodes": [
+            1,
+            6
+        ]
+    },
+    "keyframes": [
+        {
+            "nodeId": 1,
+            "endValue": {
+                "x": 6.599999904632568,
+                "y": 1080.0,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "EASE_OUT",
+            "startTime": 0.0,
+            "duration": 2.5,
+            "nextNodes": [
+                2
+            ]
+        },
+        {
+            "nodeId": 2,
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "interpolationType": "LINEAR",
+            "startTime": 2.5,
+            "duration": 2.25,
+            "nextNodes": [
+                3,
+                4
+            ]
+        },
+        {
+            "nodeId": 3,
+            "endValue": {
+                "x": -18.89999771118164,
+                "y": 1080.0,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 4.75,
+            "duration": 0.699999988079071,
+            "nextNodes": []
+        },
+        {
+            "nodeId": 4,
+            "endValue": {
+                "x": 5.860000133514404,
+                "y": 16.440000534057618,
+                "z": -36.0
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "EASE_IN",
+            "startTime": 4.75,
+            "duration": 0.699999988079071,
+            "nextNodes": [
+                5
+            ]
+        },
+        {
+            "nodeId": 5,
+            "endValue": {
+                "x": 5.860000133514404,
+                "y": 14.300000190734864,
+                "z": -36.0
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "EASE_OUT",
+            "startTime": 5.449999809265137,
+            "duration": 1.0,
+            "nextNodes": []
+        },
+        {
+            "nodeId": 6,
+            "endValue": {
+                "x": 5.860000133514404,
+                "y": 17.749116897583009,
+                "z": -36.0
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "LINEAR",
+            "startTime": 0.0,
+            "duration": 2.5,
+            "nextNodes": [
+                7
+            ]
+        },
+        {
+            "nodeId": 7,
+            "endValue": {
+                "x": 5.860000133514404,
+                "y": 18.049999237060548,
+                "z": -36.0
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 2.5,
+            "duration": 0.75,
+            "nextNodes": [
+                8
+            ]
+        },
+        {
+            "nodeId": 8,
+            "endValue": {
+                "x": 5.860000133514404,
+                "y": 17.43000030517578,
+                "z": -36.0
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 3.25,
+            "duration": 0.75,
+            "nextNodes": [
+                9
+            ]
+        },
+        {
+            "nodeId": 9,
+            "endValue": {
+                "x": 5.860000133514404,
+                "y": 18.049999237060548,
+                "z": -36.0
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 4.0,
+            "duration": 0.75,
+            "nextNodes": []
+        }
+    ]
+}

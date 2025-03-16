@@ -57,13 +57,17 @@ namespace Scenes
   }
 
   void SceneManager::PlayScene() {
-    TemporarySave(false);
+    if (mSceneState != SceneState::PAUSED) {
+      TemporarySave(false);
+      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::STARTED, mSceneName);
+    }
+
     mSceneState = SceneState::PLAYING;
-    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::STARTED, mSceneName);
   }
 
   void SceneManager::StopScene() {
     Events::EventManager::GetInstance().DispatchImmediateEvent<Events::SceneStateChange>(Events::SceneStateChange::STOPPED, mSceneName);
+    gIsGamePaused = false;
     ClearScene();
     UnloadScene();
 
@@ -87,19 +91,21 @@ namespace Scenes
     // realign colliders with transforms
     IGE_EVENTMGR.DispatchImmediateEvent<Events::TriggerPausedUpdate>();
     Mono::ScriptManager::GetInstance().LinkAllScriptDataMember();
+
+    IGE_DBGLOGGER.LogInfo("Entity count: " + std::to_string(IGE_ENTITYMGR.GetAllEntities().size()));
   }
 
   // i should just combine clear and unload functions
   void SceneManager::ClearScene() {
     mSceneName.clear();
-    IGE::Physics::PhysicsSystem::GetInstance()->ClearSystem();
-    Graphics::MaterialTable::ClearMaterials();
+    Reflection::ObjectFactory::GetInstance().ClearData();
+    ECS::EntityManager::GetInstance().Reset();
   }
 
   void SceneManager::UnloadScene()
   {
-    Reflection::ObjectFactory::GetInstance().ClearData();
-    ECS::EntityManager::GetInstance().Reset();
+    IGE::Physics::PhysicsSystem::GetInstance()->ClearSystem();
+    Graphics::MaterialTable::ClearMaterials();
   }
 
   void SceneManager::ReloadScene()
@@ -261,7 +267,7 @@ namespace Scenes
   void SceneManager::ExecuteMainThreadQueue()
   {
     std::scoped_lock<std::mutex> lock(mMainThreadQueueMutex);
-
+    
     for (auto& func : mMainThreadQueue)
       func();
 

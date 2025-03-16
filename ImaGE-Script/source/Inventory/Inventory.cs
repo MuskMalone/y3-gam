@@ -13,13 +13,14 @@ public class Inventory : Entity
   public event EventHandler<InventoryEventArgs> ItemRemoved;
 
   private IInventoryItem currentItem;
-  private bool highlighted = false;
+  public bool highlighted = false;
   public bool isVisible = false;
 
   // Inventory Item UI (Image at the bottom right)
   public Entity seedUI;
   public Entity nightPaintingUI;
   public Entity toolsPaintingUI;
+  public Entity CorridorPaintingUI;
   public Entity hammerUI;
   public Entity crowbarUI;
   public Entity transitionPaintingUI;
@@ -30,6 +31,7 @@ public class Inventory : Entity
   public Entity seedSelection;
   public Entity nightPaintingSelection;
   public Entity toolsPaintingSelection;
+  public Entity CorridorPaintingSelection;
   public Entity hammerSelection;
   public Entity crowbarSelection;
   public Entity transitionPaintingSelection;
@@ -45,13 +47,13 @@ public class Inventory : Entity
   // Workaround for lack of Vec3<float>[]
   private List<Vec2<float>> iconPosition = new List<Vec2<float>>
   {
-      new Vec2<float>(-15.9f, 7.2f),
-      new Vec2<float>(-15.9f, 4.7f),
-      new Vec2<float>(-15.9f, 2.4f),
-      new Vec2<float>(-15.9f, 0.1f),
-      new Vec2<float>(-15.9f, -2.3f),
-      new Vec2<float>(-15.9f, -4.6f),
-      new Vec2<float>(-15.9f, -7.0f)
+      new Vec2<float>(-14.745f, 6.530f),
+      new Vec2<float>(-15.140f, 4.259f),
+      new Vec2<float>(-15.241f, 1.980f),
+      new Vec2<float>(-15.290f, -0.320f),
+      new Vec2<float>(-15.340f, -2.599f),
+      new Vec2<float>(-15.190f, -4.890f),
+      new Vec2<float>(-14.869f, -7.180f)
   };
 
   // Equipped Flags
@@ -76,6 +78,10 @@ public class Inventory : Entity
   private Vector2 startHandScale = new Vector2(1.0f, 1.2f);
   private Vector2 endHandScale = new Vector2(1.4f, 1.8f);
   private Vector2 currentHandScale;
+
+  //Painting Alignment UI
+  private PaintingAlignUIGarden paintingAlignUIGardenScript;
+
 
   void Start()
   {
@@ -109,6 +115,7 @@ public class Inventory : Entity
     InternalCalls.SetPosition(crowbarUI.mEntityID, ref startPosition);
     InternalCalls.SetPosition(keyUI.mEntityID, ref startPosition);
     pictureAlignscript = FindObjectOfType<PictureAlign>();
+    paintingAlignUIGardenScript = FindObjectOfType<PaintingAlignUIGarden>();
   }
 
   public void Additem(IInventoryItem item)
@@ -122,7 +129,7 @@ public class Inventory : Entity
 
         if (ItemAdded != null)
         {
-          Console.WriteLine("Item "+item.Name + " has been added to inventory");
+          //Console.WriteLine("Item "+item.Name + " has been added to inventory");
           ItemAdded(this, new InventoryEventArgs(item, iconPosition[i]));
         }
         return;
@@ -139,7 +146,7 @@ public class Inventory : Entity
     hammerEquipped = false;
     keyEquipped = false;
     seedEquipped = false;
-    Console.WriteLine("Remove item: "+ item.Name);
+    //Console.WriteLine("Remove item: "+ item.Name);
     currentItem = null;
     highlighted = false;
     selectionHand.SetActive(false);
@@ -165,7 +172,7 @@ public class Inventory : Entity
     return mItems.Find(item => item != null && item.Name == itemName);
   }
 
-  private void ToggleInventoryVisibility()
+  public void ToggleInventoryVisibility()
   {
     if (isSliding) return;
     isVisible = !isVisible;
@@ -204,7 +211,7 @@ public class Inventory : Entity
       ToggleInventoryVisibility();
     }
 
-    if (Input.anyKeyTriggered)
+    if (!pictureAlignscript.isFading && Input.anyKeyTriggered)
     {
       switch (Input.inputString)
       {
@@ -295,8 +302,8 @@ public class Inventory : Entity
       if (highlighted) // i.e. Item is selected
       {
         string itemName = mItems[index].Name;
-        Debug.Log($"Item in slot {index + 1}: {itemName}");
-        Debug.Log("Item selected");
+        //Debug.Log($"Item in slot {index + 1}: {itemName}");
+        //Debug.Log("Item selected");
         ShowUIForItem(itemName);
       }
       else
@@ -317,14 +324,15 @@ public class Inventory : Entity
 
     if (!highlighted || currentItem != selectedItem)
     {
+      Vector3 inventorySelectPosition = new Vector3(iconPosition.X, iconPosition.Y, 0.5f);
+      InternalCalls.SetPosition(inventorySelectSquare.mEntityID, ref inventorySelectPosition);
+
+      Vector3 handPosition = new Vector3(iconPosition.X + selectionHandXOffset, iconPosition.Y, 1f);
+      InternalCalls.SetPosition(selectionHand.mEntityID, ref handPosition);
+
       if (isVisible)
       {
-        Vector3 handPosition = new Vector3(iconPosition.X + selectionHandXOffset, iconPosition.Y, 1f);
-        InternalCalls.SetPosition(selectionHand.mEntityID, ref handPosition);
         selectionHand.SetActive(true);
-
-        Vector3 inventorySelectPosition = new Vector3(iconPosition.X, iconPosition.Y, 0.5f);
-        InternalCalls.SetPosition(inventorySelectSquare.mEntityID, ref inventorySelectPosition);
         inventorySelectSquare.SetActive(true);
       }
 
@@ -346,25 +354,37 @@ public class Inventory : Entity
     switch (itemName)
     {
       case "Seed":
-        Debug.Log("Seed Equipped");
+        //Debug.Log("Seed Equipped");
         seedUI?.SetActive(true);
         seedEquipped = true;
+        paintingAlignUIGardenScript.isPainting = false;
         break;
       case "NightPainting":
+        Console.WriteLine("Night");
         nightPaintingUI?.SetActive(true);
+        paintingAlignUIGardenScript.isPainting = true;
         nightPaintingUI?.FindScript<HoldupUI>().SetAlginUI("NightPainting", GetItemByName("NightPainting"));
         break;
       case "ToolsPainting":
         toolsPaintingUI?.SetActive(true);
+        paintingAlignUIGardenScript.isPainting = true;
         toolsPaintingUI?.FindScript<HoldupUI>().SetAlginUI("ToolsPainting", GetItemByName("ToolsPainting"));
+        break;
+      case "CorridorPainting":
+        Console.WriteLine("CORR");
+        CorridorPaintingUI?.SetActive(true);
+        paintingAlignUIGardenScript.isPainting = true;
+        CorridorPaintingUI?.FindScript<HoldupUI>().SetAlginUI("CorridorPainting", GetItemByName("CorridorPainting"));
         break;
       case "Hammer":
         hammerUI?.SetActive(true);
         hammerEquipped = true;
+        paintingAlignUIGardenScript.isPainting = false;
         break;
       case "Crowbar":
         crowbarUI?.SetActive(true);
         crowbarEquipped = true;
+        paintingAlignUIGardenScript.isPainting = false;
         break;
       //case "Transition Painting":
       //  Console.WriteLine("TransitionPainting");
@@ -374,6 +394,7 @@ public class Inventory : Entity
       case "Key":
         keyUI?.SetActive(true);
         keyEquipped = true;
+        paintingAlignUIGardenScript.isPainting = false;
         break;
 
 
@@ -392,9 +413,16 @@ public class Inventory : Entity
     crowbarUI?.SetActive(false);
     crowbarEquipped = false;
     transitionPaintingUI?.SetActive(false);
+    CorridorPaintingUI?.SetActive(false);
     keyUI?.SetActive(false);
     keyEquipped = false;
     pictureAlignscript.ClearUI();
-    Console.WriteLine("CLEAE ARROWS");
+    //Console.WriteLine("CLEAE ARROWS");
   }
+
+    public IInventoryItem GetCurrentItem()
+    {
+        return currentItem;
+    }
+
 }

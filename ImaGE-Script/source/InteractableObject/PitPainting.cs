@@ -4,11 +4,11 @@ using static Dialogue;
 public class PitPainting : Entity, IInventoryItem
 {
   public Entity _Image;
-  public Inventory inventoryScript;
+  public Level3Inventory inventoryScript;
   public PlayerInteraction playerInteraction;
   public Entity EToPickUpUI;
-  public Dialogue dialogueSystem;
-  public string[] pitPaintingDialogue;
+  //public Dialogue dialogueSystem;
+  //public string[] pitPaintingDialogue;
 
   public string Name
   {
@@ -38,7 +38,7 @@ public class PitPainting : Entity, IInventoryItem
 
   public void OnUsed()
   {
-    Destroy(mEntityID);
+    Destroy();
   }
 
   void Start()
@@ -55,7 +55,7 @@ public class PitPainting : Entity, IInventoryItem
     {
       InternalCalls.PlaySound(mEntityID, "PickupObjects");
       inventoryScript.Additem(this);
-      dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised, Emotion.Shocked });
+      //dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised, Emotion.Shocked });
     }
     EToPickUpUI.SetActive(isPaintHit);
   }

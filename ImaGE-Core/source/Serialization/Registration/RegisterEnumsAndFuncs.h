@@ -33,6 +33,14 @@ namespace
   IGE::Assets::GUID Uint64ToGUID(uint64_t val, bool& ok) {
     ok = true; return IGE::Assets::GUID(val);
   }
+
+  int UintToInt(unsigned val, bool& ok) {
+    ok = true; return static_cast<int>(val);
+  }
+
+  unsigned IntToUint(int val, bool& ok) {
+    ok = true; return static_cast<unsigned>(val);
+  }
 }
 
 static void rttr_auto_register_reflection_function3_(); namespace {
@@ -48,6 +56,8 @@ static void rttr_auto_register_reflection_function3_(); namespace {
   rttr::type::register_converter_func(RttrTypeFromString);
   rttr::type::register_converter_func(Uint64ToGUID);
   rttr::type::register_converter_func(UintToGUID);
+  rttr::type::register_converter_func(UintToInt);
+  rttr::type::register_converter_func(IntToUint);
 
   /* ------------------- ENUMERATIONS ------------------- */
   rttr::registration::enumeration<Component::RigidBody::MotionType>("MotionType")(
@@ -57,9 +67,14 @@ static void rttr_auto_register_reflection_function3_(); namespace {
   rttr::registration::enumeration<IGE::Audio::SoundInvokeSetting::RolloffType>("RolloffType")(
     rttr::value("LINEAR", IGE::Audio::SoundInvokeSetting::RolloffType::LINEAR),
     rttr::value("LOGARITHMIC", IGE::Audio::SoundInvokeSetting::RolloffType::LOGARITHMIC),
-      rttr::value("NONE", IGE::Audio::SoundInvokeSetting::RolloffType::NONE)
+    rttr::value("NONE", IGE::Audio::SoundInvokeSetting::RolloffType::NONE)
     );
-
+  rttr::registration::enumeration<IGE::Audio::SoundInvokeSetting::PostProcessingType>("PostProcessingType")(
+      rttr::value("REVERB", IGE::Audio::SoundInvokeSetting::PostProcessingType::REVERB),
+      rttr::value("ECHO", IGE::Audio::SoundInvokeSetting::PostProcessingType::ECHO),
+      rttr::value("DISTORTION", IGE::Audio::SoundInvokeSetting::PostProcessingType::DISTORTION),
+      rttr::value("CHORUS", IGE::Audio::SoundInvokeSetting::PostProcessingType::CHORUS)
+      );
   rttr::registration::enumeration<Component::LightType>("LightType")(
     rttr::value("DIRECTIONAL", Component::LightType::DIRECTIONAL),
     rttr::value("SPOTLIGHT", Component::LightType::SPOTLIGHT),
@@ -73,6 +88,15 @@ static void rttr_auto_register_reflection_function3_(); namespace {
       rttr::value("TRANSLATION", T::TRANSLATION),
       rttr::value("ROTATION", T::ROTATION),
       rttr::value("SCALE", T::SCALE)
+      );
+  }
+  {
+    using T = Anim::InterpolationType;
+    rttr::registration::enumeration<T>("InterpolationType")(
+      rttr::value("LINEAR", T::LINEAR),
+      rttr::value("EASE_IN", T::EASE_IN),
+      rttr::value("EASE_OUT", T::EASE_OUT),
+      rttr::value("EASE_INOUT", T::EASE_INOUT)
       );
   }
 

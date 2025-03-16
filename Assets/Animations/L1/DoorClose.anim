@@ -1,0 +1,112 @@
+{
+    "rootKeyframe": {
+        "startPos": {
+            "x": 53.93000030517578,
+            "y": 14.15999984741211,
+            "z": 58.630001068115237
+        },
+        "startRot": {
+            "x": 0.0,
+            "y": -76.5,
+            "z": 0.0
+        },
+        "startScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "nextNodes": [
+            1
+        ]
+    },
+    "keyframes": [
+        {
+            "nodeId": 1,
+            "endValue": {
+                "x": 0.0,
+                "y": -75.69999694824219,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "LINEAR",
+            "startTime": 0.0,
+            "duration": 0.6000000238418579,
+            "nextNodes": [
+                2
+            ]
+        },
+        {
+            "nodeId": 2,
+            "endValue": {
+                "x": 0.0,
+                "y": -55.70000076293945,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "LINEAR",
+            "startTime": 0.6000000238418579,
+            "duration": 0.30000001192092898,
+            "nextNodes": [
+                3
+            ]
+        },
+        {
+            "nodeId": 3,
+            "endValue": {
+                "x": 0.0,
+                "y": -28.200000762939454,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "LINEAR",
+            "startTime": 0.9000000357627869,
+            "duration": 0.10000000149011612,
+            "nextNodes": [
+                4
+            ]
+        },
+        {
+            "nodeId": 4,
+            "endValue": {
+                "x": 0.0,
+                "y": -7.800000190734863,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "LINEAR",
+            "startTime": 1.0,
+            "duration": 0.07999999821186066,
+            "nextNodes": [
+                5
+            ]
+        },
+        {
+            "nodeId": 5,
+            "endValue": {
+                "x": 0.0,
+                "y": -3.299999952316284,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "LINEAR",
+            "startTime": 1.0800000429153443,
+            "duration": 0.07999999821186066,
+            "nextNodes": [
+                6
+            ]
+        },
+        {
+            "nodeId": 6,
+            "endValue": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "LINEAR",
+            "startTime": 1.1600000858306885,
+            "duration": 0.07999999821186066,
+            "nextNodes": []
+        }
+    ]
+}

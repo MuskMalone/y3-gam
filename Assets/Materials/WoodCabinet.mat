@@ -1,0 +1,39 @@
+{
+    "name": "WoodCabinet",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 0.8193979859352112,
+        "y": 0.8193979859352112,
+        "z": 0.8193979859352112
+    },
+    "metalness": 0.0,
+    "roughness": 0.03200000151991844,
+    "ao": 1.0,
+    "emission": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "transparency": 1.0,
+    "tiling": {
+        "x": 0.12999999523162843,
+        "y": 5.0
+    },
+    "offset": {
+        "x": -1.0800000429153443,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 1857933801922153255
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}

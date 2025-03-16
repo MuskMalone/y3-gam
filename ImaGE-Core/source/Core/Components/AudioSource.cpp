@@ -24,14 +24,34 @@ namespace Component {
 			sound.playSettings.volume = volume;
 		}
 	}
+	void AudioSource::EnablePostProcessing(std::string const& id, IGE::Audio::SoundInvokeSetting::PostProcessingType type, float param)
+	{
+		//play sound
+		if (sounds.find(id) != sounds.end()) {
+			auto & sound{ sounds.at(id) };
+			sound.playSettings.enablePostProcessing = true;
+			sound.playSettings.processingType = type;
+			sound.playSettings.postProcessingParameter = param;
+		}
+	}
+	void AudioSource::DisablePostProcessing(std::string const& id)
+	{
+		//play sound
+		if (sounds.find(id) != sounds.end()) {
+			auto& sound{ sounds.at(id) };
+			sound.playSettings.enablePostProcessing = false;
+		}
+	}
 	void AudioSource::PlaySound(std::string const& id) const
 	{
 		//play sound
 		if (sounds.find(id) != sounds.end()) {
 			auto const& sound{ sounds.at(id) };
-			IGE::Audio::AudioManager::GetInstance().PlaySound(sound.guid, sound.playSettings, channelGroup);
+			sound.playSettings.name = id;
+			IGE::Audio::AudioManager::GetInstance().PlaySound(sound.guid, sound.playSettings, channelGroup, id);
 		}
 	}
+
 	void AudioSource::PauseSound(std::string const& id) const {
 		if (sounds.find(id) != sounds.end()) {
 			auto const& sound{ sounds.at(id) };
@@ -42,6 +62,32 @@ namespace Component {
 		if (sounds.find(id) != sounds.end()) {
 			auto const& sound{ sounds.at(id) };
 			IGE::Audio::AudioManager::GetInstance().StopSound(sound.guid, sound.playSettings);
+		}
+	}
+	void AudioSource::StopAllSounds() const
+	{
+		for (auto const& [name, sound] : sounds) {
+			IGE::Audio::AudioManager::GetInstance().StopSound(sound.guid, sound.playSettings);
+		}
+	}
+	//gets the playback time of the most recent channel in milliseconds
+	uint32_t AudioSource::GetPlaybackTime(std::string const& id) const {
+		if (sounds.find(id) != sounds.end()) {
+			auto& sound{ sounds.at(id) };
+			auto channel{ *sound.playSettings.channels.begin() };
+			uint32_t playbackTime{};
+			channel->getPosition(&playbackTime, FMOD_TIMEUNIT_MS);
+			return playbackTime;
+		}
+		return 0;
+	}
+	//sets the playback time of the most recent channel in milliseconds
+	void AudioSource::SetPlaybackTime(std::string const& id, uint32_t time) {
+		if (sounds.find(id) != sounds.end()) {
+			auto& sound{ sounds.at(id) };
+			for (auto& channel : sound.playSettings.channels) {
+				channel->setPosition(time, FMOD_TIMEUNIT_MS);
+			}
 		}
 	}
 	void AudioSource::RemoveSound(std::string const& id)

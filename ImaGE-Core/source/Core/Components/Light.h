@@ -48,10 +48,13 @@ namespace Component {
 	struct LightGlobalProps {
 		glm::vec3 ambColor;
 		float ambIntensity;
+		float gammaValue;
 
-		LightGlobalProps() : ambColor{ 1.f, 1.f, 1.f }, ambIntensity{} {}
-		LightGlobalProps(glm::vec3 const& _ambClr, float _ambIntensity) : ambColor{ _ambClr }, ambIntensity{ _ambIntensity } {}
+		LightGlobalProps() : ambColor{ 1.f, 1.f, 1.f }, ambIntensity{}, gammaValue{ 1.8f } {}
+		LightGlobalProps(glm::vec3 const& _ambClr, float _ambIntensity, float gammaVal) : ambColor{ _ambClr }, ambIntensity{ _ambIntensity }, gammaValue{ gammaVal } {}
 	};
+
+
 
 	struct Light {
 		Light() : forwardVec{ 0.f, 0.f, -1.f }, color{ 1.f, 1.f, 1.f }, type{ DIRECTIONAL }, mLightIntensity{ 1.f },

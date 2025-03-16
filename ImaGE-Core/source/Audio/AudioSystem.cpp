@@ -12,7 +12,7 @@ namespace IGE {
         void AudioSystem::Update()
         {
             auto& mgr{ AudioManager::GetInstance() };
-            
+
             //track updates to position
             //track whether guids are valid
             {
@@ -30,6 +30,7 @@ namespace IGE {
                                 channel->setVolume(0);
                             }
                             else {
+                                //std::cout << ECS::Entity{ entity }.GetComponent<Component::Tag>().tag << " setting volume" << std::endl;
                                 channel->setVolume(sound.second.playSettings.volume);
                             }
 
@@ -37,10 +38,22 @@ namespace IGE {
                     }
                 }
             }
-            {
-                auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioListener, Component::Transform>() };
-                for (auto entity : rbsystem) {
-                    auto& audiolistener{ rbsystem.get<Component::AudioListener>(entity) };
+            {//only accounts for one audio listener
+                auto listenersystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioListener, Component::Transform, Component::Camera>() };
+                //gets the first listener
+                for (auto entity : listenersystem){
+                    ECS::Entity e{ entity };
+                    auto& xfm{ e.GetComponent<Component::Transform>() };
+                    auto& camera{ e.GetComponent<Component::Camera>() };
+                    auto forwardVec{ camera.GetForwardVector() };
+                    auto upVec{ camera.GetUpVector() };
+                    // Listener setup
+                    FMOD_VECTOR listenerPos = { xfm.worldPos.x, xfm.worldPos.y, xfm.worldPos.z };
+                    FMOD_VECTOR listenerVel = { 0.0f, 0.0f, 0.0f };
+                    FMOD_VECTOR listenerForward = { forwardVec.x, forwardVec.y, forwardVec.z };
+                    FMOD_VECTOR listenerUp = { upVec.x, upVec.y, upVec.z };
+                    mgr.mSystem->set3DListenerAttributes(0, &listenerPos, &listenerVel, &listenerForward, &listenerUp);
+                    break;
                 }
 
             }
@@ -53,7 +66,6 @@ namespace IGE {
                 auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
                 for (auto entity : rbsystem) {
                     auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
-                    auto& xfm{ rbsystem.get<Component::Transform>(entity) };
                     if (mgr.mSceneStarted && mgr.mScenePaused) {
                         mgr.mGroup[audiosource.channelGroup]->setPaused(false);
                     }
@@ -76,7 +88,6 @@ namespace IGE {
                 auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
                 for (auto entity : rbsystem) {
                     auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
-                    auto& xfm{ rbsystem.get<Component::Transform>(entity) };
                     mgr.mGroup[audiosource.channelGroup]->setPaused(true);
                 }
             }

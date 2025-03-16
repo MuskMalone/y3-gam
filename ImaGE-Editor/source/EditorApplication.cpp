@@ -17,6 +17,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Input/InputManager.h>
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Graphics/Renderer.h>
+#include  <Commands/CommandManager.h>
 
 #include <ImGui/imgui.h>
 #include <ImGui/backends/imgui_impl_glfw.h>
@@ -24,6 +25,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <csignal>
 
 #include <Events/AssetEvents.h>
+#include <EditorEvents.h>
 #include <Core/Systems/Systems.h>
 #include <EditorCamera.h>
 #include <GUI/GUIVault.h>
@@ -31,7 +33,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace IGE {
   EditorApplication::EditorApplication(Application::ApplicationSpecification const& spec) :
-    Application(spec), mGUIManager{}, mEditorCamera{} {
+    Application(spec), mGUIManager{}, mEditorCamera{}, mHideImGuiThisFrame{ false } {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
@@ -67,9 +69,21 @@ namespace IGE {
     Application::Init();  // perform default Init
 
     // init editor-specific stuff
+    CMD::CommandManager::CreateInstance();
+
     mGUIManager.Init(std::static_pointer_cast<Graphics::EditorCamera>(mEditorCamera));
 
     SUBSCRIBE_CLASS_FUNC(Events::SignalEvent, &EditorApplication::SignalCallback, this);
+    SUBSCRIBE_CLASS_FUNC(Events::ToggleImGui, &EditorApplication::OnImGuiToggle, this);
+    SUBSCRIBE_CLASS_FUNC(Events::QuitApplication, &EditorApplication::OnApplicationQuit, this);
+
+    glfwSetWindowCloseCallback(
+      mWindow.get(),
+      [](GLFWwindow* window) {
+        glfwSetWindowShouldClose(window, GLFW_FALSE); // Prevent closing immediately
+        IGE_EVENTMGR.DispatchImmediateEvent<Events::QuitApplicationConfirmation>();
+      }
+    );
   }
 
   void EditorApplication::Run() {
@@ -80,9 +94,33 @@ namespace IGE {
     static auto& sysManager{ Systems::SystemManager::GetInstance() };
 
     while (!glfwWindowShouldClose(mWindow.get())) {
-        if (inputManager.IsKeyTriggered(IK_K)) {
-            ToggleImGuiEnabled(); //TODO CHANGE TO EVENT SYSTEM
+      // check for ImGui Toggle
+      // have to toggle before ImGuiStartFrame
+      if (GetApplicationSpecification().EnableImGui) {
+        if (mHideImGuiThisFrame) {
+          ToggleImGuiEnabled();
+          mHideImGuiThisFrame = false;
         }
+      }
+      else {
+        if (inputManager.IsKeyTriggered(IK_K)) {
+          ToggleImGuiEnabled();
+        }
+        if (inputManager.IsKeyHeld(IK_LEFT_CONTROL) && inputManager.IsKeyReleased(IK_P)) {
+          if (sceneManager.IsSceneInProgress()) {
+            sceneManager.StopScene();
+            inputManager.SetisCursorLocked(false);
+            eventManager.DispatchImmediateEvent<Events::LockMouseEvent>(false);
+            ToggleImGuiEnabled();
+          }
+          else if (!sceneManager.NoSceneSelected()) {
+            sceneManager.PlayScene();
+            inputManager.SetisCursorLocked(true);
+            eventManager.DispatchImmediateEvent<Events::LockMouseEvent>(true);
+          }
+        }
+      }
+
       frameRateController.Start();
       try {
         if (GetApplicationSpecification().EnableImGui) {
@@ -103,8 +141,12 @@ namespace IGE {
             sysManager.UpdateSystems();
           }
           else {
-            sysManager.PausedUpdate<Systems::PreTransformSystem, IGE::Physics::PhysicsSystem,
-              Systems::PostTransformSystem, IGE::Audio::AudioSystem>();
+            sysManager.PausedUpdate<Systems::PreTransformSystem,
+                                    IGE::Physics::PhysicsSystem,
+                                    Systems::PostTransformSystem,
+                                    IGE::Audio::AudioSystem,
+                                    Systems::AnimationSystem,
+                                    Systems::ParticleSystem>();
             sceneManager.ExecuteMainThreadQueue();
           }
         }
@@ -284,13 +326,23 @@ namespace IGE {
     ImGui::DockSpaceOverViewport();
   }
 
+  EVENT_CALLBACK_DEF(EditorApplication, OnApplicationQuit) {
+    glfwSetWindowShouldClose(mWindow.get(), GLFW_TRUE);
+  }
+
   void EditorApplication::Shutdown()
   {
     // shutdown editor-specific stuff
     mGUIManager.Shutdown();
 
+    CMD::CommandManager::DestroyInstance();
+
     // perform default shutdown
     Application::Shutdown();
+  }
+
+  EVENT_CALLBACK_DEF(EditorApplication, OnImGuiToggle) {
+    ToggleImGuiEnabled();
   }
 
   // ensure proper shutdown in case of crash

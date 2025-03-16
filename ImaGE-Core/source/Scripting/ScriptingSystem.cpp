@@ -40,6 +40,8 @@ void ScriptingSystem::Update()
 
   }
   for (ECS::Entity entity : mEntityManager.GetAllEntitiesWithComponents<Component::Script>()) {
+      //if the entity is valid
+      if (entity.GetEntityID() == std::numeric_limits<unsigned>::max()) continue;
       Component::Script& scriptComp = entity.GetComponent<Component::Script>();
       // std::cout << entity.GetTag() << ":SUPdate\n";
       scriptComp.UpdateAllScripts();

@@ -9,7 +9,7 @@ using System.Data;
 public class HoldupUI : Entity
 {
   //Data on how to display the Image on the screen
-  private bool isBigPaintingActive = false;
+  public bool isBigPaintingActive = false;
   public Vector3 bigPicPos = new Vector3(0, 0.6f, 0);
   public Vector3 bigPicScale = new Vector3(12.980f, 13.8f, 12.980f);
   public Vector3 smallPicPos = new Vector3(10,0, 0);
@@ -18,6 +18,8 @@ public class HoldupUI : Entity
   // AudioManager audioManager;
   private Inventory inventoryScript;
   private TutorialLevelInventory tutorialInventoryScript;
+  private Level2Inventory level2InventoryScript;
+  private Level3Inventory level3InventoryScript;
 
   // Track the associated item to remove
   private IInventoryItem associatedItem;
@@ -39,11 +41,13 @@ public class HoldupUI : Entity
   {
     inventoryScript = FindObjectOfType<Inventory>();
     tutorialInventoryScript = FindObjectOfType<TutorialLevelInventory>();
+    level2InventoryScript = FindObjectOfType<Level2Inventory>();
+    level3InventoryScript = FindObjectOfType<Level3Inventory>();
     pictureAlignscript = FindObjectOfType<PictureAlign>();
-    if (pictureAlignscript != null)
-      Console.WriteLine(pictureAlignscript.GetComponent<Tag>().tag);
-    else
-      Console.WriteLine("No pic align");
+    //if (pictureAlignscript != null)
+    //  Console.WriteLine(pictureAlignscript.GetComponent<Tag>().tag);
+    //else
+    //  Console.WriteLine("No pic align");
 
     LoadDataFromTextAsset();
     if (isBigPaintingActive)
@@ -237,5 +241,15 @@ public class HoldupUI : Entity
     public void TutorialRemoveItself()
     {
         tutorialInventoryScript.RemoveItem(associatedItem);
+    }
+
+    public void Level2RemoveItself()
+    {
+        level2InventoryScript.RemoveItem(associatedItem);
+    }
+
+    public void Level3RemoveItself()
+    {
+        level3InventoryScript.RemoveItem(associatedItem);
     }
 }

@@ -39,6 +39,8 @@ public class Dialogue : Entity
   private float nextCharTime = 0f;      // Tracks the time for the next character
   private const float defaultFontSize = 0.006f;
   private bool specialSequence = true;
+  private string textAudioName = "DefaultDialogueSound";
+  private const string defaultFont = "..\\Assets\\Textures\\Sniglet-Regular.ttf";
 
   public Dialogue() : base()
   {
@@ -70,7 +72,7 @@ public class Dialogue : Entity
     if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && charIndex >= lines[lineIndex].Length)
     {
       // Line has ended, stop sound
-      InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+      InternalCalls.StopSound(mEntityID, textAudioName);
     }
     
     if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && 
@@ -89,7 +91,7 @@ public class Dialogue : Entity
   }
 
   // To be called by other scripts before starting the dialogue
-  public void SetDialogue(string[] newLines, Emotion[] newEmotions, float textScale = defaultFontSize)
+  public void SetDialogue(string[] newLines, Emotion[] newEmotions, float textScale = defaultFontSize, string textAudio = "DefaultDialogueSound", string fontFilePath = defaultFont)
   {
     InternalCalls.SetTextScale(mEntityID, textScale);
     if (newLines.Length != newEmotions.Length)
@@ -98,7 +100,8 @@ public class Dialogue : Entity
         "(Each line should have its own emotion)");
       return;
     }
-
+    InternalCalls.SetTextFont(mEntityID, fontFilePath);
+    textAudioName = textAudio;
     lines = newLines;
     emotions = newEmotions;
     StartDialogue();
@@ -118,7 +121,7 @@ public class Dialogue : Entity
       return;
     }
 
-    InternalCalls.PlaySound(mEntityID, "DefaultDialogueSound");
+    InternalCalls.PlaySound(mEntityID, textAudioName);
     playerMove.FreezePlayer();
     lineIndex = 0;
     InternalCalls.SetText(mEntityID, string.Empty);
@@ -132,7 +135,7 @@ public class Dialogue : Entity
 
   private void EndDialogue()
   {
-    InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+    InternalCalls.StopSound(mEntityID, textAudioName);
     playerMove.UnfreezePlayer();
     DialogueBox.SetActive(false);
     SetActive(false);
@@ -148,7 +151,7 @@ public class Dialogue : Entity
 
   private void SkipTyping()
   {
-    InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+    InternalCalls.StopSound(mEntityID, textAudioName);
     InternalCalls.SetText(mEntityID, lines[lineIndex]);
     charIndex = lines[lineIndex].Length;
   }
@@ -156,7 +159,7 @@ public class Dialogue : Entity
   private void NextLine()
   {
     DeactivateAllEmotions();
-    InternalCalls.PlaySound(mEntityID, "DefaultDialogueSound");
+    InternalCalls.PlaySound(mEntityID, textAudioName);
 
     if (lineIndex < lines.Length - 1)
     {

@@ -10,24 +10,27 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <pch.h>
 #include "Inspector.h"
-#include <typeindex>
 #include <imgui/imgui.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
+#include <functional>
+#include <typeindex>
+#include <malloc.h>
+
+#include <Core/LayerManager/LayerManager.h>
+#include <Commands/CommandManager.h>
+#include <Events/EventManager.h>
+#include <Physics/PhysicsSystem.h>
+#include <Scenes/SceneManager.h>
+
 #include "Color.h"
 #include "GUI/Helpers/ImGuiHelpers.h"
 #include <GUI/Helpers/AssetPayload.h>
+#include <Physics/PhysicsHelpers.h>
 #include <Core/Systems/TransformSystem/TransformHelpers.h>
-#include "Physics/PhysicsSystem.h"
-#include <functional>
 #include <Reflection/ComponentTypes.h>
-#include <Events/EventManager.h>
 #include <Graphics/Mesh/MeshFactory.h>
 #include <Graphics/Mesh/Mesh.h>
 #include "Asset/IGEAssets.h"
-#include <Core/LayerManager/LayerManager.h>
-#include <Physics/PhysicsHelpers.h>
-#include <malloc.h>
-#include <Commands/CommandManager.h>
 
 #define ICON_PADDING "   "
 
@@ -75,6 +78,7 @@ namespace GUI {
     mComponentIcons{
       { typeid(Component::AudioListener), ICON_FA_EAR_LISTEN ICON_PADDING},
       { typeid(Component::AudioSource), ICON_FA_VOLUME_HIGH ICON_PADDING},
+      { typeid(Component::Bloom), ICON_FA_SUN ICON_PADDING },
       { typeid(Component::Tag), ICON_FA_TAG ICON_PADDING },
       { typeid(Component::Transform), ICON_FA_ROTATE ICON_PADDING },
       { typeid(Component::BoxCollider), ICON_FA_BOMB ICON_PADDING },
@@ -93,7 +97,8 @@ namespace GUI {
       { typeid(Component::Animation), ICON_FA_PERSON_RUNNING ICON_PADDING },
       { typeid(Component::Camera), ICON_FA_CAMERA ICON_PADDING },
       { typeid(Component::Skybox), ICON_FA_EARTH_ASIA ICON_PADDING },
-      { typeid(Component::Interactive), ICON_FA_COMPUTER_MOUSE ICON_PADDING }
+      { typeid(Component::Interactive), ICON_FA_COMPUTER_MOUSE ICON_PADDING },
+      { typeid(Component::EmitterSystem), ICON_FA_STAR ICON_PADDING }
     },
     mObjFactory{ Reflection::ObjectFactory::GetInstance() },
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -125,12 +130,14 @@ namespace GUI {
     SaveLastEditedFile();
   }
 
-  void Inspector::RunDragDropInspector(ECS::Entity entity) {
-    if (!entity) { return; }
+  bool Inspector::RunDragDropInspector(ECS::Entity entity) {
+    if (!entity) { return false; }
 
     if (ImGuiHelpers::BeginDrapDropTargetWindow(AssetPayload::sAssetDragDropPayload)) {
-      ImGuiHelpers::AssetDragDropBehavior(entity);
+      return ImGuiHelpers::AssetDragDropBehavior(entity);
     }
+
+    return false;
   }
 
   void Inspector::Run() {
@@ -211,11 +218,16 @@ namespace GUI {
 #pragma region ComponentWindows
       if (currentEntity.HasComponent<Component::Transform>()) {
         componentOverriden = prefabOverride && prefabOverride->IsComponentModified(rttr::type::get<Component::Transform>());
-        Component::Transform& trans{ currentEntity.GetComponent<Component::Transform>() };
+        Component::Transform& trans{ currentEntity.GetComponent<Component::Transform>() },
+          oldTrans{ trans };  // note: this is a cpy; reference only applies to first elem
         glm::vec3 const oldPos{ trans.position };
+
         if (TransformComponentWindow(currentEntity, componentOverriden)) {
           trans.modified = true;
           SetIsComponentEdited(true);
+
+          // undo
+          IGE_CMDMGR.AddCommand("Transform", currentEntity, std::move(oldTrans));
 
           if (prefabOverride) {
             if (!componentOverriden && prefabOverride->subDataId == Prefabs::PrefabSubData::BasePrefabId) {
@@ -460,9 +472,29 @@ namespace GUI {
               }
           }
       }
-// ComponentWindows endregion
-#pragma endregion
+      if (currentEntity.HasComponent<Component::Bloom>()) {
+          rttr::type const compType{ rttr::type::get<Component::Bloom>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(compType);
 
+          if (BloomComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentOverride(compType);
+              }
+          }
+      }
+
+      if (currentEntity.HasComponent<Component::EmitterSystem>()) {
+          rttr::type const compType{ rttr::type::get<Component::EmitterSystem>() };
+          componentOverriden = prefabOverride && prefabOverride->IsComponentModified(compType);
+
+          if (EmitterSystemComponentWindow(currentEntity, componentOverriden)) {
+              SetIsComponentEdited(true);
+              if (prefabOverride) {
+                  prefabOverride->AddComponentOverride(compType);
+              }
+          }
+      }
       if (prefabOverride) {
         for (rttr::type const& type : prefabOverride->removedComponents) {
           DisplayRemovedComponent(type);
@@ -472,13 +504,15 @@ namespace GUI {
     ImGui::PopFont();
     style.ItemSpacing.x = oldItemSpacingX;
     style.CellPadding.x = oldCellPaddingX;
-
-    RunDragDropInspector(currentEntity);
+    
+    if (RunDragDropInspector(currentEntity) && !mFirstEdit) {
+      mFirstEdit = true;
+    }
 
     ImGui::End();
 
     // if edit is the first of this session, dispatch a SceneModifiedEvent
-    if (!mFirstEdit && mIsComponentEdited) {
+    if (!mFirstEdit && mIsComponentEdited && !IGE_SCENEMGR.IsSceneInProgress()) {
       QUEUE_EVENT(Events::SceneModifiedEvent);
       mFirstEdit = true;
     }
@@ -488,6 +522,8 @@ namespace GUI {
       ImGuiHelpers::WrapMousePos(1 << ImGuiAxis_X);
     }
   }
+  // ComponentWindows endregion
+#pragma endregion
 
   EVENT_CALLBACK_DEF(Inspector, OnSceneSave) {
       mIsComponentEdited = mFirstEdit = false;
@@ -529,7 +565,7 @@ namespace GUI {
         ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
         IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-        std::map<IGE::Assets::GUID, std::string> guidToFileName{ { {}, "None" } };
+        //std::map<IGE::Assets::GUID, std::string> guidToFileName{ { {}, "None" } };
         
         NextRowTable("Animations");
         if (ImGui::TreeNodeEx("Drag here to add to list", ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
@@ -537,43 +573,40 @@ namespace GUI {
             float const col2{ 40.f }, col1{ inputWidth - col2 };
             ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, col1);
             ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, col2);
-            
-            IGE::Assets::GUID toRemove{};
-            for (IGE::Assets::GUID guid : animation.animations) {
-              try {
-                std::string fileName{ am.GUIDToPath(guid) };
-                fileName = fileName.substr(fileName.find_last_of("\\/") + 1);
 
-                ImGui::TableNextRow();
-                ImGui::TableSetColumnIndex(0);
-                ImGui::AlignTextToFramePadding();
-                if (ImGui::Selectable(fileName.c_str())) {
+            std::string toRemove{};
+            for (auto const& [name, guid] : animation.animations) {
+              std::string buffer{ name };
 
-                }
-                ImGui::TableSetColumnIndex(1);
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.65f, 0.f, 0.f, 1.f));
-                ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 20.f);
-                if (ImGui::Button(ICON_FA_MINUS)) {
-                  toRemove = guid;
-                }
+              ImGui::TableNextRow();
+              ImGui::TableSetColumnIndex(0);
+              ImGui::AlignTextToFramePadding();
+              ImGui::SetNextItemWidth(col1);
+              ImGui::InputText(("##" + buffer).c_str(), &buffer);
+              if (ImGui::IsItemDeactivatedAfterEdit()) {
+                animation.RenameAnimation(name, buffer);
+                break;
+              }
+
+              ImGui::TableSetColumnIndex(1);
+              ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.65f, 0.f, 0.f, 1.f));
+              ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 20.f);
+              if (ImGui::Button(ICON_FA_MINUS)) {
+                toRemove = name;
                 ImGui::PopStyleVar();
                 ImGui::PopStyleColor();
-
-                guidToFileName.emplace(guid, std::move(fileName));
+                break;
               }
-              catch (Debug::ExceptionBase&) {
-                IGE_DBGLOGGER.LogError("Unable to get path of GUID: " + std::to_string(static_cast<uint64_t>(guid)));
-                toRemove = guid;  // remove guid from the set if exception thrown
-                continue;
-              }
+              ImGui::PopStyleVar();
+              ImGui::PopStyleColor();
             }
 
             // remove if necessary
-            if (toRemove) {
-              animation.animations.erase(toRemove);
-              if (animation.currentAnimation == toRemove) {
+            if (!toRemove.empty()) {
+              if (animation.currentAnimation.second == animation.animations[toRemove]) {
                 animation.currentAnimation = {};
               }
+              animation.animations.erase(toRemove);
               modified = true;
             }
 
@@ -582,14 +615,23 @@ namespace GUI {
         }
 
         NextRowTable("Current Animation");
-        std::string const& currAnim{ animation.currentAnimation ? guidToFileName[animation.currentAnimation] : "None"};
-        if (ImGui::BeginCombo("##CurrAnim", currAnim.c_str())) {
-          for (auto const&[guid, file] : guidToFileName) {
-            if (!ImGui::Selectable(file.c_str())) { continue; }
+        Component::Animation::AnimationEntry const& currAnim{ animation.GetCurrentAnimation() };
+        if (ImGui::BeginCombo("##CurrAnim", currAnim.first.empty() ? "None" : currAnim.first.c_str())) {
+          if (ImGui::Selectable("None")) {
+            animation.currentAnimation = {};
+            modified = true;
+          }
+          for (auto const&[name, guid] : animation.animations) {
+            if (!ImGui::Selectable(name.c_str())) { continue; }
 
             // have to do this to handle the "None" option
-            if (guid != currAnim) {
-              animation.currentAnimation = (file == "None" ? IGE::Assets::GUID() : guid);
+            if (guid != currAnim.second) {
+              if (name == "None") {
+                animation.currentAnimation = {};
+              }
+              else {
+                animation.SetCurrentAnimation(name, guid);
+              }
               modified = true;
             }
             break;
@@ -665,12 +707,18 @@ namespace GUI {
                   break;
               }
 
+              if (ImGui::Button(("Play##" + uniqueID).c_str())) {
+                  audioSource.PlaySound(currentName);
+              }
+              ImGui::SameLine();
+              if (ImGui::Button(("Stop##" + uniqueID).c_str())) {
+                  audioSource.StopSound(currentName);
+              }
               ImGui::SameLine();
               if (ImGui::Button(("Delete##" + uniqueID).c_str())) {
                   audioSource.RemoveSound(currentName);
                   break;
               }
-
               // Begin a Tree Node for sound properties with a unique ID
               if (ImGui::TreeNode(("Sound Properties##" + uniqueID).c_str())) {
                   // Table for 3D position
@@ -750,7 +798,36 @@ namespace GUI {
                   }
 
                   ImGui::EndTable();
+                  // Table for Post Processing settings
+                  if (ImGui::BeginTable(("PostProcessingTable##" + uniqueID).c_str(), 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+                      ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+                      ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
 
+                      NextRowTable("Enable Post Processing");
+                      if (ImGui::Checkbox(("##EnablePostProcessing" + uniqueID).c_str(), &audioInstance.playSettings.enablePostProcessing)) {
+                          modified = true;
+                      }
+
+                      // Only show additional post-processing controls if enabled
+                      if (audioInstance.playSettings.enablePostProcessing) {
+                          // Combo for selecting the processing type
+                          static const char* processingTypes[] = { "Reverb", "Echo", "Distortion", "Chorus" };
+                          int currentProcessing = static_cast<int>(audioInstance.playSettings.processingType);
+                          NextRowTable("Processing Type");
+                          if (ImGui::Combo(("##ProcessingType" + uniqueID).c_str(), &currentProcessing, processingTypes, IM_ARRAYSIZE(processingTypes))) {
+                              audioInstance.playSettings.processingType = static_cast<IGE::Audio::SoundInvokeSetting::PostProcessingType>(currentProcessing);
+                              modified = true;
+                          }
+
+                          // Drag float for the post-processing parameter
+                          NextRowTable("Parameter");
+                          if (ImGui::DragFloat(("##PostProcessingParameter" + uniqueID).c_str(), &audioInstance.playSettings.postProcessingParameter, 0.1f, 0.0f, 10000.0f)) {
+                              modified = true;
+                          }
+                      }
+
+                      ImGui::EndTable();
+                  }
                   ImGui::TreePop();
               }
           }
@@ -870,28 +947,71 @@ namespace GUI {
   }
 
   bool Inspector::CanvasComponentWindow(ECS::Entity entity, bool highlight) {
-    bool const isOpen{ WindowBegin<Component::Canvas>("Canvas", highlight) };
-    bool modified{ false };
+      bool const isOpen{ WindowBegin<Component::Canvas>("Canvas", highlight) };
+      bool modified{ false };
 
-    //if (isOpen) {
-    //    Component::Canvas& canvas = entity.GetComponent<Component::Canvas>();
-    //    float const inputWidth{ CalcInputWidth(60.f) };
-    //    // Start a table for organizing the color and textureAsset inputs
-    //    ImGui::BeginTable("ImageTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+      if (isOpen) {
+          Component::Canvas& canvas = entity.GetComponent<Component::Canvas>();
+          float const inputWidth{ CalcInputWidth(60.f) };
 
-    //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
-    //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+          // Start a table for organizing UI properties
+          ImGui::BeginTable("CanvasTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+          ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
-    //    NextRowTable("Toggle Visiblity");
-    //    if (ImGui::Checkbox("##IsActive", &canvas.isActive)) {
-    //        modified = true;
-    //    }
-    //    ImGui::EndTable();
-    //}
+          // Toggle UI visibility
+          NextRowTable("Toggle Visibility");
+          if (ImGui::Checkbox("##IsActive", &canvas.isVisible)) {
+              modified = true;
+          }
 
-    WindowEnd(isOpen);
-    return modified;
+          // Toggle transition effect
+          NextRowTable("Enable Transition");
+          if (ImGui::Checkbox("##EnableTransition", &canvas.hasTransition)) {
+              modified = true;
+          }
+
+          // Transition type selection
+          NextRowTable("Transition Type");
+          static const char* transitionTypes[] = { "Fade", "TV Switch", "Wipe" };
+          int transitionTypeIndex = static_cast<int>(canvas.transitionType);
+          if (ImGui::Combo("##TransitionType", &transitionTypeIndex, transitionTypes, IM_ARRAYSIZE(transitionTypes))) {
+              canvas.transitionType = static_cast<Component::Canvas::TransitionType>(transitionTypeIndex);
+              modified = true;
+          }
+
+          // Transition direction (Fade in or Fade out)
+          NextRowTable("Fade Out?");
+          if (ImGui::Checkbox("##FadeOut", &canvas.fadingOut)) {
+              modified = true;
+          }
+
+          // Transition speed slider
+          NextRowTable("Fade Speed");
+          if (ImGui::SliderFloat("##TransitionSpeed", &canvas.transitionSpeed, 0.1f, 3.0f)) {
+              modified = true;
+          }
+
+          // Transition progress slider
+          NextRowTable("Transition Progress");
+          if (ImGui::SliderFloat("##TransitionProgress", &canvas.transitionProgress, 0.0f, 1.0f)) {
+              modified = true;
+          }
+
+          // Fade color picker
+          NextRowTable("Fade Color");
+          if (ImGui::ColorEdit4("##FadeColor", &canvas.fadeColor[0])) {
+              modified = true;
+          }
+
+          ImGui::EndTable();
+      }
+
+      WindowEnd(isOpen);
+      return modified;
   }
+
+
 
   bool Inspector::CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight)
   {
@@ -1342,6 +1462,7 @@ namespace GUI {
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.f));
         if (ImGui::Button("X", ImVec2(22.f, 30.f))) {
           material.SetGUID({});
+          modified = true;
         }
         if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove"); }
         ImGui::PopStyleColor();
@@ -1371,7 +1492,7 @@ namespace GUI {
     if (isOpen) {
       Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
       static const std::vector<const char*> meshNames{
-        "Cube", "Plane", "Sphere", "Capsule"
+        "Cube", "Plane", "HalfPlane", "Sphere", "Capsule"
       };
 
       float const inputWidth{ CalcInputWidth(60.f) };
@@ -1382,14 +1503,25 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
       NextRowTable("Mesh Type");
-      if (ImGui::BeginCombo("##MeshSelection", mesh.meshName.c_str())) {
+      std::string meshName{ "Unable to retrieve mesh name" };
+      try {
+        meshName = mesh.isCustomMesh ?
+          std::filesystem::path(IGE_ASSETMGR.GUIDToPath(mesh.meshSource)).stem().string()
+          : mesh.meshName;
+      }
+      catch (Debug::ExceptionBase&) {
+        IGE_DBGLOGGER.LogError(std::string("Unable to get filename of Mesh: ") + mesh.meshName);
+        mesh.meshSource = mesh.meshName = {};
+      }
+
+      if (ImGui::BeginCombo("##MeshSelection", meshName.c_str())) {
         for (unsigned i{}; i < meshNames.size(); ++i) {
           const char* selected{ meshNames[i] };
           if (ImGui::Selectable(selected)) {
             try {
               mesh.meshSource = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(selected);
 
-              if (selected != mesh.meshName) {
+              if (selected != meshName) {
                 modified = true;
                 mesh.isCustomMesh = false;
                 mesh.meshName = selected;
@@ -1557,19 +1689,19 @@ namespace GUI {
       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
 
       NextRowTable("Linear Damping");
-      if (ImGui::DragFloat("##RigidBodyLinearDamping", &rigidBody.linearDamping, 0.01f, 0.0f, 1.0f)) {
+      if (ImGui::DragFloat("##RigidBodyLinearDamping", &rigidBody.linearDamping, 0.01f, 0.0f, 1024.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LINEAR_DAMPING);
         modified = true;
       }
 
       NextRowTable("Static Friction");
-      if (ImGui::DragFloat("##RigidBodyStaticFriction", &rigidBody.staticFriction, 0.01f, 0.0f, 1.0f)) {
+      if (ImGui::DragFloat("##RigidBodyStaticFriction", &rigidBody.staticFriction, 0.01f, 0.0f, 1024.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::STATIC_FRICTION);
         modified = true;
       }
 
       NextRowTable("Dynamic Friction");
-      if (ImGui::DragFloat("##RigidBodyDynamicFriction", &rigidBody.dynamicFriction, 0.01f, 0.0f, 1.0f)) {
+      if (ImGui::DragFloat("##RigidBodyDynamicFriction", &rigidBody.dynamicFriction, 0.01f, 0.0f, 1024.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::STATIC_FRICTION);
         modified = true;
       }
@@ -1757,7 +1889,21 @@ namespace GUI {
     WindowEnd(isOpen);
     return modified;
   }
+  bool Inspector::BloomComponentWindow(ECS::Entity entity, bool highlight)
+  {
+      bool const isOpen{ WindowBegin<Component::Bloom>("Bloom", highlight) };
+      bool modified{ false };
 
+      if (isOpen) {
+          auto& bloom{ entity.GetComponent<Component::Bloom>() };
+          ImGui::DragFloat("Threshold", &bloom.threshold, 0.01f, 0.f, 1024.f);
+          ImGui::DragFloat("Intensity", &bloom.intensity, 0.01f, 0.f, 1024.f);
+          ImGui::DragFloat("Range", &bloom.range, 0.01f, 1.f, 1024.f);
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
   bool Inspector::SphereColliderComponentWindow(ECS::Entity entity, bool highlight)
   {
       bool const isOpen{ WindowBegin<Component::SphereCollider>("Sphere Collider", highlight) };
@@ -2001,7 +2147,141 @@ namespace GUI {
     WindowEnd(isOpen);
     return modified;
   }
+  bool Inspector::EmitterSystemComponentWindow(ECS::Entity entity, bool highlight) {
+      bool const isOpen{ WindowBegin<Component::EmitterSystem>("Emitter System", highlight) };
+      bool modified{ false };
 
+      if (isOpen) {
+          Component::EmitterSystem& emitterSystem = entity.GetComponent<Component::EmitterSystem>();
+          auto& emitters = emitterSystem.emitters;
+
+          float const inputWidth{ CalcInputWidth(50.f) / 3.f };
+
+          // Iterate over each emitter
+          for (size_t i = 0; i < emitters.size(); ++i) {
+              auto& emitter = emitters[i];
+
+              // Display emitter header with index
+              std::string emitterLabel = "Emitter #" + std::to_string(i);
+              bool isOpenEmitter = ImGui::CollapsingHeader(emitterLabel.c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+
+              if (isOpenEmitter) {
+                  // Dropdown for vCount selection
+                  const char* vCountTitles[] = {
+                      "Point",      // 1 vertex
+                      "Line",       // 2 vertices
+                      "Plane",      // 4 vertices
+                      "Irregular"   // 8 vertices
+                  };
+
+                  // Temporary index for ImGui Combo based on emitter.vCount
+                  // Map 1 -> 0, 2 -> 1, 4 -> 2, 8 -> 3
+                  int vCountIndex = 0;
+                  switch (emitter.vCount) {
+                  case 1: vCountIndex = 0; break;
+                  case 2: vCountIndex = 1; break;
+                  case 4: vCountIndex = 2; break;
+                  case 8: vCountIndex = 3; break;
+                  default: vCountIndex = 0; break; // fallback to point
+                  }
+
+                  if (ImGui::Combo(("Vertex Count##" + std::to_string(i)).c_str(), &vCountIndex, vCountTitles, IM_ARRAYSIZE(vCountTitles))) {
+                      // Map selected index back to vCount value
+                      switch (vCountIndex) {
+                      case 0: emitter.vCount = 1; break;
+                      case 1: emitter.vCount = 2; break;
+                      case 2: emitter.vCount = 4; break;
+                      case 3: emitter.vCount = 8; break;
+                      default: emitter.vCount = 1; break;
+                      }
+                      modified = true;
+                  }
+                  // Show vertices based on vCount
+                  for (int j = 0; j < emitter.vCount; ++j) {
+                      if (ImGui::DragFloat3(("Vertex " + std::to_string(j + 1) + "##" + std::to_string(i) + "_" + std::to_string(j)).c_str(), &emitter.vertices[j][0], 0.1f, -FLT_MAX, FLT_MAX)) {
+                          modified = true;
+                      }
+                  }
+
+                  // Edit color
+                  if (ImGui::ColorEdit4(("Color##" + std::to_string(i)).c_str(), &emitter.col[0])) {
+                      modified = true;
+                  }
+
+                  // Edit velocity
+                  if (ImGui::DragFloat3(("Velocity##" + std::to_string(i)).c_str(), &emitter.vel[0], 0.1f, -FLT_MAX, FLT_MAX)) {
+                      modified = true;
+                  }
+
+                  // Edit lifetime
+                  if (ImGui::DragFloat(("Spread Angle##" + std::to_string(i)).c_str(), &emitter.spreadAngle, 0.0f, 0.1f, 180.f)) {
+                      modified = true;
+                  }
+
+                  // Edit gravity
+                  if (ImGui::DragFloat3(("Gravity##" + std::to_string(i)).c_str(), &emitter.gravity[0], 0.01f, -99999.f, 99999.f)) {
+                      modified = true;
+                  }
+
+                  // Edit size
+                  if (ImGui::DragFloat2(("Size##" + std::to_string(i)).c_str(), &emitter.size[0], 0.02f, 0.001f, FLT_MAX)) {
+                      modified = true;
+                  }
+
+                  //// Edit angular velocity
+                  //if (ImGui::DragFloat(("Angular Velocity##" + std::to_string(i)).c_str(), &emitter.angvel, 0.1f, -FLT_MAX, FLT_MAX)) {
+                  //    modified = true;
+                  //}
+
+                  // Edit lifetime
+                  if (ImGui::DragFloat(("Lifetime##" + std::to_string(i)).c_str(), &emitter.lifetime, 0.1f, 0.1f, 100.f)) {
+                      modified = true;
+                  }
+
+                  // Edit speed
+                  if (ImGui::DragFloat(("Speed##" + std::to_string(i)).c_str(), &emitter.speed, 0.1f, 0.1f, 100.f)) {
+                      modified = true;
+                  }
+
+                  // Edit frequency
+                  if (ImGui::DragFloat(("Frequency##" + std::to_string(i)).c_str(), &emitter.frequency, 0.01f, 0.01f, 10.f)) {
+                      modified = true;
+                  }
+
+                  // Edit particles per frame
+                  if (ImGui::DragInt(("Particles Per Frame##" + std::to_string(i)).c_str(), &emitter.particlesPerFrame, 1, 1, 1000)) {
+                      modified = true;
+                  }
+
+                  // Dropdown for preset
+                  const char* presetTitles[] = {
+                      "Alpha Over Lifetime",
+                      "Size Over Lifetime",
+                      "Alpha and Size Decrease Over Lifetime",
+                      "Alpha and Size Increase Over Lifetime"
+                  };
+                  if (ImGui::Combo(("Preset##" + std::to_string(i)).c_str(), &emitter.preset, presetTitles, IM_ARRAYSIZE(presetTitles))) {
+                      modified = true;
+                  }
+
+                  // Delete button for this emitter
+                  if (ImGui::Button(("Delete Emitter##" + std::to_string(i)).c_str())) {
+                      emitterSystem.RemoveEmitter(i);
+                      modified = true;
+                  }
+              }
+          }
+
+          // Add emitter button
+          if (ImGui::Button("Add Emitter")) {
+              emitterSystem.AddEmitter();
+              modified = true;
+          }
+      }
+
+      WindowEnd(isOpen);
+      return modified;
+  }
   bool Inspector::TextComponentWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Text>("Text", highlight) };
     bool modified{ false };
@@ -2135,7 +2415,6 @@ namespace GUI {
 
     if (isOpen) {
       Component::Transform& transform = entity.GetComponent<Component::Transform>();
-      Component::Transform oldTrans = transform;
 
       float const inputWidth{ CalcInputWidth(50.f) / 3.f };
 
@@ -2189,10 +2468,6 @@ namespace GUI {
       ImGui::EndDisabled();
 
       EndVec3Table();
-
-
-      if (modified)
-        CMD::CommandManager::GetInstance().AddCommand("Transform", entity, oldTrans);
     }
 
     WindowEnd(isOpen);
@@ -2280,6 +2555,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Text>("Text");
         DrawAddComponentButton<Component::Transform>("Transform");
         DrawAddComponentButton<Component::Light>("Light");
+        DrawAddComponentButton<Component::Bloom>("Bloom");
         DrawAddComponentButton<Component::Canvas>("Canvas");
         DrawAddComponentButton<Component::Image>("Image");
         DrawAddComponentButton<Component::Sprite2D>("Sprite2D");
@@ -2287,6 +2563,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Camera>("Camera");
         DrawAddComponentButton<Component::Skybox>("Skybox");
         DrawAddComponentButton<Component::Interactive>("Interactive");
+        DrawAddComponentButton<Component::EmitterSystem>("Emitter System");
         ImGui::EndTable();
       }
 

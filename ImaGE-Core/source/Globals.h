@@ -40,3 +40,7 @@ constexpr char gMontserratLightFontPath[] = "..\\Assets\\.Editor\\.Fonts\\Montse
 constexpr char gMontserratRegularFontPath[] = "..\\Assets\\.Editor\\.Fonts\\Montserrat-Regular.ttf";
 constexpr char gIconsFontPath[] = "..\\Assets\\.Editor\\.Fonts\\fa-solid-900.ttf";
 constexpr int gEditorDefaultTheme = 1;
+
+inline bool gIsGamePaused{ false };
+
+#define RINIT glDisable(GL_FRAMEBUFFER_SRGB);

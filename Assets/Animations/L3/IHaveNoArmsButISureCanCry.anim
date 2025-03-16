@@ -1,0 +1,81 @@
+{
+    "rootKeyframe": {
+        "startPos": {
+            "x": -0.07083368301391602,
+            "y": 0.42347240447998049,
+            "z": 0.019557476043701173
+        },
+        "startRot": {
+            "x": -1.6669999361038209,
+            "y": -1.1339181327230108e-7,
+            "z": -3.197700262069702
+        },
+        "startScale": {
+            "x": 0.0010000000474974514,
+            "y": 0.0010000000474974514,
+            "z": 0.0010000000474974514
+        },
+        "nextNodes": [
+            1
+        ]
+    },
+    "keyframes": [
+        {
+            "nodeId": 1,
+            "endValue": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0000001192092896
+            },
+            "type": "SCALE",
+            "interpolationType": "EASE_OUT",
+            "startTime": 0.0,
+            "duration": 6.0,
+            "nextNodes": [
+                2,
+                3
+            ]
+        },
+        {
+            "nodeId": 2,
+            "endValue": {
+                "x": -1.3669999837875367,
+                "y": -1.1339181327230108e-7,
+                "z": -0.1979999989271164
+            },
+            "type": "ROTATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 6.0,
+            "duration": 0.10000000149011612,
+            "nextNodes": [
+                4
+            ]
+        },
+        {
+            "nodeId": 4,
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "interpolationType": "LINEAR",
+            "startTime": 6.099999904632568,
+            "duration": 0.30000001192092898,
+            "nextNodes": []
+        },
+        {
+            "nodeId": 3,
+            "endValue": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0000001192092896
+            },
+            "type": "SCALE",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 6.0,
+            "duration": 0.10000000149011612,
+            "nextNodes": []
+        }
+    ]
+}

@@ -131,8 +131,17 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       .property("sounds", &AudioSource::sounds);
   REGISTER_COMPONENT(AudioListener, "AudioListener");
 
+  REGISTER_COMPONENT(Bloom, "Bloom")
+      .property("threshold", &Bloom::threshold)
+      .property("intensity", &Bloom::intensity)
+      .property("range", &Bloom::range);
   REGISTER_COMPONENT(Canvas, "Canvas")
-    .property("isVisible", &Component::Canvas::isVisible);
+      .property("isVisible", &Component::Canvas::isVisible)
+      .property("hasTransition", &Component::Canvas::hasTransition)
+      .property("transitionProgress", &Component::Canvas::transitionProgress)
+      .property("transitionSpeed", &Component::Canvas::transitionSpeed)
+      .property("fadeColor", &Component::Canvas::fadeColor)
+      .property("fadingOut", &Component::Canvas::fadingOut);
 
   REGISTER_COMPONENT(Image, "Image")
     .property("color", &Image::color)
@@ -166,6 +175,9 @@ static void rttr_auto_register_reflection_function2_(); namespace {
 
   REGISTER_COMPONENT(Interactive, "Interactive")
       .property("isHovered", &Interactive::isHovered);
+
+  REGISTER_COMPONENT(EmitterSystem, "EmitterSystem")
+      .property("emitters", &EmitterSystem::emitters);
 
   // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")

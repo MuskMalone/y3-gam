@@ -40,10 +40,12 @@ public class InventoryTutorial : Entity
     private bool isFadingIn = false;
     private bool isFadingOut = false;
     private bool isVisible = false;
-    private bool finish = false;
+    public bool finish = false;
 
     private float timer = 0f;
-    private float duration = 4f;
+    public float duration = 4f;
+
+    public bool wasBigPaintingActive = false;
 
     void Start()
     {
@@ -128,9 +130,11 @@ public class InventoryTutorial : Entity
                 currentAlpha = 0f;
                 isFadingOut = false;
                 finish = true;
+
+                // Capture if big painting was still active when tutorial ends
+                wasBigPaintingActive = FindObjectOfType<HoldupUI>().isBigPaintingActive;
             }
         }
-
     }
 }
 

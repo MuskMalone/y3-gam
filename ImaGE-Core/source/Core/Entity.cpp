@@ -23,7 +23,7 @@ namespace ECS
     if (!this->HasComponent<Component::Tag>()) {
       /*Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity does not have Tag Component!");
       return std::string();*/
-      throw Debug::Exception<Entity>(Debug::LVL_CRITICAL, Msg("Entity does not have Tag Component!"));
+      throw Debug::Exception<Entity>(Debug::LVL_CRITICAL, Msg("Entity " + std::to_string(GetEntityID()) + " does not have Tag Component!"));
     }
 
     Component::Tag const& tagComponent{ this->GetComponent<Component::Tag>() };
@@ -32,7 +32,7 @@ namespace ECS
 
   void Entity::SetTag(std::string const& tag) {
     if (!this->HasComponent<Component::Tag>()) {
-      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity does not have Tag Component!");
+      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity " + std::to_string(GetEntityID()) + " does not have Tag Component!");
       return;
     }
 
@@ -42,7 +42,7 @@ namespace ECS
 
   bool Entity::IsActive() const {
     if (!this->HasComponent<Component::Tag>()) {
-      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity does not have Tag Component!");
+      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity " + std::to_string(GetEntityID()) + " does not have Tag Component!");
       return false;
     }
 
@@ -51,7 +51,7 @@ namespace ECS
 
   void Entity::SetIsActive(bool isActiveFlag) {
     if (!this->HasComponent<Component::Tag>()) {
-      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity does not have Tag Component!");
+      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity " + std::to_string(GetEntityID()) + " does not have Tag Component!");
       return;
     }
 
@@ -60,7 +60,7 @@ namespace ECS
 
   void Entity::SetLayer(std::string layerName) {
     if (!this->HasComponent<Component::Layer>()) {
-      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity does not have Layer Component!");
+      Debug::DebugLogger::GetInstance().LogWarning("[Entity] Entity " + std::to_string(GetEntityID()) + " does not have Layer Component!");
       return;
     }
 

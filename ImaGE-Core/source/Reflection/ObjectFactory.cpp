@@ -47,6 +47,7 @@ namespace {
   std::unordered_map<rttr::type, AddComponentFunc> const sAddComponentFuncs{
     { RTTR_TYPE(AudioListener), AddAudioListener },
     { RTTR_TYPE(AudioSource), AddAudioSource },
+    { RTTR_TYPE(Bloom), AddBloom },
     { RTTR_TYPE(Tag), AddTag },
     { RTTR_TYPE(Transform), AddTransform },
     { RTTR_TYPE(Layer), AddLayer },
@@ -65,11 +66,13 @@ namespace {
     { RTTR_TYPE(Animation), AddAnimation },
     { RTTR_TYPE(Camera), AddCamera },
     { RTTR_TYPE(Skybox), AddSkybox },
-    { RTTR_TYPE(Interactive), AddInteractive }
+    { RTTR_TYPE(Interactive), AddInteractive },
+    { RTTR_TYPE(EmitterSystem), AddEmitterSystem }
   };
   std::unordered_map<rttr::type, GetComponentFunc> const sGetComponentFuncs{
     { RTTR_TYPE(AudioListener), GetComponentVariant<AudioListener> },
     { RTTR_TYPE(AudioSource), GetComponentVariant<AudioSource> },
+    { RTTR_TYPE(Bloom), GetComponentVariant<Bloom> },
     { RTTR_TYPE(Tag), GetComponentVariant<Tag> },
     { RTTR_TYPE(Transform), GetComponentVariant<Transform> },
     { RTTR_TYPE(Layer), GetComponentVariant<Layer> },
@@ -88,11 +91,13 @@ namespace {
     { RTTR_TYPE(Animation), GetComponentVariant<Animation> },
     { RTTR_TYPE(Camera), GetComponentVariant<Camera> },
     { RTTR_TYPE(Skybox), GetComponentVariant<Skybox> },
-    { RTTR_TYPE(Interactive), GetComponentVariant<Interactive> }
+    { RTTR_TYPE(Interactive), GetComponentVariant<Interactive> },
+    { RTTR_TYPE(EmitterSystem), GetComponentVariant<EmitterSystem> }
   };
   std::unordered_map<rttr::type, RemoveComponentFunc> const sRemoveComponentFuncs{
     { RTTR_TYPE(AudioListener), RemoveComponent<AudioListener> },
     { RTTR_TYPE(AudioSource), RemoveComponent<AudioSource> },
+    { RTTR_TYPE(Bloom), RemoveComponent<Bloom> },
     { RTTR_TYPE(Tag), RemoveComponent<Tag> },
     { RTTR_TYPE(Transform), RemoveComponent<Transform> },
     { RTTR_TYPE(Layer), RemoveComponent<Layer> },
@@ -111,7 +116,8 @@ namespace {
     { RTTR_TYPE(Animation), RemoveComponent<Animation> },
     { RTTR_TYPE(Camera), RemoveComponent<Camera> },
     { RTTR_TYPE(Skybox), RemoveComponent<Skybox> },
-    { RTTR_TYPE(Interactive), RemoveComponent<Interactive> }
+    { RTTR_TYPE(Interactive), RemoveComponent<Interactive> },
+    { RTTR_TYPE(EmitterSystem), RemoveComponent<EmitterSystem> }
   };
 #pragma endregion
 }
@@ -231,8 +237,8 @@ namespace Reflection
 
         // then remove those in the vector
         if (!overrides.removedComponents.empty()) {
-          for (rttr::type const& type : overrides.removedComponents) {
-            RemoveComponentFromEntity(entity, type);
+          for (std::string const& typeStr : overrides.removedComponents) {
+            RemoveComponentFromEntity(entity, rttr::type::get_by_name(typeStr));
           }
         }
       }
@@ -318,32 +324,42 @@ namespace Reflection
   {
     ECS::EntityManager& entityMan{ ECS::EntityManager::GetInstance() };
 
-    // iterate through data and create entities
-    for (auto const& data : mRawEntities)
-    {
-      ECS::Entity newEntity{ entityMan.CreateEntityWithID({}, data.mID) };
+#ifndef DISTRIBUTION
+    try {
+#endif
+      // iterate through data and create entities
+      for (auto const& data : mRawEntities)
+      {
+        ECS::Entity newEntity{ entityMan.CreateEntityWithID({}, data.mID) };
 
-      // if the ID is taken, map it to the new ID
-      if (newEntity.GetRawEnttEntityID() != data.mID) {
-        mNewIDs.emplace(data.mID, newEntity);
+        // if the ID is taken, map it to the new ID
+        if (newEntity.GetRawEnttEntityID() != data.mID) {
+          mNewIDs.emplace(data.mID, newEntity);
+        }
+
+        newEntity.SetIsActive(data.mIsActive);
+        AddComponentsToEntity(newEntity, data.mComponents);
       }
 
-      newEntity.SetIsActive(data.mIsActive);
-      AddComponentsToEntity(newEntity, data.mComponents);
+      // restore the hierarchy
+      for (auto const& data : mRawEntities)
+      {
+        if (data.mParent == entt::null) { continue; }
+
+        // get ID from map if it was re-mapped
+        entityMan.SetParentEntity(
+          mNewIDs.contains(data.mParent) ? mNewIDs[data.mParent] : data.mParent,
+          mNewIDs.contains(data.mID) ? mNewIDs[data.mID] : data.mID);
+      }
+
+      LoadPrefabInstances();
+#ifndef DISTRIBUTION
     }
-
-    // restore the hierarchy
-    for (auto const& data : mRawEntities)
-    {
-      if (data.mParent == entt::null) { continue; }
-
-      // get ID from map if it was re-mapped
-      entityMan.SetParentEntity(
-        mNewIDs.contains(data.mParent) ? mNewIDs[data.mParent] : data.mParent,
-        mNewIDs.contains(data.mID) ? mNewIDs[data.mID] : data.mID);
+    catch (Debug::ExceptionBase& e) {
+      e.LogSource();
     }
+#endif
 
-    LoadPrefabInstances();
     // trigger the guid remapping popup if needed
     QUEUE_EVENT(Events::TriggerGUIDRemap);
   }

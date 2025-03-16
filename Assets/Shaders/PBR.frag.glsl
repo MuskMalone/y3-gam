@@ -20,6 +20,8 @@ layout(std430, binding = 0) buffer MaterialPropsBuffer {
 
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out int entityID;
+layout(location = 2) out vec4 viewPosition;
+layout(location = 3) out vec4 bloomColor;
 
 in vec4 v_Color;
 in vec2 v_TexCoord;
@@ -35,6 +37,12 @@ in vec3 v_Bitangent;            // Bitangent in world space
 
 // shadows
 in vec4 v_LightSpaceFragPos;
+
+in vec3 v_ViewPosition;
+
+in flat vec4 v_BloomProps;
+in vec4 testingPos;
+
 uniform bool u_ShadowsActive;
 uniform float u_ShadowBias;
 uniform int u_ShadowSoftness;
@@ -48,7 +56,7 @@ uniform sampler2D[16] u_AlbedoMaps;
 const int typeDir = 0;
 const int typeSpot = 1;
 const int typePoint = 2;
-const int maxLights = 30;
+const int maxLights = 100;
 uniform vec3 u_CamPos;       // Camera position in world space
 uniform int numlights;
 uniform vec3 u_AmbientLight;
@@ -66,6 +74,9 @@ uniform  float u_LightIntensity[maxLights]; // Intensity of the light
 uniform  float u_Range[maxLights]; // Maximum range of the spotlight
 uniform  float gSpecularPower;
 
+uniform float u_Gamma; // Default value should be set in the application
+
+
 const float PI = 3.14159265359;
 
 float DistributionGGX(vec3 N, vec3 H, float roughness);
@@ -77,6 +88,9 @@ float geomSmith(float dp, float Roughness);
 
 void main(){
     entityID = v_EntityID;
+    // //pls add this line for subsequent custom shaders
+    viewPosition = vec4(v_ViewPosition, 1);
+
     bool hasRenderDir = false;
 	//vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], texCoord); //currently unused
     MaterialProperties mat = materials[v_MaterialIdx];
@@ -146,18 +160,17 @@ void main(){
         vec3 n = N;
         vec3 h = normalize(V + l);
 
-        float NdotL = max(dot(n, l), 0.0);
+         // Replace standard Lambertian NdotL with Half-Lambert
+        float NdotL = 0.5 + 0.5 * dot(n, l); // Half-Lambert shading
         float NdotV = max(dot(n, V), 0.0);
         float NdotH = max(dot(n, h), 0.0);
         float HdotV = max(dot(h, V), 0.0);
-        vec3 fLambert = pow(albedo, vec3(2.2)); // Gamma correction
+
+        vec3 fLambert = pow(albedo, vec3(u_Gamma)); // Gamma correction
         vec3 F0 = vec3(0);
 
-        if( mat.Metalness > 0.f)
+        if (mat.Metalness > 0.0)
             F0 = mix(vec3(0.04), fLambert, mat.Metalness);
-
-
-
 
         vec3 F = fresnelSchlick(HdotV, F0);
         vec3 kS = F;
@@ -165,15 +178,14 @@ void main(){
 
         float Roughness = mat.Roughness;
 
-        vec3 SpecBRDF_nom  = DistributionGGX(N, h, mat.Roughness) * F * geomSmith(NdotL , mat.Roughness) * geomSmith(NdotV, mat.Roughness);
-
+        vec3 SpecBRDF_nom = DistributionGGX(N, h, mat.Roughness) * F * geomSmith(NdotL, mat.Roughness) * geomSmith(NdotV, mat.Roughness);
         float SpecBRDF_denom = 4.0 * NdotV * NdotL + 0.0001;
-
         vec3 SpecBRDF = SpecBRDF_nom / SpecBRDF_denom;
 
-        vec3 DiffuseBRDF = kD * fLambert / PI;
+        // Apply Half-Lambert to the diffuse term
+        vec3 DiffuseBRDF = kD * fLambert / PI * NdotL; // NdotL is already Half-Lambert
 
-       vec3 FinalColor = (DiffuseBRDF + SpecBRDF) * LightIntensity * NdotL;
+        vec3 FinalColor = (DiffuseBRDF + SpecBRDF) * LightIntensity;
 
         TotalLight += FinalColor * (1.0 - shadow);
     }
@@ -195,10 +207,20 @@ void main(){
     TotalLight += Emission;
     TotalLight = TotalLight / (TotalLight + vec3(1.0));
 
-    // Gamma correction
-    //fragColor = mat.Emission;
-    fragColor = vec4(pow(TotalLight, vec3(1.0/2.2)), mat.Transparency);
+    float luminance = dot(mat.Emission.xyz, vec3(0.2126, 0.7152, 0.0722)); // Standard Rec. 709 weights
 
+
+    bloomColor = vec4(0,0,0,1);
+    if (v_BloomProps.x > 0.1){ // if there is bloom and it is above threshold
+        if (luminance >= v_BloomProps.y){
+            fragColor = vec4(mat.Emission.xyz, 1);
+            bloomColor = vec4(mat.Emission.xyz, v_BloomProps.z);
+        }else{
+            fragColor = fragColor * vec4(mat.Emission.xyz, 1);
+        }
+    }
+
+    fragColor = vec4(pow(TotalLight, vec3(1.0 / u_Gamma)), mat.Transparency);
 }
 
 vec3 fresnelSchlick(float cosTheta, vec3 F0)

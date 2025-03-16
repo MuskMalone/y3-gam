@@ -41,6 +41,7 @@ namespace Serialization
     FILEWrapper fileWrapper{ filePath.c_str(), "r" };
     if (!fileWrapper) {
       IGE_DBGLOGGER.LogError("[Deserializer] Unable to read " + filePath);
+      IGE_DBGLOGGER.LogInfo("[Deserializer] Please ignore this if your file is new/empty");
       return;
     }
 
@@ -214,6 +215,7 @@ namespace Serialization
       IGE_DBGLOGGER.LogError("Prefab " + json + " has no name, re-save from prefab editor!");
     }
 
+#ifdef PREFABS_OLD
     if (document.HasMember(JSON_COMPONENTS_KEY)) {
       auto const& compArr{ document[JSON_COMPONENTS_KEY].GetArray() };
       Prefabs::PrefabSubData subObj{ Prefabs::PrefabSubData::BasePrefabId, Prefabs::PrefabSubData::InvalidId };
@@ -229,13 +231,16 @@ namespace Serialization
         if (!compType.is_valid()) { continue; }
 
         rttr::variant compVar{};
-        DeserializeComponent(compVar, compType, compJson);
+        if (!DeserializeSpecialCases(compVar, compType, compJson)) {
+          DeserializeComponent(compVar, compType, compJson);
+        }
 
         subObj.AddComponent(std::move(compVar));
       }
 
       prefab.mObjects.emplace_back(std::move(subObj));
     }
+#endif
 
     auto const& subObjArr{ document[JSON_PFB_DATA_KEY].GetArray() };
     prefab.mObjects.reserve(subObjArr.Size());
@@ -276,7 +281,9 @@ namespace Serialization
         }
 
         rttr::variant compVar{};
-        DeserializeComponent(compVar, compType, compJson);
+        if (!DeserializeSpecialCases(compVar, compType, compJson)) {
+          DeserializeComponent(compVar, compType, compJson);
+        }
 
         subObj.AddComponent(std::move(compVar));
       }
@@ -302,7 +309,7 @@ namespace Serialization
       rttr::variant var{ std::set<rttr::type>() };
       auto associativeView{ var.create_associative_view() };
       DeserializeAssociativeContainer(associativeView, json["removedComponents"]);
-      overrides.removedComponents = std::move(var.get_value<std::set<rttr::type>>());
+      overrides.removedComponents = std::move(var.get_value<std::set<std::string>>());
     }
 
     // deserialize modified components
@@ -321,7 +328,8 @@ namespace Serialization
 #endif
       }
 
-      rttr::type compType{ rttr::type::get_by_name(keyIter->value.GetString()) };
+      std::string typeStr{ keyIter->value.GetString() };
+      rttr::type compType{ rttr::type::get_by_name(typeStr) };
       if (!compType.is_valid())
       {
 #ifndef DISTRIBUTION
@@ -339,7 +347,7 @@ namespace Serialization
       if (!DeserializeSpecialCases(compVar, compType, valIter->value)) {
         DeserializeComponent(compVar, compType, valIter->value);
       }
-      overrides.componentData.emplace(std::move(compType), std::move(compVar));
+      overrides.componentData.emplace(std::move(typeStr), std::move(compVar));
     }
   }
 
@@ -494,7 +502,8 @@ namespace Serialization
             extractedVal = static_cast<entt::entity>(jsonVal.GetUint());
           }
           else {
-            std::string const msg{ "Unable to convert element to type " + propType.get_name().to_string() };
+            std::string const msg{ "Unable to convert element of type " + extractedVal.get_type().get_name().to_string()
+              + " to type " + propType.get_name().to_string()};
             IGE_DBGLOGGER.LogError("[Deserializer] " + msg);
 #ifdef _DEBUG
             std::cout << msg << "\n";
@@ -753,15 +762,7 @@ namespace Serialization
     case Anim::KeyframeType::SCALE:
     case Anim::KeyframeType::ROTATION:
     {
-      glm::vec3& start{ std::get<glm::vec3>(keyframe.startValue) },
-        &end{ std::get<glm::vec3>(keyframe.endValue) };
-      if (jsonVal.HasMember("startValue")) {
-        DeserializeRecursive(start, jsonVal["startValue"]);
-      }
-      else {
-        start = glm::vec3();
-        IGE_DBGLOGGER.LogError("Anim::Keyframe missing \"startValue\" member");
-      }
+      glm::vec3& end{ std::get<glm::vec3>(keyframe.endValue) };
 
       if (jsonVal.HasMember("endValue")) {
         DeserializeRecursive(end, jsonVal["endValue"]);
@@ -781,7 +782,19 @@ namespace Serialization
     FILEWrapper fileWrapper{ filePath.c_str(), "r" };
     if (!fileWrapper) {
       IGE_DBGLOGGER.LogError("[Deserializer] Unable to read " + filePath);
+      IGE_DBGLOGGER.LogInfo("[Deserializer] Please ignore this if your file is new or empty");
       return {};
+    }
+
+    // if file is empty, ignore it
+    {
+      int const ch{ fgetc(fileWrapper.GetFILE()) };
+      if (ch == EOF) {
+        return {};
+      }
+      else {
+        ungetc(ch, fileWrapper.GetFILE());
+      }
     }
 
     std::vector<char> buffer(sBufferSize);
@@ -802,8 +815,7 @@ namespace Serialization
 
     // since we registered everything except "nextNodes",
     // we can rely on the serializer to handle the basic data members
-    rapidjson::Value const& rootNextNodesJson{ document["rootKeyframe"] };
-    DeserializeRecursive(ret, rootNextNodesJson);
+    DeserializeRecursive(ret, document);
 
     auto const keyframesArr{ document["keyframes"].GetArray() };
     idToNode.reserve(keyframesArr.Size());
@@ -839,6 +851,7 @@ namespace Serialization
     }
 
     // link the root node
+    rapidjson::Value const& rootNextNodesJson{ document["rootKeyframe"] };
     if (!rootNextNodesJson.HasMember("nextNodes")) {
       IGE_DBGLOGGER.LogError("[Deserializer] Anim::RootKeyframe missing nextNodes field");
       return ret;

@@ -1,0 +1,659 @@
+{
+    "Name": "candlestand",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "candlestand",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 13.0,
+                            "y": 13.0,
+                            "z": 13.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 13.0,
+                            "y": 13.0,
+                            "z": 13.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048576,
+                                "scriptName": "CandleFlicker",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 1048579,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "candleBloom"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048578,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "candleLight"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.6499999761581421,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "flickerSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": 1.2000000476837159,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxBloomIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.44999998807907107,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxFillIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 1.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxFlickerTime"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxLightIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.800000011920929,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minBloomIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.20000000298023225,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minFillIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minFlickerTime"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.20000000298023225,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minLightIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048577,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "secondaryLight"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SecondaryLighT",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.20015382766723634,
+                            "y": 0.417286217212677,
+                            "z": -0.03856247663497925
+                        },
+                        "scale": {
+                            "x": 0.08474576473236084,
+                            "y": 0.08474576473236084,
+                            "z": 0.08474576473236084
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 2.6019997596740724,
+                            "y": 5.424720764160156,
+                            "z": -0.5013121962547302
+                        },
+                        "worldScale": {
+                            "x": 1.101694941520691,
+                            "y": 1.101694941520691,
+                            "z": 1.101694941520691
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 1.0,
+                            "y": 0.5490196347236633,
+                            "z": 0.23529411852359773
+                        },
+                        "intensity": 0.2800000011920929,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 12.0,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "PointFlame",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0008568763732910156,
+                            "y": 0.6415663957595825,
+                            "z": -0.011089682579040528
+                        },
+                        "scale": {
+                            "x": 0.009999999776482582,
+                            "y": 0.009999999776482582,
+                            "z": 0.009999999776482582
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.011139392852783203,
+                            "y": 8.340363502502442,
+                            "z": -0.14416587352752686
+                        },
+                        "worldScale": {
+                            "x": 0.12999999523162843,
+                            "y": 0.12999999523162843,
+                            "z": 0.12999999523162843
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 1.0,
+                            "y": 0.5490196347236633,
+                            "z": 0.19607843458652497
+                        },
+                        "intensity": 0.18000000715255738,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 24.0,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Bloom": {
+                        "threshold": 0.4699999988079071,
+                        "intensity": 1.0299999713897706,
+                        "range": 5.889999866485596
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "BloomFlame",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.005281925201416016,
+                            "y": 0.4382222890853882,
+                            "z": -0.0075113773345947269
+                        },
+                        "scale": {
+                            "x": 0.009999999776482582,
+                            "y": 0.009999999776482582,
+                            "z": 0.009999999776482582
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.0686650276184082,
+                            "y": 5.696889877319336,
+                            "z": -0.09764790534973145
+                        },
+                        "worldScale": {
+                            "x": 0.12999999523162843,
+                            "y": 0.12999999523162843,
+                            "z": 0.12999999523162843
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 10579210109920632505
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "wick",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.004971504211425781
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.06462955474853516
+                        },
+                        "worldScale": {
+                            "x": 13.0,
+                            "y": 13.0,
+                            "z": 13.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17930799073652826812
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "wick",
+                        "GUID": {
+                            "ID": 16059444492480042176
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "candles",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 13.0,
+                            "y": 13.0,
+                            "z": 13.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 0
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "candles",
+                        "GUID": {
+                            "ID": 16059444492480042176
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 6,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "candlestand",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 13.0,
+                            "y": 13.0,
+                            "z": 13.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 2736295656358640927
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "candlestand",
+                        "GUID": {
+                            "ID": 16059444492480042176
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}

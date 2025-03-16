@@ -21,6 +21,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Events/EventManager.h>
 #include <Serialization/Serializer.h>
 #include <Serialization/Deserializer.h>
+#include <Scenes/SceneManager.h>
 
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <imgui/imgui.h>
@@ -34,6 +35,7 @@ namespace {
   static bool sJumpToEntity{ false };
   // have to use these bools cause we can't get ImGui ID stack out of window scope
   static bool sSaveHierarchyState{ false }, sLoadHierarchyState{ false };
+  static std::string sSearchQuery{};
 
   void RemovePrefabOverrides(ECS::Entity root, IGE::Assets::GUID guid);
   ECS::Entity GetPrefabRoot(ECS::Entity root);
@@ -42,6 +44,9 @@ namespace {
 
   void ReassignSubmeshIndices(ECS::Entity root);
   ECS::Entity GetCanvasEntity();
+  std::string ToLower(const std::string& str);
+  bool HasSearchMatch(const std::string& entityName, const std::string& searchQuery);
+  bool EntityOrDescendantMatches(ECS::Entity entity, const std::string& searchQuery);
 }
 
 namespace GUI
@@ -68,7 +73,9 @@ namespace GUI
   void SceneHierarchy::Run()
   {
     ImGui::Begin(mWindowName.c_str());
-
+    // ***** NEW: Add Search Bar *****
+    ImGui::InputText("Search", &sSearchQuery);
+    // ********************************
     if (mSceneName.empty())
     {
       ImGui::Text("No Scene Selected");
@@ -162,7 +169,7 @@ namespace GUI
       sLoadHierarchyState = false;
     }
 
-    if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIVault::GetSelectedEntity() && !mLockControls) {
+    if (ImGui::IsKeyPressed(ImGuiKey_Delete) && ImGui::IsWindowFocused() && GUIVault::GetSelectedEntity() && !mLockControls) {
       ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
       auto entities{ GUIVault::GetSelectedEntities() };
       if (!entities.empty()) {
@@ -248,13 +255,26 @@ namespace GUI
 
   void SceneHierarchy::RecurseDownHierarchy(ECS::Entity entity, float nodeToLabelSpacing)
   {
+      // ***** NEW: If search is active, skip branches with no match *****
+      if (!sSearchQuery.empty() && !EntityOrDescendantMatches(entity, sSearchQuery))
+          return;
+      // ****************************************************************
     bool const isCurrentEntity{ GUIVault::GetSelectedEntity() == entity || GUIVault::IsEntitySelected(entity)},
       isEditMode{ sEntityToRename == entity && sEditNameMode };
     // set the flag accordingly
     ImGuiTreeNodeFlags treeFlag{ ImGuiTreeNodeFlags_SpanFullWidth };
     bool const hasChildren{ mEntityManager.HasChild(entity) };
-    treeFlag |= hasChildren ? ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
-      : ImGuiTreeNodeFlags_Leaf;
+    //treeFlag |= hasChildren ? ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
+    //  : ImGuiTreeNodeFlags_Leaf;
+    
+    // When no search is active, use the normal flags.
+    // When a search is active, force nodes to be open to show matching children and their parents.
+    if (sSearchQuery.empty())
+        treeFlag |= hasChildren ? ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen
+        : ImGuiTreeNodeFlags_Leaf;
+    else
+        treeFlag |= hasChildren ? (ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen)
+        : ImGuiTreeNodeFlags_Leaf;
 
     if (isCurrentEntity) { treeFlag |= ImGuiTreeNodeFlags_Selected; }
 
@@ -325,6 +345,11 @@ namespace GUI
     }
     if (ImGui::InputText("##EntityRename", &entityName, ImGuiInputTextFlags_AutoSelectAll)) {
       entity.GetComponent<Component::Tag>().tag = entityName;
+
+      if (entity.HasComponent<Component::PrefabOverrides>()) {
+        entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Tag>();
+      }
+
       SceneModified();
     }
     ImGui::PopStyleVar();
@@ -568,15 +593,15 @@ namespace GUI
   bool SceneHierarchy::MeshMenu(const char* label, bool entitySelected) {
     const char* meshName{ nullptr };
     if (ImGui::BeginMenu(label)) {
-      if (ImGui::Selectable("Cube")) { meshName = "Cube"; }
+      if (ImGui::MenuItem("Cube")) { meshName = "Cube"; }
 
-      if (ImGui::Selectable("Sphere")) { meshName = "Sphere"; }
+      if (ImGui::MenuItem("Sphere")) { meshName = "Sphere"; }
 
-      if (ImGui::Selectable("Plane")) { meshName = "Plane"; }
+      if (ImGui::MenuItem("Plane")) { meshName = "Plane"; }
 
-      if (ImGui::Selectable("Capsule")) { meshName = "Capsule"; }
+      if (ImGui::MenuItem("Capsule")) { meshName = "Capsule"; }
 
-      if (ImGui::Selectable("Quad")) { meshName = "Quad"; }
+      if (ImGui::MenuItem("Quad")) { meshName = "Quad"; }
 
       if (meshName) {
         ECS::Entity newEntity{ mEntityManager.CreateEntityWithTag(meshName) };
@@ -599,21 +624,21 @@ namespace GUI
     if (ImGui::BeginMenu(label)) {
       ECS::Entity newEntity{};
 
-      if (ImGui::Selectable("Directional")) {
+      if (ImGui::MenuItem("Directional")) {
         newEntity = mEntityManager.CreateEntityWithTag("Directional Light");
         newEntity.GetComponent<Component::Transform>().ApplyWorldRotation(-90.f, glm::vec3(1.f, 0.f, 0.f));  // face down by default
         newEntity.EmplaceComponent<Component::Light>(Component::DIRECTIONAL);
         modified = true;
       }
 
-      if (ImGui::Selectable("Spot Light")) {
+      if (ImGui::MenuItem("Spot Light")) {
         newEntity = mEntityManager.CreateEntityWithTag("Spot Light");
         newEntity.GetComponent<Component::Transform>().ApplyWorldRotation(-90.f, glm::vec3(1.f, 0.f, 0.f));  // face down by default
         newEntity.EmplaceComponent<Component::Light>(Component::SPOTLIGHT);
         modified = true;
       }
 
-      if (ImGui::Selectable("Point Light")) {
+      if (ImGui::MenuItem("Point Light")) {
         newEntity = mEntityManager.CreateEntityWithTag("Point Light");
         newEntity.EmplaceComponent<Component::Light>(Component::POINT);
         modified = true;
@@ -637,12 +662,12 @@ namespace GUI
     ECS::Entity newEntity{};
     if (ImGui::BeginMenu(label)) {
 
-      if (ImGui::Selectable("Audio Source")) {
+      if (ImGui::MenuItem("Audio Source")) {
         newEntity = mEntityManager.CreateEntityWithTag("Audio Source");
         newEntity.EmplaceComponent<Component::AudioSource>();
       }
 
-      if (ImGui::Selectable("Audio Listener")) {
+      if (ImGui::MenuItem("Audio Listener")) {
         newEntity = mEntityManager.CreateEntityWithTag("Audio Listener");
         newEntity.EmplaceComponent<Component::AudioListener>();
       }
@@ -665,19 +690,19 @@ namespace GUI
     ECS::Entity newEntity{};
     if (ImGui::BeginMenu(label)) {
       bool canvasCreated{ false };
-      if (ImGui::Selectable("Image")) {
+      if (ImGui::MenuItem("Image")) {
         newEntity = mEntityManager.CreateEntityWithTag("Image");
         newEntity.EmplaceComponent<Component::Image>();
       }
 
-      if (ImGui::Selectable("Text")) {
+      if (ImGui::MenuItem("Text")) {
         newEntity = mEntityManager.CreateEntityWithTag("Text");
         newEntity.EmplaceComponent<Component::Text>();
       }
 
       ImGui::Separator();
 
-      if (ImGui::Selectable("Canvas")) {
+      if (ImGui::MenuItem("Canvas")) {
         newEntity = mEntityManager.CreateEntityWithTag("Canvas");
         newEntity.EmplaceComponent<Component::Canvas>();
         canvasCreated = true;
@@ -733,7 +758,7 @@ namespace GUI
   }
 
   bool SceneHierarchy::CreateEmptyParent(const char* label) {
-    if (!ImGui::Selectable(label)) { return false; }
+    if (!ImGui::MenuItem(label)) { return false; }
 
     ECS::Entity newEntity{ CreateNewEntity() };
 
@@ -931,9 +956,10 @@ namespace GUI
   }
 
   void SceneHierarchy::SceneModified() {
-    if (mSceneModified) { return; }
+    if (mSceneModified || IGE_SCENEMGR.IsSceneInProgress()) { return; }
 
     QUEUE_EVENT(Events::SceneModifiedEvent);
+    mSceneModified = true;
   }
 
 } // namespace GUI
@@ -1001,5 +1027,38 @@ namespace {
   ECS::Entity GetCanvasEntity() {
     auto const canvases{ IGE_ENTITYMGR.GetAllEntitiesWithComponents<Component::Canvas>() };
     return canvases.empty() ? ECS::Entity() : canvases.front();
+  }
+
+  // Converts a string to lower-case.
+  std::string ToLower(const std::string& str) {
+      std::string lowerStr = str;
+      std::transform(lowerStr.begin(), lowerStr.end(), lowerStr.begin(),
+          [](unsigned char c) { return std::tolower(c); });
+      return lowerStr;
+  }
+
+  // Returns true if the given entity name contains the search query (case-insensitive)
+  bool HasSearchMatch(const std::string& entityName, const std::string& searchQuery) {
+      std::string lowerEntity = ToLower(entityName);
+      std::string lowerQuery = ToLower(searchQuery);
+      return lowerEntity.find(lowerQuery) != std::string::npos;
+  }
+
+  // Recursively checks if the entity or any of its descendants match the search.
+  bool EntityOrDescendantMatches(ECS::Entity entity, const std::string& searchQuery) {
+      // If search is empty, always match.
+      if (searchQuery.empty()) return true;
+
+      if (HasSearchMatch(entity.GetComponent<Component::Tag>().tag, searchQuery))
+          return true;
+
+      ECS::EntityManager& em = ECS::EntityManager::GetInstance();
+      if (em.HasChild(entity)) {
+          for (ECS::Entity child : em.GetChildEntity(entity)) {
+              if (EntityOrDescendantMatches(child, searchQuery))
+                  return true;
+          }
+      }
+      return false;
   }
 }

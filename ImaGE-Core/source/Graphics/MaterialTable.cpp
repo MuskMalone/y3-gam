@@ -86,7 +86,8 @@ namespace Graphics {
         
         // Load the material data from the AssetManager
         IGE_ASSETMGR.LoadRef<IGE::Assets::MaterialAsset>(guid);
-       auto & materialData = IGE_ASSETMGR.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial;
+        auto & materialData = IGE_ASSETMGR.GetAsset<IGE::Assets::MaterialAsset>(guid)->mMaterial;
+        materialData->Modified();
         //std::shared_ptr<MaterialData> materialData{};
         if (!materialData) {
             // Handle missing material (use a default material if needed)
@@ -100,9 +101,6 @@ namespace Graphics {
         uint32_t newIndex = static_cast<uint32_t>(mMaterials.size());
         mMaterials.push_back(materialData);
         mGUIDToIndexMap[guid] = newIndex;
-
-        UpdateMaterialPropsBuffer();
-        UploadMaterialProps();
 
         return newIndex;
     }
@@ -273,6 +271,7 @@ namespace Graphics {
       defaultMaterial->SetAlbedoColor(glm::vec3(1.0f));  // Set default white albedo
       defaultMaterial->SetMetalness(0.0f);
       defaultMaterial->SetRoughness(1.0f);
+      defaultMaterial->Modified();
 
       // Add default material to the table (e.g., at index 0)
       MaterialTable::AddMaterial(defaultMaterial);

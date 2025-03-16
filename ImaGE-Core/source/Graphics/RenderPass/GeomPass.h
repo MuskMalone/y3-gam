@@ -30,7 +30,7 @@ namespace Graphics {
     using MatGroupMap = std::unordered_map<int, std::vector<EntityRenderData>>;
     using ShaderGroupMap = std::unordered_map<std::shared_ptr<Shader>, MatGroupMap>;
 
-    static inline constexpr unsigned sMaxLights = 30;
+    static inline constexpr unsigned sMaxLights = 100;
 
     ShaderGroupMap GroupEntities(std::vector<ECS::Entity> const& entities);
     void GroupEntities(std::vector<ECS::Entity> const& entities,

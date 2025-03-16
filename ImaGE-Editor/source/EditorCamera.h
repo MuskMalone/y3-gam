@@ -69,7 +69,7 @@ namespace Graphics {
 	private:
 		inline static float sBaseMoveSpeed{ 15.f };
 		inline static float sMousePanningSpeed{ 5.f };
-		inline static float sMouseSense{ 50.f };
+		inline static float sMouseSense{ 100.f };
 		inline static float sZoomSpeed{ 2.5f };
 
 		RTTR_ENABLE()

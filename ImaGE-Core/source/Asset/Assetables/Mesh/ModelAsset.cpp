@@ -7,12 +7,17 @@
 #include "Asset/AssetUtils.h"
 #include "Asset/AssetManager.h"
 #include "Asset/AssetMetadata.h"
+
+namespace {
+	bool ReadBoolean(IGE::Assets::AssetMetadata::AssetProps const& metadata, const char* key);
+}
+
 namespace IGE {
 	namespace Assets {
 		ModelAsset::ModelAsset(std::string const& fp) : mMeshSource{ 
-			(!IsValidFilePath(fp)) ? 
-				Graphics::MeshFactory::CreateModelFromString(fp) : 
-				Graphics::MeshFactory::CreateModelFromImport(fp)
+			(IsValidFilePath(fp)) ? 
+				Graphics::MeshFactory::CreateModelFromImport(fp) :
+				Graphics::MeshFactory::CreateModelFromString(fp)
 		}
 		{
 		}
@@ -43,7 +48,16 @@ namespace IGE {
 			CreateDirectoryIfNotExists(compiledDir);
 
 			Debug::DebugLogger::GetInstance().LogInfo("Model detected. Converting to .imsh file...");
-			Graphics::AssetIO::IMSH imsh{ fp };
+
+			Graphics::AssetIO::ImportSettings settings{};
+			// same keys as in AssetBrowser.cpp
+			settings.staticMesh = ReadBoolean(metadata, IMSH_IMPORT_STATIC);
+			settings.flipUVs = ReadBoolean(metadata, IMSH_IMPORT_FLIP_UV);
+			settings.recenterMesh = ReadBoolean(metadata, IMSH_IMPORT_RECENTER);
+			settings.normalizeScale = ReadBoolean(metadata, IMSH_IMPORT_NORM_SCALE);
+			settings.minimalFlags = ReadBoolean(metadata, IMSH_IMPORT_MIN_FLAGS);
+
+			Graphics::AssetIO::IMSH imsh{ fp, settings };
 			imsh.WriteToBinFile(compiledDir + filename + gMeshFileExt);
 			Debug::DebugLogger::GetInstance().LogInfo(("Added " + filename + fileext) + " to assets");
 
@@ -85,5 +99,12 @@ namespace IGE {
 		{
 			delete ptr;
 		}
+	}	// namespace Assets
+}	// namespace IGE
+
+namespace {
+	bool ReadBoolean(IGE::Assets::AssetMetadata::AssetProps const& metadata, const char* key) {
+		auto const result{ metadata.metadata.find(key) };
+		return result != metadata.metadata.cend() && result->second == "1";
 	}
 }

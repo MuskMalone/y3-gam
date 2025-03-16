@@ -21,27 +21,49 @@ namespace IGE {
 		}
 		void PhysicsEventManager::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
 		{
-			if (!pairHeader.actors[0]->userData || !pairHeader.actors[1]->userData) return;
+			if (pairHeader.flags & (physx::PxContactPairHeaderFlag::eREMOVED_ACTOR_0 | physx::PxContactPairHeaderFlag::eREMOVED_ACTOR_1))
+				return;
 			if (pairHeader.actors[0]->getType() == physx::PxActorType::eRIGID_DYNAMIC && pairHeader.actors[1]->getType() == physx::PxActorType::eRIGID_DYNAMIC) {
 				auto firstactor{ reinterpret_cast<physx::PxRigidDynamic*>(pairHeader.actors[0]) };
 				auto secondactor{ reinterpret_cast<physx::PxRigidDynamic*>(pairHeader.actors[1]) };
+				auto firstactorVoid{ reinterpret_cast<void*>(firstactor) };
+				auto secondactorVoid{ reinterpret_cast<void*>(secondactor) };
 				//assume that all the actors are rigiddynamics
 				std::pair<ECS::Entity, ECS::Entity> entitypair{
-					mRigidBodyToEntity.at(reinterpret_cast<void*>(firstactor)),
-					mRigidBodyToEntity.at(reinterpret_cast<void*>(secondactor))
+					mRigidBodyToEntity.at(firstactorVoid),
+					mRigidBodyToEntity.at(secondactorVoid)
 				};
 
 				std::vector<physx::PxContactPairPoint> cp;
+				//printf("nbPairs: %u =======================================================================\n", nbPairs);
 				for (unsigned i{}; i < nbPairs; ++i) {
 					physx::PxContactPair const& contactPair{ pairs[i] };
 					physx::PxContactPairPoint contactPoints[64]; // i dont think there are so many contact points available anyways
+
 					auto numContacts{ contactPair.extractContacts(contactPoints, 64) };
 					for (unsigned cpidx{}; cpidx < numContacts; ++cpidx) {
 						cp.emplace_back(contactPoints[cpidx]);
+						//auto contactPoint = contactPoints[cpidx];
+						//printf("Contact Point:\n");
+						//printf("Actor1: %s, Actor2 %s", entitypair.first.GetComponent<Component::Tag>().tag.c_str(), entitypair.second.GetComponent<Component::Tag>().tag.c_str());
+						//printf("  Position:        (%f, %f, %f)\n",
+						//	contactPoint.position.x, contactPoint.position.y, contactPoint.position.z);
+
+						//printf("  Separation:      %f\n", contactPoint.separation);
+
+						//printf("  Normal:          (%f, %f, %f)\n",
+						//	contactPoint.normal.x, contactPoint.normal.y, contactPoint.normal.z);
+
+						//printf("  Impulse:         (%f, %f, %f)\n",
+						//	contactPoint.impulse.x, contactPoint.impulse.y, contactPoint.impulse.z);
+
+						//printf("  Face Index 0:    %u\n", contactPoint.internalFaceIndex0);
+						//printf("  Face Index 1:    %u\n", contactPoint.internalFaceIndex1);
 					}
+
 				}
 				//std::cout << "contact\n";
-
+				mOnContactPairs[firstactorVoid][secondactorVoid] = std::move(cp);
 				PhysicsEvent e{ PhysicsEventID::CONTACT };
 				e.SetParam(EventKey::EventContact::ENTITY_PAIR, entitypair);
 				e.SetParam(EventKey::EventContact::CONTACT_POINTS, cp);
@@ -52,9 +74,12 @@ namespace IGE {
 		{
 			for (unsigned i{}; i < count; ++i)
 			{
+				if (pairs[i].flags & (physx::PxTriggerPairFlag::eREMOVED_SHAPE_TRIGGER | physx::PxTriggerPairFlag::eREMOVED_SHAPE_OTHER))
+					continue;
 				const physx::PxTriggerPair& triggerPair = pairs[i];
 				physx::PxActor* actor1 = triggerPair.triggerActor;
 				physx::PxActor* actor2 = triggerPair.otherActor;
+				//if (!actor1->userData || !actor2->userData) return;
 				if (actor1->getType() == physx::PxActorType::eRIGID_DYNAMIC && actor2->getType() == physx::PxActorType::eRIGID_DYNAMIC) {
 					auto triggeractor{ reinterpret_cast<physx::PxRigidDynamic*>(actor1) };
 					auto otheractor{ reinterpret_cast<physx::PxRigidDynamic*>(actor2) };
@@ -68,6 +93,9 @@ namespace IGE {
 						break;
 					case physx::PxPairFlag::eNOTIFY_TOUCH_LOST:
 						result = TriggerResult::LOST; 
+						break;
+					case physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS:
+						result = TriggerResult::PERSISTS;
 						break;
 					}
 					//add to the trigger pair

@@ -29,7 +29,7 @@ namespace Events {
   // original, newFile
   class RenameAsset : public Event {
   public:
-    RenameAsset(std::filesystem::path const& original, std::string newFile) : mOriginal{ original }, mNewFile{ std::move(newFile) } {}
+    RenameAsset(std::filesystem::path const& original, std::string newFile) : Event(), mOriginal{ original }, mNewFile{ std::move(newFile) } {}
     inline std::string GetName() const noexcept override { return "Renaming " + mOriginal.string() + " to " + mNewFile; }
 
     std::filesystem::path const mOriginal;
@@ -39,9 +39,27 @@ namespace Events {
   // guid
   class EditAnimation : public Event {
   public:
-    EditAnimation(IGE::Assets::GUID guid) : mGUID{ guid } {}
+    EditAnimation(IGE::Assets::GUID guid) : Event(), mGUID{ guid } {}
     inline std::string GetName() const noexcept override { return "Editing animation " + std::to_string(static_cast<uint64_t>(mGUID)); }
 
     IGE::Assets::GUID mGUID;
+  };
+
+  class ToggleImGui : public Event {
+  public:
+    ToggleImGui() {}
+    inline std::string GetName() const noexcept override { return "Toggling ImGui"; }
+  };
+
+  class QuitApplicationConfirmation : public Event {
+  public:
+    QuitApplicationConfirmation() : Event() {}
+    inline std::string GetName() const noexcept override { return "Triggering quit application popup."; }
+  };
+
+  class QuitApplication : public Event {
+  public:
+    QuitApplication() : Event() {}
+    inline std::string GetName() const noexcept override { return "Quitting application..."; }
   };
 }

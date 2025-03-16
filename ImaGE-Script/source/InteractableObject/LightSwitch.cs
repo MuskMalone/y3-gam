@@ -1,34 +1,57 @@
 using IGE.Utils;
+using System;
 
 public class LightSwitch : Entity
 {
-  public PlayerInteraction playerInteraction;
-  public Entity[] LightsToToggleActive;
+    public PlayerInteraction playerInteraction;
+    public ControlPanel2 controlPanel;
+    public Entity[] LightsToToggleActive;
+    public Entity lever;
 
-  public LightSwitch() : base()
-  {
-
-  }
-
-  void Start()
-  {
-
-  }
-
-  void Update()
-  {
-    bool mouseClicked = Input.GetMouseButtonTriggered(0);
-    bool isSwitchHit = playerInteraction.RayHitString == "Light Switch";
-
-    if (mouseClicked)
+    private bool playingAnim = false;
+    private bool lightsOn = true;
+    public LightSwitch() : base()
     {
-      if (isSwitchHit)
-      {
-        foreach (Entity light in LightsToToggleActive)
-        {
-          light.SetActive(!InternalCalls.IsActive(light.mEntityID));
-        }
-      }
+
     }
-  }
+
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+        if (playingAnim)
+        {
+            if (InternalCalls.IsPlayingAnimation(lever.mEntityID))
+            {
+                return;
+            }
+
+            // when animation has ended, toggle lights
+            lightsOn = !lightsOn;
+            foreach (Entity light in LightsToToggleActive)
+            {
+                light.SetActive(lightsOn);
+            }
+
+            controlPanel.LightsToggled(lightsOn);
+            playingAnim = false;
+        }
+        else
+        {
+            bool mouseClicked = Input.GetMouseButtonTriggered(0);
+            bool isSwitchHit = playerInteraction.RayHitString == "Light Switch";
+
+            if (mouseClicked && isSwitchHit)
+            {
+                //Console.WriteLine("CameHere");
+                InternalCalls.PlaySound(mEntityID, "LightSwitch");
+
+                InternalCalls.PlayAnimation(lever.mEntityID, lightsOn ? "SwitchOff" : "SwitchOn");
+                playingAnim = true;
+            }
+        }
+    }
 }

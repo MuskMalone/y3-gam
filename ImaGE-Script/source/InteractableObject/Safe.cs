@@ -27,6 +27,8 @@ public class Safe : Entity
   public Entity TUV;
   public Entity WXYZ;
   public Entity Enter;
+  public Entity Back;
+  public Entity doorPivot;  // for door opening anim
 
   private SafeButtons ABCButtonScript;
   private SafeButtons DEFButtonScript;
@@ -37,10 +39,21 @@ public class Safe : Entity
   private SafeButtons TUVButtonScript;
   private SafeButtons WXYZButtonScript;
   private SafeButtons EnterButtonScript;
+  private SafeButtons BackButtonScript;
 
+  private enum State
+  {
+    LOCKED,
+    SAFE_UI,
+    DOOR_OPENING,
+    UNLOCKED
+  }
+
+  private State currState = State.LOCKED;
   private bool safeInteraction = false;
   private bool safeUIActive = false;
 
+  static private readonly string openSafeAnim = "SafeOpen";
   private Dictionary<string, string[]> letterGroups = new Dictionary<string, string[]>
     {
         { "ABC", new string[] { "A", "B", "C" } },
@@ -97,6 +110,7 @@ public class Safe : Entity
     TUV?.SetActive(false);
     WXYZ?.SetActive(false);
     Enter?.SetActive(false);
+    Back?.SetActive(false);
 
     ABCButtonScript = ABC.FindScript<SafeButtons>();
     DEFButtonScript = DEF.FindScript<SafeButtons>();
@@ -107,6 +121,7 @@ public class Safe : Entity
     TUVButtonScript = TUV.FindScript<SafeButtons>();
     WXYZButtonScript = WXYZ.FindScript<SafeButtons>();
     EnterButtonScript = Enter.FindScript<SafeButtons>();
+    BackButtonScript = Back.FindScript<SafeButtons>();
 
     foreach (var key in letterGroups.Keys)
     {
@@ -116,222 +131,277 @@ public class Safe : Entity
 
   void Update()
   {
-    if (!isSafeOpenedByCrowbar)
+    switch (currState)
     {
-      if (!correctAnswer && !safeInteraction)
-      {
-        bool isSafeHit = playerInteraction.RayHitString == InternalCalls.GetTag(safeDoorPart.mEntityID);
+      case State.LOCKED:
+        SafeInteraction();
+        break;
+      // END CASE LOCKED
 
-        //if player tries to use hammer on it first
-        if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive && 
-          inventory.hammerEquipped && !isCrowbarOnSafe && !dialogue.isInDialogueMode)
+      case State.SAFE_UI:
+        SafeUIMode();
+        break;
+
+      case State.DOOR_OPENING:
+        InternalCalls.UpdatePhysicsToTransform(doorPivot.mEntityID);
+
+        if (!InternalCalls.IsPlayingAnimation(doorPivot.mEntityID))
         {
-          dialogue.SetDialogue(hammerDialogue, EhammerFirst);
-          //interactWithSafeUI.SetActive(false);
-          return;
+          // unlock sound
+          currState = State.UNLOCKED;
         }
+        break;
 
-        // crowbar is equipped and placed on safe
-        //insert dialogue: Now i need something to whack this thing 
-        else if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive &&
-          inventory.crowbarEquipped && !isCrowbarOnSafe && !dialogue.isInDialogueMode)
-        {
-          crowbarAtSafe.SetActive(true);
-          //audioManager.Play3DSound(audioManager.crowbar, crowbarAtSafe, audioManager.CrowbarVolume);
+      case State.UNLOCKED:
 
-          IInventoryItem itemToUse = inventory.GetItemByName("Crowbar");
-          Debug.Log("itemToUse" + itemToUse);
-          if (itemToUse != null)
-          {
-            Debug.Log("name" + itemToUse.Name);
-            inventory.RemoveItem(itemToUse);
-          }
-
-          isCrowbarOnSafe = true;
-          dialogue.SetDialogue(crowbarDialogue, EcrowbarFirst);
-          //interactWithSafeUI.SetActive(false);
-          return;
-        }
-
-        // if crowbar is already on the safe but hammer isnt and hammer is equipped
-        //insert dialogue Alright now give it a good whack 
-        else if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive && 
-          isCrowbarOnSafe && inventory.hammerEquipped && !isHammerOnSafe && !dialogue.isInDialogueMode)
-        {
-          hammerAtSafe.SetActive(true);
-          //audioManager.Play3DSound(audioManager.hammer, hammerAtSafe, audioManager.HammerVolume);
-          IInventoryItem itemToUse = inventory.GetItemByName("Hammer");
-          Debug.Log("itemToUse" + itemToUse);
-          if (itemToUse != null)
-          {
-            Debug.Log("name" + itemToUse.Name);
-            inventory.RemoveItem(itemToUse); // Remove after use
-          }
-
-          isHammerOnSafe = true;
-          dialogue.SetDialogue(lastDialogue, EhammerAfterCrowbar); // Send specific dialogue lines for scene 1
-          //interactWithSafeUI.SetActive(false);
-          return;
-        }
-
-        ////if crowbar and hammer are on the safe already
-        ////position the crowbar and hammer and safe door on the ground
-        else if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive && isCrowbarOnSafe && isHammerOnSafe)
-        {
-          /*
-          //move and rotate crowbar
-          //crowbarAtSafe.transform.localposition = crowbarNewPos;
-          crowbarAtSafe.transform.localPosition = crowbarNewPos;
-          crowbarAtSafe.transform.eulerAngles = crowbarNewRot;
-          //move and rotate hammer
-          hammerAtSafe.transform.localPosition = hammerNewPos;
-          hammerAtSafe.transform.eulerAngles = hammerNewRot;
-          */
-          //interactWithSafeUI.SetActive(false);
-          isSafeOpenedByCrowbar = true;
-          InternalCalls.PlaySound(mEntityID, "SafeInteract");
-          EndSafeUI();
-          safeDoorPart.SetActive(false);
-          hammerAtSafe.SetActive(false);
-          crowbarAtSafe.SetActive(false);
-          return;
-        }
-
-        else if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive && 
-          !isHammerOnSafe && !inventory.crowbarEquipped && !inventory.hammerEquipped && !dialogue.isInDialogueMode)
-        {
-          safeInteraction = true;
-          interactWithSafeUI.SetActive(false);
-          BeginSafeUI();
-          return;
-        }
-
-        interactWithSafeUI.SetActive(isSafeHit);
-      }
+        break;
     }
+  }
 
-    if (safeUIActive)
+  private void SafeInteraction()
+  {
+    if (!correctAnswer && !safeInteraction)
     {
-      SetAllButtonsInactive();
-      if (ABCButtonScript.IsVisible)
+      bool isSafeHit = playerInteraction.RayHitString == InternalCalls.GetTag(safeDoorPart.mEntityID);
+
+      //if player tries to use hammer on it first
+      if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive &&
+        inventory.hammerEquipped && !isCrowbarOnSafe && !dialogue.isInDialogueMode)
       {
-        ABC.SetActive(true);
-        if (ABCButtonScript.TriggerButton)
-        {
-          ABCButtonScript.TriggerButton = false;
-          PressButton("ABC");
-        }
+        dialogue.SetDialogue(hammerDialogue, EhammerFirst);
+        //interactWithSafeUI.SetActive(false);
+        return;
       }
 
-      else if (DEFButtonScript.IsVisible) { 
-        DEF.SetActive(true);
-        if (DEFButtonScript.TriggerButton)
-        {
-          DEFButtonScript.TriggerButton = false;
-          PressButton("DEF");
-        }
-      }
-
-      else if (GHIButtonScript.IsVisible) { 
-        GHI.SetActive(true);
-        if (GHIButtonScript.TriggerButton)
-        {
-          GHIButtonScript.TriggerButton = false;
-          PressButton("GHI");
-        }
-      }
-
-      else if (JKLButtonScript.IsVisible) { 
-        JKL.SetActive(true);
-        if (JKLButtonScript.TriggerButton)
-        {
-          JKLButtonScript.TriggerButton = false;
-          PressButton("JKL");
-        }
-      }
-
-      else if (MNOButtonScript.IsVisible) { 
-        MNO.SetActive(true);
-        if (MNOButtonScript.TriggerButton)
-        {
-          MNOButtonScript.TriggerButton = false;
-          PressButton("MNO");
-        }
-      }
-
-      else if (PQRSButtonScript.IsVisible) { 
-        PQRS.SetActive(true);
-        if (PQRSButtonScript.TriggerButton)
-        {
-          PQRSButtonScript.TriggerButton = false;
-          PressButton("PQRS");
-        }
-      }
-
-      else if (TUVButtonScript.IsVisible) { 
-        TUV.SetActive(true);
-        if (TUVButtonScript.TriggerButton)
-        {
-          TUVButtonScript.TriggerButton = false;
-          PressButton("TUV");
-        }
-      }
-
-      else if (WXYZButtonScript.IsVisible) { 
-        WXYZ.SetActive(true);
-        if (WXYZButtonScript.TriggerButton)
-        {
-          WXYZButtonScript.TriggerButton = false;
-          PressButton("WXYZ");
-        }
-      }
-
-      else if (EnterButtonScript.IsVisible)
+      // crowbar is equipped and placed on safe
+      //insert dialogue: Now i need something to whack this thing 
+      else if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive &&
+        inventory.crowbarEquipped && !isCrowbarOnSafe && !dialogue.isInDialogueMode)
       {
-        Enter.SetActive(true);
-        if (EnterButtonScript.TriggerButton)
+        crowbarAtSafe.SetActive(true);
+        //audioManager.Play3DSound(audioManager.crowbar, crowbarAtSafe, audioManager.CrowbarVolume);
+
+        IInventoryItem itemToUse = inventory.GetItemByName("Crowbar");
+        Debug.Log("itemToUse" + itemToUse);
+        if (itemToUse != null)
         {
-          EnterButtonScript.TriggerButton = false;
-          EnterButton();
+          Debug.Log("name" + itemToUse.Name);
+          inventory.RemoveItem(itemToUse);
         }
+
+        isCrowbarOnSafe = true;
+        dialogue.SetDialogue(crowbarDialogue, EcrowbarFirst);
+        //interactWithSafeUI.SetActive(false);
+        return;
       }
 
-      if (Input.GetKeyTriggered(KeyCode.ESCAPE))
+      // if crowbar is already on the safe but hammer isnt and hammer is equipped
+      //insert dialogue Alright now give it a good whack 
+      else if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive &&
+        isCrowbarOnSafe && inventory.hammerEquipped && !isHammerOnSafe && !dialogue.isInDialogueMode)
       {
-        EndSafeUI();
-        safeInteraction = false;
+        hammerAtSafe.SetActive(true);
+        //audioManager.Play3DSound(audioManager.hammer, hammerAtSafe, audioManager.HammerVolume);
+        IInventoryItem itemToUse = inventory.GetItemByName("Hammer");
+        Debug.Log("itemToUse" + itemToUse);
+        if (itemToUse != null)
+        {
+          Debug.Log("name" + itemToUse.Name);
+          inventory.RemoveItem(itemToUse); // Remove after use
+        }
+
+        isHammerOnSafe = true;
+        dialogue.SetDialogue(lastDialogue, EhammerAfterCrowbar); // Send specific dialogue lines for scene 1
+                                                                 //interactWithSafeUI.SetActive(false);
+        return;
       }
 
-      if (waitingForDelay)
+      ////if crowbar and hammer are on the safe already
+      ////position the crowbar and hammer and safe door on the ground
+      else if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive && isCrowbarOnSafe && isHammerOnSafe)
       {
-        if (Time.gameTime - lastPressTime >= inputDelay)
-        {
-          FinalizeCurrentLetter();
-        }
-      }
-
-      if (enterPressed)
-      {
-        if (InternalCalls.GetText(safeTextBox.mEntityID) == "CEREUS")
-        {
-          Debug.Log("Correct answer");
-          correctAnswer = true;
-        }
-        else
-        {
-          InternalCalls.PlaySound(mEntityID, "WrongInput");
-          correctAnswer = false;
-          ClearText();
-        }
-        enterPressed = false;
-      }
-      
-      if (correctAnswer)
-      {
+        /*
+        //move and rotate crowbar
+        //crowbarAtSafe.transform.localposition = crowbarNewPos;
+        crowbarAtSafe.transform.localPosition = crowbarNewPos;
+        crowbarAtSafe.transform.eulerAngles = crowbarNewRot;
+        //move and rotate hammer
+        hammerAtSafe.transform.localPosition = hammerNewPos;
+        hammerAtSafe.transform.eulerAngles = hammerNewRot;
+        */
+        //interactWithSafeUI.SetActive(false);
+        isSafeOpenedByCrowbar = true;
         InternalCalls.PlaySound(mEntityID, "SafeInteract");
         EndSafeUI();
         safeDoorPart.SetActive(false);
+        hammerAtSafe.SetActive(false);
+        crowbarAtSafe.SetActive(false);
+        return;
       }
+
+      else if (Input.GetMouseButtonTriggered(0) && isSafeHit && !safeUIActive &&
+        !isHammerOnSafe && !inventory.crowbarEquipped && !inventory.hammerEquipped && !dialogue.isInDialogueMode)
+      {
+        safeInteraction = true;
+        interactWithSafeUI.SetActive(false);
+        BeginSafeUI();
+        return;
+      }
+
+      interactWithSafeUI.SetActive(isSafeHit);
+    }
+  }
+
+  private void SafeUIMode()
+  {
+    SetAllButtonsInactive();
+    if (ABCButtonScript.IsVisible)
+    {
+      ABC.SetActive(true);
+      if (ABCButtonScript.TriggerButton)
+      {
+        ABCButtonScript.TriggerButton = false;
+        PressButton("ABC");
+      }
+    }
+
+    else if (DEFButtonScript.IsVisible)
+    {
+      DEF.SetActive(true);
+      if (DEFButtonScript.TriggerButton)
+      {
+        DEFButtonScript.TriggerButton = false;
+        PressButton("DEF");
+      }
+    }
+
+    else if (GHIButtonScript.IsVisible)
+    {
+      GHI.SetActive(true);
+      if (GHIButtonScript.TriggerButton)
+      {
+        GHIButtonScript.TriggerButton = false;
+        PressButton("GHI");
+      }
+    }
+
+    else if (JKLButtonScript.IsVisible)
+    {
+      JKL.SetActive(true);
+      if (JKLButtonScript.TriggerButton)
+      {
+        JKLButtonScript.TriggerButton = false;
+        PressButton("JKL");
+      }
+    }
+
+    else if (MNOButtonScript.IsVisible)
+    {
+      MNO.SetActive(true);
+      if (MNOButtonScript.TriggerButton)
+      {
+        MNOButtonScript.TriggerButton = false;
+        PressButton("MNO");
+      }
+    }
+
+    else if (PQRSButtonScript.IsVisible)
+    {
+      PQRS.SetActive(true);
+      if (PQRSButtonScript.TriggerButton)
+      {
+        PQRSButtonScript.TriggerButton = false;
+        PressButton("PQRS");
+      }
+    }
+
+    else if (TUVButtonScript.IsVisible)
+    {
+      TUV.SetActive(true);
+      if (TUVButtonScript.TriggerButton)
+      {
+        TUVButtonScript.TriggerButton = false;
+        PressButton("TUV");
+      }
+    }
+
+    else if (WXYZButtonScript.IsVisible)
+    {
+      WXYZ.SetActive(true);
+      if (WXYZButtonScript.TriggerButton)
+      {
+        WXYZButtonScript.TriggerButton = false;
+        PressButton("WXYZ");
+      }
+    }
+
+    else if (EnterButtonScript.IsVisible)
+    {
+      Enter.SetActive(true);
+      if (EnterButtonScript.TriggerButton)
+      {
+        EnterButtonScript.TriggerButton = false;
+        EnterButton();
+      }
+    }
+
+    else if (BackButtonScript.IsVisible)
+    {
+      Back.SetActive(true);
+      if (BackButtonScript.TriggerButton)
+      {
+        BackButtonScript.TriggerButton = false;
+        BackButton();
+      }
+    }
+
+    if (Input.GetKeyTriggered(KeyCode.ESCAPE))
+    {
+      EndSafeUI();
+      safeInteraction = false;
+    }
+
+    /*
+    if (Input.GetKeyTriggered(KeyCode.BACKSPACE))
+    {
+      typedText = typedText.Substring(0, typedText.Length - 1);
+      InternalCalls.SetText(safeTextBox.mEntityID, typedText);
+    }
+    */
+
+    if (waitingForDelay)
+    {
+      if (Time.gameTime - lastPressTime >= inputDelay)
+      {
+        FinalizeCurrentLetter();
+      }
+    }
+
+    if (enterPressed)
+    {
+      if (InternalCalls.GetText(safeTextBox.mEntityID) == "CEREUS")
+      {
+        Debug.Log("Correct answer");
+        correctAnswer = true;
+      }
+      else
+      {
+        InternalCalls.PlaySound(mEntityID, "WrongInput");
+        correctAnswer = false;
+        ClearText();
+      }
+      enterPressed = false;
+    }
+
+    if (correctAnswer)
+    {
+      InternalCalls.PlaySound(mEntityID, "SafeInteract");
+      InternalCalls.PlaySound(mEntityID, "SafeUnlock");
+      InternalCalls.PlayAnimation(doorPivot.mEntityID, openSafeAnim);
+      EndSafeUI();
+      //safeDoorPart.SetActive(false);
+
+      currState = State.DOOR_OPENING;
     }
   }
 
@@ -343,6 +413,7 @@ public class Safe : Entity
     safeTextBox.SetActive(true);
     safeInstructionsUI.SetActive(true);
     InternalCalls.ShowCursor();
+    currState = State.SAFE_UI;
   }
 
   private void EndSafeUI()
@@ -356,6 +427,7 @@ public class Safe : Entity
 
     SetAllButtonsInactive();
     InternalCalls.HideCursor();
+    currState = State.LOCKED;
   }
 
   private void SetAllButtonsInactive()
@@ -369,6 +441,7 @@ public class Safe : Entity
     TUV?.SetActive(false);
     WXYZ?.SetActive(false);
     Enter?.SetActive(false);
+    Back?.SetActive(false);
   }
 
   public void PressButton(string buttonGroup)
@@ -427,6 +500,12 @@ public class Safe : Entity
   public void EnterButton()
   {
     enterPressed = true;
+  }
+  private void BackButton()
+  {
+    PlayRandomKeypadButtonSound();
+    typedText = typedText.Substring(0, typedText.Length - 1);
+    InternalCalls.SetText(safeTextBox.mEntityID, typedText);
   }
   private void PlayRandomKeypadButtonSound()
   {

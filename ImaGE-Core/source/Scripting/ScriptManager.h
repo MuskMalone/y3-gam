@@ -37,12 +37,13 @@ namespace Mono
 		ScriptInstance mEntityBaseTemplate;
 		
 	public:
+		static std::map<std::string, MonoClass*> mMonoUtilsMap; //tch: i added this
 		static std::unordered_map<std::string, ScriptFieldType> mScriptFieldTypeMap;
 		static std::unordered_map<ScriptFieldType, std::string> mRevClassMap;			//Rev Map of Scripts, for getting the name of script based on type 
 		static std::vector < std::tuple<std::string, int, int>>mScreenShotInfo;
 		static std::vector<std::string> mAllScriptNames;
 		static std::shared_ptr<MonoDomain> mRootDomain;
-		static std::shared_ptr<MonoDomain> mAppDomain;
+		static MonoDomain* mAppDomain;
 		static std::string mAppDomFilePath;
 		static std::string mCoreAssFilePath;
 		static std::unique_ptr<filewatch::FileWatch<std::string>> mFileWatcher;
@@ -329,6 +330,8 @@ namespace Mono
 
 		static float GetGravityFactor(ECS::Entity::EntityID entity);
 		static void SetGravityFactor(ECS::Entity::EntityID entity, float gravity);
+		static void LockRigidBody(ECS::Entity::EntityID entity, bool lock);
+		static void LockRigidBodyRotation(ECS::Entity::EntityID entity, bool x, bool y, bool z);
 
 		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
 
@@ -336,9 +339,25 @@ namespace Mono
 
 		static void SetSoundPitch(ECS::Entity::EntityID, MonoString*, float);
 		static void SetSoundVolume(ECS::Entity::EntityID, MonoString*, float);
+		static void EnableSoundPostProcessing(ECS::Entity::EntityID, MonoString*, unsigned, float);
+		static void DisableSoundPostProcessing(ECS::Entity::EntityID, MonoString*);
 		static void PlaySound(ECS::Entity::EntityID, MonoString*);
 		static void PauseSound(ECS::Entity::EntityID, MonoString*);
+		static void PlaySoundFromPosition(ECS::Entity::EntityID, MonoString*, unsigned time);
+		static unsigned GetSoundPlaybackPosition(ECS::Entity::EntityID, MonoString*);
 		static void StopSound(ECS::Entity::EntityID, MonoString*);
+
+		static void PlayAnimation(ECS::Entity::EntityID entity, MonoString* name, bool loop);
+		static bool IsPlayingAnimation(ECS::Entity::EntityID entity);
+		static MonoString* GetCurrentAnimation(ECS::Entity::EntityID entity);
+		static void PauseAnimation(ECS::Entity::EntityID entity);
+		static void ResumeAnimation(ECS::Entity::EntityID entity);
+		static void StopAnimationLoop(ECS::Entity::EntityID entity);
+
+		static void SetShaderState(unsigned idx, bool active);
+
+		// updates physics of the entity to align with its world transform values
+		static void UpdatePhysicsToTransform(ECS::Entity::EntityID entity);
 
 		static glm::vec3 GetVelocity(ECS::Entity::EntityID);
 
@@ -370,12 +389,17 @@ namespace Mono
 
 		static glm::vec3 GetCameraForward();
 
+		static glm::vec3 GetCameraRight();
+
 		static ECS::Entity::EntityID FindChildByTag(ECS::Entity::EntityID entity, MonoString* s);
 
 		static ECS::Entity::EntityID FindParentByTag(MonoString* s);
 
+		static ECS::Entity::EntityID GetParentByID(ECS::Entity::EntityID entity);
 
 		static MonoArray* GetAllChildren(ECS::Entity::EntityID entity);
+
+		static void UnparentEntity(ECS::Entity::EntityID entityId);
 
 		static glm::vec3 GetMainCameraPosition(ECS::Entity::EntityID cameraEntity);
 
@@ -396,6 +420,8 @@ namespace Mono
 		static void SetText(ECS::Entity::EntityID textEntity, MonoString* textContent);
 
 		static void AppendText(ECS::Entity::EntityID textEntity, MonoString* textContent);
+
+		static void SetTextFont(ECS::Entity::EntityID textEntity, MonoString* s);
 
 		static glm::vec4 GetImageColor(ECS::Entity::EntityID entity);
 
@@ -423,9 +449,28 @@ namespace Mono
 
 		static void SpawnOpenDoor();
 
+		static void SpawnTaraSilhouette();
+
 		static bool OnTriggerEnter(ECS::Entity trigger, ECS::Entity other);
 
 		static bool OnTriggerExit(ECS::Entity trigger, ECS::Entity other);
+
+		static MonoArray* GetContactPoints(ECS::Entity entity1, ECS::Entity entity2);
+
+		float GetShortestDistance(ECS::Entity::EntityID e1, ECS::Entity::EntityID e2);
+
+		static void SetBloomIntensity(ECS::Entity::EntityID bloomEntity, float intensity);
+		static float GetBloomIntensity(ECS::Entity::EntityID bloomEntity);
+		static void SetLightIntensity(ECS::Entity::EntityID lightEntity, float intensity);
+		static float GetLightIntensity(ECS::Entity::EntityID lightEntity);
+
+		static void PauseGame();
+		static void ResumeGame();
+		static bool GetIsPaused();
+
+		static void SetCanvasTransitionProgress(ECS::Entity::EntityID canvasEntity, float progress);
+		static void EnableCanvasTransition(ECS::Entity::EntityID canvasEntity, bool isEnabled);
+		static void SetCanvasTransitionType(ECS::Entity::EntityID canvasEntity, int transitionType);
 
 		/*!**********************************************************************
 		*																																			  *

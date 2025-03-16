@@ -1,4 +1,5 @@
 using IGE.Utils;
+using System;
 using System.Numerics;
 
 public class KeyDoor : Entity
@@ -9,11 +10,29 @@ public class KeyDoor : Entity
   public Entity unlockDoorUI;
   public string[] lockedDialogue;
   public Dialogue dialogueSystem;
-  private bool doorFlag = false;
   public bool doorInteraction = true;
+  public string doorAnimName;  // input from inspector based on name in anim component
+  public string doorSlamAnimName;
+  public BlackBorder blackBorder;
 
-  private Vector3 UnlockedPosition = new Vector3(57.197f, 13.759f, 52.316f);
-  private Quaternion UnlockedQuaternion = new Quaternion(0f, -0.2745087f, 0f, 0.9615892f);
+  public Entity playerCamera;
+  public Entity keyCamera;
+  float elapsedTime = 0.0f;
+  float zoomOutDuration = 2.50f;
+  bool initialAnimation = true;
+  private Vector3 zoomInPos;
+  private Vector3 zoomOutPos;
+  bool isZoomingOut = true;
+
+  public Entity corridorTrigger;
+  public bool triggerInteraction = true;
+
+  public Entity motherHumming;
+
+
+  private bool doorFlag = false;
+  private string currentAnim = null;
+
 
   void Start()
   {
@@ -25,7 +44,7 @@ public class KeyDoor : Entity
     if (doorInteraction)
     {
       bool isDoorHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-      if (Input.GetMouseButtonTriggered(0) && isDoorHit && !doorFlag)
+      if (isDoorHit && Input.GetMouseButtonTriggered(0) && !doorFlag)
       {
         if (!inventoryScript.keyEquipped && !dialogueSystem.isInDialogueMode)
         {
@@ -35,8 +54,7 @@ public class KeyDoor : Entity
           return;
         }
 
-        UnlockDoor();
-        return;
+        doorInteraction = false;
       }
       unlockDoorUI.SetActive(isDoorHit);
 
@@ -45,16 +63,93 @@ public class KeyDoor : Entity
         doorFlag = false;
       }
     }
+
+    else if (!doorInteraction && triggerInteraction)
+    {
+      if (InternalCalls.OnTriggerEnter(corridorTrigger.mEntityID, blackBorder.playerMove.mEntityID))
+      {
+        SlamDoor();
+        triggerInteraction = false;
+      }
+    }
+
+    // if an animation is in progress
+    if (!string.IsNullOrEmpty(currentAnim))
+    {
+      uint parent = InternalCalls.GetParentByID(mEntityID);
+
+      // align the collider to the animated transform
+      InternalCalls.UpdatePhysicsToTransform(mEntityID);
+
+      if (currentAnim == doorSlamAnimName)
+      {
+        if (initialAnimation)
+        {
+          InternalCalls.PlaySound(mEntityID, "DoorSwing");
+          initialAnimation = false;
+        }
+        
+        if (!InternalCalls.IsPlayingAnimation(parent))
+        {
+          InternalCalls.PlaySound(mEntityID, "DoorSlam");
+          currentAnim = null;
+          initialAnimation = true;
+        }
+      }
+
+      if (currentAnim == doorAnimName)
+      {
+        if (initialAnimation)
+        {
+          zoomInPos = InternalCalls.GetPosition(keyCamera.mEntityID);
+          zoomOutPos = zoomInPos + new Vector3(-15, 0, 0);
+          initialAnimation = false;
+          InternalCalls.PlaySound(mEntityID, "DoorSwing");
+        }
+
+        if (isZoomingOut)
+        {
+          elapsedTime += Time.deltaTime;
+          float t = Mathf.SmoothStep(elapsedTime / zoomOutDuration);
+          Vector3 newPos = Vector3.Lerp(zoomInPos, zoomOutPos, t);
+          InternalCalls.SetPosition(keyCamera.mEntityID, ref newPos);
+
+          if (elapsedTime >= zoomOutDuration)
+          {
+            elapsedTime = 0.0f;
+            isZoomingOut = false;
+          }
+        }
+
+        // end of animation sequence, clear the current anim
+        if (!InternalCalls.IsPlayingAnimation(parent)) {
+          currentAnim = null;
+          initialAnimation = true;
+          SetPlayerCameraAsMain();
+          blackBorder.HideBlackBorders();
+        }
+      }
+    }
   }
 
-  private void UnlockDoor()
+  public void UnlockDoor()
   {
+    currentAnim = doorAnimName;
     InternalCalls.PlaySound(mEntityID, "UnlockDoor");
-    InternalCalls.SetPosition(mEntityID, ref UnlockedPosition);
-    InternalCalls.SetRotation(mEntityID, ref UnlockedQuaternion);
-    InternalCalls.SetWorldRotation(mEntityID, ref UnlockedQuaternion);
+    InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), doorAnimName);
     unlockDoorUI.SetActive(false);
-    SetActive(false);
-    doorInteraction = false;
+    InternalCalls.PlaySound(motherHumming.mEntityID, "MotherHumming");
+  }
+
+  public void SlamDoor()
+  {
+    currentAnim = doorSlamAnimName;
+    InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), doorSlamAnimName);
+  }
+
+  private void SetPlayerCameraAsMain()
+  {
+    InternalCalls.SetTag(playerCamera.mEntityID, "MainCamera");
+    InternalCalls.SetTag(keyCamera.mEntityID, "KeyCamera");
   }
 }

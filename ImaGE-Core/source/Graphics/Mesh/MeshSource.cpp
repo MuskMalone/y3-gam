@@ -8,7 +8,8 @@ namespace Graphics {
   ECS::Entity MeshSource::ConstructEntity(IGE::Assets::GUID const& guid, std::string const& fileName) const {
     ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
 
-    if (mSubmeshes.empty()) {
+    // if static mesh, just create 1 entity
+    if (mSubmeshes.size() <= 1) {
       ECS::Entity entity{ em.CreateEntityWithTag(fileName) };
       entity.EmplaceComponent<Component::Mesh>(guid, fileName, true);
       entity.EmplaceComponent<Component::Material>();

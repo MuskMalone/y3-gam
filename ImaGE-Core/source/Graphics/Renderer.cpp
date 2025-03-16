@@ -16,12 +16,11 @@
 #include <Graphics/RenderPass/ShadowPass.h>
 #include <Graphics/RenderPass/ScreenPass.h>
 #include <Graphics/RenderPass/PostProcessPass.h>
+#include <Graphics/RenderPass/ParticlePass.h>
 #include <Graphics/RenderPass/UIPass.h>
 #pragma endregion
 
-#include "Core/Components/Camera.h"
-#include "Core/Components/Transform.h"
-#include "Core/Components/Light.h"
+#include "Core/Components/Components.h"
 #include "Core/Entity.h"
 #include "Input/InputManager.h"
 
@@ -42,10 +41,13 @@ namespace Graphics {
 
 	}
 	void Renderer::Init() {
+
+		glEnable(GL_FRAMEBUFFER_SRGB);
+
 		SUBSCRIBE_STATIC_FUNC(Events::WindowResized, OnResize);
 		SUBSCRIBE_STATIC_FUNC(Events::EntitySelectedInEditor, OnEntityPicked);
 		InitUICamera();
-
+		RINIT
 		//----------------------Init Batching Quads------------------------------------------------------------//
 		mData.quadVertexArray = VertexArray::Create();
 		mData.quadVertexBuffer = VertexBuffer::Create(mData.cMaxVertices2D * sizeof(QuadVtx));
@@ -170,6 +172,7 @@ namespace Graphics {
 		//InitPickPass();
 		InitShadowMapPass();
 		InitGeomPass();
+		InitParticlePass();
 		InitPostProcessPass();
 		InitUIPass();
 	
@@ -233,6 +236,8 @@ namespace Graphics {
 		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
 		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
 		ShaderLibrary::Add("Water", Shader::Create("Water.vert.glsl", "Water.frag.glsl"));
+
+		ShaderLibrary::Add("Transition", Shader::Create("Transition.vert.glsl", "Transition.frag.glsl"));
 #ifdef DISTRIBUTION
 		ShaderLibrary::Add("ShadowMap", Shader::Create("ShadowMap.vert.glsl", "ShadowMap.frag.glsl"));
 #else
@@ -243,6 +248,14 @@ namespace Graphics {
 		ShaderLibrary::Add("SkyboxProc", Shader::Create("Skybox\\Procedural.vert.glsl", "Skybox\\Procedural.frag.glsl"));
 		ShaderLibrary::Add("SkyboxPano", Shader::Create("Skybox\\Panoramic.vert.glsl", "Skybox\\Panoramic.frag.glsl"));
 		ShaderLibrary::Add("Highlight", Shader::Create("Highlight.vert.glsl", "Highlight.frag.glsl"));
+		ShaderLibrary::Add("Fog", Shader::Create("Fog.vert.glsl", "Fog.frag.glsl"));
+		ShaderLibrary::Add("Blur", Shader::Create("Blur.vert.glsl", "Blur.frag.glsl"));
+		ShaderLibrary::Add("Particle", Shader::Create("Particle\\Particle.geom.glsl", "Particle\\Particle.vert.glsl", "Particle\\Particle.frag.glsl"));
+		
+		////compute shaders
+		ShaderLibrary::Add("EmitterStep", Shader::Create("Particle\\EmitterStep.glsl"));
+		ShaderLibrary::Add("Emitter", Shader::Create("Particle\\Emitter.glsl"));
+		ShaderLibrary::Add("ParticleStep", Shader::Create("Particle\\ParticleStep.glsl"));
 	}
 
 	void Renderer::InitGeomPass() {
@@ -250,9 +263,8 @@ namespace Graphics {
 		Graphics::FramebufferSpec framebufferSpec;
 		framebufferSpec.width = WINDOW_WIDTH<int>;
 		framebufferSpec.height = WINDOW_HEIGHT<int>;
-		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::DEPTH };
+		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::RGBA32F, Graphics::FramebufferTextureFormat::RGBA32F, Graphics::FramebufferTextureFormat::DEPTH };
 		std::shared_ptr<Framebuffer> fb = Framebuffer::Create(framebufferSpec);
-
 		InitSkyboxPass(fb);
 
 		PipelineSpec geomPipelineSpec;
@@ -263,7 +275,6 @@ namespace Graphics {
 		RenderPassSpec geomPassSpec;
 		geomPassSpec.pipeline = Pipeline::Create(geomPipelineSpec);
 		geomPassSpec.debugName = "Geometry Pass";
-
 
 		AddPass(RenderPass::Create<GeomPass>(geomPassSpec));
 	}
@@ -344,7 +355,7 @@ namespace Graphics {
 		Graphics::FramebufferSpec postprocessSpec;
 		postprocessSpec.width = WINDOW_WIDTH<int>;
 		postprocessSpec.height = WINDOW_HEIGHT<int>;
-		postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };	// temporarily max. 1 shadow-caster
+		postprocessSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RGBA32F };	// temporarily max. 1 shadow-caster
 
 		PipelineSpec postprocessPSpec;
 
@@ -357,6 +368,26 @@ namespace Graphics {
 		postprocessPassSpec.debugName = "Post Process Pass";
 
 		AddPass(RenderPass::Create<PostProcessingPass>(postprocessPassSpec));
+	}
+
+	void Renderer::InitParticlePass()
+	{
+		Graphics::FramebufferSpec particleSpec;
+		particleSpec.width = WINDOW_WIDTH<int>;
+		particleSpec.height = WINDOW_HEIGHT<int>;
+		particleSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8 };	// temporarily max. 1 shadow-caster
+
+		PipelineSpec particlePSpec;
+
+		//leaving this blank, i have multipel shaders in postproc mgr to be run in a pingpong fashion
+		particlePSpec.shader = ShaderLibrary::Get("Particle");
+		particlePSpec.targetFramebuffer = Framebuffer::Create(particleSpec);
+
+		RenderPassSpec particlePassSpec;
+		particlePassSpec.pipeline = Pipeline::Create(particlePSpec);
+		particlePassSpec.debugName = "Particle Pass";
+
+		AddPass(RenderPass::Create<ParticlePass>(particlePassSpec));
 	}
 
 	void Renderer::InitUIPass() {
@@ -563,7 +594,8 @@ namespace Graphics {
 		BufferLayout instanceLayout = {
 			{ AttributeType::MAT4, "a_ModelMatrix" },
 			{ AttributeType::INT, "a_MaterialIdx"},
-			{ AttributeType::INT, "a_EntityID"}
+			{ AttributeType::INT, "a_EntityID"},
+			{ AttributeType::VEC4, "a_BloomProps" }
 			//{ AttributeType::VEC4, "a_Color" },
 
 		};
@@ -1056,8 +1088,12 @@ namespace Graphics {
 		}
 	}
 
-	void Renderer::RenderFullscreenTexture(){
+	void Renderer::RenderFullscreenTexture(bool blend) {
+		if(!blend)
+			glDisable(GL_BLEND);
+
 		RenderAPI::DrawTriangles(mData.screen.screenVertexArray, 6);
+		glEnable(GL_BLEND);
 	}
 
 	void Renderer::SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr) {
@@ -1133,6 +1169,15 @@ namespace Graphics {
 
 		if (id != INVALID_ENTITY_ID) {
 			instance.entityID = id;
+			
+			ECS::Entity entity{ ECS::Entity::EntityID{static_cast<unsigned>(id)} };
+			if (entity.HasComponent<Component::Bloom>()){
+				auto const& bloom{ entity.GetComponent<Component::Bloom>() };
+				instance.bloomProps = glm::vec4{ 1.f, bloom.threshold, bloom.intensity, 0.f };
+			}
+			else {
+				instance.bloomProps = glm::vec4{ 0.f };
+			}
 		}
 		instance.materialIdx = matID;
 		

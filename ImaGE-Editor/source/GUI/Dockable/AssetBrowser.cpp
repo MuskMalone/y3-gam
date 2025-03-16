@@ -23,10 +23,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <EditorEvents.h>
 #include <GUI/Helpers/AssetHelpers.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
-#include <Graphics/Mesh/IMSH.h>
 #include <GUI/Helpers/AssetPayload.h>
 #include "Asset/IGEAssets.h"
 #include <Graphics/MaterialTable.h>
+#include <Graphics/Mesh/MeshImport.h>
 
 namespace MeshPopup {
   static constexpr float sTableCol1Width = 250.f;
@@ -717,6 +717,7 @@ namespace GUI
     ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
     if (!ImGui::BeginPopupModal(sMeshPopupTitle, NULL, ImGuiWindowFlags_AlwaysAutoResize)) { return; }
     static bool blankWarning{ false };
+    static Graphics::AssetIO::ImportSettings settings{};
     bool close{ false };
 
     ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.5f, 0.5f, 0.5f, 1.f));
@@ -764,7 +765,7 @@ namespace GUI
       NextRowTable("Recenter Mesh?");
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
-      ImGui::Checkbox("##RecenterMesh", &Graphics::AssetIO::IMSH::sRecenterMesh);
+      ImGui::Checkbox("##RecenterMesh", &settings.recenterMesh);
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
       if (elementHover) {
@@ -778,7 +779,7 @@ namespace GUI
       NextRowTable("Normalize Scale?");
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
-      ImGui::Checkbox("##NormalizeScale", &Graphics::AssetIO::IMSH::sNormalizeScale);
+      ImGui::Checkbox("##NormalizeScale", &settings.normalizeScale);
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
       if (elementHover) {
@@ -792,7 +793,7 @@ namespace GUI
       NextRowTable("Flip UVs?");
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
-      ImGui::Checkbox("##FlipUVs", &Graphics::AssetIO::IMSH::sFlipUVs);
+      ImGui::Checkbox("##FlipUVs", &settings.flipUVs);
       ImGui::TableNextRow();
 
       // static mesh checkbox
@@ -800,14 +801,46 @@ namespace GUI
       NextRowTable("Static Mesh");
       if (ImGui::IsItemHovered()) { elementHover = true; }
       
-      ImGui::Checkbox("##StaticMesh", &Graphics::AssetIO::IMSH::sStaticMeshConversion);
+      ImGui::Checkbox("##StaticMesh", &settings.staticMesh);
       if (ImGui::IsItemHovered()) { elementHover = true; }
 
       if (elementHover) {
         ImGui::SetTooltip("Combine all sub-meshes into a single mesh entity");
+        elementHover = false;
+      }
+      ImGui::EndTable();
+
+      ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 20.f);
+      if (ImGui::TreeNodeEx("Advanced")) {
+        if (ImGui::BeginTable("AdvancedTable", 2, ImGuiTableFlags_SizingFixedFit)) {
+          ImGui::TableSetupColumn("##c0", ImGuiTableColumnFlags_WidthFixed, firstColWidth);
+          ImGui::TableSetupColumn("##c1", ImGuiTableColumnFlags_WidthFixed, MeshPopup::sTableCol1Width);
+          ImGui::TableNextRow();
+
+          bool optimizeVertices{ !settings.minimalFlags };
+
+          NextRowTable("Optimize Vertices");
+          if (ImGui::IsItemHovered()) { elementHover = true; }
+
+          if (ImGui::Checkbox("##OptimizeVertices", &optimizeVertices)) {
+            settings.minimalFlags = !optimizeVertices;
+          }
+          if (ImGui::IsItemHovered()) { elementHover = true; }
+
+          if (elementHover) {
+            ImGui::BeginTooltip();
+            ImGui::Text("Attempt to optimize the structure of the mesh during import. On by default.");
+            ImGui::Text("Turn this off if you are facing issues with your mesh.");
+            ImGui::EndTooltip();
+          }
+
+          ImGui::EndTable();
+        }
+        ImGui::TreePop();
       }
 
-      ImGui::EndTable();
+      
+
     }
 
     ImGui::NewLine();
@@ -825,8 +858,17 @@ namespace GUI
       }
       else {
         // send the relevant file path to the asset manager
+        IGE::Assets::AssetMetadata::AssetProps metadata{};
+        metadata.metadata = {
+          { IMSH_IMPORT_RECENTER, settings.recenterMesh ? "1" : "0" },
+          { IMSH_IMPORT_NORM_SCALE, settings.normalizeScale ? "1" : "0" },
+          { IMSH_IMPORT_FLIP_UV, settings.flipUVs ? "1" : "0" },
+          { IMSH_IMPORT_STATIC, settings.staticMesh ? "1" : "0" },
+          { IMSH_IMPORT_MIN_FLAGS, settings.minimalFlags ? "1" : "0" }
+        };
+
         IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-        IGE::Assets::GUID const guid{ am.ImportAsset<IGE::Assets::ModelAsset>(MeshPopup::sModelsToImport.back()) };
+        IGE::Assets::GUID const guid{ am.ImportAsset<IGE::Assets::ModelAsset>(MeshPopup::sModelsToImport.back(), metadata) };
 
         close = true;
       }
@@ -960,12 +1002,20 @@ namespace
       }
       else {
         try {
-          auto guid{ IGE_ASSETMGR.PathToGUID(path.string()) };
+          IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+          auto guid{ am.PathToGUID(path.string()) };
           if (path.extension() == gMaterialFileExt) {
             Graphics::MaterialTable::DeleteMaterial(guid);
           }
-          IGE_DBGLOGGER.LogInfo("DeleteFunction called on " + path.string());
-          IGE_ASSETMGR.DeleteFunction(path.parent_path().filename().string())(guid);
+          // for animations, remove the associated editor file as well
+          else if (path.extension() == gAnimationFileExt) {
+            auto const& metadata{ am.GetMetadata<IGE::Assets::AnimationAsset>(guid).metadata };
+            if (metadata.contains("KeyframeEditorData")) {
+              std::filesystem::remove(metadata.at("KeyframeEditorData"));
+            }
+          }
+          //IGE_DBGLOGGER.LogInfo("DeleteFunction called on " + path.string());
+          am.DeleteFunction(path.parent_path().filename().string())(guid);
         }
         catch (...) {
           //do nothing
@@ -1010,6 +1060,9 @@ namespace
         case GUI::AssetPayload::SHADER:
           am.ChangeAssetPath<IGE::Assets::ShaderAsset>(guid, newPath);
           break;
+        case GUI::AssetPayload::ANIMATION:
+          am.ChangeAssetPath<IGE::Assets::AnimationAsset>(guid, newPath);
+          break;
         case GUI::AssetPayload::SCENE:
         default:
           break;
@@ -1043,17 +1096,20 @@ namespace
     else if (ext == gPrefabFileExt) {
       ImGui::TextColored(sFileIconCol, ICON_FA_PERSON);
     }
-    else if (ext == gFontFileExt) {
-      ImGui::TextColored(sFileIconCol, ICON_FA_FONT);
-    }
     else if (ext == gMaterialFileExt) {
       ImGui::TextColored(sFileIconCol, ICON_FA_GEM);
     }
     else if (ext == gSpriteFileExt || ext == ".png") {
       ImGui::TextColored(sFileIconCol, ICON_FA_IMAGE);
     }
+    else if (ext == gAnimationFileExt) {
+      ImGui::TextColored(sFileIconCol, ICON_FA_PERSON_RUNNING);
+    }
     else if (std::string(gSupportedAudioFormats).find(ext) != std::string::npos) {
       ImGui::TextColored(sFileIconCol, ICON_FA_MUSIC);
+    }
+    else if (ext == gFontFileExt) {
+      ImGui::TextColored(sFileIconCol, ICON_FA_FONT);
     }
     else if (ext == ".glsl") {
       ImGui::TextColored(sFileIconCol, ICON_FA_WATER);

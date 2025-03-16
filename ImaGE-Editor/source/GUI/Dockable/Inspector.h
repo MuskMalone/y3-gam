@@ -57,10 +57,12 @@ namespace GUI {
     bool AnimationComponentWindow(ECS::Entity entity, bool highlight = false);
     bool AudioListenerComponentWindow(ECS::Entity entity, bool highlight = false);
     bool AudioSourceComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool BloomComponentWindow(ECS::Entity entity, bool highlight = false);
     bool BoxColliderComponentWindow(ECS::Entity entity, bool highlight = false);
     bool CameraComponentWindow(ECS::Entity entity, bool highlight = false);
     bool CanvasComponentWindow(ECS::Entity entity, bool highlight = false);
     bool CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight = false);
+    bool EmitterSystemComponentWindow(ECS::Entity entity, bool highlight = false);
     bool ImageComponentWindow(ECS::Entity entity, bool highlight = false);
     bool InteractiveComponentWindow(ECS::Entity entity, bool highlight = false);
     bool LayerComponentWindow(ECS::Entity entity, bool highlight = false);
@@ -142,7 +144,7 @@ namespace GUI {
     EVENT_CALLBACK_DECL(OnSceneStateChange);
     EVENT_CALLBACK_DECL(OnPrefabEdit);
 
-    void RunDragDropInspector(ECS::Entity entity);
+    bool RunDragDropInspector(ECS::Entity entity);
 
     /*!*********************************************************************
     \brief

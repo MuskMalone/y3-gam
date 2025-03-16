@@ -76,9 +76,6 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetVelocity(uint ID);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static uint[] GetAllChildren(uint ID);
     #endregion
 
 
@@ -114,6 +111,9 @@ namespace IGE.Utils
     internal extern static Vector3 GetCameraForward();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static Vector3 GetCameraRight();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static string GetInputString();
 
     #endregion
@@ -145,7 +145,6 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetTag(uint EntityID, string tag); // Try not to use, dangerous
 
-    // avoid using this, prefer SetPosition (local)
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetActive(uint entityHandle, bool active);
 
@@ -154,6 +153,7 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void DestroyEntity(uint EntityID);
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void DestroyScript(Entity obj, uint EntityID);
 
@@ -165,7 +165,16 @@ namespace IGE.Utils
     extern public static uint FindChildByTag(uint EntityID, string s);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static uint[] GetAllChildren(uint ID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static uint FindParentByTag(string s);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void UnparentEntity(uint entityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static uint GetParentByID(uint EntityID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMainCameraPosition(uint cameraEntityID);
@@ -175,6 +184,7 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Quaternion GetMainCameraRotation(uint cameraEntityID);
+
     #endregion
 
 
@@ -200,6 +210,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void AppendText(uint TextEntityID, string textContent);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetTextFont(uint TextEntityID, string textFontName);
     #endregion
 
 
@@ -219,7 +232,36 @@ namespace IGE.Utils
     #endregion
 
 
+    #region Light Component
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetLightIntensity(uint entityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetLightIntensity(uint entityID, float intensity);
+    #endregion
+
+
+    #region Bloom Component
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetBloomIntensity(uint entityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetBloomIntensity(uint entityID, float intensity);
+    #endregion
+
+    #region Canvas Component
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetCanvasTransitionProgress(uint entityID, float intensity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void EnableCanvasTransition(uint entityID, bool isEnabled);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetCanvasTransitionType(uint entityID, int intensity);
+    #endregion
+
     #region Utility
+
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static string GetLayerName(uint entity);
@@ -237,12 +279,41 @@ namespace IGE.Utils
     extern public static void SetSoundVolume(uint entity, string sound, float volume);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void EnableSoundPostProcessing(uint entity, string sound, uint type, float param);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void DisableSoundPostProcessing(uint entity, string sound);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void PlaySound(uint entity, string sound);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void PauseSound(uint entity, string sound);
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void StopSound(uint entity, string sound);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void PlaySoundFromPosition(uint entity, string sound);
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void GetSoundPlaybackPosition(uint entity, string sound, uint time);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void PlayAnimation(uint entity, string animation, bool loop = false);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool IsPlayingAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static string GetCurrentAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void PauseAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ResumeAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void StopAnimationLoop(uint entity); // stops the animation after the current loop ends
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetDeltaTime();
@@ -267,6 +338,16 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetGravityFactor(uint mEntityID, float gravityFactor);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    // updates physics of the entity to align with its world transform values
+    internal extern static void UpdatePhysicsToTransform(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void LockRigidBody(uint entity, bool toLock);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void LockRigidBodyRotation(uint entity, bool x, bool y, bool z);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static Entity FindScript(string s);
@@ -296,14 +377,34 @@ namespace IGE.Utils
     extern public static bool OnTriggerExit(uint entityTrigger, uint entityOther);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void ChangeToolsPainting();
+    extern public static ContactPoint[] GetContactPoints(uint entity1, uint entity2);
 
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetShortestDistance(uint e1, uint e2);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ChangeToolsPainting();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SpawnToolBox();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SpawnOpenDoor();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SpawnTaraSilhouette();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetShaderState(uint idx, bool active);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void PauseGame();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ResumeGame();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool GetIsPaused();
     #endregion
-    }
+  }
 }

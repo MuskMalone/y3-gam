@@ -2,6 +2,7 @@
 #include <policy.h>
 #include <GUI/Helpers/SceneEditorConfig.h>
 #include <ImGui/imgui.h>
+#include <GUI/Dockable/KeyframeEditor.h>
 
 static void rttr_auto_register_reflection_function4_(); namespace {
   struct rttr__auto__register4__ {
@@ -11,6 +12,15 @@ static void rttr_auto_register_reflection_function4_(); namespace {
   };
 } static const rttr__auto__register4__ auto_register__79; static void rttr_auto_register_reflection_function4_()
 {
+  rttr::registration::class_<ImVec2>("ImVec2")
+    .constructor<>()(rttr::policy::ctor::as_object)
+    .property("x", &ImVec2::x)
+    .property("y", &ImVec2::y);
+
+  rttr::registration::class_<GUI::KeyframeEditor::NodePositions>("NodePositions")
+    .constructor<>()(rttr::policy::ctor::as_object)
+    .property("posMap", &GUI::KeyframeEditor::NodePositions::posMap);
+
   rttr::registration::class_<GUI::HierarchyEntry>("HierarchyEntry")
     .constructor<>()(rttr::policy::ctor::as_object)
     .property("entityId", &GUI::HierarchyEntry::entityId)

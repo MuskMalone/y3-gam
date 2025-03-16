@@ -67,10 +67,13 @@ namespace Graphics {
 		glm::mat4 modelMatrix;
 		int materialIdx;
 		int entityID = -1;
+
+		//x == active/not active, y = threshold, z = intensity
+		glm::vec4 bloomProps;
 		//glm::vec4 color;
 		InstanceData() = default;
-		InstanceData(const glm::mat4& mtx, int mat, int ent = -1)
-			: modelMatrix{ mtx }, materialIdx{ mat }, entityID{ ent } {}
+		InstanceData(const glm::mat4& mtx, int mat, int ent = -1, glm::vec4 bloom = glm::vec4{})
+			: modelMatrix{ mtx }, materialIdx{ mat }, entityID{ ent }, bloomProps{ bloom } {}
 	};
 
 	struct SubmeshInstanceData {
@@ -80,7 +83,7 @@ namespace Graphics {
 
 	struct RendererData {
 		uint32_t maxTexUnits{};
-		uint32_t cMaxMaterials{64};
+		uint32_t cMaxMaterials{128};
 
 		//------------------Mesh Batching-----------------------------------//
 		static constexpr uint32_t cMaxVertices = 0;
@@ -178,7 +181,7 @@ namespace Graphics {
 		static void DrawCircle(glm::vec3 const& center, float radius, glm::vec4 const& color, glm::vec3 const& normal);
 		static void DrawLightGizmo(Component::Light const& light, Component::Transform const& xform, CameraSpec const& cam, int lightID);
 
-		static void RenderFullscreenTexture();
+		static void RenderFullscreenTexture(bool blend = false);
 
 		static void SubmitMesh(std::shared_ptr<Mesh> mesh, glm::vec3 const& pos, glm::vec3 const& rot, glm::vec3 const& scale, glm::vec4 const& clr = Color::COLOR_WHITE);
 		static void SubmitTriangle(glm::vec3 const& v1, glm::vec3 const& v2, glm::vec3 const& v3, glm::vec4 const& clr = Color::COLOR_WHITE);
@@ -254,6 +257,7 @@ namespace Graphics {
 		static void InitShadowMapPass();
 		static void InitScreenPass(std::shared_ptr<Framebuffer> const& fb);
 		static void InitPostProcessPass();
+		static void InitParticlePass();
 		static void InitUIPass();
 		static void InitMeshSources();
 

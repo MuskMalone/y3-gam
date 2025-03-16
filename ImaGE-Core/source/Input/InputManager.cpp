@@ -103,55 +103,66 @@ void InputManager::UpdateInput()
 
 	QueueInputEvents();
 
-	if (axes["Vertical"] < 0.f)
-	{
-		axes["Vertical"] += Performance::FrameRateController::GetInstance().GetDeltaTime();
-		axes["Vertical"] = (axes["Vertical"] > 0.f) ? 0.f: axes["Vertical"];
-	}
-	else if (axes["Vertical"] > 0.f) {
-		axes["Vertical"] -= Performance::FrameRateController::GetInstance().GetDeltaTime();
-		axes["Vertical"] = (axes["Vertical"] < 0.f) ? 0.f : axes["Vertical"];
-	}
+	//if (axes["Vertical"] < 0.f)
+	//{
+	//	axes["Vertical"] += Performance::FrameRateController::GetInstance().GetDeltaTime();
+	//	axes["Vertical"] = (axes["Vertical"] > 0.f) ? 0.f: axes["Vertical"];
+	//}
+	//else if (axes["Vertical"] > 0.f) {
+	//	axes["Vertical"] -= Performance::FrameRateController::GetInstance().GetDeltaTime();
+	//	axes["Vertical"] = (axes["Vertical"] < 0.f) ? 0.f : axes["Vertical"];
+	//}
 
 	//Update the Axis
 	if (IsKeyHeld(KEY_CODE::KEY_W) || IsKeyTriggered(KEY_CODE::KEY_W))
 	{
-		axes["Vertical"] += Performance::FrameRateController::GetInstance().GetDeltaTime() * 10.f;
+		axes["Vertical"] += 1.f;//Performance::FrameRateController::GetInstance().GetDeltaTime() * 10.f;
 		axes["Vertical"] = (axes["Vertical"] > 1.f) ? 1.f : axes["Vertical"];
 	}
 	if (IsKeyHeld(KEY_CODE::KEY_S) || IsKeyTriggered(KEY_CODE::KEY_S))
 	{
-		axes["Vertical"] -= Performance::FrameRateController::GetInstance().GetDeltaTime() * 10.f;
+		axes["Vertical"] -= 1.f;//Performance::FrameRateController::GetInstance().GetDeltaTime() * 10.f;
 		axes["Vertical"] = (axes["Vertical"] < -1.f) ? -1.f : axes["Vertical"];
 	}
 
-
-
-	if (axes["Horizontal"] < 0.f)
-	{
-		axes["Horizontal"] += Performance::FrameRateController::GetInstance().GetDeltaTime();
-		axes["Horizontal"] = (axes["Horizontal"] > 0.f) ? 0.f : axes["Horizontal"];
-	}
-	else if (axes["Horizontal"] > 0.f) {
-		axes["Horizontal"] -= Performance::FrameRateController::GetInstance().GetDeltaTime();
-		axes["Horizontal"] = (axes["Horizontal"] < 0.f) ? 0.f : axes["Horizontal"];
-	}
+	//if (axes["Horizontal"] < 0.f)
+	//{
+	//	axes["Horizontal"] += Performance::FrameRateController::GetInstance().GetDeltaTime();
+	//	axes["Horizontal"] = (axes["Horizontal"] > 0.f) ? 0.f : axes["Horizontal"];
+	//}
+	//else if (axes["Horizontal"] > 0.f) {
+	//	axes["Horizontal"] -= Performance::FrameRateController::GetInstance().GetDeltaTime();
+	//	axes["Horizontal"] = (axes["Horizontal"] < 0.f) ? 0.f : axes["Horizontal"];
+	//}
 
 	//Update the Axis
 	if (IsKeyHeld(KEY_CODE::KEY_D) || IsKeyTriggered(KEY_CODE::KEY_D))
 	{
-		axes["Horizontal"] += Performance::FrameRateController::GetInstance().GetDeltaTime() * 10.f;
+		axes["Horizontal"] += 1.f;//Performance::FrameRateController::GetInstance().GetDeltaTime() * 10.f;
 		axes["Horizontal"] = (axes["Horizontal"] > 1.f) ? 1.f : axes["Horizontal"];
 	}
 	if (IsKeyHeld(KEY_CODE::KEY_A) || IsKeyTriggered(KEY_CODE::KEY_A))
 	{
-		axes["Horizontal"] -= Performance::FrameRateController::GetInstance().GetDeltaTime() * 10.f;
+		axes["Horizontal"] -= 1.f;//Performance::FrameRateController::GetInstance().GetDeltaTime() * 10.f;
 		axes["Horizontal"] = (axes["Horizontal"] < -1.f) ? -1.f : axes["Horizontal"];
 	}
 
-
-
-
+	if (IsKeyReleased(KEY_CODE::KEY_W)) {
+		axes["Vertical"] -= 1.f;
+		axes["Vertical"] = (axes["Vertical"] < -1.f) ? -1.f : axes["Vertical"];
+	}
+	if (IsKeyReleased(KEY_CODE::KEY_S)) {
+		axes["Vertical"] += 1.f;
+		axes["Vertical"] = (axes["Vertical"] > 1.f) ? 1.f : axes["Vertical"];
+	}
+	if (IsKeyReleased(KEY_CODE::KEY_D)) {
+		axes["Horizontal"] -= 1.f;
+		axes["Horizontal"] = (axes["Horizontal"] < -1.f) ? -1.f : axes["Horizontal"];
+	}
+	if (IsKeyReleased(KEY_CODE::KEY_A)) {
+		axes["Horizontal"] += 1.f;
+		axes["Horizontal"] = (axes["Horizontal"] > 1.f) ? 1.f : axes["Horizontal"];
+	}
 }
 
 
@@ -247,12 +258,12 @@ void InputManager::QueueInputEvents()
 		QUEUE_EVENT(Events::WindowMinimized);
 	}
 
-	if (IsKeyPressed(IK_LEFT_CONTROL) && IsKeyTriggered(IK_O))
+	/*if (IsKeyPressed(IK_LEFT_CONTROL) && IsKeyTriggered(IK_O))
 	{
 		isCursorLocked = !isCursorLocked;
 		QUEUE_EVENT(Events::LockMouseEvent, isCursorLocked);
 		QUEUE_EVENT(Events::WindowMinimized);
-	}
+	}*/
 }
 
 bool InputManager::IsKeyTriggered(KEY_CODE key)

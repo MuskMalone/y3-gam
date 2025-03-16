@@ -92,6 +92,10 @@ namespace IGE.Utils
       t = Clamp((t - a) / (b - a), 0f, 1f);
       return t * t * (3f - 2f * t);
     }
+    public static float SmoothStep(float t)
+    {
+      return t * t * (3 - 2 * t);
+    }
 
     public static float CopySign(float magnitude, float sign)
     {
@@ -196,30 +200,62 @@ namespace IGE.Utils
       return angles;
     }
 
-
-
-    public static Quaternion EulertoQuat(Vector3 euler)
+    static Vector3 NormalizeAngles(Vector3 angles)
     {
-      // Convert angles from degrees to radians
-      euler.X *= Mathf.Deg2Rad;
-      euler.Y *= Mathf.Deg2Rad;
-      euler.Z *= Mathf.Deg2Rad;
+      angles.X = NormalizeAngle(angles.X);
+      angles.Y = NormalizeAngle(angles.Y);
+      angles.Z = NormalizeAngle(angles.Z);
+      return angles;
+    }
 
-      // Calculate the half angles
-      float cx = Mathf.Cos(euler.X * 0.5f);
-      float sx = Mathf.Sin(euler.X * 0.5f);
-      float cy = Mathf.Cos(euler.Y * 0.5f);
-      float sy = Mathf.Sin(euler.Y * 0.5f);
-      float cz = Mathf.Cos(euler.Z * 0.5f);
-      float sz = Mathf.Sin(euler.Z * 0.5f);
+    public static float NormalizeAngle(float angle)
+    {
+      while (angle > 360)
+        angle -= 360;
+      while (angle < 0)
+        angle += 360;
+      return angle;
+    }
 
-      // Compute quaternion components
-      float w = cx * cy * cz + sx * sy * sz;
-      float xVal = sx * cy * cz - cx * sy * sz;
-      float yVal = cx * sy * cz + sx * cy * sz;
-      float zVal = cx * cy * sz - sx * sy * cz;
 
-      return new Quaternion(xVal, yVal, zVal, w);
+    public static Quaternion QuaternionFromToRot(Vector3 fromDirection, Vector3 toDirection)
+    {
+      // Normalize the input directions
+      fromDirection = Vector3.Normalize(fromDirection);
+      toDirection = Vector3.Normalize(toDirection);
+
+      // Calculate the axis of rotation using the cross product
+      Vector3 axis = Vector3.Cross(fromDirection, toDirection);
+
+      // If the cross product is zero, the vectors are parallel (no rotation needed)
+      if (axis.LengthSquared() < float.Epsilon)
+      {
+        return Quaternion.Identity;
+      }
+
+      // Normalize the axis
+      axis = Vector3.Normalize(axis);
+
+      // Calculate the angle of rotation using the dot product
+      float angle = (float)Math.Acos(Mathf.Clamp(Vector3.Dot(fromDirection, toDirection), -1f, 1f));
+
+      // Create and return the quaternion
+      return Quaternion.CreateFromAxisAngle(axis, angle);
+    }
+
+    public static Quaternion EulertoQuat(Vector3 eulerDegrees)
+    {
+      float yaw = eulerDegrees.X * (float)(Math.PI / 180.0);
+      float pitch = eulerDegrees.Y * (float)(Math.PI / 180.0);
+      float roll = eulerDegrees.Z * (float)(Math.PI / 180.0);
+
+      // Create quaternion from yaw, pitch, roll
+      Quaternion newQ = Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll);
+      float tempX = newQ.X;
+      newQ.X = newQ.Y;
+      newQ.Y = tempX;
+      return newQ;
+     // return Quaternion.CreateFromYawPitchRoll(eulerDegrees.Y, eulerDegrees.X, eulerDegrees.Z);
     }
 
 

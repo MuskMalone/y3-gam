@@ -18,6 +18,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <FrameRateController/FrameRateController.h>
 #include <Scenes/SceneManager.h>
 #include <Core/EntityManager.h>
+#include <Commands/CommandManager.h>
 
 #include <GUI/Helpers/AssetPayload.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
@@ -37,7 +38,8 @@ namespace {
   static bool sMovingToEntity{ false };
   static glm::vec3 sTargetPosition, sMoveDir;
   static float sDistToCover;
-  static ECS::Entity sPrevSelectedEntity;
+  static ECS::Entity sPrevSelectedEntity{}, sPrevSelectedLeaf{};
+  static std::unique_ptr<GUI::AssetPayload> sDroppedPayload{};
 
   // for multi-select
   static bool sCtrlHeld{ false };
@@ -86,6 +88,7 @@ namespace GUI
   {
       ImGui::Begin(mWindowName.c_str());
 
+      bool const sceneStopped{ !IGE_SCENEMGR.IsSceneInProgress() };
       ImVec2 const vpSize = ImGui::GetContentRegionAvail();
       ImVec2 const vpStartPos{ ImGui::GetCursorScreenPos() };
 
@@ -94,6 +97,27 @@ namespace GUI
       // only register input if viewport is focused
       bool const checkInput{ (ImGui::IsWindowFocused() && ImGui::IsWindowHovered()) || mRightClickHeld || mIsPanning || sMovingToEntity };
       if (checkInput) {
+        // check for delete key
+        if (ImGui::IsKeyPressed(ImGuiKey_Delete) && GUIVault::GetSelectedEntity()) {
+          ECS::EntityManager& em{ ECS::EntityManager::GetInstance() };
+          auto entities{ GUIVault::GetSelectedEntities() };
+          if (!entities.empty()) {
+            for (ECS::Entity e : entities) {
+              em.RemoveEntity(e);
+            }
+            GUIVault::ClearSelectedEntities();
+          }
+          else {
+            em.RemoveEntity(GUIVault::GetSelectedEntity());
+          }
+
+          GUIVault::SetSelectedEntity(ECS::Entity());
+
+          if (sceneStopped) {
+            IGE_EVENTMGR.DispatchImmediateEvent<Events::SceneModifiedEvent>();
+          }
+        }
+
         ProcessCameraInputs();
       }
       // auto focus window when middle or right-clicked upon
@@ -117,15 +141,20 @@ namespace GUI
 
       float const windowRight{ vpStartPos.x + vpSize.x };
       ImVec2 const topLeft{ windowRight - 128.f , vpStartPos.y }, size{ 128.f, 128.f };
-
+      bool guizmosUsed{ false };
       if (UpdateViewManipulate(topLeft, size)) {
         mEditorCam->UpdateFromViewMtx(mEditorCam->viewMatrix);
+        guizmosUsed = true;
       }
       else {
         bool const viewManipulateWindowClicked{ ImGui::IsMouseClicked(ImGuiMouseButton_Left)
-        && ImGui::IsMouseHoveringRect(topLeft, { windowRight, vpStartPos.y + 128.f }) };
+          && ImGui::IsMouseHoveringRect(topLeft, { windowRight, vpStartPos.y + 128.f }) };
 
-        if (!viewManipulateWindowClicked && !UpdateGuizmos() && checkInput) {
+        if (UpdateGuizmos()) {
+          guizmosUsed = true;
+        }
+
+        if (!viewManipulateWindowClicked && !guizmosUsed && checkInput) {
           // object picking
           if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
             ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
@@ -146,7 +175,14 @@ namespace GUI
               if (entityId >= 0) {
                 ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
                   root{ GetRootEntity(selected) };
-                sPrevSelectedEntity = root == sPrevSelectedEntity ? selected : root;
+                ECS::EntityManager& em{ IGE_ENTITYMGR };
+
+                if (selected == sPrevSelectedLeaf && em.HasParent(sPrevSelectedEntity)) {
+                  sPrevSelectedEntity = em.GetParentEntity(sPrevSelectedEntity);
+                }
+                else {
+                  sPrevSelectedLeaf = sPrevSelectedEntity = selected;
+                }
 
                 if (sCtrlHeld) {
                   ECS::Entity const curr{ GUIVault::GetSelectedEntity() };
@@ -167,14 +203,14 @@ namespace GUI
                     GUIVault::AddSelectedEntity(root);
                     GUIVault::SetSelectedEntity(sPrevSelectedEntity);
                   }
-                }
+                } // end if ctrlHeld
                 else {
                   GUIVault::ClearSelectedEntities();
                   GUIVault::SetSelectedEntity(sPrevSelectedEntity);
                 }
 
                 QUEUE_EVENT(Events::EntityScreenPicked, sPrevSelectedEntity);
-              }
+              } // end if entityId >= 0
               else {
                 sPrevSelectedEntity = {};
                 GUIVault::SetSelectedEntity({});
@@ -185,14 +221,16 @@ namespace GUI
         }
       } // else block UpdateViewManipulate
 
-
       if (mEditorCam->modified) {
         mEditorCam->UpdateMatrices();
         mEditorCam->modified = false;
       }
       
+      if ((ReceivePayload() || guizmosUsed) && sceneStopped) {
+        QUEUE_EVENT(Events::SceneModifiedEvent);
+      }
 
-      ReceivePayload();
+      UnsavedChangesPopup();
 
       ImGui::End();
   }
@@ -363,7 +401,8 @@ namespace GUI
     float const windowWidth{ ImGui::GetWindowWidth() };
     float const windowHeight{ ImGui::GetWindowHeight() };
     ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
-    Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() };
+    Component::Transform& transform{ selectedEntity.GetComponent<Component::Transform>() },
+      oldTrans{ transform };  // old cpy for undo/redo;
 
     glm::mat4 const& viewMatrix{ mEditorCam->viewMatrix };
     glm::mat4 const projMatrix{ mEditorCam->GetProjMatrix() };
@@ -487,16 +526,19 @@ namespace GUI
             lightComp.shadowConfig.shadowModified = true;
           }
         }
-      }
 
-      QUEUE_EVENT(Events::SceneModifiedEvent);
+        if (!IGE_SCENEMGR.IsSceneInProgress()) {
+          IGE_CMDMGR.AddCommand("Transform", selectedEntity, std::move(oldTrans));
+        }
+      }
     }
 
     return usingGuizmos;
   }
 
-  void Viewport::ReceivePayload()
+  bool Viewport::ReceivePayload()
   {
+    bool modified{ false };
     bool const noScene{ IGE_SCENEMGR.NoSceneSelected() };
     if (ImGui::BeginDragDropTarget())
     {
@@ -507,13 +549,25 @@ namespace GUI
         switch (assetPayload.mAssetType)
         {
         case AssetPayload::SCENE:
-          QUEUE_EVENT(Events::LoadSceneEvent, assetPayload.GetFileName(), assetPayload.GetFilePath());
+        {
+          // if scene has unsaved changes, trigger popup
+          if (GUIVault::IsSceneModified()) {
+            // temporarily save the current payload
+            sDroppedPayload = std::make_unique<GUI::AssetPayload>(std::move(assetPayload));
+            ImGui::OpenPopup(sUnsavedChangesPopupTitle);
+          }
+          else {
+            QUEUE_EVENT(Events::LoadSceneEvent, assetPayload.GetFileName(), assetPayload.GetFilePath());
+          }
+
+          GUIVault::SetSelectedEntity({});
           break;
+        }
         case AssetPayload::PREFAB:
         {
           if (noScene) {
             ImGui::EndDragDropTarget();
-            return;
+            return false;
           }
 
           // @TODO: Convert screen to world pos when viewport is up
@@ -523,6 +577,7 @@ namespace GUI
 
             ECS::Entity newEntity{ assetMan.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData.Construct(guid, {}) };
             GUIVault::SetSelectedEntity(newEntity);
+            modified = true;
           }
           catch (Debug::ExceptionBase&) {
             IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
@@ -533,13 +588,14 @@ namespace GUI
         {
           if (noScene) {
             ImGui::EndDragDropTarget();
-            return;
+            return false;
           }
 
           try {
             IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
             ECS::Entity const newEntity{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource.ConstructEntity(meshSrc, assetPayload.GetFileName()) };
             GUIVault::SetSelectedEntity(newEntity);
+            modified = true;
           }
           catch (Debug::ExceptionBase&) {
             IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
@@ -552,6 +608,53 @@ namespace GUI
       }
       ImGui::EndDragDropTarget();
     }
+
+    return modified;
+  }
+
+  void Viewport::UnsavedChangesPopup() {
+    ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    if (!ImGui::BeginPopupModal(sUnsavedChangesPopupTitle, NULL, ImGuiWindowFlags_AlwaysAutoResize)) { return; }
+    
+    bool close{ false };
+    {
+      ImGui::Text("Would you like to save your changes to ");
+      ImGui::SameLine();
+      float const denom{ 1 / 255.f };
+      ImGui::TextColored(ImVec4(167.f * denom, 90 * denom, 35 * denom, 255), (IGE_SCENEMGR.GetSceneName() + ".scn").c_str());
+      ImGui::SameLine();
+      ImGui::Text("?");
+    }
+
+    ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x * 0.5f - ImGui::CalcTextSize("Save Discard Ch").x);
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.55f, 0.f, 1.f));
+    if (ImGui::Button("Save"))
+    {
+      IGE_EVENTMGR.DispatchImmediateEvent<Events::SaveSceneEvent>(GUIVault::sSerializePrettyScene);
+      QUEUE_EVENT(Events::LoadSceneEvent, sDroppedPayload->GetFileName(), sDroppedPayload->GetFilePath());
+      close = true;
+    }
+    ImGui::PopStyleColor();
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.65f, 0.2f, 0.2f, 1.f));
+    ImGui::SameLine();
+    
+    if (ImGui::Button("Discard Changes")) {
+      QUEUE_EVENT(Events::LoadSceneEvent, sDroppedPayload->GetFileName(), sDroppedPayload->GetFilePath());
+      close = true;
+    }
+    ImGui::PopStyleColor();
+    ImGui::SameLine();
+
+    if (ImGui::Button("Cancel")) {
+      close = true;
+    }
+
+    if (close) {
+      sDroppedPayload.reset();
+      ImGui::CloseCurrentPopup();
+    }
+
+    ImGui::EndPopup();
   }
 
   EVENT_CALLBACK_DEF(Viewport, OnCollectEditorData) {

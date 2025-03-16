@@ -18,15 +18,15 @@ written consent of DigiPen Institute of Technology is prohibited.
 using IGE.Utils;
 using System;
 using System.Numerics;
+using System.Text;
 
 public class  PlayerMove : Entity
 {
-  public float speed = 650f;
-  public float walkingSpeed = 650f;
-  public float runSpeed = 1200f;
-  public float jumpForce = 3000f;
-  private readonly float extraGravityFactorDuringDescent = 15f;
+  public float speed = 750f;
+  public float walkingSpeed = 750f;
+  public float runSpeed = 1300f;
   public float isGroundedRayHeight = 3f;
+  
   public Entity cam;
 
   private float yaw = 0f;                                   // Rotation around the Y-axis (horizontal, for player)
@@ -38,13 +38,15 @@ public class  PlayerMove : Entity
 
   private Quaternion playerRotation = Quaternion.Identity;  // Player rotation (yaw only)
   private Quaternion cameraRotation = Quaternion.Identity;  // Camera rotation (pitch only)
-  private float initialGravityFactor = 5f;
+  public float initialGravityFactor = 5f;
+  public float extraGravityFactorDuringDescent = 15f;
 
-  public bool canLook = true;
-  public bool canMove = true;
+  public bool canLook = true, canMove = true, useScriptRotation = true, climbing = false;
+  private bool skipNextMouseDelta = false;  // to skip the jump in delta when unfreezing player
   private double currTime = 0.0;
   private double targetTime = 1.0;
   private bool startTimer = false;
+
 
   public PlayerMove() : base()
   {
@@ -72,19 +74,15 @@ public class  PlayerMove : Entity
       }
     }
 
-    if(InternalCalls.IsKeyTriggered(KeyCode.SEMICOLON))
-      canLook = false;
+    // Skip look processing if the player is frozen
+    if(useScriptRotation)
+    {
+      ProcessLook();
+    }
+    
 
-    ProcessLook();
     if (canMove)
       PlayerMovement();
-
-    /*
-    if (Input.GetKeyTriggered(KeyCode.SPACE))
-    {
-      InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
-    }
-    */
   }
   void PlayerMovement()
   {
@@ -100,21 +98,20 @@ public class  PlayerMove : Entity
     {
       speed = walkingSpeed;
     }
-
-    Vector3 move = GetComponent<Transform>().right * x * speed + GetComponent<Transform>().forward * z * speed;
+    Vector3 movementVector = (GetComponent<Transform>().right * x + GetComponent<Transform>().forward * z);
+    float movementVectorLength = movementVector.Length();
+    if (Math.Abs(movementVectorLength) > float.Epsilon)
+    {
+      movementVector /= movementVectorLength;
+    }
+    Vector3 move = movementVector * speed;
 
     InternalCalls.MoveCharacter(mEntityID, move);
-
-    if (Input.GetKeyTriggered(KeyCode.SPACE) && IsGrounded())
-    {
-      Jump();
-    }
 
     if (IsGrounded())
     {
       InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
     }
-
     else
     {
       InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor * extraGravityFactorDuringDescent);
@@ -123,31 +120,40 @@ public class  PlayerMove : Entity
 
   void ProcessLook()
   {
-    // Skip look processing if the player is frozen
     if (canLook)
     {
-
       Vector3 mouseDelt = InternalCalls.GetMouseDelta();
+
+      if (skipNextMouseDelta && mouseDelt.X != 0.0f && mouseDelt.Y != 0.0f)
+      {
+        skipNextMouseDelta = false;
+        //Debug.Log("Skipped delta of: " + InternalCalls.GetMouseDelta().ToString());
+        return;
+      }
+
       float mouseDeltaX = mouseDelt.X;
       float mouseDeltaY = mouseDelt.Y;
 
       yaw -= mouseDeltaX * sensitivity;
-      if(yaw > 360.0f || yaw < -360.0f) 
-        yaw /= 360.0f;
 
       // Apply mouse delta to pitch (rotate camera around the X-axis)
       pitch -= mouseDeltaY * sensitivity;
-
-      // Clamp pitch to prevent camera from flipping upside down
-      pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
     }
-   // Console.WriteLine(yaw);
+
+    if (yaw > 360.0f || yaw < -360.0f)
+      yaw /= 360.0f;
+
+    // Clamp pitch to prevent camera from flipping upside down
+    pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+
+    // Console.WriteLine(yaw);
     // Update the camera's rotation (pitch)
     cam.GetComponent<Transform>().rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(pitch));
 
     // Update the player's rotation (yaw)
     GetComponent<Transform>().rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, Mathf.DegToRad(yaw));
-    
+    // not sure if theres another way
+    InternalCalls.UpdatePhysicsToTransform(mEntityID);  // fix for player physics overriding transform updates
   }
 
   private void ResetPlayerVelocity()
@@ -155,14 +161,6 @@ public class  PlayerMove : Entity
     InternalCalls.MoveCharacter(mEntityID, new Vector3(0, 0, 0));
     InternalCalls.SetAngularVelocity(mEntityID, new Vector3(0, 0, 0));
   }
-
-  private void Jump()
-  {
-    Vector3 currentVelocity = InternalCalls.GetVelocity(mEntityID);
-    currentVelocity.Y = jumpForce;
-    InternalCalls.SetVelocity(mEntityID, currentVelocity);
-  }
-
   public bool IsGrounded()
   {
     Vector3 entityPosition = InternalCalls.GetWorldPosition(mEntityID);
@@ -170,6 +168,7 @@ public class  PlayerMove : Entity
     // Ray ends slightly beneath the entity
     Vector3 rayEnd = entityPosition + new Vector3(0, 0 - isGroundedRayHeight, 0);
     uint entityIDHit = InternalCalls.RaycastFromEntity(mEntityID, rayStart, rayEnd);
+    //Console.WriteLine(InternalCalls.GetTag(entityIDHit));
     return entityIDHit != 0;
 
   }
@@ -187,6 +186,7 @@ public class  PlayerMove : Entity
     ResetPlayerVelocity();
     canMove = true;
     canLook = true;
+    skipNextMouseDelta = true;
   }
 
 
@@ -200,4 +200,12 @@ public class  PlayerMove : Entity
   {
     return new Vector2(pitch,yaw);
   }
+
+  public void SetRotation(Vector3 rot)
+  {
+    yaw = rot.Y;                                   // Rotation around the Y-axis (horizontal, for player)
+    pitch = rot.X;                                 // Rotation around the X-axis (vertical, for camera)
+}
+
+
 }

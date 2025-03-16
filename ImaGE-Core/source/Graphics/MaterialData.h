@@ -101,7 +101,7 @@ namespace Graphics {
         bool IsDefaultNormalMap() const { return !mNormalMap.IsValid(); }
         bool IsDefaultMetalnessMap() const { return !mMetalnessMap.IsValid(); }
         bool IsDefaultRoughnessMap() const { return !mRoughnessMap.IsValid(); }
-
+    
         IGE::Assets::GUID GetAlbedoMap() const;
         void SetAlbedoMap(IGE::Assets::GUID const& texture);
 
@@ -125,7 +125,8 @@ namespace Graphics {
         }
 
         bool IsModified() const { return mModified; }
-        void ClearModifiedFlag() { mModified = false; }
+        void Modified() noexcept { mModified = true; }
+        void ClearModifiedFlag() noexcept { mModified = false; }
 
     private:
         std::shared_ptr<Shader> mShader;

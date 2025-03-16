@@ -45,14 +45,26 @@ namespace Mono {
 		TEST,
 		INSIDE,
 		INSIDEB,
-		PLAYERMOVE,
+		PLAYER_MOVE,
 		DIALOGUE,
-		PLAYERINTERACTION,
+		PLAYER_INTERACTION,
 		INVENTORY,
-		TUTORIALLEVELINVENTORY,
-		SPECIALDIALOGUE,
-		KEYDOOR,
-		PICTUREALIGN,
+		TUTORIAL_LEVEL_INVENTORY,
+		LEVEL2_INVENTORY,
+		LEVEL3_INVENTORY,
+		SPECIAL_DIALOGUE,
+		KEY_DOOR,
+		PICTURE_ALIGN,
+		CONTROL_PANEL,
+		TRANSITION,
+		PLAYER_ARISE,
+		EYEBALL_FOLLOW,
+		HAMMER_L3,
+		BLACK_BORDER,
+		HEX_TABLE_ORB,
+		LEVEL3_DIALOGUE,
+		FRAGMENT,
+		BOOTUPTEXT
 	};
 
 
@@ -103,27 +115,27 @@ namespace Mono {
 		The size of the array
 	************************************************************************/
 	template <typename T>
-	MonoArray* GetMonoArray(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<int>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<int>(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<std::string>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<std::string>(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<unsigned>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<unsigned>(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<float>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<float>(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<double>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<double>(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<double>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<double>(MonoDomain* md, size_t sz);
 
 	template <>
-	MonoArray* GetMonoArray<MonoObject*>(std::shared_ptr<MonoDomain> md, size_t sz);
+	MonoArray* GetMonoArray<MonoObject*>(MonoDomain* md, size_t sz);
 
 }

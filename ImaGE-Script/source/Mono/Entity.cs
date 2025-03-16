@@ -106,12 +106,21 @@ using IGE.Utils;
         return newEnt;
     }
 
-    public void OnDestroy()
+  public Entity GetParent()
+  {
+    uint e = InternalCalls.GetParentByID(mEntityID);
+    Entity newEnt = new Entity();
+    newEnt.mEntityID = e;
+    return newEnt;
+  }
+
+
+  public void OnDestroy()
     {
 
     }
 
-    public void Destroy(uint entityID)  //Function to destroy entities
+    public void Destroy()  //Function to destroy entities
     {
       OnDestroy();
       InternalCalls.DestroyEntity(mEntityID);

@@ -21,8 +21,10 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Audio/AudioManager.h>
 #include <Core/Components/AudioSource.h>
 #include <Graphics/PostProcessing/PostProcessingManager.h>
+#include <Graphics/PostProcessing/ParticleManager.h>
 #include <Graphics/MaterialData.h>
 #include <Core/Components/Light.h>
+#include <Core/Components/Animation.h>
 #include <Animation/AnimationData.h>
 
 #define REGISTER_DATA_MEMBER_INST(T, nameStr) rttr::registration::class_<Mono::DataMemberInstance<T>>(nameStr).constructor<>()(rttr::policy::ctor::as_object)\
@@ -168,7 +170,8 @@ static void rttr_auto_register_reflection_function_(); namespace {
     rttr::registration::class_<T>("LightGlobalProps")
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("ambColor", &T::ambColor)
-      .property("ambIntensity", &T::ambIntensity);
+      .property("ambIntensity", &T::ambIntensity)
+      .property("gammaValue", &T::gammaValue);
   }
 
   /* ------------------- Audio ------------------- */
@@ -186,13 +189,45 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .property("dopplerLevel", &IGE::Audio::SoundInvokeSetting::dopplerLevel)
           .property("minDistance", &IGE::Audio::SoundInvokeSetting::minDistance)
           .property("maxDistance", &IGE::Audio::SoundInvokeSetting::maxDistance)
-          .property("rolloffType", &IGE::Audio::SoundInvokeSetting::rolloffType); // As reference for mutable property
+          .property("rolloffType", &IGE::Audio::SoundInvokeSetting::rolloffType) // As reference for mutable property
+          .property("enablePostProcessing", &IGE::Audio::SoundInvokeSetting::enablePostProcessing)
+          .property("processingType", &IGE::Audio::SoundInvokeSetting::processingType)
+          .property("postProcessingParameter", &IGE::Audio::SoundInvokeSetting::postProcessingParameter);
       rttr::registration::class_<Component::AudioSource::AudioInstance>("AudioInstance")
           .constructor<>()(rttr::policy::ctor::as_object)
           .property("guid", &Component::AudioSource::AudioInstance::guid)
           .property("playSettings", &Component::AudioSource::AudioInstance::playSettings);
   }
+  /* ----------------- Particles --------------------- */
+  {
+      rttr::registration::class_<Graphics::EmitterInstance>("EmitterInstance")
+          .constructor<>()(rttr::policy::ctor::as_object)
+          .property("vertices", &Graphics::EmitterInstance::vertices)  // 8 vec4s
+          .property("col", &Graphics::EmitterInstance::col)            // Color
+          .property("vel", &Graphics::EmitterInstance::vel)            // Velocity
+          .property("spreadAngle", &Graphics::EmitterInstance::spreadAngle)      //angle of spread
+          .property("gravity", &Graphics::EmitterInstance::gravity)            // Gravity
+          .property("size", &Graphics::EmitterInstance::size)          // Size
+          .property("angvel", &Graphics::EmitterInstance::angvel)      // Angular velocity
+          .property("lifetime", &Graphics::EmitterInstance::lifetime)  // Lifetime
+          .property("speed", &Graphics::EmitterInstance::speed)        // Speed
+          .property("frequency", &Graphics::EmitterInstance::frequency) // Emission frequency
+          .property("type", &Graphics::EmitterInstance::type)          // Emission type
+          .property("vCount", &Graphics::EmitterInstance::vCount)      // Vertex count
+          .property("preset", &Graphics::EmitterInstance::preset)      // Preset ID
+          .property("particlesPerFrame", &Graphics::EmitterInstance::particlesPerFrame);
+  }
   /* ------------------ Shaders ---------------------*/
+  rttr::registration::class_<Graphics::PostProcessingManager::PostProcessingConfigs::ShaderLayer>("ShaderLayer")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property("active", &Graphics::PostProcessingManager::PostProcessingConfigs::ShaderLayer::active)
+      .property("shader", &Graphics::PostProcessingManager::PostProcessingConfigs::ShaderLayer::shader);
+  rttr::registration::class_<Graphics::PostProcessingManager::PostProcessingConfigs::ShaderOrder>("ShaderOrder")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property("shaders", &Graphics::PostProcessingManager::PostProcessingConfigs::ShaderOrder::shaders)
+      .property("fogMinDist", &Graphics::PostProcessingManager::PostProcessingConfigs::ShaderOrder::fogMinDist)
+      .property("fogMaxDist", &Graphics::PostProcessingManager::PostProcessingConfigs::ShaderOrder::fogMaxDist)
+      .property("fogColor", &Graphics::PostProcessingManager::PostProcessingConfigs::ShaderOrder::fogColor);
   rttr::registration::class_<Graphics::PostProcessingManager::PostProcessingConfigs>("PostProcessingConfigs")
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("configs", &Graphics::PostProcessingManager::PostProcessingConfigs::mConfigs);
@@ -241,7 +276,9 @@ static void rttr_auto_register_reflection_function_(); namespace {
     using T = Anim::Keyframe;
     rttr::registration::class_<T>("Keyframe")
       .constructor<>()(rttr::policy::ctor::as_object)
+      .property(JSON_ANIM_NODE_ID_KEY, &T::id)
       .property("type", &T::type)
+      .property("interpolationType", &T::interpolationType)
       .property("startTime", &T::startTime)
       .property("duration", &T::duration);
   }
@@ -250,6 +287,13 @@ static void rttr_auto_register_reflection_function_(); namespace {
     rttr::registration::class_<T>("AnimationData")
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("rootKeyframe", &T::rootKeyframe);
+  }
+  {
+    using T = Component::Animation::AnimationEntry;
+    rttr::registration::class_<T>("AnimationEntry")
+      .constructor<>()(rttr::policy::ctor::as_object)
+      .property("first", &T::first)
+      .property("second", &T::second);
   }
 
   /* ------------------- Script ------------------- */
