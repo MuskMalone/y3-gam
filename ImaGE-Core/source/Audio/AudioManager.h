@@ -137,6 +137,8 @@ namespace IGE {
 			 bool mSceneStarted{false};
 			 bool mSceneStopped{true}; // scene starts from a stopped state
 			 bool mScenePaused{false};
+		public:
+			 float mGlobalVolume{ 1.f };
 		};
 
 	}

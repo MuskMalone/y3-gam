@@ -28834,6 +28834,153 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "AudioSource",
+                        "value": {
+                            "sounds": [
+                                {
+                                    "key": "Break",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 6660050509190802330
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 65.40299987792969,
+                                                "y": 67.56388092041016,
+                                                "z": -428.79107666015627
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Light",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 841077141013606611
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 65.40299987792969,
+                                                "y": 67.56388092041016,
+                                                "z": -428.79107666015627
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Roll",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 12707054166757105615
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 65.40299987792969,
+                                                "y": 67.56388092041016,
+                                                "z": -428.79107666015627
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Spin",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 1616990361643963113
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 65.40299987792969,
+                                                "y": 67.56388092041016,
+                                                "z": -428.79107666015627
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": true,
+                                            "playOnAwake": true,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "SpinFaster",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 4088593239336645526
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 65.40299987792969,
+                                                "y": 67.56388092041016,
+                                                "z": -428.79107666015627
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": true,
+                                            "playOnAwake": true,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 20.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "HexTable"
@@ -28855,6 +29002,13 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "brokenOrb"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.47200000286102297,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "delayBeforeLightPingSFX"
                                             }
                                         },
                                         {
@@ -28895,6 +29049,20 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "tableSurface"
+                                            }
+                                        },
+                                        {
+                                            "data": 3.799999952316284,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "timeTakenToGlow"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "timer"
                                             }
                                         }
                                     ]
@@ -29082,6 +29250,153 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "AudioSource",
+                        "value": {
+                            "sounds": [
+                                {
+                                    "key": "Break",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 18246225462023274792
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 61.31917190551758,
+                                                "y": 67.56388092041016,
+                                                "z": -428.6943664550781
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Light",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 841077141013606611
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 61.31917190551758,
+                                                "y": 67.56388092041016,
+                                                "z": -428.6943664550781
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Roll",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 12778662779507227648
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 61.31917190551758,
+                                                "y": 67.56388092041016,
+                                                "z": -428.6943664550781
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Spin",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 1616990361643963113
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 61.31917190551758,
+                                                "y": 67.56388092041016,
+                                                "z": -428.6943664550781
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": true,
+                                            "playOnAwake": true,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "SpinFaster",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 4088593239336645526
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 61.31917190551758,
+                                                "y": 67.56388092041016,
+                                                "z": -428.6943664550781
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": true,
+                                            "playOnAwake": true,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 20.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "HexTable"
@@ -29103,6 +29418,13 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "brokenOrb"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.9919999837875366,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "delayBeforeLightPingSFX"
                                             }
                                         },
                                         {
@@ -29143,6 +29465,20 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "tableSurface"
+                                            }
+                                        },
+                                        {
+                                            "data": 3.799999952316284,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "timeTakenToGlow"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "timer"
                                             }
                                         }
                                     ]
@@ -31943,6 +32279,153 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "AudioSource",
+                        "value": {
+                            "sounds": [
+                                {
+                                    "key": "Break",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 4572024971958799037
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 67.48799896240235,
+                                                "y": 67.56388092041016,
+                                                "z": -425.46185302734377
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Light",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 9816889343190238184
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 67.48799896240235,
+                                                "y": 67.56388092041016,
+                                                "z": -425.46185302734377
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Roll",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 7875223026159574835
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 67.48799896240235,
+                                                "y": 67.56388092041016,
+                                                "z": -425.46185302734377
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Spin",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 9141871864351776630
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 67.48799896240235,
+                                                "y": 67.56388092041016,
+                                                "z": -425.46185302734377
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": true,
+                                            "playOnAwake": true,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "SpinFaster",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 1780835197031567055
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 67.48799896240235,
+                                                "y": 67.56388092041016,
+                                                "z": -425.46185302734377
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": true,
+                                            "playOnAwake": true,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 20.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "HexTable"
@@ -31964,6 +32447,13 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "brokenOrb"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.921999990940094,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "delayBeforeLightPingSFX"
                                             }
                                         },
                                         {
@@ -32004,6 +32494,20 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "tableSurface"
+                                            }
+                                        },
+                                        {
+                                            "data": 3.799999952316284,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "timeTakenToGlow"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "timer"
                                             }
                                         }
                                     ]
@@ -32166,6 +32670,153 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "AudioSource",
+                        "value": {
+                            "sounds": [
+                                {
+                                    "key": "Break",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 13825791036228792665
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 63.533451080322269,
+                                                "y": 67.56388092041016,
+                                                "z": -421.9073181152344
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Light",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 4984618744859493627
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 63.533451080322269,
+                                                "y": 67.56388092041016,
+                                                "z": -421.9073181152344
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Roll",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 18053667730629464258
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 63.533451080322269,
+                                                "y": 67.56388092041016,
+                                                "z": -421.9073181152344
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Spin",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 1616990361643963113
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 63.533451080322269,
+                                                "y": 67.56388092041016,
+                                                "z": -421.9073181152344
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": true,
+                                            "playOnAwake": true,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "SpinFaster",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 4088593239336645526
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 63.533451080322269,
+                                                "y": 67.56388092041016,
+                                                "z": -421.9073181152344
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": true,
+                                            "playOnAwake": true,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 20.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "HexTable"
@@ -32187,6 +32838,13 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "brokenOrb"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.8960000276565552,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "delayBeforeLightPingSFX"
                                             }
                                         },
                                         {
@@ -32227,6 +32885,20 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "tableSurface"
+                                            }
+                                        },
+                                        {
+                                            "data": 3.799999952316284,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "timeTakenToGlow"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "timer"
                                             }
                                         }
                                     ]
@@ -32369,6 +33041,153 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "AudioSource",
+                        "value": {
+                            "sounds": [
+                                {
+                                    "key": "Break",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 6151707152602065412
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 59.500396728515628,
+                                                "y": 67.56388092041016,
+                                                "z": -425.2380676269531
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Light",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 13554847536293592163
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 59.500396728515628,
+                                                "y": 67.56388092041016,
+                                                "z": -425.2380676269531
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Roll",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 16452890240671658145
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 59.500396728515628,
+                                                "y": 67.56388092041016,
+                                                "z": -425.2380676269531
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "Spin",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 9141871864351776630
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 59.500396728515628,
+                                                "y": 67.56388092041016,
+                                                "z": -425.2380676269531
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": true,
+                                            "playOnAwake": true,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 10.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "SpinFaster",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 1780835197031567055
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 59.500396728515628,
+                                                "y": 67.56388092041016,
+                                                "z": -425.2380676269531
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": true,
+                                            "playOnAwake": true,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 20.0,
+                                            "rolloffType": "LINEAR",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingParameter": 1500.0
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
                         "key": "Layer",
                         "value": {
                             "layerName": "HexTable"
@@ -32390,6 +33209,13 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "brokenOrb"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.9129999876022339,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "delayBeforeLightPingSFX"
                                             }
                                         },
                                         {
@@ -32430,6 +33256,20 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "tableSurface"
+                                            }
+                                        },
+                                        {
+                                            "data": 3.799999952316284,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "timeTakenToGlow"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "timer"
                                             }
                                         }
                                     ]

@@ -282,6 +282,10 @@ namespace IGE.Utils
     extern public static void SetSoundVolume(uint entity, string sound, float volume);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetSoundGlobalVolume(float volume);
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void EnableSoundPostProcessing(uint entity, string sound, uint type, float param);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
