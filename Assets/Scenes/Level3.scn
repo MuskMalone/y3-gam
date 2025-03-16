@@ -4389,7 +4389,8 @@
             "Parent": null,
             "Child Entities": [
                 408,
-                494
+                494,
+                660
             ],
             "Components": [
                 {
@@ -10775,7 +10776,7 @@
                         },
                         "scale": {
                             "x": 7.7769999504089359,
-                            "y": 3.325000047683716,
+                            "y": 2.0250000953674318,
                             "z": 8.258000373840332
                         },
                         "rotation": {
@@ -10796,7 +10797,7 @@
                         },
                         "worldScale": {
                             "x": 7.7769999504089359,
-                            "y": 3.325000047683716,
+                            "y": 2.0250000953674318,
                             "z": 8.258000373840332
                         },
                         "worldRot": {
@@ -32326,6 +32327,178 @@
                         "textureAssetGUID": {
                             "ID": 11884634068675465474
                         }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 660,
+            "Parent": 65,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "GlitchSFX",
+                                "value": {
+                                    "guid": {
+                                        "ID": 419373065535952996
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -42.26469039916992,
+                                            "y": 1.7292393445968629,
+                                            "z": -48.317752838134769
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "GlitchTrigger",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -42.26469039916992,
+                            "y": 1.7292393445968629,
+                            "z": -48.317752838134769
+                        },
+                        "scale": {
+                            "x": 38.316864013671878,
+                            "y": 9.65999984741211,
+                            "z": 1.7465007305145264
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -42.26469039916992,
+                            "y": 1.7292393445968629,
+                            "z": -48.317752838134769
+                        },
+                        "worldScale": {
+                            "x": 38.316864013671878,
+                            "y": 9.65999984741211,
+                            "z": 1.7465007305145264
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 19.158432006835939,
+                            "y": 4.829999923706055,
+                            "z": 0.8732503652572632
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": true
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 660,
+                                "scriptName": "GlitchSequence",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 5.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "glitchSequenceTotalDuration"
+                                        }
+                                    },
+                                    {
+                                        "data": 0,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "glitchShaderIdx"
+                                        }
+                                    },
+                                    {
+                                        "data": [],
+                                        "type": "MonoObjectVec",
+                                        "scriptField": {
+                                            "fieldName": "lightsToFlicker"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 660,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "triggerEntity"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -56027,6 +56200,6 @@
             "z": 1.0
         },
         "ambIntensity": 0.0,
-        "gammaValue": 1.7000000476837159
+        "gammaValue": 2.200000047683716
     }
 }
