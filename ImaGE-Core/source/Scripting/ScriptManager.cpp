@@ -102,7 +102,8 @@ namespace Mono
     { "HexTableOrb", ScriptFieldType::HEX_TABLE_ORB },
     { "Level3Dialogue", ScriptFieldType::LEVEL3_DIALOGUE },
     { "Fragment", ScriptFieldType::FRAGMENT },
-    { "BootupText", ScriptFieldType::BOOTUPTEXT }
+    { "BootupText", ScriptFieldType::BOOTUPTEXT },
+    { "Lvl4Dialogue", ScriptFieldType::LVL4_DIALOGUE }
   };
 }
 
