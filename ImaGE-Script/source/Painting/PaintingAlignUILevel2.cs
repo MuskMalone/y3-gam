@@ -73,14 +73,17 @@ public class PaintingAlignUILevel2 : Entity
         {
             if (pictureAlignScript.IsAligned())
             {
+              if (pictureAlignScript.preventAlignment)
+              {
                 if (leverTwoScript.LeverPulled())
                 {
-                    pictureAlignScript.preventAlignment = false;
+                  pictureAlignScript.preventAlignment = false;
                 }
                 else if (Input.GetMouseButtonDown(0) && !dialogueScript.isInDialogueMode)
                 {
                   dialogueScript.SetDialogue(lever2Dialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking });
                 }
+              }
 
                 bigPaintingUI.SetActive(false);
                 smallPaintingUI.SetActive(false);
