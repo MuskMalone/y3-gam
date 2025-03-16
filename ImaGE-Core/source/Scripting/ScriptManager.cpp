@@ -101,7 +101,8 @@ namespace Mono
     { "BlackBorder", ScriptFieldType::BLACK_BORDER },
     { "HexTableOrb", ScriptFieldType::HEX_TABLE_ORB },
     { "Level3Dialogue", ScriptFieldType::LEVEL3_DIALOGUE },
-    { "Fragment", ScriptFieldType::FRAGMENT }
+    { "Fragment", ScriptFieldType::FRAGMENT },
+    { "BootupText", ScriptFieldType::BOOTUPTEXT }
   };
 }
 
