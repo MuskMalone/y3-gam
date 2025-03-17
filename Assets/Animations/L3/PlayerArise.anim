@@ -1,0 +1,81 @@
+{
+    "rootKeyframe": {
+        "startPos": {
+            "x": 33.02000045776367,
+            "y": -5.0,
+            "z": 1.4889999628067017
+        },
+        "startRot": {
+            "x": 70.0,
+            "y": 120.0,
+            "z": 0.0
+        },
+        "startScale": {
+            "x": 0.7200000286102295,
+            "y": 2.319999933242798,
+            "z": 0.7200000286102295
+        },
+        "nextNodes": [
+            1
+        ]
+    },
+    "keyframes": [
+        {
+            "nodeId": 1,
+            "endValue": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 0.0,
+            "duration": 2.75,
+            "nextNodes": [
+                2,
+                3
+            ]
+        },
+        {
+            "nodeId": 2,
+            "endValue": {
+                "x": 25.0,
+                "y": 0.0,
+                "z": 1.4889999628067017
+            },
+            "type": "TRANSLATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 2.75,
+            "duration": 2.75,
+            "nextNodes": []
+        },
+        {
+            "nodeId": 3,
+            "endValue": {
+                "x": -40.0,
+                "y": 80.0,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "EASE_IN",
+            "startTime": 2.75,
+            "duration": 2.75,
+            "nextNodes": [
+                4
+            ]
+        },
+        {
+            "nodeId": 4,
+            "endValue": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 5.5,
+            "duration": 1.0,
+            "nextNodes": []
+        }
+    ]
+}

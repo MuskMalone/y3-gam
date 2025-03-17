@@ -1,7 +1,7 @@
 #define VCOUNT_POINT 1 //point
 #define VCOUNT_LINE 2 //line
 #define VCOUNT_QUAD 4 //quad
-#define VCOUNT_ELLIPSE 5//circle
+#define VCOUNT_IRREGULAR 8//circle
 
 //type of emmission for all emitter types or points
 #define EMT_TYPE_GRADUAL 0
@@ -30,6 +30,7 @@ struct Emitter {
     //color
     vec4 col;          // 16 bytes
     vec3 vel;          // vec3
+    float spreadAngle; // float
     vec3 gravity;
     vec2 size;         // vec2
 

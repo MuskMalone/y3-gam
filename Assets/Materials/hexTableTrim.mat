@@ -1,0 +1,39 @@
+{
+    "name": "hexTableTrim",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 0.6722407937049866,
+        "y": 0.6677442193031311,
+        "z": 0.6677442193031311
+    },
+    "metalness": 0.13199999928474427,
+    "roughness": 0.8579999804496765,
+    "ao": 1.0,
+    "emission": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "transparency": 1.0,
+    "tiling": {
+        "x": 1.0,
+        "y": 1.0
+    },
+    "offset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 0
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}

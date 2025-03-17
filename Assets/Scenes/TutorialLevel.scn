@@ -11,7 +11,11 @@
                 114,
                 115,
                 135,
+                141,
+                142,
                 1048618,
+                1048713,
+                1048908,
                 1049184,
                 2097595,
                 2097603,
@@ -159,6 +163,32 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 68,
+            "Parent": 142,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 75,
+            "Parent": 142,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 103,
@@ -350,6 +380,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "preventAlignment"
+                                        }
+                                    },
+                                    {
                                         "data": 0.5,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -368,6 +405,43 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "targetY"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 103,
+                                "scriptName": "GlowingLight",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 120,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "BloomObject"
+                                        }
+                                    },
+                                    {
+                                        "data": 4.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "duration"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "startIntensity"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "targetIntensity"
                                         }
                                     }
                                 ]
@@ -731,7 +805,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 136201228599137842
+                            "ID": 10052155929906438117
                         }
                     }
                 }
@@ -816,8 +890,8 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -15.899999618530274,
-                                            "y": 0.0,
+                                            "x": -14.399999618530274,
+                                            "y": -0.10000000149011612,
                                             "z": -2.0
                                         },
                                         "volume": 1.0,
@@ -844,8 +918,8 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -15.899999618530274,
-                                            "y": 0.0,
+                                            "x": -14.399999618530274,
+                                            "y": -0.10000000149011612,
                                             "z": -2.0
                                         },
                                         "volume": 1.0,
@@ -876,14 +950,14 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -15.899999618530274,
-                            "y": 0.0,
+                            "x": -14.399999618530274,
+                            "y": -0.10000000149011612,
                             "z": -2.0
                         },
                         "scale": {
-                            "x": 3.9010000228881838,
-                            "y": 17.900999069213868,
-                            "z": -1.0989999771118165
+                            "x": 5.801000118255615,
+                            "y": 20.141000747680665,
+                            "z": 0.14100000262260438
                         },
                         "rotation": {
                             "x": 0.0,
@@ -897,14 +971,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -15.899999618530274,
-                            "y": 0.0,
+                            "x": -14.399999618530274,
+                            "y": -0.10000000149011612,
                             "z": -2.0
                         },
                         "worldScale": {
-                            "x": 3.9010000228881838,
-                            "y": 17.900999069213868,
-                            "z": -1.0989999771118165
+                            "x": 5.801000118255615,
+                            "y": 20.141000747680665,
+                            "z": 0.14100000262260438
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -927,7 +1001,7 @@
                                 "scriptName": "TutorialLevelInventory",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": -15.850000381469727,
+                                        "data": -14.399999618530274,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "endScreenPosX"
@@ -992,7 +1066,7 @@
                                         }
                                     },
                                     {
-                                        "data": -20.0,
+                                        "data": -25.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "startScreenPosX"
@@ -1048,7 +1122,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 8394662900419204535
+                            "ID": 1429824161077583112
                         }
                     }
                 }
@@ -1140,13 +1214,13 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -15.899999618530274,
-                            "y": -7.0,
+                            "x": -14.744999885559082,
+                            "y": 6.53000020980835,
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 2.0799999237060549,
-                            "y": 1.899999976158142,
+                            "x": 1.809999942779541,
+                            "y": 1.909999966621399,
                             "z": -1.440000057220459
                         },
                         "rotation": {
@@ -1161,13 +1235,13 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -15.899999618530274,
-                            "y": -7.0,
+                            "x": -14.744999885559082,
+                            "y": 6.53000020980835,
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 2.0799999237060549,
-                            "y": 1.899999976158142,
+                            "x": 1.809999942779541,
+                            "y": 1.909999966621399,
                             "z": -1.440000057220459
                         },
                         "worldRot": {
@@ -1192,7 +1266,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 5662221334067653333
+                            "ID": 15167728305292783555
                         }
                     }
                 }
@@ -1492,7 +1566,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 1562391855474573918
+                            "ID": 9902208057998120638
                         }
                     }
                 }
@@ -1569,6 +1643,16 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 141,
+                                            "scriptName": "BootupText"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "bootup"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 2097182,
                                             "scriptName": "Entity"
                                         },
@@ -1586,7 +1670,7 @@
                                     },
                                     {
                                         "data": [
-                                            "Mom... She always seemed to exist on the\nperiphery of the dream."
+                                            "I have a recurring dream of my mum,\nstanding at an open doorway."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -1605,7 +1689,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 121,
+                                            "entityID": 1048713,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -1625,7 +1709,7 @@
                                     },
                                     {
                                         "data": [
-                                            "No... Where are you going? Please come back!"
+                                            "My legs are frozen, and no matter how much \nI beg... How much I cry... \nI can't stop her from slipping away."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -1634,7 +1718,7 @@
                                     },
                                     {
                                         "data": [
-                                            "Wait, the painting! It feels so familiar."
+                                            "Wait, the painting! Let's use it..."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -1654,8 +1738,15 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "Bloom": {
+                        "threshold": 1.0,
+                        "intensity": 1.0,
+                        "range": 100.0
+                    }
+                },
+                {
                     "Tag": {
-                        "tag": "pCylinder18",
+                        "tag": "BloomObject",
                         "isActive": true
                     }
                 },
@@ -1708,7 +1799,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 16148162105990453228
                         }
                     }
                 },
@@ -1734,7 +1825,7 @@
                 {
                     "Tag": {
                         "tag": "Mother",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -2048,6 +2139,13 @@
                                         }
                                     },
                                     {
+                                        "data": 1.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "footstepPitch"
+                                        }
+                                    },
+                                    {
                                         "data": 8,
                                         "type": "System.Int32",
                                         "scriptField": {
@@ -2066,6 +2164,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "interval"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isGrounded"
                                         }
                                     },
                                     {
@@ -2115,6 +2220,13 @@
                                         "scriptField": {
                                             "fieldName": "speedThreshold"
                                         }
+                                    },
+                                    {
+                                        "data": "",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "tag"
+                                        }
                                     }
                                 ]
                             }
@@ -2127,9 +2239,9 @@
             "ID": 124,
             "Parent": 1048699,
             "Child Entities": [
-                125,
                 127,
-                128
+                128,
+                1049214
             ],
             "Components": [
                 {
@@ -2191,9 +2303,9 @@
                             "w": 0.7416546940803528
                         },
                         "eulerAngles": {
-                            "x": -25.500995635986329,
-                            "y": 81.0,
-                            "z": 0.0
+                            "x": -25.500988006591798,
+                            "y": 81.00000762939453,
+                            "z": 0.00000545770717508276
                         },
                         "worldPos": {
                             "x": -15.41988754272461,
@@ -2295,8 +2407,8 @@
                                     },
                                     {
                                         "data": [
-                                            "I won't lose her again. I've already waited for so long..",
-                                            "If I can align the painting with the door... \nIt doesn't have to end here."
+                                            "Let's not lose her again.",
+                                            "I have to align this painting with the door."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -2326,133 +2438,6 @@
                                 ]
                             }
                         ]
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 125,
-            "Parent": 124,
-            "Child Entities": [
-                126
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Props_PaintingFrame1",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.00011378660565242171,
-                            "y": 0.0002117156982421875,
-                            "z": 0.0004596710205078125
-                        },
-                        "scale": {
-                            "x": 0.15000000596046449,
-                            "y": 0.15000000596046449,
-                            "z": 0.15000000596046449
-                        },
-                        "rotation": {
-                            "x": 0.09576700627803803,
-                            "y": 0.07373275607824326,
-                            "z": 0.02681981399655342,
-                            "w": 0.9923069477081299
-                        },
-                        "eulerAngles": {
-                            "x": 11.301908493041993,
-                            "y": 8.116952896118164,
-                            "z": 3.900892734527588
-                        },
-                        "worldPos": {
-                            "x": -15.419549942016602,
-                            "y": 6.8283891677856449,
-                            "z": -23.147937774658204
-                        },
-                        "worldScale": {
-                            "x": 0.15000000596046449,
-                            "y": 0.15000000596046449,
-                            "z": 0.15000000596046449
-                        },
-                        "worldRot": {
-                            "x": -0.08908902108669281,
-                            "y": 0.7014721035957336,
-                            "z": 0.08908911049365998,
-                            "w": 0.701472282409668
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 126,
-            "Parent": 125,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Frame3",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.000339508056640625,
-                            "y": -0.00090789794921875,
-                            "z": 0.0032196044921875
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 7.450580596923828e-8,
-                            "y": -8.381903171539307e-9,
-                            "z": 3.0547380447387697e-7,
-                            "w": 0.9999999403953552
-                        },
-                        "eulerAngles": {
-                            "x": 0.000008537736903235782,
-                            "y": -9.604979140931392e-7,
-                            "z": 0.00003500471939332783
-                        },
-                        "worldPos": {
-                            "x": -15.419048309326172,
-                            "y": 6.828377723693848,
-                            "z": -23.14798927307129
-                        },
-                        "worldScale": {
-                            "x": 0.15000000596046449,
-                            "y": 0.15000000596046449,
-                            "z": 0.15000000596046449
-                        },
-                        "worldRot": {
-                            "x": -0.08908874541521073,
-                            "y": 0.7014720439910889,
-                            "z": 0.08908926695585251,
-                            "w": 0.7014722228050232
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 9989484729768110263
-                        }
                     }
                 }
             ]
@@ -2517,7 +2502,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 8402171933765989402
+                            "ID": 10191301109709101477
                         }
                     }
                 },
@@ -3011,6 +2996,328 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 141,
+            "Parent": 37,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "BootUploadingText",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7518709902889426159
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -17.100000381469728,
+                                            "y": -7.5,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingParameter": 1500.0
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "BootStartupText",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -17.100000381469728,
+                            "y": -7.5,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -17.100000381469728,
+                            "y": -7.5,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "",
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "scale": 0.009999999776482582,
+                        "textAssetGUID": {
+                            "ID": 10355075193979688064
+                        },
+                        "fontFamilyName": "PressStart2P-Regular",
+                        "alignment": 0,
+                        "multiLineSpacingOffset": 0.0,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 141,
+                                "scriptName": "BootupText",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "fadeDuration"
+                                        }
+                                    },
+                                    {
+                                        "data": "Player.EnterLevel([\"PICTUREPERFECT\"]\nbackgroundProcesses:\n[\"SOULLINK.EXE\"])",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "introMessage"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.03999999910593033,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "typewriterSpeed"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 142,
+            "Parent": 37,
+            "Child Entities": [
+                68,
+                75,
+                144
+            ],
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 142,
+                                    "scriptName": "SettingsPage",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 144,
+                                                "scriptName": "PauseMenuButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BackButton"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 75,
+                                                "scriptName": "SettingsButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BrightnessSlider"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "CanvasmaxX"
+                                            }
+                                        },
+                                        {
+                                            "data": -0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "CanvasminX"
+                                            }
+                                        },
+                                        {
+                                            "data": -2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "OriginalTargetZButton"
+                                            }
+                                        },
+                                        {
+                                            "data": -2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "OriginalTargetZMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": 3.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "TargetZButton"
+                                            }
+                                        },
+                                        {
+                                            "data": 2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "TargetZMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 68,
+                                                "scriptName": "SettingsButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "VolumeSlider"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.20999999344348908,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxX"
+                                            }
+                                        },
+                                        {
+                                            "data": -0.03700000047683716,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minX"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048908,
+                                                "scriptName": "PauseMenu"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "pauseMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 37,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "transitionDuration"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 144,
+            "Parent": 142,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 1048578,
@@ -8615,7 +8922,7 @@
                                         }
                                     },
                                     {
-                                        "data": "TutorialPaintingM4.txt",
+                                        "data": "TutorialPaintingM5.txt",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "dataFilePath"
@@ -8664,7 +8971,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 1562391855474573918
+                            "ID": 8833524074735740568
                         }
                     }
                 }
@@ -8680,7 +8987,7 @@
                 {
                     "Tag": {
                         "tag": "Puzzle_GlowingDoor",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -8788,6 +9095,548 @@
                 {
                     "Layer": {
                         "layerName": "Puzzle"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048713,
+            "Parent": 37,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "CutMom",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 2.2850000858306886,
+                            "y": -2.940000057220459,
+                            "z": -0.30000001192092898
+                        },
+                        "scale": {
+                            "x": 3.6449999809265138,
+                            "y": 6.014999866485596,
+                            "z": -6.0699944496154789
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 2.2850000858306886,
+                            "y": -2.940000057220459,
+                            "z": -0.30000001192092898
+                        },
+                        "worldScale": {
+                            "x": 3.6449999809265138,
+                            "y": 6.014999866485596,
+                            "z": -6.0699944496154789
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 5774957819343618220
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048908,
+            "Parent": 37,
+            "Child Entities": [
+                1048913,
+                1048914,
+                1048915
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "PauseMenu",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 35.599998474121097,
+                            "y": 20.040000915527345,
+                            "z": 20.079999923706056
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 35.599998474121097,
+                            "y": 20.040000915527345,
+                            "z": 20.079999923706056
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048908,
+                                "scriptName": "PauseMenu",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 1048915,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "MainMenuButton"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048914,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ResumeButton"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048913,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "SettingsButton"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 142,
+                                            "scriptName": "SettingsPage"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "settingsPage"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 37,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "transitionDuration"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 5831806178521839330
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048913,
+            "Parent": 1048908,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SettingsHover",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.010999999940395356,
+                            "y": -0.011999999172985554,
+                            "z": 3.999999761581421
+                        },
+                        "scale": {
+                            "x": 0.2199999988079071,
+                            "y": 0.0820000022649765,
+                            "z": 0.049800798296928409
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.39159998297691347,
+                            "y": -0.2404799908399582,
+                            "z": 80.31999206542969
+                        },
+                        "worldScale": {
+                            "x": 7.831999778747559,
+                            "y": 1.6432801485061646,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048913,
+                                "scriptName": "PauseMenuButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "TriggerButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 4557617938621859577
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048914,
+            "Parent": 1048908,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "ResumeHover",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.004999999888241291,
+                            "y": 0.10999999940395355,
+                            "z": 3.999999761581421
+                        },
+                        "scale": {
+                            "x": 0.2199999988079071,
+                            "y": 0.0820000022649765,
+                            "z": 0.049800798296928409
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.17799998819828034,
+                            "y": 2.204400062561035,
+                            "z": 80.31999206542969
+                        },
+                        "worldScale": {
+                            "x": 7.831999778747559,
+                            "y": 1.6432801485061646,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048914,
+                                "scriptName": "PauseMenuButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "TriggerButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6804212942469185314
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048915,
+            "Parent": 1048908,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "MainMenuHover",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.004000000189989805,
+                            "y": -0.1420000046491623,
+                            "z": 3.999999761581421
+                        },
+                        "scale": {
+                            "x": 0.2199999988079071,
+                            "y": 0.0820000022649765,
+                            "z": 0.049800798296928409
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.14239999651908875,
+                            "y": -2.8456802368164064,
+                            "z": 80.31999206542969
+                        },
+                        "worldScale": {
+                            "x": 7.831999778747559,
+                            "y": 1.6432801485061646,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048915,
+                                "scriptName": "PauseMenuButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "TriggerButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 2464312753618505060
+                        }
                     }
                 }
             ]
@@ -9027,6 +9876,84 @@
                 "componentData": [],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 1049214,
+            "Parent": 124,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Props_PaintingFrame_new",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.00010609626770019531,
+                            "y": 0.00005626678466796875,
+                            "z": -0.000118255615234375
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.04096617549657822,
+                            "y": 0.07197179645299912,
+                            "z": 0.030851595103740693,
+                            "w": 0.996087372303009
+                        },
+                        "eulerAngles": {
+                            "x": 4.986395359039307,
+                            "y": 8.097188949584961,
+                            "z": 3.9012396335601808
+                        },
+                        "worldPos": {
+                            "x": -15.420001029968262,
+                            "y": 6.828000068664551,
+                            "z": -23.14800262451172
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": -0.12756049633026124,
+                            "y": 0.6953824162483215,
+                            "z": 0.127629354596138,
+                            "w": 0.695616602897644
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 9989484729768110263
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Props_PaintingFrame_new",
+                        "GUID": {
+                            "ID": 8783117261646337323
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
         },
         {
             "ID": 2097152,
@@ -9395,6 +10322,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "climbing"
+                                        }
+                                    },
+                                    {
                                         "data": 1000.0,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -9416,6 +10350,13 @@
                                         }
                                     },
                                     {
+                                        "data": 4.349999904632568,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minIsGroundedDistance"
+                                        }
+                                    },
+                                    {
                                         "data": 20.0,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -9427,6 +10368,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "speed"
+                                        }
+                                    },
+                                    {
+                                        "data": true,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "useScriptRotation"
                                         }
                                     },
                                     {
@@ -9493,7 +10441,7 @@
                                 "scriptName": "CameraCapture",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": "TutorialPaintingM4",
+                                        "data": "TutorialPaintingM5",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "PictureName"
@@ -11599,7 +12547,7 @@
                 {
                     "Tag": {
                         "tag": "PickupTutorialPaintingUI",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
@@ -11611,7 +12559,7 @@
                         },
                         "scale": {
                             "x": 7.7769999504089359,
-                            "y": 3.325000047683716,
+                            "y": 2.2049999237060549,
                             "z": 8.258000373840332
                         },
                         "rotation": {
@@ -11632,7 +12580,7 @@
                         },
                         "worldScale": {
                             "x": 7.7769999504089359,
-                            "y": 3.325000047683716,
+                            "y": 2.2049999237060549,
                             "z": 8.258000373840332
                         },
                         "worldRot": {
@@ -11657,7 +12605,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 16948251644551116755
+                            "ID": 12928936452914099644
                         }
                     }
                 }
@@ -12076,7 +13024,6 @@
             "y": 1.0,
             "z": 1.0
         },
-        "ambIntensity": 0.0,
-        "gammaValue": 1.7999999523162842
+        "ambIntensity": 0.0
     }
 }
