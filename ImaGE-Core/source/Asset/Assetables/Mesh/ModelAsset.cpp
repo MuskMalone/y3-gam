@@ -48,6 +48,9 @@ namespace IGE {
 			CreateDirectoryIfNotExists(compiledDir);
 
 			Debug::DebugLogger::GetInstance().LogInfo("Model detected. Converting to .imsh file...");
+			if (std::string(gSupportedModelFormats).find(fileext) == std::string::npos) {
+				throw Debug::Exception<ModelAsset>(Debug::LVL_ERROR, Msg("couldnt compile" + filename + fileext + "to imsh"));
+			}
 
 			Graphics::AssetIO::ImportSettings settings{};
 			// same keys as in AssetBrowser.cpp
@@ -70,14 +73,11 @@ namespace IGE {
 		{
 			//converting in imsh is done here
 			//assuming that this is an imsh file that is added via the assets folder
-			std::string fp{ AssetManager::GetInstance().GUIDToPath(guid) };
+			std::string const& fp{ AssetManager::GetInstance().GUIDToPath(guid) };
 			if (!IsValidFilePath(fp)) {
 				return new ModelAsset(fp);
 			}
-			std::filesystem::path const path{ fp };
-			std::string filename{ GetFileName(fp) };
-			std::string fileext{ GetFileExtension(fp) };
-			CreateDirectoryIfNotExists(cModelDirectory + cCompiledDirectory);
+
 			std::string const finalfp{ cModelDirectory + cCompiledDirectory + GetFileName(fp) + gMeshFileExt };
 
 			//copy the file to a "Compiled" folder
@@ -86,10 +86,6 @@ namespace IGE {
 			//	finalfp = cModelDirectory + cCompiledDirectory + filename + fileext;
 			//	CopyFileToAssets(fp, finalfp);
 			//}
-
-			if (std::string(gSupportedModelFormats).find(fileext) == std::string::npos) {
-				throw Debug::Exception<ModelAsset>(Debug::LVL_ERROR, Msg("couldnt compile" + fileext + "to imsh"));
-			}
 			
 			return new ModelAsset(
 				finalfp

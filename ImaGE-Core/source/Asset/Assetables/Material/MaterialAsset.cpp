@@ -19,10 +19,7 @@ namespace IGE {
             }
 
             // Define the new file path within the assets directory
-            std::filesystem::path path{ fp };
-            std::string fileName = GetFileName(fp);
-            std::string fileExt = GetFileExtension(fp);
-            std::string assetFilePath = cMaterialDirectory + fileName + fileExt;
+            std::string const assetFilePath = cMaterialDirectory + GetFileNameWithExtension(fp);
 
             // Create directories if they do not exist
             CreateDirectoryIfNotExists(cMaterialDirectory);
@@ -41,7 +38,7 @@ namespace IGE {
 
         void* MaterialAsset::Load(GUID guid) {
             // Convert GUID to file path
-            std::string fp = AssetManager::GetInstance().GUIDToPath(guid);
+            std::string const& fp = AssetManager::GetInstance().GUIDToPath(guid);
 
             // Check if the file path is valid, otherwise create a default MaterialAsset
             if (!IsValidFilePath(fp)) {
@@ -51,9 +48,8 @@ namespace IGE {
                 return new MaterialAsset("");
             }
 
-            std::filesystem::path const path{ fp };
-            std::string filename = GetFileName(fp);
-            std::string fileext = GetFileExtension(fp);
+            std::string const filename = GetFileName(fp);
+            std::string const fileext = GetFileExtension(fp);
 
             // Ensure the material directory exists for compiled materials
             CreateDirectoryIfNotExists(cMaterialDirectory);
