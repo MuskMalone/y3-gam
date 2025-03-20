@@ -39,6 +39,7 @@ public class PaintingAlignUILevel2 : Entity
   public Entity alignmentUI;
   public Entity leverTwo;
   public string[] lever2Dialogue;
+  public string[] allPaintingsDialogue;
 
   public bool isPainting = false;
   private PullLever leverTwoScript;
@@ -73,8 +74,10 @@ public class PaintingAlignUILevel2 : Entity
     {
       if (pictureAlignScript.IsAligned())
       {
-        if (pictureAlignScript.GetCurrentPainting() == "HexPaintingDestructible2to1")
+        string currPainting = pictureAlignScript.GetCurrentPainting();
+        if (currPainting == "HexPaintingDestructible2to1")
         {
+          // prevent alignment if lever2 hasn't been pulled
           if (leverTwoScript.LeverPulled())
           {
             pictureAlignScript.preventAlignment = false;
@@ -82,6 +85,18 @@ public class PaintingAlignUILevel2 : Entity
           else if (Input.GetMouseButtonTriggered(0) && !dialogueScript.isInDialogueMode)
           {
             dialogueScript.SetDialogue(lever2Dialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking });
+          }
+        }
+        else if (currPainting.StartsWith("HexPaintingIndestructible"))
+        {
+          // prevent alignment if not all paintings are picked up
+          if (level2inventoryScript.HasAllPaintings())
+          {
+            pictureAlignScript.preventAlignment = false;
+          }
+          else if(Input.GetMouseButtonTriggered(0) && !dialogueScript.isInDialogueMode)
+          {
+            dialogueScript.SetDialogue(allPaintingsDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking });
           }
         }
 

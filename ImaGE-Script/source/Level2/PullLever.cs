@@ -9,7 +9,7 @@ public class PullLever : Entity
   public float timeBeforeCamSwitch = 0.1f;
 
   public Entity platformLight;
-  private static LeverManager leverManager; // Reference to the manager
+  private LeverManager leverManager; // Reference to the manager
   private string thisLeverTag;
   private bool leverPulled = false;
   private float timeElapsed = 0f;
@@ -18,10 +18,7 @@ public class PullLever : Entity
 
   void Start()
   {
-    if (leverManager == null)
-    {
-      leverManager = FindObjectOfType<LeverManager>();
-    }
+    leverManager = FindObjectOfType<LeverManager>();
 
     thisLeverTag = InternalCalls.GetTag(mEntityID);
     InternalCalls.SetLightIntensity(leverLight.mEntityID, 0.0f);

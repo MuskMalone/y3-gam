@@ -26,7 +26,7 @@ public class HexTableOrb : Entity
   private static readonly Vector3 tableSurfaceMidpoint = new Vector3(63.429f, 67.564f, -425.342f);
   private static readonly float pushOffStrength = 45f;
 
-  private static LeverManager leverManager;
+  private LeverManager leverManager;
 
   public enum State
   {
@@ -56,10 +56,7 @@ public class HexTableOrb : Entity
     timer = 0f;
     InternalCalls.SetSoundVolume(mEntityID, "Spin", 0);
     InternalCalls.SetSoundVolume(mEntityID, "SpinFaster", 0);
-    if (leverManager == null)
-    {
-      leverManager = FindObjectOfType<LeverManager>();
-    }
+    leverManager = FindObjectOfType<LeverManager>();
 
     StopGlowing();
     brokenOrb.SetActive(false);
