@@ -370,9 +370,9 @@ public class Level2Inventory : Entity
                 poseidonPaintingUI?.FindScript<HoldupUI>().SetAlginUI("PoseidonPainting", GetItemByName("PoseidonPainting"));
                 paintingAlignUILevel2Script.isPainting = true;
                 break;
-            case "HexPaintingDescructible2to1":
+            case "HexPaintingDestructible2to1":
                 twotoonePaintingUI?.SetActive(true);
-                twotoonePaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingDescructible2to1", GetItemByName("HexPaintingDescructible2to1"));
+                twotoonePaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingDestructible2to1", GetItemByName("HexPaintingDestructible2to1"));
                 paintingAlignUILevel2Script.isPainting = true;
                 break;
             case "HexPaintingIndestructible1to5":

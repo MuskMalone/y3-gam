@@ -2170,6 +2170,13 @@
                                         "scriptField": {
                                             "fieldName": "player"
                                         }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "shouldLock"
+                                        }
                                     }
                                 ]
                             },
@@ -22529,6 +22536,35 @@
                                         }
                                     },
                                     {
+                                        "data": [
+                                            "I should probably collect the fragment first..."
+                                        ],
+                                        "type": "System.String[]",
+                                        "scriptField": {
+                                            "fieldName": "collectFragmentDialogue"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 197,
+                                            "scriptName": "Dialogue"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "dialogueScript"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 203,
+                                            "scriptName": "Fragment"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fragment"
+                                        }
+                                    },
+                                    {
                                         "data": false,
                                         "type": "System.Boolean",
                                         "scriptField": {
@@ -27337,6 +27373,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "positionThreshold"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "preventAlignment"
                                         }
                                     },
                                     {

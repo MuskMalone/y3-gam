@@ -13084,7 +13084,7 @@
                 },
                 {
                     "Tag": {
-                        "tag": "HexPaintingDescructible2to1",
+                        "tag": "HexPaintingDestructible2to1",
                         "isActive": true
                     }
                 },
@@ -13165,7 +13165,7 @@
                         "scriptList": [
                             {
                                 "entityID": 306,
-                                "scriptName": "HexPaintingDescructible2to1",
+                                "scriptName": "HexPaintingDestructible2to1",
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
@@ -27152,7 +27152,7 @@
                         "position": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 0.0
+                            "z": 1.0
                         },
                         "scale": {
                             "x": 1.0,
@@ -27173,7 +27173,7 @@
                         "worldPos": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 0.0
+                            "z": 1.0
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -27298,7 +27298,7 @@
                                         "position": {
                                             "x": -4.599999904632568,
                                             "y": -7.599999904632568,
-                                            "z": 0.0
+                                            "z": 1.0
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -27351,7 +27351,7 @@
                         "worldPos": {
                             "x": -4.599999904632568,
                             "y": -7.599999904632568,
-                            "z": 0.0
+                            "z": 1.0
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -55619,7 +55619,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "HexPaintingDescructible2to1UI",
+                        "tag": "HexPaintingDestructible2to1UI",
                         "isActive": false
                     }
                 },
@@ -55761,7 +55761,7 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "HexPaintingDescructible2to1Selection",
+                        "tag": "HexPaintingDestructible2to1Selection",
                         "isActive": false
                     }
                 },
@@ -66403,6 +66403,13 @@
                                         "scriptField": {
                                             "fieldName": "player"
                                         }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "shouldLock"
+                                        }
                                     }
                                 ]
                             },
@@ -67882,7 +67889,7 @@
             "Position": {
                 "x": 0.0,
                 "y": 0.0,
-                "z": 0.0
+                "z": 1.0
             },
             "Prefab": {
                 "GUID": {
