@@ -2,7 +2,7 @@
 using IGE.Utils;
 using static Dialogue;
 
-public class HexPaintingDescructible2to1 : Entity, IInventoryItem
+public class HexPaintingDestructible2to1 : Entity, IInventoryItem
 {
     public Entity _Image;
     public Level2Inventory level2inventoryScript;
@@ -13,7 +13,7 @@ public class HexPaintingDescructible2to1 : Entity, IInventoryItem
     {
         get
         {
-            return "HexPaintingDescructible2to1";
+            return "HexPaintingDestructible2to1";
         }
     }
 

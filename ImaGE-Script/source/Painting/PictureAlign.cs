@@ -292,7 +292,7 @@ public class PictureAlign : Entity
             }
         }
 
-        else if (picture == "HexPaintingDescructible2to1") 
+        else if (picture == "HexPaintingDestructible2to1") 
         {
             FadeOut();
             if (hasFaded)
@@ -461,6 +461,7 @@ public class PictureAlign : Entity
     }
   }
 
+  public string GetCurrentPainting() { return picture; } 
 
     public bool IsAligned()
   {
@@ -468,8 +469,8 @@ public class PictureAlign : Entity
     Vector2 currRot =playerMove.GetRotation();
     //Vector3 currWRot = mainCamera.GetComponent<Transform>().rotationWorldEuler;
     //Vector3 currLRot = mainCamera.GetComponent<Transform>().rotationEuler;
-    Console.WriteLine("Curr:" + player.GetComponent<Transform>().worldPosition + " vs:" + savedPosition);
-    Console.WriteLine("DIFF: " + positionDistance);
+    //Console.WriteLine("Curr:" + player.GetComponent<Transform>().worldPosition + " vs:" + savedPosition);
+    //Console.WriteLine("DIFF: " + positionDistance);
     bool aligned = true;
 
     if (positionDistance > positionThreshold)
