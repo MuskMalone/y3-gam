@@ -129,7 +129,7 @@ public class  PlayerMove : Entity
         movementVector.Y -= 1f;
       }
       InternalCalls.SetGravityFactor(mEntityID, 0f);
-      GetComponent<Transform>().worldPosition += movementVector * 3f;
+      GetComponent<Transform>().worldPosition += movementVector * (Input.GetKeyDown(KeyCode.Q) ? 5f : 3f);
       InternalCalls.UpdatePhysicsToTransform(mEntityID);
     }
     else

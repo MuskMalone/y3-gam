@@ -39,6 +39,7 @@ public class TheTwinDoors : Entity
           bool doorHit = playerInteraction.RayHitString.StartsWith("TwinDoors ");
           if (Input.GetKeyTriggered(KeyCode.MOUSE_BUTTON_1) && doorHit && !dialogueScript.isInDialogueMode)
           {
+            InternalCalls.PlaySound(mEntityID, "LockedDoor");
             dialogueScript.SetDialogue(lockedDoorDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking });
             interactDoorUI.SetActive(false);
           }
