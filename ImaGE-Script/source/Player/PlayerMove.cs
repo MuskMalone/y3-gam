@@ -14,6 +14,7 @@ or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
+#define COMMENT_OUT_FOR_SUBMISSION
 
 using IGE.Utils;
 using System;
@@ -26,6 +27,7 @@ public class  PlayerMove : Entity
   public float walkingSpeed = 750f;
   public float runSpeed = 1300f;
   public float isGroundedRayHeight = 3f;
+  public bool noClip = false;
   
   public Entity cam;
 
@@ -86,6 +88,15 @@ public class  PlayerMove : Entity
   }
   void PlayerMovement()
   {
+#if COMMENT_OUT_FOR_SUBMISSION
+    // tilde(~) key to ALLOW NOCLIP MODE TO FLY AROUND
+    // CONTROLS: WASD SPACE Q
+    if (Input.GetKeyTriggered(KeyCode.GRAVE_ACCENT))
+    {
+      noClip = !noClip;
+    }
+#endif
+
     float x = Input.GetAxis("Horizontal");
     float z = Input.GetAxis("Vertical");
 
@@ -106,15 +117,34 @@ public class  PlayerMove : Entity
     }
     Vector3 move = movementVector * speed;
 
-    InternalCalls.MoveCharacter(mEntityID, move);
-
-    if (IsGrounded())
+#if COMMENT_OUT_FOR_SUBMISSION
+    if (noClip)
     {
-      InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
+      if (Input.GetKeyDown(KeyCode.SPACE))
+      {
+        movementVector.Y += 1f;
+      }
+      if (Input.GetKeyDown(KeyCode.Q))
+      {
+        movementVector.Y -= 1f;
+      }
+      InternalCalls.SetGravityFactor(mEntityID, 0f);
+      GetComponent<Transform>().worldPosition += movementVector * 3f;
+      InternalCalls.UpdatePhysicsToTransform(mEntityID);
     }
     else
+#endif
     {
-      InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor * extraGravityFactorDuringDescent);
+      InternalCalls.MoveCharacter(mEntityID, move);
+
+      if (IsGrounded())
+      {
+        InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
+      }
+      else
+      {
+        InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor * extraGravityFactorDuringDescent);
+      }
     }
   }
 

@@ -150,11 +150,15 @@ public class Level2Inventory : Entity
         }
     }
 
-    public void ClearInventory()
+    // i'm accounting for the fact that you can solve the key code without collecting
+    // all paintings and by guessing the last number, meaning it is possible for someone
+    // to walk back out of the hex room to collect other paintings after the door opens.
+    // We will only clear non-HexPaintings from inventory via a trigger
+    public void ClearInventoryForHexRoom()
     {
       foreach (IInventoryItem item in mItems)
       {
-        if (item != null)
+        if (item != null && !item.Name.StartsWith("HexPainting"))
           RemoveItem(item);
       }
     }

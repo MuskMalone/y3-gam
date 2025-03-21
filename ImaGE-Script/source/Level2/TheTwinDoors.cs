@@ -6,49 +6,77 @@ using static System.TimeZoneInfo;
 
 public class TheTwinDoors : Entity
 {
-  public Level2Inventory level2Inventory;
   public PlayerInteraction playerInteraction;
+  public Entity level2Dialogue;
+  public string[] lockedDoorDialogue;
   public Entity leftDoor, rightDoor;
+  public Entity interactDoorUI;
   public string doorAnimName;
 
-  private string entityTag;
-  private bool playerInteracted = false;
-  public TheTwinDoors() : base()
+  private enum State
   {
-
+    CLOSED,
+    ANIMATION,
+    OPEN
   }
+  private State currState = State.CLOSED;
+  private TutorialDialogue dialogueScript;
+
+  public TheTwinDoors() : base() {}
 
   void Start()
   {
-    entityTag = InternalCalls.GetTag(mEntityID);
+    dialogueScript = level2Dialogue.FindScript<TutorialDialogue>();
   }
 
   void Update()
   {
-    if (!playerInteracted)
+    switch (currState)
     {
-      if (Input.GetMouseButtonTriggered(0) && playerInteraction.RayHitString == entityTag)
+      case State.CLOSED:
+        {
+          // both doors are prefixed with "TwinDoors "
+          bool doorHit = playerInteraction.RayHitString.StartsWith("TwinDoors ");
+          if (Input.GetKeyTriggered(KeyCode.MOUSE_BUTTON_1) && doorHit && !dialogueScript.isInDialogueMode)
+          {
+            dialogueScript.SetDialogue(lockedDoorDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking });
+            interactDoorUI.SetActive(false);
+          }
+          else
+          {
+            interactDoorUI.SetActive(doorHit);
+          }
+
+          break;
+        }
+      case State.ANIMATION:
+        {
+          // align collider during anim
+          if (InternalCalls.IsPlayingAnimation(leftDoor.mEntityID))
+          {
+            InternalCalls.UpdatePhysicsToTransform(leftDoor.mEntityID);
+            InternalCalls.UpdatePhysicsToTransform(rightDoor.mEntityID);
+          }
+          else
+          {
+            currState = State.OPEN;
+          }
+
+          break;
+        }
+      case State.OPEN:
       {
-        level2Inventory.ClearInventory();
-        SetActive(false);
-        playerInteracted = true;
-        InternalCalls.PlayAnimation(leftDoor.mEntityID, doorAnimName);
-        InternalCalls.PlayAnimation(rightDoor.mEntityID, doorAnimName);
+        Destroy(this);  // no longer need this script
+        break;
       }
-
-      return;
     }
+  }
 
-    if (InternalCalls.IsPlayingAnimation(leftDoor.mEntityID))
-    {
-      InternalCalls.UpdatePhysicsToTransform(leftDoor.mEntityID);
-      InternalCalls.UpdatePhysicsToTransform(rightDoor.mEntityID);
-    }
-    else
-    {
-      Destroy(this);
-    }
-
-    // align collider here
+  public void UnlockDoors()
+  {
+    InternalCalls.PlayAnimation(leftDoor.mEntityID, doorAnimName);
+    InternalCalls.PlayAnimation(rightDoor.mEntityID, doorAnimName);
+    currState = State.ANIMATION;
+    interactDoorUI.SetActive(false);
   }
 }

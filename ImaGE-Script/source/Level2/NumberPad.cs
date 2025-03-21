@@ -6,11 +6,12 @@ using System.Numerics;
 public class NumberPad : Entity
 {
     public PlayerInteraction playerInteraction;
+    public PlayerMove playerMove;
+    public Entity twinDoors;
     public Entity interactWithKeypadUI;
     public Entity keypadInstructionsUI;
     public Entity keypadUI;
     public Entity keypadTextBox;
-    public PlayerMove playerMove;
     public Entity enterButton;
     public Entity backButton;
     private Random random = new Random();
@@ -75,6 +76,8 @@ public class NumberPad : Entity
                 KeypadUIMode();
                 break;
             case State.UNLOCKED:
+                twinDoors.FindScript<TheTwinDoors>().UnlockDoors();
+                Destroy(this);
                 break;
         }
     }
