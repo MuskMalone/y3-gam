@@ -12,6 +12,7 @@
                 115,
                 135,
                 141,
+                142,
                 1048618,
                 1048713,
                 1048908,
@@ -162,6 +163,32 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 68,
+            "Parent": 142,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 75,
+            "Parent": 142,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 103,
@@ -350,6 +377,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "positionThreshold"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "preventAlignment"
                                         }
                                     },
                                     {
@@ -1675,7 +1709,7 @@
                                     },
                                     {
                                         "data": [
-                                            "My legs are frozen, and no matter how much \nI beg... How much I cry... \nI can't stop here from slipping away."
+                                            "My legs are frozen, and no matter how much \nI beg... How much I cry... \nI can't stop her from slipping away."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -2102,6 +2136,13 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "doorEntryTrigger"
+                                        }
+                                    },
+                                    {
+                                        "data": 1.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "footstepPitch"
                                         }
                                     },
                                     {
@@ -3115,6 +3156,168 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 142,
+            "Parent": 37,
+            "Child Entities": [
+                68,
+                75,
+                144
+            ],
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 142,
+                                    "scriptName": "SettingsPage",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 144,
+                                                "scriptName": "PauseMenuButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BackButton"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 75,
+                                                "scriptName": "SettingsButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BrightnessSlider"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "CanvasmaxX"
+                                            }
+                                        },
+                                        {
+                                            "data": -0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "CanvasminX"
+                                            }
+                                        },
+                                        {
+                                            "data": -2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "OriginalTargetZButton"
+                                            }
+                                        },
+                                        {
+                                            "data": -2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "OriginalTargetZMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": 3.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "TargetZButton"
+                                            }
+                                        },
+                                        {
+                                            "data": 2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "TargetZMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 68,
+                                                "scriptName": "SettingsButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "VolumeSlider"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.20999999344348908,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxX"
+                                            }
+                                        },
+                                        {
+                                            "data": -0.03700000047683716,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minX"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048908,
+                                                "scriptName": "PauseMenu"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "pauseMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 37,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "transitionDuration"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 144,
+            "Parent": 142,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 1048578,
@@ -9078,6 +9281,16 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 142,
+                                            "scriptName": "SettingsPage"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "settingsPage"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 37,
                                             "scriptName": "Transition"
                                         },
@@ -10134,6 +10347,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "isGroundedRayHeight"
+                                        }
+                                    },
+                                    {
+                                        "data": 4.349999904632568,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minIsGroundedDistance"
                                         }
                                     },
                                     {
@@ -12804,7 +13024,6 @@
             "y": 1.0,
             "z": 1.0
         },
-        "ambIntensity": 0.0,
-        "gammaValue": 1.7999999523162842
+        "ambIntensity": 0.0
     }
 }

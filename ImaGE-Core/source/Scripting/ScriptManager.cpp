@@ -102,7 +102,13 @@ namespace Mono
     { "HexTableOrb", ScriptFieldType::HEX_TABLE_ORB },
     { "Level3Dialogue", ScriptFieldType::LEVEL3_DIALOGUE },
     { "Fragment", ScriptFieldType::FRAGMENT },
-    { "BootupText", ScriptFieldType::BOOTUPTEXT }
+    { "BootupText", ScriptFieldType::BOOTUPTEXT },
+    { "Lvl4Dialogue", ScriptFieldType::LVL4_DIALOGUE },
+    { "SettingsPage", ScriptFieldType::SETTINGS },
+    { "PauseMenu", ScriptFieldType::PAUSEMENU },
+    { "SettingsButtons", ScriptFieldType::SETTINGSBUTTON },
+    { "PauseMenuButtons", ScriptFieldType::PAUSEMENUBUTTON }
+
   };
 }
 
@@ -208,6 +214,7 @@ void ScriptManager::AddInternalCalls()
   ADD_CLASS_INTERNAL_CALL(AnyKeyDown, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(AnyKeyTriggered, Input::InputManager::GetInstance());
   ADD_INTERNAL_CALL(GetMousePos);
+  ADD_INTERNAL_CALL(GetScreenWidth);
   ADD_INTERNAL_CALL(GetMousePosWorld);
   ADD_INTERNAL_CALL(GetMouseDelta);
   ADD_INTERNAL_CALL(GetCameraForward);
@@ -292,8 +299,11 @@ void ScriptManager::AddInternalCalls()
   // Utility Functions
   ADD_INTERNAL_CALL(Raycast);
   ADD_INTERNAL_CALL(RaycastFromEntity);
+  ADD_INTERNAL_CALL(RaycastFromEntityInfo);
   ADD_INTERNAL_CALL(SetSoundPitch);
   ADD_INTERNAL_CALL(SetSoundVolume);
+  ADD_INTERNAL_CALL(SetSoundGlobalVolume);
+  ADD_INTERNAL_CALL(GetSoundGlobalVolume);
   ADD_INTERNAL_CALL(EnableSoundPostProcessing);
   ADD_INTERNAL_CALL(DisableSoundPostProcessing);
   ADD_INTERNAL_CALL(PlaySound);
@@ -327,6 +337,9 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetCanvasTransitionProgress);
   ADD_INTERNAL_CALL(EnableCanvasTransition);
   ADD_INTERNAL_CALL(SetCanvasTransitionType);
+  ADD_INTERNAL_CALL(SetBrightness);
+  ADD_INTERNAL_CALL(SetBGM);
+  ADD_INTERNAL_CALL(GetGammaNorm);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -984,6 +997,8 @@ void Mono::SetTag(ECS::Entity::EntityID entity, MonoString* tag) {
     ECS::Entity(entity).GetComponent<Component::Tag>().tag = convertedTag;
 }
 
+
+
 void Mono::Log(MonoString*s)
 {
   std::string msg{ MonoStringToSTD(s) };
@@ -1125,7 +1140,29 @@ glm::vec3 Mono::GetMouseDelta()
 
 glm::vec3 Mono::GetMousePos()
 {
+
   return glm::vec3(Input::InputManager::GetInstance().GetMousePos(), 0);
+}
+
+float Mono::GetScreenWidth()
+{
+  return Input::InputManager::GetInstance().GetDim().x;
+}
+
+void Mono::SetBrightness(float fraction)
+{
+  float newValue = Component::Light::sGlobalProps.MinGammaValue + (fraction * (Component::Light::sGlobalProps.MaxGammvalue - Component::Light::sGlobalProps.MinGammaValue));
+  Component::Light::sGlobalProps.gammaValue = newValue;
+}
+
+void Mono::SetBGM(float fraction)
+{
+
+}
+
+float Mono::GetGammaNorm()
+{
+  return (Component::Light::sGlobalProps.gammaValue - Component::Light::sGlobalProps.MinGammaValue) / (Component::Light::sGlobalProps.MaxGammvalue - Component::Light::sGlobalProps.MinGammaValue);
 }
 
 glm::vec3 Mono::GetMousePosWorld(float depth)
@@ -1155,7 +1192,7 @@ ECS::Entity::EntityID Mono::Raycast(glm::vec3 start, glm::vec3 end)
     if (IGE::Physics::PhysicsSystem::GetInstance()->RayCastSingular(start, end, hit)) {
         ECS::Entity::EntityID out {hit.entity.GetEntityID()};
         return out;
-    }return static_cast<ECS::Entity::EntityID>(0);
+    }return static_cast<ECS::Entity::EntityID>(static_cast<unsigned>(-1));
 }
 
 ECS::Entity::EntityID Mono::RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3 start, glm::vec3 end) {
@@ -1163,7 +1200,16 @@ ECS::Entity::EntityID Mono::RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3
     if (IGE::Physics::PhysicsSystem::GetInstance()->RayCastFromEntity(e, start, end, hit)) {
         ECS::Entity::EntityID out {hit.entity.GetEntityID()};
         return out;
-    }return static_cast<ECS::Entity::EntityID>(0);
+    }return static_cast<ECS::Entity::EntityID>(static_cast<unsigned>(-1));
+}
+
+IGE::Physics::RaycastHitInfo Mono::RaycastFromEntityInfo(ECS::Entity::EntityID e, glm::vec3 start, glm::vec3 end) {
+    IGE::Physics::RaycastHit hit{};
+    if (IGE::Physics::PhysicsSystem::GetInstance()->RayCastFromEntity(e, start, end, hit)) {
+        ECS::Entity::EntityID out{ hit.entity.GetEntityID() };
+
+        return IGE::Physics::RaycastHitInfo{ hit.position, hit.normal, hit.distance };
+    }return IGE::Physics::RaycastHitInfo{};
 }
 
 void Mono::SetSoundPitch(ECS::Entity::EntityID e, MonoString* s, float p)
@@ -1179,6 +1225,15 @@ void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v)
     ECS::Entity entity{ e };
     //printf("%s is setting volume", entity.GetComponent<Component::Tag>().tag.c_str());
     entity.GetComponent<Component::AudioSource>().SetSoundVolume(name, v);
+}
+
+void Mono::SetSoundGlobalVolume(float vol) {
+    IGE::Audio::AudioManager::GetInstance().mGlobalVolume = vol;
+}
+
+
+float Mono::GetSoundGlobalVolume() {
+  return IGE::Audio::AudioManager::GetInstance().mGlobalVolume;
 }
 
 void Mono::EnableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s, unsigned type, float param)
@@ -1948,7 +2003,7 @@ MonoArray* Mono::GetContactPoints(ECS::Entity entity1, ECS::Entity entity2)
 
         cp.internalFaceIndex1 = contactPoints[i].internalFaceIndex1;
 
-        // Obtain a pointer to the array element’s storage.
+        // Obtain a pointer to the array elementï¿½s storage.
         // Calculate the element size from the MonoClass information.
         void* elementAddr = mono_array_addr_with_size(managedArray, mono_class_value_size(contactPointClass, nullptr), i);
         // Copy our local instance into the managed array.

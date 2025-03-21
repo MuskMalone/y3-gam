@@ -20,7 +20,7 @@ public class PlayerInteraction : Entity
 
     uint rayHitID = InternalCalls.RaycastFromEntity(mEntityID, rayOrigin, rayEnd);
 
-        if (rayHitID != 0)
+        if (rayHitID != uint.MaxValue)
         {
             RayHitString = InternalCalls.GetTag(rayHitID);
             //Console.WriteLine(RayHitString);

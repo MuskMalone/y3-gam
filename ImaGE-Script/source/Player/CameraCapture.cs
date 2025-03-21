@@ -20,6 +20,8 @@ public class CameraCapture : Entity
   private Quaternion savedCameraRotation;
   private Vector3 savedCameraEuler;
 
+  // whether the painting needs to be unlocked (by another script) before allowing alignment
+  public bool shouldLock = false;
   public bool imageCaptured = false;  // Check if the image and data have been captured
 
   void Start()
@@ -67,6 +69,7 @@ public class CameraCapture : Entity
     content += $"Player Position: {savedPlayerPosition}\n";
     content += $"Camera Rotation: {savedCameraRotation}\n";
     content += $"Camera Euler:    {savedCameraEuler}\n";
+    content += $"shouldLock:      {shouldLock}\n";
 
     // Write the content to the text file
     File.WriteAllText(dataPath, content);

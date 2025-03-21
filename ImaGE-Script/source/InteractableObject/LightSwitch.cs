@@ -47,7 +47,7 @@ public class LightSwitch : Entity
             if (mouseClicked && isSwitchHit)
             {
                 //Console.WriteLine("CameHere");
-                InternalCalls.PlaySound(mEntityID, "LightSwitch");
+                InternalCalls.PlaySound(mEntityID, lightsOn ? "LeverUp" : "LeverDown");
 
                 InternalCalls.PlayAnimation(lever.mEntityID, lightsOn ? "SwitchOff" : "SwitchOn");
                 playingAnim = true;

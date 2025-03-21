@@ -2,6 +2,7 @@
 #include <chrono>
 #include <map>
 #include <Singleton/ThreadSafeSingleton.h>
+#include <Events/EventCallback.h>
 
 // FrameRateController
 #define IGE_FRC Performance::FrameRateController::GetInstance()
@@ -36,15 +37,15 @@ namespace Performance {
     void SetTargetFPS(float target);
     void SetVsync(bool vsyncEnabled);
 
-
-
     void Reset();
 
   private:
+    // reset on the frame we switch scenes
+    EVENT_CALLBACK_DECL(OnSceneLoad);
+
     std::chrono::time_point<std::chrono::high_resolution_clock> mSystemTimeStart{};
     std::map<std::string, TimeFormat> mSystemTimerMap;
 
-    bool mVsyncEnabled{};
     TimeType mAccumulatedFPS{};
     TimeType mTotalTime{};
     TimeType mCurrFrameTime{}, mNewFrameTime{}, mDeltaTime{};
@@ -53,5 +54,6 @@ namespace Performance {
     TimeType mTargetFrameTime{};
     TimeType mFPSCalculationInterval{};
     unsigned mFrameCounter{};
+    bool mVsyncEnabled{}, mFirstFrameAfterSceneLoad = false;
   };
 } // namespace Performance

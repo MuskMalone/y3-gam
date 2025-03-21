@@ -34,7 +34,8 @@ public class Fragment : Entity
     TRANSITION,
     ZOOMING_IN,     // fragment fitting into place
     EXPLOSION,      // boom
-    FINAL_PHASE     // animation done
+    FINAL_PHASE,    // animation done
+    COLLECTED
   }
   private State currState = State.IDLE;
 
@@ -140,11 +141,14 @@ public class Fragment : Entity
           transition.StartTransition(true, 0.5f, Transition.TransitionType.WIPE);
           SetPlayerCameraAsMain();
           blackBorder.HideBlackBorders();
-          Destroy();
+          SetActive(false);
           fragmentCollected = true;
+          currState = State.COLLECTED;
 
           break;
         }
+      case State.COLLECTED:
+        return;
       default:
         break;
     }

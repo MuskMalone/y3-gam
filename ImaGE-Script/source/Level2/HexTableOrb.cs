@@ -26,7 +26,7 @@ public class HexTableOrb : Entity
   private static readonly Vector3 tableSurfaceMidpoint = new Vector3(63.429f, 67.564f, -425.342f);
   private static readonly float pushOffStrength = 45f;
 
-  private static LeverManager leverManager;
+  private LeverManager leverManager;
 
   public enum State
   {
@@ -46,13 +46,17 @@ public class HexTableOrb : Entity
   private float timeElapsed = 0f, violentTimer = 0f;
   private bool firstFrameAfterFall = true;
 
+  public float delayBeforeLightPingSFX = 0.472f;
+  public float timeTakenToGlow = 3.8f;
+  public float timer = 0f;
+  private bool toPlay = true;
   // Start is called before the first frame update
   void Start()
   {
-    if (leverManager == null)
-    {
-      leverManager = FindObjectOfType<LeverManager>();
-    }
+    timer = 0f;
+    InternalCalls.SetSoundVolume(mEntityID, "Spin", 0);
+    InternalCalls.SetSoundVolume(mEntityID, "SpinFaster", 0);
+    leverManager = FindObjectOfType<LeverManager>();
 
     StopGlowing();
     brokenOrb.SetActive(false);
@@ -67,9 +71,17 @@ public class HexTableOrb : Entity
     {
       case State.RISING:
         {
+          timer += InternalCalls.GetDeltaTime();
+          if (timer >= timeTakenToGlow - delayBeforeLightPingSFX && toPlay == true)
+          {
+            toPlay = false;
+            InternalCalls.SetSoundVolume(mEntityID, "Light", 3f);
+            InternalCalls.PlaySound(mEntityID, "Light");
+          }
           // when orb comes to a stop
           if (InternalCalls.GetVelocity(mEntityID).Y < 0.1f)
           {
+
             currState = State.HOVERING;
             originalPos = InternalCalls.GetPosition(mEntityID);
             StartGlowing();
@@ -80,7 +92,7 @@ public class HexTableOrb : Entity
       case State.HOVERING:
         {
           timeElapsed += Time.deltaTime;
-
+          InternalCalls.SetSoundVolume(mEntityID, "Spin", 0.4f);
           if (timeElapsed >= frequency)
           {
             // Generate a small random offset
@@ -102,11 +114,16 @@ public class HexTableOrb : Entity
       case State.VIOLENT:
         {
           timeElapsed += Time.deltaTime;
+          InternalCalls.SetSoundVolume(mEntityID, "SpinFaster", 0.5f);
+
+          timeElapsed += Time.deltaTime;
           violentTimer += Time.deltaTime;
 
           if (timeElapsed >= violentDuration)
           {
             Fall();
+            InternalCalls.StopSound(mEntityID, "Spin");
+            InternalCalls.StopSound(mEntityID, "SpinFaster");
             timeElapsed = 0f;
             return;
           }
@@ -138,6 +155,8 @@ public class HexTableOrb : Entity
           if (InternalCalls.GetContactPoints(tableSurface.mEntityID, mEntityID).Length > 0)
           {
             currState = State.ROLLING;
+            InternalCalls.SetSoundVolume(mEntityID, "Roll", 0.5f);
+            InternalCalls.PlaySound(mEntityID, "Roll");
           }
 
           break;
@@ -153,6 +172,7 @@ public class HexTableOrb : Entity
             brokenOrb.SetActive(true);  // activate the broken orb and all its pieces
             InternalCalls.UnparentEntity(brokenOrb.mEntityID);
             currState = State.OFF_TABLE;
+            InternalCalls.StopSound(mEntityID, "Roll");
 
             // align all colliders to their pieces
             foreach (uint id in InternalCalls.GetAllChildren(brokenOrb.mEntityID))
@@ -186,7 +206,7 @@ public class HexTableOrb : Entity
             InternalCalls.LockRigidBody(id, false);
           }
           currState = State.SHATTERED;
-
+          
           break;
         }
 
@@ -195,7 +215,10 @@ public class HexTableOrb : Entity
           // if pieces touched the ground
           if (InternalCalls.GetContactPoints(firstBrokenPiece, hexFloor.mEntityID).Length > 0)
           {
+
             leverManager.OrbShattered();
+            
+            InternalCalls.PlaySound(mEntityID, "Break");
             Destroy();  // no longer needs this entity
           }
 
