@@ -138,7 +138,6 @@ public class TutorialCutscene : Entity
         openDoor.SetActive(false);
         glow.SetActive(false);
         tutorialDialogue.SetDialogue(thirdCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Surprised });
-        playerMove.UnfreezePlayer();
         secondCutscenePlaying = false;
         cutsceneFinish = true;
     }

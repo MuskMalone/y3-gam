@@ -5,14 +5,15 @@ using System.Numerics;
 public class BootupText : Entity
 { 
   public PlayerMove playerMove;
-
+  public Transition transition;
   // Boot upload text
   public float fadeDuration = 3f;
   public string introMessage;
   public float typewriterSpeed = 0.04f;
 
   private bool completed = false;
-  private bool triggerInitialSpecialDialogue = true;
+  private bool triggerInitialFadeIn = true;
+  private bool triggerInitialSpecialDialogue = false;
   private string specialLine;
   private bool isInSpecialDialogueMode = false;
   private bool specialLineFadeout = false;
@@ -28,10 +29,21 @@ public class BootupText : Entity
 
   void Update()
   {
+    if (triggerInitialFadeIn)
+    {
+      playerMove.FreezePlayer();
+      transition.StartTransition(true, fadeDuration, Transition.TransitionType.TV_SWITCH);
+      triggerInitialSpecialDialogue = true;
+      triggerInitialFadeIn = false;
+    }
+
     if (triggerInitialSpecialDialogue)
     {
-      SetSpecialDialogue(introMessage, specialDialogueFontScale);
-      triggerInitialSpecialDialogue = false;
+      if (transition.IsFinished())
+      {
+        SetSpecialDialogue(introMessage, specialDialogueFontScale);
+        triggerInitialSpecialDialogue = false;
+      }
     }
 
     if (isInSpecialDialogueMode)
@@ -73,7 +85,6 @@ public class BootupText : Entity
     }
 
     InternalCalls.PlaySound(mEntityID, "BootUploadingText");
-    playerMove.FreezePlayer();
     InternalCalls.SetText(mEntityID, string.Empty);
     isInSpecialDialogueMode = true;
     SetActive(true);
@@ -83,7 +94,7 @@ public class BootupText : Entity
 
   private void EndSpecialDialogue()
   {
-    playerMove.UnfreezePlayer();
+    //playerMove.UnfreezePlayer();
     SetActive(false);
     isInSpecialDialogueMode = false;
     completed = true;

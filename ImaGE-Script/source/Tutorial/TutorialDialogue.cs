@@ -87,6 +87,12 @@ public class TutorialDialogue : Entity
 
     void Update()
     {
+        if (InternalCalls.GetIsPaused())
+        {
+          InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+          return;
+        }
+
         if (isInDialogueMode && IsActive() && DialogueBox.IsActive() &&
           Time.gameTime >= nextCharTime && charIndex < lines[lineIndex].Length)
         {
@@ -186,12 +192,14 @@ public class TutorialDialogue : Entity
 
     private void NextLine()
     {
-        DeactivateAllEmotions();
+    Debug.Log("TriggeredNextLine");
+    DeactivateAllEmotions();
         InternalCalls.PlaySound(mEntityID, "DefaultDialogueSound");
 
         if (lineIndex < lines.Length - 1)
         {
-            lineIndex++;
+      Debug.Log("TriggeredLine");
+      lineIndex++;
             SetEmotion(emotions[lineIndex]);
             InternalCalls.SetText(mEntityID, string.Empty);
             charIndex = 0;                                      // Reset character index for new line
@@ -200,7 +208,8 @@ public class TutorialDialogue : Entity
         }
         else
         {
-            EndDialogue();
+      Debug.Log("TriggeredTutorialDialogue");
+      EndDialogue();
         }
     }
 

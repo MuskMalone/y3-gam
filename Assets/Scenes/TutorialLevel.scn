@@ -3144,6 +3144,16 @@
                                         }
                                     },
                                     {
+                                        "data": {
+                                            "entityID": 37,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    },
+                                    {
                                         "data": 0.03999999910593033,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -10476,6 +10486,13 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "player"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "shouldLock"
                                         }
                                     }
                                 ]

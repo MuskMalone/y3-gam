@@ -87,7 +87,13 @@ public class Level3Dialogue : Entity
 
     void Update()
     {
-        if (isInDialogueMode && IsActive() && DialogueBox.IsActive() &&
+      if (InternalCalls.GetIsPaused())
+      {
+        InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+        return;
+      }
+
+    if (isInDialogueMode && IsActive() && DialogueBox.IsActive() &&
           Time.gameTime >= nextCharTime && charIndex < lines[lineIndex].Length)
         {
             InternalCalls.AppendText(mEntityID, lines[lineIndex][charIndex].ToString());
