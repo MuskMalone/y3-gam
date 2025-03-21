@@ -30,7 +30,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 namespace {
   static ECS::Entity sEntityToRename{};
   static bool sEntityDoubleClicked{ false }, sEditNameMode{ false }, sFirstEnterEditMode{ true };
-  static bool sLMouseReleased{ false }, sCtrlHeld{ false }, sWasCtrlHeld{ false };
+  static bool sLMouseReleased{ false }, sCtrlHeld{ false }, sWasCtrlHeld{ false }, sRenameTextBoxHovered{ false };
   static float sTimeElapsed;  // for renaming entity
   static bool sJumpToEntity{ false };
   // have to use these bools cause we can't get ImGui ID stack out of window scope
@@ -277,6 +277,7 @@ namespace GUI
         : ImGuiTreeNodeFlags_Leaf;
 
     if (isCurrentEntity) { treeFlag |= ImGuiTreeNodeFlags_Selected; }
+    if (isEditMode) { treeFlag |= ImGuiTreeNodeFlags_AllowOverlap; }
 
     // create the tree nodes
     std::string const displayName{ isEditMode ? "##" : entity.GetComponent<Component::Tag>().tag };
@@ -335,7 +336,7 @@ namespace GUI
   void SceneHierarchy::RenameEntity(ECS::Entity entity) {
     std::string entityName{ entity.GetComponent<Component::Tag>().tag };
 
-    ImGui::SetItemAllowOverlap();
+    ImGui::SetNextItemAllowOverlap();
     ImGui::SameLine();
     ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
     ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 12.f);
@@ -353,10 +354,11 @@ namespace GUI
       SceneModified();
     }
     ImGui::PopStyleVar();
-    if (ImGui::IsItemHovered() || (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows)
-      && !ImGui::IsAnyItemActive() && !ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
-      ImGui::SetKeyboardFocusHere(-1); // Auto focus previous widget
-    }
+    //if (ImGui::IsItemHovered() || (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows)
+    //  && !ImGui::IsAnyItemActive() && !ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsMouseClicked(ImGuiMouseButton_Right))) {
+    //  ImGui::SetKeyboardFocusHere(-1); // Auto focus previous widget
+    //}
+    sRenameTextBoxHovered = ImGui::IsItemHovered();
 
     if (ImGui::IsKeyPressed(ImGuiKey_Escape) || ImGui::IsKeyPressed(ImGuiKey_Enter)) {
       ResetEditNameMode();
@@ -445,7 +447,7 @@ namespace GUI
       }
     }
 
-    if (sEditNameMode && (ImGui::IsMouseClicked(ImGuiMouseButton_Left)
+    if (sEditNameMode && !sRenameTextBoxHovered && (ImGui::IsMouseClicked(ImGuiMouseButton_Left)
       || ImGui::IsMouseClicked(ImGuiMouseButton_Right) || ImGui::IsMouseClicked(ImGuiMouseButton_Middle))) {
       ResetEditNameMode();
     }
@@ -893,8 +895,10 @@ namespace GUI
   }
 
   void SceneHierarchy::ResetEditNameMode() {
+    IGE_DBGLOGGER.LogInfo("Reset");
     sEditNameMode = mLockControls = false;
     sFirstEnterEditMode = true;
+    sRenameTextBoxHovered = false;
   }
 
   EVENT_CALLBACK_DEF(SceneHierarchy, OnCollectEditorData) {
