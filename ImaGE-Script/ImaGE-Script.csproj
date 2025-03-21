@@ -245,6 +245,8 @@
     <Compile Include="source\Triggers\DeathtriggerPit.cs" />
     <Compile Include="source\Triggers\FinishLineTrigger.cs" />
     <Compile Include="source\Dialogue\BootupText.cs" />
+    <Compile Include="source\Triggers\TransitionHallwayTrigger.cs" />
+    <Compile Include="source\Triggers\TransitionPaintingTrigger.cs" />
     <Compile Include="source\Tutorial\GlowingLight.cs" />
     <Compile Include="source\Tutorial\InventoryTutorial.cs" />
     <Compile Include="source\Tutorial\TutorialDialogue.cs" />

@@ -14,6 +14,7 @@ public class KeyDoor : Entity
   public string doorAnimName;  // input from inspector based on name in anim component
   public string doorSlamAnimName;
   public BlackBorder blackBorder;
+  public Entity transitionCorridorTrigger;
 
   public Entity playerCamera;
   public Entity keyCamera;
@@ -25,14 +26,10 @@ public class KeyDoor : Entity
   bool isZoomingOut = true;
 
   public Entity corridorTrigger;
+  public Entity motherHumming;
   public bool triggerInteraction = true;
 
-  public Entity motherHumming;
-
-
-  private bool doorFlag = false;
   private string currentAnim = null;
-
 
   void Start()
   {
@@ -44,26 +41,24 @@ public class KeyDoor : Entity
     if (doorInteraction)
     {
       bool isDoorHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
-      if (isDoorHit && Input.GetMouseButtonTriggered(0) && !doorFlag)
+      if (isDoorHit && Input.GetMouseButtonTriggered(0))
       {
-        if (!inventoryScript.keyEquipped && !dialogueSystem.isInDialogueMode)
+        if (inventoryScript.keyEquipped)
+        {
+          doorInteraction = false;
+        }
+        else if (!dialogueSystem.isInDialogueMode)
         {
           InternalCalls.PlaySound(mEntityID, "LockedDoor");
           dialogueSystem.SetDialogue(lockedDialogue, new Dialogue.Emotion[] { Dialogue.Emotion.Sad });
-          doorFlag = true;
           return;
         }
-
-        doorInteraction = false;
       }
-      unlockDoorUI.SetActive(isDoorHit);
-
-      if (!isDoorHit)
+      else
       {
-        doorFlag = false;
+        unlockDoorUI.SetActive(isDoorHit);
       }
     }
-
     else if (!doorInteraction && triggerInteraction)
     {
       if (InternalCalls.OnTriggerEnter(corridorTrigger.mEntityID, blackBorder.playerMove.mEntityID))
@@ -144,6 +139,7 @@ public class KeyDoor : Entity
   public void SlamDoor()
   {
     currentAnim = doorSlamAnimName;
+    transitionCorridorTrigger?.FindScript<TransitionHallwayTrigger>().PlayerTrapped();
     InternalCalls.PlayAnimation(InternalCalls.GetParentByID(mEntityID), doorSlamAnimName);
   }
 

@@ -124,7 +124,7 @@ public class  PlayerMove : Entity
       {
         movementVector.Y += 1f;
       }
-      if (Input.GetKeyDown(KeyCode.Q))
+      if (Input.GetKeyDown(KeyCode.LEFT_SHIFT))
       {
         movementVector.Y -= 1f;
       }
