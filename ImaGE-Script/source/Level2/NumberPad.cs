@@ -23,6 +23,7 @@ public class NumberPad : Entity
 
     private Dictionary<string, Entity> numberButtons;
     private Dictionary<string, SafeButtons> buttonScripts;
+    private string entityTag;
     private string typedCode = "";
     private string correctCode = "2862";
     private bool keypadActive = false;
@@ -57,6 +58,7 @@ public class NumberPad : Entity
 
         buttonScripts["Enter"] = enterButton.FindScript<SafeButtons>();
         buttonScripts["Back"] = backButton.FindScript<SafeButtons>();
+        entityTag = InternalCalls.GetTag(mEntityID);
 
         enterButton?.SetActive(false);
         backButton?.SetActive(false);
@@ -79,7 +81,7 @@ public class NumberPad : Entity
 
     private void KeypadInteraction()
     {
-        bool isKeypadHit = playerInteraction.RayHitString == "Keypad";
+        bool isKeypadHit = playerInteraction.RayHitString == entityTag;
 
         if (Input.GetMouseButtonTriggered(0) && isKeypadHit && !keypadActive)
         {
@@ -157,6 +159,7 @@ public class NumberPad : Entity
             Console.WriteLine("Correct code entered!");
             CloseKeypadUI();
             currState = State.UNLOCKED;
+            entityTag = null;
         }
         else
         {
