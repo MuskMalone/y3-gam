@@ -1,13 +1,13 @@
 {
-    "name": "MuseumCeiling2",
+    "name": "HermesPlacard",
     "shader": "PBR",
     "albedoColor": {
         "x": 1.0,
         "y": 1.0,
         "z": 1.0
     },
-    "metalness": 0.18700000643730164,
-    "roughness": 0.7440000176429749,
+    "metalness": 0.5,
+    "roughness": 0.5,
     "ao": 1.0,
     "emission": {
         "x": 0.0,
@@ -17,15 +17,15 @@
     },
     "transparency": 1.0,
     "tiling": {
-        "x": 16.0,
-        "y": 16.0
+        "x": 1.0,
+        "y": 1.0
     },
     "offset": {
         "x": 0.0,
         "y": 0.0
     },
     "albedoMap": {
-        "ID": 10484710059337540446
+        "ID": 6506774019091442313
     },
     "normalMap": {
         "ID": 0
