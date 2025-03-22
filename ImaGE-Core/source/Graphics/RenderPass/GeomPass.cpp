@@ -41,7 +41,7 @@ namespace Graphics {
 
       Begin();
 
-      // clears the last 2 frame buffers
+      // Clears the last 2 frame buffers
       GLfloat clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f }; // Black with full alpha
       glClearBufferfv(GL_COLOR, 3, clearColor); // view pos buffer
       GetTargetFramebuffer()->ClearAttachmentInt(1, -1);
@@ -52,9 +52,9 @@ namespace Graphics {
       ShaderGroupMap transparentGroups;
       GroupEntities(entities, opaqueGroups, transparentGroups);
 
-      // get light data to pass into shader
+      // Get light data to pass into shader
       LightUniforms<sMaxLights> const lightUniforms{ GetLightData<sMaxLights>(entities) };
-      unsigned matCount{ static_cast<unsigned>(MaterialTable::GetMaterialCount()) };
+      unsigned matCount = static_cast<unsigned>(MaterialTable::GetMaterialCount());
       float time = static_cast<float>(glfwGetTime()); // for shaders requiring time
 
       // Sort transparent objects back-to-front
@@ -67,27 +67,50 @@ namespace Graphics {
 
                       float distanceA = glm::length2(cam.position - transformA.worldPos);
                       float distanceB = glm::length2(cam.position - transformB.worldPos);
-
                       return distanceA > distanceB;
                   });
           }
       }
 
-      // opaque objects first
+      // --- Render Opaque Objects ---
       for (auto const& [shader, matGrp] : opaqueGroups) {
           shader->Use();
 
+          // Set base matrices
           shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
-          shader->SetUniform("u_ViewMtx", cam.viewMatrix); // Restored view matrix uniform
-          shader->SetUniform("u_CamPos", cam.position);
-          lightUniforms.SetUniforms(shader);
+          shader->SetUniform("u_ViewMtx", cam.viewMatrix);
 
+          // If this shader is for water, set the time uniform
+          bool isWaterShader = (shader == ShaderLibrary::Get("Water"));
+          if (isWaterShader) {
+              shader->SetUniform("u_Time", time);
+          }
+
+          // Only set camera and shadow uniforms if this isn't an unlit shader
+          bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
+          if (!isUnlitShader) {
+              shader->SetUniform("u_CamPos", cam.position);
+              lightUniforms.SetUniforms(shader);
+
+              // Set shadow uniforms
+              auto const& shadowPass = Renderer::GetPass<ShadowPass>();
+              shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
+              if (shadowPass->IsActive()) {
+                  shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
+                  shadowPass->BindShadowMap(Texture::sShadowMapTexUnit);
+                  shader->SetUniform("u_ShadowMap", static_cast<int>(Texture::sShadowMapTexUnit));
+                  shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
+                  shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
+              }
+          }
+
+          // Render instances for each material group
           for (auto const& [matGrpIndex, entityData] : matGrp) {
               unsigned batchStart = matGrpIndex * MaterialTable::sMaterialsPerBatch;
               unsigned batchEnd = std::min(batchStart + MaterialTable::sMaterialsPerBatch - 1, matCount - 1);
               MaterialTable::ApplyMaterialTextures(shader, batchStart, batchEnd);
 
-              // Calculate and set the offset uniform for material indices
+              // Set the offset for material indices
               int offset = (matGrpIndex == 0) ? 0 : -static_cast<int>(batchStart);
               shader->SetUniform("u_MatIdxOffset", offset);
 
@@ -100,7 +123,7 @@ namespace Graphics {
           }
       }
 
-      // transparent objects
+      // --- Render Transparent Objects ---
       glEnable(GL_BLEND);
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       glDepthMask(GL_FALSE); // Disable depth writing
@@ -108,17 +131,41 @@ namespace Graphics {
       for (auto const& [shader, matGrp] : transparentGroups) {
           shader->Use();
 
+          // Set base matrices
           shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
-          shader->SetUniform("u_ViewMtx", cam.viewMatrix); // Restored view matrix uniform
-          shader->SetUniform("u_CamPos", cam.position);
-          lightUniforms.SetUniforms(shader);
+          shader->SetUniform("u_ViewMtx", cam.viewMatrix);
 
+          // If this shader is for water, set the time uniform
+          bool isWaterShader = (shader == ShaderLibrary::Get("Water"));
+          if (isWaterShader) {
+              shader->SetUniform("u_Time", time);
+          }
+
+          // Only set camera and shadow uniforms if this isn't an unlit shader
+          bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
+          if (!isUnlitShader) {
+              shader->SetUniform("u_CamPos", cam.position);
+              lightUniforms.SetUniforms(shader);
+
+              // Set shadow uniforms
+              auto const& shadowPass = Renderer::GetPass<ShadowPass>();
+              shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
+              if (shadowPass->IsActive()) {
+                  shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
+                  shadowPass->BindShadowMap(Texture::sShadowMapTexUnit);
+                  shader->SetUniform("u_ShadowMap", static_cast<int>(Texture::sShadowMapTexUnit));
+                  shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
+                  shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
+              }
+          }
+
+          // Render instances for each material group
           for (auto const& [matGrpIndex, entityData] : matGrp) {
               unsigned batchStart = matGrpIndex * MaterialTable::sMaterialsPerBatch;
               unsigned batchEnd = std::min(batchStart + MaterialTable::sMaterialsPerBatch - 1, matCount - 1);
               MaterialTable::ApplyMaterialTextures(shader, batchStart, batchEnd);
 
-              // Calculate and set the offset uniform for material indices
+              // Set the offset for material indices
               int offset = (matGrpIndex == 0) ? 0 : -static_cast<int>(batchStart);
               shader->SetUniform("u_MatIdxOffset", offset);
 
