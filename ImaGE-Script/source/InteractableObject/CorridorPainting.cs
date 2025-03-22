@@ -10,6 +10,7 @@ public class CorrdiorPainting : Entity, IInventoryItem
   public Dialogue dialogueSystem;
   public string[] pitPaintingDialogue;
 
+  private bool playerCollided = false;
   public string Name
   {
     get
@@ -55,8 +56,17 @@ public class CorrdiorPainting : Entity, IInventoryItem
     {
       InternalCalls.PlaySound(mEntityID, "PickupPainting");
       inventoryScript.Additem(this);
-      dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised });
+      dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised });  
     }
     EToPickUpUI.SetActive(isPaintHit);
+
+    if (!playerCollided)
+    {
+      if (InternalCalls.GetContactPoints(mEntityID, playerInteraction.mEntityID).Length > 0)
+      {
+        InternalCalls.LockRigidBody(mEntityID, true);
+        playerCollided = true;
+      }
+    }
   }
 }

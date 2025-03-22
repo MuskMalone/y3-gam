@@ -175,7 +175,10 @@ namespace Graphics {
 	}
 
 	EVENT_CALLBACK_DEF(PostProcessingManager, HandleSystemEvents) {
+		if (IGE_SCENEMGR.GetSceneState() == Scenes::PREFAB_EDITOR) { return; }
+
 		auto const& state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
+
 		if (state == Events::SceneStateChange::CHANGED) {
 			auto name{ Scenes::SceneManager::GetInstance().GetSceneName() };
 			if (mPpc.mConfigs.find(name) != mPpc.mConfigs.end()) {

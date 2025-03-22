@@ -44,7 +44,7 @@ namespace IGE {
         std::string GetFileNameWithExtension(const std::string& filePath)
         {
             //return std::filesystem::path(filePath).filename().string();
-            return GetFileName(filePath) + GetFileExtension(filePath);
+            return std::filesystem::path(filePath).filename().string();
         }
         std::string GetDirectoryPath(const std::string& filePath) {
             size_t pos = filePath.find_last_of("/\\");

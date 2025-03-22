@@ -10,9 +10,7 @@ namespace IGE {
 		IGE::Assets::GUID ShaderAsset::Import(std::string const& fp, std::string& newFp, AssetMetadata::AssetProps& metadata)
 		{
 			// Copy the image file to the assets folder
-			std::string filename { GetFileName(fp) };
-			std::string fileext { GetFileExtension(fp) };
-			std::string inputShaderPath{ cPostProcessingDirectory + filename + fileext };//GetAbsolutePath(cAudioDirectory + filename + fileext) };
+			std::string const inputShaderPath{ cPostProcessingDirectory + GetFileNameWithExtension(fp) };//GetAbsolutePath(cAudioDirectory + filename + fileext) };
 			CreateDirectoryIfNotExists(cPostProcessingDirectory);
 
 			if (!CopyFileToAssets(fp, inputShaderPath)) {
@@ -29,7 +27,7 @@ namespace IGE {
 		{
 			//compilation is not needed
 			//todo: maybe importing means creating a new text file containing the guids to different shaders
-			std::string fp { AssetManager::GetInstance().GUIDToPath(guid) };
+			std::string const& fp { AssetManager::GetInstance().GUIDToPath(guid) };
 			return reinterpret_cast<void*>(new ShaderAsset(fp));
 		}
 		void ShaderAsset::Unload(ShaderAsset* ptr, GUID guid)

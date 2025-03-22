@@ -25,8 +25,7 @@ public class HexTeleport : Entity
     else if (Input.GetKeyDown(KeyCode.H)) TeleportPlayer(teleportPosition4);//4
     else if (Input.GetKeyDown(KeyCode.BACKSLASH)) TeleportPlayer(teleportPosition5); //5
     else if (Input.GetKeyDown(KeyCode.EQUAL)) TeleportPlayer(teleportPosition1); //1
-    else if (Input.GetKeyTriggered(KeyCode.MINUS)) TeleportPlayer(InternalCalls.GetPosition(playerMove.mEntityID) - new Vector3(0f, -5f, 0.5f));
-    }
+  }
 
     public void TeleportPlayer(Vector3 newPosition)
     {

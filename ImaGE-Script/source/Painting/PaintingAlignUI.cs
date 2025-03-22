@@ -29,18 +29,17 @@ using IGE.Utils;
 
 public class PaintingAlignUI : Entity
 {
+    public Entity bigPaintingUI;
+    public Entity smallPaintingUI;
+    public Entity alignmentUI;
+
     private HoldupUI holdupUIScript;
     private TutorialLevelInventory tutorialInventoryScript;
     private PictureAlign pictureAlignScript;
     private InventoryTutorial inventoryTutorialScript;
 
-    public Entity bigPaintingUI;
-    public Entity smallPaintingUI;
-    public Entity alignmentUI;
-
-
-    // Start is called before the first frame update
-    void Start()
+  // Start is called before the first frame update
+  void Start()
     {
         holdupUIScript = FindObjectOfType<HoldupUI>();
         tutorialInventoryScript = FindObjectOfType<TutorialLevelInventory>();

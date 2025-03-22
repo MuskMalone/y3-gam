@@ -61,6 +61,12 @@ public class Dialogue : Entity
 
   void Update()
   {
+    if (InternalCalls.GetIsPaused())
+    {
+      InternalCalls.StopSound(mEntityID, textAudioName);
+      return;
+    }
+
     if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && 
       Time.gameTime >= nextCharTime && charIndex < lines[lineIndex].Length)
     {

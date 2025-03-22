@@ -378,7 +378,6 @@
                 116,
                 151,
                 214,
-                383,
                 755,
                 1048632,
                 1048685,
@@ -387,7 +386,8 @@
                 2097869,
                 3145740,
                 3145797,
-                3146002
+                3146002,
+                4195023
             ],
             "Components": [
                 {
@@ -2072,6 +2072,20 @@
                                         }
                                     },
                                     {
+                                        "data": 4.349999904632568,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minIsGroundedDistance"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "noClip"
+                                        }
+                                    },
+                                    {
                                         "data": 30.0,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -2161,6 +2175,13 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "player"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "shouldLock"
                                         }
                                     }
                                 ]
@@ -3902,6 +3923,13 @@
                                         }
                                     },
                                     {
+                                        "data": 1.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "footstepPitch"
+                                        }
+                                    },
+                                    {
                                         "data": 8,
                                         "type": "System.Int32",
                                         "scriptField": {
@@ -4105,8 +4133,8 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
+                        "staticFriction": 5.0,
+                        "dynamicFriction": 5.0,
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
@@ -5182,6 +5210,7 @@
                 589,
                 597,
                 602,
+                666,
                 758,
                 767,
                 799,
@@ -6511,7 +6540,7 @@
         },
         {
             "ID": 114,
-            "Parent": null,
+            "Parent": 281,
             "Child Entities": [],
             "Components": [
                 {
@@ -6526,7 +6555,7 @@
                                     "playSettings": {
                                         "position": {
                                             "x": 60.94206237792969,
-                                            "y": 29.735448837280275,
+                                            "y": 7.215724945068359,
                                             "z": -32.20646667480469
                                         },
                                         "volume": 1.0,
@@ -6554,7 +6583,7 @@
                                     "playSettings": {
                                         "position": {
                                             "x": 60.94206237792969,
-                                            "y": 29.735448837280275,
+                                            "y": 7.215724945068359,
                                             "z": -32.20646667480469
                                         },
                                         "volume": 1.0,
@@ -6585,9 +6614,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 60.94206237792969,
-                            "y": 29.735448837280275,
-                            "z": -32.20646667480469
+                            "x": -5.866493225097656,
+                            "y": -2.983469009399414,
+                            "z": -30.247329711914064
                         },
                         "scale": {
                             "x": 1.0,
@@ -6607,7 +6636,7 @@
                         },
                         "worldPos": {
                             "x": 60.94206237792969,
-                            "y": 29.735448837280275,
+                            "y": 7.215724945068359,
                             "z": -32.20646667480469
                         },
                         "worldScale": {
@@ -6632,7 +6661,7 @@
                     "BoxCollider": {
                         "scale": {
                             "x": 11.100000381469727,
-                            "y": 18.5,
+                            "y": 1.0,
                             "z": 16.100000381469728
                         },
                         "positionOffset": {
@@ -6886,7 +6915,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 2097869,
+                                            "entityID": 4195023,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -9251,6 +9280,16 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 666,
+                                            "scriptName": "SettingsPage"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "settingsPage"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 75,
                                             "scriptName": "Transition"
                                         },
@@ -9755,6 +9794,19 @@
             ]
         },
         {
+            "ID": 195,
+            "Parent": 666,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 196,
             "Parent": 5243127,
             "Child Entities": [],
@@ -10217,7 +10269,7 @@
                                         },
                                         "playSettings": {
                                             "position": {
-                                                "x": 71.7745361328125,
+                                                "x": 67.35090637207031,
                                                 "y": 12.289115905761719,
                                                 "z": -1.6289911270141602
                                             },
@@ -10565,6 +10617,48 @@
                                 }
                             ]
                         }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 50.11899948120117,
+                                "y": 4.908152103424072,
+                                "z": 15.86824893951416
+                            },
+                            "scale": {
+                                "x": 0.1889999955892563,
+                                "y": 0.18637323379516602,
+                                "z": 0.12600000202655793
+                            },
+                            "rotation": {
+                                "x": -0.17209097743034364,
+                                "y": -0.3502432107925415,
+                                "z": 0.10440273582935333,
+                                "w": 0.9147756695747376
+                            },
+                            "eulerAngles": {
+                                "x": -29.157289505004884,
+                                "y": -37.21836853027344,
+                                "z": 23.031599044799806
+                            },
+                            "worldPos": {
+                                "x": 67.35090637207031,
+                                "y": 12.289115905761719,
+                                "z": -1.6289911270141602
+                            },
+                            "worldScale": {
+                                "x": 0.1889999955892563,
+                                "y": 0.18637323379516602,
+                                "z": 0.12600000202655793
+                            },
+                            "worldRot": {
+                                "x": -0.17209097743034364,
+                                "y": -0.3502432107925415,
+                                "z": 0.10440273582935333,
+                                "w": 0.9147756695747376
+                            }
+                        }
                     }
                 ],
                 "removedComponents": []
@@ -10572,7 +10666,7 @@
         },
         {
             "ID": 210,
-            "Parent": null,
+            "Parent": 281,
             "Child Entities": [],
             "Components": [
                 {
@@ -10584,9 +10678,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 79.284912109375,
-                            "y": 18.91299057006836,
-                            "z": 34.79376220703125
+                            "x": 4.142082214355469,
+                            "y": 6.407981872558594,
+                            "z": 36.752899169921878
                         },
                         "scale": {
                             "x": 42.70000076293945,
@@ -10605,8 +10699,8 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 79.284912109375,
-                            "y": 18.91299057006836,
+                            "x": 70.95063781738281,
+                            "y": 16.607175827026368,
                             "z": 34.79376220703125
                         },
                         "worldScale": {
@@ -10630,7 +10724,7 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 21.350000381469728,
+                            "x": 13.449999809265137,
                             "y": 10.755208969116211,
                             "z": 3.9600000381469728
                         },
@@ -10651,6 +10745,123 @@
                             "w": 1.0
                         },
                         "sensor": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 213,
+            "Parent": 281,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "TransitionPainting Trigger",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.3875579833984375,
+                            "y": -2.315410614013672,
+                            "z": -21.111492156982423
+                        },
+                        "scale": {
+                            "x": 42.70000076293945,
+                            "y": 21.510417938232423,
+                            "z": 1.5199999809265137
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 67.19611358642578,
+                            "y": 7.883783340454102,
+                            "z": -23.070629119873048
+                        },
+                        "worldScale": {
+                            "x": 42.70000076293945,
+                            "y": 21.510417938232423,
+                            "z": 1.5199999809265137
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 10.949999809265137,
+                            "y": 2.0,
+                            "z": 26.360000610351564
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": true
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 213,
+                                "scriptName": "TransitionPaintingTrigger",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "player"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049003,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transitionPainting"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -10912,6 +11123,19 @@
                     "ID": 12754032475676556068
                 },
                 "subDataId": 6,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 240,
+            "Parent": 666,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 2,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -11306,6 +11530,71 @@
                             }
                         },
                         "repeat": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 281,
+            "Parent": null,
+            "Child Entities": [
+                114,
+                210,
+                213,
+                383,
+                486
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Triggers",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 66.80855560302735,
+                            "y": 10.199193954467774,
+                            "z": -1.9591361284255982
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 66.80855560302735,
+                            "y": 10.199193954467774,
+                            "z": -1.9591361284255982
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
                     }
                 }
             ]
@@ -12403,7 +12692,7 @@
         },
         {
             "ID": 383,
-            "Parent": 11,
+            "Parent": 281,
             "Child Entities": [],
             "Components": [
                 {
@@ -12415,9 +12704,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 56.93828582763672,
-                            "y": 14.156999588012696,
-                            "z": 54.10149002075195
+                            "x": -9.870269775390625,
+                            "y": 3.957805633544922,
+                            "z": 56.06062698364258
                         },
                         "scale": {
                             "x": 1.0,
@@ -13999,6 +14288,123 @@
                 "componentData": [],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 486,
+            "Parent": 281,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "TransitionHallway Trigger",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.3875579833984375,
+                            "y": -2.315410614013672,
+                            "z": 49.505714416503909
+                        },
+                        "scale": {
+                            "x": 42.70000076293945,
+                            "y": 21.510417938232423,
+                            "z": 1.5199999809265137
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 67.19611358642578,
+                            "y": 7.883783340454102,
+                            "z": 47.54657745361328
+                        },
+                        "worldScale": {
+                            "x": 42.70000076293945,
+                            "y": 21.510417938232423,
+                            "z": 1.5199999809265137
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 10.949999809265137,
+                            "y": 2.0,
+                            "z": 16.559999465942384
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": true
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 486,
+                                "scriptName": "TransitionHallwayTrigger",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "player"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048632,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transitionHallway"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
         },
         {
             "ID": 488,
@@ -18206,6 +18612,168 @@
             ]
         },
         {
+            "ID": 666,
+            "Parent": 75,
+            "Child Entities": [
+                195,
+                240,
+                667
+            ],
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 666,
+                                    "scriptName": "SettingsPage",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 240,
+                                                "scriptName": "PauseMenuButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BackButton"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 667,
+                                                "scriptName": "SettingsButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BrightnessSlider"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "CanvasmaxX"
+                                            }
+                                        },
+                                        {
+                                            "data": -0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "CanvasminX"
+                                            }
+                                        },
+                                        {
+                                            "data": -2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "OriginalTargetZButton"
+                                            }
+                                        },
+                                        {
+                                            "data": -2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "OriginalTargetZMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": 3.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "TargetZButton"
+                                            }
+                                        },
+                                        {
+                                            "data": 2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "TargetZMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 195,
+                                                "scriptName": "SettingsButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "VolumeSlider"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.20999999344348908,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxX"
+                                            }
+                                        },
+                                        {
+                                            "data": -0.03700000047683716,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minX"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 178,
+                                                "scriptName": "PauseMenu"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "pauseMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 75,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "transitionDuration"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 667,
+            "Parent": 666,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 668,
             "Parent": 231,
             "Child Entities": [],
@@ -22315,6 +22883,35 @@
                                         }
                                     },
                                     {
+                                        "data": [
+                                            "I should probably collect the fragment first..."
+                                        ],
+                                        "type": "System.String[]",
+                                        "scriptField": {
+                                            "fieldName": "collectFragmentDialogue"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 197,
+                                            "scriptName": "Dialogue"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "dialogueScript"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 203,
+                                            "scriptName": "Fragment"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fragment"
+                                        }
+                                    },
+                                    {
                                         "data": false,
                                         "type": "System.Boolean",
                                         "scriptField": {
@@ -25823,8 +26420,8 @@
                                         "playSettings": {
                                             "position": {
                                                 "x": 67.63999938964844,
-                                                "y": 12.164999961853028,
-                                                "z": -12.052000045776368
+                                                "y": 52.57352066040039,
+                                                "z": -32.82134246826172
                                             },
                                             "volume": 1.0,
                                             "pitch": 1.0,
@@ -25849,14 +26446,14 @@
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
-                                "x": 2.4100000858306886,
-                                "y": 2.4100000858306886,
-                                "z": 0.4099999964237213
+                                "x": 2.9100000858306886,
+                                "y": 2.9100000858306886,
+                                "z": 2.4100000858306886
                             },
                             "positionOffset": {
                                 "x": 0.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 2.0999999046325685
                             },
                             "degreeRotationOffsetEuler": {
                                 "x": 0.0,
@@ -25885,12 +26482,12 @@
                                 "y": 0.0,
                                 "z": 0.0
                             },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
+                            "staticFriction": 5.0,
+                            "dynamicFriction": 5.0,
                             "restitution": 0.0,
                             "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "KINEMATIC",
+                            "linearDamping": 1.0,
+                            "motionType": "DYNAMIC",
                             "axisLock": 7,
                             "angularAxisLock": 7
                         }
@@ -25977,8 +26574,8 @@
                         "value": {
                             "position": {
                                 "x": 67.63999938964844,
-                                "y": 12.164999961853028,
-                                "z": -12.052000045776368
+                                "y": 52.57352066040039,
+                                "z": -32.82134246826172
                             },
                             "scale": {
                                 "x": 0.8199999928474426,
@@ -25986,20 +26583,20 @@
                                 "z": 0.8199999928474426
                             },
                             "rotation": {
-                                "x": -0.033963460475206378,
-                                "y": -0.3751634359359741,
-                                "z": -0.013756617903709412,
-                                "w": 0.9262340664863586
+                                "x": -0.43346354365348818,
+                                "y": -0.2677963972091675,
+                                "z": -0.06395599246025086,
+                                "w": 0.8580816984176636
                             },
                             "eulerAngles": {
-                                "x": -4.199999809265137,
-                                "y": -44.099998474121097,
-                                "z": 0.0
+                                "x": -55.88191604614258,
+                                "y": -30.999298095703126,
+                                "z": 8.209673881530762
                             },
                             "worldPos": {
                                 "x": 67.63999938964844,
-                                "y": 12.164999961853028,
-                                "z": -12.052000045776368
+                                "y": 52.57352066040039,
+                                "z": -32.82134246826172
                             },
                             "worldScale": {
                                 "x": 0.8199999928474426,
@@ -26007,10 +26604,10 @@
                                 "z": 0.8199999928474426
                             },
                             "worldRot": {
-                                "x": -0.033963460475206378,
-                                "y": -0.3751634359359741,
-                                "z": -0.013756617903709412,
-                                "w": 0.9262340664863586
+                                "x": -0.43346354365348818,
+                                "y": -0.2677963972091675,
+                                "z": -0.06395599246025086,
+                                "w": 0.8580816984176636
                             }
                         }
                     }
@@ -27123,6 +27720,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "positionThreshold"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "preventAlignment"
                                         }
                                     },
                                     {
@@ -42808,6 +43412,16 @@
                                         }
                                     },
                                     {
+                                        "data": {
+                                            "entityID": 486,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transitionCorridorTrigger"
+                                        }
+                                    },
+                                    {
                                         "data": true,
                                         "type": "System.Boolean",
                                         "scriptField": {
@@ -43050,6 +43664,84 @@
                 ],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 4195023,
+            "Parent": 11,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cereus",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -6.536351203918457,
+                            "y": 6.729538917541504,
+                            "z": -12.221896171569825
+                        },
+                        "scale": {
+                            "x": 4.0,
+                            "y": 4.0,
+                            "z": 4.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -6.536351203918457,
+                            "y": 6.729538917541504,
+                            "z": -12.221896171569825
+                        },
+                        "worldScale": {
+                            "x": 4.0,
+                            "y": 4.0,
+                            "z": 4.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 6094928404620233416
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Reuploaded_Cereus",
+                        "GUID": {
+                            "ID": 14760659303595227349
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
         },
         {
             "ID": 4195024,
@@ -45964,7 +46656,6 @@
             "y": 1.0,
             "z": 1.0
         },
-        "ambIntensity": 0.014999999664723874,
-        "gammaValue": 1.7999999523162842
+        "ambIntensity": 0.014999999664723874
     }
 }

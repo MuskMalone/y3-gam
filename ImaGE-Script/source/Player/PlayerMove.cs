@@ -14,6 +14,7 @@ or disclosure of this file or its contents without the prior
 written consent of DigiPen Institute of Technology is prohibited.
 */
 /******************************************************************************/
+#define COMMENT_OUT_FOR_SUBMISSION
 
 using IGE.Utils;
 using System;
@@ -26,6 +27,7 @@ public class  PlayerMove : Entity
   public float walkingSpeed = 750f;
   public float runSpeed = 1300f;
   public float isGroundedRayHeight = 3f;
+  public bool noClip = false;
   
   public Entity cam;
 
@@ -40,7 +42,7 @@ public class  PlayerMove : Entity
   private Quaternion cameraRotation = Quaternion.Identity;  // Camera rotation (pitch only)
   public float initialGravityFactor = 5f;
   public float extraGravityFactorDuringDescent = 15f;
-
+  public float minIsGroundedDistance = 4.35f;
   public bool canLook = true, canMove = true, useScriptRotation = true, climbing = false;
   private bool skipNextMouseDelta = false;  // to skip the jump in delta when unfreezing player
   private double currTime = 0.0;
@@ -86,6 +88,15 @@ public class  PlayerMove : Entity
   }
   void PlayerMovement()
   {
+#if COMMENT_OUT_FOR_SUBMISSION
+    // tilde(~) key to ALLOW NOCLIP MODE TO FLY AROUND
+    // CONTROLS: WASD LSHIFT SPACE
+    if (Input.GetKeyTriggered(KeyCode.GRAVE_ACCENT))
+    {
+      noClip = !noClip;
+    }
+#endif
+
     float x = Input.GetAxis("Horizontal");
     float z = Input.GetAxis("Vertical");
 
@@ -106,15 +117,34 @@ public class  PlayerMove : Entity
     }
     Vector3 move = movementVector * speed;
 
-    InternalCalls.MoveCharacter(mEntityID, move);
-
-    if (IsGrounded())
+#if COMMENT_OUT_FOR_SUBMISSION
+    if (noClip)
     {
-      InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
+      if (Input.GetKeyDown(KeyCode.SPACE))
+      {
+        movementVector.Y += 1f;
+      }
+      if (Input.GetKeyDown(KeyCode.LEFT_SHIFT))
+      {
+        movementVector.Y -= 1f;
+      }
+      InternalCalls.SetGravityFactor(mEntityID, 0f);
+      GetComponent<Transform>().worldPosition += movementVector * (Input.GetKeyDown(KeyCode.Q) ? 5f : 3f);
+      InternalCalls.UpdatePhysicsToTransform(mEntityID);
     }
     else
+#endif
     {
-      InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor * extraGravityFactorDuringDescent);
+      InternalCalls.MoveCharacter(mEntityID, move);
+
+      if (IsGrounded())
+      {
+        InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
+      }
+      else
+      {
+        InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor * extraGravityFactorDuringDescent);
+      }
     }
   }
 
@@ -167,10 +197,13 @@ public class  PlayerMove : Entity
     Vector3 rayStart = entityPosition;
     // Ray ends slightly beneath the entity
     Vector3 rayEnd = entityPosition + new Vector3(0, 0 - isGroundedRayHeight, 0);
-    uint entityIDHit = InternalCalls.RaycastFromEntity(mEntityID, rayStart, rayEnd);
-    //Console.WriteLine(InternalCalls.GetTag(entityIDHit));
-    return entityIDHit != 0;
+    RaycastHitInfo hitInfo = InternalCalls.RaycastFromEntityInfo(mEntityID, rayStart, rayEnd);
 
+    uint entityIDHit = InternalCalls.RaycastFromEntity(mEntityID, rayStart, rayEnd);
+    //Console.WriteLine($"distance {hitInfo.distance} tag {InternalCalls.GetTag(entityIDHit)} >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    //return entityIDHit != uint.MaxValue;
+    return hitInfo.distance < minIsGroundedDistance;
+    //return true;
   }
 
   // Called by other scripts to Freeze/Unfreeze Player

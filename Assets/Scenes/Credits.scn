@@ -308,7 +308,7 @@
                 },
                 {
                     "Text": {
-                        "textContent": "Xavier Choa\nNg Wen Wen\nNg Yue Zhi\nChua Xinyi Tricia\nSheryl Teh",
+                        "textContent": "Xavier Choa\nNg Wen Wen\nNg Yue Zhi\nChua Xinyi Tricia\nSheryl Teh\nNeo Wen En",
                         "color": {
                             "x": 1.0,
                             "y": 1.0,
@@ -622,6 +622,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "speed"
+                                        }
+                                    },
+                                    {
+                                        "data": 7.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "transitionTime"
                                         }
                                     }
                                 ]

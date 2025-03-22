@@ -1,0 +1,485 @@
+{
+    "Name": "Settings",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Settings",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 35.64000701904297,
+                            "y": 22.059999465942384,
+                            "z": 21.18000030517578
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 35.64000701904297,
+                            "y": 22.059999465942384,
+                            "z": 21.18000030517578
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 665,
+                                "scriptName": "SettingsPage",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 666,
+                                            "scriptName": "PauseMenuButtons"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "BackButton"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 414,
+                                            "scriptName": "SettingsButtons"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "BrightnessSlider"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "CanvasmaxX"
+                                        }
+                                    },
+                                    {
+                                        "data": -0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "CanvasminX"
+                                        }
+                                    },
+                                    {
+                                        "data": -2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "OriginalTargetZButton"
+                                        }
+                                    },
+                                    {
+                                        "data": -2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "OriginalTargetZMenu"
+                                        }
+                                    },
+                                    {
+                                        "data": 3.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "TargetZButton"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "TargetZMenu"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 667,
+                                            "scriptName": "SettingsButtons"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "VolumeSlider"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.20999999344348908,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "maxX"
+                                        }
+                                    },
+                                    {
+                                        "data": -0.03700000047683716,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "minX"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 178,
+                                            "scriptName": "PauseMenu"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "pauseMenu"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 75,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "transitionDuration"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 2526722337056533777
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BrightnessSlider",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.04800000041723251,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.05999999865889549,
+                            "y": 0.07727255672216416,
+                            "z": 0.07915599644184113
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -1.0588799715042115,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 2.1384003162384035,
+                            "y": 1.7046325206756592,
+                            "z": 1.676524043083191
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 414,
+                                "scriptName": "SettingsButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6689603120792449434
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BackButton",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.23100000619888307,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.20999999344348908,
+                            "y": 0.08999999612569809,
+                            "z": 0.13621437549591065
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -5.095860004425049,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 7.484401226043701,
+                            "y": 1.985399842262268,
+                            "z": 2.8850204944610597
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 666,
+                                "scriptName": "PauseMenuButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsVisible"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "TriggerButton"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 10944242110827318691
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "VolumeSlider",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.08049999922513962,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.05999999865889549,
+                            "y": 0.07727257162332535,
+                            "z": 0.07915598899126053
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 1.7758299112319947,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 2.1384003162384035,
+                            "y": 1.7046328783035279,
+                            "z": 1.6765239238739014
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 667,
+                                "scriptName": "SettingsButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6689603120792449434
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

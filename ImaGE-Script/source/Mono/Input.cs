@@ -57,6 +57,14 @@ namespace IGE.Utils
       return InternalCalls.GetAxis(s);
     }
 
+    public static float screenWidth // Checks if any key is triggered/held this frame and return the result
+    {
+      get
+      {
+        return InternalCalls.GetScreenWidth();
+      }
+    }
+
     public static Vector3 mousePosition // Checks if any key is triggered/held this frame and return the result
     {
       get

@@ -198,6 +198,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 			************************************************************************/
 			void SetDim(int width, int height);
 
+			glm::vec2 GetDim();
+
 			/*!*********************************************************************
 			\brief
 				.Function to update the Input for this frame. It will call GLFWPollEvents to get all key triggers and update the btiset

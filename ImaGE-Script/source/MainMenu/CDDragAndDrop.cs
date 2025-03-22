@@ -39,8 +39,6 @@ public class CDDragAndDrop : Entity
     //public Entity cdLidClosed;
     //public Entity CDCurr;
 
-    public Entity fadeImageEntity; // Entity containing the fade Image
-    private Image fadeImage; // Image used for the fade effect
     public Transition transition;
 
     private Vec3<float> originalScale;
@@ -102,19 +100,6 @@ public class CDDragAndDrop : Entity
             originalScale.Y * 1.1f,
             originalScale.Z * 1.1f
         );
-
-        if (fadeImageEntity != null)
-        {
-            fadeImage = fadeImageEntity.GetComponent<Image>();
-            //fadeImage = FindImageInChildren(fadeImageEntity.mEntityID);
-        }
-
-        if (fadeImage != null)
-        {
-            //Debug.Log("fadeimage is here");
-            fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, startAlpha);
-        }
-
     }
         
     //private Image FindImageInChildren(uint parentEntityID)
@@ -226,11 +211,6 @@ public class CDDragAndDrop : Entity
             fadeElapsed += Time.deltaTime;
             float alpha = Mathf.Lerp(startAlpha, targetAlpha, fadeElapsed / fadeDuration);
             string tag = InternalCalls.GetTag(mEntityID);
-            
-                if (fadeImage != null)
-            {
-                fadeImage.color = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, alpha);
-            }
 
             float volume = Mathf.Lerp(1.0f, 0.0f, fadeElapsed / fadeDuration); // Fade volume from 1.0 to 0.0
             InternalCalls.SetSoundVolume(mEntityID, "MainMenuBGM", volume); // Apply the volume fade
@@ -289,10 +269,11 @@ public class CDDragAndDrop : Entity
     {
         isFading = true;
         fadeElapsed = 0f;
-        //startAlpha = fadeImage != null ? fadeImage.color.a : 0f;
-        //targetAlpha = 1f;
-        //fadeDuration = 2.5f;
-        //FadeManager.Instance.FadeToBlack(2.5f);
+        transition.StartTransition(false, fadeDuration, Transition.TransitionType.TV_SWITCH);
+      //startAlpha = fadeImage != null ? fadeImage.color.a : 0f;
+      //targetAlpha = 1f;
+      //fadeDuration = 2.5f;
+      //FadeManager.Instance.FadeToBlack(2.5f);
     }
     public void OnMouseDown()
     {
