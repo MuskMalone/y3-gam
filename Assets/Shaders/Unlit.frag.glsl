@@ -1,5 +1,6 @@
 #version 460 core
 //#extension GL_ARB_bindless_texture : require
+
 struct MaterialProperties {
     vec2 Tiling;
     vec2 Offset;
@@ -22,15 +23,15 @@ layout(location = 3) out vec4 bloomColor;
 
 in vec4 v_Color;
 in vec2 v_TexCoord;
-in flat float v_TexIdx; //not being used might delete
+in flat float v_TexIdx; // not being used might delete
 
 in flat int v_EntityID;
 in flat int v_MaterialIdx;
-           
-in vec3 v_FragPos;              // Fragment position in world space
-in vec3 v_Normal;               // Normal in world space
-in vec3 v_Tangent;              // Tangent in world space
-in vec3 v_Bitangent;            // Bitangent in world space
+
+in vec3 v_FragPos;      // Fragment position in world space
+in vec3 v_Normal;       // Normal in world space
+in vec3 v_Tangent;      // Tangent in world space
+in vec3 v_Bitangent;    // Bitangent in world space
 
 // shadows
 in vec4 v_LightSpaceFragPos;
@@ -44,22 +45,18 @@ uniform sampler2D u_ShadowMap;
 
 uniform int u_MatIdxOffset;
 uniform sampler2D[16] u_AlbedoMaps;
-//uniform sampler2D[16] u_NormalMaps;
+uniform sampler2D[16] u_NormalMaps;
 
-void main(){
+void main() {
     entityID = v_EntityID;
     MaterialProperties mat = materials[v_MaterialIdx];
     vec2 texCoord = v_TexCoord * mat.Tiling + mat.Offset;
 
-	//vec4 texColor = texture2D(u_NormalMaps[int(v_MaterialIdx)], texCoord); //currently unused
-    
-    vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx) - u_MatIdxOffset], texCoord);
+    // Corrected: use addition for the material index offset
+    vec4 albedoTexture = texture2D(u_AlbedoMaps[int(v_MaterialIdx) + u_MatIdxOffset], texCoord);
     vec3 albedo = albedoTexture.rgb * mat.AlbedoColor.rgb; // Mixing texture and uniform
-	// Normalize inputs
-    
-    //change transparency here
-    //float alpha = albedoTexture.a * mat.Transparency;
-    float alpha = mat.Transparency;
+
+    // Change transparency here (you can choose to multiply with texture alpha if needed)
+    float alpha = mat.Transparency * albedoTexture.a;
     fragColor = vec4(albedo, alpha);
-    
 }

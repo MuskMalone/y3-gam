@@ -50,7 +50,7 @@ uniform sampler2D u_ShadowMap;
 
 uniform int u_MatIdxOffset;
 uniform sampler2D[16] u_AlbedoMaps;
-//uniform sampler2D[16] u_NormalMaps;
+uniform sampler2D[16] u_NormalMaps;
 
 //lighting parameters
 const int typeDir = 0;
