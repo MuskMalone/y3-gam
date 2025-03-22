@@ -281,8 +281,13 @@ namespace IGE {
 			//mRigidBodyIDs.emplace(rigidbody.bodyID, rb);
 			RegisterRB(rigidbody.bodyID, rb, entity);
 
-			return entity.EmplaceOrReplaceComponent<Component::RigidBody>(rigidbody);
+			auto& res = entity.EmplaceOrReplaceComponent<Component::RigidBody>(rigidbody);
 
+			if (rigidbody.jointID) { // means the joint is old, create new one
+				res.jointID = 0;
+				ChangeRigidBodyVar(entity, Component::RigidBodyVars::JOINT_ENTITY);
+			}
+			return res;
 			//set 
 			//bodyinterface.SetFriction(rigidbody.bodyID, rigidbody.friction);
 			//bodyinterface.SetRestitution(rigidbody.bodyID, rigidbody.restitution);
@@ -867,21 +872,47 @@ namespace IGE {
 			{ // debug for joints
 				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody>() };
 				for (auto entity : rbsystem) {
-					auto const& rb{ rbsystem.get<Component::RigidBody>(entity) };
+					auto const& rb = rbsystem.get<Component::RigidBody>(entity);
 					ECS::Entity e0{ entity };
 					ECS::Entity e1{ ECS::Entity::EntityID(rb.entityLinked) };
-					if (rb.hasJoint) {
-						auto actor0Pose{ reinterpret_cast<physx::PxRevoluteJoint*>(rb.jointID)->getLocalPose(physx::PxJointActorIndex::eACTOR0) };
-						auto actor1Pose{ reinterpret_cast<physx::PxRevoluteJoint*>(rb.jointID)->getLocalPose(physx::PxJointActorIndex::eACTOR1) };
-						actor0Pose.p += reinterpret_cast<physx::PxRigidDynamic*>(rb.bodyID)->getGlobalPose().p;
-						if (rb.entityLinked != (unsigned)-1){
-							actor1Pose.p += reinterpret_cast<physx::PxRigidDynamic*>(e1.GetComponent<Component::RigidBody>().bodyID)->getGlobalPose().p;
-						}
-						auto startPos{ ToGLMVec3(actor0Pose.p) };
-						auto endPos{ ToGLMVec3(actor1Pose.p) };
-						auto jointClr{ glm::vec4(1.0f, 0.5f, 0.0f, 1.0f) };
-						auto dir{ glm::normalize(endPos - startPos) };
 
+					if (rb.hasJoint) {
+						// Retrieve the joint's local poses for actor0 and actor1
+						auto localPose0 = reinterpret_cast<physx::PxJoint*>(rb.jointID)->getLocalPose(physx::PxJointActorIndex::eACTOR0);
+						auto localPose1 = reinterpret_cast<physx::PxJoint*>(rb.jointID)->getLocalPose(physx::PxJointActorIndex::eACTOR1);
+
+						// Retrieve the global poses of the actors
+						auto globalPose0 = reinterpret_cast<physx::PxRigidDynamic*>(rb.bodyID)->getGlobalPose();
+						physx::PxTransform globalPose1{};
+						if (rb.entityLinked != (unsigned)-1) {
+							globalPose1 = reinterpret_cast<physx::PxRigidDynamic*>(e1.GetComponent<Component::RigidBody>().bodyID)->getGlobalPose();
+						}
+
+						// Combine transforms to get the joint frame in world space.
+						// This properly applies the rotation and translation of the joint relative to each actor.
+						auto worldJointPose0 = globalPose0 * localPose0;
+						auto worldJointPose1 = globalPose1 * localPose1;
+
+						auto jointClr = glm::vec4(1.0f, 0.5f, 0.0f, 1.0f);
+						switch (rb.jointConfig.jointType) {
+						case Component::RigidBody::JointType::SPHERICAL:
+						case Component::RigidBody::JointType::REVOLUTE: {
+							// Draw a line from the joint frame on actor0 to actor0's global origin.
+							Graphics::Renderer::DrawLine(ToGLMVec3(worldJointPose0.p), ToGLMVec3(globalPose0.p), jointClr);
+							// Draw a line from the joint frame on actor1 to actor1's global origin.
+							Graphics::Renderer::DrawLine(ToGLMVec3(worldJointPose1.p), ToGLMVec3(globalPose1.p), jointClr);
+							// Draw a sphere at the joint frame on actor1.
+							Graphics::Renderer::DrawWireSphere(ToGLMVec3(worldJointPose1.p), 0.2, jointClr);
+						} break;
+						case Component::RigidBody::JointType::PRISMATIC:
+						case Component::RigidBody::JointType::DISTANCE: {
+							// Draw spheres at both joint frames.
+							Graphics::Renderer::DrawWireSphere(ToGLMVec3(worldJointPose0.p), 0.1, jointClr);
+							Graphics::Renderer::DrawWireSphere(ToGLMVec3(worldJointPose1.p), 0.1, jointClr);
+							// Draw a line connecting the two joint frames.
+							Graphics::Renderer::DrawLine(ToGLMVec3(worldJointPose0.p), ToGLMVec3(worldJointPose1.p), jointClr);
+						} break;
+						}
 					}
 				}
 			}

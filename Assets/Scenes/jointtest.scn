@@ -90,6 +90,153 @@
             ]
         },
         {
+            "ID": 1,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cube (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.8489158153533936,
+                            "y": 0.16830050945281983,
+                            "z": 1.5844906568527222
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 1.7524540041335969e-8,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0000020081643015146257,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.8489158153533936,
+                            "y": 0.16830050945281983,
+                            "z": 1.5844906568527222
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 1.7524540041335969e-8,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 0.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.000002365223053857335
+                        },
+                        "angularVelocity": {
+                            "x": -8.760086416259583e-7,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 10.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "DYNAMIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": true,
+                        "entityLinked": 7,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852887e38,
+                            "breakTorque": 3.4028234663852887e38,
+                            "stiffness": 25.600000381469728,
+                            "damping": 1.0,
+                            "lowerAngle": -3.140000104904175,
+                            "upperAngle": 3.140000104904175,
+                            "yLimit": 0.04712389409542084,
+                            "zLimit": 0.03490658476948738,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 2.5799999237060549,
+                            "motorEnabled": true,
+                            "motorTargetVelocity": -22.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 2.700000047683716,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": -2.5,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 2,
             "Parent": null,
             "Child Entities": [],
@@ -103,9 +250,303 @@
                 {
                     "Transform": {
                         "position": {
+                            "x": -4.472044944763184,
+                            "y": 0.40205442905426028,
+                            "z": 0.8429343700408936
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 5.364400479379583e-9,
+                            "y": -0.0019277120009064675,
+                            "z": -2.9185754257810005e-8,
+                            "w": -0.999998152256012
+                        },
+                        "eulerAngles": {
+                            "x": -6.082712502575305e-7,
+                            "y": 0.22089965641498567,
+                            "z": 0.00000334327478412888
+                        },
+                        "worldPos": {
+                            "x": -4.472044944763184,
+                            "y": 0.40205442905426028,
+                            "z": 0.8429343700408936
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 5.364400479379583e-9,
+                            "y": -0.0019277120009064675,
+                            "z": -2.9185754257810005e-8,
+                            "w": -0.999998152256012
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 0.5
+                        },
+                        "positionOffset": {
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": -0.000009592942660674453,
+                            "y": 0.0,
+                            "z": -0.0000011935533166251844
+                        },
+                        "angularVelocity": {
+                            "x": 4.4205668814356616e-7,
+                            "y": -1.280144069752212e-19,
+                            "z": -0.000003552941052475944
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 10.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "DYNAMIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": true,
+                        "entityLinked": 5,
+                        "joinConfig": {
+                            "jointType": "SPHERICAL",
+                            "breakForce": 3.4028234663852887e38,
+                            "breakTorque": 3.4028234663852887e38,
+                            "stiffness": 25.600000381469728,
+                            "damping": 1.0,
+                            "lowerAngle": -3.140000104904175,
+                            "upperAngle": 3.140000104904175,
+                            "yLimit": 0.015707962214946748,
+                            "zLimit": 0.04014257341623306,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 2.5799999237060549,
+                            "motorEnabled": true,
+                            "motorTargetVelocity": -22.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 2.700000047683716,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": -1.899999976158142,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cube (Copy) (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 6.724605083465576,
+                            "y": 0.08925659209489823,
+                            "z": 3.589000701904297
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.7071068286895752,
+                            "w": 0.7071068286895752
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 90.0
+                        },
+                        "worldPos": {
+                            "x": 6.724605083465576,
+                            "y": 0.08925659209489823,
+                            "z": 3.589000701904297
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.7071068286895752,
+                            "w": 0.7071068286895752
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 0.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 2.753477350639355e-12,
+                            "y": 0.0000015497207641601563,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -5.666492015193869e-12
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 10.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "DYNAMIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": true,
+                        "entityLinked": 8,
+                        "joinConfig": {
+                            "jointType": "PRISMATIC",
+                            "breakForce": 3.4028234663852887e38,
+                            "breakTorque": 3.4028234663852887e38,
+                            "stiffness": 25.600000381469728,
+                            "damping": 1.0,
+                            "lowerAngle": -3.140000104904175,
+                            "upperAngle": 3.140000104904175,
+                            "yLimit": 0.01745329238474369,
+                            "zLimit": 0.013962634839117527,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 2.5799999237060549,
+                            "motorEnabled": true,
+                            "motorTargetVelocity": -22.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "t",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -4.472045421600342,
+                            "y": 5.002054691314697,
+                            "z": 0.8429343104362488
                         },
                         "scale": {
                             "x": 1.0,
@@ -124,9 +565,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
+                            "x": -4.472045421600342,
+                            "y": 5.002054691314697,
+                            "z": 0.8429343104362488
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -199,32 +640,32 @@
                         "staticFriction": 0.0,
                         "dynamicFriction": 0.0,
                         "restitution": 0.0,
-                        "gravityFactor": 10.0,
+                        "gravityFactor": 0.8299999833106995,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC",
+                        "motionType": "KINEMATIC",
                         "axisLock": 0,
                         "angularAxisLock": 0,
-                        "hasJoint": true,
-                        "entityLinked": 5,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
                         "joinConfig": {
-                            "jointType": "SPHERICAL",
+                            "jointType": "REVOLUTE",
                             "breakForce": 3.4028234663852887e38,
                             "breakTorque": 3.4028234663852887e38,
-                            "stiffness": 25.600000381469728,
-                            "damping": 1.0,
-                            "lowerAngle": -3.140000104904175,
-                            "upperAngle": 3.140000104904175,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
                             "yLimit": 0.0,
                             "zLimit": 0.0,
                             "lowerLimit": 0.0,
-                            "upperLimit": 2.5799999237060549,
-                            "motorEnabled": true,
-                            "motorTargetVelocity": -22.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
                             "motorForceLimit": 0.0
                         },
                         "jointOffset": {
                             "x": 0.0,
-                            "y": 2.700000047683716,
+                            "y": 0.0,
                             "z": 0.0
                         },
                         "entityLinkedJointOffset": {
@@ -237,22 +678,169 @@
             ]
         },
         {
-            "ID": 5,
+            "ID": 6,
             "Parent": null,
             "Child Entities": [],
             "Components": [
                 {
                     "Tag": {
-                        "tag": "t",
+                        "tag": "Cube (Copy) (Copy) (Copy)",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": -0.7967528700828552,
-                            "y": 5.353388786315918,
-                            "z": 0.745766282081604
+                            "x": 12.155512809753418,
+                            "y": 1.8839342594146729,
+                            "z": 1.7382547855377198
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": -0.04318542033433914,
+                            "y": -0.0462932363152504,
+                            "z": 0.7186980247497559,
+                            "w": 0.6924342513084412
+                        },
+                        "eulerAngles": {
+                            "x": -7.258612632751465,
+                            "y": -0.1166253462433815,
+                            "z": 92.1399154663086
+                        },
+                        "worldPos": {
+                            "x": 12.155512809753418,
+                            "y": 1.8839342594146729,
+                            "z": 1.7382547855377198
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": -0.04318542033433914,
+                            "y": -0.0462932363152504,
+                            "z": 0.7186980247497559,
+                            "w": 0.6924342513084412
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 0.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": -0.000014731606825080235,
+                            "y": 0.0000030994415283203127,
+                            "z": 0.0000018414656324239332
+                        },
+                        "angularVelocity": {
+                            "x": 2.1648137348776752e-20,
+                            "y": -3.475631415475809e-25,
+                            "z": 1.861041671557806e-20
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 10.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "DYNAMIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": true,
+                        "entityLinked": 9,
+                        "joinConfig": {
+                            "jointType": "DISTANCE",
+                            "breakForce": 3.4028234663852887e38,
+                            "breakTorque": 3.4028234663852887e38,
+                            "stiffness": 25.600000381469728,
+                            "damping": 1.0,
+                            "lowerAngle": -3.140000104904175,
+                            "upperAngle": 3.140000104904175,
+                            "yLimit": 0.010471976362168789,
+                            "zLimit": 0.013962634839117527,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 2.5799999237060549,
+                            "motorEnabled": true,
+                            "motorTargetVelocity": -22.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 7,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "t (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.8489158153533936,
+                            "y": 5.368300437927246,
+                            "z": 1.5844907760620118
                         },
                         "scale": {
                             "x": 1.0,
@@ -271,9 +859,303 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -0.7967528700828552,
-                            "y": 5.353388786315918,
-                            "z": 0.745766282081604
+                            "x": 0.8489158153533936,
+                            "y": 5.368300437927246,
+                            "z": 1.5844907760620118
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 0.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.8299999833106995,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852887e38,
+                            "breakTorque": 3.4028234663852887e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.0,
+                            "zLimit": 0.0,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 8,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "t (Copy) (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 6.724606037139893,
+                            "y": 6.43869686126709,
+                            "z": 3.589000701904297
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.7071068286895752,
+                            "w": 0.7071068286895752
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 90.0
+                        },
+                        "worldPos": {
+                            "x": 6.724606037139893,
+                            "y": 6.43869686126709,
+                            "z": 3.589000701904297
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.7071068286895752,
+                            "w": 0.7071068286895752
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 0.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.8299999833106995,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852887e38,
+                            "breakTorque": 3.4028234663852887e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.0,
+                            "zLimit": 0.0,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 9,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "t (Copy) (Copy) (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 12.155511856079102,
+                            "y": 8.258376121520996,
+                            "z": 1.7382549047470093
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 12.155511856079102,
+                            "y": 8.258376121520996,
+                            "z": 1.7382549047470093
                         },
                         "worldScale": {
                             "x": 1.0,
