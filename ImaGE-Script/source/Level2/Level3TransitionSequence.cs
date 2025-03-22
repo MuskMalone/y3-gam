@@ -120,12 +120,12 @@ public class Level3TransitionSequence : Entity
   private void TransformHexRoom()
   {
     mainGround.SetActive(false);
-    sinkHoleVictims.SetActive(false);
     groundSmoke.SetActive(false);
     animGroundCollider.SetActive(false);
     hexTable.SetActive(false);
 
     sinkHole.SetActive(true);
+    sinkHoleVictims.SetActive(false);
     aftermathSmoke.SetActive(true);
   }
 
