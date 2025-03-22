@@ -10,7 +10,6 @@ public class LeverManager : Entity
   public Entity tableCamera;
   public Entity fragmentGlass;
   public PlayerMove playerMove;
-  //public Entity door; // The door to unlock
 
   public float timeBeforeOrbsDrop;  // how much time to wait after all levers pulled
 

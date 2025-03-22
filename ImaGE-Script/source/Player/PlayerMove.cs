@@ -26,7 +26,6 @@ public class  PlayerMove : Entity
   public float speed = 750f;
   public float walkingSpeed = 750f;
   public float runSpeed = 1300f;
-  public float isGroundedRayHeight = 3f;
   public bool noClip = false;
   
   public Entity cam;
@@ -40,15 +39,15 @@ public class  PlayerMove : Entity
 
   private Quaternion playerRotation = Quaternion.Identity;  // Player rotation (yaw only)
   private Quaternion cameraRotation = Quaternion.Identity;  // Camera rotation (pitch only)
-  public float initialGravityFactor = 5f;
-  public float extraGravityFactorDuringDescent = 15f;
-  public float minIsGroundedDistance = 4.35f;
   public bool canLook = true, canMove = true, useScriptRotation = true, climbing = false;
   private bool skipNextMouseDelta = false;  // to skip the jump in delta when unfreezing player
   private double currTime = 0.0;
   private double targetTime = 1.0;
   private bool startTimer = false;
+  private readonly float initialGravityFactor = 40f;
 
+  public float isGroundedRayHeight = 3f;
+  public float minIsGroundedDistance = 4.35f;
 
   public PlayerMove() : base()
   {
@@ -59,6 +58,8 @@ public class  PlayerMove : Entity
   void Start()
   {
     ResetPlayerVelocity();
+    Debug.Log("C# SetGravityFactor to " + initialGravityFactor);
+    InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
     //initialGravityFactor = InternalCalls.GetGravityFactor(mEntityID);
   }
 
@@ -86,6 +87,9 @@ public class  PlayerMove : Entity
     if (canMove)
       PlayerMovement();
   }
+
+  public float GetInitialGravityFactor() { return initialGravityFactor; }
+
   void PlayerMovement()
   {
 #if COMMENT_OUT_FOR_SUBMISSION
@@ -94,6 +98,10 @@ public class  PlayerMove : Entity
     if (Input.GetKeyTriggered(KeyCode.GRAVE_ACCENT))
     {
       noClip = !noClip;
+      if (!noClip)
+      {
+        InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
+      }
     }
 #endif
 
@@ -136,15 +144,6 @@ public class  PlayerMove : Entity
 #endif
     {
       InternalCalls.MoveCharacter(mEntityID, move);
-
-      if (IsGrounded())
-      {
-        InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
-      }
-      else
-      {
-        InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor * extraGravityFactorDuringDescent);
-      }
     }
   }
 
@@ -191,6 +190,7 @@ public class  PlayerMove : Entity
     InternalCalls.MoveCharacter(mEntityID, new Vector3(0, 0, 0));
     InternalCalls.SetAngularVelocity(mEntityID, new Vector3(0, 0, 0));
   }
+
   public bool IsGrounded()
   {
     Vector3 entityPosition = InternalCalls.GetWorldPosition(mEntityID);

@@ -248,6 +248,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetGravityFactor);
   ADD_INTERNAL_CALL(LockRigidBody);
   ADD_INTERNAL_CALL(LockRigidBodyRotation);
+  ADD_INTERNAL_CALL(SetDynamicFriction);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -1091,6 +1092,7 @@ void Mono::SetGravityFactor(ECS::Entity::EntityID entityId, float gravity) {
   }
   entity.GetComponent<Component::RigidBody>().gravityFactor = gravity;
   IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
+  //IGE_DBGLOGGER.LogInfo("Set gravity of " + entity.GetTag() + " to " + std::to_string(gravity));
 }
 
 void Mono::LockRigidBody(ECS::Entity::EntityID entityId, bool lock) {
@@ -1130,6 +1132,13 @@ void Mono::LockRigidBodyRotation(ECS::Entity::EntityID entityId, bool x, bool y,
     (z ? (int)Component::RigidBody::Axis::Z : 0)
   );
   IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LOCK);
+}
+
+void Mono::SetDynamicFriction(ECS::Entity::EntityID entityId, float val) {
+  ECS::Entity entity{ entityId };
+  entity.GetComponent<Component::RigidBody>().dynamicFriction = val;
+  IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::DYNAMIC_FRICTION);
+  //IGE_DBGLOGGER.LogInfo("Set dynamic friction of " + entity.GetTag() + " to " + std::to_string(val));
 }
 
 glm::vec3 Mono::GetMouseDelta()

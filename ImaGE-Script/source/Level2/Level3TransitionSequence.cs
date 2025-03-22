@@ -9,8 +9,10 @@ public class Level3TransitionSequence : Entity
   public Entity mainGround, sinkHoleVictims;
   public Entity invisibleBarrier, animGroundCollider;
   public Entity hexTable;
+  public PlayerMove playerMove;
   public PlayerInteraction playerInteraction; // Handles raycasting
   public float delayAfterCollection, delayAfterGroundSmoke;
+  public float delayTillTiltUp, tiltUpDuration;
 
   // camera shake stuff
   public float startShakeIntensity = 1f, endShakeIntensity = 2.5f;
@@ -73,7 +75,12 @@ public class Level3TransitionSequence : Entity
 
           if (timeElapsed >= delayAfterGroundSmoke)
           {
+            timeElapsed = 0f;
             TransformHexRoom();
+            InternalCalls.SetGravityFactor(playerInteraction.mEntityID, 50f);
+            InternalCalls.SetDynamicFriction(playerInteraction.mEntityID, 0f);
+            playerMove.FreezePlayer();
+            originalCamPos = playerCam.GetComponent<Transform>().rotationEuler;
             currState = State.CAVE_IN;
             return;
           }
@@ -86,8 +93,25 @@ public class Level3TransitionSequence : Entity
 
       case State.CAVE_IN:
         {
-          InternalCalls.SetGravityFactor(playerInteraction.mEntityID, 100f);
+          timeElapsed += Time.deltaTime;
 
+          if (timeElapsed < delayTillTiltUp) { return; }
+
+          timeElapsed = 0f;
+          groundSmoke.SetActive(false);
+          aftermathSmoke.SetActive(true);
+          currState = State.DROP;
+
+          break;
+        }
+
+      case State.DROP:
+        {
+          timeElapsed += Time.deltaTime;
+
+          Vector3 newRot = playerCam.GetComponent<Transform>().rotationEuler;
+          newRot.X = Mathf.Lerp(originalCamPos.X, 85f, timeElapsed / tiltUpDuration);
+          playerCam.GetComponent<Transform>().rotationEuler = newRot;
           break;
         }
     }

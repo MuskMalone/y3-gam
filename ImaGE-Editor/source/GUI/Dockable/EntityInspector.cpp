@@ -1702,7 +1702,7 @@ namespace GUI {
 
       NextRowTable("Dynamic Friction");
       if (ImGui::DragFloat("##RigidBodyDynamicFriction", &rigidBody.dynamicFriction, 0.01f, 0.0f, 1024.0f)) {
-        IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::STATIC_FRICTION);
+        IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::DYNAMIC_FRICTION);
         modified = true;
       }
 

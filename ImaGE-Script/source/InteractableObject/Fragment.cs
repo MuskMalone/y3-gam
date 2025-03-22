@@ -46,6 +46,12 @@ public class Fragment : Entity
 
   void Update()
   {
+    if (Input.GetKeyTriggered(KeyCode.RIGHT_BRACKET))
+    {
+      currState = State.COLLECTED;
+      fragmentCollected = true;
+    }
+
     switch (currState)
     {
       // check for player interaction

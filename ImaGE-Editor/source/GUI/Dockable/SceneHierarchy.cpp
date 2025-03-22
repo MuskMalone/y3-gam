@@ -895,7 +895,6 @@ namespace GUI
   }
 
   void SceneHierarchy::ResetEditNameMode() {
-    IGE_DBGLOGGER.LogInfo("Reset");
     sEditNameMode = mLockControls = false;
     sFirstEnterEditMode = true;
     sRenameTextBoxHovered = false;
