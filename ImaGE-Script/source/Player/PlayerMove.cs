@@ -90,7 +90,7 @@ public class  PlayerMove : Entity
   {
 #if COMMENT_OUT_FOR_SUBMISSION
     // tilde(~) key to ALLOW NOCLIP MODE TO FLY AROUND
-    // CONTROLS: WASD SPACE Q
+    // CONTROLS: WASD LSHIFT SPACE
     if (Input.GetKeyTriggered(KeyCode.GRAVE_ACCENT))
     {
       noClip = !noClip;
