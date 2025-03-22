@@ -41,97 +41,23 @@ namespace Graphics {
 
       Begin();
 
-      //clears the last 2 frame buffers
-        GLfloat clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f }; // Black with full alpha
-        glClearBufferfv(GL_COLOR, 3, clearColor); //view pos buffer
-     // Renderer::Clear();
-      //auto shader = mSpec.pipeline->GetShader();
+      // clears the last 2 frame buffers
+      GLfloat clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f }; // Black with full alpha
+      glClearBufferfv(GL_COLOR, 3, clearColor); // view pos buffer
       GetTargetFramebuffer()->ClearAttachmentInt(1, -1);
 
       //=================================================SUBMESH VERSION===============================================================
       // STEP UNO: Collect entities into shader groups!!!
-      //ShaderGroupMap const shaderGroups{ GroupEntities(entities) };
-
       ShaderGroupMap opaqueGroups;
       ShaderGroupMap transparentGroups;
       GroupEntities(entities, opaqueGroups, transparentGroups);
 
-
       // get light data to pass into shader
       LightUniforms<sMaxLights> const lightUniforms{ GetLightData<sMaxLights>(entities) };
-      int count{ 0 };
-
-      //for (ECS::Entity const& entity : entities) {
-      //  if (entity.HasComponent<Component::Material>()) { //GUID is 0 or invalid
-      //    std::cout << entity.GetComponent<Component::Material>().GetGUID() << "\n";
-      //    const auto emissionProp = Graphics::MaterialTable::GetMaterialByGUID(entity.GetComponent<Component::Material>().materialGUID);          
-      //  }
-      //}
-
-  
-
       unsigned matCount{ static_cast<unsigned>(MaterialTable::GetMaterialCount()) };
+      float time = static_cast<float>(glfwGetTime()); // for shaders requiring time
 
-      float time = static_cast<float>(glfwGetTime()); //for shaders requiring time
-      // STEP TRES: Render shader groups
-      //for (auto const&[shader, matGrp] : shaderGroups) {
-
-      //  // Only bind the shader if it's different from the currently bound one
-      //  shader->Use();
-
-        // Set the gamma uniform
-        //shader->SetUniform("u_Gamma", 2.2f); // Default gamma value
-
-        //bool isWaterShader = (shader == ShaderLibrary::Get("Water"));
-
-      //  if (isWaterShader) {
-      //      shader->SetUniform("u_Time", time);
-      //  }
-
-      //  bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
-
-      //  shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
-
-      //  if (!isUnlitShader) {
-      //    shader->SetUniform("u_CamPos", cam.position);
-
-      //    // Light Info
-      //    lightUniforms.SetUniforms(shader);
-
-      //    // Set shadow uniforms
-      //    auto const& shadowPass = Renderer::GetPass<ShadowPass>();
-      //    shader->SetUniform("u_ShadowsActive", shadowPass->IsActive());
-      //    if (shadowPass->IsActive()) {
-      //      shader->SetUniform("u_LightSpaceMtx", shadowPass->GetLightSpaceMatrix());
-      //      shadowPass->BindShadowMap(Texture::sShadowMapTexUnit);
-      //      shader->SetUniform("u_ShadowMap", static_cast<int>(Texture::sShadowMapTexUnit));
-      //      shader->SetUniform("u_ShadowBias", shadowPass->GetShadowBias());
-      //      shader->SetUniform("u_ShadowSoftness", shadowPass->GetShadowSoftness());
-      //    }
-      //  }
-
-      //  for (auto const& [matGrp, entityData] : matGrp) {
-      //    // set the offset to subtract from the index
-      //    unsigned const batchStart{ static_cast<unsigned>(matGrp) * MaterialTable::sMaterialsPerBatch },
-      //      batchEnd{ matCount - batchStart >= MaterialTable::sMaterialsPerBatch
-      //      ? batchStart + MaterialTable::sMaterialsPerBatch - 1 : matCount - 1 };
-
-      //    MaterialTable::ApplyMaterialTextures(shader, batchStart, batchEnd);
-
-      //    int offset = matGrp == 0 ? 0 : -static_cast<int>(batchStart);
-      //    shader->SetUniform("u_MatIdxOffset", offset);
-      //    // Render all instances for this material
-      //    for (const auto&[worldMtx, entity, matIdx] : entityData) {
-      //      auto const& mesh = entity.GetComponent<Component::Mesh>();
-      //      Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE,
-      //        entity.GetEntityID(), matIdx, mesh.submeshIdx);
-      //    }
-
-      //    Renderer::RenderSubmeshInstances();  // Flush all instances for this material group
-      //  }
-      //}
-
-      // sort transparent objects back to front
+      // Sort transparent objects back-to-front
       for (auto& [shader, matGrp] : transparentGroups) {
           for (auto& [matBatch, entityData] : matGrp) {
               std::sort(entityData.begin(), entityData.end(),
@@ -142,16 +68,17 @@ namespace Graphics {
                       float distanceA = glm::length2(cam.position - transformA.worldPos);
                       float distanceB = glm::length2(cam.position - transformB.worldPos);
 
-                      return distanceA > distanceB; 
+                      return distanceA > distanceB;
                   });
           }
       }
 
-      // opaque first
+      // opaque objects first
       for (auto const& [shader, matGrp] : opaqueGroups) {
           shader->Use();
 
           shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
+          shader->SetUniform("u_ViewMtx", cam.viewMatrix); // Restored view matrix uniform
           shader->SetUniform("u_CamPos", cam.position);
           lightUniforms.SetUniforms(shader);
 
@@ -182,6 +109,7 @@ namespace Graphics {
           shader->Use();
 
           shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);
+          shader->SetUniform("u_ViewMtx", cam.viewMatrix); // Restored view matrix uniform
           shader->SetUniform("u_CamPos", cam.position);
           lightUniforms.SetUniforms(shader);
 
@@ -199,11 +127,11 @@ namespace Graphics {
                   Graphics::Renderer::SubmitInstance(mesh.meshSource, worldMtx, Color::COLOR_WHITE,
                       entity.GetEntityID(), matIdx, mesh.submeshIdx);
               }
-              Renderer::RenderSubmeshInstances();  
+              Renderer::RenderSubmeshInstances();
           }
       }
 
-      glDepthMask(GL_TRUE); 
+      glDepthMask(GL_TRUE);
       glDisable(GL_BLEND);
   
 
