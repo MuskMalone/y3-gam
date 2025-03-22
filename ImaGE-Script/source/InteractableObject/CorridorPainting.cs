@@ -56,7 +56,7 @@ public class CorrdiorPainting : Entity, IInventoryItem
     {
       InternalCalls.PlaySound(mEntityID, "PickupPainting");
       inventoryScript.Additem(this);
-      dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised });
+      dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised });  
     }
     EToPickUpUI.SetActive(isPaintHit);
 
