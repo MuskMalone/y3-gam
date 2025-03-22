@@ -1579,7 +1579,6 @@ namespace GUI {
     mComponentOpenStatusMap[compName] = isOpen;
 
     bool modified{ false };
-
     if (isOpen) {
       ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_LIGHT));
       float const inputWidth{ CalcInputWidth(50.f) };
@@ -1736,6 +1735,209 @@ namespace GUI {
       }
 
       ImGui::EndTable();
+
+      ImGui::Separator();
+      // Checkbox to enable/disable joint for this rigid body.
+      if (ImGui::Checkbox("Has Joint", &rigidBody.hasJoint)) {
+          modified = true;
+          IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::HAS_JOINT);
+      }
+      if (rigidBody.hasJoint) {
+          // entity dropdown combobox
+    // Entity dropdown combobox with search// Define the options for the joint types
+          static const char* jointTypeOptions[] = {
+              "Revolute",
+              "Spherical",
+              "Prismatic",
+              "Distance"
+          };
+
+          // Get the current joint type index from the rigidBody
+          int currentJointTypeIndex = static_cast<int>(rigidBody.jointConfig.jointType);
+
+          // Create the combo box for joint type selection
+          if (ImGui::Combo("Joint Type", &currentJointTypeIndex, jointTypeOptions, IM_ARRAYSIZE(jointTypeOptions)))
+          {
+              // Update the rigidBody joint type based on selection
+              rigidBody.jointConfig.jointType = static_cast<Component::RigidBody::JointType>(currentJointTypeIndex);
+              IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::JOINT_TYPE);
+              modified = true;
+          }
+
+          static char entitySearchBuffer[128] = "";
+          unsigned& selectedEntityID = rigidBody.entityLinked;
+
+          const auto& allEntities = ECS::EntityManager::GetInstance().GetAllEntities();
+
+          if (ImGui::BeginCombo("Linked Entity", selectedEntityID != static_cast<unsigned>(-1)
+              ? ECS::Entity(static_cast<ECS::Entity::EntityID>(selectedEntityID)).GetTag().c_str()
+              : "None"))
+          {
+              // Search box inside combo
+              ImGui::InputText("Search", entitySearchBuffer, IM_ARRAYSIZE(entitySearchBuffer));
+
+              for (auto entityID : allEntities) {
+                  ECS::Entity linkedEntity(entityID);
+
+                  // Get tag for display and filtering
+                  const std::string& tag = linkedEntity.GetTag();
+
+                  // Filter by search text (case-insensitive)
+                  if (strlen(entitySearchBuffer) > 0) {
+                      std::string searchStr(entitySearchBuffer);
+                      auto it = std::search(
+                          tag.begin(), tag.end(),
+                          searchStr.begin(), searchStr.end(),
+                          [](char ch1, char ch2) { return std::toupper(ch1) == std::toupper(ch2); }
+                      );
+                      if (it == tag.end()) {
+                          continue; // Skip non-matching entries
+                      }
+                  }
+
+                  // Handle selection
+                  bool isSelected = (linkedEntity.GetEntityID() == selectedEntityID);
+
+                  if (ImGui::Selectable(tag.c_str(), isSelected)) {
+                      selectedEntityID = linkedEntity.GetEntityID();
+                      rigidBody.entityLinked = selectedEntityID;
+
+                      modified = true; // Mark as modified
+                      IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::JOINT_ENTITY);
+                  }
+
+                  if (isSelected) {
+                      ImGui::SetItemDefaultFocus();
+                  }
+              }
+
+              ImGui::EndCombo();
+          }
+          // Joint Configuration GUI
+          
+            bool jointModified{ false };
+            // Assume modified and jointModified are booleans already declared,
+            // and 'rb' is your RigidBody component instance.
+            auto& config = rigidBody.jointConfig;
+
+            switch (config.jointType)
+            {
+            case Component::RigidBody::JointType::REVOLUTE:
+            {
+                if (ImGui::DragFloat("Break Force", &config.breakForce, 0.1f, 0.0f, 10000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Break Torque", &config.breakTorque, 0.1f, 0.0f, 10000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Stiffness", &config.stiffness, 0.1f, 0.0f, 1000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Damping", &config.damping, 0.1f, 0.0f, 1000.0f))
+                    modified = true, jointModified = true;
+
+                // Convert lower/upper angles from radians to degrees for display.
+                float lowerAngleDeg = config.lowerAngle * 180.0f / glm::pi<float>();
+                float upperAngleDeg = config.upperAngle * 180.0f / glm::pi<float>();
+                if (ImGui::DragFloat("Lower Angle (deg)", &lowerAngleDeg, 0.1f, -180.0f, 180.0f))
+                {
+                    config.lowerAngle = lowerAngleDeg * glm::pi<float>() / 180.0f;
+                    modified = true, jointModified = true;
+                }
+                if (ImGui::DragFloat("Upper Angle (deg)", &upperAngleDeg, 0.1f, -180.0f, 180.0f))
+                {
+                    config.upperAngle = upperAngleDeg * glm::pi<float>() / 180.0f;
+                    modified = true, jointModified = true;
+                }
+                if (ImGui::Checkbox("Motor Enabled", &config.motorEnabled))
+                    modified = true, jointModified = true;
+                if (config.motorEnabled)
+                {
+                    if (ImGui::DragFloat("Motor Target Velocity", &config.motorTargetVelocity, 0.1f, -1000.0f, 1000.0f))
+                        modified = true, jointModified = true;
+                    if (ImGui::DragFloat("Motor Force Limit", &config.motorForceLimit, 0.1f, 0.0f, 10000.0f))
+                        modified = true, jointModified = true;
+                }
+                break;
+            }
+
+            case Component::RigidBody::JointType::SPHERICAL:
+            {
+                if (ImGui::DragFloat("Break Force", &config.breakForce, 0.1f, 0.0f, 10000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Break Torque", &config.breakTorque, 0.1f, 0.0f, 10000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Stiffness", &config.stiffness, 0.1f, 0.0f, 1000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Damping", &config.damping, 0.1f, 0.0f, 1000.0f))
+                    modified = true, jointModified = true;
+                // Convert spherical limits (yLimit and zLimit) from radians to degrees.
+                float yLimitDeg = config.yLimit * 180.0f / glm::pi<float>();
+                float zLimitDeg = config.zLimit * 180.0f / glm::pi<float>();
+                if (ImGui::DragFloat("Y Limit (deg)", &yLimitDeg, 0.1f, 0.0f, 180.0f))
+                {
+                    config.yLimit = yLimitDeg * glm::pi<float>() / 180.0f;
+                    modified = true, jointModified = true;
+                }
+                if (ImGui::DragFloat("Z Limit (deg)", &zLimitDeg, 0.1f, 0.0f, 180.0f))
+                {
+                    config.zLimit = zLimitDeg * glm::pi<float>() / 180.0f;
+                    modified = true, jointModified = true;
+                }
+                break;
+            }
+
+            case Component::RigidBody::JointType::PRISMATIC:
+            {
+                if (ImGui::DragFloat("Break Force", &config.breakForce, 0.1f, 0.0f, 10000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Break Torque", &config.breakTorque, 0.1f, 0.0f, 10000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Stiffness", &config.stiffness, 0.1f, 0.0f, 1000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Damping", &config.damping, 0.1f, 0.0f, 1000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Lower Limit", &config.lowerLimit, 0.01f, -1000.0f, 1000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Upper Limit", &config.upperLimit, 0.01f, -1000.0f, 1000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::Checkbox("Motor Enabled", &config.motorEnabled))
+                    modified = true, jointModified = true;
+                if (config.motorEnabled)
+                {
+                    if (ImGui::DragFloat("Motor Target Velocity", &config.motorTargetVelocity, 0.1f, -1000.0f, 1000.0f))
+                        modified = true, jointModified = true;
+                    if (ImGui::DragFloat("Motor Force Limit", &config.motorForceLimit, 0.1f, 0.0f, 10000.0f))
+                        modified = true, jointModified = true;
+                }
+                break;
+            }
+
+            case Component::RigidBody::JointType::DISTANCE:
+            {
+                if (ImGui::DragFloat("Break Force", &config.breakForce, 0.1f, 0.0f, 10000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Break Torque", &config.breakTorque, 0.1f, 0.0f, 10000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Stiffness", &config.stiffness, 0.1f, 0.0f, 1000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Damping", &config.damping, 0.1f, 0.0f, 1000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Lower Limit", &config.lowerLimit, 0.01f, -1000.0f, 1000.0f))
+                    modified = true, jointModified = true;
+                if (ImGui::DragFloat("Upper Limit", &config.upperLimit, 0.01f, -1000.0f, 1000.0f))
+                    modified = true, jointModified = true;
+                break;
+            }
+
+            default:
+                break;
+            }
+            // Joint Offset GUI
+          if (ImGui::DragFloat3("Joint Offset", &rigidBody.jointOffset.x, 0.1f, -1000.f, 1000.f))
+              modified = true, jointModified = true;
+          if (ImGui::DragFloat3("Other Joint Offset", &rigidBody.entityLinkedJointOffset.x, 0.1f, -1000.f, 1000.f))
+              modified = true, jointModified = true;
+
+          if (jointModified) { IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::JOINT_PROPS); }
+      }
     }
 
     WindowEnd(isOpen);
@@ -2469,7 +2671,9 @@ namespace GUI {
 
       EndVec3Table();
     }
-
+    if (modified) {
+        IGE::Physics::PhysicsSystem::GetInstance()->UpdatePhysicsToTransform(entity);
+    }
     WindowEnd(isOpen);
     return modified;
   }

@@ -214,7 +214,16 @@ namespace IGE {
 				UpdatePhysicsToTransform(entity);
 			}
 		}
-
+		void PhysicsSystem::LoadJoints() {
+			auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody>() };
+			for (auto e : rbsystem) {
+				ECS::Entity entity{ e };
+				auto& rigidbody{ entity.GetComponent<Component::RigidBody>() };
+				ChangeRigidBodyVar(entity, Component::RigidBodyVars::HAS_JOINT);
+				ChangeRigidBodyVar(entity, Component::RigidBodyVars::JOINT_ENTITY);
+				ChangeRigidBodyVar(entity, Component::RigidBodyVars::JOINT_PROPS);
+			}
+		}
 		Component::RigidBody& PhysicsSystem::AddRigidBody(ECS::Entity entity, Component::RigidBody rigidbody) {
 			physx::PxRigidDynamic* rb { }; // Mass = 10.0f
 			//if (entity.HasComponent<Component::BoxCollider>() ||
@@ -271,6 +280,7 @@ namespace IGE {
 			rigidbody.bodyID = reinterpret_cast<void*>(rb);
 			//mRigidBodyIDs.emplace(rigidbody.bodyID, rb);
 			RegisterRB(rigidbody.bodyID, rb, entity);
+
 			return entity.EmplaceOrReplaceComponent<Component::RigidBody>(rigidbody);
 
 			//set 
@@ -418,6 +428,181 @@ namespace IGE {
 		{
 			return AddCollider<physx::PxCapsuleGeometry>(entity, collider, newCollider);
 		}
+
+		void PhysicsSystem::CreateJoint(ECS::Entity entity, Component::RigidBody& rb, physx::PxRigidDynamic* rbptr, physx::PxRigidDynamic* otherRbptr) {
+			physx::PxTransform localFrameA(rb.jointOffset); // relative to rbA
+			physx::PxTransform worldFrame(rb.entityLinkedJointOffset);   // world anchor
+
+			// Create the joint with rbA attached and the other actor set to nullptr.
+			physx::PxJoint* joint{ };
+			switch (rb.jointConfig.jointType) {
+			case Component::RigidBody::JointType::REVOLUTE:
+				joint = dynamic_cast<physx::PxJoint*>(physx::PxRevoluteJointCreate(
+					*mPhysics,
+					rbptr,           // First actor (rbA)
+					localFrameA,   // Joint frame relative to rbA
+					otherRbptr,       // Second actor is nullptr -> attached to the world
+					worldFrame     // World frame for the joint
+				));
+				break;
+			case Component::RigidBody::JointType::SPHERICAL:
+				joint = dynamic_cast<physx::PxJoint*>(physx::PxSphericalJointCreate(
+					*mPhysics,
+					rbptr,           // First actor (rbA)
+					localFrameA,   // Joint frame relative to rbA
+					otherRbptr,       // Second actor is nullptr -> attached to the world
+					worldFrame     // World frame for the joint
+				));
+				break;
+			case Component::RigidBody::JointType::PRISMATIC:
+				joint = dynamic_cast<physx::PxJoint*>(physx::PxPrismaticJointCreate(
+					*mPhysics,
+					rbptr,           // First actor (rbA)
+					localFrameA,   // Joint frame relative to rbA
+					otherRbptr,       // Second actor is nullptr -> attached to the world
+					worldFrame     // World frame for the joint
+				));
+				break;
+			case Component::RigidBody::JointType::DISTANCE:
+				joint = dynamic_cast<physx::PxJoint*>(physx::PxDistanceJointCreate(
+					*mPhysics,
+					rbptr,           // First actor (rbA)
+					localFrameA,   // Joint frame relative to rbA
+					otherRbptr,       // Second actor is nullptr -> attached to the world
+					worldFrame     // World frame for the joint
+				));
+				break;
+			}
+
+			rb.jointID = reinterpret_cast<void*>(joint);
+			UpdateJointConfig(entity, rb);
+
+			//add it to the joint map
+			mJointMap[reinterpret_cast<void*>(otherRbptr)].emplace(entity.GetEntityID());
+		}
+
+		void PhysicsSystem::UpdateJointConfig(ECS::Entity entity, Component::RigidBody& rb) {
+			auto& config = rb.jointConfig;
+			switch (config.jointType)
+			{
+			case Component::RigidBody::JointType::REVOLUTE:
+			{
+				// Cast to a revolute joint and update hinge-specific properties.
+				auto joint = reinterpret_cast<physx::PxRevoluteJoint*>(rb.jointID);
+				joint->setRevoluteJointFlag(physx::PxRevoluteJointFlag::eLIMIT_ENABLED, true);
+				joint->setBreakForce(config.breakForce, config.breakTorque);
+
+				// Create an angular limit pair for the hinge.
+				physx::PxJointAngularLimitPair limits(config.lowerAngle, config.upperAngle);
+				limits.stiffness = config.stiffness;
+				limits.damping = config.damping;
+				joint->setLimit(limits);
+
+				// Motor (drive) settings.
+				if (config.motorEnabled)
+				{
+					joint->setRevoluteJointFlag(physx::PxRevoluteJointFlag::eDRIVE_ENABLED, true);
+					joint->setDriveVelocity(config.motorTargetVelocity);
+					joint->setDriveForceLimit(config.motorForceLimit);
+				}
+				else
+				{
+					joint->setRevoluteJointFlag(physx::PxRevoluteJointFlag::eDRIVE_ENABLED, false);
+				}
+				// Update the frame for the first actor (rbA)
+				physx::PxTransform frameA{ rb.jointOffset };
+				joint->setLocalPose(physx::PxJointActorIndex::eACTOR0, frameA);
+
+				// Update the frame for the second actor (rbB)
+				physx::PxTransform frameB{ rb.entityLinkedJointOffset };
+				joint->setLocalPose(physx::PxJointActorIndex::eACTOR1, frameB);
+				break;
+			}
+
+			case Component::RigidBody::JointType::SPHERICAL:
+			{
+				// Cast to a spherical joint and update spherical-specific limits.
+				auto joint = reinterpret_cast<physx::PxSphericalJoint*>(rb.jointID);
+				joint->setSphericalJointFlag(physx::PxSphericalJointFlag::eLIMIT_ENABLED, true);
+				joint->setBreakForce(config.breakForce, config.breakTorque);
+
+				// For spherical joints, use a limit cone.
+				// Here, 'yLimit' and 'zLimit' are used to create the cone limit.
+				physx::PxJointLimitCone limitCone(config.yLimit, config.zLimit, physx::PxSpring(config.stiffness, config.damping));
+				joint->setLimitCone(limitCone);
+				// Update the frame for the first actor (rbA)
+				physx::PxTransform frameA{ rb.jointOffset };
+				joint->setLocalPose(physx::PxJointActorIndex::eACTOR0, frameA);
+
+				// Update the frame for the second actor (rbB)
+				physx::PxTransform frameB{ rb.entityLinkedJointOffset };
+				joint->setLocalPose(physx::PxJointActorIndex::eACTOR1, frameB);
+				break;
+			}
+
+			case Component::RigidBody::JointType::PRISMATIC:
+			{
+				// Cast to a prismatic joint and update linear limits.
+				auto joint = reinterpret_cast<physx::PxPrismaticJoint*>(rb.jointID);
+				joint->setPrismaticJointFlag(physx::PxPrismaticJointFlag::eLIMIT_ENABLED, true);
+				joint->setBreakForce(config.breakForce, config.breakTorque);
+
+				// Create a linear limit pair for prismatic joints.
+				physx::PxJointLinearLimitPair limits(config.lowerLimit, config.upperLimit, physx::PxSpring(config.stiffness, config.damping));
+				joint->setLimit(limits);
+				// Update the frame for the first actor (rbA)
+				physx::PxTransform frameA{ rb.jointOffset };
+				joint->setLocalPose(physx::PxJointActorIndex::eACTOR0, frameA);
+
+				// Update the frame for the second actor (rbB)
+				physx::PxTransform frameB{ rb.entityLinkedJointOffset };
+				joint->setLocalPose(physx::PxJointActorIndex::eACTOR1, frameB);
+				break;
+			}
+
+			case Component::RigidBody::JointType::DISTANCE:
+			{
+				// Cast to a distance joint and update linear limits.
+				auto joint = reinterpret_cast<physx::PxDistanceJoint*>(rb.jointID);
+				joint->setDistanceJointFlag(physx::PxDistanceJointFlag::eMAX_DISTANCE_ENABLED, true);
+				joint->setDistanceJointFlag(physx::PxDistanceJointFlag::eMIN_DISTANCE_ENABLED, true);
+				joint->setDistanceJointFlag(physx::PxDistanceJointFlag::eSPRING_ENABLED, true);
+
+				joint->setBreakForce(config.breakForce, config.breakTorque);
+
+				// Set a linear limit pair for the distance joint.
+				joint->setMaxDistance(config.upperLimit);
+				joint->setMinDistance(config.lowerLimit);
+				joint->setStiffness(config.stiffness);
+				joint->setDamping(config.damping);
+				// Update the frame for the first actor (rbA)
+				physx::PxTransform frameA{ rb.jointOffset };
+				joint->setLocalPose(physx::PxJointActorIndex::eACTOR0, frameA);
+
+				// Update the frame for the second actor (rbB)
+				physx::PxTransform frameB{ rb.entityLinkedJointOffset };
+				joint->setLocalPose(physx::PxJointActorIndex::eACTOR1, frameB);
+				break;
+			}
+
+			default:
+				// Optionally handle unexpected joint types.
+				break;
+			}
+
+
+		}
+
+		void PhysicsSystem::RemoveJoint(ECS::Entity entity, Component::RigidBody& rb) {
+			if (rb.jointID) {
+				auto joint{ reinterpret_cast<physx::PxJoint*>(rb.jointID) };
+				joint->release();
+			}
+
+			rb.entityLinked = static_cast<unsigned>(-1);
+			rb.jointID = 0;	//remove the jointID
+		}
+		
 		void PhysicsSystem::ChangeRigidBodyVar(ECS::Entity entity, Component::RigidBodyVars var)
 		{
 			auto& rb{ entity.GetComponent<Component::RigidBody>() };
@@ -460,12 +645,37 @@ namespace IGE {
 					rbptr->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, rb.IsAngleAxisLocked((int)Component::RigidBody::Axis::Z) ? true : false);
 
 				}break;
-
 				case Component::RigidBodyVars::FORCE: {
 					//force is converted to kN
 					rbptr->addForce(rb.force * 1000.f * Performance::FrameRateController::GetInstance().GetDeltaTime(), physx::PxForceMode::eFORCE);
 					//printf("force added: %d %d %d\n", force.x, force.y, force.z);
 				}break;
+				case Component::RigidBodyVars::HAS_JOINT: {
+					if (rb.hasJoint && !rb.jointID) { //add the joint{
+						CreateJoint(entity, rb, rbptr, nullptr);
+					}
+					else {
+						RemoveJoint(entity, rb);
+					}
+				}break;
+				case Component::RigidBodyVars::JOINT_TYPE:
+				case Component::RigidBodyVars::JOINT_ENTITY: {
+					if (rb.entityLinked != static_cast<unsigned>(-1)) {
+						ECS::Entity entityLinked{ ECS::Entity::EntityID{rb.entityLinked} };
+						auto otherRbptr = GetRBIter(entityLinked);
+						if (otherRbptr) {
+							auto saveEntity = rb.entityLinked;
+							RemoveJoint(entity, rb);
+							CreateJoint(entity, rb, rbptr, otherRbptr);
+							rb.entityLinked = saveEntity;
+						}
+					}
+				} break;
+				case Component::RigidBodyVars::JOINT_PROPS: {
+					if (rb.jointID) {
+						UpdateJointConfig(entity, rb);
+					}
+				}
 				}
 				if (entity.HasComponent<Component::BoxCollider>() || entity.HasComponent<Component::CapsuleCollider>() || entity.HasComponent<Component::SphereCollider>()) {
 					physx::PxShape* shape[3]{};
@@ -488,8 +698,6 @@ namespace IGE {
 						}
 					}
 				}
-
-
 			}
 			//AddRigidBody(ECS::Entity{});
 		}
@@ -542,9 +750,11 @@ namespace IGE {
 
 		void PhysicsSystem::Debug() {
 			if (Input::InputManager::GetInstance().IsKeyHeld(KEY_CODE::KEY_LEFT_CONTROL) &&
-				Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_D)) mDrawDebug = !mDrawDebug;
-			if (!mDrawDebug) return;
+				Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_D)) {
+				mDrawDebug = !mDrawDebug;
 
+			}
+			if (!mDrawDebug) return;
 			{
 				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::BoxCollider>() };
 				for (auto entity : rbsystem) {
@@ -654,6 +864,27 @@ namespace IGE {
 
 				}
 			}
+			{ // debug for joints
+				auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::RigidBody>() };
+				for (auto entity : rbsystem) {
+					auto const& rb{ rbsystem.get<Component::RigidBody>(entity) };
+					ECS::Entity e0{ entity };
+					ECS::Entity e1{ ECS::Entity::EntityID(rb.entityLinked) };
+					if (rb.hasJoint) {
+						auto actor0Pose{ reinterpret_cast<physx::PxRevoluteJoint*>(rb.jointID)->getLocalPose(physx::PxJointActorIndex::eACTOR0) };
+						auto actor1Pose{ reinterpret_cast<physx::PxRevoluteJoint*>(rb.jointID)->getLocalPose(physx::PxJointActorIndex::eACTOR1) };
+						actor0Pose.p += reinterpret_cast<physx::PxRigidDynamic*>(rb.bodyID)->getGlobalPose().p;
+						if (rb.entityLinked != (unsigned)-1){
+							actor1Pose.p += reinterpret_cast<physx::PxRigidDynamic*>(e1.GetComponent<Component::RigidBody>().bodyID)->getGlobalPose().p;
+						}
+						auto startPos{ ToGLMVec3(actor0Pose.p) };
+						auto endPos{ ToGLMVec3(actor1Pose.p) };
+						auto jointClr{ glm::vec4(1.0f, 0.5f, 0.0f, 1.0f) };
+						auto dir{ glm::normalize(endPos - startPos) };
+
+					}
+				}
+			}
 			for (auto const& ray : mRays) {
 				if (ray.detected) {
 					//draw three lines
@@ -687,6 +918,7 @@ namespace IGE {
 				rb->release();
 			}
 			mRigidBodyIDs.clear();
+			mJointMap.clear();
 			mRigidBodyToEntity.clear();
 			mInactiveActors.clear();
 			mOnTriggerPairs.clear();
@@ -1090,21 +1322,40 @@ namespace IGE {
 
 		EVENT_CALLBACK_DEF(PhysicsSystem, HandleRemoveComponent) {
 			auto e{ CAST_TO_EVENT(Events::RemoveComponentEvent) };
+			auto rbptr{ GetRBIter(e->mEntity) };
+			bool isLastPhysicsComponent{ false };
 			if (e->mType == rttr::type::get<Component::RigidBody>()) {
 				RemoveRigidBody(e->mEntity);
+				isLastPhysicsComponent = !HasAnyComponent<Component::BoxCollider, Component::SphereCollider, Component::CapsuleCollider>(e->mEntity);
 			} 
 			else if (e->mType == rttr::type::get<Component::BoxCollider>()) {
 				RemoveCollider<physx::PxBoxGeometry, Component::BoxCollider>(e->mEntity, physx::PxGeometryType::Enum::eBOX);
+				isLastPhysicsComponent = !HasAnyComponent<Component::RigidBody, Component::SphereCollider, Component::CapsuleCollider>(e->mEntity);
 			}
 			else if (e->mType == rttr::type::get<Component::SphereCollider>()) {
 				RemoveCollider<physx::PxSphereGeometry, Component::SphereCollider>(e->mEntity, physx::PxGeometryType::Enum::eSPHERE);
+				isLastPhysicsComponent = !HasAnyComponent<Component::BoxCollider, Component::RigidBody, Component::CapsuleCollider>(e->mEntity);
 			}
 			else if (e->mType == rttr::type::get<Component::CapsuleCollider>()) {
 				RemoveCollider<physx::PxCapsuleGeometry, Component::CapsuleCollider>(e->mEntity, physx::PxGeometryType::Enum::eCAPSULE);
+				isLastPhysicsComponent = !HasAnyComponent<Component::BoxCollider, Component::SphereCollider, Component::RigidBody>(e->mEntity);
+			}
+
+			if (rbptr && 
+				isLastPhysicsComponent &&
+				mJointMap.find(reinterpret_cast<void*>(rbptr)) != mJointMap.end()) {
+				for (auto entityid : mJointMap[rbptr]) {
+					ECS::Entity entity{ ECS::Entity::EntityID{entityid} };
+					if (ECS::EntityManager::GetInstance().IsValidEntity(entity) && entity.HasComponent<Component::RigidBody>()) {
+						entity.GetComponent<Component::RigidBody>().hasJoint = false;
+						ChangeRigidBodyVar(entity, Component::RigidBodyVars::HAS_JOINT);
+					}
+				}
 			}
 		}
 		EVENT_CALLBACK_DEF(PhysicsSystem, HandleRemoveEntity) {
 			auto e{ CAST_TO_EVENT(Events::RemoveEntityEvent) };
+			auto rbptr{ GetRBIter(e->mEntity) };
 			if (e->mEntity.HasComponent<Component::RigidBody>()) {
 				RemoveRigidBody(e->mEntity);
 			}
@@ -1117,6 +1368,16 @@ namespace IGE {
 			if (e->mEntity.HasComponent<Component::CapsuleCollider>()) {
 				RemoveCollider<physx::PxCapsuleGeometry, Component::CapsuleCollider>(e->mEntity, physx::PxGeometryType::Enum::eCAPSULE);
 			}
+			if (mJointMap.find(reinterpret_cast<void*>(rbptr)) != mJointMap.end() && rbptr) {
+				for (auto entityid : mJointMap[rbptr]) {
+					ECS::Entity entity{ ECS::Entity::EntityID{entityid} };
+					if (ECS::EntityManager::GetInstance().IsValidEntity(entity) && entity.HasComponent<Component::RigidBody>()) {
+						entity.GetComponent<Component::RigidBody>().hasJoint = false;
+						ChangeRigidBodyVar(entity, Component::RigidBodyVars::HAS_JOINT);
+					}
+				}
+			}
+
 		}
 		PhysicsSystem::~PhysicsSystem() {
 			//UnregisterTypes();

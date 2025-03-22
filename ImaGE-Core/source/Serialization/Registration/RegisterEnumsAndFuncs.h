@@ -64,11 +64,18 @@ static void rttr_auto_register_reflection_function3_(); namespace {
     rttr::value("DYNAMIC", Component::RigidBody::MotionType::DYNAMIC),
     rttr::value("KINEMATIC", Component::RigidBody::MotionType::KINEMATIC)
     );
+  rttr::registration::enumeration<Component::RigidBody::JointType>("JointType")(
+      rttr::value("REVOLUTE", Component::RigidBody::JointType::REVOLUTE),
+      rttr::value("SPHERICAL", Component::RigidBody::JointType::SPHERICAL),
+      rttr::value("PRISMATIC", Component::RigidBody::JointType::PRISMATIC),
+      rttr::value("DISTANCE", Component::RigidBody::JointType::DISTANCE)
+      );
   rttr::registration::enumeration<IGE::Audio::SoundInvokeSetting::RolloffType>("RolloffType")(
     rttr::value("LINEAR", IGE::Audio::SoundInvokeSetting::RolloffType::LINEAR),
     rttr::value("LOGARITHMIC", IGE::Audio::SoundInvokeSetting::RolloffType::LOGARITHMIC),
     rttr::value("NONE", IGE::Audio::SoundInvokeSetting::RolloffType::NONE)
     );
+
   rttr::registration::enumeration<IGE::Audio::SoundInvokeSetting::PostProcessingType>("PostProcessingType")(
       rttr::value("REVERB", IGE::Audio::SoundInvokeSetting::PostProcessingType::REVERB),
       rttr::value("ECHO", IGE::Audio::SoundInvokeSetting::PostProcessingType::ECHO),

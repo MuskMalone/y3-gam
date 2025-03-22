@@ -20,6 +20,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/GUID.h>
 #include <Audio/AudioManager.h>
 #include <Core/Components/AudioSource.h>
+#include <Core/Components/RigidBody.h>
 #include <Graphics/PostProcessing/PostProcessingManager.h>
 #include <Graphics/PostProcessing/ParticleManager.h>
 #include <Graphics/MaterialData.h>
@@ -172,6 +173,25 @@ static void rttr_auto_register_reflection_function_(); namespace {
       .property("ambColor", &T::ambColor)
       .property("ambIntensity", &T::ambIntensity)
       .property("gammaValue", &T::gammaValue);
+  }
+  {
+      using T = Component::RigidBody::JointConfig;
+      rttr::registration::class_<T>("JointConfig")
+          .constructor<>()(rttr::policy::ctor::as_object)
+          .property("jointType", &T::jointType)
+          .property("breakForce", &T::breakForce)
+          .property("breakTorque", &T::breakTorque)
+          .property("stiffness", &T::stiffness)
+          .property("damping", &T::damping)
+          .property("lowerAngle", &T::lowerAngle)
+          .property("upperAngle", &T::upperAngle)
+          .property("yLimit", &T::yLimit)
+          .property("zLimit", &T::zLimit)
+          .property("lowerLimit", &T::lowerLimit)
+          .property("upperLimit", &T::upperLimit)
+          .property("motorEnabled", &T::motorEnabled)
+          .property("motorTargetVelocity", &T::motorTargetVelocity)
+          .property("motorForceLimit", &T::motorForceLimit);
   }
 
   /* ------------------- Audio ------------------- */

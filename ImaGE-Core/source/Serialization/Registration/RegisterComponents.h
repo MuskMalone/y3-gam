@@ -99,7 +99,12 @@ static void rttr_auto_register_reflection_function2_(); namespace {
       .property("linearDamping", &RigidBody::linearDamping)
       .property("motionType", &RigidBody::motionType)
       .property("axisLock", &RigidBody::axisLock)
-      .property("angularAxisLock", &RigidBody::angularAxisLock);
+      .property("angularAxisLock", &RigidBody::angularAxisLock)
+      .property("hasJoint", &RigidBody::hasJoint)
+      .property("entityLinked", &RigidBody::entityLinked)
+      .property("joinConfig", &RigidBody::jointConfig)
+      .property("jointOffset", &RigidBody::jointOffset)
+      .property("entityLinkedJointOffset", &RigidBody::entityLinkedJointOffset);
 
   REGISTER_COMPONENT(BoxCollider, "BoxCollider")
       .property("scale", &BoxCollider::scale)

@@ -19,6 +19,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Scenes/SceneManager.h>
 #include <Core/EntityManager.h>
 #include <Commands/CommandManager.h>
+#include <Physics/PhysicsSystem.h>
 
 #include <GUI/Helpers/AssetPayload.h>
 #include <GUI/Helpers/ImGuiHelpers.h>
@@ -444,10 +445,12 @@ namespace GUI
         if (multiSelectActive) {
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
             e.GetComponent<Component::Transform>().worldPos += offset;
+            IGE::Physics::PhysicsSystem::GetInstance()->UpdatePhysicsToTransform(e);
           }
         }
         else {
           transform.worldPos += offset;
+          IGE::Physics::PhysicsSystem::GetInstance()->UpdatePhysicsToTransform(selectedEntity);
         }
       }
       else if (currentOperation == ImGuizmo::ROTATE) {
@@ -460,12 +463,15 @@ namespace GUI
             trans.worldRot = glm::quat(glm::radians(r));
             //trans.rotation = offset * trans.rotation;
             //trans.eulerAngles += eulerOffset;
+            IGE::Physics::PhysicsSystem::GetInstance()->UpdatePhysicsToTransform(e);
+
           }
         }
         else {
           //transform.rotation = offset * transform.rotation;
           //transform.eulerAngles += eulerOffset;
           transform.worldRot = glm::quat(glm::radians(r));
+          IGE::Physics::PhysicsSystem::GetInstance()->UpdatePhysicsToTransform(selectedEntity);
         }
       }
       else if (currentOperation == ImGuizmo::SCALE) {
@@ -474,6 +480,7 @@ namespace GUI
         if (multiSelectActive) {
           for (ECS::Entity e : GUIVault::GetSelectedEntities()) {
             e.GetComponent<Component::Transform>().worldScale += offset;
+
           }
         }
         else {

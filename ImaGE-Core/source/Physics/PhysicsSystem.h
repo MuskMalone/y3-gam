@@ -40,6 +40,8 @@ namespace IGE {
 			void Update() override;
 			void PausedUpdate() override;
 
+			void LoadJoints();
+
 			// temporarily using this to deserialize a copy of the rb from file
 			Component::RigidBody& AddRigidBody(ECS::Entity entity, Component::RigidBody rb = {}); // should const ref this when the functions r consted
 			void ChangeRigidBodyVar(ECS::Entity entity, Component::RigidBodyVars var);
@@ -105,6 +107,7 @@ namespace IGE {
 			// map is a way to get around the pesky casting
 			std::unordered_map<void*, physx::PxRigidDynamic*> mRigidBodyIDs; 
 			std::unordered_map<void*, ECS::Entity> mRigidBodyToEntity;
+			std::unordered_map<void*, std::set<unsigned>> mJointMap; // map of entityB joints connected to other joints to track for removal
 
 			std::unordered_map<void*, std::unordered_map<void*, int>> mOnTriggerPairs;
 			std::unordered_map<void*, std::unordered_map<void*, std::vector<physx::PxContactPairPoint>>> mOnContactPairs;
@@ -139,6 +142,10 @@ namespace IGE {
 			void RemoveRB(void* bodyID) noexcept;
 			physx::PxRigidDynamic* GetRBIter(ECS::Entity entity);
 			void SetEntityActive(ECS::Entity e, physx::PxRigidDynamic* pxrb, bool kinematic);
+			void CreateJoint(ECS::Entity entity, Component::RigidBody& rb, physx::PxRigidDynamic* rbptr, physx::PxRigidDynamic* otherRbptr);
+			void UpdateJointConfig(ECS::Entity entity, Component::RigidBody& rb);
+			void RemoveJoint(ECS::Entity entity, Component::RigidBody& rb);
+
 		private:
 			//for testing purposes only
 			PHYSICS_EVENT_LISTENER_DECL(OnContactSampleListener)

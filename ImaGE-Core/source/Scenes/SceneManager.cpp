@@ -18,7 +18,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Reflection/ObjectFactory.h>
 #include "Graphics/RenderSystem.h"
 #include <Core/Components/Light.h>
-#include <Physics/PhysicsSystem.h>
 
 #ifdef _DEBUG
 //#define EVENTS_DEBUG
@@ -91,7 +90,7 @@ namespace Scenes
     // realign colliders with transforms
     IGE_EVENTMGR.DispatchImmediateEvent<Events::TriggerPausedUpdate>();
     Mono::ScriptManager::GetInstance().LinkAllScriptDataMember();
-
+    IGE::Physics::PhysicsSystem::GetInstance()->LoadJoints();
     IGE_DBGLOGGER.LogInfo("Entity count: " + std::to_string(IGE_ENTITYMGR.GetAllEntities().size()));
   }
 
