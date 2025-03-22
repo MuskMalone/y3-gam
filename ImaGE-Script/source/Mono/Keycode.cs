@@ -144,5 +144,7 @@ namespace IGE.Utils
     KP_ADD = 334,
     KP_ENTER = 335,
     KP_EQUAL = 336,
+
+    LEFT_SHIFT = 340
   }
 }

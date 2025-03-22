@@ -105,6 +105,15 @@ namespace IGE.Utils
     internal extern static Vector3 GetMousePos();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static float GetScreenWidth();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetBrightness(float fraction);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static float GetGammaNorm();
+
+  [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetMousePosWorld(float depth);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -286,6 +295,10 @@ namespace IGE.Utils
 
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetSoundGlobalVolume();
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void EnableSoundPostProcessing(uint entity, string sound, uint type, float param);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -352,6 +365,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void LockRigidBody(uint entity, bool toLock);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetDynamicFriction(uint entity, float frictionValue);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void LockRigidBodyRotation(uint entity, bool x, bool y, bool z);

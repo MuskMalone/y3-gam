@@ -29,70 +29,84 @@ using IGE.Utils;
 
 public class PaintingAlignUIGarden : Entity
 {
-    private HoldupUI holdupUIScript;
-    private Inventory inventoryScript;
-    private PictureAlign pictureAlignScript;
+  public Entity bigPaintingUI;
+  public Entity smallPaintingUI;
+  public Entity alignmentUI;
+  public Fragment fragment;
+  public Dialogue dialogueScript;
+  public string[] collectFragmentDialogue;
 
-    public Entity bigPaintingUI;
-    public Entity smallPaintingUI;
-    public Entity alignmentUI;
+  public bool isPainting = false;
 
-    public bool isPainting = false;
+  private HoldupUI holdupUIScript;
+  private Inventory inventoryScript;
+  private PictureAlign pictureAlignScript;
 
-    // Start is called before the first frame update
-    void Start()
+  // Start is called before the first frame update
+  void Start()
+  {
+    holdupUIScript = FindObjectOfType<HoldupUI>();
+    inventoryScript = FindObjectOfType<Inventory>();
+    pictureAlignScript = FindObjectOfType<PictureAlign>();
+
+    bigPaintingUI.SetActive(false);
+    smallPaintingUI.SetActive(false);
+    alignmentUI.SetActive(false);
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+    // Ensure UI does not show if no valid item is selected
+    if (inventoryScript.GetCurrentItem() == null || !inventoryScript.highlighted || !isPainting)
     {
-        holdupUIScript = FindObjectOfType<HoldupUI>();
-        inventoryScript = FindObjectOfType<Inventory>();
-        pictureAlignScript = FindObjectOfType<PictureAlign>();
+      disableAlignUI();
+      return;
+    }
+
+    if (holdupUIScript.isBigPaintingActive)
+    {
+      if (pictureAlignScript.IsAligned())
+      {
+        if (pictureAlignScript.GetCurrentPainting() == "CorridorPainting")
+        {
+          // only allow alignment after fragment is collected
+          if (fragment.IsFragmentCollected())
+          {
+            pictureAlignScript.preventAlignment = false;
+          }
+          else if (Input.GetMouseButtonTriggered(0) && !dialogueScript.isInDialogueMode)
+          {
+            dialogueScript.SetDialogue(collectFragmentDialogue, new Dialogue.Emotion[] { Dialogue.Emotion.Thinking });
+            pictureAlignScript.preventAlignment = true;
+          }
+        }
 
         bigPaintingUI.SetActive(false);
         smallPaintingUI.SetActive(false);
-        alignmentUI.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // Ensure UI does not show if no valid item is selected
-        if (inventoryScript.GetCurrentItem() == null || !inventoryScript.highlighted || !isPainting)
-        {
-            disableAlignUI();
-            return;
-        }
-
-        if (holdupUIScript.isBigPaintingActive)
-        {
-            if (pictureAlignScript.IsAligned())
-            {
-                bigPaintingUI.SetActive(false);
-                smallPaintingUI.SetActive(false);
-                alignmentUI.SetActive(true);
-            }
-            else
-            {
-                bigPaintingUI.SetActive(true);
-                smallPaintingUI.SetActive(false);
-                alignmentUI.SetActive(false);
-            }
-        }
-        else
-        {
-            bigPaintingUI.SetActive(false);
-            smallPaintingUI.SetActive(true);
-            alignmentUI.SetActive(false);
-        }
-    }
-
-
-    public void disableAlignUI()
-    {
-        bigPaintingUI.SetActive(false);
+        alignmentUI.SetActive(true);
+      }
+      else
+      {
+        bigPaintingUI.SetActive(true);
         smallPaintingUI.SetActive(false);
         alignmentUI.SetActive(false);
+      }
     }
+    else
+    {
+      bigPaintingUI.SetActive(false);
+      smallPaintingUI.SetActive(true);
+      alignmentUI.SetActive(false);
+    }
+  }
+
+
+  public void disableAlignUI()
+  {
+    bigPaintingUI.SetActive(false);
+    smallPaintingUI.SetActive(false);
+    alignmentUI.SetActive(false);
+  }
 
 }
-
-
-

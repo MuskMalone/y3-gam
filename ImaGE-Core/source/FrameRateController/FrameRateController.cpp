@@ -1,6 +1,7 @@
 #include <pch.h>
 #include <GLFW/glfw3.h>
 #include "FrameRateController.h"
+#include <Events/EventManager.h>
 
 namespace Performance {
   FrameRateController::FrameRateController(float targetFPS, float fpsCalculationInterval, bool vsyncEnabled) {
@@ -17,9 +18,21 @@ namespace Performance {
     mFPSCalculationInterval = fpsCalculationInterval;
 
     mFrameCounter = 0;
+
+    SUBSCRIBE_CLASS_FUNC(Events::LoadSceneEvent, &FrameRateController::OnSceneLoad, this);
   }
 
   void FrameRateController::Start() {
+    // reset and skip the dt for this frame
+    if (mFirstFrameAfterSceneLoad) {
+      mDeltaTime = 0.f;
+      mCurrFrameTime = mNewFrameTime;
+      mFPSTimer = 0.f, mCurrFPS = 0.f;
+      mFrameCounter = 0;
+      mFirstFrameAfterSceneLoad = false;
+      return;
+    }
+
     mDeltaTime = mNewFrameTime - mCurrFrameTime;
     mCurrFrameTime = mNewFrameTime;
 
@@ -119,6 +132,10 @@ namespace Performance {
   void FrameRateController::SetVsync(bool vsyncEnabled) {
     mVsyncEnabled = vsyncEnabled;
     glfwSwapInterval((mVsyncEnabled) ? 1 : 0);
+  }
+
+  EVENT_CALLBACK_DEF(FrameRateController, OnSceneLoad) {
+    mFirstFrameAfterSceneLoad = true;
   }
 
   void FrameRateController::Reset() {

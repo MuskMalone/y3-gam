@@ -30,6 +30,7 @@ public class PictureAlign : Entity
   private PlayerMove playerMove;          // Reference to the PlayerLook script
   public bool isFrozen = false;           // Check if the player is frozen
   public bool alignCheck = false;
+  public bool preventAlignment = false;
 
   private Vector3 savedPosition;
   private Vector3 savedCameraEuler;
@@ -142,7 +143,7 @@ public class PictureAlign : Entity
     if (!toStop)
     {
       // Perform alignment checks and freeze the player if aligned
-      if (IsActive() && isBigPic && IsAligned())
+      if (IsActive() && isBigPic && IsAligned() && !preventAlignment)
       {
         //if (LeftClickText != null)
         //  LeftClickText.SetActive(true);
@@ -193,27 +194,27 @@ public class PictureAlign : Entity
             InternalCalls.ChangeToolsPainting();
             if (hasFaded)
             {
-                playerMove.UnfreezePlayer();
-                isTransitioning = false;
-                currentImg.RemoveItself();
-                currentImg = null;
-                hasFaded = false;
+              playerMove.UnfreezePlayer();
+              isTransitioning = false;
+              currentImg.RemoveItself();
+              currentImg = null;
+              hasFaded = false;
             }
           }
         }
         else if (picture == "ToolsPainting")
         {
           Console.WriteLine("Tool");
-            FadeOut();
-            InternalCalls.SpawnToolBox();
-            if (hasFaded)
-            {
-                playerMove.UnfreezePlayer();
-                isTransitioning = false;
-                currentImg.RemoveItself();
-                currentImg = null;
-                hasFaded = false;
-            }
+          FadeOut();
+          InternalCalls.SpawnToolBox();
+          if (hasFaded)
+          {
+            playerMove.UnfreezePlayer();
+            isTransitioning = false;
+            currentImg.RemoveItself();
+            currentImg = null;
+            hasFaded = false;
+          }
         }
         else if (picture == "TutorialPainting")
         {
@@ -221,235 +222,221 @@ public class PictureAlign : Entity
           FadeOut();
           FindScript<GlowingLight>()?.StartBlooming();
           InternalCalls.SpawnOpenDoor();
-            if (hasFaded)
-            {
-                currentImg.SetActive(false);
-                SetActive(false);
-                playerMove.UnfreezePlayer();
-                isTransitioning = false;
-                currentImg.TutorialRemoveItself();
-                currentImg = null;
-                //tutorialFade.StartFade();
-                startFade = true;
-                hasFaded = false;
-            }
+          if (hasFaded)
+          {
+            currentImg.SetActive(false);
+            SetActive(false);
+            playerMove.UnfreezePlayer();
+            isTransitioning = false;
+            currentImg.TutorialRemoveItself();
+            currentImg = null;
+            //tutorialFade.StartFade();
+            startFade = true;
+            hasFaded = false;
+          }
         }
         else if (picture == "CorridorPainting")
         {
-            FadeOut();
-            InternalCalls.SpawnTaraSilhouette();
-            if (hasFaded)
-            {
-                TransitionCamera();
-                //isTransitioning = false;
-                //playerMove.UnfreezePlayer();
-                //currentImg.RemoveItself();
-                //currentImg = null;
-                //InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
-            }
+          FadeOut();
+          InternalCalls.SpawnTaraSilhouette();
+          if (hasFaded)
+          {
+            TransitionCamera();
+            //isTransitioning = false;
+            //playerMove.UnfreezePlayer();
+            //currentImg.RemoveItself();
+            //currentImg = null;
+            //InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
+          }
         }
         // Greek god paintings: Dionysus, Artemis, Zeus, Poseidon
         else if (picture == "AthenaPainting" || picture == "HermesPainting" || picture == "ZeusPainting" || picture == "PoseidonPainting")
         {
-            // Set the mode according to the painting
-            if (picture == "AthenaPainting")
+          // Set the mode according to the painting
+          if (picture == "AthenaPainting")
+          {
+            controlPanelScript.SwitchMode(ControlPanel2.StatueType.ATHENA);
+          }
+          else if (picture == "HermesPainting")
+          {
+            controlPanelScript.SwitchMode(ControlPanel2.StatueType.HERMES);
+          }
+          else if (picture == "ZeusPainting")
+          {
+            controlPanelScript.SwitchMode(ControlPanel2.StatueType.ZEUS);
+          }
+          else if (picture == "PoseidonPainting")
+          {
+            controlPanelScript.SwitchMode(ControlPanel2.StatueType.POSEIDON);
+          }
+
+          // Fade-out phase: keep calling FadeOut until currentAlpha is nearly 0
+          if (!hasFaded)
+          {
+            FadeOut();
+            if (Mathf.Abs(currentAlpha - 0f) < 0.01f)
             {
-                controlPanelScript.SwitchMode(ControlPanel2.StatueType.ATHENA);
+              hasFaded = true;
             }
-            else if (picture == "HermesPainting")
+          }
+          else
+          {
+            // Once fade-out is complete, instantly reset the image alpha to 1
+            currentAlpha = 1f;
+            ResetCurrentImgAlpha();
+            playerMove.UnfreezePlayer();
+            isTransitioning = false;
+            hasFaded = false;
+
+            //ClearUI();
+          }
+        }
+
+        else if (picture.StartsWith("HexPainting"))
+        {
+          if (picture == "HexPaintingDestructible2to1")
+          {
+            FadeOut();
+            if (hasFaded)
             {
-                controlPanelScript.SwitchMode(ControlPanel2.StatueType.HERMES);
-            }
-            else if (picture == "ZeusPainting")
-            {
-                controlPanelScript.SwitchMode(ControlPanel2.StatueType.ZEUS);
-            }
-            else if (picture == "PoseidonPainting")
-            {
-                controlPanelScript.SwitchMode(ControlPanel2.StatueType.POSEIDON);
+              HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition1);
+              currentImg.SetActive(false);
+              SetActive(false);
+              playerMove.UnfreezePlayer();
+              isTransitioning = false;
+              currentImg.Level2RemoveItself();
+              currentImg = null;
+              startFade = true;
+              hasFaded = false;
             }
 
-            // Fade-out phase: keep calling FadeOut until currentAlpha is nearly 0
+          }
+          //else if (picture == "HexPaintingIndestructible1to5" || picture == "HexPaintingIndestructible1to6" ||
+          // picture == "HexPaintingIndestructible3to1" || picture == "HexPaintingIndestructible4to1" ||
+          // picture == "HexPaintingIndestructible6to4" || picture == "HexPaintingIndestructible6to7" ||
+          // picture == "HexPaintingIndestructible7to3")
+          //{
+          //    // Fade-out phase: keep calling FadeOut until currentAlpha is nearly 0.
+          //    if (!hasFaded)
+          //    {
+          //        FadeOut();
+          //        if (Mathf.Abs(currentAlpha - 0f) < 0.01f)
+          //        {
+          //            hasFaded = true;
+          //        }
+          //    }
+          //    else
+          //    {
+          //        // Once fade-out is complete, teleport the player based on the painting.
+          //        if (picture == "HexPaintingIndestructible1to5")
+          //        {
+          //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition5);
+          //        }
+          //        else if (picture == "HexPaintingIndestructible1to6")
+          //        {
+          //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition6);
+          //        }
+          //        else if (picture == "HexPaintingIndestructible3to1")
+          //        {
+          //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition1);
+          //        }
+          //        else if (picture == "HexPaintingIndestructible4to1")
+          //        {
+          //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition1);
+          //        }
+          //        else if (picture == "HexPaintingIndestructible6to4")
+          //        {
+          //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition4);
+          //        }
+          //        else if (picture == "HexPaintingIndestructible6to7")
+          //        {
+          //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition7);
+          //        }
+          //        else if (picture == "HexPaintingIndestructible7to3")
+          //        {
+          //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition3);
+          //        }
+
+          //        // After teleportation, reset the fade and UI.
+          //        currentAlpha = 1f;
+          //        ResetCurrentImgAlpha();
+          //        playerMove.UnfreezePlayer();
+          //        isTransitioning = false;
+          //        hasFaded = false;
+          //        // Optionally, call ClearUI() if needed.
+          //    }
+          //}
+
+          else
+          {
+            // Fade-out phase: keep calling FadeOut until currentAlpha is nearly 0.
             if (!hasFaded)
             {
-                FadeOut();
-                if (Mathf.Abs(currentAlpha - 0f) < 0.01f)
-                {
-                    hasFaded = true;
-                }
+              FadeOut();
+              if (Mathf.Abs(currentAlpha - 0f) < 0.01f)
+              {
+                hasFaded = true;
+              }
             }
             else
             {
-                // Once fade-out is complete, instantly reset the image alpha to 1
-                currentAlpha = 1f;
-                ResetCurrentImgAlpha();
-                playerMove.UnfreezePlayer();
-                isTransitioning = false;
-                hasFaded = false;
-
-                //ClearUI();
-            }
-        }
-
-        else if (picture == "HexPaintingDescructible2to1") 
-        {
-            FadeOut();
-            if (hasFaded)
-            {
+              // Once fade-out is complete, teleport the player based on the painting.
+              if (picture == "HexPaintingIndestructible1to5")
+              {
+                HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition5);
+              }
+              else if (picture == "HexPaintingIndestructible1to6")
+              {
+                HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition6);
+              }
+              else if (picture == "HexPaintingIndestructible3to1")
+              {
                 HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition1);
-                currentImg.SetActive(false);
-                SetActive(false);
-                playerMove.UnfreezePlayer();
-                isTransitioning = false;
-                currentImg.Level2RemoveItself();
-                currentImg = null;
-                startFade = true;
-                hasFaded = false;
-            }
+              }
+              else if (picture == "HexPaintingIndestructible4to1")
+              {
+                HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition1);
+              }
+              else if (picture == "HexPaintingIndestructible6to4")
+              {
+                HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition4);
+              }
+              else if (picture == "HexPaintingIndestructible6to7")
+              {
+                HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition7);
+              }
+              else if (picture == "HexPaintingIndestructible7to3")
+              {
+                HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition3);
+              }
 
+              // After teleportation, reset the fade and UI.
+              currentAlpha = 1f;
+              ResetCurrentImgAlpha();
+              playerMove.UnfreezePlayer();
+              isTransitioning = false;
+              hasFaded = false;
+              // Optionally, call ClearUI() if needed.
+            }
+          }
         }
-                //else if (picture == "HexPaintingIndestructible1to5" || picture == "HexPaintingIndestructible1to6" ||
-                // picture == "HexPaintingIndestructible3to1" || picture == "HexPaintingIndestructible4to1" ||
-                // picture == "HexPaintingIndestructible6to4" || picture == "HexPaintingIndestructible6to7" ||
-                // picture == "HexPaintingIndestructible7to3")
-                //{
-                //    // Fade-out phase: keep calling FadeOut until currentAlpha is nearly 0.
-                //    if (!hasFaded)
-                //    {
-                //        FadeOut();
-                //        if (Mathf.Abs(currentAlpha - 0f) < 0.01f)
-                //        {
-                //            hasFaded = true;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        // Once fade-out is complete, teleport the player based on the painting.
-                //        if (picture == "HexPaintingIndestructible1to5")
-                //        {
-                //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition5);
-                //        }
-                //        else if (picture == "HexPaintingIndestructible1to6")
-                //        {
-                //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition6);
-                //        }
-                //        else if (picture == "HexPaintingIndestructible3to1")
-                //        {
-                //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition1);
-                //        }
-                //        else if (picture == "HexPaintingIndestructible4to1")
-                //        {
-                //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition1);
-                //        }
-                //        else if (picture == "HexPaintingIndestructible6to4")
-                //        {
-                //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition4);
-                //        }
-                //        else if (picture == "HexPaintingIndestructible6to7")
-                //        {
-                //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition7);
-                //        }
-                //        else if (picture == "HexPaintingIndestructible7to3")
-                //        {
-                //            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition3);
-                //        }
 
-                //        // After teleportation, reset the fade and UI.
-                //        currentAlpha = 1f;
-                //        ResetCurrentImgAlpha();
-                //        playerMove.UnfreezePlayer();
-                //        isTransitioning = false;
-                //        hasFaded = false;
-                //        // Optionally, call ClearUI() if needed.
-                //    }
-                //}
-
-                else if (picture == "HexPaintingIndestructible1to5" || picture == "HexPaintingIndestructible1to6" ||
-          picture == "HexPaintingIndestructible3to1" || picture == "HexPaintingIndestructible4to1" ||
-          picture == "HexPaintingIndestructible6to4" || picture == "HexPaintingIndestructible6to7" ||
-          picture == "HexPaintingIndestructible7to3")
-                {
-                    // Check if the player has all 7 paintings in their inventory.
-                    Level2Inventory inv = FindObjectOfType<Level2Inventory>();
-                    if (inv == null || !inv.HasAllPaintings())
-                    {
-                        Debug.Log("You must have all 7 paintings in your inventory before aligning.");
-                        // Ensure the player is unfrozen if they were frozen by the align action.
-                        playerMove.UnfreezePlayer();
-                        return;
-                    }
-
-                    // Fade-out phase: keep calling FadeOut until currentAlpha is nearly 0.
-                    if (!hasFaded)
-                    {
-                        FadeOut();
-                        if (Mathf.Abs(currentAlpha - 0f) < 0.01f)
-                        {
-                            hasFaded = true;
-                        }
-                    }
-                    else
-                    {
-                        // Once fade-out is complete, teleport the player based on the painting.
-                        if (picture == "HexPaintingIndestructible1to5")
-                        {
-                            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition5);
-                        }
-                        else if (picture == "HexPaintingIndestructible1to6")
-                        {
-                            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition6);
-                        }
-                        else if (picture == "HexPaintingIndestructible3to1")
-                        {
-                            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition1);
-                        }
-                        else if (picture == "HexPaintingIndestructible4to1")
-                        {
-                            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition1);
-                        }
-                        else if (picture == "HexPaintingIndestructible6to4")
-                        {
-                            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition4);
-                        }
-                        else if (picture == "HexPaintingIndestructible6to7")
-                        {
-                            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition7);
-                        }
-                        else if (picture == "HexPaintingIndestructible7to3")
-                        {
-                            HexTeleportScript.TeleportPlayer(HexTeleportScript.teleportPosition3);
-                        }
-
-                        // After teleportation, reset the fade and UI.
-                        currentAlpha = 1f;
-                        ResetCurrentImgAlpha();
-                        playerMove.UnfreezePlayer();
-                        isTransitioning = false;
-                        hasFaded = false;
-                        // Optionally, call ClearUI() if needed.
-                    }
-                }
-
-
-
-
-
-                else if (picture == "PitPainting")
+        else if (picture == "PitPainting")
         {
-            FadeOut();
-            //controlPanelScript.SwitchMode(ControlPanel2.StatueType.POSEIDON);
-            pitPuzzleScript.switchPlanks();
-            if (hasFaded)
-            {
-                currentImg.SetActive(false);
-                SetActive(false);
-                playerMove.UnfreezePlayer();
-                isTransitioning = false;
-                currentImg.Level3RemoveItself();
-                currentImg = null;
-                hasFaded = false;
-                
-            }
+          FadeOut();
+          //controlPanelScript.SwitchMode(ControlPanel2.StatueType.POSEIDON);
+          pitPuzzleScript.switchPlanks();
+          if (hasFaded)
+          {
+            currentImg.SetActive(false);
+            SetActive(false);
+            playerMove.UnfreezePlayer();
+            isTransitioning = false;
+            currentImg.Level3RemoveItself();
+            currentImg = null;
+            hasFaded = false;
+
+          }
         }
         else
         {
@@ -460,6 +447,7 @@ public class PictureAlign : Entity
     }
   }
 
+  public string GetCurrentPainting() { return picture; } 
 
     public bool IsAligned()
   {
@@ -467,8 +455,8 @@ public class PictureAlign : Entity
     Vector2 currRot =playerMove.GetRotation();
     //Vector3 currWRot = mainCamera.GetComponent<Transform>().rotationWorldEuler;
     //Vector3 currLRot = mainCamera.GetComponent<Transform>().rotationEuler;
-    Console.WriteLine("Curr:" + player.GetComponent<Transform>().worldPosition + " vs:" + savedPosition);
-    Console.WriteLine("DIFF: " + positionDistance);
+    //Console.WriteLine("Curr:" + player.GetComponent<Transform>().worldPosition + " vs:" + savedPosition);
+    //Console.WriteLine("DIFF: " + positionDistance);
     bool aligned = true;
 
     if (positionDistance > positionThreshold)

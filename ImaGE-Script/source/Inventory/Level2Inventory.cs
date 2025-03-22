@@ -150,6 +150,19 @@ public class Level2Inventory : Entity
         }
     }
 
+    // i'm accounting for the fact that you can solve the key code without collecting
+    // all paintings and by guessing the last number, meaning it is possible for someone
+    // to walk back out of the hex room to collect other paintings after the door opens.
+    // We will only clear non-HexPaintings from inventory via a trigger
+    public void ClearInventoryForHexRoom()
+    {
+      foreach (IInventoryItem item in mItems)
+      {
+        if (item != null && !item.Name.StartsWith("HexPainting"))
+          RemoveItem(item);
+      }
+    }
+
     public IInventoryItem GetItemByName(string itemName)
     {
         return mItems.Find(item => item != null && item.Name == itemName);
@@ -361,9 +374,9 @@ public class Level2Inventory : Entity
                 poseidonPaintingUI?.FindScript<HoldupUI>().SetAlginUI("PoseidonPainting", GetItemByName("PoseidonPainting"));
                 paintingAlignUILevel2Script.isPainting = true;
                 break;
-            case "HexPaintingDescructible2to1":
+            case "HexPaintingDestructible2to1":
                 twotoonePaintingUI?.SetActive(true);
-                twotoonePaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingDescructible2to1", GetItemByName("HexPaintingDescructible2to1"));
+                twotoonePaintingUI?.FindScript<HoldupUI>().SetAlginUI("HexPaintingDestructible2to1", GetItemByName("HexPaintingDestructible2to1"));
                 paintingAlignUILevel2Script.isPainting = true;
                 break;
             case "HexPaintingIndestructible1to5":

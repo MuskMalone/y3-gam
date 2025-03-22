@@ -6,11 +6,12 @@ using System.Numerics;
 public class NumberPad : Entity
 {
     public PlayerInteraction playerInteraction;
+    public PlayerMove playerMove;
+    public Entity twinDoors;
     public Entity interactWithKeypadUI;
     public Entity keypadInstructionsUI;
     public Entity keypadUI;
     public Entity keypadTextBox;
-    public PlayerMove playerMove;
     public Entity enterButton;
     public Entity backButton;
     private Random random = new Random();
@@ -23,8 +24,9 @@ public class NumberPad : Entity
 
     private Dictionary<string, Entity> numberButtons;
     private Dictionary<string, SafeButtons> buttonScripts;
+    private string entityTag;
     private string typedCode = "";
-    private string correctCode = "7828";
+    private string correctCode = "2862";
     private bool keypadActive = false;
     private float lastPressTime = 0f;
     private float inputDelay = 0.3f; // Prevents multiple rapid inputs
@@ -57,6 +59,7 @@ public class NumberPad : Entity
 
         buttonScripts["Enter"] = enterButton.FindScript<SafeButtons>();
         buttonScripts["Back"] = backButton.FindScript<SafeButtons>();
+        entityTag = InternalCalls.GetTag(mEntityID);
 
         enterButton?.SetActive(false);
         backButton?.SetActive(false);
@@ -73,13 +76,15 @@ public class NumberPad : Entity
                 KeypadUIMode();
                 break;
             case State.UNLOCKED:
+                twinDoors.FindScript<TheTwinDoors>().UnlockDoors();
+                Destroy(this);
                 break;
         }
     }
 
     private void KeypadInteraction()
     {
-        bool isKeypadHit = playerInteraction.RayHitString == "Keypad";
+        bool isKeypadHit = playerInteraction.RayHitString == entityTag;
 
         if (Input.GetMouseButtonTriggered(0) && isKeypadHit && !keypadActive)
         {
@@ -157,6 +162,7 @@ public class NumberPad : Entity
             Console.WriteLine("Correct code entered!");
             CloseKeypadUI();
             currState = State.UNLOCKED;
+            entityTag = null;
         }
         else
         {

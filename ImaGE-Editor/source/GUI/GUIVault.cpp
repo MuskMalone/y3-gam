@@ -1,6 +1,7 @@
 #include <pch.h>
 #include "GUIVault.h"
 #include <Events/EventManager.h>
+#include <Scenes/SceneManager.h>
 
 namespace GUI {
   void GUIVault::SetSelectedEntity(ECS::Entity entity) {
@@ -9,6 +10,8 @@ namespace GUI {
   }
 
   EVENT_CALLBACK_DEF(GUIVault, OnSceneModified) {
+    if (IGE_SCENEMGR.NoSceneSelected()) { return; }
+
     sSceneModified = true;
   }
 

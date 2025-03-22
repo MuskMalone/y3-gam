@@ -30,6 +30,7 @@ public class HoldupUI : Entity
   private Vector3 savedPosition;
   private Quaternion savedCameraRotation;
   private Vector3 saveCamEuler;
+  private bool shouldLock;
   private PictureAlign pictureAlignscript;  
 
   private void Awake()
@@ -118,6 +119,15 @@ public class HoldupUI : Entity
     associatedItem = i;
     if (pictureAlignscript != null)
     {
+      if (shouldLock)
+      {
+        pictureAlignscript.preventAlignment = true;
+      }
+      else
+      {
+        pictureAlignscript.preventAlignment = false;
+      }
+
       pictureAlignscript.SetActive(true);
       pictureAlignscript.SetTarget(savedPosition, savedCameraRotation, saveCamEuler,s,this);
       pictureAlignscript.SetBorder(isBigPaintingActive);
@@ -152,6 +162,9 @@ public class HoldupUI : Entity
 
     if (dataFile != null)
     {
+      // default to unlocked (to account for older dataFiles)
+      shouldLock = false;
+
       // Read lines from the TextAsset
       string[] lines = dataFile.Text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
 
@@ -168,6 +181,10 @@ public class HoldupUI : Entity
         else if (line.StartsWith("Camera Euler:"))
         {
           saveCamEuler = ParseVector3(line.Replace("Camera Euler:", "").Trim());
+        }
+        else if (line.StartsWith("shouldLock:"))
+        {
+          shouldLock = bool.Parse(line.Replace("shouldLock:", "").Trim());
         }
       }
       //Debug.Log("Data loaded from text asset:");

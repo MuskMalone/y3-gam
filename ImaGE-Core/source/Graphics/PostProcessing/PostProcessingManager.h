@@ -17,7 +17,8 @@ namespace Graphics {
 				glm::vec3 fogColor{1,1,1};
 				std::vector<ShaderLayer> shaders;
 			};
-			std::unordered_map<std::string, ShaderOrder> mConfigs;
+			// CE: changed to map so its always serialized the same order
+			std::map<std::string, ShaderOrder> mConfigs;
 			
 		};
 	public:

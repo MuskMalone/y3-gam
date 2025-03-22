@@ -171,8 +171,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
     rttr::registration::class_<T>("LightGlobalProps")
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("ambColor", &T::ambColor)
-      .property("ambIntensity", &T::ambIntensity)
-      .property("gammaValue", &T::gammaValue);
+      .property("ambIntensity", &T::ambIntensity);
   }
   {
       using T = Component::RigidBody::JointConfig;

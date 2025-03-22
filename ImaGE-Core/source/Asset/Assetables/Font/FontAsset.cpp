@@ -10,14 +10,16 @@ namespace IGE {
   namespace Assets {
 
     GUID FontAsset::Import(std::string const& fp, std::string& newFp, AssetMetadata::AssetProps& metadata) {
-      std::string filename{ GetFileName(fp) };
-      std::string fileext{ GetFileExtension(fp) };
-      std::string inputFontPath{ cFontDirectory + filename + fileext };
+      std::string const inputFontPath{ cFontDirectory + GetFileNameWithExtension(fp) };
       CreateDirectoryIfNotExists(cFontDirectory);
+      CreateDirectoryIfNotExists(cFontDirectory + cCompiledDirectory);
 
       if (!CopyFileToAssets(fp, inputFontPath)) {
         return GUID{};
       }
+
+      if (cFontExtensions.find(GetFileExtension(fp)) == cFontExtensions.end())
+        throw Debug::Exception<FontAsset>(Debug::LVL_ERROR, Msg("unsupported file type " + GetFileNameWithExtension(fp)));
 
       newFp = inputFontPath;
       metadata.metadata["path"] = newFp;
@@ -26,15 +28,9 @@ namespace IGE {
 
     void* FontAsset::Load(GUID guid) {
       // @TODO: Convert to custom file format
-      std::string fp{ AssetManager::GetInstance().GUIDToPath(guid) };
-      std::filesystem::path const path{ fp };
-      std::string filename{ GetFileName(fp) };
-      std::string fileext{ GetFileExtension(fp) };
-      CreateDirectoryIfNotExists(cFontDirectory + cCompiledDirectory);
+      std::string const& fp{ AssetManager::GetInstance().GUIDToPath(guid) };
+      std::string const finalfp{ cFontDirectory + cCompiledDirectory + GetFileNameWithExtension(fp) };
 
-      if (cFontExtensions.find(fileext) == cFontExtensions.end())
-        throw Debug::Exception<FontAsset>(Debug::LVL_ERROR, Msg("unsupported file type " + fileext));
-      std::string finalfp{ cFontDirectory + cCompiledDirectory + filename + fileext };
       CopyFileToAssets(fp, finalfp);
 
       return reinterpret_cast<void*>(new FontAsset{ finalfp });

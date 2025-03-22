@@ -43,7 +43,7 @@ public class Transition : Entity
       float progress = Mathf.Clamp01(transitionTimer / totalTime);
 
       // If it's a fade-in, invert the progress
-      transitionProgress = isFadeIn ? 1f - progress : progress;
+      transitionProgress = Mathf.Clamp(isFadeIn ? 1f - progress : progress, 0f, 1f);
 
       InternalCalls.SetCanvasTransitionProgress(mEntityID, transitionProgress);
 

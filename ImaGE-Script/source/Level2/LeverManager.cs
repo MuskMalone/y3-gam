@@ -10,7 +10,6 @@ public class LeverManager : Entity
   public Entity tableCamera;
   public Entity fragmentGlass;
   public PlayerMove playerMove;
-  //public Entity door; // The door to unlock
 
   public float timeBeforeOrbsDrop;  // how much time to wait after all levers pulled
 
@@ -64,6 +63,7 @@ public class LeverManager : Entity
 
   void Update()
   {
+    //Debug.Log(currState.ToString());
     switch (currState)
     {
       case State.IDLE:
@@ -72,6 +72,8 @@ public class LeverManager : Entity
 
       case State.TABLE_CAM:
         {
+          //Debug.Log(timeElapsed.ToString() + " / " + switchDuration.ToString());
+
           timeElapsed += Time.deltaTime;
 
           // Check if we're in table view and if the switch-back time has been reached
@@ -123,7 +125,7 @@ public class LeverManager : Entity
   public void LeverPulled()
   {
     ++leversPulled;
-    Console.WriteLine($"Lever pulled! {leversPulled}/{totalLevers} levers activated.");
+    //Console.WriteLine($"Lever pulled! {leversPulled}/{totalLevers} levers activated.");
 
     if (playerMove != null)
     {
@@ -132,6 +134,8 @@ public class LeverManager : Entity
 
     SetTableCameraAsMain(); // Switch to table camera
     currState = State.TABLE_CAM;
+    //timeElapsed = 0f;
+    //Debug.Log("STATE CHANGED TO " + currState.ToString());
   }
 
   public void OrbShattered()

@@ -337,6 +337,7 @@ namespace Mono
 		static void SetGravityFactor(ECS::Entity::EntityID entity, float gravity);
 		static void LockRigidBody(ECS::Entity::EntityID entity, bool lock);
 		static void LockRigidBodyRotation(ECS::Entity::EntityID entity, bool x, bool y, bool z);
+		static void SetDynamicFriction(ECS::Entity::EntityID entityId, float val);
 
 		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
 
@@ -347,6 +348,7 @@ namespace Mono
 		static void SetSoundPitch(ECS::Entity::EntityID, MonoString*, float);
 		static void SetSoundVolume(ECS::Entity::EntityID, MonoString*, float);
 		static void SetSoundGlobalVolume(float vol);
+		static float GetSoundGlobalVolume();
 		static void EnableSoundPostProcessing(ECS::Entity::EntityID, MonoString*, unsigned, float);
 		static void DisableSoundPostProcessing(ECS::Entity::EntityID, MonoString*);
 		static void PlaySound(ECS::Entity::EntityID, MonoString*);
@@ -392,6 +394,14 @@ namespace Mono
 		static bool IsActive(ECS::Entity::EntityID entity);
 
 		static glm::vec3 GetMousePos();
+
+		static float GetScreenWidth();
+
+		static void SetBrightness(float fraction);
+
+		static void SetBGM(float fraction);
+
+		static float GetGammaNorm();
 
 		static glm::vec3 GetMousePosWorld(float depth);
 

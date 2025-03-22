@@ -70,7 +70,7 @@ public class ControlPanel2 : Entity
 
         InitHiddenTexts();
 
-        
+
         odysseusStatue.SetActive(true);
         SetDefaultHiddenText(true);
 
@@ -100,8 +100,8 @@ public class ControlPanel2 : Entity
         bool isInteractable = isPanelHit || isDoorHit;
 
 
-            LeftClickControlPanelUI.SetActive(isInteractable);
-        
+        LeftClickControlPanelUI.SetActive(isInteractable);
+
 
 
         switch (currState)
@@ -124,7 +124,7 @@ public class ControlPanel2 : Entity
                     {
                         SetHiddenText(currStatue, true);
                         UVLight.SetActive(true);
-                        uvLightEnabled = true; 
+                        uvLightEnabled = true;
                         currState = State.UV_LIGHT;
                     }
                     else
@@ -146,33 +146,33 @@ public class ControlPanel2 : Entity
             case State.UV_LIGHT:
                 HandleUVLightControls();
 
-                if (defaultStateActive)
+                // Only show hidden text if the room lights are off.
+                if (!areLightsOn)
                 {
-                    SetDefaultHiddenText(true); // Show default writings
+                    if (defaultStateActive)
+                    {
+                        SetDefaultHiddenText(true);
+                    }
+                    else
+                    {
+                        SetHiddenText(currStatue, true);
+                    }
                 }
                 else
                 {
-                    SetHiddenText(currStatue, true); // Show the correct state's hidden text
+                    // If the room lights are on, hide any hidden text.
+                    SetDefaultHiddenText(false);
+                    SetHiddenText(currStatue, false);
                 }
 
                 if (Input.GetKeyTriggered(KeyCode.ESCAPE))
                 {
                     playerMove.UnfreezePlayer();
                     SetPlayerCameraAsMain();
-
-                    
-                    if (defaultStateActive)
-                    {
-                        SetDefaultHiddenText(false);
-                    }
-                    else
-                    {
-                        SetHiddenText(currStatue, false);
-                    }
-
                     currState = State.OPEN;
                 }
                 break;
+
 
             case State.CLOSED:
                 break;
@@ -226,6 +226,7 @@ public class ControlPanel2 : Entity
         }
 
         DisableAllStatues();
+        DisableAllHiddenTexts();
         switch (statue)
         {
             case StatueType.ODYSSEUS:
@@ -249,7 +250,7 @@ public class ControlPanel2 : Entity
 
         currStatue = statue;
 
-        
+
         if (uvLightEnabled)
         {
             SetHiddenText(currStatue, true);
@@ -275,6 +276,26 @@ public class ControlPanel2 : Entity
         }
     }
 
+    private void DisableAllHiddenTexts()
+    {
+        // Disable default hidden text first.
+        SetDefaultHiddenText(false);
+
+        // Loop over all hidden text arrays and disable each entity.
+        if (hiddenTexts != null)
+        {
+            foreach (var group in hiddenTexts)
+            {
+                if (group != null)
+                {
+                    foreach (Entity text in group)
+                    {
+                        text?.SetActive(false);
+                    }
+                }
+            }
+        }
+    }
     public void Unlock()
     {
         if (defaultStateActive)
@@ -302,22 +323,51 @@ public class ControlPanel2 : Entity
 
     public void SetHiddenText(StatueType statue, bool active)
     {
-
+        // Skip hidden text for Odysseus.
         if (statue == StatueType.ODYSSEUS)
         {
-            odysseusStatue.SetActive(active);
-            SetDefaultHiddenText(active);
             return;
         }
 
-        // For other statues, use the hiddenTexts array.
-        int index = (int)statue;
-
-        foreach (Entity text in hiddenTexts[(int)statue])
+        int index = -1;
+        // Remap the statue to a hidden text index:
+        // We'll assume:
+        // Hermes -> hiddenTexts[0]
+        // Zeus -> hiddenTexts[1]
+        // Athena -> hiddenTexts[2]
+        // Poseidon -> hiddenTexts[3]
+        switch (statue)
         {
-            text?.SetActive(active);
+            case StatueType.HERMES:
+                index = 0;
+                break;
+            case StatueType.ZEUS:
+                index = 1;
+                break;
+            case StatueType.ATHENA:
+                index = 2;
+                break;
+            case StatueType.POSEIDON:
+                index = 3;
+                break;
+            default:
+                Debug.LogWarning("SetHiddenText: Unexpected statue type: " + statue);
+                return;
+        }
+
+        if (hiddenTexts != null && index < hiddenTexts.Length)
+        {
+            foreach (Entity text in hiddenTexts[index])
+            {
+                text?.SetActive(active);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("SetHiddenText: Index out of bounds for hiddenTexts.");
         }
     }
+
 
     public void SetDefaultHiddenText(bool active)
     {

@@ -103,7 +103,12 @@ namespace Mono
     { "Level3Dialogue", ScriptFieldType::LEVEL3_DIALOGUE },
     { "Fragment", ScriptFieldType::FRAGMENT },
     { "BootupText", ScriptFieldType::BOOTUPTEXT },
-    { "Lvl4Dialogue", ScriptFieldType::LVL4_DIALOGUE }
+    { "Lvl4Dialogue", ScriptFieldType::LVL4_DIALOGUE },
+    { "SettingsPage", ScriptFieldType::SETTINGS },
+    { "PauseMenu", ScriptFieldType::PAUSEMENU },
+    { "SettingsButtons", ScriptFieldType::SETTINGSBUTTON },
+    { "PauseMenuButtons", ScriptFieldType::PAUSEMENUBUTTON }
+
   };
 }
 
@@ -209,6 +214,7 @@ void ScriptManager::AddInternalCalls()
   ADD_CLASS_INTERNAL_CALL(AnyKeyDown, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(AnyKeyTriggered, Input::InputManager::GetInstance());
   ADD_INTERNAL_CALL(GetMousePos);
+  ADD_INTERNAL_CALL(GetScreenWidth);
   ADD_INTERNAL_CALL(GetMousePosWorld);
   ADD_INTERNAL_CALL(GetMouseDelta);
   ADD_INTERNAL_CALL(GetCameraForward);
@@ -242,6 +248,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetGravityFactor);
   ADD_INTERNAL_CALL(LockRigidBody);
   ADD_INTERNAL_CALL(LockRigidBodyRotation);
+  ADD_INTERNAL_CALL(SetDynamicFriction);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -297,6 +304,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetSoundPitch);
   ADD_INTERNAL_CALL(SetSoundVolume);
   ADD_INTERNAL_CALL(SetSoundGlobalVolume);
+  ADD_INTERNAL_CALL(GetSoundGlobalVolume);
   ADD_INTERNAL_CALL(EnableSoundPostProcessing);
   ADD_INTERNAL_CALL(DisableSoundPostProcessing);
   ADD_INTERNAL_CALL(PlaySound);
@@ -330,6 +338,9 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetCanvasTransitionProgress);
   ADD_INTERNAL_CALL(EnableCanvasTransition);
   ADD_INTERNAL_CALL(SetCanvasTransitionType);
+  ADD_INTERNAL_CALL(SetBrightness);
+  ADD_INTERNAL_CALL(SetBGM);
+  ADD_INTERNAL_CALL(GetGammaNorm);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -987,6 +998,8 @@ void Mono::SetTag(ECS::Entity::EntityID entity, MonoString* tag) {
     ECS::Entity(entity).GetComponent<Component::Tag>().tag = convertedTag;
 }
 
+
+
 void Mono::Log(MonoString*s)
 {
   std::string msg{ MonoStringToSTD(s) };
@@ -1079,6 +1092,7 @@ void Mono::SetGravityFactor(ECS::Entity::EntityID entityId, float gravity) {
   }
   entity.GetComponent<Component::RigidBody>().gravityFactor = gravity;
   IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
+  //IGE_DBGLOGGER.LogInfo("Set gravity of " + entity.GetTag() + " to " + std::to_string(gravity));
 }
 
 void Mono::LockRigidBody(ECS::Entity::EntityID entityId, bool lock) {
@@ -1120,6 +1134,13 @@ void Mono::LockRigidBodyRotation(ECS::Entity::EntityID entityId, bool x, bool y,
   IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LOCK);
 }
 
+void Mono::SetDynamicFriction(ECS::Entity::EntityID entityId, float val) {
+  ECS::Entity entity{ entityId };
+  entity.GetComponent<Component::RigidBody>().dynamicFriction = val;
+  IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::DYNAMIC_FRICTION);
+  //IGE_DBGLOGGER.LogInfo("Set dynamic friction of " + entity.GetTag() + " to " + std::to_string(val));
+}
+
 glm::vec3 Mono::GetMouseDelta()
 {
   //std::cout << Input::InputManager::GetInstance().GetMousePos() << "\n";
@@ -1128,7 +1149,29 @@ glm::vec3 Mono::GetMouseDelta()
 
 glm::vec3 Mono::GetMousePos()
 {
+
   return glm::vec3(Input::InputManager::GetInstance().GetMousePos(), 0);
+}
+
+float Mono::GetScreenWidth()
+{
+  return Input::InputManager::GetInstance().GetDim().x;
+}
+
+void Mono::SetBrightness(float fraction)
+{
+  float newValue = Component::Light::sGlobalProps.MinGammaValue + (fraction * (Component::Light::sGlobalProps.MaxGammvalue - Component::Light::sGlobalProps.MinGammaValue));
+  Component::Light::sGlobalProps.gammaValue = newValue;
+}
+
+void Mono::SetBGM(float fraction)
+{
+
+}
+
+float Mono::GetGammaNorm()
+{
+  return (Component::Light::sGlobalProps.gammaValue - Component::Light::sGlobalProps.MinGammaValue) / (Component::Light::sGlobalProps.MaxGammvalue - Component::Light::sGlobalProps.MinGammaValue);
 }
 
 glm::vec3 Mono::GetMousePosWorld(float depth)
@@ -1195,6 +1238,11 @@ void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v)
 
 void Mono::SetSoundGlobalVolume(float vol) {
     IGE::Audio::AudioManager::GetInstance().mGlobalVolume = vol;
+}
+
+
+float Mono::GetSoundGlobalVolume() {
+  return IGE::Audio::AudioManager::GetInstance().mGlobalVolume;
 }
 
 void Mono::EnableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s, unsigned type, float param)
@@ -1964,7 +2012,7 @@ MonoArray* Mono::GetContactPoints(ECS::Entity entity1, ECS::Entity entity2)
 
         cp.internalFaceIndex1 = contactPoints[i].internalFaceIndex1;
 
-        // Obtain a pointer to the array element’s storage.
+        // Obtain a pointer to the array elementï¿½s storage.
         // Calculate the element size from the MonoClass information.
         void* elementAddr = mono_array_addr_with_size(managedArray, mono_class_value_size(contactPointClass, nullptr), i);
         // Copy our local instance into the managed array.

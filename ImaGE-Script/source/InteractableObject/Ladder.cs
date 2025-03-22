@@ -241,7 +241,7 @@ public class Ladder : Entity
       }
 
       playerMove.UnfreezePlayer();
-      InternalCalls.SetGravityFactor(playerMove.mEntityID, playerMove.initialGravityFactor);
+      InternalCalls.SetGravityFactor(playerMove.mEntityID, playerMove.GetInitialGravityFactor());
       // Hide the ClickUI when not on the ladder.
       ClickUI?.SetActive(false);
     }
