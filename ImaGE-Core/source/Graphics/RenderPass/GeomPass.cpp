@@ -179,11 +179,7 @@ namespace Graphics {
       }
 
       glDepthMask(GL_TRUE);
-      glDisable(GL_BLEND);
   
-
-
-
 //========================================2D Sprite Rendering=========================================================================================
       Renderer::RenderSceneBegin(cam.viewProjMatrix, cam);
       std::vector<ECS::Entity> opaqueSprites;
