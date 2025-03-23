@@ -23,6 +23,8 @@ namespace Systems {
 			// this is not a ref. i have to update all the transforms as they are offsets of the main transform
 			std::vector<Graphics::EmitterInstance> vecProxy{ e.GetComponent<Component::EmitterSystem>().emitters };
 			auto const& pos{ e.GetComponent<Component::Transform>().worldPos };
+            auto const& rot{ e.GetComponent<Component::Transform>().worldRot };
+            auto const& sca{ e.GetComponent<Component::Transform>().worldScale };
 			auto const& tag{ e.GetComponent<Component::Tag>().tag };
 			//update the transforms
 			for (int i{}; i < vecProxy.size(); ++i) {
@@ -35,9 +37,18 @@ namespace Systems {
 				}
                 if (emitproxy.vCount < 8) {
                     for (int j = 0; j < emitproxy.vCount; ++j) {
-                        emitproxy.vertices[j][0] += pos.x;
-                        emitproxy.vertices[j][1] += pos.y;
-                        emitproxy.vertices[j][2] += pos.z;
+                        // Get the original local vertex.
+                        glm::vec3 localVertex = glm::vec3(emitproxy.vertices[j]);
+                        // Scale it (component-wise multiplication).
+                        glm::vec3 scaled = localVertex * sca;
+                        // Rotate it.
+                        glm::vec3 rotated = rot * scaled;
+                        // Translate it.
+                        glm::vec3 worldVertex = pos + rotated;
+                        // Write back to the vertex (preserving w if needed).
+                        emitproxy.vertices[j][0] = worldVertex.x;
+                        emitproxy.vertices[j][1] = worldVertex.y;
+                        emitproxy.vertices[j][2] = worldVertex.z;
                     }
                 }
                 else {
@@ -116,9 +127,11 @@ namespace Systems {
 
                         // Write the ordered vertices back, applying the global offset.
                         for (int i = 0; i < 8; ++i) {
-                            emitproxy.vertices[i][0] = orderedVertices[i].x + pos.x;
-                            emitproxy.vertices[i][1] = orderedVertices[i].y + pos.y;
-                            emitproxy.vertices[i][2] = orderedVertices[i].z + pos.z;
+                            glm::vec3 localVertex = glm::vec3(orderedVertices[i]);
+                            glm::vec3 worldVertex = pos + (rot * (localVertex * sca));
+                            emitproxy.vertices[i][0] = worldVertex.x;
+                            emitproxy.vertices[i][1] = worldVertex.y;
+                            emitproxy.vertices[i][2] = worldVertex.z;
                             emitproxy.vertices[i][3] = orderedVertices[i].w; // preserve w
                         }
                     }
