@@ -108,6 +108,11 @@ namespace Graphics {
           for (auto const& [matGrpIndex, entityData] : matGrp) {
               unsigned batchStart = matGrpIndex * MaterialTable::sMaterialsPerBatch;
               unsigned batchEnd = std::min(batchStart + MaterialTable::sMaterialsPerBatch - 1, matCount - 1);
+
+              if (batchStart >= matCount) {
+                  // Skip this batch because the computed batchStart is out-of-range.
+                  continue;
+              }
               MaterialTable::ApplyMaterialTextures(shader, batchStart, batchEnd);
 
               // Set the offset for material indices
@@ -163,6 +168,12 @@ namespace Graphics {
           for (auto const& [matGrpIndex, entityData] : matGrp) {
               unsigned batchStart = matGrpIndex * MaterialTable::sMaterialsPerBatch;
               unsigned batchEnd = std::min(batchStart + MaterialTable::sMaterialsPerBatch - 1, matCount - 1);
+
+              if (batchStart >= matCount) {
+                  // Skip this batch because the computed batchStart is out-of-range.
+                  continue;
+              }
+
               MaterialTable::ApplyMaterialTextures(shader, batchStart, batchEnd);
 
               // Set the offset for material indices
