@@ -58,7 +58,6 @@ public class  PlayerMove : Entity
   void Start()
   {
     ResetPlayerVelocity();
-    Debug.Log("C# SetGravityFactor to " + initialGravityFactor);
     InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
     //initialGravityFactor = InternalCalls.GetGravityFactor(mEntityID);
   }

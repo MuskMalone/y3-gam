@@ -501,6 +501,9 @@ namespace Serialization
           if (propType == rttr::type::get<entt::entity>()) {
             extractedVal = static_cast<entt::entity>(jsonVal.GetUint());
           }
+          else if (propType == rttr::type::get<float>()) {
+            extractedVal = static_cast<float>(jsonVal.GetDouble());
+          }
           else {
             std::string const msg{ "Unable to convert element of type " + extractedVal.get_type().get_name().to_string()
               + " to type " + propType.get_name().to_string()};
