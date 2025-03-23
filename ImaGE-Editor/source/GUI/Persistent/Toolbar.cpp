@@ -348,6 +348,22 @@ namespace GUI
         modified = true;
       }
 
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0); ImGui::Text("Leaf Dist: ");
+      ImGui::TableSetColumnIndex(1);
+      if (ImGui::DragFloat("##LeafDist", &globalProps.gammaValue, 0.01f, globalProps.MinGammaValue, globalProps.dist, "%.3f")) {
+        modified = true;
+      }
+
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0); ImGui::Text("Leaf Sizee: ");
+      ImGui::TableSetColumnIndex(1);
+      if (ImGui::DragFloat("##Leaf Size", &globalProps.gammaValue, 0.01f, globalProps.MinGammaValue, globalProps.leafSize, "%.3f")) {
+        modified = true;
+      }
+
       ImGui::EndTable();
     }
 

@@ -395,7 +395,7 @@ namespace Mono
 
 		static glm::vec3 GetMousePos();
 
-		static float GetScreenWidth();
+		static glm::vec3 GetScreenDimension();
 
 		static void SetBrightness(float fraction);
 

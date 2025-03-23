@@ -96,6 +96,7 @@ public class PauseMenu : Entity
   {
     if (!InternalCalls.GetIsPaused() && InternalCalls.IsKeyTriggered(KeyCode.P))
     {
+      //InternalCalls.TakeScreenShot("CurrentView", (int)Input.screenWidth, (int)Input.screenHeight);
       transition.StartTransitionInOut(transitionDuration, Transition.TransitionType.FADE);
       currState = State.PAUSE;
       InternalCalls.PauseGame();

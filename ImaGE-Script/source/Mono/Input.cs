@@ -61,7 +61,15 @@ namespace IGE.Utils
     {
       get
       {
-        return InternalCalls.GetScreenWidth();
+        return InternalCalls.GetScreenDimension().X;
+      }
+    }
+
+    public static float screenHeight // Checks if any key is triggered/held this frame and return the result
+    {
+      get
+      {
+        return InternalCalls.GetScreenDimension().Y;
       }
     }
 

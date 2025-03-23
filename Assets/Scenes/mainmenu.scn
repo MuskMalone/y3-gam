@@ -1,6 +1,67 @@
 {
     "Scene": [
         {
+            "ID": 3,
+            "Parent": null,
+            "Child Entities": [
+                24
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "CreditsGameCDinCase",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.43221044540405276,
+                            "y": -0.447966992855072,
+                            "z": -0.4292306900024414
+                        },
+                        "scale": {
+                            "x": 0.008999999612569809,
+                            "y": 0.008999999612569809,
+                            "z": 0.008999999612569809
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.43221044540405276,
+                            "y": -0.447966992855072,
+                            "z": -0.4292306900024414
+                        },
+                        "worldScale": {
+                            "x": 0.008999999612569809,
+                            "y": 0.008999999612569809,
+                            "z": 0.008999999612569809
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 14,
             "Parent": null,
             "Child Entities": [],
@@ -298,6 +359,84 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 14840939470102888852
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Props_PS1CD",
+                        "GUID": {
+                            "ID": 3244419131253938194
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 24,
+            "Parent": 3,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Props_PS1CD",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.001102447509765625,
+                            "y": 0.000095367431640625,
+                            "z": -0.0044403076171875
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0,
+                            "w": -4.371138828673793e-8
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 180.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.43220052123069765,
+                            "y": -0.4479661285877228,
+                            "z": -0.4292706549167633
+                        },
+                        "worldScale": {
+                            "x": 0.008999999612569809,
+                            "y": 0.008999999612569809,
+                            "z": 0.008999999612569809
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 1.0,
+                            "z": 0.0,
+                            "w": -4.371138828673793e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 566910909923529782
                         }
                     }
                 },
@@ -826,6 +965,26 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 1048591,
+                                            "scriptName": "NewGameCD"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "CreditsCD"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048607,
+                                            "scriptName": "NewGameCD"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "newGameCD"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "x": 10.0,
                                             "y": 10.0,
                                             "z": 10.0
@@ -937,7 +1096,7 @@
                                     "playSettings": {
                                         "position": {
                                             "x": 1.4826281070709229,
-                                            "y": -0.4179856479167938,
+                                            "y": -0.41798558831214907,
                                             "z": -0.751998782157898
                                         },
                                         "volume": 0.20000000298023225,
@@ -970,7 +1129,7 @@
                         "position": {
                             "x": -0.00201416015625,
                             "y": 0.00019421194156166166,
-                            "z": -0.0023956298828125
+                            "z": -0.00240325927734375
                         },
                         "scale": {
                             "x": 1.0,
@@ -979,18 +1138,18 @@
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": 1.0,
+                            "y": 0.0,
                             "z": 0.0,
-                            "w": -4.371139183945161e-8
+                            "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": 180.0,
-                            "y": -0.000005008956577512436,
-                            "z": 180.0
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
                         },
                         "worldPos": {
                             "x": 1.4826281070709229,
-                            "y": -0.4179856479167938,
+                            "y": -0.41798558831214907,
                             "z": -0.751998782157898
                         },
                         "worldScale": {
@@ -999,10 +1158,10 @@
                             "z": 0.006000000052154064
                         },
                         "worldRot": {
-                            "x": -3.0908619663705397e-8,
-                            "y": 0.7071067690849304,
-                            "z": 0.7071067690849304,
-                            "w": -3.0908619663705397e-8
+                            "x": 0.7071067690849304,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -1039,22 +1198,19 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
-                                            "entityID": 22,
+                                            "entityID": 3,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
-                                            "fieldName": "ContinueCDinCase"
+                                            "fieldName": "CDinCase"
                                         }
                                     },
                                     {
-                                        "data": {
-                                            "entityID": 2097156,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
+                                        "data": "Credits",
+                                        "type": "System.String",
                                         "scriptField": {
-                                            "fieldName": "NewGameCDinCase"
+                                            "fieldName": "SceneName"
                                         }
                                     },
                                     {
@@ -1093,6 +1249,19 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "transition"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 1048591,
+                                "scriptName": "NewGameCD",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isLidOpen"
                                         }
                                     }
                                 ]
@@ -1336,72 +1505,7 @@
                 },
                 {
                     "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 1048594,
-                                "scriptName": "CDDragAndDrop",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 22,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "ContinueCDinCase"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 2097156,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "NewGameCDinCase"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1048587,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "cdPlayer"
-                                        }
-                                    },
-                                    {
-                                        "data": false,
-                                        "type": "System.Boolean",
-                                        "scriptField": {
-                                            "fieldName": "isLidOpen"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "x": 10.0,
-                                            "y": 10.0,
-                                            "z": 10.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "outOfTheWay"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 20,
-                                            "scriptName": "Transition"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "transition"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
+                        "scriptList": []
                     }
                 }
             ]
@@ -1484,7 +1588,7 @@
                                     "playSettings": {
                                         "position": {
                                             "x": 1.0994586944580079,
-                                            "y": -0.41799965500831606,
+                                            "y": -0.4179995059967041,
                                             "z": -0.7515864372253418
                                         },
                                         "volume": 1.0,
@@ -1512,7 +1616,7 @@
                                     "playSettings": {
                                         "position": {
                                             "x": 1.0994586944580079,
-                                            "y": -0.41799965500831606,
+                                            "y": -0.4179995059967041,
                                             "z": -0.7515864372253418
                                         },
                                         "volume": 1.0,
@@ -1540,7 +1644,7 @@
                                     "playSettings": {
                                         "position": {
                                             "x": 1.0994586944580079,
-                                            "y": -0.41799965500831606,
+                                            "y": -0.4179995059967041,
                                             "z": -0.7515864372253418
                                         },
                                         "volume": 1.0,
@@ -1568,7 +1672,7 @@
                                     "playSettings": {
                                         "position": {
                                             "x": 1.0994586944580079,
-                                            "y": -0.41799965500831606,
+                                            "y": -0.4179995059967041,
                                             "z": -0.7515864372253418
                                         },
                                         "volume": 1.0,
@@ -1596,7 +1700,7 @@
                                     "playSettings": {
                                         "position": {
                                             "x": 1.0994586944580079,
-                                            "y": -0.41799965500831606,
+                                            "y": -0.4179995059967041,
                                             "z": -0.7515864372253418
                                         },
                                         "volume": 1.0,
@@ -1624,7 +1728,7 @@
                                     "playSettings": {
                                         "position": {
                                             "x": 1.0994586944580079,
-                                            "y": -0.41799965500831606,
+                                            "y": -0.4179995059967041,
                                             "z": -0.7515864372253418
                                         },
                                         "volume": 8.0,
@@ -1652,7 +1756,7 @@
                                     "playSettings": {
                                         "position": {
                                             "x": 1.0994586944580079,
-                                            "y": -0.41799965500831606,
+                                            "y": -0.4179995059967041,
                                             "z": -0.7515864372253418
                                         },
                                         "volume": 1.0,
@@ -1684,8 +1788,8 @@
                     "Transform": {
                         "position": {
                             "x": 0.0000457763671875,
-                            "y": 0.000003476940037216991,
-                            "z": -0.00006866455078125
+                            "y": 0.000003476940946711693,
+                            "z": -0.00008392333984375
                         },
                         "scale": {
                             "x": 1.0,
@@ -1705,7 +1809,7 @@
                         },
                         "worldPos": {
                             "x": 1.0994586944580079,
-                            "y": -0.41799965500831606,
+                            "y": -0.4179995059967041,
                             "z": -0.7515864372253418
                         },
                         "worldScale": {
@@ -1714,10 +1818,10 @@
                             "z": 0.006000000052154064
                         },
                         "worldRot": {
-                            "x": 0.0,
+                            "x": 0.7071067690849304,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 0.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -1754,22 +1858,19 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
-                                            "entityID": 22,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "ContinueCDinCase"
-                                        }
-                                    },
-                                    {
-                                        "data": {
                                             "entityID": 2097156,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
-                                            "fieldName": "NewGameCDinCase"
+                                            "fieldName": "CDinCase"
+                                        }
+                                    },
+                                    {
+                                        "data": "TutorialLevel",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "SceneName"
                                         }
                                     },
                                     {
@@ -1913,6 +2014,26 @@
                                 "entityID": 1048628,
                                 "scriptName": "OpenedCdLid",
                                 "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 1048591,
+                                            "scriptName": "NewGameCD"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "CreditsCD"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048607,
+                                            "scriptName": "NewGameCD"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "newGameCD"
+                                        }
+                                    },
                                     {
                                         "data": {
                                             "x": 10.0,

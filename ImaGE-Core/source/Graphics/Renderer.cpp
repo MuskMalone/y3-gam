@@ -236,6 +236,7 @@ namespace Graphics {
 		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
 		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
 		ShaderLibrary::Add("Water", Shader::Create("Water.vert.glsl", "Water.frag.glsl"));
+		ShaderLibrary::Add("Leaf", Shader::Create("Leaf.vert.glsl", "Leaf.frag.glsl"));
 
 		ShaderLibrary::Add("Transition", Shader::Create("Transition.vert.glsl", "Transition.frag.glsl"));
 #ifdef DISTRIBUTION
@@ -1541,6 +1542,7 @@ namespace Graphics {
 		auto const& texShader = ShaderLibrary::Get("Tex2D");
 		texShader->Use();
 		texShader->SetUniform("u_ViewProjMtx", viewProjMtx);
+		texShader->SetUniform("u_Gamma", Component::Light::sGlobalProps.gammaValue);
 
 		BeginBatch();
 	}

@@ -105,6 +105,15 @@ namespace IGE {
       //=======================================================================
       if (Graphics::RenderSystem::mCameraManager.HasActiveCamera()) {
           Graphics::RenderSystem::RenderScene(Graphics::CameraSpec{ Graphics::RenderSystem::mCameraManager.GetActiveCameraComponent() });
+          //auto const& fb0 = Graphics::Renderer::GetFinalFramebuffer();
+          //if (Mono::ScriptManager::GetInstance().mScreenShotInfo.size() > 0)
+          //{
+          //  fb0->Bind();
+          //  for (const auto& ss : Mono::ScriptManager::GetInstance().mScreenShotInfo)
+          //    Mono::SaveScreenShot(std::get<0>(ss), std::get<1>(ss), std::get<2>(ss));
+          //  Mono::ScriptManager::GetInstance().mScreenShotInfo.clear();
+          //  fb0->Unbind();
+          //}
       }
       auto const& fb = Graphics::Renderer::GetFinalFramebuffer();
       std::shared_ptr<Graphics::Texture> gameTex = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
