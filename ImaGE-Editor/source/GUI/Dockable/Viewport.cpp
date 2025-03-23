@@ -73,6 +73,8 @@ namespace {
   }
 
   ECS::Entity ConstructEntity(IGE::Assets::GUID const& guid, Graphics::MeshSource const& meshSource);
+
+  int ScreenPickEntity(ImVec2 const& vpSize, ImVec2 const& vpStartPos);
 }
 
 namespace GUI
@@ -142,20 +144,20 @@ namespace GUI
 
       float const windowRight{ vpStartPos.x + vpSize.x };
       ImVec2 const topLeft{ windowRight - 128.f , vpStartPos.y }, size{ 128.f, 128.f };
-      bool guizmosUsed{ false };
+      bool modified{ false };
       if (UpdateViewManipulate(topLeft, size)) {
         mEditorCam->UpdateFromViewMtx(mEditorCam->viewMatrix);
-        guizmosUsed = true;
+        modified = true;
       }
       else {
         bool const viewManipulateWindowClicked{ ImGui::IsMouseClicked(ImGuiMouseButton_Left)
           && ImGui::IsMouseHoveringRect(topLeft, { windowRight, vpStartPos.y + 128.f }) };
 
         if (UpdateGuizmos()) {
-          guizmosUsed = true;
+          modified = true;
         }
 
-        if (!viewManipulateWindowClicked && !guizmosUsed && checkInput) {
+        if (!viewManipulateWindowClicked && !modified && checkInput) {
           // object picking
           if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
             ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
@@ -163,15 +165,7 @@ namespace GUI
             // check if clicking outside viewport
             if (!(offset.x < 0 || offset.x > vpSize.x || offset.y < 0 || offset.y > vpSize.y)) {
 
-              auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
-              auto const& pickFb{ geomPass->GetTargetFramebuffer() };
-              Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
-
-              pickFb->Bind();
-              int const entityId{ pickFb->ReadPixel(1,
-                static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
-                static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
-              pickFb->Unbind();
+              int const entityId{ ScreenPickEntity(vpSize, vpStartPos) };
 
               if (entityId >= 0) {
                 ECS::Entity const selected{ static_cast<ECS::Entity::EntityID>(entityId) },
@@ -227,7 +221,16 @@ namespace GUI
         mEditorCam->modified = false;
       }
       
-      if ((ReceivePayload() || guizmosUsed) && sceneStopped) {
+      if (ImGui::BeginDragDropTarget()) {
+        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+        if (drop && ReceivePayload(drop, vpSize, vpStartPos)) {
+          modified = true;
+        }
+
+        ImGui::EndDragDropTarget();
+      }
+
+      if (modified && sceneStopped) {
         QUEUE_EVENT(Events::SceneModifiedEvent);
       }
 
@@ -319,8 +322,6 @@ namespace GUI
         mIsPanning = false;
       }
     }
-    
-    ReceivePayload();
 
     // move camera towards entity if the event has been triggered
     if (sMovingToEntity) {
@@ -543,77 +544,91 @@ namespace GUI
     return usingGuizmos;
   }
 
-  bool Viewport::ReceivePayload()
+  bool Viewport::ReceivePayload(ImGuiPayload const* drop, ImVec2 const& vpSize, ImVec2 const& vpStartPos)
   {
     bool modified{ false };
     bool const noScene{ IGE_SCENEMGR.NoSceneSelected() };
-    if (ImGui::BeginDragDropTarget())
+
+    AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+    switch (assetPayload.mAssetType)
     {
-      ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-      if (drop)
-      {
-        AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-        switch (assetPayload.mAssetType)
-        {
-        case AssetPayload::SCENE:
-        {
-          // if scene has unsaved changes, trigger popup
-          if (GUIVault::IsSceneModified()) {
-            // temporarily save the current payload
-            sDroppedPayload = std::make_unique<GUI::AssetPayload>(std::move(assetPayload));
-            ImGui::OpenPopup(sUnsavedChangesPopupTitle);
-          }
-          else {
-            QUEUE_EVENT(Events::LoadSceneEvent, assetPayload.GetFileName(), assetPayload.GetFilePath());
-          }
-
-          GUIVault::SetSelectedEntity({});
-          break;
-        }
-        case AssetPayload::PREFAB:
-        {
-          if (noScene) {
-            ImGui::EndDragDropTarget();
-            return false;
-          }
-
-          // @TODO: Convert screen to world pos when viewport is up
-          try {
-            IGE::Assets::AssetManager& assetMan{ IGE_ASSETMGR };
-            IGE::Assets::GUID guid{ assetMan.LoadRef<IGE::Assets::PrefabAsset>(assetPayload.GetFilePath()) };
-
-            ECS::Entity newEntity{ assetMan.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData.Construct(guid, {}) };
-            GUIVault::SetSelectedEntity(newEntity);
-            modified = true;
-          }
-          catch (Debug::ExceptionBase&) {
-            IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
-          }
-          break;
-        }
-        case AssetPayload::MODEL:
-        {
-          if (noScene) {
-            ImGui::EndDragDropTarget();
-            return false;
-          }
-
-          try {
-            IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
-            ECS::Entity const newEntity{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource.ConstructEntity(meshSrc, assetPayload.GetFileName()) };
-            GUIVault::SetSelectedEntity(newEntity);
-            modified = true;
-          }
-          catch (Debug::ExceptionBase&) {
-            IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
-          }
-          break;
-        }
-        default:
-          break;
-        }
+    case AssetPayload::SCENE:
+    {
+      // if scene has unsaved changes, trigger popup
+      if (GUIVault::IsSceneModified()) {
+        // temporarily save the current payload
+        sDroppedPayload = std::make_unique<GUI::AssetPayload>(std::move(assetPayload));
+        ImGui::OpenPopup(sUnsavedChangesPopupTitle);
       }
-      ImGui::EndDragDropTarget();
+      else {
+        QUEUE_EVENT(Events::LoadSceneEvent, assetPayload.GetFileName(), assetPayload.GetFilePath());
+      }
+
+      GUIVault::SetSelectedEntity({});
+      break;
+    }
+    case AssetPayload::PREFAB:
+    {
+      if (noScene) {
+        ImGui::EndDragDropTarget();
+        return false;
+      }
+
+      // @TODO: Convert screen to world pos when viewport is up
+      glm::vec3 spawnPos{};
+      int const entityId{ ScreenPickEntity(vpSize, vpStartPos) };
+      if (entityId >= 0) {
+        spawnPos = ECS::Entity(static_cast<ECS::Entity::EntityID>(entityId)).GetComponent<Component::Transform>().worldPos;
+      }
+      else {
+        spawnPos = mEditorCam->position + mEditorCam->GetForwardVector() * 5.f;
+      }
+
+      try {
+        IGE::Assets::AssetManager& assetMan{ IGE_ASSETMGR };
+        IGE::Assets::GUID guid{ assetMan.LoadRef<IGE::Assets::PrefabAsset>(assetPayload.GetFilePath()) };
+
+        ECS::Entity newEntity{ assetMan.GetAsset<IGE::Assets::PrefabAsset>(guid)->mPrefabData.Construct(guid, spawnPos) };
+        GUIVault::SetSelectedEntity(newEntity);
+        modified = true;
+      }
+      catch (Debug::ExceptionBase&) {
+        IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
+      }
+      break;
+    }
+    case AssetPayload::MODEL:
+    {
+      if (noScene) {
+        ImGui::EndDragDropTarget();
+        return false;
+      }
+
+      glm::vec3 spawnPos{};
+      int const entityId{ ScreenPickEntity(vpSize, vpStartPos) };
+      if (entityId >= 0) {
+        spawnPos = ECS::Entity(static_cast<ECS::Entity::EntityID>(entityId)).GetComponent<Component::Transform>().worldPos;
+      }
+      else {
+        spawnPos = mEditorCam->position + mEditorCam->GetForwardVector() * 5.f;
+      }
+
+      try {
+        IGE::Assets::GUID const& meshSrc{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(assetPayload.GetFilePath()) };
+        ECS::Entity newEntity{ IGE_ASSETMGR.GetAsset<IGE::Assets::ModelAsset>(meshSrc)->mMeshSource.ConstructEntity(meshSrc, assetPayload.GetFileName()) };
+        Component::Transform& trans{ newEntity.GetComponent<Component::Transform>() };
+        trans.position = spawnPos;
+        trans.modified = true;
+        GUIVault::SetSelectedEntity(newEntity);
+        modified = true;
+      }
+      catch (Debug::ExceptionBase&) {
+        IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
+      }
+      break;
+    }
+    default:
+      break;
     }
 
     return modified;
@@ -677,6 +692,21 @@ namespace GUI
 } // namespace GUI
 
 namespace {
+  int ScreenPickEntity(ImVec2 const& vpSize, ImVec2 const& vpStartPos) {
+    ImVec2 const offset{ ImGui::GetMousePos() - vpStartPos };
+    auto const& geomPass{ Graphics::Renderer::GetPass<Graphics::GeomPass>() };
+    auto const& pickFb{ geomPass->GetTargetFramebuffer() };
+    Graphics::FramebufferSpec const& fbSpec{ pickFb->GetFramebufferSpec() };
+
+    pickFb->Bind();
+    int const entityId{ pickFb->ReadPixel(1,
+      static_cast<int>(offset.x / vpSize.x * static_cast<float>(fbSpec.width)),
+      static_cast<int>((vpSize.y - offset.y) / vpSize.y * static_cast<float>(fbSpec.height))) };
+    pickFb->Unbind();
+
+    return entityId;
+  }
+
   glm::vec2 ProjVectorOnCamPlane(glm::vec3 const& vector, std::shared_ptr<Graphics::EditorCamera> const& cam) {
     // projection = vector - dot(vector, normal) * normal
     glm::vec3 const camFwdVec{ cam->GetForwardVector() };

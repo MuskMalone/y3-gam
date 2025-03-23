@@ -15,6 +15,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <memory>
 #include <Events/EventCallback.h>
 
+struct ImGuiPayload; struct ImVec2;
+
 namespace GUI
 {
 
@@ -62,7 +64,7 @@ namespace GUI
       Checks the viewport for any DragDrop operations and handles them
       accordingly
     ************************************************************************/
-    bool ReceivePayload();
+    bool ReceivePayload(ImGuiPayload const* drop, ImVec2 const& vpSize, ImVec2 const& vpStartPos);
 
     void UnsavedChangesPopup();
 

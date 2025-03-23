@@ -198,7 +198,6 @@ namespace Graphics {
             // apply scale to halfExtents of mesh
             glm::vec3 const& halfExt{ meshSource.GetBoundingBox().halfExtents };
 
-            // if rotation is identity (unmodified), simply multiply half extents to scale
             glm::vec3 const right = transform.worldMtx[0] * halfExt.x;
             glm::vec3 const up = transform.worldMtx[1] * halfExt.y;
             glm::vec3 const forward = -transform.worldMtx[2] * halfExt.z;
