@@ -165,6 +165,95 @@
             ]
         },
         {
+            "ID": 2,
+            "Parent": 1048582,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Spot Light (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 225.58648681640626,
+                            "y": 105.65899658203125,
+                            "z": 2.7039999961853029
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.04855348914861679,
+                            "y": 0.6986649036407471,
+                            "z": 0.7122087478637695,
+                            "w": -0.047630224376916888
+                        },
+                        "eulerAngles": {
+                            "x": 88.9000015258789,
+                            "y": -7.800000190734863,
+                            "z": -180.0
+                        },
+                        "worldPos": {
+                            "x": 225.58648681640626,
+                            "y": 105.65899658203125,
+                            "z": 2.7039999961853029
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.04855348914861679,
+                            "y": 0.6986649036407471,
+                            "z": 0.7122087478637695,
+                            "w": -0.047630224376916888
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "SPOTLIGHT",
+                        "color": {
+                            "x": 1.0,
+                            "y": 0.9607843160629273,
+                            "z": 0.8627451062202454
+                        },
+                        "intensity": 8.0,
+                        "innerAngle": 25.0,
+                        "outerAngle": -41.0,
+                        "range": 99.5,
+                        "castShadows": true,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 4,
             "Parent": 2097443,
             "Child Entities": [],
@@ -1136,7 +1225,7 @@
                 {
                     "Tag": {
                         "tag": "alight",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -1487,10 +1576,10 @@
                         "lightType": "POINT",
                         "color": {
                             "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "y": 0.9411764740943909,
+                            "z": 0.7843137383460999
                         },
-                        "intensity": 7.0,
+                        "intensity": 1.899999976158142,
                         "innerAngle": 5.0,
                         "outerAngle": 12.5,
                         "range": 40.0,
@@ -1528,9 +1617,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 67.8902587890625,
-                            "y": 40.398956298828128,
-                            "z": -179.1328887939453
+                            "x": 56.5706672668457,
+                            "y": 86.86307525634766,
+                            "z": -202.2091064453125
                         },
                         "scale": {
                             "x": 1.0,
@@ -1549,9 +1638,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 67.8902587890625,
-                            "y": 40.398956298828128,
-                            "z": -179.69366455078126
+                            "x": 56.5706672668457,
+                            "y": 86.86307525634766,
+                            "z": -202.76988220214845
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -1576,13 +1665,13 @@
                         "lightType": "POINT",
                         "color": {
                             "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "y": 0.9411764740943909,
+                            "z": 0.7843137383460999
                         },
-                        "intensity": 7.0,
+                        "intensity": 2.0,
                         "innerAngle": 5.0,
                         "outerAngle": 12.5,
-                        "range": 40.0,
+                        "range": 32.5,
                         "castShadows": false,
                         "shadowConfig": {
                             "centerPos": {
@@ -2489,7 +2578,7 @@
                 {
                     "Tag": {
                         "tag": "Point Light",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -2578,7 +2667,7 @@
                 {
                     "Tag": {
                         "tag": "IMPORTANT MIDDLELIGHT",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -2667,7 +2756,7 @@
                 {
                     "Tag": {
                         "tag": "Point Light (Copy)",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -2888,10 +2977,10 @@
                         "lightType": "POINT",
                         "color": {
                             "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "y": 0.9411764740943909,
+                            "z": 0.7843137383460999
                         },
-                        "intensity": 7.0,
+                        "intensity": 2.5,
                         "innerAngle": 5.0,
                         "outerAngle": 12.5,
                         "range": 70.0,
@@ -2923,7 +3012,7 @@
                 {
                     "Tag": {
                         "tag": "Point Light (Copy)",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -4262,6 +4351,95 @@
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 86,
+            "Parent": 597,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Spot Light",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 3.7997961044311526e-7
+                        },
+                        "scale": {
+                            "x": 0.125944584608078,
+                            "y": 0.125944584608078,
+                            "z": 0.125944584608078
+                        },
+                        "rotation": {
+                            "x": -0.2146974503993988,
+                            "y": -0.7446165680885315,
+                            "z": -0.2828534245491028,
+                            "w": 0.5651947855949402
+                        },
+                        "eulerAngles": {
+                            "x": 138.39999389648438,
+                            "y": -74.4000015258789,
+                            "z": -180.0
+                        },
+                        "worldPos": {
+                            "x": 114.45343780517578,
+                            "y": 103.1594009399414,
+                            "z": -130.5526580810547
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": -0.21395620703697205,
+                            "y": -0.74609375,
+                            "z": -0.2834145426750183,
+                            "w": 0.5632435083389282
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "SPOTLIGHT",
+                        "color": {
+                            "x": 1.0,
+                            "y": 0.9607843160629273,
+                            "z": 0.8627451062202454
+                        },
+                        "intensity": 4.0,
+                        "innerAngle": 25.0,
+                        "outerAngle": -44.0,
+                        "range": 134.5,
+                        "castShadows": true,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
                     }
                 }
             ]
@@ -5822,10 +6000,10 @@
                         "lightType": "POINT",
                         "color": {
                             "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "y": 0.9411764740943909,
+                            "z": 0.7843137383460999
                         },
-                        "intensity": 7.0,
+                        "intensity": 2.5,
                         "innerAngle": 5.0,
                         "outerAngle": 12.5,
                         "range": 70.0,
@@ -6913,6 +7091,95 @@
             ]
         },
         {
+            "ID": 147,
+            "Parent": 1048582,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "MessanineLights",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 157.48101806640626,
+                            "y": 80.63360595703125,
+                            "z": -211.2489776611328
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 157.48101806640626,
+                            "y": 80.63360595703125,
+                            "z": -211.2489776611328
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "POINT",
+                        "color": {
+                            "x": 1.0,
+                            "y": 0.9411764740943909,
+                            "z": 0.7843137383460999
+                        },
+                        "intensity": 2.0,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 58.5,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 152,
             "Parent": 332,
             "Child Entities": [],
@@ -7136,7 +7403,7 @@
         },
         {
             "ID": 158,
-            "Parent": null,
+            "Parent": 1048582,
             "Child Entities": [
                 580,
                 655
@@ -7454,19 +7721,6 @@
                     }
                 }
             ]
-        },
-        {
-            "ID": 171,
-            "Parent": 577,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 17047066605511819437
-                },
-                "subDataId": 1,
-                "componentData": [],
-                "removedComponents": []
-            }
         },
         {
             "ID": 177,
@@ -7996,10 +8250,10 @@
                         "lightType": "POINT",
                         "color": {
                             "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "y": 0.9411764740943909,
+                            "z": 0.7843137383460999
                         },
-                        "intensity": 7.0,
+                        "intensity": 2.5,
                         "innerAngle": 5.0,
                         "outerAngle": 12.5,
                         "range": 40.0,
@@ -11695,6 +11949,84 @@
             ]
         },
         {
+            "ID": 274,
+            "Parent": 307,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cube.003",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0026254653930664064,
+                            "z": 0.0000057220458984375
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 98.47122955322266,
+                            "y": 25.435121536254884,
+                            "z": -202.03292846679688
+                        },
+                        "worldScale": {
+                            "x": 24.899999618530275,
+                            "y": 24.899999618530275,
+                            "z": 24.899999618530275
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 12717561917737326923
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube.003",
+                        "GUID": {
+                            "ID": 16615228508828023938
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 275,
             "Parent": 660,
             "Child Entities": [],
@@ -12125,6 +12457,84 @@
                         "meshName": "pSphere1",
                         "GUID": {
                             "ID": 12467580282968539768
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 295,
+            "Parent": 597,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Sphere.002",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 3.7997961044311526e-7
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": -0.07790294289588928,
+                            "y": -0.9093725085258484,
+                            "z": -0.3572949469089508,
+                            "w": 0.1982753872871399
+                        },
+                        "eulerAngles": {
+                            "x": 137.09999084472657,
+                            "y": -24.600013732910158,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 114.45343780517578,
+                            "y": 103.1594009399414,
+                            "z": -130.5526580810547
+                        },
+                        "worldScale": {
+                            "x": 7.940000057220459,
+                            "y": 7.940000057220459,
+                            "z": 7.940000057220459
+                        },
+                        "worldRot": {
+                            "x": -0.0769672766327858,
+                            "y": -0.909888505935669,
+                            "z": -0.3574976623058319,
+                            "w": 0.19589398801326753
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 9649479857935609331
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Sphere.002",
+                        "GUID": {
+                            "ID": 8771490309464032469
                         },
                         "submeshIdx": 1,
                         "isCustomMesh": true,
@@ -12662,6 +13072,68 @@
                                 ]
                             }
                         ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 307,
+            "Parent": null,
+            "Child Entities": [
+                274,
+                519
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "bench",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 98.47108459472656,
+                            "y": 25.369747161865236,
+                            "z": -202.03292846679688
+                        },
+                        "scale": {
+                            "x": 24.899999618530275,
+                            "y": 24.899999618530275,
+                            "z": 24.899999618530275
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 98.47108459472656,
+                            "y": 25.369747161865236,
+                            "z": -202.03292846679688
+                        },
+                        "worldScale": {
+                            "x": 24.899999618530275,
+                            "y": 24.899999618530275,
+                            "z": 24.899999618530275
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
                     }
                 }
             ]
@@ -13998,6 +14470,69 @@
             ]
         },
         {
+            "ID": 356,
+            "Parent": 1048582,
+            "Child Entities": [
+                646,
+                775,
+                1048645
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "NormStageLight1",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 114.45343780517578,
+                            "y": 103.1594009399414,
+                            "z": -130.5526580810547
+                        },
+                        "scale": {
+                            "x": 7.940000057220459,
+                            "y": 7.940000057220459,
+                            "z": 7.940000057220459
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.002617990830913186,
+                            "z": 0.0,
+                            "w": 0.9999966025352478
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.30000001192092898,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 114.45343780517578,
+                            "y": 103.1594009399414,
+                            "z": -130.5526580810547
+                        },
+                        "worldScale": {
+                            "x": 7.940000057220459,
+                            "y": 7.940000057220459,
+                            "z": 7.940000057220459
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.002617990830913186,
+                            "z": 0.0,
+                            "w": 0.9999966025352478
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 357,
             "Parent": 2097285,
             "Child Entities": [
@@ -14471,37 +15006,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 184,
+                                                "entityID": 25,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 184,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 121,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 121,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 40,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 40,
+                                                        "data": 25,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -14523,11 +15032,37 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 25,
+                                                "entityID": 40,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 25,
+                                                        "data": 40,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 121,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 121,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 184,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 184,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -14961,7 +15496,7 @@
                 {
                     "Tag": {
                         "tag": "Point Light",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -15912,50 +16447,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 187,
+                                                "entityID": 192,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 187,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 188,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 188,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 189,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 189,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 190,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 190,
+                                                        "data": 192,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15977,11 +16473,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 192,
+                                                "entityID": 190,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 192,
+                                                        "data": 190,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 189,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 189,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 188,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 188,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 187,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 187,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15998,50 +16533,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 193,
+                                                "entityID": 198,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 193,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 194,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 194,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 1048771,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 1048771,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 196,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 196,
+                                                        "data": 198,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16063,11 +16559,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 198,
+                                                "entityID": 196,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 198,
+                                                        "data": 196,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 1048771,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 1048771,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 194,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 194,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 193,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 193,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16084,50 +16619,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 253,
+                                                "entityID": 258,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 253,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 254,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 254,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 255,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 255,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 256,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 256,
+                                                        "data": 258,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16149,11 +16645,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 258,
+                                                "entityID": 256,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 258,
+                                                        "data": 256,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 255,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 255,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 254,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 254,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 253,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 253,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16170,50 +16705,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 259,
+                                                "entityID": 264,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 259,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 260,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 260,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 261,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 261,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 262,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 262,
+                                                        "data": 264,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16235,11 +16731,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 264,
+                                                "entityID": 262,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 264,
+                                                        "data": 262,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 261,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 261,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 260,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 260,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 259,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 259,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -24824,6 +25359,84 @@
             ]
         },
         {
+            "ID": 519,
+            "Parent": 307,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cube.001",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 98.47108459472656,
+                            "y": 25.369747161865236,
+                            "z": -202.03292846679688
+                        },
+                        "worldScale": {
+                            "x": 24.899999618530275,
+                            "y": 24.899999618530275,
+                            "z": 24.899999618530275
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 7398324319315129017
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube.001",
+                        "GUID": {
+                            "ID": 16615228508828023938
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 520,
             "Parent": 2097285,
             "Child Entities": [],
@@ -27046,92 +27659,6 @@
             }
         },
         {
-            "ID": 577,
-            "Parent": 1048897,
-            "Child Entities": [
-                171,
-                581
-            ],
-            "Prefab": {
-                "GUID": {
-                    "ID": 17047066605511819437
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 2.200000047683716,
-                                "y": 1.899999976158142,
-                                "z": 6.300000190734863
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": 100.1016845703125,
-                                "y": 24.625,
-                                "z": -203.8006591796875
-                            },
-                            "scale": {
-                                "x": 13.119999885559082,
-                                "y": 13.119999885559082,
-                                "z": 13.119999885559082
-                            },
-                            "rotation": {
-                                "x": 0.0,
-                                "y": 0.7071067690849304,
-                                "z": 0.0,
-                                "w": 0.7071067690849304
-                            },
-                            "eulerAngles": {
-                                "x": 0.0,
-                                "y": 89.98021697998047,
-                                "z": 0.0
-                            },
-                            "worldPos": {
-                                "x": 100.1016845703125,
-                                "y": 24.625,
-                                "z": -203.8006591796875
-                            },
-                            "worldScale": {
-                                "x": 13.119999885559082,
-                                "y": 13.119999885559082,
-                                "z": 13.119999885559082
-                            },
-                            "worldRot": {
-                                "x": 0.0,
-                                "y": 0.7071067690849304,
-                                "z": 0.0,
-                                "w": 0.7071067690849304
-                            }
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 578,
             "Parent": 3146390,
             "Child Entities": [],
@@ -27243,9 +27770,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
+                            "x": 0.000003084540367126465,
                             "y": 0.0,
-                            "z": 0.0
+                            "z": -9.5367431640625e-7
                         },
                         "scale": {
                             "x": 1.0,
@@ -27260,13 +27787,13 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 111.90048217773438,
+                            "x": 111.9004898071289,
                             "y": 103.1594009399414,
-                            "z": -150.81585693359376
+                            "z": -150.81582641601563
                         },
                         "worldScale": {
                             "x": 7.940000057220459,
@@ -27306,19 +27833,6 @@
                     }
                 }
             ]
-        },
-        {
-            "ID": 581,
-            "Parent": 577,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 17047066605511819437
-                },
-                "subDataId": 2,
-                "componentData": [],
-                "removedComponents": []
-            }
         },
         {
             "ID": 582,
@@ -28219,6 +28733,69 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 597,
+            "Parent": 1048582,
+            "Child Entities": [
+                86,
+                295,
+                769
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "NormStageLight2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 114.45343780517578,
+                            "y": 103.1594009399414,
+                            "z": -130.5526580810547
+                        },
+                        "scale": {
+                            "x": 7.940000057220459,
+                            "y": 7.940000057220459,
+                            "z": 7.940000057220459
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": -0.002617990830913186,
+                            "z": 0.0,
+                            "w": 0.9999966025352478
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.30000001192092898,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 114.45343780517578,
+                            "y": 103.1594009399414,
+                            "z": -130.5526580810547
+                        },
+                        "worldScale": {
+                            "x": 7.940000057220459,
+                            "y": 7.940000057220459,
+                            "z": 7.940000057220459
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.002617990830913186,
+                            "z": 0.0,
+                            "w": 0.9999966025352478
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
                     }
                 }
             ]
@@ -29435,6 +30012,84 @@
             ]
         },
         {
+            "ID": 646,
+            "Parent": 356,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Sphere.002",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 3.7997961044311526e-7
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": -0.07790294289588928,
+                            "y": -0.9093725085258484,
+                            "z": -0.3572949469089508,
+                            "w": 0.1982753872871399
+                        },
+                        "eulerAngles": {
+                            "x": 137.09999084472657,
+                            "y": -24.600013732910158,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 114.45343780517578,
+                            "y": 103.1594009399414,
+                            "z": -130.5526580810547
+                        },
+                        "worldScale": {
+                            "x": 7.940000057220459,
+                            "y": 7.940000057220459,
+                            "z": 7.940000057220459
+                        },
+                        "worldRot": {
+                            "x": -0.0769672766327858,
+                            "y": -0.909888505935669,
+                            "z": -0.3574976623058319,
+                            "w": 0.19589398801326753
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 9649479857935609331
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Sphere.002",
+                        "GUID": {
+                            "ID": 8771490309464032469
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 647,
             "Parent": 394,
             "Child Entities": [],
@@ -29794,9 +30449,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
+                            "x": 0.000003084540367126465,
                             "y": 0.0,
-                            "z": 0.0
+                            "z": -9.5367431640625e-7
                         },
                         "scale": {
                             "x": 1.0,
@@ -29811,13 +30466,13 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 111.90048217773438,
+                            "x": 111.9004898071289,
                             "y": 103.1594009399414,
-                            "z": -150.81585693359376
+                            "z": -150.81582641601563
                         },
                         "worldScale": {
                             "x": 7.940000057220459,
@@ -36146,6 +36801,84 @@
             ]
         },
         {
+            "ID": 769,
+            "Parent": 597,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Plane.003",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 3.7997961044311526e-7
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 114.45343780517578,
+                            "y": 103.1594009399414,
+                            "z": -130.5526580810547
+                        },
+                        "worldScale": {
+                            "x": 7.940000057220459,
+                            "y": 7.940000057220459,
+                            "z": 7.940000057220459
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.002617990830913186,
+                            "z": 0.0,
+                            "w": 0.9999966025352478
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 12614877318618865449
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane.003",
+                        "GUID": {
+                            "ID": 8771490309464032469
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 770,
             "Parent": 484,
             "Child Entities": [],
@@ -36641,6 +37374,84 @@
                         "textureAssetGUID": {
                             "ID": 12225198779976589326
                         }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 775,
+            "Parent": 356,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Plane.003",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 3.7997961044311526e-7
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 114.45343780517578,
+                            "y": 103.1594009399414,
+                            "z": -130.5526580810547
+                        },
+                        "worldScale": {
+                            "x": 7.940000057220459,
+                            "y": 7.940000057220459,
+                            "z": 7.940000057220459
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": -0.002617990830913186,
+                            "z": 0.0,
+                            "w": 0.9999966025352478
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 12614877318618865449
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane.003",
+                        "GUID": {
+                            "ID": 8771490309464032469
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -42108,10 +42919,15 @@
             "ID": 1048582,
             "Parent": 1048901,
             "Child Entities": [
+                2,
                 20,
                 30,
                 37,
                 38,
+                147,
+                158,
+                356,
+                597,
                 1048618
             ],
             "Components": [
@@ -42334,9 +43150,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 126.32809448242188,
+                            "x": 197.0421600341797,
                             "y": 72.17316436767578,
-                            "z": -119.43167114257813
+                            "z": -173.06631469726563
                         },
                         "scale": {
                             "x": 1.0,
@@ -42355,9 +43171,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 126.32809448242188,
+                            "x": 197.0421600341797,
                             "y": 72.17316436767578,
-                            "z": -119.43167114257813
+                            "z": -173.06631469726563
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -42382,13 +43198,13 @@
                         "lightType": "POINT",
                         "color": {
                             "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "y": 0.9411764740943909,
+                            "z": 0.7843137383460999
                         },
-                        "intensity": 7.0,
+                        "intensity": 2.0,
                         "innerAngle": 5.0,
                         "outerAngle": 12.5,
-                        "range": 70.0,
+                        "range": 155.5,
                         "castShadows": false,
                         "shadowConfig": {
                             "centerPos": {
@@ -42549,6 +43365,95 @@
                 {
                     "Layer": {
                         "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048645,
+            "Parent": 356,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Spot Light",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 3.7997961044311526e-7
+                        },
+                        "scale": {
+                            "x": 0.125944584608078,
+                            "y": 0.125944584608078,
+                            "z": 0.125944584608078
+                        },
+                        "rotation": {
+                            "x": 0.021293187513947488,
+                            "y": 0.9434941411018372,
+                            "z": 0.32487112283706667,
+                            "w": -0.061839912086725238
+                        },
+                        "eulerAngles": {
+                            "x": 142.0,
+                            "y": -7.500004768371582,
+                            "z": -180.0
+                        },
+                        "worldPos": {
+                            "x": 114.45343780517578,
+                            "y": 103.1594009399414,
+                            "z": -130.5526580810547
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.020442605018615724,
+                            "y": 0.9436528086662293,
+                            "z": 0.3249257802963257,
+                            "w": -0.05936964601278305
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "SPOTLIGHT",
+                        "color": {
+                            "x": 1.0,
+                            "y": 0.9607843160629273,
+                            "z": 0.8627451062202454
+                        },
+                        "intensity": 4.0,
+                        "innerAngle": 25.0,
+                        "outerAngle": -56.0,
+                        "range": 134.5,
+                        "castShadows": true,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
                     }
                 }
             ]
@@ -45293,6 +46198,84 @@
                 "componentData": [],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 1048747,
+            "Parent": 1049153,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cube.001",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 156.40866088867188,
+                            "y": 25.369747161865236,
+                            "z": -202.03292846679688
+                        },
+                        "worldScale": {
+                            "x": 24.899999618530275,
+                            "y": 24.899999618530275,
+                            "z": 24.899999618530275
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 7398324319315129017
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube.001",
+                        "GUID": {
+                            "ID": 16615228508828023938
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
         },
         {
             "ID": 1048749,
@@ -48305,7 +49288,6 @@
                 287,
                 329,
                 573,
-                577,
                 723,
                 1048661,
                 1048680,
@@ -52444,6 +53426,146 @@
             }
         },
         {
+            "ID": 1049153,
+            "Parent": null,
+            "Child Entities": [
+                1048747,
+                1049157
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "bench (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 156.40866088867188,
+                            "y": 25.369747161865236,
+                            "z": -202.03292846679688
+                        },
+                        "scale": {
+                            "x": 24.899999618530275,
+                            "y": 24.899999618530275,
+                            "z": 24.899999618530275
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 156.40866088867188,
+                            "y": 25.369747161865236,
+                            "z": -202.03292846679688
+                        },
+                        "worldScale": {
+                            "x": 24.899999618530275,
+                            "y": 24.899999618530275,
+                            "z": 24.899999618530275
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049157,
+            "Parent": 1049153,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cube.003",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0026254653930664064,
+                            "z": 0.0000057220458984375
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 156.40879821777345,
+                            "y": 25.435121536254884,
+                            "z": -202.03292846679688
+                        },
+                        "worldScale": {
+                            "x": 24.899999618530275,
+                            "y": 24.899999618530275,
+                            "z": 24.899999618530275
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 12717561917737326923
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube.003",
+                        "GUID": {
+                            "ID": 16615228508828023938
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1049172,
             "Parent": 2098172,
             "Child Entities": [],
@@ -56474,9 +57596,9 @@
                         "key": "Transform",
                         "value": {
                             "position": {
-                                "x": 155.5229949951172,
+                                "x": 198.03501892089845,
                                 "y": 36.17399978637695,
-                                "z": -206.8280029296875
+                                "z": 2.119121551513672
                             },
                             "scale": {
                                 "x": 2.0,
@@ -56485,19 +57607,19 @@
                             },
                             "rotation": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": 1.0,
                                 "z": 0.0,
-                                "w": 1.0
+                                "w": -4.371138828673793e-8
                             },
                             "eulerAngles": {
-                                "x": 0.0,
-                                "y": -0.0,
-                                "z": 0.0
+                                "x": 180.0,
+                                "y": -0.000005008956122765085,
+                                "z": 180.0
                             },
                             "worldPos": {
-                                "x": 155.5229949951172,
+                                "x": 198.03501892089845,
                                 "y": 36.17399978637695,
-                                "z": -206.8280029296875
+                                "z": 2.119121551513672
                             },
                             "worldScale": {
                                 "x": 2.0,
@@ -56506,9 +57628,9 @@
                             },
                             "worldRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": 1.0,
                                 "z": 0.0,
-                                "w": 1.0
+                                "w": -4.371138828673793e-8
                             }
                         }
                     }

@@ -1,0 +1,39 @@
+{
+    "name": "NormalStageLight",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 1.0,
+        "y": 0.9111530780792236,
+        "z": 0.43478262424468996
+    },
+    "metalness": 0.210999995470047,
+    "roughness": 0.23600000143051148,
+    "ao": 1.0,
+    "emission": {
+        "x": 0.9632107019424439,
+        "y": 0.9530831575393677,
+        "z": 0.35757988691329958,
+        "w": 0.8460000157356262
+    },
+    "transparency": 1.0,
+    "tiling": {
+        "x": 1.0,
+        "y": 1.0
+    },
+    "offset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 0
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}
