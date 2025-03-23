@@ -41,7 +41,7 @@
                 },
                 {
                     "Tag": {
-                        "tag": "HexPaintingIndestructible1to5",
+                        "tag": "IndestructiblePainting",
                         "isActive": true
                     }
                 },
@@ -119,54 +119,7 @@
                 },
                 {
                     "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 1048576,
-                                "scriptName": "HexPaintingIndestructible1to5",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 741,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "EToPickUpUI"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 740,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "_Image"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 481,
-                                            "scriptName": "Level2Inventory"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "level2inventoryScript"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 3145735,
-                                            "scriptName": "PlayerInteraction"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerInteraction"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
+                        "scriptList": []
                     }
                 },
                 {
@@ -358,13 +311,13 @@
                             "z": 5.639999866485596
                         },
                         "rotation": {
-                            "x": 1.0,
+                            "x": 0.0,
                             "y": 0.0,
-                            "z": -0.0,
-                            "w": -4.371138828673793e-8
+                            "z": 0.0,
+                            "w": 1.0
                         },
                         "eulerAngles": {
-                            "x": 180.0,
+                            "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
                         },
@@ -379,10 +332,10 @@
                             "z": 5.639999866485596
                         },
                         "worldRot": {
-                            "x": 1.0,
+                            "x": 0.0,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": -4.371138828673793e-8
+                            "w": 1.0
                         }
                     }
                 },
