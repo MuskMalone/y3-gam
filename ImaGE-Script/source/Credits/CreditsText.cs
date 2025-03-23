@@ -20,6 +20,7 @@ using IGE.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
@@ -35,10 +36,15 @@ public class CreditsText : Entity
   public Entity DesignerName;
   public Entity Programmers;
   public Entity ProgrammersName;
+  public Entity Artist;
+  public Entity ArtistName;
   public float speed;
+  public Transition transition;
 
   private float transitionTimer = 0f;
-  public float transitionTime = 7f;
+  public float creditTime = 7f;
+  private bool toSwitch = false;
+  private bool StartTransition = false;
 
   CreditsText() : base()
   {
@@ -53,23 +59,41 @@ public class CreditsText : Entity
   // Update is called once per frame
   void Update()
   {
-    transitionTimer += Time.deltaTime;
-
-    Credits.GetComponent<Transform>().position = Credits.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
-    Designer.GetComponent<Transform>().position = Designer.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
-    DesignerName.GetComponent<Transform>().position = DesignerName.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
-    Programmers.GetComponent<Transform>().position = Programmers.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
-    ProgrammersName.GetComponent<Transform>().position = ProgrammersName.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
-
-    if(Input.GetKeyTriggered(KeyCode.ESCAPE))
+    if (!toSwitch)
     {
-      InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\mainmenu.scn");
+      transitionTimer += Time.deltaTime;
+
+      Credits.GetComponent<Transform>().position = Credits.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
+      Designer.GetComponent<Transform>().position = Designer.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
+      DesignerName.GetComponent<Transform>().position = DesignerName.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
+      Programmers.GetComponent<Transform>().position = Programmers.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
+      ProgrammersName.GetComponent<Transform>().position = ProgrammersName.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
+      Artist.GetComponent<Transform>().position = Artist.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
+      ArtistName.GetComponent<Transform>().position = ArtistName.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
+
+      if (Input.GetKeyTriggered(KeyCode.ESCAPE) || transitionTimer >= creditTime)
+      {
+        toSwitch = true;
+        StartTransition = true;
+        transitionTimer = 0;
+      }
     }
 
-    if (transitionTimer >= transitionTime)
+    else
     {
-      InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\mainmenu.scn");
+      if (StartTransition)
+      {
+        StartTransition = false;
+        transition.StartTransition(true, 1.5f, Transition.TransitionType.FADE);
+      }
+      if (transition.IsFinished())
+      {
+        toSwitch = false;
+        InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\mainmenu.scn"); // go back to main menu
+      }
+
     }
+
   }
 }
 

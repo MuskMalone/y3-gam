@@ -83,6 +83,13 @@ namespace Graphics {
             shader->SetUniform("u_Time", time);
         }
 
+        bool isLeafShader = (shader == ShaderLibrary::Get("Leaf"));
+
+        if (isLeafShader) {
+          shader->SetUniform("u_Dist", Component::Light::sGlobalProps.dist);
+          shader->SetUniform("u_LeafSize", Component::Light::sGlobalProps.leafSize);
+        }
+
         bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
 
         shader->SetUniform("u_ViewProjMtx", cam.viewProjMatrix);

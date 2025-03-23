@@ -5,6 +5,8 @@ public class SettingsButtons : Entity
 {
   public bool IsClicked = false;
 
+
+
   void Start()
   {
 
@@ -13,6 +15,11 @@ public class SettingsButtons : Entity
   void Update()
   {
 
+  }
+
+  public void OnPointerExit()
+  {
+    IsClicked = false;
   }
 
 

@@ -30,10 +30,13 @@ using System.Numerics;
 
 public class CDDragAndDrop : Entity
 {
-       
-    public Entity NewGameCDinCase;
-    public Entity ContinueCDinCase;
-
+     public Entity CDinCase;
+     public string SceneName;  
+    //public Entity NewGameCDinCase;
+    //public Entity ContinueCDinCase;
+    //public Entity SettingCDinCase;
+    //public Entity CreditCDinCase;
+ 
     public Entity cdPlayer;
     //public Entity cdLidOpened;
     //public Entity cdLidClosed;
@@ -90,8 +93,7 @@ public class CDDragAndDrop : Entity
         //cdLidOpened.SetActive(false);
 
         //Console.WriteLine("My Entity WorldPos INITIAL " + InternalCalls.GetWorldPosition(mEntityID));
-        NewGameCDinCase.SetActive(false);
-        ContinueCDinCase.SetActive(false);
+        CDinCase.SetActive(false);
 
         Vector3 scaleVector = InternalCalls.GetScale(mEntityID);
         originalScale = new Vec3<float>(scaleVector.X, scaleVector.Y, scaleVector.Z);
@@ -142,26 +144,26 @@ public class CDDragAndDrop : Entity
             
             //rotation
             string tag = InternalCalls.GetTag(mEntityID);
-            if (tag == "NewGameCDChild" || tag == "ContinueCDChild")
+            //if (tag == "NewGameCDChild" || tag == "ContinueCDChild" || tag == "SettingsCDChild" || tag == "CreditsCDChild")
+            //{
+            if (!isSpinningSoundPlaying)
             {
-                if (!isSpinningSoundPlaying)
-                {
-                    //Console.WriteLine("Here?");
-                    InternalCalls.PlaySound(mEntityID, "SpinningDiscPS1_SFX");
-                    isSpinningSoundPlaying = true;
-                    //spinningSoundTimer = 0f;
-                }
-                zRotAngle += -2f * Time.deltaTime;
-                Quaternion zRot = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, zRotAngle);
-
-                Quaternion xRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(90));
-
-                // Combine the rotations
-                Quaternion combinedRotation = zRot * xRotation; // Order matters!
-
-                // Apply the combined rotation
-                InternalCalls.SetWorldRotation(mEntityID, ref combinedRotation);
+                //Console.WriteLine("Here?");
+                InternalCalls.PlaySound(mEntityID, "SpinningDiscPS1_SFX");
+                isSpinningSoundPlaying = true;
+                //spinningSoundTimer = 0f;
             }
+            zRotAngle += -2f * Time.deltaTime;
+            Quaternion zRot = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, zRotAngle);
+
+            Quaternion xRotation = Quaternion.CreateFromAxisAngle(Vector3.UnitX, Mathf.DegToRad(90));
+
+            // Combine the rotations
+            Quaternion combinedRotation = zRot * xRotation; // Order matters!
+
+            // Apply the combined rotation
+            InternalCalls.SetWorldRotation(mEntityID, ref combinedRotation);
+           // }
             
 
         }
@@ -217,17 +219,28 @@ public class CDDragAndDrop : Entity
             if (fadeElapsed >= fadeDuration)
             {
                 isFading = false;
-                //InternalCalls.StopSound(mEntityID, "..\\Assets\\Audio\\Picture Perfect - BGM1_Vers1_Loop.wav");
-                if (tag == "NewGameCDChild")
-                {
-                    InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\TutorialLevel.scn");
-                }
-                else if(tag == "ContinueCDChild")
-                {
-                    InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
-                }
-                //InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
-            }
+                if(SceneName != null)
+                  InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\" + SceneName + ".scn");
+            ////InternalCalls.StopSound(mEntityID, "..\\Assets\\Audio\\Picture Perfect - BGM1_Vers1_Loop.wav");
+            //        if (tag == "NewGameCDChild")
+            //        {
+            //            InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\TutorialLevel.scn");
+            //        }
+            //        else if(tag == "ContinueCDChild")
+            //        {
+            //            InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
+            //        }
+            //        else if (tag == "SettingsCDChild")
+            //        {
+            //         // InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
+            //        }
+
+            //        else if (tag == "CreditsCDChild")
+            //        {
+            //          InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Credits.scn");
+            //        }
+            //InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\M3.scn");
+        }
         }
 
         //shakingcd
@@ -278,15 +291,15 @@ public class CDDragAndDrop : Entity
     public void OnMouseDown()
     {
         //shaking cds
-        string tag = InternalCalls.GetTag(mEntityID);
-        //if(tag == "ContinueCDChild" || tag == "CreditsCDChild" || tag == "SettingsCDChild")
-        if (tag == "CreditsCDChild" || tag == "SettingsCDChild")
-        {
+        //string tag = InternalCalls.GetTag(mEntityID);
+        ////if(tag == "ContinueCDChild" || tag == "CreditsCDChild" || tag == "SettingsCDChild")
+        //if (tag == "CreditsCDChild" || tag == "SettingsCDChild" || tag == "SettingsCDChild" || tag == "CreditsCDChild")
+        //{
             //Debug.Log("Entered tag == for shakecd");
             
-            ShakeCD(0.5f, 0.005f);
-            return;
-        }
+            //ShakeCD(0.5f, 0.005f);
+            //return;
+        //}
         isLidOpen = true;
         isBeingDragged = true;
         //play sound
@@ -316,16 +329,27 @@ public class CDDragAndDrop : Entity
         if (mouseOnCDPlayer)
         {
             isLidOpen = true;
-            if (tag == "NewGameCDChild")
-            {
-                //Console.WriteLine("bitch");
-                NewGameCDinCase.SetActive(true);
-            }
-            else if (tag == "ContinueCDChild")
-            {
-                ContinueCDinCase.SetActive(true);
-            }
-            InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
+           CDinCase.SetActive(true);
+      //if (tag == "NewGameCDChild")
+      //      {
+      //          //Console.WriteLine("bitch");
+      //          NewGameCDinCase.SetActive(true);
+      //      }
+      //      else if (tag == "ContinueCDChild")
+      //      {
+      //          ContinueCDinCase.SetActive(true);
+      //      }
+      //      else if (tag == "SettingsCDChild")
+      //      {
+      //         SettingCDinCase.SetActive(true);
+      //      }
+      //      else if (tag == "CreditsCDChild")
+      //      {
+      //         CreditCDinCase.SetActive(true);
+      //      }
+
+
+             InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
             NextScene();
         }
         else
@@ -377,18 +401,21 @@ public class CDDragAndDrop : Entity
     {
         isHovered = false;
         string tag = InternalCalls.GetTag(mEntityID);
-        if (tag == "NewGameCDChild")
-        {
-            InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
-            InternalCalls.PauseSound(mEntityID, "SpinningDiscPS1_SFX");
-            isSpinningSoundPlaying = false;
-        }
-        else if (tag == "ContinueCDChild")
-        {
-            InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
-            InternalCalls.PauseSound(mEntityID, "SpinningDiscPS1_SFX");
-            isSpinningSoundPlaying = false;
-        }
+        InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
+        InternalCalls.PauseSound(mEntityID, "SpinningDiscPS1_SFX");
+        isSpinningSoundPlaying = false;
+       // if (tag == "NewGameCDChild" || tag  == "ContinueCDChild"  || tag == "SettingsCDChild" || tag == "CreditsCDChild")
+        //{
+        //    InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
+        //    InternalCalls.PauseSound(mEntityID, "SpinningDiscPS1_SFX");
+        //    isSpinningSoundPlaying = false;
+        //}
+        //else if (tag == "ContinueCDChild")
+        //{
+        //    InternalCalls.SetWorldRotation(mEntityID, ref originalRotation);
+        //    InternalCalls.PauseSound(mEntityID, "SpinningDiscPS1_SFX");
+        //    isSpinningSoundPlaying = false;
+        //}
     }
 }
 

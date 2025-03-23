@@ -105,7 +105,8 @@ namespace IGE.Utils
     internal extern static Vector3 GetMousePos();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static float GetScreenWidth();
+    internal extern static Vector3 GetScreenDimension();
+
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void SetBrightness(float fraction);

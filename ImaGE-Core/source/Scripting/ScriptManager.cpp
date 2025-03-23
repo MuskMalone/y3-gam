@@ -107,7 +107,9 @@ namespace Mono
     { "SettingsPage", ScriptFieldType::SETTINGS },
     { "PauseMenu", ScriptFieldType::PAUSEMENU },
     { "SettingsButtons", ScriptFieldType::SETTINGSBUTTON },
-    { "PauseMenuButtons", ScriptFieldType::PAUSEMENUBUTTON }
+    { "PauseMenuButtons", ScriptFieldType::PAUSEMENUBUTTON },
+     { "NewGameCD", ScriptFieldType::NEWCD }
+
 
   };
 }
@@ -214,7 +216,7 @@ void ScriptManager::AddInternalCalls()
   ADD_CLASS_INTERNAL_CALL(AnyKeyDown, Input::InputManager::GetInstance());
   ADD_CLASS_INTERNAL_CALL(AnyKeyTriggered, Input::InputManager::GetInstance());
   ADD_INTERNAL_CALL(GetMousePos);
-  ADD_INTERNAL_CALL(GetScreenWidth);
+  ADD_INTERNAL_CALL(GetScreenDimension);
   ADD_INTERNAL_CALL(GetMousePosWorld);
   ADD_INTERNAL_CALL(GetMouseDelta);
   ADD_INTERNAL_CALL(GetCameraForward);
@@ -1144,9 +1146,9 @@ glm::vec3 Mono::GetMousePos()
   return glm::vec3(Input::InputManager::GetInstance().GetMousePos(), 0);
 }
 
-float Mono::GetScreenWidth()
+glm::vec3 Mono::GetScreenDimension()
 {
-  return Input::InputManager::GetInstance().GetDim().x;
+  return glm::vec3(Input::InputManager::GetInstance().GetDim(),1.f);
 }
 
 void Mono::SetBrightness(float fraction)
@@ -1723,7 +1725,23 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
 {
   // Get the primary monitor and its video mode
   GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+  if (!monitor)
+  {
+#ifdef _DEBUG
+    std::cout << " Cant find Monitor\n";
+#endif
+    return;
+  }
+   
   const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+  if (!mode)
+  {
+#ifdef _DEBUG
+    std::cout << "Can't find mode\n";
+#endif
+    return;
+  }
+  
 
   // Window's full width and height
   int windowWidth = mode->width;
@@ -1750,7 +1768,7 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
   // Read pixels from the specified region
   glReadPixels(startX, startY, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels.data());
 
-  // Flip rows (OpenGL's origin is bottom-left, PNG expects top-left)
+  // Flip rows (OpenGL's origin is bo ttom-left, PNG expects top-left)
   std::vector<unsigned char> flippedPixels(width * height * 3);
   for (int y = 0; y < height; ++y)
   {

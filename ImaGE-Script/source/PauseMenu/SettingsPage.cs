@@ -129,14 +129,14 @@ public class SettingsPage : Entity
           InternalCalls.SetSoundGlobalVolume(fraction);
         }
 
-        if (BrightnessSlider.IsClicked)
+        if (BrightnessSlider.IsClicked )
         {
           Vector3 originalResume = InternalCalls.GetPosition(BrightnessSlider.mEntityID);
           float NewXPos = screenToCanvas(Input.mousePosition.X, Input.screenWidth);
           Vector3 newPosResume = new Vector3(NewXPos, originalResume.Y, originalResume.Z);
           newPosResume.X = (newPosResume.X < minX) ? minX : (newPosResume.X > maxX) ? maxX : newPosResume.X;
           InternalCalls.SetPosition(BrightnessSlider.mEntityID, ref newPosResume);
-          float fraction = normalize(NewXPos, minX, maxX);
+          float fraction = normalize(newPosResume.X, minX, maxX);
           InternalCalls.SetBrightness(fraction);
 
         }

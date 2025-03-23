@@ -15,7 +15,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -17.200000762939454,
+                            "y": -24.799999237060548,
                             "z": 0.0
                         },
                         "scale": {
@@ -36,7 +36,7 @@
                         },
                         "worldPos": {
                             "x": 0.0,
-                            "y": -17.200000762939454,
+                            "y": -24.799999237060548,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -59,7 +59,7 @@
                 },
                 {
                     "Text": {
-                        "textContent": "Designers\n",
+                        "textContent": "Artist\n",
                         "color": {
                             "x": 0.557052493095398,
                             "y": 0.9832776188850403,
@@ -308,7 +308,173 @@
                 },
                 {
                     "Text": {
-                        "textContent": "Xavier Choa\nNg Wen Wen\nNg Yue Zhi\nChua Xinyi Tricia\nSheryl Teh\nNeo Wen En",
+                        "textContent": "Xavier Choa\nNg Wen Wen\nYuki Ng Yue Zhi\nChua Xinyi Tricia\nSheryl Teh\n",
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "scale": 0.004999999888241291,
+                        "textAssetGUID": {
+                            "ID": 10355075193979688064
+                        },
+                        "fontFamilyName": "PressStart2P-Regular",
+                        "alignment": 2,
+                        "multiLineSpacingOffset": 0.47999998927116396,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 9,
+            "Parent": 1048578,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Artist",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -17.200000762939454,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -17.200000762939454,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "Designers\n",
+                        "color": {
+                            "x": 0.557052493095398,
+                            "y": 0.9832776188850403,
+                            "z": 0.5130143761634827,
+                            "w": 1.0
+                        },
+                        "scale": 0.00800000037997961,
+                        "textAssetGUID": {
+                            "ID": 10355075193979688064
+                        },
+                        "fontFamilyName": "PressStart2P-Regular",
+                        "alignment": 2,
+                        "multiLineSpacingOffset": 0.47999998927116396,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 10,
+            "Parent": 1048578,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Artist Name",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -25.200000762939454,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -25.200000762939454,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "Neo Wen En",
                         "color": {
                             "x": 1.0,
                             "y": 1.0,
@@ -504,6 +670,8 @@
                 4,
                 5,
                 7,
+                9,
+                10,
                 1048582,
                 1048584
             ],
@@ -569,6 +737,26 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 9,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Artist"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 10,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "ArtistName"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 1048582,
                                             "scriptName": "Entity"
                                         },
@@ -618,6 +806,13 @@
                                         }
                                     },
                                     {
+                                        "data": 7.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "creditTime"
+                                        }
+                                    },
+                                    {
                                         "data": 5.0,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -625,13 +820,60 @@
                                         }
                                     },
                                     {
-                                        "data": 7.0,
-                                        "type": "System.Single",
+                                        "data": {
+                                            "entityID": 1048578,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
-                                            "fieldName": "transitionTime"
+                                            "fieldName": "transition"
                                         }
                                     }
                                 ]
+                            },
+                            {
+                                "entityID": 1048578,
+                                "scriptName": "LevelStartFade",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 1.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "fadeDuration"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048578,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 1048578,
+                                "scriptName": "LevelEndFade",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 1048578,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "fadeImageEntity"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "entityID": 1048578,
+                                "scriptName": "Transition",
+                                "scriptFieldInstList": []
                             }
                         ]
                     }
@@ -802,7 +1044,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 11587003713487795447
+                            "ID": 14344846759704546565
                         }
                     }
                 }
