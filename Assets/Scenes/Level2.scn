@@ -10234,6 +10234,16 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 3145972,
+                                            "scriptName": "BlackBorder"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorders"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 1048665,
                                             "scriptName": "Entity"
                                         },
@@ -52079,6 +52089,16 @@
                                 "entityID": 1049080,
                                 "scriptName": "Lvl2IntroCutscene",
                                 "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 3145972,
+                                            "scriptName": "BlackBorder"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorders"
+                                        }
+                                    },
                                     {
                                         "data": 3.0,
                                         "type": "System.Single",
