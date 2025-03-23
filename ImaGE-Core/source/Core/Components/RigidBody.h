@@ -60,8 +60,8 @@ namespace Component {
 			float upperAngle = 0.f;     // Maximum angular limit (for revolute joints).
 
 			// Spherical-specific limits (angles in radians)
-			float yLimit = 0.f;     // Maximum swing limit (for spherical joints).
-			float zLimit = 0.f;     // Maximum twist limit (for spherical joints).
+			float yLimit = 0.01f;     // Maximum swing limit (for spherical joints).
+			float zLimit = 0.01f;     // Maximum twist limit (for spherical joints).
 
 			// Prismatic/Distance-specific limits (linear distance units)
 			float lowerLimit = 0.f;     // Minimum translation/distance.

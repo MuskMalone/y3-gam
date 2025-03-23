@@ -885,7 +885,9 @@ namespace IGE {
 						auto globalPose0 = reinterpret_cast<physx::PxRigidDynamic*>(rb.bodyID)->getGlobalPose();
 						physx::PxTransform globalPose1{};
 						if (rb.entityLinked != (unsigned)-1) {
-							globalPose1 = reinterpret_cast<physx::PxRigidDynamic*>(e1.GetComponent<Component::RigidBody>().bodyID)->getGlobalPose();
+							auto rbiter1 = GetRBIter(e1);
+							if (rbiter1)
+								globalPose1 = rbiter1->getGlobalPose();
 						}
 
 						// Combine transforms to get the joint frame in world space.
@@ -902,7 +904,7 @@ namespace IGE {
 							// Draw a line from the joint frame on actor1 to actor1's global origin.
 							Graphics::Renderer::DrawLine(ToGLMVec3(worldJointPose1.p), ToGLMVec3(globalPose1.p), jointClr);
 							// Draw a sphere at the joint frame on actor1.
-							Graphics::Renderer::DrawWireSphere(ToGLMVec3(worldJointPose1.p), 0.2, jointClr);
+							Graphics::Renderer::DrawWireSphere(ToGLMVec3(worldJointPose1.p), 0.1, jointClr);
 						} break;
 						case Component::RigidBody::JointType::PRISMATIC:
 						case Component::RigidBody::JointType::DISTANCE: {
