@@ -14,7 +14,6 @@
                 141,
                 142,
                 1048618,
-                1048713,
                 1048908,
                 1049184,
                 2097595,
@@ -1689,7 +1688,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 1048713,
+                                            "entityID": 121,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -1825,7 +1824,7 @@
                 {
                     "Tag": {
                         "tag": "Mother",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
@@ -1841,13 +1840,13 @@
                             "z": 8.0
                         },
                         "rotation": {
-                            "x": 0.0,
+                            "x": 0.7071067690849304,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         },
                         "eulerAngles": {
-                            "x": 0.0,
+                            "x": 90.0,
                             "y": -0.0,
                             "z": 0.0
                         },
@@ -1862,10 +1861,10 @@
                             "z": 8.0
                         },
                         "worldRot": {
-                            "x": 0.0,
+                            "x": 0.7071067690849304,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -1875,17 +1874,22 @@
                     }
                 },
                 {
-                    "Sprite2D": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 1014835808550484125
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Plane",
+                        "GUID": {
+                            "ID": 3815097445005270835
                         },
-                        "textureAssetGUID": {
-                            "ID": 6966392172315074395
-                        },
-                        "isTransparent": false
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
@@ -2375,7 +2379,35 @@
                         "linearDamping": 0.9800000190734863,
                         "motionType": "KINEMATIC",
                         "axisLock": 7,
-                        "angularAxisLock": 7
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852887e38,
+                            "breakTorque": 3.4028234663852887e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 },
                 {
@@ -9110,78 +9142,6 @@
             ]
         },
         {
-            "ID": 1048713,
-            "Parent": 37,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "CutMom",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 2.2850000858306886,
-                            "y": -2.940000057220459,
-                            "z": -0.30000001192092898
-                        },
-                        "scale": {
-                            "x": 3.6449999809265138,
-                            "y": 6.014999866485596,
-                            "z": -6.0699944496154789
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 2.2850000858306886,
-                            "y": -2.940000057220459,
-                            "z": -0.30000001192092898
-                        },
-                        "worldScale": {
-                            "x": 3.6449999809265138,
-                            "y": 6.014999866485596,
-                            "z": -6.0699944496154789
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "UI"
-                    }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 5774957819343618220
-                        }
-                    }
-                }
-            ]
-        },
-        {
             "ID": 1048908,
             "Parent": 37,
             "Child Entities": [
@@ -10297,7 +10257,35 @@
                         "linearDamping": 10.0,
                         "motionType": "DYNAMIC",
                         "axisLock": 0,
-                        "angularAxisLock": 7
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852887e38,
+                            "breakTorque": 3.4028234663852887e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 },
                 {
@@ -10339,20 +10327,6 @@
                                         }
                                     },
                                     {
-                                        "data": 1000.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "extraGravityFactorDuringDescent"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.10000000149011612,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "initialGravityFactor"
-                                        }
-                                    },
-                                    {
                                         "data": 4.5,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -10364,6 +10338,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "minIsGroundedDistance"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "noClip"
                                         }
                                     },
                                     {
@@ -11671,7 +11652,35 @@
                         "linearDamping": 0.9800000190734863,
                         "motionType": "KINEMATIC",
                         "axisLock": 0,
-                        "angularAxisLock": 0
+                        "angularAxisLock": 0,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852887e38,
+                            "breakTorque": 3.4028234663852887e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
