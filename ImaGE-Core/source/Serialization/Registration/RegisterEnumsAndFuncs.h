@@ -41,6 +41,22 @@ namespace
   unsigned IntToUint(int val, bool& ok) {
     ok = true; return static_cast<unsigned>(val);
   }
+
+  entt::entity UintToEnttEntity(unsigned val, bool& ok) {
+    ok = true; return static_cast<entt::entity>(val);
+  }
+
+  unsigned EnttEntityToUint(entt::entity val, bool& ok) {
+    ok = true; return static_cast<unsigned>(val);
+  }
+
+  float DoubleToFloat(double val, bool& ok) {
+    ok = true; return static_cast<float>(val);
+  }
+
+  double FloatToDouble(float val, bool& ok) {
+    ok = true; return static_cast<double>(val);
+  }
 }
 
 static void rttr_auto_register_reflection_function3_(); namespace {
@@ -58,8 +74,14 @@ static void rttr_auto_register_reflection_function3_(); namespace {
   rttr::type::register_converter_func(UintToGUID);
   rttr::type::register_converter_func(UintToInt);
   rttr::type::register_converter_func(IntToUint);
+  //rttr::type::register_converter_func(UintToEnttEntity);
+  //rttr::type::register_converter_func(EnttEntityToUint);
+  //rttr::type::register_converter_func(DoubleToFloat);
+  //rttr::type::register_converter_func(FloatToDouble);
 
   /* ------------------- ENUMERATIONS ------------------- */
+  //rttr::registration::enumeration<entt::entity>("enttEntity");
+
   rttr::registration::enumeration<Component::RigidBody::MotionType>("MotionType")(
     rttr::value("DYNAMIC", Component::RigidBody::MotionType::DYNAMIC),
     rttr::value("KINEMATIC", Component::RigidBody::MotionType::KINEMATIC)

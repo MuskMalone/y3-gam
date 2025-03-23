@@ -583,6 +583,14 @@ namespace GUI {
               ImGui::AlignTextToFramePadding();
               ImGui::SetNextItemWidth(col1);
               ImGui::InputText(("##" + buffer).c_str(), &buffer);
+              if (ImGui::IsItemHovered()) {
+                try {
+                  ImGui::SetTooltip(am.GUIDToPath(guid).c_str());
+                }
+                catch (Debug::ExceptionBase&) {
+                  IGE_DBGLOGGER.LogError("Unable to get filepath of " + name + "(" + std::to_string(static_cast<uint64_t>(guid)) + ")");
+                }
+              }
               if (ImGui::IsItemDeactivatedAfterEdit()) {
                 animation.RenameAnimation(name, buffer);
                 break;
@@ -700,6 +708,16 @@ namespace GUI {
 
               // Render the input text box with a unique ID
               ImGui::InputText(("##" + uniqueID).c_str(), buffer, 512);
+
+              if (ImGui::IsItemHovered()) {
+                try {
+                  ImGui::SetTooltip(IGE_ASSETMGR.GUIDToPath(audioInstance.guid).c_str());
+                }
+                catch (Debug::ExceptionBase&) {
+                  IGE_DBGLOGGER.LogError("Unable to get filepath of " + currentName + 
+                    "(" + std::to_string(static_cast<uint64_t>(audioInstance.guid)) + ")");
+                }
+              }
 
               // Update the name when the input loses focus
               if (ImGui::IsItemDeactivatedAfterEdit()) {
@@ -1454,7 +1472,12 @@ namespace GUI {
         }
       }
       ImGui::PopStyleVar();
-      if (ImGui::IsItemHovered() && hasMaterial) { ImGui::SetTooltip("Edit Material"); }
+      if (ImGui::IsItemHovered() && hasMaterial) {
+        ImGui::BeginTooltip();
+        ImGui::Text(name);
+        ImGui::Text("Click to Edit");
+        ImGui::EndTooltip();
+      }
 
       if (hasMaterial) {
         ImGui::SameLine();
@@ -1964,6 +1987,9 @@ namespace GUI {
           float const deleteBtnPos{ ImGui::GetCursorPosX() + FIRST_COLUMN_LENGTH };
           ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_REGULAR));
           ImGui::Text(s.mScriptName.c_str());
+          if (ImGui::IsItemHovered()) {
+            ImGui::SetTooltip(s.mScriptName.c_str());
+          }
           ImGui::PopFont();
           ImGui::SameLine();
 
@@ -3062,6 +3088,9 @@ namespace ScriptInputs {
         }
         ImGui::EndCombo();
       }
+      if (ImGui::IsItemHovered()) {
+        ImGui::SetTooltip(msg.c_str());
+      }
     }
     else  //If the script inherits from the entity Class
     {
@@ -3114,6 +3143,9 @@ namespace ScriptInputs {
           }
         }
         ImGui::EndCombo();
+      }
+      if (ImGui::IsItemHovered()) {
+        ImGui::SetTooltip(msg.c_str());
       }
     }
 
