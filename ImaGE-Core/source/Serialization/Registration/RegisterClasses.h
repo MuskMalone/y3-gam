@@ -195,6 +195,22 @@ static void rttr_auto_register_reflection_function_(); namespace {
 
   /* ------------------- Audio ------------------- */
   {
+      using namespace IGE::Audio;
+      rttr::registration::class_<PostProcessingSetting>("AudioPostProcessingSetting")
+          .constructor<>()(rttr::policy::ctor::as_object)
+          .property("type", &PostProcessingSetting::type)
+          .property("reverb_decayTime", &PostProcessingSetting::reverb_decayTime)
+          .property("reverb_earlyDelay", &PostProcessingSetting::reverb_earlyDelay)
+          .property("reverb_lateDelay", &PostProcessingSetting::reverb_lateDelay)
+          .property("reverb_diffusion", &PostProcessingSetting::reverb_diffusion)
+          .property("reverb_density", &PostProcessingSetting::reverb_density)
+          .property("echo_delay", &PostProcessingSetting::echo_delay)
+          .property("echo_feedback", &PostProcessingSetting::echo_feedback)
+          .property("echo_wetDryMix", &PostProcessingSetting::echo_wetDryMix)
+          .property("distortion_level", &PostProcessingSetting::distortion_level)
+          .property("chorus_rate", &PostProcessingSetting::chorus_rate)
+          .property("chorus_depth", &PostProcessingSetting::chorus_depth)
+          .property("chorus_mix", &PostProcessingSetting::chorus_mix);
       // Register the SoundInvokeSetting struct
       rttr::registration::class_<IGE::Audio::SoundInvokeSetting>("SoundInvokeSetting")
           .constructor<>()(rttr::policy::ctor::as_object)
@@ -211,7 +227,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .property("rolloffType", &IGE::Audio::SoundInvokeSetting::rolloffType) // As reference for mutable property
           .property("enablePostProcessing", &IGE::Audio::SoundInvokeSetting::enablePostProcessing)
           .property("processingType", &IGE::Audio::SoundInvokeSetting::processingType)
-          .property("postProcessingParameter", &IGE::Audio::SoundInvokeSetting::postProcessingParameter);
+          .property("postProcessingSettings", &IGE::Audio::SoundInvokeSetting::postProcessingSettings);
       rttr::registration::class_<Component::AudioSource::AudioInstance>("AudioInstance")
           .constructor<>()(rttr::policy::ctor::as_object)
           .property("guid", &Component::AudioSource::AudioInstance::guid)

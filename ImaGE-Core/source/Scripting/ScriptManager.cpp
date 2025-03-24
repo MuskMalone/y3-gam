@@ -1251,7 +1251,7 @@ void Mono::EnableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s, uns
 {
     std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
-    entity.GetComponent<Component::AudioSource>().EnablePostProcessing(name, static_cast<IGE::Audio::SoundInvokeSetting::PostProcessingType>(type), param);
+    entity.GetComponent<Component::AudioSource>().EnablePostProcessing(name, static_cast<IGE::Audio::PostProcessingType>(type), param);
 }
 
 void Mono::DisableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s)

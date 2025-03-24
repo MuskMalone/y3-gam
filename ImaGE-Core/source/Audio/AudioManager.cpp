@@ -359,66 +359,72 @@ namespace IGE {
                 }
             }
 
-            if (settings.enablePostProcessing)  // <-- You'll need to add this bool flag in SoundInvokeSetting
+            if (settings.enablePostProcessing)  // 'settings' is a SoundInvokeSetting instance
             {
-                FMOD::DSP* dsp = nullptr;
-
-                switch (settings.processingType)
+                for (size_t i = 0; i < settings.postProcessingSettings.size(); ++i)
                 {
-                case SoundInvokeSetting::PostProcessingType::REVERB:
-                    result = mSystem->createDSPByType(FMOD_DSP_TYPE_SFXREVERB, &dsp);
-                    if (result == FMOD_OK && dsp)
+                    auto& ppSetting = settings.postProcessingSettings[i];
+                    FMOD::DSP* dsp = nullptr;
+                    FMOD_RESULT result = FMOD_OK;
+
+                    switch (ppSetting.type)
                     {
-                        // Set reverb-specific parameters (e.g., decay time)
-                        dsp->setParameterFloat(FMOD_DSP_SFXREVERB_DECAYTIME, settings.postProcessingParameter);
-                        // Additional reverb parameters can be set here
-                    }
-                    break;
-
-                case SoundInvokeSetting::PostProcessingType::ECHO:
-                    result = mSystem->createDSPByType(FMOD_DSP_TYPE_ECHO, &dsp);
-                    if (result == FMOD_OK && dsp)
+                    case IGE::Audio::PostProcessingType::REVERB:
                     {
-                        dsp->setParameterFloat(FMOD_DSP_ECHO_DELAY, settings.postProcessingParameter);
-                        // You can adjust other echo parameters if desired
-
+                        result = mSystem->createDSPByType(FMOD_DSP_TYPE_SFXREVERB, &dsp);
+                        if (result == FMOD_OK && dsp)
+                        {
+                            dsp->setParameterFloat(FMOD_DSP_SFXREVERB_DECAYTIME, ppSetting.reverb_decayTime);
+                            dsp->setParameterFloat(FMOD_DSP_SFXREVERB_EARLYDELAY, ppSetting.reverb_earlyDelay);
+                            dsp->setParameterFloat(FMOD_DSP_SFXREVERB_LATEDELAY, ppSetting.reverb_lateDelay);
+                            dsp->setParameterFloat(FMOD_DSP_SFXREVERB_DIFFUSION, ppSetting.reverb_diffusion);
+                            dsp->setParameterFloat(FMOD_DSP_SFXREVERB_DENSITY, ppSetting.reverb_density);
+                        }
+                        break;
                     }
-                    break;
-
-                case SoundInvokeSetting::PostProcessingType::DISTORTION:
-                    result = mSystem->createDSPByType(FMOD_DSP_TYPE_DISTORTION, &dsp);
-                    if (result == FMOD_OK && dsp)
+                    case IGE::Audio::PostProcessingType::ECHO:
                     {
-                        dsp->setParameterFloat(FMOD_DSP_DISTORTION_LEVEL, settings.postProcessingParameter);
-                        // Set additional distortion parameters as needed
+                        result = mSystem->createDSPByType(FMOD_DSP_TYPE_ECHO, &dsp);
+                        if (result == FMOD_OK && dsp)
+                        {
+                            dsp->setParameterFloat(FMOD_DSP_ECHO_DELAY, ppSetting.echo_delay);
+                            dsp->setParameterFloat(FMOD_DSP_ECHO_FEEDBACK, ppSetting.echo_feedback);
+                            // Here we assume wet level is (1.0 - wetDryMix/100) and dry level is (wetDryMix/100)
+                            dsp->setParameterFloat(FMOD_DSP_ECHO_WETLEVEL, 1.f - (ppSetting.echo_wetDryMix / 100.f));
+                            dsp->setParameterFloat(FMOD_DSP_ECHO_DRYLEVEL, ppSetting.echo_wetDryMix / 100.f);
+                        }
+                        break;
                     }
-                    break;
-
-                case SoundInvokeSetting::PostProcessingType::CHORUS:
-                    result = mSystem->createDSPByType(FMOD_DSP_TYPE_CHORUS, &dsp);
-                    if (result == FMOD_OK && dsp)
+                    case IGE::Audio::PostProcessingType::DISTORTION:
                     {
-                        dsp->setParameterFloat(FMOD_DSP_CHORUS_RATE, settings.postProcessingParameter);
+                        result = mSystem->createDSPByType(FMOD_DSP_TYPE_DISTORTION, &dsp);
+                        if (result == FMOD_OK && dsp)
+                        {
+                            dsp->setParameterFloat(FMOD_DSP_DISTORTION_LEVEL, ppSetting.distortion_level);
+                        }
+                        break;
                     }
-                    break;
-
-                default:
-                    break;
-                }
-
-                if (result == FMOD_OK && dsp)
-                {
-                    // Attach the DSP to the channel at position 0 in the chain.
-                    result = temp->addDSP(0, dsp);
-                    if (result != FMOD_OK)
+                    case IGE::Audio::PostProcessingType::CHORUS:
                     {
-                        Debug::DebugLogger::GetInstance().LogError("FMOD ERROR adding DSP effect", true);
+                        result = mSystem->createDSPByType(FMOD_DSP_TYPE_CHORUS, &dsp);
+                        if (result == FMOD_OK && dsp)
+                        {
+                            dsp->setParameterFloat(FMOD_DSP_CHORUS_RATE, ppSetting.chorus_rate);
+                            dsp->setParameterFloat(FMOD_DSP_CHORUS_DEPTH, ppSetting.chorus_depth);
+                            dsp->setParameterFloat(FMOD_DSP_CHORUS_MIX, ppSetting.chorus_mix);
+                        }
+                        break;
                     }
-                    // Note: You might want to store the dsp pointer if you plan to remove or modify it later.
-                }
-                else
-                {
-                    Debug::DebugLogger::GetInstance().LogError("Failed to create DSP effect", true);
+                    default:
+                        break;
+                    }
+                    if (result != FMOD_OK || !dsp)
+                        continue;
+
+                    // Append each dsp to the channel DSP chain.
+                    int dspCount = 0;
+                    temp->getNumDSPs(&dspCount);
+                    temp->addDSP(dspCount, dsp);
                 }
             }
 
@@ -616,6 +622,49 @@ namespace IGE {
 //                Debug::DebugLogger::GetInstance().LogWarning("audio instance doesnt exist");
 //            }
             return FMOD_OK;
+        }
+
+        // not for imgui
+        void SoundInvokeSetting::AddPostProcessingEffect(PostProcessingType type)
+        {
+            PostProcessingSetting newSetting;
+            newSetting.type = type;
+
+            switch (type)
+            {
+            case PostProcessingType::REVERB:
+                newSetting.reverb_decayTime = 1500.f;  // Default reverb settings
+                newSetting.reverb_earlyDelay = 0.f;
+                newSetting.reverb_lateDelay = 0.f;
+                newSetting.reverb_diffusion = 100.f;
+                newSetting.reverb_density = 100.f;
+                break;
+            case PostProcessingType::ECHO:
+                newSetting.echo_delay = 500.f;         // Default echo settings
+                newSetting.echo_feedback = 50.f;
+                newSetting.echo_wetDryMix = 50.f;
+                break;
+            case PostProcessingType::DISTORTION:
+                newSetting.distortion_level = 50.f;      // Default distortion settings
+                break;
+            case PostProcessingType::CHORUS:
+                newSetting.chorus_rate = 0.8f;           // Default chorus settings
+                newSetting.chorus_depth = 0.5f;
+                newSetting.chorus_mix = 50.f;
+                break;
+            default:
+                break;
+            }
+
+            postProcessingSettings.push_back(newSetting);
+        }
+
+
+        // Member function to remove a post processing effect by index.
+
+        void SoundInvokeSetting::RemovePostProcessingEffect(size_t index) {
+            if (index < postProcessingSettings.size())
+                postProcessingSettings.erase(postProcessingSettings.begin() + index);
         }
 
     }

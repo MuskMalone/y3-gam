@@ -206,7 +206,6 @@ public class PlayerFootsteps : Entity
       {
         case "BumpyGround":
           PlayRandomGrassSound();
-          Debug.Log("GrassSound");
           break;
         case "Second Level":
         case "Pit Room Ground":
@@ -221,6 +220,7 @@ public class PlayerFootsteps : Entity
           PlayRandomGravelSound();
           break;
         case "Floor":
+        case "Floor (Main Area)":
         case "Floor (Exit)":
         case "Floor (Room)":
         case "Floor Layer":
