@@ -10,7 +10,11 @@ public class TutorialPainting : Entity, IInventoryItem
 
     private TutorialDialogue tutorialDialogue;
     public string[] dialogueWhenPaintingPickup;
-    public string Name
+
+    private bool isBeingPickedUp = false;
+    public Entity playerCamera;
+    public float finalDistanceAwayFromCamWhenPickedUp = 1.2f;
+  public string Name
     {
         get
         {
@@ -52,13 +56,22 @@ public class TutorialPainting : Entity, IInventoryItem
 
     void Update()
     {
-        bool isTutorialPaintingHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+    if (isBeingPickedUp)
+    {
+      if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID, finalDistanceAwayFromCamWhenPickedUp))
+      {
+        tutorialDialogue.SetDialogue(dialogueWhenPaintingPickup, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking, TutorialDialogue.Emotion.Neutral });
+        InternalCalls.PlaySound(mEntityID, "PickupObjects");
+        inventoryScript.Additem(this);
+        isBeingPickedUp = false;
+      }
+      return;
+    }
+    bool isTutorialPaintingHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
 
         if (Input.GetKeyTriggered(KeyCode.E) && isTutorialPaintingHit)
         {
-            tutorialDialogue.SetDialogue(dialogueWhenPaintingPickup, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking, TutorialDialogue.Emotion.Neutral });
-            InternalCalls.PlaySound(mEntityID, "PickupObjects");
-            inventoryScript.Additem(this);
+      isBeingPickedUp = true;
         }
         EToPickUpUI.SetActive(isTutorialPaintingHit);
     }

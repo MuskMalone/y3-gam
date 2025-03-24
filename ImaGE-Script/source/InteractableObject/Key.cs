@@ -22,6 +22,8 @@ public class Key : Entity, IInventoryItem
   float zoomInDuration = 2.0f;
   bool isZoomingIn = true;
 
+  private bool isBeingPickedUp = false;
+
   public string Name
   {
     get
@@ -76,13 +78,23 @@ public class Key : Entity, IInventoryItem
 
   void Update()
   {
+    if (isBeingPickedUp)
+    {
+      if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID))
+      {
+        InternalCalls.PlaySound(mEntityID, "PickupObjects");
+        isBeingPickedUp = false;
+        inventoryScript.Additem(this);
+      }
+      return;
+    }
+
     if (keyDoor.doorInteraction)
     {
       bool isKeyHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
       if (Input.GetKeyTriggered(KeyCode.E) && isKeyHit)
       {
-        InternalCalls.PlaySound(mEntityID, "PickupObjects");
-        inventoryScript.Additem(this);
+        isBeingPickedUp = true;
       }
       EToPickUpUI.SetActive(isKeyHit);
       return;

@@ -12,6 +12,9 @@ public class Hammer : Entity, IInventoryItem
   public Dialogue dialogueSystem;
   public string[] hammerDialogue;
 
+  private bool isBeingPickedUp = false;
+  public Entity playerCamera;
+
   public string Name
   {
     get
@@ -52,13 +55,23 @@ public class Hammer : Entity, IInventoryItem
 
   void Update()
   {
+    if (isBeingPickedUp)
+    {
+      if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID))
+      {
+        InternalCalls.PlaySound(mEntityID, "PickupObjects");
+        InternalCalls.PlaySound(mEntityID, "IncoherentWhispers");
+        inventoryScript.Additem(this);
+        dialogueSystem.SetDialogue(hammerDialogue, new Dialogue.Emotion[] { Emotion.Surprised }, 0.008f, "IncoherentWhispers", "..\\Assets\\Textures\\Stagedive-d58X.ttf");
+        isBeingPickedUp = false;
+      }
+      return;
+    }
+
     bool isHammerHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
     if (Input.GetKeyTriggered(KeyCode.E) && isHammerHit)
     {
-      InternalCalls.PlaySound(mEntityID, "PickupObjects");
-      InternalCalls.PlaySound(mEntityID, "IncoherentWhispers");
-      inventoryScript.Additem(this);
-      dialogueSystem.SetDialogue(hammerDialogue, new Dialogue.Emotion[] { Emotion.Surprised }, 0.006f, "IncoherentWhispers", "..\\Assets\\Textures\\Stagedive-d58X.ttf");
+      isBeingPickedUp = true;
     }
     EToPickUpUI.SetActive(isHammerHit);
   }

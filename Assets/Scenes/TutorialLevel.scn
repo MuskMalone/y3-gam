@@ -2448,6 +2448,13 @@
                                         }
                                     },
                                     {
+                                        "data": 1.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "finalDistanceAwayFromCamWhenPickedUp"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 110,
                                             "scriptName": "TutorialLevelInventory"
@@ -2455,6 +2462,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "inventoryScript"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048579,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
                                         }
                                     },
                                     {
