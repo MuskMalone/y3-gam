@@ -20,25 +20,21 @@ project "ImaGE-Game"
    externalincludedirs
    {
       "../ImaGE-Core/source/External",
-      "../ImaGE-Core/source/External/ImGui",
       "../ImaGE-Core/source/External/glad/include",
       "../ImaGE-Core/source/External/fmod/include",
-      "../ImaGE-Core/source/External/ImTerm/",
       "../ImaGE-Core/source/External/stb",
       
-      "../Libraries/assimp/include/**",
       "../Libraries/entt/single_include",
       "../Libraries/freetype/include/",
       "../Libraries/glfw/include",
       "../Libraries/glm",
       "../Libraries/rapidjson/include/**",
       "../Libraries/rttr/**",
-      "../Libraries/spdlog/include",
-      "../Libraries/ImTerm/include/**",
       "../Libraries/PhysX/physx/include/**",
       "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include/**",
       "../Libraries/PhysX/pxshared/include",
+      "../Libraries/pl_mpeg",
       "../ImaGE-Core/source/External/filewatch",
       "../ImaGE-Core/source/External/mono/**",
       
@@ -79,7 +75,6 @@ project "ImaGE-Game"
        postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/debug/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/fmod/lib/fmodL.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
          "{COPYDIR} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
          "{COPYFILE} %[%{wks.location}Libraries/rttr/Built-Libraries/Debug/bin/Debug/rttr_core_d.dll] %[%{cfg.targetdir}]",
       }
@@ -105,7 +100,6 @@ project "ImaGE-Game"
        postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
          "{COPYDIR} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
          "{COPYFILE} %[%{wks.location}Libraries/rttr/Built-Libraries/Release/bin/Release/rttr_core.dll] %[%{cfg.targetdir}]",
       }
@@ -132,7 +126,6 @@ project "ImaGE-Game"
       postbuildcommands {
          "{COPYFILE} %[%{wks.location}Libraries/PhysX/physx/bin/win.x86_64.vc142.md/release/PhysXGpu_64.dll] %[%{cfg.targetdir}]",
          "{COPYFILE} %[%{wks.location}ImaGE-Core/source/External/fmod/lib/fmod.dll] %[%{cfg.targetdir}]",
-         "{COPYFILE} %[%{prj.location}imgui.ini] %[%{cfg.targetdir}]",
          "{COPYDIR} %[%{wks.location}ImaGE-Core/source/External/mono/4.5] %[%{cfg.targetdir}/4.5]",
          "{COPYFILE} %[%{wks.location}Libraries/rttr/Built-Libraries/Release/bin/Release/rttr_core.dll] %[%{cfg.targetdir}]",
          "{COPYDIR} %[%{cfg.targetdir}] %[%{wks.location}/Installer/GAMEDIRECTORY/ImaGE-Game]"

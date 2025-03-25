@@ -20,12 +20,16 @@ project "ImaGE-Editor"
    externalincludedirs
    {
       "../ImaGE-Core/source/External",
+
       "../ImaGE-Core/source/External/ImGui",
+      "../ImaGE-Core/source/External/ImGuizmo",
+      "../ImaGE-Core/source/External/ImTerm/",
+      "../ImaGE-Core/source/External/ImNodes/",
+      "../Libraries/spdlog/include",
+
       "../ImaGE-Core/source/External/glad/include",
       "../ImaGE-Core/source/External/fmod/include",
-      "../ImaGE-Core/source/External/ImTerm/",
       "../ImaGE-Core/source/External/stb",
-      "../ImaGE-Core/source/External/ImNodes",
       "../Libraries/assimp/include/**",
       "../Libraries/entt/single_include",
       "../Libraries/freetype/include/",
@@ -33,17 +37,16 @@ project "ImaGE-Editor"
       "../Libraries/glm",
       "../Libraries/rapidjson/include/**",
       "../Libraries/rttr/**",
-      "../Libraries/spdlog/include",
-      "../Libraries/ImTerm/include/**",
       "../Libraries/PhysX/physx/include/**",
       "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include/**",
       "../Libraries/PhysX/pxshared/include",
+      "../Libraries/pl_mpeg",
       --"../Libraries/filewatch",
       --"../Libraries/mono/**",
       "../ImaGE-Core/source/External/filewatch",
       "../ImaGE-Core/source/External/mono/**",
-      
+
       "../Libraries/rttr/Built-Libraries/Debug/Libraries/rttr/**",
       "../Libraries/DirectXTex/**"
    }

@@ -22,12 +22,8 @@ project "ImaGE-Core"
    externalincludedirs
    {
       "source/External",
-      "source/External/ImGui",
       "source/External/glad/include",
       "source/External/fmod/include",
-      "source/External/ImTerm/",
-      "source/External/ImGuizmo/",
-      "source/External/ImNodes/",
       "source/External/stb",
 
       "../Libraries/assimp/include/",
@@ -39,16 +35,16 @@ project "ImaGE-Core"
       "../Libraries/rapidjson/include/**",
       "../Libraries/rttr/**",
       "../Libraries/spdlog/include",
-      "../Libraries/ImTerm/include/**",
       "../Libraries/PhysX/physx/include/**",
       "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include/**",
       "../Libraries/PhysX/pxshared/include",
+      "../Libraries/pl_mpeg",
       "../ImaGE-Core/source/External/filewatch",
       "../ImaGE-Core/source/External/mono/**",
       
       "../Libraries/rttr/Built-Libraries/Debug/Libraries/rttr/**",
-      "../Libraries/DirectXTex/**",
+      "../Libraries/DirectXTex/**"
    }
 
    pchheader "pch.h"
