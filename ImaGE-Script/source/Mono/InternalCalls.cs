@@ -300,7 +300,7 @@ namespace IGE.Utils
 
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void EnableSoundPostProcessing(uint entity, string sound, uint type, float param);
+    extern public static void EnableSoundPostProcessing(uint entity, string sound);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void DisableSoundPostProcessing(uint entity, string sound);

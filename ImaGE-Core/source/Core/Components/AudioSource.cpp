@@ -24,14 +24,12 @@ namespace Component {
 			sound.playSettings.volume = volume;
 		}
 	}
-	void AudioSource::EnablePostProcessing(std::string const& id, IGE::Audio::PostProcessingType type, float param)
+	void AudioSource::EnablePostProcessing(std::string const& id)
 	{
 		//play sound
 		if (sounds.find(id) != sounds.end()) {
 			auto & sound{ sounds.at(id) };
 			sound.playSettings.enablePostProcessing = true;
-			sound.playSettings.processingType = type;
-			//sound.playSettings.postProcessingParameter = param;
 		}
 	}
 	void AudioSource::DisablePostProcessing(std::string const& id)

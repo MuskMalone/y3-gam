@@ -202,7 +202,23 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 0.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 0.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -258,7 +274,23 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             }
@@ -34877,9 +34909,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]                                    
                                     }
                                 }
                             },
@@ -34905,9 +34953,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]                                    
                                     }
                                 }
                             },
@@ -34933,9 +34997,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]                                    
                                     }
                                 }
                             },
@@ -34961,9 +35041,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]                                    
                                     }
                                 }
                             },
@@ -34989,9 +35085,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]                                    
                                     }
                                 }
                             },
@@ -35017,9 +35129,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]                                    
                                     }
                                 }
                             },
@@ -35045,9 +35173,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]                                    
                                     }
                                 }
                             },
@@ -35073,9 +35217,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]                                    
                                     }
                                 }
                             },

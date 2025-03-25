@@ -137,6 +137,8 @@ namespace IGE {
 			 void StopSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const&);
 			 void FreeSound(uint32_t sound);
 
+			
+			 void Debug();
 			//Gets the FMOD system instance
 			 FMOD::System* GetSystem();
 
@@ -168,6 +170,8 @@ namespace IGE {
 			 bool mSceneStarted{false};
 			 bool mSceneStopped{true}; // scene starts from a stopped state
 			 bool mScenePaused{false};
+
+			 bool mDebug{ false };
 		public:
 			 float mGlobalVolume{ 1.f };
 		};

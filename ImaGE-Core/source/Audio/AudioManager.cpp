@@ -7,7 +7,8 @@
 #include <Core/Components/Components.h>
 #include <Events/EventManager.h>
 #include "Scenes/SceneManager.h"
-
+#include <Graphics/Renderer.h>
+#include <Input/InputManager.h>
 //#define AUDIO_VERBOSE
 
 namespace IGE {
@@ -377,8 +378,8 @@ namespace IGE {
                             dsp->setParameterFloat(FMOD_DSP_SFXREVERB_DECAYTIME, ppSetting.reverb_decayTime);
                             dsp->setParameterFloat(FMOD_DSP_SFXREVERB_EARLYDELAY, ppSetting.reverb_earlyDelay);
                             dsp->setParameterFloat(FMOD_DSP_SFXREVERB_LATEDELAY, ppSetting.reverb_lateDelay);
-                            dsp->setParameterFloat(FMOD_DSP_SFXREVERB_DIFFUSION, ppSetting.reverb_diffusion);
-                            dsp->setParameterFloat(FMOD_DSP_SFXREVERB_DENSITY, ppSetting.reverb_density);
+                            dsp->setParameterFloat(FMOD_DSP_SFXREVERB_DIFFUSION, ppSetting.reverb_diffusion / 100.f); // normalize this
+                            dsp->setParameterFloat(FMOD_DSP_SFXREVERB_DENSITY, ppSetting.reverb_density / 100.f); // normalize this also
                         }
                         break;
                     }
@@ -388,7 +389,7 @@ namespace IGE {
                         if (result == FMOD_OK && dsp)
                         {
                             dsp->setParameterFloat(FMOD_DSP_ECHO_DELAY, ppSetting.echo_delay);
-                            dsp->setParameterFloat(FMOD_DSP_ECHO_FEEDBACK, ppSetting.echo_feedback);
+                            dsp->setParameterFloat(FMOD_DSP_ECHO_FEEDBACK, ppSetting.echo_feedback/100.f);
                             // Here we assume wet level is (1.0 - wetDryMix/100) and dry level is (wetDryMix/100)
                             dsp->setParameterFloat(FMOD_DSP_ECHO_WETLEVEL, 1.f - (ppSetting.echo_wetDryMix / 100.f));
                             dsp->setParameterFloat(FMOD_DSP_ECHO_DRYLEVEL, ppSetting.echo_wetDryMix / 100.f);
@@ -400,7 +401,7 @@ namespace IGE {
                         result = mSystem->createDSPByType(FMOD_DSP_TYPE_DISTORTION, &dsp);
                         if (result == FMOD_OK && dsp)
                         {
-                            dsp->setParameterFloat(FMOD_DSP_DISTORTION_LEVEL, ppSetting.distortion_level);
+                            dsp->setParameterFloat(FMOD_DSP_DISTORTION_LEVEL, ppSetting.distortion_level/100.f);
                         }
                         break;
                     }
@@ -411,7 +412,7 @@ namespace IGE {
                         {
                             dsp->setParameterFloat(FMOD_DSP_CHORUS_RATE, ppSetting.chorus_rate);
                             dsp->setParameterFloat(FMOD_DSP_CHORUS_DEPTH, ppSetting.chorus_depth);
-                            dsp->setParameterFloat(FMOD_DSP_CHORUS_MIX, ppSetting.chorus_mix);
+                            dsp->setParameterFloat(FMOD_DSP_CHORUS_MIX, ppSetting.chorus_mix/100.f);
                         }
                         break;
                     }
@@ -505,6 +506,26 @@ namespace IGE {
             else
             {
                 //Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! Freeing non-existent sound: " + std::to_string(sound), true);
+            }
+        }
+
+        void AudioManager::Debug()
+        {
+            if (Input::InputManager::GetInstance().IsKeyHeld(KEY_CODE::KEY_LEFT_CONTROL) &&
+                Input::InputManager::GetInstance().IsKeyTriggered(KEY_CODE::KEY_D))
+                mDebug = !mDebug;
+            if (!mDebug) return;
+
+            auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>()};
+            for (auto entity : rbsystem){
+                auto const& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
+                auto const& xfm{ rbsystem.get<Component::Transform>(entity) };
+                for (auto const& sound : audiosource.sounds) {
+                    auto const& setting{ sound.second.playSettings };
+                    if (setting.rolloffType == SoundInvokeSetting::RolloffType::NONE) continue;
+                    Graphics::Renderer::DrawWireSphere(setting.position, setting.maxDistance, { 1,1,1,1 }, 3);
+                    Graphics::Renderer::DrawWireSphere(setting.position, setting.minDistance, { 1,1,1,1 }, 3);
+                }
             }
         }
 
