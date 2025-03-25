@@ -6,6 +6,7 @@ using System.Runtime;
 public class Lvl2IntroCutscene : Entity
 {
     public PlayerMove playerMove;
+    public BlackBorder blackBorders;
     //public Entity firstSilhouette;
     public Entity secondSilhouette;
     public Entity thirdSilhouette;
@@ -86,6 +87,7 @@ public class Lvl2IntroCutscene : Entity
         if (triggerFadeTransition)
         {
             StartFade();
+            blackBorders.DisplayBlackBorders();
         }
 
         if (isInFadeTransition)
@@ -171,6 +173,7 @@ public class Lvl2IntroCutscene : Entity
                 }
                 else
                 {
+                    blackBorders.HideBlackBorders();
                     EndSiloutetteSequence();
                 }
             }
@@ -221,7 +224,7 @@ public class Lvl2IntroCutscene : Entity
     private void StartSilhouetteSequence()
     {
         isInSillouetteSequence = true;
-        playerMove.FreezePlayer();
+        playerMove.FreezePlayer();        
     }
 
     private void EndSiloutetteSequence()

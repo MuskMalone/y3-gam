@@ -8,6 +8,9 @@ public class Crowbar : Entity, IInventoryItem
   public PlayerInteraction playerInteraction;
   public Entity EToPickUpUI;
 
+  private bool isBeingPickedUp = false;
+  public Entity playerCamera;
+
   public string Name
   {
     get
@@ -49,11 +52,21 @@ public class Crowbar : Entity, IInventoryItem
 
   void Update()
   {
+    if (isBeingPickedUp)
+    {
+      if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID))
+      {
+        InternalCalls.PlaySound(mEntityID, "PickupObjects");
+        isBeingPickedUp = false;
+        inventoryScript.Additem(this);
+      }
+      return;
+    }
+
     bool isCrowbarHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
     if (Input.GetKeyTriggered(KeyCode.E) && isCrowbarHit)
     {
-      InternalCalls.PlaySound(mEntityID, "PickupObjects");
-      inventoryScript.Additem(this);
+      isBeingPickedUp = true;
     }
     EToPickUpUI.SetActive(isCrowbarHit);
   }

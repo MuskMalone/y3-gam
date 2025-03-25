@@ -239,6 +239,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetRotation);
   ADD_INTERNAL_CALL(SetWorldRotation);
   ADD_INTERNAL_CALL(SetWorldScale);
+  ADD_INTERNAL_CALL(SetBoxColliderScale);
   ADD_INTERNAL_CALL(GetWorldRotationEuler);
   ADD_INTERNAL_CALL(GetRotationEuler);
   ADD_INTERNAL_CALL(SetRotationEuler);
@@ -922,6 +923,17 @@ glm::vec3 Mono::GetColliderScale(ECS::Entity::EntityID e)
         return glm::vec3{ collider.scale.x, collider.scale.y, collider.scale.z };
     }
     return glm::vec3{};
+}
+
+void Mono::SetBoxColliderScale(ECS::Entity::EntityID e, glm::vec3 scale) {
+  ECS::Entity entity(e);
+  if (entity.HasComponent<Component::BoxCollider>()) {
+    entity.GetComponent<Component::BoxCollider>().scale.x = scale.x;
+    entity.GetComponent<Component::BoxCollider>().scale.y = scale.y;
+    entity.GetComponent<Component::BoxCollider>().scale.z = scale.z;
+    
+    IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeBoxColliderVar(entity);
+  }
 }
 
 glm::quat Mono::GetWorldRotation(ECS::Entity::EntityID entity)

@@ -10,6 +10,7 @@ public class LeverManager : Entity
   public Entity tableCamera;
   public Entity fragmentGlass;
   public PlayerMove playerMove;
+  public BlackBorder blackBorders;
 
   public float timeBeforeOrbsDrop;  // how much time to wait after all levers pulled
 
@@ -80,6 +81,7 @@ public class LeverManager : Entity
           if (timeElapsed >= switchDuration)
           {
             timeElapsed = 0f;
+            blackBorders.HideBlackBorders();
             SetPlayerCameraAsMain();  // Switch back to player view
             currState = State.IDLE;
 
@@ -132,6 +134,7 @@ public class LeverManager : Entity
       playerMove.FreezePlayer(); // Freeze player movement
     }
 
+    blackBorders.DisplayBlackBorders();
     SetTableCameraAsMain(); // Switch to table camera
     currState = State.TABLE_CAM;
     //timeElapsed = 0f;

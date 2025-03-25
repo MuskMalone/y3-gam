@@ -429,6 +429,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static bool GetIsPaused();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetBoxColliderScale(uint entity, Vector3 scale);
     #endregion
   }
 }
