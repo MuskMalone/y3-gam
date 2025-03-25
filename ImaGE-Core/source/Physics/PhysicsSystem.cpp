@@ -904,13 +904,13 @@ namespace IGE {
 							// Draw a line from the joint frame on actor1 to actor1's global origin.
 							Graphics::Renderer::DrawLine(ToGLMVec3(worldJointPose1.p), ToGLMVec3(globalPose1.p), jointClr);
 							// Draw a sphere at the joint frame on actor1.
-							Graphics::Renderer::DrawWireSphere(ToGLMVec3(worldJointPose1.p), 0.1, jointClr);
+							Graphics::Renderer::DrawWireSphere(ToGLMVec3(worldJointPose1.p), 0.1f, jointClr);
 						} break;
 						case Component::RigidBody::JointType::PRISMATIC:
 						case Component::RigidBody::JointType::DISTANCE: {
 							// Draw spheres at both joint frames.
-							Graphics::Renderer::DrawWireSphere(ToGLMVec3(worldJointPose0.p), 0.1, jointClr);
-							Graphics::Renderer::DrawWireSphere(ToGLMVec3(worldJointPose1.p), 0.1, jointClr);
+							Graphics::Renderer::DrawWireSphere(ToGLMVec3(worldJointPose0.p), 0.1f, jointClr);
+							Graphics::Renderer::DrawWireSphere(ToGLMVec3(worldJointPose1.p), 0.1f, jointClr);
 							// Draw a line connecting the two joint frames.
 							Graphics::Renderer::DrawLine(ToGLMVec3(worldJointPose0.p), ToGLMVec3(worldJointPose1.p), jointClr);
 						} break;
@@ -923,19 +923,19 @@ namespace IGE {
 					//draw three lines
 					auto dir{ glm::normalize(ray.end - ray.origin) };
 					auto intersectPoint{ ray.origin + (dir * ray.hit.distance) };
-					Graphics::Renderer::DrawLine(ray.origin, intersectPoint, { 0, 1, 0, 1 });
-					Graphics::Renderer::DrawLine(intersectPoint, ray.end, { 1, 0, 0, 1 });
+					Graphics::Renderer::DrawLine(ray.origin, intersectPoint, { 0.f, 1.f, 0.f, 1.f });
+					Graphics::Renderer::DrawLine(intersectPoint, ray.end, { 1.f, 0.f, 0.f, 1.f });
 				}
 				else {
-					Graphics::Renderer::DrawLine(ray.origin, ray.end, { 0, 1, 0, 1 });
+					Graphics::Renderer::DrawLine(ray.origin, ray.end, { 0.f, 1.f, 0.f, 1.f });
 				}
 			}
 			for (auto const& ray : mGeneralRays) {
 				//draw three lines
 				auto dir{ glm::normalize(ray.end - ray.start) };
-				Graphics::Renderer::DrawLine(ray.start, ray.end, { 1, 0, 1, 1 });
-				Graphics::Renderer::DrawWireSphere(ray.start, 0.1, { 1, 0, 1, 1 });
-				Graphics::Renderer::DrawWireSphere(ray.end, 0.1, { 1, 0, 1, 1 });
+				Graphics::Renderer::DrawLine(ray.start, ray.end, { 1.f, 0.f, 1.f, 1.f });
+				Graphics::Renderer::DrawWireSphere(ray.start, 0.1f, { 1.f, 0.f, 1.f, 1.f });
+				Graphics::Renderer::DrawWireSphere(ray.end, 0.1f, { 1.f, 0.f, 1.f, 1.f });
 
 			}
 			mGeneralRays.clear();

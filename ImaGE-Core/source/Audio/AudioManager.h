@@ -7,6 +7,7 @@
 #include "Singleton/ThreadSafeSingleton.h"
 #include "Events/EventCallback.h"
 #include <Audio/AudioSystem.h>
+
 //1: No filtering
 //0: Full filtering, completely muffles
 //0.5: Medium filtering

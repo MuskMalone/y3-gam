@@ -8,6 +8,9 @@
 #include <Events/EventManager.h>
 #include "Scenes/SceneManager.h"
 
+#ifdef PlaySound
+#undef PlaySound
+#endif
 //#define AUDIO_VERBOSE
 
 namespace IGE {

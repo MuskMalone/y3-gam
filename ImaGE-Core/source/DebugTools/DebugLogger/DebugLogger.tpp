@@ -1,5 +1,6 @@
+#ifndef DISTRIBUTION
 template <typename T>
-std::string DebugLogger::LogInfo(std::string msg, bool logToFile)
+void DebugLogger::LogInfo(std::string const& msg, bool logToFile)
 {
 #ifdef PRINTTOCOUT
 	PrintToCout(typeid(T).name() + (": " + msg), LVL_INFO);
@@ -13,12 +14,10 @@ std::string DebugLogger::LogInfo(std::string msg, bool logToFile)
   {
     mFileLogger->info(typeid(T).name() + (": " + msg));
   }
-
-  return msg;
 }
 
 template <typename T>
-std::string DebugLogger::LogWarning(std::string msg, bool logToFile)
+void DebugLogger::LogWarning(std::string const& msg, bool logToFile)
 {
 #ifdef PRINTTOCOUT
 	PrintToCout(typeid(T).name() + (": " + msg), LVL_WARN);
@@ -32,12 +31,10 @@ std::string DebugLogger::LogWarning(std::string msg, bool logToFile)
   {
     mFileLogger->warn(typeid(T).name() + (": " + msg));
   }
-
-  return msg;
 }
 
 template <typename T>
-std::string DebugLogger::LogError(std::string msg, bool logToFile)
+void DebugLogger::LogError(std::string const& msg, bool logToFile)
 {
 #ifdef PRINTTOCOUT
 	PrintToCout(typeid(T).name() + (": " + msg), LVL_ERROR);
@@ -50,12 +47,10 @@ std::string DebugLogger::LogError(std::string msg, bool logToFile)
   {
     mFileLogger->error(typeid(T).name() + (": " + msg));
   }
-
-  return msg;
 }
 
 template <typename T>
-std::string DebugLogger::LogCritical(std::string msg, bool logToFile)
+void DebugLogger::LogCritical(std::string const& msg, bool logToFile)
 {
 #ifdef PRINTTOCOUT
 	PrintToCout(typeid(T).name() + (": " + msg), LVL_CRITICAL);
@@ -68,6 +63,14 @@ std::string DebugLogger::LogCritical(std::string msg, bool logToFile)
   {
     mFileLogger->critical(typeid(T).name() + (": " + msg));
   }
-
-  return msg;
 }
+#else
+template <typename T>
+void DebugLogger::LogInfo([[maybe_unused]] std::string const& msg, [[maybe_unused]] bool logToFile) {}
+template <typename T>
+void DebugLogger::LogWarning([[maybe_unused]] std::string const& msg, [[maybe_unused]] bool logToFile) {}
+template <typename T>
+void DebugLogger::LogError([[maybe_unused]] std::string const& msg, [[maybe_unused]] bool logToFile) {}
+template <typename T>
+void DebugLogger::LogCritical([[maybe_unused]] std::string const& msg, [[maybe_unused]] bool logToFile) {}
+#endif

@@ -24,14 +24,13 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 using namespace Debug;
 
-
+#ifndef DISTRIBUTION
 DebugLogger::DebugLogger()
 {
 // Add these conditionals so that the installer will work (unable to write to log
 // file as app does not have permission to do so
 // @TODO: Write log files to a writable location such as {userdata}
 
-#if LOG_TO_FILE
 	// Get curret system time
 	std::chrono::system_clock::time_point currTime = std::chrono::system_clock::now();
 	std::time_t currTime_t = std::chrono::system_clock::to_time_t(currTime);
@@ -50,11 +49,6 @@ DebugLogger::DebugLogger()
 	// File logger will log into ostream and file
 	mLogger = std::make_unique<spdlog::logger>("");
 	mFileLogger = std::make_unique<spdlog::logger>("", filesink);
-
-#else
-	mLogger = std::make_unique<spdlog::logger>("");
-	mFileLogger = std::make_unique<spdlog::logger>("");
-#endif
 }
 
 DebugLogger::~DebugLogger()
@@ -62,7 +56,6 @@ DebugLogger::~DebugLogger()
 	// Flush logs
 	mLogger->flush();
 
-#if LOG_TO_FILE
 	mFileLogger.reset();
 
 	if (std::filesystem::file_size(mFileName) == 0)
@@ -88,7 +81,6 @@ DebugLogger::~DebugLogger()
 
 		std::rename(mFileName.c_str(), ss.str().c_str());
 	}
-#endif
 }
 
 void DebugLogger::AddDest(spdlog::sink_ptr sink)
@@ -115,7 +107,7 @@ void DebugLogger::SuppressLogMessages(bool flag)
 	}
 }
 
-std::string DebugLogger::LogInfo(std::string msg, bool logToFile)
+void DebugLogger::LogInfo(std::string const& msg, bool logToFile)
 {
 #ifdef PRINTTOCOUT
 	PrintToCout(msg, LVL_INFO);
@@ -129,11 +121,9 @@ std::string DebugLogger::LogInfo(std::string msg, bool logToFile)
 	{
 		mLogger->info(msg);
 	}
-
-	return msg;
 }
 
-std::string DebugLogger::LogWarning(std::string msg, bool logToFile)
+void DebugLogger::LogWarning(std::string const& msg, bool logToFile)
 {
 #ifdef PRINTTOCOUT
 	PrintToCout(msg, LVL_WARN);
@@ -146,11 +136,9 @@ std::string DebugLogger::LogWarning(std::string msg, bool logToFile)
 	{
 		mLogger->warn(msg);
 	}
-
-	return msg;
 }
 
-std::string DebugLogger::LogError(std::string msg, bool logToFile)
+void DebugLogger::LogError(std::string const& msg, bool logToFile)
 {
 #ifdef PRINTTOCOUT
 	PrintToCout(msg, LVL_ERROR);
@@ -163,11 +151,9 @@ std::string DebugLogger::LogError(std::string msg, bool logToFile)
 	{
 		mLogger->error(msg);
 	}
-
-	return msg;
 }
 
-std::string DebugLogger::LogCritical(std::string msg, bool logToFile)
+void DebugLogger::LogCritical(std::string const& msg, bool logToFile)
 {
 
 #ifdef PRINTTOCOUT
@@ -181,12 +167,9 @@ std::string DebugLogger::LogCritical(std::string msg, bool logToFile)
 	{
 		mLogger->critical(msg);
 	}
-
-
-	return msg;
 }
 
-void DebugLogger::PrintToCout(std::string msg, EXCEPTION_LEVEL lvl)
+void DebugLogger::PrintToCout(std::string const& msg, EXCEPTION_LEVEL lvl)
 {
 	// Get the current time as a time_point
 	auto now = std::chrono::system_clock::now();
@@ -232,3 +215,11 @@ void DebugLogger::PrintToCout(std::string msg, EXCEPTION_LEVEL lvl)
 		}
 	}
 }
+#else
+DebugLogger::DebugLogger() {}
+DebugLogger::~DebugLogger() {}
+void DebugLogger::LogInfo([[maybe_unused]] std::string const& msg, [[maybe_unused]] bool logToFile) {}
+void DebugLogger::LogWarning([[maybe_unused]] std::string const& msg, [[maybe_unused]] bool logToFile) {}
+void DebugLogger::LogError([[maybe_unused]] std::string const& msg, [[maybe_unused]] bool logToFile) {}
+void DebugLogger::LogCritical([[maybe_unused]] std::string const& msg, [[maybe_unused]] bool logToFile) {}
+#endif

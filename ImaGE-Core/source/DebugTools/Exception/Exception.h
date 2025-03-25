@@ -84,7 +84,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
       \return
         Logged message.
       ********************************************************************/
-      std::string Log(bool logToFile = true);
+      void Log(bool logToFile = true);
 
       /*!******************************************************************
       \brief 
@@ -98,7 +98,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 			\return 
 				Logged message.
       ********************************************************************/
-      std::string LogSource(bool logToFile = true);
+      void LogSource(bool logToFile = true);
     };
 
 #include "Exception.tpp"

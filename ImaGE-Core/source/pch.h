@@ -9,6 +9,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #define UNREFERENCED_PARAMETER(P) (P)
 #define _SILENCE_CXX20_CISO646_REMOVED_WARNING
+#define NOMINMAX
 #pragma warning(disable : 4005)
 #pragma warning(disable : 5105) // macro expansion producing 'defined' has undefined behavior
 

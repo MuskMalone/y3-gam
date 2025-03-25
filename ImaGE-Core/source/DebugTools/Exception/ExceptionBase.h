@@ -35,7 +35,7 @@ namespace Debug
 		\return
 			Logged message.
 		********************************************************************/
-		virtual std::string Log(bool logToFile = true) = 0;
+		virtual void Log(bool logToFile = true) = 0;
 
 
 		/*!******************************************************************
@@ -48,7 +48,7 @@ namespace Debug
 		\return 
 			Logged message.
 		********************************************************************/
-		virtual std::string LogSource(bool logToFile = true) = 0;
+		virtual void LogSource(bool logToFile = true) = 0;
 
 		std::string const& ErrMsg() const noexcept { return mErrMsg; }
 

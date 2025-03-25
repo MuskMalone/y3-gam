@@ -10,36 +10,36 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #pragma once
-#include <spdlog/spdlog.h>
 #include <Singleton/ThreadSafeSingleton.h>
 #include <DebugTools/Exception/ExceptionBase.h>
 #include <memory>
-#include <spdlog/sinks/basic_file_sink.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
 
 #ifdef DISTRIBUTION
 #define LOG_TO_FILE false
 #else
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 #define LOG_TO_FILE true
 #endif
 
 #define IGE_DBGLOGGER Debug::DebugLogger::GetInstance()
 
-using namespace spdlog;
 //#define PRINTTOCOUT
 namespace Debug
 {
   class DebugLogger : public ThreadSafeSingleton<DebugLogger>
   {
-//#ifndef IMGUI_DISABLE
   private:
     // Alias
+#ifndef DISTRIBUTION
     using LoggerPtr = std::unique_ptr<spdlog::logger>;
 
     LoggerPtr mLogger;
     LoggerPtr mFileLogger;
 
     std::string mFileName;
+#endif
 
   public:
 
@@ -55,6 +55,7 @@ namespace Debug
     ********************************************************************/
     ~DebugLogger();
 
+#ifndef DISTRIBUTION
     /*!******************************************************************
     \brief
       Adds a sink/Destination to the ostream logger.
@@ -82,8 +83,8 @@ namespace Debug
     ********************************************************************/
     void SuppressLogMessages(bool flag);
 
-
-    void PrintToCout(std::string msg, EXCEPTION_LEVEL lvl);
+    void PrintToCout(std::string const& msg, EXCEPTION_LEVEL lvl);
+#endif
 
     /*****************************************************************/
     /*                 Logging with Source location                  */
@@ -105,7 +106,7 @@ namespace Debug
       Logged message.
     ********************************************************************/
     template <typename T>
-    std::string LogInfo(std::string msg, bool logToFile = LOG_TO_FILE);
+    void LogInfo(std::string const& msg, bool logToFile = LOG_TO_FILE);
 
 
     /*!******************************************************************
@@ -123,7 +124,7 @@ namespace Debug
       Logged message.
     ********************************************************************/
     template <typename T>
-    std::string LogWarning(std::string msg, bool logToFile = LOG_TO_FILE);
+    void LogWarning(std::string const& msg, bool logToFile = LOG_TO_FILE);
 
     /*!******************************************************************
     \brief
@@ -140,7 +141,7 @@ namespace Debug
       Logged message.
     ********************************************************************/
     template <typename T>
-    std::string LogError(std::string msg, bool logToFile = LOG_TO_FILE);
+    void LogError(std::string const& msg, bool logToFile = LOG_TO_FILE);
 
     /*!******************************************************************
     \brief
@@ -157,7 +158,7 @@ namespace Debug
       Logged message.
     ********************************************************************/
     template <typename T>
-    std::string LogCritical(std::string msg, bool logToFile = LOG_TO_FILE);
+    void LogCritical(std::string const& msg, bool logToFile = LOG_TO_FILE);
 
 
 
@@ -179,7 +180,7 @@ namespace Debug
     \return
       Logged message.
     ********************************************************************/
-    std::string LogInfo(std::string msg, bool logToFile = LOG_TO_FILE);
+    void LogInfo(std::string const& msg, bool logToFile = LOG_TO_FILE);
 
 
     /*!******************************************************************
@@ -196,7 +197,7 @@ namespace Debug
     \return
       Logged message.
     ********************************************************************/
-    std::string LogWarning(std::string msg, bool logToFile = LOG_TO_FILE);
+    void LogWarning(std::string const& msg, bool logToFile = LOG_TO_FILE);
 
 
 
@@ -214,7 +215,7 @@ namespace Debug
     \return
       Logged message.
     ********************************************************************/
-    std::string LogError(std::string msg, bool logToFile = LOG_TO_FILE);
+    void LogError(std::string const& msg, bool logToFile = LOG_TO_FILE);
 
     /*!******************************************************************
     \brief
@@ -230,23 +231,9 @@ namespace Debug
     \return
       Logged message.
     ********************************************************************/
-    std::string LogCritical(std::string msg, bool logToFile = LOG_TO_FILE);
+    void LogCritical(std::string const& msg, bool logToFile = LOG_TO_FILE);
   };
 
 #include "DebugLogger.tpp"
-//#else
-  /*
-  public:
-    template <typename T> std::string LogMessage(std::string, bool = true) { return {}; }
-    std::string LogMessage(std::string, bool = true) { return {}; }
-    template <typename T> std::string LogWarning(std::string, bool = true) { return {}; }
-    std::string LogWarning(std::string, bool = true) { return {}; }
-    template <typename T> std::string LogError(std::string, bool = true) { return {}; }
-    std::string LogError(std::string, bool = true) { return {}; }
-    template <typename T> std::string LogCritical(std::string, bool = true) { return {}; }
-    std::string LogCritical(std::string, bool = true) { return {}; }
-    */
-//};
-//#endif
   }
 

@@ -1,5 +1,6 @@
 #include <pch.h>
 #include "Core/Components/AudioSource.h"
+
 namespace Component {
 	AudioSource::AudioSource() : channelGroup{ IGE::Audio::AudioManager::GetInstance().CreateGroup()}
 	{

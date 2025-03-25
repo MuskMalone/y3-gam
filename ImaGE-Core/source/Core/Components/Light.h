@@ -54,8 +54,11 @@ namespace Component {
 		float dist;
 		float leafSize;
 
-		LightGlobalProps() : ambColor{ 1.f, 1.f, 1.f }, ambIntensity{}, gammaValue{ 1.8f }, MaxGammvalue{ 1.f }, MinGammaValue{ 4.f }, dist{0.15}, leafSize{0.15} {}
-		LightGlobalProps(glm::vec3 const& _ambClr, float _ambIntensity, float gammaVal) : ambColor{ _ambClr }, ambIntensity{ _ambIntensity }, gammaValue{ gammaVal }, MaxGammvalue{ 1.f }, MinGammaValue{ 4.f }, dist{ 0.15 }, leafSize{ 0.15 } {}
+		LightGlobalProps() : ambColor{ 1.f, 1.f, 1.f }, ambIntensity{}, gammaValue{ 1.8f },
+			MaxGammvalue{ 1.f }, MinGammaValue{ 4.f }, dist{ 0.15f }, leafSize{ 0.15f } {}
+		LightGlobalProps(glm::vec3 const& _ambClr, float _ambIntensity, float gammaVal) :
+			ambColor{ _ambClr }, ambIntensity{ _ambIntensity }, gammaValue{ gammaVal },
+			MaxGammvalue{ 1.f }, MinGammaValue{ 4.f }, dist{ 0.15f }, leafSize{ 0.15f } {}
 	};
 
 

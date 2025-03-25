@@ -1,6 +1,11 @@
 #pragma once
 #include "Asset/Assetables/Assetables.h"
 #include "Audio/AudioManager.h"
+
+#ifdef PlaySound
+#undef PlaySound
+#endif
+
 namespace Component{
 	struct AudioSource {
 		
