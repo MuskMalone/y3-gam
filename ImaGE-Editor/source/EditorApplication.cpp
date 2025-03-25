@@ -348,7 +348,7 @@ namespace IGE {
   // ensure proper shutdown in case of crash
   EVENT_CALLBACK_DEF(EditorApplication, SignalCallback) {
     IGE_SCENEMGR.BackupSave(false);
-    IGE_ASSETMGR.SaveMetadata();
+    IGE_ASSETMGR.SaveAllMetadata();
 
     EditorApplication::Shutdown();
   }

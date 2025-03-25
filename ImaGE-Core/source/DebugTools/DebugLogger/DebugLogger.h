@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Singleton/ThreadSafeSingleton.h>
 #include <DebugTools/Exception/ExceptionBase.h>
 #include <memory>
+#include <mutex>
 
 #ifdef DISTRIBUTION
 #define LOG_TO_FILE false
@@ -39,6 +40,7 @@ namespace Debug
     LoggerPtr mFileLogger;
 
     std::string mFileName;
+    std::mutex mLogMutex;
 #endif
 
   public:

@@ -7,3 +7,4 @@
 #include <Asset/Assetables/Shader/ShaderAsset.h>
 #include <Asset/Assetables/Material/MaterialAsset.h>
 #include <Asset/Assetables/Animation/AnimationAsset.h>
+#include <Asset/Assetables/Video/VideoAsset.h>

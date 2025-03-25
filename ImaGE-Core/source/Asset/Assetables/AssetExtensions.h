@@ -3,6 +3,9 @@
 #include <string>
 namespace IGE {
 	namespace Assets {
+		const std::set<std::string> cAnimationExtensions{
+			".anim"
+		};
 		const std::set<std::string> cMeshExtensions{
 			".obj", ".fbx", ".imsh"  // JPEG format
 		};
@@ -33,13 +36,18 @@ namespace IGE {
 		const std::set<std::string> cShaderExtensions{
 			".glsl",		 // GLSL
 		};
+		const std::set<std::string> cVideoExtensions{
+			".mpg", ".mp4", ".mov", ".mkv", ".wmv"
+		};
 		//the key should be the directory name in the Assets folder
 		const std::map<std::string, std::set<std::string>> cDirectoryToExtensions{
+			{ "Animations", cAnimationExtensions },
 			{ "Models", cMeshExtensions },
 			{ "Textures", cImageExtensions },
 			{ "Audio", cAudioExtensions},
 			{ "Fonts", cFontExtensions },
-			{ "PostProcessing", cShaderExtensions }
+			{ "PostProcessing", cShaderExtensions },
+			{ "Videos", cVideoExtensions }
 		};
 	}
 }

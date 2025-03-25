@@ -30,7 +30,8 @@ namespace IGE {
 				IGE::Assets::FontAsset,
 				IGE::Assets::ShaderAsset,
 				IGE::Assets::MaterialAsset,
-				IGE::Assets::AnimationAsset
+				IGE::Assets::AnimationAsset,
+				IGE::Assets::VideoAsset
 			>();
 			// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			//auto fp{ CreateProjectFile() }; // create project file if it doesnt exist
@@ -73,7 +74,7 @@ namespace IGE {
 					mPath2GUIDRegistry.emplace(entry.second.metadata.at("path"), GUID(entry.first));
 				}
 			}
-			//SaveMetadata();
+			//SaveAllMetadata();
 		}
 		std::string AssetManager::CreateProjectFile() const
 		{
@@ -157,16 +158,25 @@ namespace IGE {
 			}
 
 			if (removed) {
-				SaveMetadata();
+				SaveAllMetadata();
 			}*/
 		}
 
 		AssetManager::~AssetManager()
 		{
-			SaveMetadata();
+			SaveAllMetadata();
 		}
 
-		void AssetManager::SaveMetadata() const {
+		void AssetManager::SaveMetadata(AssetMetadata::AssetProps& metadata, std::string const& category, GUID guid) const {
+			auto filename{ GetFileName(metadata.metadata.at("path")) };
+			// ill be storing the guid inside here for now
+			// using . as the delimiter
+			auto fp{ cAssetProjectSettingsPath + category + "\\" + filename + "." + std::to_string(guid) + cAssetMetadataFileExtension };
+			Serialization::Serializer::SerializeAny(metadata, fp);
+			metadata.modified = false;
+		}
+
+		void AssetManager::SaveAllMetadata() const {
 			for (auto const& [cat, assets] : mMetadata.mAssetProperties) {
 				for (auto const& [guid, metadata] : assets) {
 					if (!metadata.modified) continue;
@@ -262,7 +272,7 @@ namespace IGE {
 
 			IGE_DBGLOGGER.LogInfo("[AssetManager] Remapped " + remapEvent->mAssetType + " " 
 				+ std::to_string(static_cast<uint64_t>(remapEvent->mGUID)) + " to " + remapEvent->mPath);
-			SaveMetadata();
+			SaveAllMetadata();
 		}
 
 	}

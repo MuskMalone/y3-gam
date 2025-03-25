@@ -109,6 +109,7 @@ void DebugLogger::SuppressLogMessages(bool flag)
 
 void DebugLogger::LogInfo(std::string const& msg, bool logToFile)
 {
+	std::lock_guard<std::mutex> lock(mLogMutex);
 #ifdef PRINTTOCOUT
 	PrintToCout(msg, LVL_INFO);
 #endif
@@ -125,6 +126,7 @@ void DebugLogger::LogInfo(std::string const& msg, bool logToFile)
 
 void DebugLogger::LogWarning(std::string const& msg, bool logToFile)
 {
+	std::lock_guard<std::mutex> lock(mLogMutex);
 #ifdef PRINTTOCOUT
 	PrintToCout(msg, LVL_WARN);
 #endif
@@ -140,6 +142,7 @@ void DebugLogger::LogWarning(std::string const& msg, bool logToFile)
 
 void DebugLogger::LogError(std::string const& msg, bool logToFile)
 {
+	std::lock_guard<std::mutex> lock(mLogMutex);
 #ifdef PRINTTOCOUT
 	PrintToCout(msg, LVL_ERROR);
 #endif
@@ -155,7 +158,7 @@ void DebugLogger::LogError(std::string const& msg, bool logToFile)
 
 void DebugLogger::LogCritical(std::string const& msg, bool logToFile)
 {
-
+	std::lock_guard<std::mutex> lock(mLogMutex);
 #ifdef PRINTTOCOUT
 	PrintToCout(msg, LVL_CRITICAL);
 #endif

@@ -2,6 +2,7 @@
 template <typename T>
 void DebugLogger::LogInfo(std::string const& msg, bool logToFile)
 {
+  std::lock_guard<std::mutex> lock(mLogMutex);
 #ifdef PRINTTOCOUT
 	PrintToCout(typeid(T).name() + (": " + msg), LVL_INFO);
 #endif
@@ -19,6 +20,7 @@ void DebugLogger::LogInfo(std::string const& msg, bool logToFile)
 template <typename T>
 void DebugLogger::LogWarning(std::string const& msg, bool logToFile)
 {
+  std::lock_guard<std::mutex> lock(mLogMutex);
 #ifdef PRINTTOCOUT
 	PrintToCout(typeid(T).name() + (": " + msg), LVL_WARN);
 #endif
@@ -36,6 +38,7 @@ void DebugLogger::LogWarning(std::string const& msg, bool logToFile)
 template <typename T>
 void DebugLogger::LogError(std::string const& msg, bool logToFile)
 {
+  std::lock_guard<std::mutex> lock(mLogMutex);
 #ifdef PRINTTOCOUT
 	PrintToCout(typeid(T).name() + (": " + msg), LVL_ERROR);
 #endif
@@ -52,6 +55,7 @@ void DebugLogger::LogError(std::string const& msg, bool logToFile)
 template <typename T>
 void DebugLogger::LogCritical(std::string const& msg, bool logToFile)
 {
+  std::lock_guard<std::mutex> lock(mLogMutex);
 #ifdef PRINTTOCOUT
 	PrintToCout(typeid(T).name() + (": " + msg), LVL_CRITICAL);
 #endif

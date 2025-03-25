@@ -14,6 +14,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <imgui/imgui.h>
 #include <ImGui/misc/cpp/imgui_stdlib.h>
 #include <GUI/Styles/FontAwesome6Icons.h>
+#include <thread>
 
 #include "GUI/GUIVault.h"
 #include <Scenes/SceneManager.h>
@@ -27,10 +28,11 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include "Asset/IGEAssets.h"
 #include <Graphics/MaterialTable.h>
 #include <Graphics/Mesh/MeshImport.h>
+#include <Globals.h>
 
 namespace MeshPopup {
   static constexpr float sTableCol1Width = 250.f;
-  static std::vector<std::string> sModelsToImport;
+  static std::vector<std::string> sFilesToImport;
   static std::string sMeshPopupInput, sMeshName;
   static bool sOpenMeshPopup{ false }, sMeshOverwriteWarning{ false };
 }
@@ -475,11 +477,71 @@ namespace GUI
       ImGui::EndDragDropSource();
     }
   }
+  
+  void ImportVideo(std::string const& path) {
+    if (!std::filesystem::exists(gVideosDirectory)) {
+      std::filesystem::create_directory(gVideosDirectory);
+    }
+    std::string compiledPath{ std::string(gVideosDirectory) + "Compiled\\" };
+    if (!std::filesystem::exists(compiledPath)) {
+      std::filesystem::create_directory(compiledPath);
+    }
 
-  void OpenMeshPopup() {
-    MeshPopup::sOpenMeshPopup = true;
-    MeshPopup::sMeshName = MeshPopup::sMeshPopupInput = std::filesystem::path(MeshPopup::sModelsToImport.back()).filename().string();
-    MeshPopup::sMeshOverwriteWarning = std::filesystem::exists(gMeshOutputDir + MeshPopup::sMeshPopupInput);
+    compiledPath += std::filesystem::path(path).stem().string() + ".mpg";
+
+    // if alread mpg file, just copy over
+    if (std::filesystem::path(path).extension() == ".mpg") {
+      std::filesystem::copy(path, compiledPath, std::filesystem::copy_options::overwrite_existing);
+      IGE_ASSETMGR.ImportAsset<IGE::Assets::VideoAsset>(path);
+      IGE_DBGLOGGER.LogInfo("Successfuly imported video to " + compiledPath);
+      return;
+    }
+
+    // from https://github.com/phoboslab/pl_mpeg:
+    // ffmpeg -i input.mp4 -c:v mpeg1video -q:v 0 -c:a libtwolame -b:a 224k -format mpeg output.mpg
+   
+    // create a detached thread to import the video in background
+    std::thread(
+      [path, compiledPath]() {
+        std::string const cmd{
+          "..\\ImaGE-Editor\\source\\Executables\\ffmpeg.exe -i \"" + 
+          path + "\" -c:v mpeg1video -q:v 0 -c:a libtwolame -b:a 224k -f mpeg \"" + compiledPath + "\""
+        };
+
+        if (std::filesystem::exists(compiledPath)) {
+          std::filesystem::remove(compiledPath);
+        }
+
+        int result{ std::system(cmd.c_str()) };
+        if (result != 0) {
+          IGE_DBGLOGGER.LogError("Unable to import " + path);
+          return;
+        }
+
+        IGE_ASSETMGR.ImportAsset<IGE::Assets::VideoAsset>(path);
+        IGE_DBGLOGGER.LogInfo("Successfuly imported video to " + compiledPath);
+      }
+    ).detach();
+  }
+
+  void HandleNextAssetImport() {
+    std::filesystem::path const nextAsset{ MeshPopup::sFilesToImport.back() };
+
+    // for now the only 2 types to handle are video and models
+    if (std::string(gSupportedVideoFormats).find(nextAsset.extension().string()) != std::string::npos) {
+      ImportVideo(MeshPopup::sFilesToImport.back());
+      MeshPopup::sFilesToImport.pop_back();
+
+      if (!MeshPopup::sFilesToImport.empty()) {
+        HandleNextAssetImport();
+      }
+    }
+    // else here means model
+    else {
+      MeshPopup::sOpenMeshPopup = true;
+      MeshPopup::sMeshName = MeshPopup::sMeshPopupInput = nextAsset.filename().string();
+      MeshPopup::sMeshOverwriteWarning = std::filesystem::exists(gMeshOutputDir + MeshPopup::sMeshPopupInput);
+    }
   }
 
   EVENT_CALLBACK_DEF(AssetBrowser, FilesImported) {
@@ -488,11 +550,13 @@ namespace GUI
 
     for (std::string const& file : files) {
       std::filesystem::path const path{ file };
-      if (std::string(gSupportedModelFormats).find(path.extension().string()) == std::string::npos) {
-        filesToRegister.emplace_back(file);
+      std::string const ext{ path.extension().string() };
+      if (std::string(gSupportedVideoFormats).find(ext) != std::string::npos 
+        || std::string(gSupportedModelFormats).find(ext) != std::string::npos) {
+        MeshPopup::sFilesToImport.emplace_back(file);
       }
       else {
-        MeshPopup::sModelsToImport.emplace_back(file);
+        filesToRegister.emplace_back(file);
       }
     }
 
@@ -500,8 +564,8 @@ namespace GUI
       QUEUE_EVENT(Events::RegisterAssetsEvent, std::move(filesToRegister));
     }
 
-    if (!MeshPopup::sModelsToImport.empty()) {
-      OpenMeshPopup();
+    if (!MeshPopup::sFilesToImport.empty()) {
+      HandleNextAssetImport();
     }
   }
 
@@ -868,7 +932,7 @@ namespace GUI
         };
 
         IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-        IGE::Assets::GUID const guid{ am.ImportAsset<IGE::Assets::ModelAsset>(MeshPopup::sModelsToImport.back(), metadata) };
+        IGE::Assets::GUID const guid{ am.ImportAsset<IGE::Assets::ModelAsset>(MeshPopup::sFilesToImport.back(), metadata) };
 
         close = true;
       }
@@ -877,10 +941,10 @@ namespace GUI
     if (close) {
       blankWarning = MeshPopup::sMeshOverwriteWarning = false;
       // erase the last element
-      MeshPopup::sModelsToImport.erase(MeshPopup::sModelsToImport.begin() + MeshPopup::sModelsToImport.size() - 1);
+      MeshPopup::sFilesToImport.erase(MeshPopup::sFilesToImport.begin() + MeshPopup::sFilesToImport.size() - 1);
       // if there are still more to import, run the popup again
-      if (!MeshPopup::sModelsToImport.empty()) {
-        OpenMeshPopup();
+      if (!MeshPopup::sFilesToImport.empty()) {
+        HandleNextAssetImport();
       }
       else {
         MeshPopup::sMeshPopupInput.clear();

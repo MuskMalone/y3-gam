@@ -17,19 +17,22 @@ constexpr char gAssetsDirectory[] = "..\\Assets\\";
 constexpr char gEditorAssetsDirectory[] = "..\\Assets\\.Editor\\";
 constexpr char gScenesDirectory[] = "..\\Assets\\Scenes\\";
 constexpr char gPrefabsDirectory[] = "..\\Assets\\Prefabs\\";
+constexpr char gMaterialDirectory[] = "..\\Assets\\Materials\\";
+constexpr char gAnimationsDirectory[] = "..\\Assets\\Animations\\";
+constexpr char gVideosDirectory[] = "..\\Assets\\Videos\\";
+constexpr char gMeshOutputDir[] = "..\\Assets\\Models\\";
+
 constexpr char gSceneFileExt[] = ".scn";
 constexpr char gPrefabFileExt[] = ".pfb";
 constexpr char gSupportedModelFormats[] = ".fbx.obj";
-constexpr char gMeshOutputDir[] = "..\\Assets\\Models\\";
 constexpr char gMeshFileExt[] = ".imsh";
 constexpr char gFontFileExt[] = ".ttf";
 constexpr char gSpriteFileExt[] = ".dds";
 constexpr char gMaterialFileExt[] = ".mat";
 constexpr char gAnimationFileExt[] = ".anim";
 constexpr char gSupportedAudioFormats[] = ".mp3.wav";
-constexpr char gMaterialDirectory[] = "..\\Assets\\Materials\\";
-constexpr char gAnimationsDirectory[] = "..\\Assets\\Animations\\";
-//currently my Shaders are hard coded in ShaderLibrary in Shader.h* as cShaderDirectory
+constexpr char gSupportedVideoFormats[] = ".mp4.mpg.mkv.mov.webm";
+
 
 // Editor
 constexpr char gRobotoBoldFontPath[] = "..\\Assets\\.Editor\\.Fonts\\Roboto-Bold.ttf";

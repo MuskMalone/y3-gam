@@ -9,6 +9,8 @@
 #include "AssetUtils.h"
 #include <Events/EventCallback.h>
 #include "Asset/AssetMetadata.h"
+#include <mutex>
+
 #define IGE_ASSETMGR IGE::Assets::AssetManager::GetInstance()
 #define IGE_REF(type, guid) IGE::Assets::AssetManager::GetInstance().GetAsset<type>(guid)
 namespace IGE {
@@ -104,6 +106,7 @@ namespace IGE {
           // CE: added 2nd arg to allow for importing with metadata
           template <typename T>
           GUID ImportAsset(std::string const& filepathstr, AssetMetadata::AssetProps metadata = {}) {
+              std::lock_guard<std::mutex> lock(mAssetsMutex);
               //get the absolute file path so that there cant be any duplicates
               //std::string absolutepath{filepathstr};
               GUID guid{};
@@ -140,12 +143,12 @@ namespace IGE {
 
                   // register under the respective categories in metadata, 
                   AssetMetadata::IGEProjProperties& allmetadata{ mMetadata.mAssetProperties };
-                  std::string assetCategory{ GetTypeName<T>() };
+                  std::string const assetCategory{ GetTypeName<T>() };
                   mMetadata.Emplace(assetCategory, guid, metadata);
                   mPath2GUIDRegistry.emplace(newFp, guid);
                   mGUID2PathRegistry.emplace(guid, newFp);
 
-                  SaveMetadata();
+                  SaveMetadata(metadata, assetCategory, guid);
 
                   return guid;
               }
@@ -162,6 +165,7 @@ namespace IGE {
           }
           template <typename T>
           void DeleteAsset(GUID const& guid) {
+              std::lock_guard<std::mutex> lock(mAssetsMutex);
               auto type{ GetTypeName<T>() };
               TypeGUID typeguid{ type };
               TypeAssetKey key{ typeguid ^ guid };
@@ -202,6 +206,7 @@ namespace IGE {
           template<typename T>
           Ref<T> GetAsset(GUID const& guid)
           {
+              std::lock_guard<std::mutex> lock(mAssetsMutex);
               TypeGUID typeguid{ GetTypeName<T>() };
               TypeAssetKey key{ typeguid ^ guid };
               if (mAssetRefs.find(key) != mAssetRefs.end()) {
@@ -230,6 +235,7 @@ namespace IGE {
           }
           template <typename T>
           GUID LoadRef(GUID const& guid) {
+              std::lock_guard<std::mutex> lock(mAssetsMutex);
               TypeGUID typeguid{ GetTypeName<T>() };
               TypeAssetKey key{ typeguid ^ guid };
               std::string fp { GUIDToPath(guid) };
@@ -252,6 +258,7 @@ namespace IGE {
           // if you wanna do smth like LoadRef<Class>("SomeSpecialString"), do it with this function. 
           template <typename T>
           GUID LoadRef(std::string const& fp) {
+              std::lock_guard<std::mutex> lock(mAssetsMutex);
               std::string filepath {fp};
               if (IsValidFilePath(fp) && !IsPathWithinDirectory(fp, gAssetsDirectory))
                   throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("file is not within assets dir"));
@@ -312,6 +319,7 @@ namespace IGE {
           }
           template<typename T>
           void ReloadRef(GUID const& guid) {
+              std::lock_guard<std::mutex> lock(mAssetsMutex);
               TypeGUID typeguid{ GetTypeName<T>() };
               TypeAssetKey key{ typeguid ^ guid };
               if (mAssetRefs.find(key) != mAssetRefs.end())
@@ -330,12 +338,14 @@ namespace IGE {
 
           template <typename T>
           bool IsGUIDValid(GUID const& guid) {
+              std::lock_guard<std::mutex> lock(mAssetsMutex);
               TypeGUID typeguid{ GetTypeName<T>() };
               TypeAssetKey key{ typeguid ^ guid };
               return (mAssetRefs.find(key) != mAssetRefs.end());
           }
           template <typename T>
           AssetMetadata::AssetProps& GetMetadata(GUID const& guid) {
+              std::lock_guard<std::mutex> lock(mAssetsMutex);
               auto category{ GetTypeName<T>() };
               auto& props{ mMetadata.mAssetProperties };
               if (props.find(category) != props.end()) {
@@ -349,10 +359,12 @@ namespace IGE {
           }
           template <typename T>
           AssetMetadata::AssetProps const& GetCMetadata(GUID const& guid) const {
+              std::lock_guard<std::mutex> lock(mAssetsMutex);
               return GetMetadata<T>(guid);
           }
           template <typename T>
           void ChangeAssetPath(GUID const& guid, std::string newPath) {
+              std::lock_guard<std::mutex> lock(mAssetsMutex);
               try {
                   //update the metadata stuff
                   auto& metadata{ GetMetadata<T>(guid) };
@@ -369,8 +381,7 @@ namespace IGE {
                   metadata.metadata.at("path") = newPath;
                   //remove the old metadata file
 
-
-                  SaveMetadata();
+                  SaveMetadata(metadata, GetTypeName<T>(), guid);
               }
               catch ([[maybe_unused]] Debug::Exception<AssetManager> const& e) {
                   Debug::DebugLogger::GetInstance().LogWarning("guid " + std::to_string(guid) + " does not exist within metadata");
@@ -395,13 +406,16 @@ namespace IGE {
 
           //keep in mind that any instance of Ref<T> always has a minimum of 1 reference
           std::unordered_map<TypeAssetKey, RefAny> mAssetRefs; //bitwise xor the typeguid and guid for the key;
+          std::mutex mAssetsMutex;
+
         public: //get set
             std::string const& GUIDToPath(GUID const& guid);
 
             GUID PathToGUID(std::string const& path);
             ImportFunc ImportFunction(std::string const& type);
             DeleteFunc DeleteFunction(std::string const& type);
-            void SaveMetadata() const;
+            void SaveMetadata(AssetMetadata::AssetProps& metadata, std::string const& category, GUID guid) const;
+            void SaveAllMetadata() const;
 
             template <typename T>
             bool IsTypeRegistered() {
