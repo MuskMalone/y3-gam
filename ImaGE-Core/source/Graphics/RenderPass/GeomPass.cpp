@@ -86,6 +86,14 @@ namespace Graphics {
               shader->SetUniform("u_Time", time);
           }
 
+          bool isLeafShader = (shader == ShaderLibrary::Get("Leaf"));
+          if (isLeafShader) {
+            shader->SetUniform("u_Time", time);
+            shader->SetUniform("u_Dist", Component::Light::sGlobalProps.dist);
+            shader->SetUniform("u_LeafSize", Component::Light::sGlobalProps.leafSize);
+            shader->SetUniform("u_MaxRot", Component::Light::sGlobalProps.maxRot);
+          }
+
           // Only set camera and shadow uniforms if this isn't an unlit shader
           bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
           if (!isUnlitShader) {
@@ -139,6 +147,14 @@ namespace Graphics {
           bool isWaterShader = (shader == ShaderLibrary::Get("Water"));
           if (isWaterShader) {
               shader->SetUniform("u_Time", time);
+          }
+
+          bool isLeafShader = (shader == ShaderLibrary::Get("Leaf"));
+          if (isLeafShader) {
+            shader->SetUniform("u_Time", time); 
+            shader->SetUniform("u_Dist", Component::Light::sGlobalProps.dist);
+            shader->SetUniform("u_LeafSize", Component::Light::sGlobalProps.leafSize);
+            shader->SetUniform("u_MaxRot", Component::Light::sGlobalProps.maxRot);
           }
 
           // Only set camera and shadow uniforms if this isn't an unlit shader

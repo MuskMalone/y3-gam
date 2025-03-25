@@ -352,7 +352,7 @@ namespace GUI
       ImGui::TableNextRow();
       ImGui::TableSetColumnIndex(0); ImGui::Text("Leaf Dist: ");
       ImGui::TableSetColumnIndex(1);
-      if (ImGui::DragFloat("##LeafDist", &globalProps.gammaValue, 0.01f, globalProps.MinGammaValue, globalProps.dist, "%.3f")) {
+      if (ImGui::DragFloat("##LeafDist", &globalProps.dist, 0.01f, 0.f, FLT_MAX, "%.3f")) {
         modified = true;
       }
 
@@ -360,7 +360,14 @@ namespace GUI
       ImGui::TableNextRow();
       ImGui::TableSetColumnIndex(0); ImGui::Text("Leaf Sizee: ");
       ImGui::TableSetColumnIndex(1);
-      if (ImGui::DragFloat("##Leaf Size", &globalProps.gammaValue, 0.01f, globalProps.MinGammaValue, globalProps.leafSize, "%.3f")) {
+      if (ImGui::DragFloat("##LeafSize", &globalProps.leafSize, 0.01f, 0.f, FLT_MAX, "%.3f")) {
+        modified = true;
+      }
+
+      ImGui::TableNextRow();
+      ImGui::TableSetColumnIndex(0); ImGui::Text("Max Rot: ");
+      ImGui::TableSetColumnIndex(1);
+      if (ImGui::DragFloat("##max rot", &globalProps.maxRot, 0.01f, 0.f, FLT_MAX, "%.3f")) {
         modified = true;
       }
 
