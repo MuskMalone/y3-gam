@@ -19,6 +19,7 @@ written consent of DigiPen Institute of Technology is prohibited.
 using IGE.Utils;
 using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 public class  PlayerMove : Entity
@@ -27,7 +28,7 @@ public class  PlayerMove : Entity
   public float walkingSpeed = 750f;
   public float runSpeed = 1300f;
   public bool noClip = false;
-  
+  public bool isTutorial = false;
   public Entity cam;
 
   private float yaw = 0f;                                   // Rotation around the Y-axis (horizontal, for player)
@@ -36,7 +37,7 @@ public class  PlayerMove : Entity
   private float sensitivity = 0.1f;                         // Mouse sensitivity
   private float maxPitch = 89f;                             // Limit to prevent camera flipping (in degrees)
   private float minPitch = -89f;                            // Limit to prevent camera flipping (in degrees)
-
+  
   private Quaternion playerRotation = Quaternion.Identity;  // Player rotation (yaw only)
   private Quaternion cameraRotation = Quaternion.Identity;  // Camera rotation (pitch only)
   public bool canLook = true, canMove = true, useScriptRotation = true, climbing = false;
@@ -58,7 +59,10 @@ public class  PlayerMove : Entity
   void Start()
   {
     ResetPlayerVelocity();
-    InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
+    if (!isTutorial)
+    {
+      InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
+    }
     //initialGravityFactor = InternalCalls.GetGravityFactor(mEntityID);
   }
 
