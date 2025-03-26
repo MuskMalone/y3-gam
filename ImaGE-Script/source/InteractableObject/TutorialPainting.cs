@@ -14,6 +14,8 @@ public class TutorialPainting : Entity, IInventoryItem
     private bool isBeingPickedUp = false;
     public Entity playerCamera;
     public float finalDistanceAwayFromCamWhenPickedUp = 1.2f;
+    public PlayerMove playerMove;
+
   public string Name
     {
         get
@@ -64,6 +66,7 @@ public class TutorialPainting : Entity, IInventoryItem
         InternalCalls.PlaySound(mEntityID, "PickupObjects");
         inventoryScript.Additem(this);
         isBeingPickedUp = false;
+        playerMove.UnfreezePlayer();
       }
       return;
     }
@@ -71,7 +74,8 @@ public class TutorialPainting : Entity, IInventoryItem
 
         if (Input.GetKeyTriggered(KeyCode.E) && isTutorialPaintingHit)
         {
-      isBeingPickedUp = true;
+          isBeingPickedUp = true;
+          playerMove.FreezePlayer();
         }
         EToPickUpUI.SetActive(isTutorialPaintingHit);
     }

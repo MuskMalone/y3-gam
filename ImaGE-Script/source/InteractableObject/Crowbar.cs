@@ -10,6 +10,7 @@ public class Crowbar : Entity, IInventoryItem
 
   private bool isBeingPickedUp = false;
   public Entity playerCamera;
+  public PlayerMove playerMove;
 
   public string Name
   {
@@ -59,6 +60,7 @@ public class Crowbar : Entity, IInventoryItem
         InternalCalls.PlaySound(mEntityID, "PickupObjects");
         isBeingPickedUp = false;
         inventoryScript.Additem(this);
+        playerMove.UnfreezePlayer();
       }
       return;
     }
@@ -67,6 +69,7 @@ public class Crowbar : Entity, IInventoryItem
     if (Input.GetKeyTriggered(KeyCode.E) && isCrowbarHit)
     {
       isBeingPickedUp = true;
+      playerMove.FreezePlayer();
     }
     EToPickUpUI.SetActive(isCrowbarHit);
   }
