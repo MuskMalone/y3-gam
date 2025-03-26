@@ -44,6 +44,8 @@ public class ArmlessStatueTrigger : Entity
         {
           InternalCalls.PlayAnimation(Head.mEntityID, tiltAnimName);
           currState = State.HEAD_TILT;
+          InternalCalls.PlaySound(Head.mEntityID, "..\\Assets\\Audio\\HeadMoving_SFX.wav");
+          InternalCalls.StopSound(Head.mEntityID, "..\\Assets\\Audio\\GhostlyFemaleSinging_SFX.wav");
         }
         break;
 
@@ -57,7 +59,7 @@ public class ArmlessStatueTrigger : Entity
         // after first animation, trigger tears falling
         InternalCalls.PlayAnimation(Tears.mEntityID, tearsAnimName);
         currState = State.TEARS;
-
+        InternalCalls.PlaySound(Head.mEntityID, "..\\Assets\\Audio\\StatueCrying_SFX.wav");
 
         break;
 
@@ -72,7 +74,8 @@ public class ArmlessStatueTrigger : Entity
         InternalCalls.SetGravityFactor(Head.mEntityID, 10f);
         InternalCalls.LockRigidBody(Head.mEntityID, false);
         currState = State.FALLING;
-
+        InternalCalls.StopSound(Head.mEntityID, "..\\Assets\\Audio\\StatueCrying_SFX.wav");
+        InternalCalls.PlaySound(Head.mEntityID, "..\\Assets\\Audio\\HeadDropBefore_SFX.wav");
         break;
 
       case State.FALLING:
@@ -81,6 +84,7 @@ public class ArmlessStatueTrigger : Entity
         {
           InternalCalls.LockRigidBody(Head.mEntityID, true);  // prevent it from moving further
           CleanUp();  // we are done
+          InternalCalls.PlaySound(Head.mEntityID, "..\\Assets\\Audio\\HeadImpact_SFX.wav");
         }
 
         break;
