@@ -81,6 +81,7 @@ namespace IGE {
 			static FMOD_RESULT FMODChannelCallback(FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type,
 				FMOD_CHANNELCONTROL_CALLBACK_TYPE callbackType, void* commanddata1, void* commanddata2);
 			mutable std::unordered_set<FMOD::Channel*> channels; // not for imgui
+			mutable FMOD::ChannelGroup* dspGroup{ nullptr };
 			mutable bool paused{ false }; // not fo rimgui
 
 			void AddPostProcessingEffect(PostProcessingType type);
@@ -164,6 +165,7 @@ namespace IGE {
 			 std::unordered_map<uint32_t, FMOD::Sound*> mData;
 			//for managing groups of audio channels by grouping different sound effects, ambient sounds, etc., 
 			 std::unordered_map<ChannelGroupGUID, FMOD::ChannelGroup*> mGroup;
+
 			// std::unordered_map<std::string, std::list<FMOD::Channel*>> _mChannels;
 			 EVENT_CALLBACK_DECL(HandleRemoveComponent);
 			 EVENT_CALLBACK_DECL(HandleRemoveEntity);

@@ -491,6 +491,8 @@ namespace Mono
 		static void EnableCanvasTransition(ECS::Entity::EntityID canvasEntity, bool isEnabled);
 		static void SetCanvasTransitionType(ECS::Entity::EntityID canvasEntity, int transitionType);
 
+		static void SetShaderElapsedTime(float elapsedTime);
+		static float GetShaderElapsedTime();
 
 		/*!**********************************************************************
 		*																																			  *

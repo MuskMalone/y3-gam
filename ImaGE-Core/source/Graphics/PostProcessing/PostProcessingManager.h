@@ -41,6 +41,8 @@ namespace Graphics {
 		float& GetFogMinDist();
 		float& GetFogMaxDist();
 		glm::vec3& GetFogColor();
+		void SetShaderElapsedTime(float elapsedTime);
+		float GetShaderElapsedTime();
 	private:
 		void CreateConfigFile();
 	private: 
@@ -51,6 +53,7 @@ namespace Graphics {
 		// idx 1 will be second ... idx n will be the n + 1th
 		std::shared_ptr<Graphics::Shader> mDefaultShader;
 		PostProcessingConfigs mPpc;
+		float shaderElapsedTime = 0; // Small workaround
 		EVENT_CALLBACK_DECL(HandleSystemEvents);
 	};
 }

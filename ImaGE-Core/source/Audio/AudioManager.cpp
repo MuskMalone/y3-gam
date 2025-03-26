@@ -310,6 +310,26 @@ namespace IGE {
 
         void AudioManager::PlaySound(uint32_t sound, SoundInvokeSetting const& settings, FMOD::ChannelGroup* group, std::string const& name)
         {
+            if (!settings.dspGroup) {
+                mSystem->createChannelGroup("", &settings.dspGroup);
+                group->addGroup(settings.dspGroup);
+            }
+            else {
+                //clear the dsp
+                int dspCount = 0;
+                settings.dspGroup->getNumDSPs(&dspCount);
+                std::vector<FMOD::DSP*> dspToRemove(dspCount);
+                for (int i = dspCount - 1; i >= 0; --i)
+                {
+                    FMOD::DSP* dsp{};
+                    settings.dspGroup->getDSP(i, &dsp);
+                    dspToRemove.emplace_back(dsp);
+                }
+                for (auto const& dsp : dspToRemove) {
+                    settings.dspGroup->removeDSP(dsp);
+                }
+            }
+
             FMOD_RESULT result;
 
             // Set the loop count for the sound based on the `loop` setting
@@ -325,7 +345,7 @@ namespace IGE {
             FMOD::Channel* temp = nullptr;
 
             // Play the sound without grouping it
-            result = mSystem->playSound(mData[sound], group, true, &temp); // Start paused to set initial parameters
+            result = mSystem->playSound(mData[sound], (settings.enablePostProcessing) ? settings.dspGroup : group, true, &temp); // Start paused to set initial parameters
             if (result != FMOD_OK)
             {
                 std::string str(FMOD_ErrorString(result));
@@ -428,8 +448,9 @@ namespace IGE {
 
                     // Append each dsp to the channel DSP chain.
                     int dspCount = 0;
-                    temp->getNumDSPs(&dspCount);
-                    temp->addDSP(dspCount, dsp);
+
+                    settings.dspGroup->getNumDSPs(&dspCount);
+                    settings.dspGroup->addDSP(dspCount, dsp);
                 }
             }
 

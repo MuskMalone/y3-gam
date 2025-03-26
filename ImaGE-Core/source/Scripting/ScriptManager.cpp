@@ -341,6 +341,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetCanvasTransitionProgress);
   ADD_INTERNAL_CALL(EnableCanvasTransition);
   ADD_INTERNAL_CALL(SetCanvasTransitionType);
+  ADD_INTERNAL_CALL(SetShaderElapsedTime);
+  ADD_INTERNAL_CALL(GetShaderElapsedTime);
   ADD_INTERNAL_CALL(SetBrightness);
   ADD_INTERNAL_CALL(SetBGM);
   ADD_INTERNAL_CALL(GetGammaNorm);
@@ -2167,6 +2169,16 @@ void Mono::SetCanvasTransitionType(ECS::Entity::EntityID canvasEntity, int trans
   else {
     Debug::DebugLogger::GetInstance().LogError("SetCanvasTransitionType: No entity with ID: " + std::to_string(static_cast<uint32_t>(canvasEntity)));
   }
+}
+
+void Mono::SetShaderElapsedTime(float elapsedTime)
+{
+  Graphics::PostProcessingManager::GetInstance().SetShaderElapsedTime(elapsedTime);
+}
+
+float Mono::GetShaderElapsedTime()
+{
+  return Graphics::PostProcessingManager::GetInstance().GetShaderElapsedTime();
 }
 
 /*!**********************************************************************
