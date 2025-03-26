@@ -8,7 +8,7 @@ struct plm_t;
 namespace Component {
   struct Video {
     Video() : buffer{}, texture{}, videoSource{}, guid{}, renderType{ RenderType::WORLD },
-      started{ false }, paused{ false }, playOnStart{ true }, audioEnabled{ true } {}
+      started{ false }, paused{ false }, playOnStart{ true }, loop{ false }, audioEnabled{ true } {}
     Video(IGE::Assets::GUID guid);
     Video(Video const& rhs);
     ~Video();
@@ -40,6 +40,10 @@ namespace Component {
     void Release();
     void Clear() noexcept;
 
+  private:
+    bool PreviewFirstFrame();
+
+  public:
     enum RenderType {
       WORLD = 0,
       UI,
@@ -55,6 +59,7 @@ namespace Component {
     //float prevTimestamp, timeElapsed;
     bool started, paused;
     bool playOnStart;
+    bool loop;          // don't modify this directly!
     bool audioEnabled;  // don't modify this directly!
   };
 }

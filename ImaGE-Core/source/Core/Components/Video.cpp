@@ -7,32 +7,32 @@
 #define PL_MPEG_IMPLEMENTATION
 #include <pl_mpeg.h>
 
+namespace {
+  void VideoDecodeCallback(plm_t* self, plm_frame_t* frame, void* user);
+  void AudioDecodeCallback(plm_t* self, plm_samples_t* samples, void* user);
+}
+
 namespace Component {
   Video::Video(IGE::Assets::GUID _guid) : buffer{}, texture{}, videoSource{}, guid{},
-    renderType{ RenderType::WORLD },
-    started{ false }, paused{ false }, playOnStart{ true }
-  {
-
-  }
+    renderType{ RenderType::WORLD }, started{ false }, paused{ false },
+    playOnStart{ true }, loop{ false }, audioEnabled{ true } {}
 
   Video::Video(Video const& rhs) : buffer{}, texture{}, videoSource{}, guid{ rhs.guid },
     renderType{ rhs.renderType }, started{ false }, paused{ false },
-    playOnStart{ rhs.playOnStart }, audioEnabled{ rhs.audioEnabled }
-  {
-
-  }
+    playOnStart{ rhs.playOnStart }, loop{ rhs.loop }, audioEnabled{ rhs.audioEnabled } {}
 
   Video& Video::operator=(Video const& rhs) {
     renderType = rhs.renderType;
     playOnStart = rhs.playOnStart;
     guid = rhs.guid;
     audioEnabled = rhs.audioEnabled;
+    loop = rhs.loop;
 
     return *this;
   }
 
   void Video::InitVideoSource(IGE::Assets::GUID _guid) {
-    Release();
+    Release();  // clear previous video if needed
 
     std::string const& path{ 
       IGE_ASSETMGR.GetAsset<IGE::Assets::VideoAsset>(
@@ -46,35 +46,10 @@ namespace Component {
         Msg("Unable to create video buffer for " + path));
     }
 
-    plm_set_video_decode_callback(
-      videoSource,
-      [](plm_t* self, plm_frame_t* frame, void* user) {
-        if (!frame) {
-          IGE_DBGLOGGER.LogError("[Video] Unable to decode video frame");
-          return;
-        }
+    plm_set_video_decode_callback(videoSource, VideoDecodeCallback, this);
+    plm_set_audio_decode_callback(videoSource, AudioDecodeCallback, this);
 
-        Video* video{ reinterpret_cast<Video*>(user) };
-
-        //// if the video didn't advance, simply render the same frame
-        //if (video->GetVideoTimestamp() == video->prevTimestamp) {
-        //  return;
-        //}
-
-        //IGE_DBGLOGGER.LogInfo("Frame decoded! Timestamp: " + std::to_string(video->GetVideoTimestamp()));
-
-        plm_frame_to_rgb(frame, video->buffer.data(), frame->width * 3);
-
-        GLCALL(glTextureSubImage2D(
-          video->texture->GetTexHdl(),
-          0, 0, 0,
-          frame->width, frame->height,
-          GL_RGB, GL_UNSIGNED_BYTE, video->buffer.data())
-        );
-      },
-      this
-    );
-
+    // init texture
     texture = std::make_unique<Graphics::Texture>(
       static_cast<uint32_t>(plm_get_width(videoSource)),
       static_cast<uint32_t>(plm_get_height(videoSource)),
@@ -85,24 +60,15 @@ namespace Component {
     // set the image to the first frame as a preview
     bool const originalAudioEnabled{ audioEnabled };
     if (originalAudioEnabled) {
-      EnableAudio(false);
+      EnableAudio(false); // we don't require audio for the previw
     }
 
-    plm_frame_t* frame{ plm_decode_video(videoSource) };
-    if (!frame) {
-      throw Debug::Exception<Video>(Debug::LVL_ERROR,
-        Msg("Unable to decode video frame from " + path));
+    if (!PreviewFirstFrame()) {
+      throw Debug::Exception<Video>(Debug::LVL_ERROR, Msg("Unable to decode video frame from " + path));
     }
-    plm_frame_to_rgb(frame, buffer.data(), frame->width * 3);
-    GLCALL(glTextureSubImage2D(
-      texture->GetTexHdl(),
-      0, 0, 0,
-      frame->width, frame->height,
-      GL_RGB, GL_UNSIGNED_BYTE, buffer.data())
-    );
-    plm_rewind(videoSource); // reset it back to default
 
     EnableAudio(originalAudioEnabled);
+    SetLoop(loop);
     guid = _guid;
   }
 
@@ -141,6 +107,24 @@ namespace Component {
 
   void Video::SetLoop(bool enabled) {
     plm_set_loop(videoSource, enabled);
+    loop = enabled;
+  }
+
+  bool Video::PreviewFirstFrame() {
+    plm_frame_t* frame{ plm_decode_video(videoSource) };
+    if (!frame) { return false; }
+
+    plm_frame_to_rgb(frame, buffer.data(), frame->width * 3);
+
+    GLCALL(glTextureSubImage2D(
+      texture->GetTexHdl(),
+      0, 0, 0,
+      frame->width, frame->height,
+      GL_RGB, GL_UNSIGNED_BYTE, buffer.data())
+    );
+
+    plm_rewind(videoSource); // reset it back to default
+    return true;
   }
 
   void Video::Release() {
@@ -158,12 +142,61 @@ namespace Component {
     renderType = RenderType::WORLD;
     guid = {};
     playOnStart = audioEnabled = true;
-    started = paused = false;
+    started = paused = loop = false;
   }
 
   Video::~Video() {
     if (videoSource) {
       plm_destroy(videoSource);
     }
+  }
+} // namespace Component
+
+namespace {
+  void VideoDecodeCallback([[maybe_unused]] plm_t* self, plm_frame_t* frame, void* user) {
+    if (!frame) {
+      IGE_DBGLOGGER.LogError("[Video] Unable to decode video frame");
+      return;
+    }
+
+    Component::Video* video{ reinterpret_cast<Component::Video*>(user) };
+
+    //// if the video didn't advance, simply render the same frame
+    //if (video->GetVideoTimestamp() == video->prevTimestamp) {
+    //  return;
+    //}
+
+    //IGE_DBGLOGGER.LogInfo("Frame decoded! Timestamp: " + std::to_string(video->GetVideoTimestamp()));
+
+    // convert to rgb format
+    plm_frame_to_rgb(frame, video->buffer.data(), frame->width * 3);
+
+    // update the texture buffer
+    GLCALL(glTextureSubImage2D(
+      video->texture->GetTexHdl(),
+      0, 0, 0,
+      frame->width, frame->height,
+      GL_RGB, GL_UNSIGNED_BYTE, video->buffer.data())
+    );
+  }
+
+  void AudioDecodeCallback([[maybe_unused]] plm_t* self, plm_samples_t* samples, void* user) {
+    if (!samples) {
+      IGE_DBGLOGGER.LogError("[Video] Unable to decode audio sample");
+      return;
+    }
+
+    Component::Video* video{ reinterpret_cast<Component::Video*>(user) };
+
+    /* ======= SAMPLE EXAMPLE FOR SDL =======
+    void app_on_audio(plm_t * mpeg, plm_samples_t * samples, void* user) {
+        app_t* self = (app_t*)user;
+
+        // Hand the decoded samples over to SDL
+        int size = sizeof(float) * samples->count * 2;
+        SDL_QueueAudio(self->audio_device, samples->interleaved, size);
+    }
+    */
+
   }
 }

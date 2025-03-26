@@ -2911,6 +2911,14 @@ namespace GUI {
           modified = true;
         }
 
+        NextRowTable("Loop");
+        bool loop{ video.loop };
+        if (ImGui::Checkbox("##Loop", &loop)) {
+          video.SetLoop(loop);
+          modified = true;
+        }
+
+
         ImGui::EndTable();
       }
     }
