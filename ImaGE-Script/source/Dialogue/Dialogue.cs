@@ -42,6 +42,8 @@ public class Dialogue : Entity
   private string textAudioName = "DefaultDialogueSound";
   private const string defaultFont = "..\\Assets\\Textures\\Sniglet-Regular.ttf";
 
+  private bool audioUpdated = false;
+
   public Dialogue() : base()
   {
    
@@ -115,6 +117,7 @@ public class Dialogue : Entity
 
   private void StartDialogue()
   {
+    audioUpdated = false;
     if (playerMove == null)
     {
       Debug.LogError("PlayerMove script not attached to Dialogue script.");
@@ -221,4 +224,8 @@ public class Dialogue : Entity
     SadTara.SetActive(false);
     NeutralTara.SetActive(false);
   }
+
+    public int CurrentLineIndex { get { return lineIndex; } }
+
+
 }

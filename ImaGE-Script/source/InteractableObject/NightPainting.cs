@@ -14,6 +14,8 @@ public class NightPainting : Entity, IInventoryItem
   public Entity playerCamera;
   public PlayerMove playerMove;
 
+  private bool isNightPaintingDialogueActive = false;
+
   public string Name
   {
     get
@@ -62,6 +64,7 @@ public class NightPainting : Entity, IInventoryItem
         playerMove.UnfreezePlayer();
         inventoryScript.Additem(this);
         dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised, Emotion.Shocked });
+        isNightPaintingDialogueActive = true;
       }
       return;
     }
@@ -76,5 +79,11 @@ public class NightPainting : Entity, IInventoryItem
       return;
     }
     EToPickUpUI.SetActive(isPaintHit);
+
+    if (isNightPaintingDialogueActive && dialogueSystem.CurrentLineIndex == 1)
+    {
+        InternalCalls.PlaySound(mEntityID, "L1_5");
+        isNightPaintingDialogueActive = false;
+    }
   }
 }

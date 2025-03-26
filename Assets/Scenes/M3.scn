@@ -2262,6 +2262,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isTutorial"
+                                        }
+                                    },
+                                    {
                                         "data": 4.349999904632568,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -46494,6 +46501,34 @@
                         "value": {
                             "sounds": [
                                 {
+                                    "key": "L1_5",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 1149803819051808761
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 21.385643005371095,
+                                                "y": 4.965000152587891,
+                                                "z": -9.512203216552735
+                                            },
+                                            "volume": 2.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingSettings": []
+                                        }
+                                    }
+                                },
+                                {
                                     "key": "PickupPainting",
                                     "value": {
                                         "guid": {
@@ -46652,8 +46687,8 @@
                                         },
                                         {
                                             "data": [
-                                                "Woah, there's my painting!",
-                                                "...It doesn't look exactly as I remember"
+                                                "Is that my mom's painting?",
+                                                "Why is it here? "
                                             ],
                                             "type": "System.String[]",
                                             "scriptField": {
