@@ -2483,6 +2483,16 @@
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
                                         }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
                                     }
                                 ]
                             }

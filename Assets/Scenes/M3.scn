@@ -1049,7 +1049,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -1246,6 +1246,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
                                         }
                                     }
                                 ]
@@ -1906,7 +1916,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -1934,7 +1944,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -2006,7 +2016,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -2034,7 +2044,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -2062,7 +2072,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -3270,7 +3280,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3298,7 +3308,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3326,7 +3336,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3354,7 +3364,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3382,7 +3392,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3410,7 +3420,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3438,7 +3448,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3466,7 +3476,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3494,7 +3504,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3522,7 +3532,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3550,7 +3560,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3578,7 +3588,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3606,7 +3616,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3634,7 +3644,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3662,7 +3672,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -3690,7 +3700,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -4070,7 +4080,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -4098,7 +4108,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -4126,7 +4136,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -4154,7 +4164,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -4182,7 +4192,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -4210,7 +4220,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -5921,7 +5931,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -5949,7 +5959,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -7186,7 +7196,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -7214,7 +7224,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -7367,7 +7377,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -7395,7 +7405,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -7588,6 +7598,13 @@
                                         }
                                     },
                                     {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 76,
                                             "scriptName": "Inventory"
@@ -7615,6 +7632,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
                                         }
                                     }
                                 ]
@@ -9102,7 +9129,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -10043,7 +10070,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -10071,7 +10098,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -10280,6 +10307,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
                                         }
                                     }
                                 ]
@@ -10599,7 +10636,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -10627,7 +10664,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -11033,7 +11070,7 @@
                                             "rolloffType": "NONE",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -13265,7 +13302,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -13293,7 +13330,7 @@
                                         "rolloffType": "LOGARITHMIC",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -13321,7 +13358,7 @@
                                         "rolloffType": "LOGARITHMIC",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -13349,7 +13386,7 @@
                                         "rolloffType": "LOGARITHMIC",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -14008,7 +14045,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -19637,7 +19674,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -20405,7 +20442,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -20433,7 +20470,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -20667,6 +20704,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
                                         }
                                     }
                                 ]
@@ -27491,7 +27538,7 @@
                                             "rolloffType": "NONE",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -27629,16 +27676,6 @@
                                             "type": "System.String[]",
                                             "scriptField": {
                                                 "fieldName": "pitPaintingDialogue"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 0,
-                                                "scriptName": "Entity"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "playerCamera"
                                             }
                                         },
                                         {
@@ -31506,7 +31543,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -31534,7 +31571,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -38139,7 +38176,7 @@
                                             "rolloffType": "NONE",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -38299,6 +38336,16 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 40,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -39104,7 +39151,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -39132,7 +39179,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -39160,7 +39207,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -39188,7 +39235,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -39216,7 +39263,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -44599,7 +44646,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -44627,7 +44674,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -44655,7 +44702,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -44683,7 +44730,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -46463,7 +46510,7 @@
                                             "rolloffType": "NONE",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -46624,6 +46671,16 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 40,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]

@@ -12,6 +12,7 @@ public class Key : Entity, IInventoryItem
   public BlackBorder blackBorder;
   public Entity playerCamera;
   public Entity keyCamera;
+  public PlayerMove playerMove;
 
   public string keyAnimName;  // input from inspector based on name in anim component
 
@@ -85,6 +86,7 @@ public class Key : Entity, IInventoryItem
         InternalCalls.PlaySound(mEntityID, "PickupObjects");
         isBeingPickedUp = false;
         inventoryScript.Additem(this);
+        playerMove.UnfreezePlayer();
       }
       return;
     }
@@ -95,6 +97,7 @@ public class Key : Entity, IInventoryItem
       if (Input.GetKeyTriggered(KeyCode.E) && isKeyHit)
       {
         isBeingPickedUp = true;
+        playerMove.FreezePlayer();
       }
       EToPickUpUI.SetActive(isKeyHit);
       return;

@@ -12,6 +12,7 @@ public class ToolsPainting : Entity, IInventoryItem
 
   private bool isBeingPickedUp = false;
   public Entity playerCamera;
+  public PlayerMove playerMove;
 
   public string Name
   {
@@ -59,6 +60,7 @@ public class ToolsPainting : Entity, IInventoryItem
         InternalCalls.PlaySound(mEntityID, "PickupPainting");
         isBeingPickedUp = false;
         inventoryScript.Additem(this);
+        playerMove.UnfreezePlayer();
         dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised });
       }
       return;
@@ -69,6 +71,7 @@ public class ToolsPainting : Entity, IInventoryItem
     if (isPaintHit && Input.GetKeyTriggered(KeyCode.E))
     {
       isBeingPickedUp = true;
+      playerMove.FreezePlayer();
     }
     EToPickUpUI.SetActive(isPaintHit);
   }

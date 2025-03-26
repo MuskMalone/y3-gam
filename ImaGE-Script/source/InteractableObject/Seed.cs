@@ -16,6 +16,8 @@ public class Seed : Entity, IInventoryItem
 
   private bool seedPlanted = false;
   private bool isBeingPickedUp = false;
+  public float finalDistanceAwayFromCamAfterPickup = 2f;
+  public PlayerMove playerMove;
 
   public string Name
   {
@@ -61,10 +63,11 @@ public class Seed : Entity, IInventoryItem
   {
     if (isBeingPickedUp)
     {
-      if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID))
+      if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID, finalDistanceAwayFromCamAfterPickup))
       {
         InternalCalls.PlaySound(mEntityID, "PickupObjects");
         isBeingPickedUp = false;
+        playerMove.UnfreezePlayer();
         inventoryScript.Additem(this);
       }
       return;
@@ -75,6 +78,7 @@ public class Seed : Entity, IInventoryItem
     if (Input.GetKeyTriggered(KeyCode.E) && isSeedHit)
     {
       isBeingPickedUp = true;
+      playerMove.FreezePlayer();
     }
     EToPickUpUI.SetActive(isSeedHit);
     inventoryScript.pickupHandUI.SetActive(isSeedHit);

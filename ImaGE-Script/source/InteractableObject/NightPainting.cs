@@ -12,6 +12,7 @@ public class NightPainting : Entity, IInventoryItem
 
   private bool isBeingPickedUp = false;
   public Entity playerCamera;
+  public PlayerMove playerMove;
 
   public string Name
   {
@@ -58,6 +59,7 @@ public class NightPainting : Entity, IInventoryItem
       {
         InternalCalls.PlaySound(mEntityID, "PickupPainting");
         isBeingPickedUp = false;
+        playerMove.UnfreezePlayer();
         inventoryScript.Additem(this);
         dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised, Emotion.Shocked });
       }
@@ -69,6 +71,7 @@ public class NightPainting : Entity, IInventoryItem
     if (isPaintHit && Input.GetKeyTriggered(KeyCode.E))
     {
       isBeingPickedUp = true;
+      playerMove.FreezePlayer();
     }
     EToPickUpUI.SetActive(isPaintHit);
   }

@@ -14,6 +14,7 @@ public class Hammer : Entity, IInventoryItem
 
   private bool isBeingPickedUp = false;
   public Entity playerCamera;
+  public PlayerMove playerMove;
 
   public string Name
   {
@@ -64,6 +65,7 @@ public class Hammer : Entity, IInventoryItem
         inventoryScript.Additem(this);
         dialogueSystem.SetDialogue(hammerDialogue, new Dialogue.Emotion[] { Emotion.Surprised }, 0.008f, "IncoherentWhispers", "..\\Assets\\Textures\\Stagedive-d58X.ttf");
         isBeingPickedUp = false;
+        playerMove.UnfreezePlayer();
       }
       return;
     }
@@ -71,6 +73,7 @@ public class Hammer : Entity, IInventoryItem
     bool isHammerHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
     if (Input.GetKeyTriggered(KeyCode.E) && isHammerHit)
     {
+      playerMove.FreezePlayer();
       isBeingPickedUp = true;
     }
     EToPickUpUI.SetActive(isHammerHit);
