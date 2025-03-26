@@ -72,6 +72,8 @@ public class NightPainting : Entity, IInventoryItem
     {
       isBeingPickedUp = true;
       playerMove.FreezePlayer();
+      EToPickUpUI.SetActive(false);
+      return;
     }
     EToPickUpUI.SetActive(isPaintHit);
   }

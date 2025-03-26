@@ -156,10 +156,16 @@ public class Level2Inventory : Entity
     // We will only clear non-HexPaintings from inventory via a trigger
     public void ClearInventoryForHexRoom()
     {
-      foreach (IInventoryItem item in mItems)
+      // Create a copy of the list to iterate over
+      var mItemsCopy = new List<IInventoryItem>(mItems);
+
+      foreach (IInventoryItem item in mItemsCopy)
       {
         if (item != null && !item.Name.StartsWith("HexPainting"))
+        {
+          Debug.Log("Removing Item: " + item.Name);
           RemoveItem(item);
+        }
       }
     }
 

@@ -24,6 +24,7 @@ public class Key : Entity, IInventoryItem
   bool isZoomingIn = true;
 
   private bool isBeingPickedUp = false;
+  public float finalDistanceAwayFromCamAfterPickup = 1.5f;
 
   public string Name
   {
@@ -81,7 +82,7 @@ public class Key : Entity, IInventoryItem
   {
     if (isBeingPickedUp)
     {
-      if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID))
+      if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID, finalDistanceAwayFromCamAfterPickup))
       {
         InternalCalls.PlaySound(mEntityID, "PickupObjects");
         isBeingPickedUp = false;
@@ -98,6 +99,8 @@ public class Key : Entity, IInventoryItem
       {
         isBeingPickedUp = true;
         playerMove.FreezePlayer();
+        EToPickUpUI.SetActive(false);
+        return;
       }
       EToPickUpUI.SetActive(isKeyHit);
       return;

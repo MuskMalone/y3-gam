@@ -10,6 +10,11 @@ public class PitPainting : Entity, IInventoryItem
   //public Dialogue dialogueSystem;
   //public string[] pitPaintingDialogue;
 
+  private bool isBeingPickedUp = false;
+  public float finalDistanceAwayFromCamAfterPickup = 2f;
+  public PlayerMove playerMove;
+  public Entity playerCamera;
+
   public string Name
   {
     get
@@ -49,12 +54,26 @@ public class PitPainting : Entity, IInventoryItem
 
   void Update()
   {
+    if (isBeingPickedUp)
+    {
+      if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID))
+      {
+        InternalCalls.PlaySound(mEntityID, "PickupObjects");
+        inventoryScript.Additem(this);
+        isBeingPickedUp = false;
+        playerMove.UnfreezePlayer();
+      }
+      return;
+    }
+
     // For Painting Picking Up
     bool isPaintHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
     if (isPaintHit && Input.GetKeyTriggered(KeyCode.E))
     {
-      InternalCalls.PlaySound(mEntityID, "PickupObjects");
-      inventoryScript.Additem(this);
+      isBeingPickedUp = true;
+      playerMove.FreezePlayer();
+      EToPickUpUI.SetActive(false);
+      return;
       //dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised, Emotion.Shocked });
     }
     EToPickUpUI.SetActive(isPaintHit);

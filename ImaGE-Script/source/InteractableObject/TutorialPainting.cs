@@ -76,6 +76,8 @@ public class TutorialPainting : Entity, IInventoryItem
         {
           isBeingPickedUp = true;
           playerMove.FreezePlayer();
+          EToPickUpUI.SetActive(false);
+          return;
         }
         EToPickUpUI.SetActive(isTutorialPaintingHit);
     }
