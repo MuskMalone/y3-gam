@@ -44,8 +44,8 @@ public class SettingsPage : Entity
 
   public float CanvasmaxX = 0.5f;
   public float CanvasminX = -0.5f;
-  public float maxX = 10f;
-  public float minX = -10f;
+  public float maxX = -0.144f;
+  public float minX = -0.292f;
 
   public float TargetZMenu = 2f;
   public float TargetZButton = 3f;

@@ -1,5 +1,6 @@
 ﻿using IGE.Utils;
 using System;
+using System.Runtime.CompilerServices;
 
 public class SettingsButtons : Entity
 {
@@ -26,6 +27,7 @@ public class SettingsButtons : Entity
   public void OnPointerDown()
   {
     IsClicked = true;
+    Debug.Log("HIT\n");
   }
 
   public void OnPointerUp()
