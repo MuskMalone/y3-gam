@@ -58,21 +58,21 @@
     <IntDir>obj\Debug\</IntDir>
     <TargetName>ImaGE-Core</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>source\External;source\External\ImGui;source\External\glad\include;source\External\fmod\include;source\External\stb;source\External\pl_mpeg;source\External\filewatch;source\External\mono\include;..\Libraries\assimp\include;..\Libraries\Built-Libraries\Release\Libraries\assimp\include;..\Libraries\entt\single_include;..\Libraries\freetype\include;..\Libraries\glfw\include;..\Libraries\glm;..\Libraries\rapidjson\include;..\Libraries\rttr\src;..\Libraries\spdlog\include;..\Libraries\PhysX\physx\include;..\Libraries\PhysX\pxshared\include;..\Libraries\rttr\Built-Libraries\Debug\src;..\Libraries\DirectXTex\DirectXTex;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>source\External;source\External\ImGui;source\External\glad\include;source\External\fmod\include;source\External\stb;source\External\filewatch;source\External\mono\include;..\Libraries\assimp\include;..\Libraries\Built-Libraries\Release\Libraries\assimp\include;..\Libraries\entt\single_include;..\Libraries\freetype\include;..\Libraries\glfw\include;..\Libraries\glm;..\Libraries\rapidjson\include;..\Libraries\rttr\src;..\Libraries\spdlog\include;..\Libraries\PhysX\physx\include;..\Libraries\PhysX\pxshared\include;..\Libraries\pl_mpeg;..\Libraries\rttr\Built-Libraries\Debug\src;..\Libraries\DirectXTex\DirectXTex;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>Binaries\Release\</OutDir>
     <IntDir>obj\Release\</IntDir>
     <TargetName>ImaGE-Core</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>source\External;source\External\ImGui;source\External\glad\include;source\External\fmod\include;source\External\stb;source\External\pl_mpeg;source\External\filewatch;source\External\mono\include;..\Libraries\assimp\include;..\Libraries\Built-Libraries\Release\Libraries\assimp\include;..\Libraries\entt\single_include;..\Libraries\freetype\include;..\Libraries\glfw\include;..\Libraries\glm;..\Libraries\rapidjson\include;..\Libraries\rttr\src;..\Libraries\spdlog\include;..\Libraries\PhysX\physx\include;..\Libraries\PhysX\pxshared\include;..\Libraries\rttr\Built-Libraries\Debug\src;..\Libraries\DirectXTex\DirectXTex;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>source\External;source\External\ImGui;source\External\glad\include;source\External\fmod\include;source\External\stb;source\External\filewatch;source\External\mono\include;..\Libraries\assimp\include;..\Libraries\Built-Libraries\Release\Libraries\assimp\include;..\Libraries\entt\single_include;..\Libraries\freetype\include;..\Libraries\glfw\include;..\Libraries\glm;..\Libraries\rapidjson\include;..\Libraries\rttr\src;..\Libraries\spdlog\include;..\Libraries\PhysX\physx\include;..\Libraries\PhysX\pxshared\include;..\Libraries\pl_mpeg;..\Libraries\rttr\Built-Libraries\Debug\src;..\Libraries\DirectXTex\DirectXTex;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|x64'">
     <OutDir>Binaries\Distribution\</OutDir>
     <IntDir>obj\Distribution\</IntDir>
     <TargetName>ImaGE-Core</TargetName>
     <TargetExt>.lib</TargetExt>
-    <ExternalIncludePath>source\External;source\External\ImGui;source\External\glad\include;source\External\fmod\include;source\External\stb;source\External\pl_mpeg;source\External\filewatch;source\External\mono\include;..\Libraries\assimp\include;..\Libraries\Built-Libraries\Release\Libraries\assimp\include;..\Libraries\entt\single_include;..\Libraries\freetype\include;..\Libraries\glfw\include;..\Libraries\glm;..\Libraries\rapidjson\include;..\Libraries\rttr\src;..\Libraries\spdlog\include;..\Libraries\PhysX\physx\include;..\Libraries\PhysX\pxshared\include;..\Libraries\rttr\Built-Libraries\Debug\src;..\Libraries\DirectXTex\DirectXTex;$(ExternalIncludePath)</ExternalIncludePath>
+    <ExternalIncludePath>source\External;source\External\ImGui;source\External\glad\include;source\External\fmod\include;source\External\stb;source\External\filewatch;source\External\mono\include;..\Libraries\assimp\include;..\Libraries\Built-Libraries\Release\Libraries\assimp\include;..\Libraries\entt\single_include;..\Libraries\freetype\include;..\Libraries\glfw\include;..\Libraries\glm;..\Libraries\rapidjson\include;..\Libraries\rttr\src;..\Libraries\spdlog\include;..\Libraries\PhysX\physx\include;..\Libraries\PhysX\pxshared\include;..\Libraries\pl_mpeg;..\Libraries\rttr\Built-Libraries\Debug\src;..\Libraries\DirectXTex\DirectXTex;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -324,7 +324,6 @@ xcopy /Q /E /Y /I "$(SolutionDir)\Assets" "$(SolutionDir)\Installer\GAMEDIRECTOR
     <ClInclude Include="source\External\mono\include\mono\utils\mono-logger.h" />
     <ClInclude Include="source\External\mono\include\mono\utils\mono-private-unstable.h" />
     <ClInclude Include="source\External\mono\include\mono\utils\mono-publib.h" />
-    <ClInclude Include="source\External\pl_mpeg\pl_mpeg.h" />
     <ClInclude Include="source\External\stb\stb_image.h" />
     <ClInclude Include="source\External\stb\stb_image_write.h" />
     <ClInclude Include="source\FrameRateController\FrameRateController.h" />

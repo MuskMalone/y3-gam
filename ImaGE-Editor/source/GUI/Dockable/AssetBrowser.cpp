@@ -263,6 +263,9 @@ namespace GUI
       else if (std::string(gSupportedAudioFormats).find(ext) != std::string::npos) {
         am.ChangeAssetPath<IGE::Assets::AudioAsset>(am.LoadRef<IGE::Assets::AudioAsset>(original.string()), newPath.string());
       }
+      else if (std::string(gSupportedVideoFormats).find(ext) != std::string::npos) {
+        am.ChangeAssetPath<IGE::Assets::VideoAsset>(am.LoadRef<IGE::Assets::VideoAsset>(original.string()), newPath.string());
+      }
       else if (ext == gSceneFileExt) {
         // rename hierarchy state file of scene
         std::string const editorScenesDir{ gEditorAssetsDirectory + std::string(".Scenes\\") };
@@ -478,7 +481,7 @@ namespace GUI
     }
   }
   
-  void ImportVideo(std::string const& path) {
+  void ImportVideo(std::filesystem::path const& path) {
     if (!std::filesystem::exists(gVideosDirectory)) {
       std::filesystem::create_directory(gVideosDirectory);
     }
@@ -487,12 +490,13 @@ namespace GUI
       std::filesystem::create_directory(compiledPath);
     }
 
-    compiledPath += std::filesystem::path(path).stem().string() + ".mpg";
+    compiledPath += path.stem().string() + ".mpg";
+    std::string const pathStr{ path.string() };
 
     // if alread mpg file, just copy over
-    if (std::filesystem::path(path).extension() == ".mpg") {
+    if (path.extension() == ".mpg") {
       std::filesystem::copy(path, compiledPath, std::filesystem::copy_options::overwrite_existing);
-      IGE_ASSETMGR.ImportAsset<IGE::Assets::VideoAsset>(path);
+      IGE_ASSETMGR.ImportAsset<IGE::Assets::VideoAsset>(path.string());
       IGE_DBGLOGGER.LogInfo("Successfuly imported video to " + compiledPath);
       return;
     }
@@ -501,11 +505,13 @@ namespace GUI
     // ffmpeg -i input.mp4 -c:v mpeg1video -q:v 0 -c:a libtwolame -b:a 224k -format mpeg output.mpg
    
     // create a detached thread to import the video in background
+
+    IGE_DBGLOGGER.LogInfo("Started importing " + path.filename().string() + " in the background!");
     std::thread(
-      [path, compiledPath]() {
+      [pathStr, compiledPath]() {
         std::string const cmd{
           "..\\ImaGE-Editor\\source\\Executables\\ffmpeg.exe -i \"" + 
-          path + "\" -c:v mpeg1video -q:v 0 -c:a libtwolame -b:a 224k -f mpeg \"" + compiledPath + "\""
+          pathStr + "\" -c:v mpeg1video -q:v 0 -c:a libtwolame -b:a 224k -f mpeg \"" + compiledPath + "\""
         };
 
         if (std::filesystem::exists(compiledPath)) {
@@ -514,11 +520,11 @@ namespace GUI
 
         int result{ std::system(cmd.c_str()) };
         if (result != 0) {
-          IGE_DBGLOGGER.LogError("Unable to import " + path);
+          IGE_DBGLOGGER.LogError("Unable to import " + pathStr);
           return;
         }
 
-        IGE_ASSETMGR.ImportAsset<IGE::Assets::VideoAsset>(path);
+        IGE_ASSETMGR.ImportAsset<IGE::Assets::VideoAsset>(pathStr);
         IGE_DBGLOGGER.LogInfo("Successfuly imported video to " + compiledPath);
       }
     ).detach();
@@ -1127,6 +1133,9 @@ namespace
         case GUI::AssetPayload::ANIMATION:
           am.ChangeAssetPath<IGE::Assets::AnimationAsset>(guid, newPath);
           break;
+        case GUI::AssetPayload::VIDEO:
+          am.ChangeAssetPath<IGE::Assets::VideoAsset>(guid, newPath);
+          break;
         case GUI::AssetPayload::SCENE:
         default:
           break;
@@ -1177,6 +1186,9 @@ namespace
     }
     else if (ext == ".glsl") {
       ImGui::TextColored(sFileIconCol, ICON_FA_WATER);
+    }
+    else if (std::string(gSupportedVideoFormats).find(ext) != std::string::npos) {
+      ImGui::TextColored(sFileIconCol, ICON_FA_VIDEO);
     }
     else {
       ImGui::TextColored(sFileIconCol, ICON_FA_FILE);

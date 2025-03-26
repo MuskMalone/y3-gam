@@ -37,8 +37,8 @@ namespace Component {
     inline bool IsWorldObject() const noexcept{ return renderType == RenderType::WORLD; }
     inline bool IsUIObject() const noexcept { return renderType == RenderType::UI; }
 
+    void Release();
     void Clear() noexcept;
-    
 
     enum RenderType {
       WORLD = 0,

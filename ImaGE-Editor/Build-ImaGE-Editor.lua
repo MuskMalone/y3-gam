@@ -39,7 +39,7 @@ project "ImaGE-Editor"
       "../Libraries/rttr/src",
       "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include",
-      "../ImaGE-Core/source/External/pl_mpeg",
+      "../Libraries/pl_mpeg",
       --"../Libraries/filewatch",
       --"../Libraries/mono/**",
       "../ImaGE-Core/source/External/filewatch",

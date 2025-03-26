@@ -4,9 +4,13 @@
 #include <Core/Components/Video.h>
 #include <FrameRateController/FrameRateController.h>
 
+namespace {
+  
+}
+
 namespace Systems {
   VideoSystem::VideoSystem(const char* name) : System(name) {
-
+    
   }
 
   void VideoSystem::Update() {

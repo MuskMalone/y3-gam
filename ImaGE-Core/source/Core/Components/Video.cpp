@@ -32,12 +32,7 @@ namespace Component {
   }
 
   void Video::InitVideoSource(IGE::Assets::GUID _guid) {
-    buffer.clear();
-    texture.reset();
-    if (videoSource) {
-      plm_destroy(videoSource);
-      videoSource = nullptr;
-    }
+    Release();
 
     std::string const& path{ 
       IGE_ASSETMGR.GetAsset<IGE::Assets::VideoAsset>(
@@ -148,13 +143,18 @@ namespace Component {
     plm_set_loop(videoSource, enabled);
   }
 
-  void Video::Clear() noexcept {
+  void Video::Release() {
     buffer.clear();
     texture.reset();
     if (videoSource) {
       plm_destroy(videoSource);
       videoSource = nullptr;
+      IGE_DBGLOGGER.LogInfo("Destroyedddd");
     }
+  }
+
+  void Video::Clear() noexcept {
+    Release();
 
     renderType = RenderType::WORLD;
     guid = {};
@@ -163,8 +163,6 @@ namespace Component {
   }
 
   Video::~Video() {
-    if (videoSource) {
-      plm_destroy(videoSource);
-    }
+    Release();
   }
 }

@@ -157,9 +157,6 @@
     <Filter Include="External\mono\include\mono\utils">
       <UniqueIdentifier>{AB68BFDF-97B9-AA21-C01D-99E3ACCD3D8B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External\pl_mpeg">
-      <UniqueIdentifier>{BBB95B92-A7B2-7AE4-D0E4-5F69BC3C5AF0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="External\stb">
       <UniqueIdentifier>{609F6B0A-4C02-FBAE-F587-3365E1C9C631}</UniqueIdentifier>
     </Filter>
@@ -647,9 +644,6 @@
     </ClInclude>
     <ClInclude Include="source\External\mono\include\mono\utils\mono-publib.h">
       <Filter>External\mono\include\mono\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="source\External\pl_mpeg\pl_mpeg.h">
-      <Filter>External\pl_mpeg</Filter>
     </ClInclude>
     <ClInclude Include="source\External\stb\stb_image.h">
       <Filter>External\stb</Filter>
