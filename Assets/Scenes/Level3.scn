@@ -480,6 +480,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isTutorial"
+                                        }
+                                    },
+                                    {
                                         "data": 4.349999904632568,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -9943,9 +9950,9 @@
                             "z": 3.643716812133789
                         },
                         "worldPos": {
-                            "x": 46.42793273925781,
+                            "x": 46.428104400634769,
                             "y": 5.936108589172363,
-                            "z": -119.18306732177735
+                            "z": -119.18305969238281
                         },
                         "worldScale": {
                             "x": 0.0005400000372901559,
@@ -10101,9 +10108,9 @@
                             "z": -3.197700262069702
                         },
                         "worldPos": {
-                            "x": 46.42793655395508,
+                            "x": 46.42810821533203,
                             "y": 5.936357021331787,
-                            "z": -119.18304443359375
+                            "z": -119.18303680419922
                         },
                         "worldScale": {
                             "x": 0.010000000707805157,
@@ -19717,6 +19724,184 @@
             ],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "..\\Assets\\Audio\\GhostlyFemaleSinging_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4596280009684163333
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 47.07286071777344,
+                                            "y": 5.089890480041504,
+                                            "z": -118.82903289794922
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 16.299999237060548,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": true,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\HeadDropBefore_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 13215025869887684493
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 47.07286071777344,
+                                            "y": 5.089890480041504,
+                                            "z": -118.82903289794922
+                                        },
+                                        "volume": 1.5,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 38.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\HeadImpact_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 1787372320160392303
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 47.07286071777344,
+                                            "y": 5.089890480041504,
+                                            "z": -118.82903289794922
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\HeadMoving_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11770213145489670200
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 47.07286071777344,
+                                            "y": 5.089890480041504,
+                                            "z": -118.82903289794922
+                                        },
+                                        "volume": 1.5,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 38.0,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "..\\Assets\\Audio\\StatueCrying_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 485463795614135156
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 47.07286071777344,
+                                            "y": 5.089890480041504,
+                                            "z": -118.82903289794922
+                                        },
+                                        "volume": 0.2800000011920929,
+                                        "pitch": 1.059999942779541,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 16.299999237060548,
+                                        "rolloffType": "LINEAR",
+                                        "enablePostProcessing": true,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "Head Pivot",
                         "isActive": true
@@ -19725,9 +19910,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00006508827209472656,
+                            "x": 0.00007724761962890625,
                             "y": 0.33882567286491396,
-                            "z": -0.0000400543212890625
+                            "z": -0.00005173683166503906
                         },
                         "scale": {
                             "x": 1.0,
@@ -19746,9 +19931,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 47.072689056396487,
+                            "x": 47.07286071777344,
                             "y": 5.089890480041504,
-                            "z": -118.82904052734375
+                            "z": -118.82903289794922
                         },
                         "worldScale": {
                             "x": 10.0,
@@ -25594,50 +25779,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 527,
+                                                "entityID": 560,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 527,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 1048777,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 1048777,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 557,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 557,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 563,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 563,
+                                                        "data": 560,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -25659,11 +25805,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 560,
+                                                "entityID": 563,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 560,
+                                                        "data": 563,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 557,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 557,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 1048777,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 1048777,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 527,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 527,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -43297,9 +43482,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 47.07196807861328,
+                            "x": 47.072139739990237,
                             "y": 1.7016329765319825,
-                            "z": -118.82919311523438
+                            "z": -118.82918548583985
                         },
                         "worldScale": {
                             "x": 10.0,
@@ -57116,9 +57301,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -4.76837158203125e-7,
-                            "y": 1.4901161193847657e-8,
-                            "z": 4.76837158203125e-7
+                            "x": 0.00000762939453125,
+                            "y": -4.470348358154297e-8,
+                            "z": -0.000003814697265625
                         },
                         "scale": {
                             "x": 1.0,
@@ -57137,9 +57322,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 47.071937561035159,
-                            "y": 1.7016336917877198,
-                            "z": -118.8292007446289
+                            "x": 47.072025299072269,
+                            "y": 1.701633095741272,
+                            "z": -118.82917785644531
                         },
                         "worldScale": {
                             "x": 10.0,
