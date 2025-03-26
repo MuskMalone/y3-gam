@@ -214,15 +214,22 @@ namespace Graphics {
 
       // Group entities into opaque and transparent sprites
       for (ECS::Entity const& entity : entities) {
-          if (!entity.HasComponent<Component::Sprite2D>()) continue;
-
+        if (entity.HasComponent<Component::Sprite2D>()) {
           auto const& sprite = entity.GetComponent<Component::Sprite2D>();
           if (sprite.isTransparent) {
-              transparentSprites.push_back(entity);
+            transparentSprites.push_back(entity);
           }
           else {
-              opaqueSprites.push_back(entity);
+            opaqueSprites.push_back(entity);
           }
+        }
+        else if (entity.HasComponent<Component::Video>()) {
+          Component::Video const& video{ entity.GetComponent<Component::Video>() };
+
+          if (video.IsWorldObject() && video.texture) {
+            opaqueSprites.push_back(entity);
+          }
+        }
       }
 
       // Sort transparent sprites by distance to the camera (back-to-front)
@@ -240,16 +247,23 @@ namespace Graphics {
 
       // Render opaque sprites
       for (ECS::Entity const& entity : opaqueSprites) {
-          auto const& sprite = entity.GetComponent<Component::Sprite2D>();
           auto const& xform = entity.GetComponent<Component::Transform>();
 
-          if (sprite.textureAsset) {
+          if (entity.HasComponent<Component::Sprite2D>()) {
+            auto const& sprite = entity.GetComponent<Component::Sprite2D>();
+
+            if (sprite.textureAsset) {
               Renderer::DrawSprite(xform.worldPos, xform.worldScale, xform.worldRot,
-                  IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(sprite.textureAsset)->mTexture,
-                  sprite.color, entity.GetEntityID());
-          }
-          else {
+                IGE_ASSETMGR.GetAsset<IGE::Assets::TextureAsset>(sprite.textureAsset)->mTexture,
+                sprite.color, entity.GetEntityID());
+            }
+            else {
               Renderer::DrawQuad(xform.worldPos, glm::vec2{ xform.worldScale }, xform.worldRot, sprite.color, entity.GetEntityID());
+            }
+          }
+          else if (entity.HasComponent<Component::Video>()) {
+            Renderer::DrawSprite(xform.worldPos, xform.worldScale, xform.worldRot,
+              *(entity.GetComponent<Component::Video>().texture), Color::COLOR_WHITE, entity.GetEntityID());
           }
       }
 

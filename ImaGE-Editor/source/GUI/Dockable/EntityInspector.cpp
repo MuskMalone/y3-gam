@@ -2829,6 +2829,13 @@ namespace GUI {
       Component::Video& video{ entity.GetComponent<Component::Video>() };
       float const inputWidth{ CalcInputWidth(60.f) };
 
+      if (video.IsUIObject() && !ImGuiHelpers::IsUnderCanvasEntity(entity)) {
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8f, 0.f, 0.f, 1.f));
+        ImGui::TextWrapped("Warning: UI Video must be placed under a canvas entity");
+        ImGui::PopStyleColor();
+        ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 5.f);
+      }
+
       if (ImGui::BeginTable("VideoTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
         ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
         ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
@@ -2865,8 +2872,11 @@ namespace GUI {
         ImGui::TableNextRow(); ImGui::TableSetColumnIndex(0);
         ImGui::Text("Render Type");
         if (ImGui::IsItemHovered()) {
-          ImGui::SetTooltip("How the video should be rendered. For \"UI\",\
-                             entity must be under a canvas entity");
+          ImGui::BeginTooltip();
+          ImGui::Text("How the video should be rendered.");
+          ImGui::Text("  World: Place anywhere in the scene (similar to Sprite2D)");
+          ImGui::Text("     UI: Renders in a canvas (similar to Image)");
+          ImGui::EndTooltip();
         }
         ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(GUI::Inspector::INPUT_SIZE);
 
@@ -2889,8 +2899,15 @@ namespace GUI {
           ImGui::EndCombo();
         }
 
+        NextRowTable("Enable Audio");
+        bool audioEnabled{ video.audioEnabled };
+        if (ImGui::Checkbox("##EnableAudio", &audioEnabled)) {
+          video.EnableAudio(audioEnabled);
+          modified = true;
+        }
+
         NextRowTable("Play on Start");
-        if (ImGui::Checkbox("##playOnStart", &video.playOnStart)) {
+        if (ImGui::Checkbox("##PlayOnStart", &video.playOnStart)) {
           modified = true;
         }
 

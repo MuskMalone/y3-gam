@@ -16,8 +16,8 @@ namespace Component {
   }
 
   Video::Video(Video const& rhs) : buffer{}, texture{}, videoSource{}, guid{ rhs.guid },
-    renderType{ rhs.renderType },
-    started{ false }, paused{ false }, playOnStart{ rhs.playOnStart }
+    renderType{ rhs.renderType }, started{ false }, paused{ false },
+    playOnStart{ rhs.playOnStart }, audioEnabled{ rhs.audioEnabled }
   {
 
   }
@@ -26,6 +26,7 @@ namespace Component {
     renderType = rhs.renderType;
     playOnStart = rhs.playOnStart;
     guid = rhs.guid;
+    audioEnabled = rhs.audioEnabled;
 
     return *this;
   }
@@ -65,7 +66,7 @@ namespace Component {
         //  return;
         //}
 
-        IGE_DBGLOGGER.LogInfo("Frame decoded! Timestamp: " + std::to_string(video->GetVideoTimestamp()));
+        //IGE_DBGLOGGER.LogInfo("Frame decoded! Timestamp: " + std::to_string(video->GetVideoTimestamp()));
 
         plm_frame_to_rgb(frame, video->buffer.data(), frame->width * 3);
 
@@ -87,7 +88,7 @@ namespace Component {
     buffer.resize(texture->GetWidth() * texture->GetHeight() * 3);
     
     // set the image to the first frame as a preview
-    bool originalAudioEnabled{ IsAudioEnabled() };
+    bool const originalAudioEnabled{ audioEnabled };
     if (originalAudioEnabled) {
       EnableAudio(false);
     }
@@ -106,9 +107,7 @@ namespace Component {
     );
     plm_rewind(videoSource); // reset it back to default
 
-    if (originalAudioEnabled) {
-      EnableAudio(true);
-    }
+    EnableAudio(originalAudioEnabled);
     guid = _guid;
   }
 
@@ -136,12 +135,9 @@ namespace Component {
     plm_decode(videoSource, seconds);
   }
 
-  bool Video::IsAudioEnabled() const { 
-    return static_cast<bool>(plm_get_audio_enabled(videoSource));
-  }
-
   void Video::EnableAudio(bool enabled) {
     plm_set_audio_enabled(videoSource, enabled);
+    audioEnabled = enabled;
   }
 
   bool Video::IsLoopEnabled() const {

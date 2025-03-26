@@ -8,7 +8,7 @@ struct plm_t;
 namespace Component {
   struct Video {
     Video() : buffer{}, texture{}, videoSource{}, guid{}, renderType{ RenderType::WORLD },
-      started{ false }, paused{ false }, playOnStart{ true } {}
+      started{ false }, paused{ false }, playOnStart{ true }, audioEnabled{ true } {}
     Video(IGE::Assets::GUID guid);
     Video(Video const& rhs);
     ~Video();
@@ -25,7 +25,7 @@ namespace Component {
     float GetFramerate() const;
     float GetAspectRatio() const;
 
-    bool IsAudioEnabled() const;
+    inline bool IsAudioEnabled() const noexcept { return audioEnabled; }
     void EnableAudio(bool enabled);
 
     bool IsLoopEnabled() const;
@@ -55,5 +55,6 @@ namespace Component {
     //float prevTimestamp, timeElapsed;
     bool started, paused;
     bool playOnStart;
+    bool audioEnabled;  // don't modify this directly!
   };
 }

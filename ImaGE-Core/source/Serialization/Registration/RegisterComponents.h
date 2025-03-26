@@ -187,6 +187,7 @@ static void rttr_auto_register_reflection_function2_(); namespace {
   REGISTER_COMPONENT(Video, "Video")
     .property("renderType", &Video::renderType)
     .property("guid", &Video::guid)
+    .property("audioEnabled", &Video::audioEnabled)
     .property("playOnStart", &Video::playOnStart);
 
     // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks

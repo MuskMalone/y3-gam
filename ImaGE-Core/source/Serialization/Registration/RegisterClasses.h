@@ -267,6 +267,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
   rttr::registration::class_<Graphics::PostProcessingManager::PostProcessingConfigs>("PostProcessingConfigs")
       .constructor<>()(rttr::policy::ctor::as_object)
       .property("configs", &Graphics::PostProcessingManager::PostProcessingConfigs::mConfigs);
+
   /* ------------------ Materials ---------------------*/
   {
       using T = Graphics::MaterialData;
