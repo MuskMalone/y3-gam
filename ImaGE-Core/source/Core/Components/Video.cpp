@@ -149,7 +149,6 @@ namespace Component {
     if (videoSource) {
       plm_destroy(videoSource);
       videoSource = nullptr;
-      IGE_DBGLOGGER.LogInfo("Destroyedddd");
     }
   }
 
@@ -158,11 +157,13 @@ namespace Component {
 
     renderType = RenderType::WORLD;
     guid = {};
-    playOnStart = true;
+    playOnStart = audioEnabled = true;
     started = paused = false;
   }
 
   Video::~Video() {
-    Release();
+    if (videoSource) {
+      plm_destroy(videoSource);
+    }
   }
 }
