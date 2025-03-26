@@ -34,6 +34,9 @@
     <Filter Include="Asset\Assetables\Texture">
       <UniqueIdentifier>{3BF38E0D-2718-DE8D-5063-C31D3CE7DCAB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Asset\Assetables\Video">
+      <UniqueIdentifier>{A196A52F-8D90-CE81-76FD-6492629634EE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Audio">
       <UniqueIdentifier>{9718D90C-032D-01BE-CCAE-A41D3882FDEE}</UniqueIdentifier>
     </Filter>
@@ -69,6 +72,9 @@
     </Filter>
     <Filter Include="Core\Systems\TransformSystem">
       <UniqueIdentifier>{E531723A-D1EC-61E6-7AA4-DA30663EAC76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Systems\VideoSystem">
+      <UniqueIdentifier>{6023C8D7-4C48-1758-7593-FCE761171676}</UniqueIdentifier>
     </Filter>
     <Filter Include="DebugTools">
       <UniqueIdentifier>{7D6B98D3-6923-DA20-D22A-B37CBE017511}</UniqueIdentifier>
@@ -150,6 +156,9 @@
     </Filter>
     <Filter Include="External\mono\include\mono\utils">
       <UniqueIdentifier>{AB68BFDF-97B9-AA21-C01D-99E3ACCD3D8B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\pl_mpeg">
+      <UniqueIdentifier>{BBB95B92-A7B2-7AE4-D0E4-5F69BC3C5AF0}</UniqueIdentifier>
     </Filter>
     <Filter Include="External\stb">
       <UniqueIdentifier>{609F6B0A-4C02-FBAE-F587-3365E1C9C631}</UniqueIdentifier>
@@ -246,6 +255,9 @@
     </ClInclude>
     <ClInclude Include="source\Asset\Assetables\Texture\TextureAsset.h">
       <Filter>Asset\Assetables\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Asset\Assetables\Video\VideoAsset.h">
+      <Filter>Asset\Assetables\Video</Filter>
     </ClInclude>
     <ClInclude Include="source\Asset\IGEAssets.h">
       <Filter>Asset</Filter>
@@ -347,6 +359,9 @@
     <ClInclude Include="source\Core\Components\Transform.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="source\Core\Components\Video.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
     <ClInclude Include="source\Core\Entity.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -388,6 +403,9 @@
     </ClInclude>
     <ClInclude Include="source\Core\Systems\TransformSystem\TransformHelpers.h">
       <Filter>Core\Systems\TransformSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Systems\VideoSystem\VideoSystem.h">
+      <Filter>Core\Systems\VideoSystem</Filter>
     </ClInclude>
     <ClInclude Include="source\Debug.h" />
     <ClInclude Include="source\DebugTools\DebugLogger\DebugLogger.h">
@@ -630,6 +648,9 @@
     <ClInclude Include="source\External\mono\include\mono\utils\mono-publib.h">
       <Filter>External\mono\include\mono\utils</Filter>
     </ClInclude>
+    <ClInclude Include="source\External\pl_mpeg\pl_mpeg.h">
+      <Filter>External\pl_mpeg</Filter>
+    </ClInclude>
     <ClInclude Include="source\External\stb\stb_image.h">
       <Filter>External\stb</Filter>
     </ClInclude>
@@ -842,7 +863,6 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="source\pch.h" />
-    <ClInclude Include="source\Asset\Assetables\Video\VideoAsset.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -876,6 +896,9 @@
     <ClCompile Include="source\Asset\Assetables\Texture\TextureAsset.cpp">
       <Filter>Asset\Assetables\Texture</Filter>
     </ClCompile>
+    <ClCompile Include="source\Asset\Assetables\Video\VideoAsset.cpp">
+      <Filter>Asset\Assetables\Video</Filter>
+    </ClCompile>
     <ClCompile Include="source\Asset\SmartPointer.cpp">
       <Filter>Asset</Filter>
     </ClCompile>
@@ -898,6 +921,9 @@
       <Filter>Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Components\Transform.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Components\Video.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="source\Core\Entity.cpp">
@@ -932,6 +958,9 @@
     </ClCompile>
     <ClCompile Include="source\Core\Systems\TransformSystem\TransformHelpers.cpp">
       <Filter>Core\Systems\TransformSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Systems\VideoSystem\VideoSystem.cpp">
+      <Filter>Core\Systems\VideoSystem</Filter>
     </ClCompile>
     <ClCompile Include="source\DebugTools\DebugLogger\DebugLogger.cpp">
       <Filter>DebugTools\DebugLogger</Filter>
@@ -1141,6 +1170,5 @@
       <Filter>Serialization</Filter>
     </ClCompile>
     <ClCompile Include="source\pch.cpp" />
-    <ClCompile Include="source\Asset\Assetables\Video\VideoAsset.cpp" />
   </ItemGroup>
 </Project>

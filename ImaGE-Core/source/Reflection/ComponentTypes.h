@@ -39,7 +39,8 @@ namespace Reflection
 		rttr::type::get<Component::Camera>(),
 		rttr::type::get<Component::Skybox>(),
 		rttr::type::get<Component::Interactive>(),
-		rttr::type::get<Component::EmitterSystem>()
+		rttr::type::get<Component::EmitterSystem>(),
+		rttr::type::get<Component::Video>()
 	};
 
 } // namespace Reflection

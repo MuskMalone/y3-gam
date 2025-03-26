@@ -1,5 +1,5 @@
 #include <rttr/registration>
-#include <policy.h>
+#include <rttr/policy.h>
 #include <GUI/Helpers/SceneEditorConfig.h>
 #include <ImGui/imgui.h>
 #include <GUI/Dockable/KeyframeEditor.h>

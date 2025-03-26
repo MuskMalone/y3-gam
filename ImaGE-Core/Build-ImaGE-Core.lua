@@ -8,6 +8,8 @@ project "ImaGE-Core"
    buildoptions { "/bigobj" }
    flags { "MultiProcessorCompile" }
    files { "source/**.h", "source/**.cpp", "source/**.c" }
+   removefiles  { "source/External/pl_mpeg/*.c" }
+
 
    includedirs 
    {
@@ -22,9 +24,13 @@ project "ImaGE-Core"
    externalincludedirs
    {
       "source/External",
+      "source/External/ImGui",
       "source/External/glad/include",
       "source/External/fmod/include",
       "source/External/stb",
+      "source/External/pl_mpeg",
+      "source/External/filewatch",
+      "source/External/mono/include",
 
       "../Libraries/assimp/include/",
       "../Libraries/Built-Libraries/Release/Libraries/assimp/include",
@@ -32,19 +38,14 @@ project "ImaGE-Core"
       "../Libraries/freetype/include/",
       "../Libraries/glfw/include",
       "../Libraries/glm",
-      "../Libraries/rapidjson/include/**",
-      "../Libraries/rttr/**",
+      "../Libraries/rapidjson/include/",
+      "../Libraries/rttr/src",
       "../Libraries/spdlog/include",
-      "../Libraries/PhysX/physx/include/**",
       "../Libraries/PhysX/physx/include",
-      "../Libraries/PhysX/pxshared/include/**",
       "../Libraries/PhysX/pxshared/include",
-      "../Libraries/pl_mpeg",
-      "../ImaGE-Core/source/External/filewatch",
-      "../ImaGE-Core/source/External/mono/**",
       
-      "../Libraries/rttr/Built-Libraries/Debug/Libraries/rttr/**",
-      "../Libraries/DirectXTex/**"
+      "../Libraries/rttr/Built-Libraries/Debug/src",
+      "../Libraries/DirectXTex/DirectXTex"
    }
 
    pchheader "pch.h"
@@ -61,12 +62,6 @@ project "ImaGE-Core"
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
    objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
-
-   removefiles 
-   { 
-       "source/External/ImGui/backends/imgui_impl_vulkan.cpp",
-       "source/External/ImGui/backends/imgui_impl_vulkan.h",
-   }
 
    filter "system:windows"
        systemversion "latest"

@@ -29,9 +29,6 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 #include <Core/Systems/SystemManager/SystemManager.h>
 #include <Core/Systems/Systems.h>
-#include <Audio/AudioSystem.h>
-#include <Core/Systems/ParticleSystem/ParticleSystem.h>
-#pragma endregion
 
 #include "Serialization/Serializer.h"
 #include "Serialization/Deserializer.h"
@@ -150,6 +147,7 @@ namespace IGE {
     systemManager.RegisterSystem<Systems::PostTransformSystem>("Post-Transform System");
 
     systemManager.RegisterSystem<Systems::AnimationSystem>("Animation System"); // interpolates local transform after Post-Transform update
+    systemManager.RegisterSystem<Systems::VideoSystem>("Video System");
     systemManager.RegisterSystem<IGE::Audio::AudioSystem>("Audio System");
     systemManager.RegisterSystem<Systems::TextSystem>("Text System");
     systemManager.RegisterSystem<Systems::ParticleSystem>("Particle System");

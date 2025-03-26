@@ -98,7 +98,8 @@ namespace GUI {
       { typeid(Component::Camera), ICON_FA_CAMERA ICON_PADDING },
       { typeid(Component::Skybox), ICON_FA_EARTH_ASIA ICON_PADDING },
       { typeid(Component::Interactive), ICON_FA_COMPUTER_MOUSE ICON_PADDING },
-      { typeid(Component::EmitterSystem), ICON_FA_STAR ICON_PADDING }
+      { typeid(Component::EmitterSystem), ICON_FA_STAR ICON_PADDING },
+      { typeid(Component::Video), ICON_FA_VIDEO ICON_PADDING }
     },
     mObjFactory{ Reflection::ObjectFactory::GetInstance() },
     mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
@@ -495,6 +496,19 @@ namespace GUI {
               }
           }
       }
+
+      if (currentEntity.HasComponent<Component::Video>()) {
+        rttr::type const compType{ rttr::type::get<Component::Video>() };
+        componentOverriden = prefabOverride && prefabOverride->IsComponentModified(compType);
+
+        if (VideoComponentWindow(currentEntity, componentOverriden)) {
+          SetIsComponentEdited(true);
+          if (prefabOverride) {
+            prefabOverride->AddComponentOverride(compType);
+          }
+        }
+      }
+
       if (prefabOverride) {
         for (rttr::type const& type : prefabOverride->removedComponents) {
           DisplayRemovedComponent(type);
@@ -565,7 +579,6 @@ namespace GUI {
         ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
 
         IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-        //std::map<IGE::Assets::GUID, std::string> guidToFileName{ { {}, "None" } };
         
         NextRowTable("Animations");
         if (ImGui::TreeNodeEx("Drag here to add to list", ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth)) {
@@ -2219,7 +2232,7 @@ namespace GUI {
       }
 
       NextRowTable("Texture Asset");
-      static std::string textureText;
+      static std::string textureText{};
       try {
         textureText = (sprite.textureAsset) ? IGE_ASSETMGR.GUIDToPath(sprite.textureAsset) : "[None]: Drag in a Texture";
       }
@@ -2233,6 +2246,9 @@ namespace GUI {
       ImGui::BeginDisabled();
       ImGui::InputText("##TextureAsset", &textureText);
       ImGui::EndDisabled();
+      if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled)) {
+        ImGui::SetTooltip(textureText.c_str());
+      }
 
       NextRowTable("Has Transparent Pixels");
       if (ImGui::Checkbox("##TransparentPixels", &sprite.isTransparent)) {
@@ -2704,6 +2720,86 @@ namespace GUI {
     return modified;
   }
 
+  bool Inspector::VideoComponentWindow(ECS::Entity entity, bool highlight) {
+    bool const isOpen{ WindowBegin<Component::Video>("Video", highlight) };
+    bool modified{ false };
+
+    if (isOpen) {
+      Component::Video& video{ entity.GetComponent<Component::Video>() };
+      float const inputWidth{ CalcInputWidth(60.f) };
+
+      if (ImGui::BeginTable("VideoTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+        ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+        ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, inputWidth);
+
+        IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
+
+        NextRowTable("Video Source");
+        {
+          std::filesystem::path videoPath{};
+          std::string videoFile{ "None" };
+
+          if (video.guid) {
+            try {
+              videoPath = IGE_ASSETMGR.GUIDToPath(video.guid);
+              videoFile = videoPath.filename().string();
+            }
+            catch (Debug::ExceptionBase const&) {
+              IGE_DBGLOGGER.LogError("Unable to load video ("
+                + std::to_string(static_cast<uint64_t>(video.guid)) + ")");
+
+              // reset the component since the guid is invalid
+              video.Clear();
+            }
+          }
+
+          ImGui::BeginDisabled();
+          ImGui::InputText("##VideoFile", &videoFile);
+          ImGui::EndDisabled();
+          if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled) && !videoPath.empty()) {
+            ImGui::SetTooltip(videoPath.string().c_str());
+          }
+        }
+
+        ImGui::TableNextRow(); ImGui::TableSetColumnIndex(0);
+        ImGui::Text("Render Type");
+        if (ImGui::IsItemHovered()) {
+          ImGui::SetTooltip("How the video should be rendered. For \"UI\",\
+                             entity must be under a canvas entity");
+        }
+        ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(GUI::Inspector::INPUT_SIZE);
+
+        const char* renderTypeStr[]{
+          "World", "UI"
+        };
+        if (ImGui::BeginCombo("##RenderType", renderTypeStr[video.renderType])) {
+          for (int i{}; i < static_cast<int>(Component::Video::NUM_TYPES); ++i)
+          {
+            bool const isCurrType{ i == static_cast<int>(video.renderType) };
+            if (ImGui::Selectable(renderTypeStr[i], isCurrType))
+            {
+              if (!isCurrType) {
+                video.renderType = static_cast<Component::Video::RenderType>(i);
+                modified = true;
+              }
+              break;
+            }
+          }
+          ImGui::EndCombo();
+        }
+
+        NextRowTable("Play on Start");
+        if (ImGui::Checkbox("##playOnStart", &video.playOnStart)) {
+          modified = true;
+        }
+
+        ImGui::EndTable();
+      }
+    }
+
+    WindowEnd(isOpen);
+    return modified;
+  }
 
   bool Inspector::DrawOptionButton(std::string const& name) {
     bool openMainWindow{ true };
@@ -2794,6 +2890,7 @@ namespace GUI {
         DrawAddComponentButton<Component::Skybox>("Skybox");
         DrawAddComponentButton<Component::Interactive>("Interactive");
         DrawAddComponentButton<Component::EmitterSystem>("Emitter System");
+        DrawAddComponentButton<Component::Video>("Video");
         ImGui::EndTable();
       }
 

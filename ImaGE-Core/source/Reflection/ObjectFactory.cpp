@@ -67,7 +67,8 @@ namespace {
     { RTTR_TYPE(Camera), AddCamera },
     { RTTR_TYPE(Skybox), AddSkybox },
     { RTTR_TYPE(Interactive), AddInteractive },
-    { RTTR_TYPE(EmitterSystem), AddEmitterSystem }
+    { RTTR_TYPE(EmitterSystem), AddEmitterSystem },
+    { RTTR_TYPE(Video), AddVideo }
   };
   std::unordered_map<rttr::type, GetComponentFunc> const sGetComponentFuncs{
     { RTTR_TYPE(AudioListener), GetComponentVariant<AudioListener> },
@@ -92,7 +93,8 @@ namespace {
     { RTTR_TYPE(Camera), GetComponentVariant<Camera> },
     { RTTR_TYPE(Skybox), GetComponentVariant<Skybox> },
     { RTTR_TYPE(Interactive), GetComponentVariant<Interactive> },
-    { RTTR_TYPE(EmitterSystem), GetComponentVariant<EmitterSystem> }
+    { RTTR_TYPE(EmitterSystem), GetComponentVariant<EmitterSystem> },
+    { RTTR_TYPE(Video), GetComponentVariant<Video> }
   };
   std::unordered_map<rttr::type, RemoveComponentFunc> const sRemoveComponentFuncs{
     { RTTR_TYPE(AudioListener), RemoveComponent<AudioListener> },
@@ -117,7 +119,8 @@ namespace {
     { RTTR_TYPE(Camera), RemoveComponent<Camera> },
     { RTTR_TYPE(Skybox), RemoveComponent<Skybox> },
     { RTTR_TYPE(Interactive), RemoveComponent<Interactive> },
-    { RTTR_TYPE(EmitterSystem), RemoveComponent<EmitterSystem> }
+    { RTTR_TYPE(EmitterSystem), RemoveComponent<EmitterSystem> },
+    { RTTR_TYPE(Video), RemoveComponent<Video> }
   };
 #pragma endregion
 }

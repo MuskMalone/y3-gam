@@ -25,7 +25,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 using namespace Debug;
 
 #ifndef DISTRIBUTION
-DebugLogger::DebugLogger()
+DebugLogger::DebugLogger() : mLogMutex{}
 {
 // Add these conditionals so that the installer will work (unable to write to log
 // file as app does not have permission to do so

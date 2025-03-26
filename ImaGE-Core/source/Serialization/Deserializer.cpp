@@ -28,8 +28,12 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
 
+#ifdef GetObject
+#undef GetObject
+#endif
+
 #ifdef _DEBUG
-//#define DESERIALIZER_DEBUG
+#define DESERIALIZER_DEBUG
 #endif
 
 namespace Serialization

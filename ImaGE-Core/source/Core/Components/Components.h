@@ -22,3 +22,4 @@
 #include "Interactive.h"
 #include "Animation.h"
 #include "EmitterSystem.h"
+#include "Video.h"

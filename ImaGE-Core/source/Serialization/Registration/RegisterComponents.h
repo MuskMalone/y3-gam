@@ -7,7 +7,7 @@
 
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
-#include <policy.h>
+#include <rttr/policy.h>
 #include <rttr/registration>
 #include <Core/Components/Components.h>
 #include <Reflection/ProxyScript.h>
@@ -90,63 +90,63 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("textBoxDimensions", &Text::textBoxDimensions);
 
   REGISTER_COMPONENT(RigidBody, "RigidBody")
-      .property("velocity", &RigidBody::velocity)
-      .property("angularVelocity", &RigidBody::angularVelocity)
-      .property("staticFriction", &RigidBody::staticFriction)
-      .property("dynamicFriction", &RigidBody::dynamicFriction)
-      .property("restitution", &RigidBody::restitution)
-      .property("gravityFactor", &RigidBody::gravityFactor)
-      .property("linearDamping", &RigidBody::linearDamping)
-      .property("motionType", &RigidBody::motionType)
-      .property("axisLock", &RigidBody::axisLock)
-      .property("angularAxisLock", &RigidBody::angularAxisLock)
-      .property("hasJoint", &RigidBody::hasJoint)
-      .property("entityLinked", &RigidBody::entityLinked)
-      .property("joinConfig", &RigidBody::jointConfig)
-      .property("jointOffset", &RigidBody::jointOffset)
-      .property("entityLinkedJointOffset", &RigidBody::entityLinkedJointOffset);
+    .property("velocity", &RigidBody::velocity)
+    .property("angularVelocity", &RigidBody::angularVelocity)
+    .property("staticFriction", &RigidBody::staticFriction)
+    .property("dynamicFriction", &RigidBody::dynamicFriction)
+    .property("restitution", &RigidBody::restitution)
+    .property("gravityFactor", &RigidBody::gravityFactor)
+    .property("linearDamping", &RigidBody::linearDamping)
+    .property("motionType", &RigidBody::motionType)
+    .property("axisLock", &RigidBody::axisLock)
+    .property("angularAxisLock", &RigidBody::angularAxisLock)
+    .property("hasJoint", &RigidBody::hasJoint)
+    .property("entityLinked", &RigidBody::entityLinked)
+    .property("joinConfig", &RigidBody::jointConfig)
+    .property("jointOffset", &RigidBody::jointOffset)
+    .property("entityLinkedJointOffset", &RigidBody::entityLinkedJointOffset);
 
   REGISTER_COMPONENT(BoxCollider, "BoxCollider")
-      .property("scale", &BoxCollider::scale)
-      .property("positionOffset", &BoxCollider::positionOffset)
-      .property("degreeRotationOffsetEuler", &BoxCollider::degreeRotationOffsetEuler)
-      .property("rotationOffset", &BoxCollider::rotationOffset)
-      .property("sensor", &BoxCollider::sensor);
+    .property("scale", &BoxCollider::scale)
+    .property("positionOffset", &BoxCollider::positionOffset)
+    .property("degreeRotationOffsetEuler", &BoxCollider::degreeRotationOffsetEuler)
+    .property("rotationOffset", &BoxCollider::rotationOffset)
+    .property("sensor", &BoxCollider::sensor);
 
   REGISTER_COMPONENT(SphereCollider, "SphereCollider")
-      .property("radius", &SphereCollider::radius)
-      .property("positionOffset", &SphereCollider::positionOffset)
-      .property("degreeRotationOffsetEuler", &SphereCollider::degreeRotationOffsetEuler)
-      .property("rotationOffset", &SphereCollider::rotationOffset)
-      .property("sensor", &SphereCollider::sensor);
+    .property("radius", &SphereCollider::radius)
+    .property("positionOffset", &SphereCollider::positionOffset)
+    .property("degreeRotationOffsetEuler", &SphereCollider::degreeRotationOffsetEuler)
+    .property("rotationOffset", &SphereCollider::rotationOffset)
+    .property("sensor", &SphereCollider::sensor);
 
   REGISTER_COMPONENT(CapsuleCollider, "CapsuleCollider")
-      .property("radius", &CapsuleCollider::radius)
-      .property("halfheight", &CapsuleCollider::halfheight)
-      .property("positionOffset", &CapsuleCollider::positionOffset)
-      .property("degreeRotationOffsetEuler", &CapsuleCollider::degreeRotationOffsetEuler)
-      .property("rotationOffset", &CapsuleCollider::rotationOffset)
-      .property("sensor", &CapsuleCollider::sensor);
+    .property("radius", &CapsuleCollider::radius)
+    .property("halfheight", &CapsuleCollider::halfheight)
+    .property("positionOffset", &CapsuleCollider::positionOffset)
+    .property("degreeRotationOffsetEuler", &CapsuleCollider::degreeRotationOffsetEuler)
+    .property("rotationOffset", &CapsuleCollider::rotationOffset)
+    .property("sensor", &CapsuleCollider::sensor);
 
   REGISTER_COMPONENT(Script, "ScriptComponent")
     .constructor<std::vector<std::string> const&>()
     .property(JSON_SCRIPT_LIST_KEY, &Script::mScriptList);
 
   REGISTER_COMPONENT(AudioSource, "AudioSource")
-      .property("sounds", &AudioSource::sounds);
+    .property("sounds", &AudioSource::sounds);
   REGISTER_COMPONENT(AudioListener, "AudioListener");
 
   REGISTER_COMPONENT(Bloom, "Bloom")
-      .property("threshold", &Bloom::threshold)
-      .property("intensity", &Bloom::intensity)
-      .property("range", &Bloom::range);
+    .property("threshold", &Bloom::threshold)
+    .property("intensity", &Bloom::intensity)
+    .property("range", &Bloom::range);
   REGISTER_COMPONENT(Canvas, "Canvas")
-      .property("isVisible", &Component::Canvas::isVisible)
-      .property("hasTransition", &Component::Canvas::hasTransition)
-      .property("transitionProgress", &Component::Canvas::transitionProgress)
-      .property("transitionSpeed", &Component::Canvas::transitionSpeed)
-      .property("fadeColor", &Component::Canvas::fadeColor)
-      .property("fadingOut", &Component::Canvas::fadingOut);
+    .property("isVisible", &Component::Canvas::isVisible)
+    .property("hasTransition", &Component::Canvas::hasTransition)
+    .property("transitionProgress", &Component::Canvas::transitionProgress)
+    .property("transitionSpeed", &Component::Canvas::transitionSpeed)
+    .property("fadeColor", &Component::Canvas::fadeColor)
+    .property("fadingOut", &Component::Canvas::fadingOut);
 
   REGISTER_COMPONENT(Image, "Image")
     .property("color", &Image::color)
@@ -163,28 +163,33 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("repeat", &Animation::repeat);
 
   REGISTER_COMPONENT(Camera, "Camera")
-      .property("projType", &Component::Camera::projType)
-      .property("position", &Component::Camera::position)
-      .property("yaw", &Component::Camera::yaw)
-      .property("pitch", &Component::Camera::pitch)
-      .property("fov", &Component::Camera::fov)
-      .property("aspectRatio", &Component::Camera::aspectRatio)
-      .property("nearClip", &Component::Camera::nearClip)
-      .property("farClip", &Component::Camera::farClip);
+    .property("projType", &Component::Camera::projType)
+    .property("position", &Component::Camera::position)
+    .property("yaw", &Component::Camera::yaw)
+    .property("pitch", &Component::Camera::pitch)
+    .property("fov", &Component::Camera::fov)
+    .property("aspectRatio", &Component::Camera::aspectRatio)
+    .property("nearClip", &Component::Camera::nearClip)
+    .property("farClip", &Component::Camera::farClip);
 
   REGISTER_COMPONENT(Skybox, "Skybox")
-      //.property("materialAssetGUID", &Skybox::materialAsset);
-      .property("textureAssetGUID1", &Skybox::tex1)
-      .property("textureAssetGUID2", &Skybox::tex2)
-      .property("blend", &Skybox::blend);
+    //.property("materialAssetGUID", &Skybox::materialAsset);
+    .property("textureAssetGUID1", &Skybox::tex1)
+    .property("textureAssetGUID2", &Skybox::tex2)
+    .property("blend", &Skybox::blend);
 
   REGISTER_COMPONENT(Interactive, "Interactive")
-      .property("isHovered", &Interactive::isHovered);
+    .property("isHovered", &Interactive::isHovered);
 
   REGISTER_COMPONENT(EmitterSystem, "EmitterSystem")
-      .property("emitters", &EmitterSystem::emitters);
+    .property("emitters", &EmitterSystem::emitters);
 
-  // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
+  REGISTER_COMPONENT(Video, "Video")
+    .property("renderType", &Video::renderType)
+    .property("guid", &Video::guid)
+    .property("playOnStart", &Video::playOnStart);
+
+    // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")
     .constructor<>()(rttr::policy::ctor::as_object)
     .property(JSON_GUID_KEY, &PrefabOverrides::guid)

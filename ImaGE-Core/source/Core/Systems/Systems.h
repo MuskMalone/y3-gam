@@ -10,3 +10,4 @@
 #include <Core/LayerManager/LayerManager.h>
 #include <Core/Systems/ParticleSystem/ParticleSystem.h>
 #include <Core/Systems/TextSystem/TextSystem.h>
+#include <Core/Systems/VideoSystem/VideoSystem.h>

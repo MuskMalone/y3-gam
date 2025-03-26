@@ -15,6 +15,7 @@ namespace IGE {
 	namespace Assets {
 		void AssetManager::Initialize()
 		{
+			std::lock_guard<std::mutex> lock(mAssetsMutex);
 			HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 			if (FAILED(hr)) {
 				throw std::runtime_error{ "Error: CoInitializeEx failed!" };
@@ -114,7 +115,7 @@ namespace IGE {
 			*/
 			return out;
 		}
-		AssetManager::AssetManager() {
+		AssetManager::AssetManager() : mAssetsMutex{} {
 			SUBSCRIBE_CLASS_FUNC(Events::RegisterAssetsEvent, &AssetManager::HandleAddFiles, this);
 			SUBSCRIBE_CLASS_FUNC(Events::RemapGUID, &AssetManager::OnRemapGUID, this);
 			Initialize();

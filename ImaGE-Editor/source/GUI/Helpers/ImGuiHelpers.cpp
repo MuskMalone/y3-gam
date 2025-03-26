@@ -177,11 +177,11 @@ namespace ImGuiHelpers
       try {
         IGE::Assets::GUID const guid{ IGE_ASSETMGR.LoadRef<IGE::Assets::AnimationAsset>(assetPayload.GetFilePath()) };
 
-        // if entity has material component, simply set the material
+        // if entity has animation component, simply set the guid
         if (entity.HasComponent<Component::Animation>()) {
           entity.GetComponent<Component::Animation>().animations.emplace(assetPayload.GetFilePath(), guid);
         }
-        // else add the component and set the material
+        // else add the component and set the guid
         else {
           entity.EmplaceComponent<Component::Animation>().animations.emplace(assetPayload.GetFilePath(), guid);
         }
@@ -189,6 +189,32 @@ namespace ImGuiHelpers
         // handle prefab instance overrides
         if (entity.HasComponent<Component::PrefabOverrides>()) {
           entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Animation>();
+        }
+
+        modified = true;
+      }
+      catch (Debug::ExceptionBase&) {
+        IGE_DBGLOGGER.LogError("Unable to get GUID of " + assetPayload.GetFilePath());
+      }
+      break;
+    }
+    case GUI::AssetPayload::VIDEO:
+    {
+      try {
+        IGE::Assets::GUID const guid{ IGE_ASSETMGR.LoadRef<IGE::Assets::VideoAsset>(assetPayload.GetFilePath()) };
+
+        // if entity has video component, simply set the guid
+        if (entity.HasComponent<Component::Video>()) {
+          entity.GetComponent<Component::Video>().InitVideoSource(guid);
+        }
+        // else add the component and set the guid
+        else {
+          entity.EmplaceComponent<Component::Video>().InitVideoSource(guid);
+        }
+
+        // handle prefab instance overrides
+        if (entity.HasComponent<Component::PrefabOverrides>()) {
+          entity.GetComponent<Component::PrefabOverrides>().AddComponentOverride<Component::Video>();
         }
 
         modified = true;

@@ -8,7 +8,7 @@
 Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 ************************************************************************/
 #include <rttr/registration>
-#include <policy.h>
+#include <rttr/policy.h>
 #include <Serialization/PfbOverridesData.h>
 #include <PxPhysicsAPI.h>
 #include <Scripting/ScriptInstance.h>

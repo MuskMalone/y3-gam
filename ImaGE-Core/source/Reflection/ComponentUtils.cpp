@@ -33,13 +33,13 @@ namespace Reflection::ComponentUtils {
   }
   void AddAudioSource(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(AudioSource, comp);
-      
+
     // may be bad to try catch in for loop
     // @TODO: should optimize for game build
     bool valid{ true };
     for (auto const& [str, audioInst] : comp.sounds) {
       try {
-          IGE_ASSETMGR.LoadRef<IGE::Assets::AudioAsset>(audioInst.guid);
+        IGE_ASSETMGR.LoadRef<IGE::Assets::AudioAsset>(audioInst.guid);
       }
       catch (Debug::ExceptionBase&) {
         IGE_DBGLOGGER.LogError("GUID " + std::to_string(static_cast<uint64_t>(audioInst.guid)) + " of AudioSource component invalid");
@@ -53,9 +53,9 @@ namespace Reflection::ComponentUtils {
     }
   }
   void AddBloom(ECS::Entity entity, rttr::variant const& var) {
-      EXTRACT_RAW_COMP(Bloom, comp);
+    EXTRACT_RAW_COMP(Bloom, comp);
 
-      entity.EmplaceOrReplaceComponent<Bloom>(comp);
+    entity.EmplaceOrReplaceComponent<Bloom>(comp);
   }
   void AddTag(ECS::Entity entity, rttr::variant const& var) {
     EXTRACT_RAW_COMP(Tag, comp);
@@ -219,14 +219,28 @@ namespace Reflection::ComponentUtils {
   }
 
   void AddInteractive(ECS::Entity entity, rttr::variant const& var) {
-      EXTRACT_RAW_COMP(Interactive, comp);
+    EXTRACT_RAW_COMP(Interactive, comp);
 
-      entity.EmplaceOrReplaceComponent<Interactive>(comp);
+    entity.EmplaceOrReplaceComponent<Interactive>(comp);
   }
-  void AddEmitterSystem(ECS::Entity entity, rttr::variant const& var)
-  {
-      EXTRACT_RAW_COMP(EmitterSystem, comp);
-      entity.EmplaceOrReplaceComponent<EmitterSystem>(comp);
-      Graphics::ParticleManager::GetInstance().MultiEmitterAction(entity.GetComponent<EmitterSystem>().emitters, 1);
+
+  void AddEmitterSystem(ECS::Entity entity, rttr::variant const& var) {
+    EXTRACT_RAW_COMP(EmitterSystem, comp);
+
+    entity.EmplaceOrReplaceComponent<EmitterSystem>(comp);
+    Graphics::ParticleManager::GetInstance().MultiEmitterAction(entity.GetComponent<EmitterSystem>().emitters, 1);
+  }
+
+  void AddVideo(ECS::Entity entity, rttr::variant const& var) {
+    EXTRACT_RAW_COMP(Video, comp);
+
+    try {
+      entity.EmplaceOrReplaceComponent<Video>(comp);
+    }
+    catch (Debug::ExceptionBase& err) {
+      err.LogSource();
+      IGE_DBGLOGGER.LogError("Unable to load GUID " + std::to_string(static_cast<uint64_t>(comp.guid)) + " of Video component");
+      QUEUE_EVENT(Events::GUIDInvalidated, entity, comp.guid, GetRttrTypeString<IGE::Assets::VideoAsset>());
+    }
   }
 } // namespace Reflection

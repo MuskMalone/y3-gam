@@ -60,7 +60,7 @@ namespace Graphics {
 			}
 		}
 
-		for (ECS::Entity const& entity : entities) {
+		for (ECS::Entity entity : entities) {
 
 			if (!entity.HasComponent<Component::Canvas>()) { continue; } //if not canvas skip
 			auto const& canvas{ entity.GetComponent<Component::Canvas>() };
@@ -98,12 +98,11 @@ namespace Graphics {
 			if (cam.isEditor) {
 				Graphics::Renderer::DrawRect(xform.position, canvasScale, xform.rotation, Color::COLOR_WHITE); //canvas drawn only in editor
 			}
-
-			if (!cam.isEditor) {
+			else {
 				Graphics::Renderer::HandleUIInput(children);
 			}
 
-			for (ECS::Entity& uiEntity : children) {
+			for (ECS::Entity uiEntity : children) {
 				auto& uiXform = uiEntity.GetComponent<Component::Transform>(); //ui element transform in screen space
 
 				// Since you are iterating through the child entities, you have to check this again

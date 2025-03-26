@@ -28,18 +28,16 @@ project "ImaGE-Game"
       "../Libraries/freetype/include/",
       "../Libraries/glfw/include",
       "../Libraries/glm",
-      "../Libraries/rapidjson/include/**",
-      "../Libraries/rttr/**",
-      "../Libraries/PhysX/physx/include/**",
+      "../Libraries/rapidjson/include/",
+      "../Libraries/rttr/src",
       "../Libraries/PhysX/physx/include",
-      "../Libraries/PhysX/pxshared/include/**",
       "../Libraries/PhysX/pxshared/include",
-      "../Libraries/pl_mpeg",
+      "../ImaGE-Core/source/External/pl_mpeg",
       "../ImaGE-Core/source/External/filewatch",
-      "../ImaGE-Core/source/External/mono/**",
+      "../ImaGE-Core/source/External/mono/include",
       
-      "../Libraries/rttr/Built-Libraries/Debug/Libraries/rttr/**",
-      "../Libraries/DirectXTex/**"
+      "../Libraries/rttr/Built-Libraries/Debug/src",
+      "../Libraries/DirectXTex/DirectXTex"
    }
 
    links

@@ -13,6 +13,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #include <Core/Components/RigidBody.h>
 #include <Core/Components/Light.h>
 #include <Core/Components/Animation.h>
+#include <Core/Components/Video.h>
 #include <Asset/SmartPointer.h>
 
 #include <Audio/AudioManager.h>
@@ -85,30 +86,30 @@ static void rttr_auto_register_reflection_function3_(); namespace {
   rttr::registration::enumeration<Component::RigidBody::MotionType>("MotionType")(
     rttr::value("DYNAMIC", Component::RigidBody::MotionType::DYNAMIC),
     rttr::value("KINEMATIC", Component::RigidBody::MotionType::KINEMATIC)
-    );
+  );
   rttr::registration::enumeration<Component::RigidBody::JointType>("JointType")(
-      rttr::value("REVOLUTE", Component::RigidBody::JointType::REVOLUTE),
-      rttr::value("SPHERICAL", Component::RigidBody::JointType::SPHERICAL),
-      rttr::value("PRISMATIC", Component::RigidBody::JointType::PRISMATIC),
-      rttr::value("DISTANCE", Component::RigidBody::JointType::DISTANCE)
-      );
+    rttr::value("REVOLUTE", Component::RigidBody::JointType::REVOLUTE),
+    rttr::value("SPHERICAL", Component::RigidBody::JointType::SPHERICAL),
+    rttr::value("PRISMATIC", Component::RigidBody::JointType::PRISMATIC),
+    rttr::value("DISTANCE", Component::RigidBody::JointType::DISTANCE)
+  );
   rttr::registration::enumeration<IGE::Audio::SoundInvokeSetting::RolloffType>("RolloffType")(
     rttr::value("LINEAR", IGE::Audio::SoundInvokeSetting::RolloffType::LINEAR),
     rttr::value("LOGARITHMIC", IGE::Audio::SoundInvokeSetting::RolloffType::LOGARITHMIC),
     rttr::value("NONE", IGE::Audio::SoundInvokeSetting::RolloffType::NONE)
-    );
+  );
 
   rttr::registration::enumeration<IGE::Audio::SoundInvokeSetting::PostProcessingType>("PostProcessingType")(
-      rttr::value("REVERB", IGE::Audio::SoundInvokeSetting::PostProcessingType::REVERB),
-      rttr::value("ECHO", IGE::Audio::SoundInvokeSetting::PostProcessingType::ECHO),
-      rttr::value("DISTORTION", IGE::Audio::SoundInvokeSetting::PostProcessingType::DISTORTION),
-      rttr::value("CHORUS", IGE::Audio::SoundInvokeSetting::PostProcessingType::CHORUS)
-      );
+    rttr::value("REVERB", IGE::Audio::SoundInvokeSetting::PostProcessingType::REVERB),
+    rttr::value("ECHO", IGE::Audio::SoundInvokeSetting::PostProcessingType::ECHO),
+    rttr::value("DISTORTION", IGE::Audio::SoundInvokeSetting::PostProcessingType::DISTORTION),
+    rttr::value("CHORUS", IGE::Audio::SoundInvokeSetting::PostProcessingType::CHORUS)
+  );
   rttr::registration::enumeration<Component::LightType>("LightType")(
     rttr::value("DIRECTIONAL", Component::LightType::DIRECTIONAL),
     rttr::value("SPOTLIGHT", Component::LightType::SPOTLIGHT),
     rttr::value("POINT", Component::LightType::POINT)
-    );
+  );
 
   {
     using T = Anim::KeyframeType;
@@ -117,7 +118,7 @@ static void rttr_auto_register_reflection_function3_(); namespace {
       rttr::value("TRANSLATION", T::TRANSLATION),
       rttr::value("ROTATION", T::ROTATION),
       rttr::value("SCALE", T::SCALE)
-      );
+    );
   }
   {
     using T = Anim::InterpolationType;
@@ -126,11 +127,19 @@ static void rttr_auto_register_reflection_function3_(); namespace {
       rttr::value("EASE_IN", T::EASE_IN),
       rttr::value("EASE_OUT", T::EASE_OUT),
       rttr::value("EASE_INOUT", T::EASE_INOUT)
-      );
+    );
   }
 
   rttr::registration::enumeration<Component::Camera::Type>("CameraType")(
     rttr::value("ORTHO", Component::Camera::Type::ORTHO),
     rttr::value("PERSP", Component::Camera::Type::PERSP)
+  );
+
+  {
+    using T = Component::Video::RenderType;
+    rttr::registration::enumeration<T>("VideoRenderType")(
+      rttr::value("WORLD", T::WORLD),
+      rttr::value("UI", T::UI)
     );
+  }
 }
