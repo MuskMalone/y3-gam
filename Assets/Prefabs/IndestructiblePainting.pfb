@@ -32,7 +32,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -194,17 +194,17 @@
                                     "z": 0.0
                                 },
                                 "size": {
-                                    "x": 1.0,
-                                    "y": 1.0
+                                    "x": 0.5,
+                                    "y": 0.5
                                 },
                                 "angvel": 0.0,
                                 "lifetime": 1.0,
                                 "speed": 0.10000000149011612,
-                                "frequency": 0.10000000149011612,
+                                "frequency": 0.20000000298023225,
                                 "type": 1,
                                 "vCount": 4,
                                 "preset": 2,
-                                "particlesPerFrame": 2
+                                "particlesPerFrame": 3
                             }
                         ]
                     }

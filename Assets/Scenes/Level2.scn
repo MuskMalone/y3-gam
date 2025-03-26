@@ -124,9 +124,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -4.963858127593994,
-                            "y": 12.833251953125,
-                            "z": 42.303466796875
+                            "x": 45.51612091064453,
+                            "y": 80.39195251464844,
+                            "z": -408.2169494628906
                         },
                         "worldScale": {
                             "x": 0.7200000286102295,
@@ -150,9 +150,9 @@
                     "Camera": {
                         "projType": "PERSP",
                         "position": {
-                            "x": -4.963858127593994,
-                            "y": 12.833251953125,
-                            "z": 42.303466796875
+                            "x": 45.51612091064453,
+                            "y": 80.39195251464844,
+                            "z": -408.2169494628906
                         },
                         "yaw": 0.0,
                         "pitch": 0.0,
@@ -3520,6 +3520,13 @@
                                             }
                                         },
                                         {
+                                            "data": 7.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -3531,12 +3538,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -12947,7 +12974,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -13060,6 +13087,13 @@
                                         }
                                     },
                                     {
+                                        "data": 5.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 481,
                                             "scriptName": "Level2Inventory"
@@ -13071,12 +13105,32 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 1,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 3145735,
                                             "scriptName": "PlayerInteraction"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
                                         }
                                     }
                                 ]
@@ -14115,7 +14169,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -14893,7 +14947,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -14921,7 +14975,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -16263,7 +16317,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 100.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -16291,7 +16345,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -21778,7 +21832,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -22248,7 +22302,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -22276,7 +22330,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -25803,7 +25857,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -26521,6 +26575,23 @@
                                 "scriptName": "HexTeleport",
                                 "scriptFieldInstList": [
                                     {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "burstTimer"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 777,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "particleBurst"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 3145735,
                                             "scriptName": "PlayerMove"
@@ -26740,7 +26811,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -27899,7 +27970,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -27927,7 +27998,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -27955,7 +28026,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -27983,7 +28054,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -28011,7 +28082,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -28315,7 +28386,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -28343,7 +28414,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -28371,7 +28442,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -28399,7 +28470,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -28427,7 +28498,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -29635,7 +29706,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -31432,7 +31503,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31460,7 +31531,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31488,7 +31559,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31516,7 +31587,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31544,7 +31615,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -31823,7 +31894,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31851,7 +31922,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31879,7 +31950,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31907,7 +31978,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31935,7 +32006,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -32194,7 +32265,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -32222,7 +32293,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -32250,7 +32321,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -32278,7 +32349,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -32306,7 +32377,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -34708,9 +34779,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34724,7 +34795,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34736,9 +34807,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34752,7 +34823,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34764,9 +34835,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34780,7 +34851,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34792,9 +34863,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34808,7 +34879,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34820,9 +34891,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34836,7 +34907,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34848,9 +34919,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34864,7 +34935,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34876,9 +34947,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34892,7 +34963,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34904,9 +34975,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34920,7 +34991,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34932,9 +35003,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34964,7 +35035,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -34976,9 +35047,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -35008,7 +35079,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35020,9 +35091,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -35052,7 +35123,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35064,9 +35135,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -35096,7 +35167,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35108,9 +35179,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -35140,7 +35211,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35152,9 +35223,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -35184,7 +35255,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35196,9 +35267,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -35228,7 +35299,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35240,9 +35311,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -35272,7 +35343,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35284,9 +35355,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -35316,7 +35387,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35328,9 +35399,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -35360,7 +35431,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35372,9 +35443,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -35404,7 +35475,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35416,9 +35487,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -35448,7 +35519,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35460,9 +35531,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -35492,7 +35563,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35504,9 +35575,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -35536,7 +35607,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35548,9 +35619,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -35580,7 +35651,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             },
@@ -35592,9 +35663,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -73.24169921875,
-                                            "y": -59.4150276184082,
-                                            "z": 262.5151672363281
+                                            "x": -22.761722564697267,
+                                            "y": 8.143669128417969,
+                                            "z": -188.0052490234375
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -35624,7 +35695,7 @@
                                                 "chorus_depth": 0.5,
                                                 "chorus_mix": 50.0
                                             }
-                                        ]                                    
+                                        ]
                                     }
                                 }
                             }
@@ -35661,9 +35732,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -73.24169921875,
-                            "y": -59.4150276184082,
-                            "z": 262.5151672363281
+                            "x": -22.761722564697267,
+                            "y": 8.143669128417969,
+                            "z": -188.0052490234375
                         },
                         "worldScale": {
                             "x": 1.3888888359069825,
@@ -37735,6 +37806,152 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 777,
+            "Parent": 3145735,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "ParticleBurstTeleport",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.000003814697265625
+                        },
+                        "scale": {
+                            "x": 1.3888888359069825,
+                            "y": 0.43103450536727908,
+                            "z": 1.3888888359069825
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 45.4664421081543,
+                            "y": 72.2719497680664,
+                            "z": -407.5682373046875
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "EmitterSystem": {
+                        "emitters": [
+                            {
+                                "vertices": [
+                                    {
+                                        "x": 0.0,
+                                        "y": 6.599999904632568,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    },
+                                    {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0,
+                                        "w": 0.0
+                                    }
+                                ],
+                                "col": {
+                                    "x": 1.0,
+                                    "y": 0.9843137264251709,
+                                    "z": 0.0,
+                                    "w": 0.5098039507865906
+                                },
+                                "vel": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "spreadAngle": 0.0,
+                                "gravity": {
+                                    "x": 0.0,
+                                    "y": -0.27000001072883608,
+                                    "z": 0.0
+                                },
+                                "size": {
+                                    "x": 0.09000000357627869,
+                                    "y": 0.09000000357627869
+                                },
+                                "angvel": 0.0,
+                                "lifetime": 5.0,
+                                "speed": 6.0,
+                                "frequency": 0.0010000000474974514,
+                                "type": 1,
+                                "vCount": 1,
+                                "preset": 2,
+                                "particlesPerFrame": 1000
+                            }
+                        ]
                     }
                 }
             ]
@@ -42234,6 +42451,13 @@
                                             }
                                         },
                                         {
+                                            "data": 7.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -42245,12 +42469,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -42360,6 +42604,94 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "EmitterSystem",
+                        "value": {
+                            "emitters": [
+                                {
+                                    "vertices": [
+                                        {
+                                            "x": 3.200000047683716,
+                                            "y": 2.799999952316284,
+                                            "z": 0.10000000149011612,
+                                            "w": 0.0
+                                        },
+                                        {
+                                            "x": 3.200000047683716,
+                                            "y": -2.799999952316284,
+                                            "z": 0.10000000149011612,
+                                            "w": 0.0
+                                        },
+                                        {
+                                            "x": -3.200000047683716,
+                                            "y": -2.799999952316284,
+                                            "z": 0.10000000149011612,
+                                            "w": 0.0
+                                        },
+                                        {
+                                            "x": -3.200000047683716,
+                                            "y": 2.799999952316284,
+                                            "z": 0.10000000149011612,
+                                            "w": 0.0
+                                        },
+                                        {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0,
+                                            "w": 0.0
+                                        },
+                                        {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0,
+                                            "w": 0.0
+                                        },
+                                        {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0,
+                                            "w": 0.0
+                                        },
+                                        {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0,
+                                            "w": 0.0
+                                        }
+                                    ],
+                                    "col": {
+                                        "x": 0.9732441306114197,
+                                        "y": 0.956969141960144,
+                                        "z": 0.0,
+                                        "w": 1.0
+                                    },
+                                    "vel": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "spreadAngle": 0.0,
+                                    "gravity": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "size": {
+                                        "x": 0.5,
+                                        "y": 0.5
+                                    },
+                                    "angvel": 0.0,
+                                    "lifetime": 1.0,
+                                    "speed": 0.10000000149011612,
+                                    "frequency": 0.10000000149011612,
+                                    "type": 1,
+                                    "vCount": 4,
+                                    "preset": 2,
+                                    "particlesPerFrame": 2
+                                }
+                            ]
+                        }
+                    },
+                    {
                         "key": "ScriptComponent",
                         "value": {
                             "scriptList": [
@@ -42388,6 +42720,13 @@
                                             }
                                         },
                                         {
+                                            "data": 7.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -42399,12 +42738,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -42542,6 +42901,13 @@
                                             }
                                         },
                                         {
+                                            "data": 7.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -42553,12 +42919,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -42674,6 +43060,13 @@
                                             }
                                         },
                                         {
+                                            "data": 7.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -42685,12 +43078,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -42828,6 +43241,13 @@
                                             }
                                         },
                                         {
+                                            "data": 7.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -42839,12 +43259,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -42982,6 +43422,13 @@
                                             }
                                         },
                                         {
+                                            "data": 7.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -42993,12 +43440,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -48365,6 +48832,13 @@
                                             }
                                         },
                                         {
+                                            "data": 5.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -48376,12 +48850,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -49388,7 +49882,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -50628,6 +51122,13 @@
                                             }
                                         },
                                         {
+                                            "data": 5.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -50639,12 +51140,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -51102,7 +51623,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -53641,6 +54162,13 @@
                                             }
                                         },
                                         {
+                                            "data": 5.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -53652,12 +54180,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -54406,7 +54954,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -55736,7 +56284,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -57854,6 +58402,13 @@
                                             }
                                         },
                                         {
+                                            "data": 5.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -57865,12 +58420,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -63737,87 +64312,6 @@
                                     }
                                 ],
                                 "col": {
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0,
-                                    "w": 1.0
-                                },
-                                "vel": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "spreadAngle": 0.0,
-                                "gravity": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "size": {
-                                    "x": 1.0,
-                                    "y": 1.0
-                                },
-                                "angvel": 0.0,
-                                "lifetime": 4.0,
-                                "speed": 10.0,
-                                "frequency": 0.009999999776482582,
-                                "type": 1,
-                                "vCount": 1,
-                                "preset": 2,
-                                "particlesPerFrame": 200
-                            },
-                            {
-                                "vertices": [
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    },
-                                    {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0,
-                                        "w": 0.0
-                                    }
-                                ],
-                                "col": {
                                     "x": 0.0,
                                     "y": 0.0,
                                     "z": 0.0,
@@ -63884,7 +64378,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -64485,7 +64979,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -70311,7 +70805,8 @@
             "Parent": null,
             "Child Entities": [
                 1,
-                736
+                736,
+                777
             ],
             "Components": [
                 {
@@ -70325,9 +70820,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -5.013538360595703,
-                                            "y": 4.713252067565918,
-                                            "z": 42.952186584472659
+                                            "x": 45.4664421081543,
+                                            "y": 72.2719497680664,
+                                            "z": -407.5682373046875
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -70341,7 +70836,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -70353,9 +70848,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -5.013538360595703,
-                                            "y": 4.713252067565918,
-                                            "z": 42.952186584472659
+                                            "x": 45.4664421081543,
+                                            "y": 72.2719497680664,
+                                            "z": -407.5682373046875
                                         },
                                         "volume": 0.6000000238418579,
                                         "pitch": 1.0,
@@ -70369,7 +70864,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -70381,9 +70876,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -5.013538360595703,
-                                            "y": 4.713252067565918,
-                                            "z": 42.952186584472659
+                                            "x": 45.4664421081543,
+                                            "y": 72.2719497680664,
+                                            "z": -407.5682373046875
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -70397,7 +70892,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -70413,9 +70908,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -5.013538360595703,
-                            "y": 4.713252067565918,
-                            "z": 42.952186584472659
+                            "x": 45.4664421081543,
+                            "y": 72.2719497680664,
+                            "z": -407.5682373046875
                         },
                         "scale": {
                             "x": 0.7200000286102295,
@@ -70434,9 +70929,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -5.013538360595703,
-                            "y": 4.713252067565918,
-                            "z": 42.952186584472659
+                            "x": 45.4664421081543,
+                            "y": 72.2719497680664,
+                            "z": -407.5682373046875
                         },
                         "worldScale": {
                             "x": 0.7200000286102295,
@@ -70587,6 +71082,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isTutorial"
+                                        }
+                                    },
+                                    {
                                         "data": 5.599999904632568,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -70601,7 +71103,7 @@
                                         }
                                     },
                                     {
-                                        "data": 30.0,
+                                        "data": 40.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
@@ -70622,7 +71124,7 @@
                                         }
                                     },
                                     {
-                                        "data": 20.0,
+                                        "data": 30.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "walkingSpeed"
@@ -70635,7 +71137,7 @@
                                 "scriptName": "PlayerInteraction",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": 8.0,
+                                        "data": 15.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "RayFromPlayerCameraLength"
@@ -70940,7 +71442,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -70968,7 +71470,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -70996,7 +71498,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -71024,7 +71526,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -71052,7 +71554,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -71841,7 +72343,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }

@@ -5,6 +5,8 @@ using System.Numerics;
 public class HexTeleport : Entity
 {
     public PlayerMove playerMove;
+    public Entity particleBurst;
+    public float burstTimer = 0f;
 
     public Vector3 teleportPosition7 = new Vector3(59.034f, 120.296f, -511.751f); //7
     public Vector3 teleportPosition2 = new Vector3(5.777f, 91.919f, -481.967f); //2
@@ -14,7 +16,7 @@ public class HexTeleport : Entity
     public Vector3 teleportPosition5 = new Vector3(140.922f, 196.080f, -442.446f); //5
     public Vector3 teleportPosition1 = new Vector3(116.756f, 123.739f, -366.274f); //1
 
-
+    private bool triggerOneFrame = false;
 
     void Update()
     {
@@ -25,6 +27,18 @@ public class HexTeleport : Entity
     else if (Input.GetKeyDown(KeyCode.H)) TeleportPlayer(teleportPosition4);//4
     else if (Input.GetKeyDown(KeyCode.BACKSLASH)) TeleportPlayer(teleportPosition5); //5
     else if (Input.GetKeyDown(KeyCode.EQUAL)) TeleportPlayer(teleportPosition1); //1
+
+    if (triggerOneFrame)
+    {
+      burstTimer += Time.deltaTime;
+
+      if (burstTimer >= 1f)
+      {
+        burstTimer = 0;
+        particleBurst.SetActive(false);
+        triggerOneFrame = false;
+      }
+    }
   }
 
     public void TeleportPlayer(Vector3 newPosition)
@@ -33,6 +47,9 @@ public class HexTeleport : Entity
         InternalCalls.SetPosition(playerMove.mEntityID, ref newPosition); // Set the player's new position
         InternalCalls.UpdatePhysicsToTransform(playerMove.mEntityID); // Ensure physics updates after teleporting
         playerMove.UnfreezePlayer(); // Re-enable player movement
+
+        particleBurst.SetActive(true);
+        triggerOneFrame = true;
 
         Debug.Log($"Teleported player to: {newPosition}");
     }
