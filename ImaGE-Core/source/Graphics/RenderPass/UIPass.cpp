@@ -49,6 +49,7 @@ namespace Graphics {
 		if (cam.isEditor) {
 			IGE::Physics::PhysicsSystem::GetInstance()->Debug();
 			Graphics::ParticleManager::GetInstance().Debug();
+			IGE::Audio::AudioManager::GetInstance().Debug();
 		}
 		if (cam.isEditor) {
 			for (auto const& camera : entities ) {

@@ -12,6 +12,7 @@ public class Key : Entity, IInventoryItem
   public BlackBorder blackBorder;
   public Entity playerCamera;
   public Entity keyCamera;
+  public PlayerMove playerMove;
 
   public string keyAnimName;  // input from inspector based on name in anim component
 
@@ -21,6 +22,9 @@ public class Key : Entity, IInventoryItem
   float elapsedTime = 0.0f;
   float zoomInDuration = 2.0f;
   bool isZoomingIn = true;
+
+  private bool isBeingPickedUp = false;
+  public float finalDistanceAwayFromCamAfterPickup = 1.5f;
 
   public string Name
   {
@@ -76,13 +80,27 @@ public class Key : Entity, IInventoryItem
 
   void Update()
   {
+    if (isBeingPickedUp)
+    {
+      if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID, finalDistanceAwayFromCamAfterPickup))
+      {
+        InternalCalls.PlaySound(mEntityID, "PickupObjects");
+        isBeingPickedUp = false;
+        inventoryScript.Additem(this);
+        playerMove.UnfreezePlayer();
+      }
+      return;
+    }
+
     if (keyDoor.doorInteraction)
     {
       bool isKeyHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
       if (Input.GetKeyTriggered(KeyCode.E) && isKeyHit)
       {
-        InternalCalls.PlaySound(mEntityID, "PickupObjects");
-        inventoryScript.Additem(this);
+        isBeingPickedUp = true;
+        playerMove.FreezePlayer();
+        EToPickUpUI.SetActive(false);
+        return;
       }
       EToPickUpUI.SetActive(isKeyHit);
       return;

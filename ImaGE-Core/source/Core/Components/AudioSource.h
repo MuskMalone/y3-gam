@@ -23,7 +23,7 @@ namespace Component{
 		void Clear() noexcept;
 		void SetSoundPitch(std::string const&, float);
 		void SetSoundVolume(std::string const&, float);
-		void EnablePostProcessing(std::string const& id, IGE::Audio::SoundInvokeSetting::PostProcessingType type, float param);
+		void EnablePostProcessing(std::string const& id);
 		void DisablePostProcessing(std::string const& id);
 		void PlaySound(std::string const&) const;
 		void PauseSound(std::string const& id) const;

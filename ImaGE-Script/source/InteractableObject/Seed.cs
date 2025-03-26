@@ -1,5 +1,6 @@
 using IGE.Utils;
 using System;
+using System.Numerics;
 
 public class Seed : Entity, IInventoryItem
 {
@@ -10,9 +11,13 @@ public class Seed : Entity, IInventoryItem
   public Entity EToPlantSeedUI;
   public Entity Pot;
   public Entity Flower;
+  public Entity playerCamera;
   private PictureAlign PictureAlignScript;
 
   private bool seedPlanted = false;
+  private bool isBeingPickedUp = false;
+  public float finalDistanceAwayFromCamAfterPickup = 2f;
+  public PlayerMove playerMove;
 
   public string Name
   {
@@ -56,12 +61,26 @@ public class Seed : Entity, IInventoryItem
 
   void Update()
   {
+    if (isBeingPickedUp)
+    {
+      if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID, finalDistanceAwayFromCamAfterPickup))
+      {
+        InternalCalls.PlaySound(mEntityID, "PickupObjects");
+        isBeingPickedUp = false;
+        playerMove.UnfreezePlayer();
+        inventoryScript.Additem(this);
+      }
+      return;
+    }
+
     // For Seed Picking Up
     bool isSeedHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
     if (Input.GetKeyTriggered(KeyCode.E) && isSeedHit)
     {
-      InternalCalls.PlaySound(mEntityID, "PickupObjects");
-      inventoryScript.Additem(this);
+      isBeingPickedUp = true;
+      playerMove.FreezePlayer();
+      EToPickUpUI.SetActive(false);
+      return;
     }
     EToPickUpUI.SetActive(isSeedHit);
     inventoryScript.pickupHandUI.SetActive(isSeedHit);

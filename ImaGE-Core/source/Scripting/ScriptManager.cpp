@@ -239,6 +239,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetRotation);
   ADD_INTERNAL_CALL(SetWorldRotation);
   ADD_INTERNAL_CALL(SetWorldScale);
+  ADD_INTERNAL_CALL(SetBoxColliderScale);
   ADD_INTERNAL_CALL(GetWorldRotationEuler);
   ADD_INTERNAL_CALL(GetRotationEuler);
   ADD_INTERNAL_CALL(SetRotationEuler);
@@ -924,6 +925,17 @@ glm::vec3 Mono::GetColliderScale(ECS::Entity::EntityID e)
     return glm::vec3{};
 }
 
+void Mono::SetBoxColliderScale(ECS::Entity::EntityID e, glm::vec3 scale) {
+  ECS::Entity entity(e);
+  if (entity.HasComponent<Component::BoxCollider>()) {
+    entity.GetComponent<Component::BoxCollider>().scale.x = scale.x;
+    entity.GetComponent<Component::BoxCollider>().scale.y = scale.y;
+    entity.GetComponent<Component::BoxCollider>().scale.z = scale.z;
+    
+    IGE::Physics::PhysicsSystem::GetInstance().get()->ChangeBoxColliderVar(entity);
+  }
+}
+
 glm::quat Mono::GetWorldRotation(ECS::Entity::EntityID entity)
 {
   Component::Transform& trans{ ECS::Entity(entity).GetComponent<Component::Transform>() };
@@ -1247,11 +1259,11 @@ float Mono::GetSoundGlobalVolume() {
   return IGE::Audio::AudioManager::GetInstance().mGlobalVolume;
 }
 
-void Mono::EnableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s, unsigned type, float param)
+void Mono::EnableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s)
 {
     std::string const name{ MonoStringToSTD(s) };
     ECS::Entity entity{ e };
-    entity.GetComponent<Component::AudioSource>().EnablePostProcessing(name, static_cast<IGE::Audio::SoundInvokeSetting::PostProcessingType>(type), param);
+    entity.GetComponent<Component::AudioSource>().EnablePostProcessing(name);
 }
 
 void Mono::DisableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s)

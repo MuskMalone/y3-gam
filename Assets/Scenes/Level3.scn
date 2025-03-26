@@ -202,7 +202,23 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 0.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 0.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -230,7 +246,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -258,7 +274,23 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             }
@@ -4008,7 +4040,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -4822,7 +4854,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -4850,7 +4882,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -4878,7 +4910,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -4906,7 +4938,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -4934,7 +4966,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -4962,7 +4994,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -4990,7 +5022,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -5018,7 +5050,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -5046,7 +5078,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -5074,7 +5106,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -5301,7 +5333,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -5329,7 +5361,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -5357,7 +5389,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -5385,7 +5417,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -5413,7 +5445,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -5441,7 +5473,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -5469,7 +5501,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -5497,7 +5529,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -5525,7 +5557,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -5553,7 +5585,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -11956,7 +11988,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -11984,7 +12016,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -12012,7 +12044,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -12040,7 +12072,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -12068,7 +12100,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -12096,7 +12128,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -12124,7 +12156,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -12152,7 +12184,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -12180,7 +12212,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -12208,7 +12240,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -14097,7 +14129,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -14125,7 +14157,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -14153,7 +14185,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -14181,7 +14213,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -14209,7 +14241,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -14443,6 +14475,13 @@
                                         }
                                     },
                                     {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 1049050,
                                             "scriptName": "Entity"
@@ -14480,6 +14519,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
                                         }
                                     }
                                 ]
@@ -16146,7 +16195,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -17020,7 +17069,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -17048,7 +17097,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -25545,50 +25594,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 560,
+                                                "entityID": 527,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 560,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 555,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 555,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 563,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 563,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 557,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 557,
+                                                        "data": 527,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -25610,11 +25620,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 527,
+                                                "entityID": 557,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 527,
+                                                        "data": 557,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 563,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 563,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 555,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 555,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 560,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 560,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -30076,7 +30125,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -32356,7 +32405,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -33182,7 +33231,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -34627,7 +34676,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34655,7 +34704,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34683,7 +34732,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34711,7 +34760,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34739,7 +34788,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34767,7 +34816,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34795,7 +34844,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34823,7 +34872,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34851,7 +34900,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34877,9 +34926,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -34905,9 +34970,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -34933,9 +35014,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -34961,9 +35058,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -34989,9 +35102,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35017,9 +35146,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35045,9 +35190,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35073,9 +35234,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35103,7 +35280,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -35131,7 +35308,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -35159,7 +35336,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -35187,7 +35364,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -35215,7 +35392,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -35243,7 +35420,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -35271,7 +35448,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -35299,7 +35476,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -50866,7 +51043,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -51029,6 +51206,13 @@
                                         }
                                     },
                                     {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 369,
                                             "scriptName": "Level3Inventory"
@@ -51040,12 +51224,32 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 1,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 2,
                                             "scriptName": "PlayerInteraction"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
                                         }
                                     }
                                 ]

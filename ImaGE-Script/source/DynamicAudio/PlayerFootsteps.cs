@@ -68,7 +68,7 @@ public class PlayerFootsteps : Entity
 
           if (isEnteredHallway)
           {
-            InternalCalls.EnableSoundPostProcessing(mEntityID, soundName, Convert.ToUInt32(ppType), ppPararm);
+            InternalCalls.EnableSoundPostProcessing(mEntityID, soundName);//, Convert.ToUInt32(ppType), ppPararm);
           }
           else
           {
@@ -137,7 +137,7 @@ public class PlayerFootsteps : Entity
   {
     footstepCount = footstepCount % footstepSoundCount;
     string soundName = $"Plank{footstepCount + 1}_SFX.wav";
-    InternalCalls.EnableSoundPostProcessing(mEntityID, soundName, 0, 1500f);
+    InternalCalls.EnableSoundPostProcessing(mEntityID, soundName);//, 0, 1500f);
     InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
     InternalCalls.PlaySound(mEntityID, soundName);
     footstepCount++;
@@ -155,7 +155,7 @@ public class PlayerFootsteps : Entity
     footstepCount = footstepCount % footstepSoundCount;
     string soundName = $"..\\Assets\\Audio\\FootstepLinoleum{footstepCount + 1}_SFX.wav";
     if (pp)
-      InternalCalls.EnableSoundPostProcessing(mEntityID, soundName, 0, 2000f);
+      InternalCalls.EnableSoundPostProcessing(mEntityID, soundName);//, 0, 2000f);
     InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
     InternalCalls.PlaySound(mEntityID, soundName);
     footstepCount++;
@@ -176,7 +176,7 @@ public class PlayerFootsteps : Entity
     footstepCount = footstepCount % footstepSoundCount;
     string soundName = $"Pavement{footstepCount + 1}.wav";
     InternalCalls.SetSoundVolume(mEntityID, soundName, footstepVolume);
-    InternalCalls.EnableSoundPostProcessing(mEntityID, soundName, 0, 2000f);
+    InternalCalls.EnableSoundPostProcessing(mEntityID, soundName);//, 0, 2000f);
     InternalCalls.PlaySound(mEntityID, soundName);
     footstepCount++;
   }
@@ -206,7 +206,6 @@ public class PlayerFootsteps : Entity
       {
         case "BumpyGround":
           PlayRandomGrassSound();
-          Debug.Log("GrassSound");
           break;
         case "Second Level":
         case "Pit Room Ground":
@@ -221,6 +220,7 @@ public class PlayerFootsteps : Entity
           PlayRandomGravelSound();
           break;
         case "Floor":
+        case "Floor (Main Area)":
         case "Floor (Exit)":
         case "Floor (Room)":
         case "Floor Layer":

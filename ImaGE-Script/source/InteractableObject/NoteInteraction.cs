@@ -135,13 +135,8 @@ public class NoteInteraction : Entity
     Vector3 up = Vector3.Normalize(Vector3.Cross(InternalCalls.GetCameraForward(), InternalCalls.GetCameraRight()));
     Quaternion targetRot = CalculateLookRotation(-directionToCamera, up);
 
-    //Quaternion additionalRotation = AxisAngleToQuaternion(new Vector3(1,0,0), 90);
     Quaternion additionalRotation = new Quaternion(-0.7071f, 0f, 0f, 0.7071f); // I am hard coding this for now, it's -90deg in quat
-    //Debug.Log("Additional Rotation: " + additionalRotation);
-    float debugAngle = 2 * Mathf.Acos(additionalRotation.W) * Mathf.Rad2Deg;
-    //Debug.Log("Additional Rotation Angle: " + debugAngle + " degrees");
     targetRot = targetRot * additionalRotation;
-    //Debug.Log("Final Target Rotation: " + targetRot);
 
     // Move towards the target position
     Vector3 newPos = Vector3.Lerp(currPos, targetPos, Time.deltaTime * moveSpeed);
@@ -203,6 +198,7 @@ public class NoteInteraction : Entity
   }
 
   // This function is not working
+  /*
   private Quaternion AxisAngleToQuaternion(Vector3 axis, float angleInDegrees)
   {
     float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
@@ -220,6 +216,7 @@ public class NoteInteraction : Entity
         cosHalfAngle
     );
   }
+  */
 
   private Quaternion CalculateLookRotation(Vector3 forward, Vector3 up)
   {

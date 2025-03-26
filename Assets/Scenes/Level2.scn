@@ -3520,6 +3520,13 @@
                                             }
                                         },
                                         {
+                                            "data": 2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -3531,12 +3538,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -12947,7 +12974,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -13060,6 +13087,13 @@
                                         }
                                     },
                                     {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 481,
                                             "scriptName": "Level2Inventory"
@@ -13071,12 +13105,32 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 1,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 3145735,
                                             "scriptName": "PlayerInteraction"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
                                         }
                                     }
                                 ]
@@ -14115,7 +14169,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -14893,7 +14947,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -14921,7 +14975,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -15016,37 +15070,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 184,
+                                                "entityID": 25,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 184,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 121,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 121,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 40,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 40,
+                                                        "data": 25,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15068,11 +15096,37 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 25,
+                                                "entityID": 40,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 25,
+                                                        "data": 40,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 121,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 121,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 184,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 184,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16263,7 +16317,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 100.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -16291,7 +16345,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -16457,50 +16511,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 187,
+                                                "entityID": 192,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 187,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 188,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 188,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 189,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 189,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 190,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 190,
+                                                        "data": 192,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16522,11 +16537,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 192,
+                                                "entityID": 190,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 192,
+                                                        "data": 190,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 189,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 189,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 188,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 188,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 187,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 187,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16543,50 +16597,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 193,
+                                                "entityID": 198,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 193,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 194,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 194,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 1048771,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 1048771,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 196,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 196,
+                                                        "data": 198,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16608,11 +16623,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 198,
+                                                "entityID": 196,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 198,
+                                                        "data": 196,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 1048771,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 1048771,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 194,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 194,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 193,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 193,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16629,50 +16683,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 253,
+                                                "entityID": 258,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 253,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 254,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 254,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 255,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 255,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 256,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 256,
+                                                        "data": 258,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16694,11 +16709,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 258,
+                                                "entityID": 256,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 258,
+                                                        "data": 256,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 255,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 255,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 254,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 254,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 253,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 253,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16715,50 +16769,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 259,
+                                                "entityID": 264,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 259,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 260,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 260,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 261,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 261,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 262,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 262,
+                                                        "data": 264,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16780,11 +16795,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 264,
+                                                "entityID": 262,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 264,
+                                                        "data": 262,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 261,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 261,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 260,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 260,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 259,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 259,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -21778,7 +21832,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -22248,7 +22302,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -22276,7 +22330,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -25803,7 +25857,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -26740,7 +26794,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -27899,7 +27953,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -27927,7 +27981,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -27955,7 +28009,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -27983,7 +28037,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -28011,7 +28065,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -28315,7 +28369,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -28343,7 +28397,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -28371,7 +28425,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -28399,7 +28453,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -28427,7 +28481,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -29635,7 +29689,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -31432,7 +31486,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31460,7 +31514,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31488,7 +31542,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31516,7 +31570,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31544,7 +31598,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -31823,7 +31877,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31851,7 +31905,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31879,7 +31933,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31907,7 +31961,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -31935,7 +31989,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -32194,7 +32248,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -32222,7 +32276,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -32250,7 +32304,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -32278,7 +32332,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 },
@@ -32306,7 +32360,7 @@
                                             "rolloffType": "LINEAR",
                                             "enablePostProcessing": false,
                                             "processingType": "REVERB",
-                                            "postProcessingParameter": 1500.0
+                                            "postProcessingSettings": []
                                         }
                                     }
                                 }
@@ -34724,7 +34778,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34752,7 +34806,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34780,7 +34834,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34808,7 +34862,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34836,7 +34890,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34864,7 +34918,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34892,7 +34946,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34920,7 +34974,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -34946,9 +35000,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -34974,9 +35044,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35002,9 +35088,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35030,9 +35132,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35058,9 +35176,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35086,9 +35220,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35114,9 +35264,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35142,9 +35308,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35170,9 +35352,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 2000.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35198,9 +35396,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 2000.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35226,9 +35440,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 2000.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35254,9 +35484,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 2000.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35282,9 +35528,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 2000.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35310,9 +35572,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 2000.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35338,9 +35616,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 2000.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             },
@@ -35366,9 +35660,25 @@
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
                                         "rolloffType": "NONE",
-                                        "enablePostProcessing": false,
+                                        "enablePostProcessing": true,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 2000.0
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 2000.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
                                     }
                                 }
                             }
@@ -41978,6 +42288,13 @@
                                             }
                                         },
                                         {
+                                            "data": 2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -41989,12 +42306,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -42132,6 +42469,13 @@
                                             }
                                         },
                                         {
+                                            "data": 2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -42143,12 +42487,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -42286,6 +42650,13 @@
                                             }
                                         },
                                         {
+                                            "data": 2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -42297,12 +42668,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -42418,6 +42809,13 @@
                                             }
                                         },
                                         {
+                                            "data": 2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -42429,12 +42827,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -42572,6 +42990,13 @@
                                             }
                                         },
                                         {
+                                            "data": 2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -42583,12 +43008,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -42726,6 +43171,13 @@
                                             }
                                         },
                                         {
+                                            "data": 2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -42737,12 +43189,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -48109,6 +48581,13 @@
                                             }
                                         },
                                         {
+                                            "data": 5.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -48120,12 +48599,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -49132,7 +49631,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -50372,6 +50871,13 @@
                                             }
                                         },
                                         {
+                                            "data": 5.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -50383,12 +50889,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -50846,7 +51372,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -53385,6 +53911,13 @@
                                             }
                                         },
                                         {
+                                            "data": 5.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -53396,12 +53929,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -54150,7 +54703,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -55480,7 +56033,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -57598,6 +58151,13 @@
                                             }
                                         },
                                         {
+                                            "data": 5.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                            }
+                                        },
+                                        {
                                             "data": {
                                                 "entityID": 481,
                                                 "scriptName": "Level2Inventory"
@@ -57609,12 +58169,32 @@
                                         },
                                         {
                                             "data": {
+                                                "entityID": 1,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
                                                 "entityID": 3145735,
                                                 "scriptName": "PlayerInteraction"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3145735,
+                                                "scriptName": "PlayerMove"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerMove"
                                             }
                                         }
                                     ]
@@ -63628,7 +64208,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -64229,7 +64809,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -70085,7 +70665,7 @@
                                         "rolloffType": "LINEAR",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -70113,7 +70693,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -70141,7 +70721,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -70345,7 +70925,7 @@
                                         }
                                     },
                                     {
-                                        "data": 30.0,
+                                        "data": 40.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
@@ -70366,7 +70946,7 @@
                                         }
                                     },
                                     {
-                                        "data": 20.0,
+                                        "data": 30.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "walkingSpeed"
@@ -70379,7 +70959,7 @@
                                 "scriptName": "PlayerInteraction",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": 8.0,
+                                        "data": 15.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "RayFromPlayerCameraLength"
@@ -70684,7 +71264,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -70712,7 +71292,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -70740,7 +71320,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -70768,7 +71348,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -70796,7 +71376,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -71585,7 +72165,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }

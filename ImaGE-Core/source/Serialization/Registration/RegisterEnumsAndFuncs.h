@@ -99,11 +99,11 @@ static void rttr_auto_register_reflection_function3_(); namespace {
     rttr::value("NONE", IGE::Audio::SoundInvokeSetting::RolloffType::NONE)
   );
 
-  rttr::registration::enumeration<IGE::Audio::SoundInvokeSetting::PostProcessingType>("PostProcessingType")(
-    rttr::value("REVERB", IGE::Audio::SoundInvokeSetting::PostProcessingType::REVERB),
-    rttr::value("ECHO", IGE::Audio::SoundInvokeSetting::PostProcessingType::ECHO),
-    rttr::value("DISTORTION", IGE::Audio::SoundInvokeSetting::PostProcessingType::DISTORTION),
-    rttr::value("CHORUS", IGE::Audio::SoundInvokeSetting::PostProcessingType::CHORUS)
+  rttr::registration::enumeration<IGE::Audio::PostProcessingType>("PostProcessingType")(
+    rttr::value("REVERB", IGE::Audio::PostProcessingType::REVERB),
+    rttr::value("ECHO", IGE::Audio::PostProcessingType::ECHO),
+    rttr::value("DISTORTION", IGE::Audio::PostProcessingType::DISTORTION),
+    rttr::value("CHORUS", IGE::Audio::PostProcessingType::CHORUS)
   );
   rttr::registration::enumeration<Component::LightType>("LightType")(
     rttr::value("DIRECTIONAL", Component::LightType::DIRECTIONAL),

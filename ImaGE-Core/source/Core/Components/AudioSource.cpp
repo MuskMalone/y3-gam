@@ -25,14 +25,12 @@ namespace Component {
 			sound.playSettings.volume = volume;
 		}
 	}
-	void AudioSource::EnablePostProcessing(std::string const& id, IGE::Audio::SoundInvokeSetting::PostProcessingType type, float param)
+	void AudioSource::EnablePostProcessing(std::string const& id)
 	{
 		//play sound
 		if (sounds.find(id) != sounds.end()) {
 			auto & sound{ sounds.at(id) };
 			sound.playSettings.enablePostProcessing = true;
-			sound.playSettings.processingType = type;
-			sound.playSettings.postProcessingParameter = param;
 		}
 	}
 	void AudioSource::DisablePostProcessing(std::string const& id)
@@ -48,7 +46,6 @@ namespace Component {
 		//play sound
 		if (sounds.find(id) != sounds.end()) {
 			auto const& sound{ sounds.at(id) };
-			sound.playSettings.name = id;
 			IGE::Audio::AudioManager::GetInstance().PlaySound(sound.guid, sound.playSettings, channelGroup, id);
 		}
 	}

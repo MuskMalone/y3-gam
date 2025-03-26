@@ -1,6 +1,7 @@
 #pragma once
 #include <fmod.hpp>
 #include <unordered_map>
+#include <variant>
 #include <string>
 #include <Core/GUID.h>
 #include <Asset/AssetManager.h>
@@ -14,18 +15,45 @@
 const float LOWPASS_FILTER_VALUE{ 0.5f };
 namespace IGE {
 	namespace Audio {
+		enum class PostProcessingType : uint32_t {
+			REVERB,
+			ECHO,
+			DISTORTION,
+			CHORUS,
+		};
+		struct PostProcessingSetting {
+			PostProcessingType type = PostProcessingType::REVERB;
+
+			// Reverb parameters:
+			float reverb_decayTime = 1500.f;      // in ms (or seconds, as FMOD expects)
+			float reverb_earlyDelay = 0.f;        // delay before early reflections
+			float reverb_lateDelay = 0.f;         // delay for late reflections
+			float reverb_diffusion = 100.f;       // diffusion percentage
+			float reverb_density = 100.f;         // density percentage
+
+			// Echo parameters:
+			float echo_delay = 500.f;         // echo delay in ms
+			float echo_feedback = 50.f;       // feedback percentage
+			float echo_wetDryMix = 50.f;      // mix percentage (0 to 100)
+
+			// Distortion parameters:
+			float distortion_level = 50.f;    // distortion level (percent)
+
+			// Chorus parameters:
+			float chorus_rate = 0.8f;         // modulation rate in Hz
+			float chorus_depth = 0.5f;        // modulation depth (0.0 to 1.0)
+			float chorus_mix = 50.f;          // wet/dry mix percentage
+		};
+
+
+
 		struct SoundInvokeSetting {
 			enum class RolloffType {
 				LINEAR,
 				LOGARITHMIC, 
 				NONE
 			};
-			enum class PostProcessingType : uint32_t {
-				REVERB, 
-				ECHO, 
-				DISTORTION,
-				CHORUS,
-			};
+
 			// Position in 3D space for 3D sounds
 			glm::vec3 position{0.0f, 0.0f, 0.0f};
 
@@ -46,7 +74,7 @@ namespace IGE {
 
 			bool enablePostProcessing{ false };
 			PostProcessingType processingType{PostProcessingType::REVERB};
-			float postProcessingParameter{1500.f};
+			mutable std::vector<PostProcessingSetting> postProcessingSettings;
 
 			//atm, its used to watch whether the channel has stopped playing, 
 			//then set the channel pointer back to nullptr
@@ -54,8 +82,11 @@ namespace IGE {
 				FMOD_CHANNELCONTROL_CALLBACK_TYPE callbackType, void* commanddata1, void* commanddata2);
 			mutable std::unordered_set<FMOD::Channel*> channels; // not for imgui
 			mutable bool paused{ false }; // not fo rimgui
-			mutable bool manualStop{ false }; // not for imgui
-			mutable std::string name; // toremove
+
+			void AddPostProcessingEffect(PostProcessingType type);
+			// Member function to remove a post processing effect by index.
+			void RemovePostProcessingEffect(size_t index);
+
 		}; 
 
 		struct Sound {
@@ -107,6 +138,8 @@ namespace IGE {
 			 void StopSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const&);
 			 void FreeSound(uint32_t sound);
 
+			
+			 void Debug();
 			//Gets the FMOD system instance
 			 FMOD::System* GetSystem();
 
@@ -138,6 +171,8 @@ namespace IGE {
 			 bool mSceneStarted{false};
 			 bool mSceneStopped{true}; // scene starts from a stopped state
 			 bool mScenePaused{false};
+
+			 bool mDebug{ false };
 		public:
 			 float mGlobalVolume{ 1.f };
 		};

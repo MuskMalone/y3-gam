@@ -10,6 +10,10 @@ public class ToolsPainting : Entity, IInventoryItem
   public Dialogue dialogueSystem;
   public string[] pitPaintingDialogue;
 
+  private bool isBeingPickedUp = false;
+  public Entity playerCamera;
+  public PlayerMove playerMove;
+
   public string Name
   {
     get
@@ -49,13 +53,27 @@ public class ToolsPainting : Entity, IInventoryItem
 
   void Update()
   {
+    if (isBeingPickedUp)
+    {
+      if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID))
+      {
+        InternalCalls.PlaySound(mEntityID, "PickupPainting");
+        isBeingPickedUp = false;
+        inventoryScript.Additem(this);
+        playerMove.UnfreezePlayer();
+        dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised });
+      }
+      return;
+    }
+
     // For Painting Picking Up
     bool isPaintHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
     if (isPaintHit && Input.GetKeyTriggered(KeyCode.E))
     {
-      InternalCalls.PlaySound(mEntityID, "PickupPainting");
-      inventoryScript.Additem(this);
-      dialogueSystem.SetDialogue(pitPaintingDialogue, new Dialogue.Emotion[] { Emotion.Surprised });
+      isBeingPickedUp = true;
+      playerMove.FreezePlayer();
+      EToPickUpUI.SetActive(false);
+      return;
     }
     EToPickUpUI.SetActive(isPaintHit);
   }

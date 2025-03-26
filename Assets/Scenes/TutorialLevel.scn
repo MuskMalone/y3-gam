@@ -905,7 +905,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -933,7 +933,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -1926,7 +1926,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -1954,7 +1954,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -1982,7 +1982,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -2010,7 +2010,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -2038,7 +2038,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -2066,7 +2066,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -2275,7 +2275,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -2448,6 +2448,13 @@
                                         }
                                     },
                                     {
+                                        "data": 1.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "finalDistanceAwayFromCamWhenPickedUp"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 110,
                                             "scriptName": "TutorialLevelInventory"
@@ -2459,12 +2466,32 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 1048579,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 2097156,
                                             "scriptName": "PlayerInteraction"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
                                         }
                                     }
                                 ]
@@ -3061,7 +3088,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -3773,7 +3800,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -5804,7 +5831,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -10116,7 +10143,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             },
@@ -10144,7 +10171,7 @@
                                         "rolloffType": "NONE",
                                         "enablePostProcessing": false,
                                         "processingType": "REVERB",
-                                        "postProcessingParameter": 1500.0
+                                        "postProcessingSettings": []
                                     }
                                 }
                             }
@@ -10250,8 +10277,8 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 1.0,
-                        "dynamicFriction": 1.0,
+                        "staticFriction": 176.1699981689453,
+                        "dynamicFriction": 235.0399932861328,
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 10.0,
@@ -10331,6 +10358,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "isGroundedRayHeight"
+                                        }
+                                    },
+                                    {
+                                        "data": true,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "isTutorial"
                                         }
                                     },
                                     {
@@ -11645,8 +11679,8 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 1.0,
-                        "dynamicFriction": 1.0,
+                        "staticFriction": 161.77999877929688,
+                        "dynamicFriction": 179.9199981689453,
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,

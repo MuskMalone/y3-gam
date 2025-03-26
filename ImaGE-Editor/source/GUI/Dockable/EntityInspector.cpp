@@ -830,30 +830,131 @@ namespace GUI {
 
                   ImGui::EndTable();
                   // Table for Post Processing settings
-                  if (ImGui::BeginTable(("PostProcessingTable##" + uniqueID).c_str(), 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+                  if (ImGui::BeginTable(("PostProcessingTable##" + uniqueID).c_str(), 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit))
+                  {
                       ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
                       ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
 
                       NextRowTable("Enable Post Processing");
-                      if (ImGui::Checkbox(("##EnablePostProcessing" + uniqueID).c_str(), &audioInstance.playSettings.enablePostProcessing)) {
+                      if (ImGui::Checkbox(("##EnablePostProcessing" + uniqueID).c_str(), &audioInstance.playSettings.enablePostProcessing))
+                      {
                           modified = true;
                       }
 
                       // Only show additional post-processing controls if enabled
-                      if (audioInstance.playSettings.enablePostProcessing) {
-                          // Combo for selecting the processing type
-                          static const char* processingTypes[] = { "Reverb", "Echo", "Distortion", "Chorus" };
-                          int currentProcessing = static_cast<int>(audioInstance.playSettings.processingType);
-                          NextRowTable("Processing Type");
-                          if (ImGui::Combo(("##ProcessingType" + uniqueID).c_str(), &currentProcessing, processingTypes, IM_ARRAYSIZE(processingTypes))) {
-                              audioInstance.playSettings.processingType = static_cast<IGE::Audio::SoundInvokeSetting::PostProcessingType>(currentProcessing);
-                              modified = true;
+                      if (audioInstance.playSettings.enablePostProcessing)
+                      {
+                          // ---- Dropdown Button to Add a New Effect ----
+                          static const char* effectTypes[] = { "Reverb", "Echo", "Distortion", "Chorus" };
+                          if (ImGui::BeginCombo(("Add Post Processing Effect##" + uniqueID).c_str(), "Select Effect"))
+                          {
+                              for (int i = 0; i < IM_ARRAYSIZE(effectTypes); ++i)
+                              {
+                                  std::string selectableLabel = std::string(effectTypes[i]) + "##" + uniqueID;
+                                  if (ImGui::Selectable(selectableLabel.c_str()))
+                                  {
+                                      // Call the function to add a new effect.
+                                      audioInstance.playSettings.AddPostProcessingEffect(static_cast<IGE::Audio::PostProcessingType>(i));
+                                      modified = true;
+                                  }
+                              }
+                              ImGui::EndCombo();
                           }
 
-                          // Drag float for the post-processing parameter
-                          NextRowTable("Parameter");
-                          if (ImGui::DragFloat(("##PostProcessingParameter" + uniqueID).c_str(), &audioInstance.playSettings.postProcessingParameter, 0.1f, 0.0f, 10000.0f)) {
-                              modified = true;
+                          // ---- Iterate over Existing Effects and Show Controls ----
+                          for (size_t idx = 0; idx < audioInstance.playSettings.postProcessingSettings.size(); ++idx)
+                          {
+                              auto& effect = audioInstance.playSettings.postProcessingSettings[idx];
+                              std::string effectLabel = "Effect " + std::to_string(idx) + ": ";
+                              switch (effect.type)
+                              {
+                              case IGE::Audio::PostProcessingType::REVERB:
+                              {
+                                  effectLabel += "Reverb";
+                                  if (ImGui::TreeNode((effectLabel + "##" + std::to_string(idx) + uniqueID).c_str()))
+                                  {
+                                      if (ImGui::DragFloat(("Decay Time##" + std::to_string(idx) + uniqueID).c_str(), &effect.reverb_decayTime, 0.1f, 0.0f, 10000.f))
+                                          modified = true;
+                                      if (ImGui::DragFloat(("Early Delay##" + std::to_string(idx) + uniqueID).c_str(), &effect.reverb_earlyDelay, 0.1f, 0.0f, 1000.f))
+                                          modified = true;
+                                      if (ImGui::DragFloat(("Late Delay##" + std::to_string(idx) + uniqueID).c_str(), &effect.reverb_lateDelay, 0.1f, 0.0f, 1000.f))
+                                          modified = true;
+                                      if (ImGui::DragFloat(("Diffusion##" + std::to_string(idx) + uniqueID).c_str(), &effect.reverb_diffusion, 0.1f, 0.0f, 100.f))
+                                          modified = true;
+                                      if (ImGui::DragFloat(("Density##" + std::to_string(idx) + uniqueID).c_str(), &effect.reverb_density, 0.1f, 0.0f, 100.f))
+                                          modified = true;
+                                      // Delete button for Reverb effect:
+                                      if (ImGui::Button(("Delete##" + std::to_string(idx) + uniqueID).c_str()))
+                                      {
+                                          audioInstance.playSettings.RemovePostProcessingEffect(idx);
+                                          modified = true;
+                                      }
+                                      ImGui::TreePop();
+                                  }
+                                  break;
+                              }
+                              case IGE::Audio::PostProcessingType::ECHO:
+                              {
+                                  effectLabel += "Echo";
+                                  if (ImGui::TreeNode((effectLabel + "##" + std::to_string(idx) + uniqueID).c_str()))
+                                  {
+                                      if (ImGui::DragFloat(("Delay##" + std::to_string(idx) + uniqueID).c_str(), &effect.echo_delay, 0.1f, 0.0f, 2000.f))
+                                          modified = true;
+                                      if (ImGui::DragFloat(("Feedback##" + std::to_string(idx) + uniqueID).c_str(), &effect.echo_feedback, 0.1f, 0.0f, 100.f))
+                                          modified = true;
+                                      if (ImGui::DragFloat(("WetDryMix##" + std::to_string(idx) + uniqueID).c_str(), &effect.echo_wetDryMix, 0.1f, 0.0f, 100.f))
+                                          modified = true;
+                                      // Delete button for Echo effect:
+                                      if (ImGui::Button(("Delete##" + std::to_string(idx) + uniqueID).c_str()))
+                                      {
+                                          audioInstance.playSettings.RemovePostProcessingEffect(idx);
+                                          modified = true;
+                                      }
+                                      ImGui::TreePop();
+                                  }
+                                  break;
+                              }
+                              case IGE::Audio::PostProcessingType::DISTORTION:
+                              {
+                                  effectLabel += "Distortion";
+                                  if (ImGui::TreeNode((effectLabel + "##" + std::to_string(idx) + uniqueID).c_str()))
+                                  {
+                                      if (ImGui::DragFloat(("Level##" + std::to_string(idx) + uniqueID).c_str(), &effect.distortion_level, 0.1f, 0.0f, 100.f))
+                                          modified = true;
+                                      // Delete button for Distortion effect:
+                                      if (ImGui::Button(("Delete##" + std::to_string(idx) + uniqueID).c_str()))
+                                      {
+                                          audioInstance.playSettings.RemovePostProcessingEffect(idx);
+                                          modified = true;
+                                      }
+                                      ImGui::TreePop();
+                                  }
+                                  break;
+                              }
+                              case IGE::Audio::PostProcessingType::CHORUS:
+                              {
+                                  effectLabel += "Chorus";
+                                  if (ImGui::TreeNode((effectLabel + "##" + std::to_string(idx) + uniqueID).c_str()))
+                                  {
+                                      if (ImGui::DragFloat(("Rate##" + std::to_string(idx) + uniqueID).c_str(), &effect.chorus_rate, 0.1f, 0.0f, 10.f))
+                                          modified = true;
+                                      if (ImGui::DragFloat(("Depth##" + std::to_string(idx) + uniqueID).c_str(), &effect.chorus_depth, 0.01f, 0.0f, 1.f))
+                                          modified = true;
+                                      if (ImGui::DragFloat(("Mix##" + std::to_string(idx) + uniqueID).c_str(), &effect.chorus_mix, 0.1f, 0.0f, 100.f))
+                                          modified = true;
+                                      // Delete button for Chorus effect:
+                                      if (ImGui::Button(("Delete##" + std::to_string(idx) + uniqueID).c_str()))
+                                      {
+                                          audioInstance.playSettings.RemovePostProcessingEffect(idx);
+                                          modified = true;
+                                      }
+                                      ImGui::TreePop();
+                                  }
+                                  break;
+                              }
+                              default:
+                                  break;
+                              }
                           }
                       }
 

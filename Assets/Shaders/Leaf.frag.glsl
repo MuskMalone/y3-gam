@@ -79,6 +79,7 @@ uniform float u_Gamma; // Default value should be set in the application
 uniform float u_Dist; // Default value should be set in the application
 uniform float u_LeafSize; // Default value should be set in the application
 uniform vec3 u_TreePos;
+uniform float u_MaxRot ; // 60 degrees in radians
 
 const float PI = 3.14159265359;
 
@@ -334,11 +335,9 @@ float GetVeins(vec2 localPos, float veinScale) {
 }
 
 float hash(float seed) {
-    // Use a large prime number to scramble the bits
-    seed = fract(seed * 0.1031);
-    seed *= seed + 33.33;
-    seed *= seed + seed;
-    return fract(seed);
+    seed = fract(sin(seed) * 43758.5453);
+    return fract(sin(seed) * 43758.5453);
+
 }
 
 
@@ -354,9 +353,9 @@ float remap(float value) {
 
 
 vec3 GetSway( float phaseShift) {
-    float swayAmount = 0.15; // Adjust this value to control the swaying intensity
-    float swayFrequency = 4.0; // Adjust this value to control the swaying speed
-    float waveSpeed = 2.0; // Adjust this value to control the wave speed
+    float swayAmount = 0.4; // Adjust this value to control the swaying intensity
+    float swayFrequency = 2.0; // Adjust this value to control the swaying speed
+    float waveSpeed = 1.0; // Adjust this value to control the wave speed
 
     // Calculate the sway offset with a phase shift
     float swayTime = u_Time * waveSpeed + phaseShift * 6.28318530718; // Add phase shift
@@ -369,11 +368,13 @@ vec3 GetSway( float phaseShift) {
 
 bool IsInLeaf(vec3 fragPos, vec3 center, float radius, float seedX, float seedY) {
     // Transform the fragment position to local leaf space
+
+
     vec3 localPos = fragPos - center;
 
     // Calculate the rotation angles based on random values
-    float angleX = (seedX) * 6.28318530718; // Range [0, 2π)
-    float angleY = (seedY) * 6.28318530718; // Range [0, 2π)
+    float angleX = pow(seedX , seedY) * 6.28318530718; // Range [0, 2π)
+    float angleY = pow(seedY , seedX) * 6.28318530718; // Range [0, 2π)
 
     // Create the 3D rotation matrices
     mat3 rotationX = mat3(
@@ -407,11 +408,11 @@ bool IsInLeaf(vec3 fragPos, vec3 center, float radius, float seedX, float seedY)
     // Check if the point is inside the leaf shape
     return ellipsoid < 1.0;
 }
-vec4 leafColors[4] = vec4[](
+vec4 leafColors[3] = vec4[](
     vec4(0.165, 0.82,0, 1.0),  // rgba(73, 84, 85, 255)
     vec4(0.129, 0.51, 0.227, 1.0), // rgba(93, 125, 101, 255)
-    vec4(0.271, 0.639, 0.157, 1.0), // rgba(165, 221, 122, 255)
-    vec4(0.576, 0.839, 0.184, 1.0) // rgba(195, 242, 126, 255)
+    vec4(0.271, 0.639, 0.157, 1.0)//, // rgba(165, 221, 122, 255)
+    //vec4(0.576, 0.839, 0.184, 1.0) // rgba(195, 242, 126, 255)
     // vec4(0.839, 1, 0.31, 1.0) // rgba(224, 250, 141, 255)
     
 );
@@ -429,19 +430,19 @@ vec4 GetAlbedoColor(vec3 FragPos, vec3 ViewPosition) {
 
     // Tile the leaves in 3D space
     vec3 tileCoord = trunc(globalCoord / u_Dist);
-    for (int i = -2; i <= 2; ++i) {
-        for (int j = -2; j <= 2; ++j) {
-            for (int k = -2; k <= 2; ++k) {
+    for (int i = -3; i <= 3; ++i) {
+        for (int j = -3; j <= 3; ++j) {
+            for (int k = -3; k <= 3; ++k) {
                 vec3 seed = tileCoord + vec3(i, j, k);
                 vec3 offset = vec3(i, j, k) * u_Dist;  // Offset to get to the center of the current Quad
-                float randomValueX = hash(seed.x); // Random value for this quad
-                float randomValueY = hash(seed.y); // Random value for this quad
-                float randomValueZ = hash(seed.z); // Random value for this quad
+                float randomValueX = hash(seed.x + seed.y * 100.0 + seed.z * 10000.0); // Random value for this quad
+                float randomValueY = hash(seed.y + seed.z * 100.0 + seed.x * 10000.0); // Random value for this quad
+                float randomValueZ = hash(seed.z + seed.x * 100.0 + seed.y * 10000.0); // Random value for this quad
                 float sizeChange = hash(seed.x + seed.y) * u_LeafSize/2.0;
 
                 // Fixed leaf size
                 float radius = u_LeafSize;
-                radius += sizeChange;
+                //radius += sizeChange;
                 // Calculate the leaf center
                 vec3 center = tileCoord * u_Dist;
 
@@ -468,13 +469,13 @@ vec4 GetAlbedoColor(vec3 FragPos, vec3 ViewPosition) {
                 
                 // Apply the sway offset and tile offset to the leaf center
                 vec3 leafCenter = center  + offset ;
-                leafCenter.x += + swayOffset.x + remap(hash(seed.x*5 + seed.y* 10)) * u_LeafSize/2.0;
+                leafCenter.x += swayOffset.x + remap(hash(randomValueX * randomValueY)) * u_LeafSize/2.0;
 
                 if (IsInLeaf(globalCoord, leafCenter, radius, randomValueX, randomValueY)) {
-                    int colorIndex = int(fract(hash(seed.x * 5 + seed.y * 10 + seed.z * 100)) * 3.0);
+                    int colorIndex = int(fract(hash(seed.x * 5 + seed.y * 10 + seed.z * 100)) * 2.0);
                     //int colorIndex = int((remap(hash(sizeChange)) +1.0)/2.0* 3.0);
-                    if (colorIndex > 3)
-                        colorIndex = 3;
+                    if (colorIndex > 2)
+                        colorIndex = 2;
                     return leafColors[colorIndex];
                 }
             }

@@ -274,6 +274,7 @@ namespace Mono
 		static glm::vec3 GetScale(ECS::Entity::EntityID);
 		static void SetScale(ECS::Entity::EntityID entity, glm::vec3 scale);
 		static glm::vec3 GetColliderScale(ECS::Entity::EntityID);
+		static void SetBoxColliderScale(ECS::Entity::EntityID entity, glm::vec3 scale);
 
 		/*!*********************************************************************
 		\brief
@@ -349,7 +350,7 @@ namespace Mono
 		static void SetSoundVolume(ECS::Entity::EntityID, MonoString*, float);
 		static void SetSoundGlobalVolume(float vol);
 		static float GetSoundGlobalVolume();
-		static void EnableSoundPostProcessing(ECS::Entity::EntityID, MonoString*, unsigned, float);
+		static void EnableSoundPostProcessing(ECS::Entity::EntityID, MonoString*);
 		static void DisableSoundPostProcessing(ECS::Entity::EntityID, MonoString*);
 		static void PlaySound(ECS::Entity::EntityID, MonoString*);
 		static void PauseSound(ECS::Entity::EntityID, MonoString*);
@@ -489,6 +490,7 @@ namespace Mono
 		static void SetCanvasTransitionProgress(ECS::Entity::EntityID canvasEntity, float progress);
 		static void EnableCanvasTransition(ECS::Entity::EntityID canvasEntity, bool isEnabled);
 		static void SetCanvasTransitionType(ECS::Entity::EntityID canvasEntity, int transitionType);
+
 
 		/*!**********************************************************************
 		*																																			  *
