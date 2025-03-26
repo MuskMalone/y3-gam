@@ -82,8 +82,12 @@ public class PictureAlign : Entity
     //For hex puzzle
     private HexTeleport HexTeleportScript;
 
+    // For hiding level2 inventory when teleporting
+    private Level2Inventory level2InventoryScript;
+
     void Start()
     {
+        level2InventoryScript = FindObjectOfType<Level2Inventory>();
         //tutorialFade = FindObjectOfType<TutorialFade>();
         // Initialize the movement and camera control components
         playerMove = player.FindObjectOfType<PlayerMove>();
@@ -297,8 +301,10 @@ public class PictureAlign : Entity
         {
           if (picture == "HexPaintingDestructible2to1")
           {
+            level2InventoryScript.CloseInventoryAndUnselectAllItems();
             FadeOut();
             PlayWarpShaderEffect();
+            ClearUI();
             if (hasFaded)
             {
               EndWarpShaderEffect();
@@ -375,7 +381,9 @@ public class PictureAlign : Entity
             // Fade-out phase: keep calling FadeOut until currentAlpha is nearly 0.
             if (!hasFaded)
             {
+              level2InventoryScript.CloseInventoryAndUnselectAllItems();
               FadeOut();
+              ClearUI();
               PlayWarpShaderEffect();
               Debug.Log("Fading");
               if (Mathf.Abs(currentAlpha - 0f) < 0.01f)
@@ -422,6 +430,8 @@ public class PictureAlign : Entity
               playerMove.UnfreezePlayer();
               isTransitioning = false;
               hasFaded = false;
+              currentImg.SetActive(false);
+              currentImg = null;
               // Optionally, call ClearUI() if needed.
             }
           }
@@ -646,6 +656,13 @@ public class PictureAlign : Entity
     toStop = true;
   }
 
+  public void ClearAll()
+  {
+    ClearUI();
+    currentImg.SetActive(false);
+    currentImg = null;
+  }
+
   public bool ChangeSkyBox()
   {
     Global.isNighttime = true;
@@ -822,5 +839,6 @@ public class PictureAlign : Entity
         }
     }
 
+    
 
 }
