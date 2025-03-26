@@ -124,7 +124,14 @@ namespace Graphics {
 					mSpec.pipeline->GetSpec().targetFramebuffer->GetFramebufferSpec().width,
 					mSpec.pipeline->GetSpec().targetFramebuffer->GetFramebufferSpec().height
 				));
-				shader->SetUniform("u_Time", static_cast<float>(glfwGetTime()));
+				
+				if (Graphics::PostProcessingManager::GetInstance().GetShaderName(i) == "..\\Assets\\PostProcessing\\teleport.frag.glsl") {
+					shader->SetUniform("u_Time", Graphics::PostProcessingManager::GetInstance().GetShaderElapsedTime());
+				}
+				else {
+					shader->SetUniform("u_Time", static_cast<float>(glfwGetTime()));
+				}
+			
 				shader->SetUniform("u_Frame", static_cast<int>(Performance::FrameRateController::GetInstance().GetFrameCounter()));
 				shader->SetUniform("u_Mouse", Input::InputManager::GetInstance().GetMousePos());
 				shader->SetUniform("u_ScreenTex", mInputTexture, 0);

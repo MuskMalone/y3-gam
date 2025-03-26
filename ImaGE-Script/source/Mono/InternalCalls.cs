@@ -432,6 +432,12 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetBoxColliderScale(uint entity, Vector3 scale);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetShaderElapsedTime(float elapsedTime);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetShaderElapsedTime();
     #endregion
   }
 }

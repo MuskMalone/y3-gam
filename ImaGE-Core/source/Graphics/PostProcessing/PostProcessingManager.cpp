@@ -164,6 +164,14 @@ namespace Graphics {
 		}
 		return mPpc.mConfigs.at(name).fogColor;
 	}
+	void PostProcessingManager::SetShaderElapsedTime(float elapsedTime)
+	{
+		shaderElapsedTime = elapsedTime;
+	}
+	float PostProcessingManager::GetShaderElapsedTime()
+	{
+		return shaderElapsedTime;
+	}
 	void PostProcessingManager::CreateConfigFile()
 	{
 		IGE::Assets::CreateDirectoryIfNotExists(IGE::Assets::cPostProcessingDirectory);

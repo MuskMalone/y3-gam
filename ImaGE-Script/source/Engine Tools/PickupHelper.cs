@@ -10,8 +10,8 @@ public static class Pickup
     InternalCalls.SetBoxColliderScale(entity.mEntityID, smallScale);
 
     // Hardcoded values
-    float moveSpeed = 12f;
-    float rotateSpeed = 3f;
+    float moveSpeed = 5f;
+    float rotateSpeed = 2f;
     float scaleSpeed = 0f;
 
     // Current Transform Properties
