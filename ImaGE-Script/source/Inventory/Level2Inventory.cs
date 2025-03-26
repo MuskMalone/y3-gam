@@ -174,7 +174,7 @@ public class Level2Inventory : Entity
         return mItems.Find(item => item != null && item.Name == itemName);
     }
 
-    private void ToggleInventoryVisibility()
+    public void ToggleInventoryVisibility()
     {
         if (isSliding) return;
         isVisible = !isVisible;
@@ -443,6 +443,15 @@ public class Level2Inventory : Entity
 
     }
 
+    public void CloseInventoryAndUnselectAllItems()
+    {
+      currentItem = null;
+      if (isVisible)
+      {
+        ToggleInventoryVisibility();
+      }
+    }
+    
     public IInventoryItem GetCurrentItem()
     {
         return currentItem;
