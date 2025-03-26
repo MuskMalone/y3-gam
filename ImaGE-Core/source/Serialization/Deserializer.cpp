@@ -33,7 +33,7 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 #endif
 
 #ifdef _DEBUG
-#define DESERIALIZER_DEBUG
+//#define DESERIALIZER_DEBUG
 #endif
 
 namespace Serialization

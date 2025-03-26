@@ -157,6 +157,13 @@ namespace Graphics {
 						Renderer::DrawQuad(uiXform.worldPos, glm::vec2{ uiXform.worldScale }, uiXform.worldRot, imageComp.color);
 						
 				}
+				else if (uiEntity.HasComponent<Component::Video>()) {
+					Component::Video& video{ uiEntity.GetComponent<Component::Video>() };
+
+					if (video.IsUIObject() && video.texture) {
+						Renderer::DrawSprite(uiXform.worldPos, glm::vec2{ uiXform.worldScale }, uiXform.worldRot, *video.texture, Color::COLOR_WHITE);
+					}
+				}
 
 				/*
 				else {

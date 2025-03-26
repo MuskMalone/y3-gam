@@ -235,7 +235,10 @@ namespace Reflection::ComponentUtils {
     EXTRACT_RAW_COMP(Video, comp);
 
     try {
-      entity.EmplaceOrReplaceComponent<Video>(comp);
+      Component::Video& newVid{ entity.EmplaceOrReplaceComponent<Video>(comp) };
+      if (newVid.guid) {
+        newVid.InitVideoSource(newVid.guid);
+      }
     }
     catch (Debug::ExceptionBase& err) {
       err.LogSource();

@@ -17,7 +17,6 @@ namespace Systems {
       if (!video.guid || video.paused || video.HasVideoEnded()) { continue; }
       if (!video.playOnStart && !video.started) { continue; }
 
-      float const initialTimestamp{ video.timeElapsed };
       // video component will handle the rest
       video.AdvanceVideo(IGE_FRC.GetDeltaTime());
     }

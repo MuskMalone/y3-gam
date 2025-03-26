@@ -32,6 +32,7 @@ project "ImaGE-Game"
       "../Libraries/rttr/src",
       "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include",
+      "../Libraries/spdlog/include",
       "../ImaGE-Core/source/External/pl_mpeg",
       "../ImaGE-Core/source/External/filewatch",
       "../ImaGE-Core/source/External/mono/include",

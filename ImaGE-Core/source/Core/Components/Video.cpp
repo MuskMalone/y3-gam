@@ -2,6 +2,7 @@
 #include "Video.h"
 #include <Asset/AssetManager.h>
 #include <Asset/Assetables/Video/VideoAsset.h>
+#include <Graphics/Utils.h>
 
 #define PL_MPEG_IMPLEMENTATION
 #include <pl_mpeg.h>
@@ -9,35 +10,33 @@
 namespace Component {
   Video::Video(IGE::Assets::GUID _guid) : buffer{}, texture{}, videoSource{}, guid{},
     renderType{ RenderType::WORLD },
-    timeElapsed{}, started{ false }, paused{ false }, playOnStart{ true }
+    started{ false }, paused{ false }, playOnStart{ true }
   {
-    if (guid) {
-      InitVideoSource(guid);
-    }
+
   }
 
   Video::Video(Video const& rhs) : buffer{}, texture{}, videoSource{}, guid{ rhs.guid },
     renderType{ rhs.renderType },
-    timeElapsed{}, started{ false }, paused{ false }, playOnStart{ rhs.playOnStart }
+    started{ false }, paused{ false }, playOnStart{ rhs.playOnStart }
   {
-    if (guid) {
-      InitVideoSource(guid);
-    }
+
   }
 
   Video& Video::operator=(Video const& rhs) {
-    Clear();
     renderType = rhs.renderType;
     playOnStart = rhs.playOnStart;
-    if (guid) {
-      InitVideoSource(guid);
-    }
+    guid = rhs.guid;
 
     return *this;
   }
 
   void Video::InitVideoSource(IGE::Assets::GUID _guid) {
-    Clear();
+    buffer.clear();
+    texture.reset();
+    if (videoSource) {
+      plm_destroy(videoSource);
+      videoSource = nullptr;
+    }
 
     std::string const& path{ 
       IGE_ASSETMGR.GetAsset<IGE::Assets::VideoAsset>(
@@ -54,19 +53,27 @@ namespace Component {
     plm_set_video_decode_callback(
       videoSource,
       [](plm_t* self, plm_frame_t* frame, void* user) {
-        Video* video{ reinterpret_cast<Video*>(user) };
-
-        // if the video didn't advance, simply render the same frame
-        if (video->GetVideoTimestamp() == video->prevTimestamp) {
+        if (!frame) {
+          IGE_DBGLOGGER.LogError("[Video] Unable to decode video frame");
           return;
         }
 
+        Video* video{ reinterpret_cast<Video*>(user) };
+
+        //// if the video didn't advance, simply render the same frame
+        //if (video->GetVideoTimestamp() == video->prevTimestamp) {
+        //  return;
+        //}
+
+        IGE_DBGLOGGER.LogInfo("Frame decoded! Timestamp: " + std::to_string(video->GetVideoTimestamp()));
+
         plm_frame_to_rgb(frame, video->buffer.data(), frame->width * 3);
 
-        glBindTexture(GL_TEXTURE_2D, video->texture->GetTexHdl());
-        glTexImage2D(
-          GL_TEXTURE_2D, 0, GL_RGB, frame->width, frame->height, 0,
-          GL_RGB, GL_UNSIGNED_BYTE, video->buffer.data()
+        GLCALL(glTextureSubImage2D(
+          video->texture->GetTexHdl(),
+          0, 0, 0,
+          frame->width, frame->height,
+          GL_RGB, GL_UNSIGNED_BYTE, video->buffer.data())
         );
       },
       this
@@ -80,19 +87,28 @@ namespace Component {
     buffer.resize(texture->GetWidth() * texture->GetHeight() * 3);
     
     // set the image to the first frame as a preview
+    bool originalAudioEnabled{ IsAudioEnabled() };
+    if (originalAudioEnabled) {
+      EnableAudio(false);
+    }
+
     plm_frame_t* frame{ plm_decode_video(videoSource) };
     if (!frame) {
       throw Debug::Exception<Video>(Debug::LVL_ERROR,
         Msg("Unable to decode video frame from " + path));
     }
     plm_frame_to_rgb(frame, buffer.data(), frame->width * 3);
-    glBindTexture(GL_TEXTURE_2D, texture->GetTexHdl());
-    glTexImage2D(
-      GL_TEXTURE_2D, 0, GL_RGB, frame->width, frame->height, 0,
-      GL_RGB, GL_UNSIGNED_BYTE, buffer.data()
+    GLCALL(glTextureSubImage2D(
+      texture->GetTexHdl(),
+      0, 0, 0,
+      frame->width, frame->height,
+      GL_RGB, GL_UNSIGNED_BYTE, buffer.data())
     );
     plm_rewind(videoSource); // reset it back to default
 
+    if (originalAudioEnabled) {
+      EnableAudio(true);
+    }
     guid = _guid;
   }
 
@@ -117,9 +133,7 @@ namespace Component {
   }
 
   void Video::AdvanceVideo(float seconds) {
-    prevTimestamp = GetVideoTimestamp();
-    timeElapsed += seconds;
-    plm_decode(videoSource, timeElapsed);
+    plm_decode(videoSource, seconds);
   }
 
   bool Video::IsAudioEnabled() const { 
@@ -148,7 +162,6 @@ namespace Component {
 
     renderType = RenderType::WORLD;
     guid = {};
-    prevTimestamp = timeElapsed = 0.f;
     playOnStart = true;
     started = paused = false;
   }
