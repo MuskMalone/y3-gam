@@ -23,6 +23,7 @@ project "ImaGE-Game"
       "../ImaGE-Core/source/External/glad/include",
       "../ImaGE-Core/source/External/fmod/include",
       "../ImaGE-Core/source/External/stb",
+      "../ImaGE-Core/source/External/pl_mpeg",
       
       "../Libraries/entt/single_include",
       "../Libraries/freetype/include/",
@@ -33,7 +34,6 @@ project "ImaGE-Game"
       "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include",
       "../Libraries/spdlog/include",
-      "../Libraries/pl_mpeg",
       "../ImaGE-Core/source/External/filewatch",
       "../ImaGE-Core/source/External/mono/include",
       

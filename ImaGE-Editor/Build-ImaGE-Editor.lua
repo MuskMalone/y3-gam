@@ -26,6 +26,7 @@ project "ImaGE-Editor"
       "../ImaGE-Core/source/External/ImTerm/",
       "../ImaGE-Core/source/External/ImNodes/",
       "../Libraries/spdlog/include",
+      "../ImaGE-Core/source/External/pl_mpeg",
 
       "../ImaGE-Core/source/External/glad/include",
       "../ImaGE-Core/source/External/fmod/include",
@@ -39,7 +40,6 @@ project "ImaGE-Editor"
       "../Libraries/rttr/src",
       "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include",
-      "../Libraries/pl_mpeg",
       --"../Libraries/filewatch",
       --"../Libraries/mono/**",
       "../ImaGE-Core/source/External/filewatch",

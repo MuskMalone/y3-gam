@@ -8,7 +8,7 @@ project "ImaGE-Core"
    buildoptions { "/bigobj" }
    flags { "MultiProcessorCompile" }
    files { "source/**.h", "source/**.cpp", "source/**.c" }
-   removefiles  {}
+   removefiles  { "source/External/pl_mpeg/*.c" }
 
 
    includedirs 
@@ -30,6 +30,7 @@ project "ImaGE-Core"
       "source/External/stb",
       "source/External/filewatch",
       "source/External/mono/include",
+      "source/External/pl_mpeg",
 
       "../Libraries/assimp/include/",
       "../Libraries/Built-Libraries/Release/Libraries/assimp/include",
@@ -42,7 +43,6 @@ project "ImaGE-Core"
       "../Libraries/spdlog/include",
       "../Libraries/PhysX/physx/include",
       "../Libraries/PhysX/pxshared/include",
-      "../Libraries/pl_mpeg",
       
       "../Libraries/rttr/Built-Libraries/Debug/src",
       "../Libraries/DirectXTex/DirectXTex"
