@@ -29,6 +29,11 @@ public class HammerLevel3 : Entity, IInventoryItem
   private float[] sfxDelays = new float[] { 0f, 1.5f, 1.3f, .8f, 1.2f};
   private float sfxTimeElapsed = 0f;
   private bool startSFX = false;
+
+  private bool isBeingPickedUp = false;
+  public float finalDistanceAwayFromCamAfterPickup = 2f;
+  public PlayerMove playerMove;
+
   public enum HammerState
   {
     IDLE,
@@ -119,12 +124,24 @@ public class HammerLevel3 : Entity, IInventoryItem
     {
       case HammerState.IDLE:
         {
+          if (isBeingPickedUp)
+          {
+            if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID, finalDistanceAwayFromCamAfterPickup))
+            {
+              InternalCalls.PlaySound(mEntityID, "PickupObjects");
+              isBeingPickedUp = false;
+              playerMove.UnfreezePlayer();
+              inventoryScript.Additem(this);
+            }
+            return;
+          }
+
           bool isHammerHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
           if (Input.GetKeyTriggered(KeyCode.E) && isHammerHit)
           {
-            InternalCalls.PlaySound(mEntityID, "PickUpObjects");
-            inventoryScript.Additem(this);
             EToPickUpUI.SetActive(false);
+            isBeingPickedUp = true;
+            playerMove.FreezePlayer();
             return;
           }
 

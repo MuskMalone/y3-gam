@@ -9,7 +9,12 @@ public class HexPaintingIndestructible1to6 : Entity, IInventoryItem
     public PlayerInteraction playerInteraction;
     public Entity EToPickUpUI;
 
-    public string Name
+  private bool isBeingPickedUp = false;
+  public float finalDistanceAwayFromCamAfterPickup = 2f;
+  public PlayerMove playerMove;
+  public Entity playerCamera;
+
+  public string Name
     {
         get
         {
@@ -48,13 +53,27 @@ public class HexPaintingIndestructible1to6 : Entity, IInventoryItem
 
     void Update()
     {
-        // For Painting Picking Up
-        bool isPaintHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+    if (isBeingPickedUp)
+    {
+      if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID, finalDistanceAwayFromCamAfterPickup))
+      {
+        InternalCalls.PlaySound(mEntityID, "PickupPainting");
+        level2inventoryScript.Additem(this);
+        isBeingPickedUp = false;
+        playerMove.UnfreezePlayer();
+      }
+      return;
+
+    }
+    // For Painting Picking Up
+    bool isPaintHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
         if (isPaintHit && Input.GetKeyTriggered(KeyCode.E))
         {
-            InternalCalls.PlaySound(mEntityID, "PickupPainting");
-            level2inventoryScript.Additem(this);
-        }
+      isBeingPickedUp = true;
+      playerMove.FreezePlayer();
+      EToPickUpUI.SetActive(false);
+      return;
+    }
         EToPickUpUI.SetActive(isPaintHit);
     }
 }

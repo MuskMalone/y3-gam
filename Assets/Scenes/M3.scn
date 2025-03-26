@@ -20650,6 +20650,13 @@
                                         }
                                     },
                                     {
+                                        "data": 1.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "finalDistanceAwayFromCamAfterPickup"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 76,
                                             "scriptName": "Inventory"
@@ -23090,7 +23097,7 @@
                         "position": {
                             "x": 0.0,
                             "y": 0.6000000238418579,
-                            "z": 0.0
+                            "z": -0.5
                         },
                         "scale": {
                             "x": 12.979999542236329,
@@ -23111,7 +23118,7 @@
                         "worldPos": {
                             "x": 0.0,
                             "y": 0.6000000238418579,
-                            "z": 0.0
+                            "z": -0.5
                         },
                         "worldScale": {
                             "x": 12.979999542236329,
@@ -23142,7 +23149,7 @@
                                         "data": {
                                             "x": 0.0,
                                             "y": 0.6000000238418579,
-                                            "z": 0.0
+                                            "z": -0.5
                                         },
                                         "type": "System.Numerics.Vector3",
                                         "scriptField": {

@@ -79,6 +79,8 @@ public class Seed : Entity, IInventoryItem
     {
       isBeingPickedUp = true;
       playerMove.FreezePlayer();
+      EToPickUpUI.SetActive(false);
+      return;
     }
     EToPickUpUI.SetActive(isSeedHit);
     inventoryScript.pickupHandUI.SetActive(isSeedHit);

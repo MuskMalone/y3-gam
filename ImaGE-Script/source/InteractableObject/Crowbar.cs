@@ -70,6 +70,8 @@ public class Crowbar : Entity, IInventoryItem
     {
       isBeingPickedUp = true;
       playerMove.FreezePlayer();
+      EToPickUpUI.SetActive(false);
+      return;
     }
     EToPickUpUI.SetActive(isCrowbarHit);
   }
