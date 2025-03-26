@@ -13,11 +13,15 @@ public class PullLever : Entity
   private string thisLeverTag;
   private bool leverPulled = false;
   private float timeElapsed = 0f;
+  private Level2Inventory level2InventoryScript;
+  private PictureAlign picAlignScript;
 
   public PullLever() : base() { }
 
   void Start()
   {
+    level2InventoryScript = FindObjectOfType<Level2Inventory>();
+    picAlignScript = FindObjectOfType<PictureAlign>();
     leverManager = FindObjectOfType<LeverManager>();
 
     thisLeverTag = InternalCalls.GetTag(mEntityID);
@@ -64,5 +68,7 @@ public class PullLever : Entity
     InternalCalls.PlaySound(mEntityID, "LeverUp");
     InternalCalls.PlayAnimation(mEntityID, "SwitchOff");
     leverPulled = true;
+    level2InventoryScript.CloseInventoryAndUnselectAllItems();
+    picAlignScript.ClearAll();
   }
 }

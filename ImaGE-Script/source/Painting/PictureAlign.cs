@@ -656,6 +656,13 @@ public class PictureAlign : Entity
     toStop = true;
   }
 
+  public void ClearAll()
+  {
+    ClearUI();
+    currentImg.SetActive(false);
+    currentImg = null;
+  }
+
   public bool ChangeSkyBox()
   {
     Global.isNighttime = true;
@@ -832,5 +839,6 @@ public class PictureAlign : Entity
         }
     }
 
+    
 
 }
