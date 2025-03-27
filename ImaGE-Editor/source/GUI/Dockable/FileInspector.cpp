@@ -31,6 +31,7 @@ namespace GUI {
     // @TODO: Work for other files in future
     if (selectedFile.empty() || selectedFile.extension() != gMaterialFileExt) { return; }
 
+    HandleDragInputWrapping();
 
     MaterialInspector(selectedFile);
 
@@ -78,6 +79,17 @@ namespace GUI {
         selectedMaterial->SetName(name);
       }
     }*/
+    {
+      ECS::Entity const prevEntity{ GUIVault::GetPrevSelectedEntity() };
+      if (prevEntity) {
+        if (ImGui::Button("<")) {
+          GUIVault::SetSelectedFile({});
+          GUIVault::SetSelectedEntity(prevEntity);
+          return;
+        }
+        ImGui::SameLine();
+      }
+    }
     ImGui::Text(selectedMaterial->GetName().c_str());
     ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_LIGHT));
 

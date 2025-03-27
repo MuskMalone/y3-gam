@@ -5,8 +5,16 @@
 
 namespace GUI {
   void GUIVault::SetSelectedEntity(ECS::Entity entity) {
+    sPreviousEntity = sSelectedEntity;
     sSelectedEntity = entity;
     QUEUE_EVENT(Events::EntitySelectedInEditor, entity);
+  }
+
+
+  void GUIVault::SetSelectedFile(std::filesystem::path const& file) {
+    mSelectedFile = file;
+    sPreviousEntity = sSelectedEntity;
+    sSelectedEntity = {};
   }
 
   EVENT_CALLBACK_DEF(GUIVault, OnSceneModified) {
