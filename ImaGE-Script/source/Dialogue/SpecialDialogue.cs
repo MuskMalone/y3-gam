@@ -73,6 +73,24 @@ public class SpecialDialogue : Entity
 
   void Update()
   {
+    if (InternalCalls.GetIsPaused())
+    {
+      if (isInSpecialDialogueMode)
+      {
+        InternalCalls.PauseSound(mEntityID, "BootUploadingText");
+        InternalCalls.SetActive(mEntityID, false);
+      }
+
+      return;
+    }
+
+    if (isInSpecialDialogueMode && !InternalCalls.GetIsPaused())
+    {
+      // InternalCalls.ResumeSound(mEntityID, "BootUploadingText"); Need resume sound to exist
+      InternalCalls.SetActive(mEntityID, true);
+      playerMove.FreezePlayer();
+    }
+
     if (triggerFadeTransition)
     {
       StartFade();

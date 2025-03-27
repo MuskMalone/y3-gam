@@ -90,7 +90,18 @@ public class Level3Dialogue : Entity
       if (InternalCalls.GetIsPaused())
       {
         InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+        InternalCalls.SetActive(mEntityID, false);
+        DialogueBox.SetActive(false);
+        DeactivateAllEmotions();
         return;
+      }
+
+      if (isInDialogueMode && !InternalCalls.GetIsPaused())
+      {
+        InternalCalls.SetActive(mEntityID, true);
+        DialogueBox.SetActive(true);
+        SetEmotion(emotions[lineIndex]);
+        playerMove.FreezePlayer();
       }
 
     if (isInDialogueMode && IsActive() && DialogueBox.IsActive() &&
