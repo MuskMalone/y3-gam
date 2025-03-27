@@ -56,7 +56,7 @@ public class LightFlicker : Entity
 
       // Perlin Noise-based flickering effect
       float noiseValue = Easing.PerlinNoise(Time.gameTime * flickerSpeed + noiseOffset);
-      float interpolatedIntensity = Mathf.Lerp(0.2f, 10.0f, noiseValue);
+      float interpolatedIntensity = Mathf.Lerp(0.2f, 4.0f, noiseValue);
             if (lightSFX.mEntityID != uint.MaxValue)
             {
                 //InternalCalls.SetSoundVolume(lightSFX.mEntityID, "ElectricBuzz", (interpolatedIntensity - 0.2f) / (10.0f - 0.2f));
