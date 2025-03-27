@@ -828,6 +828,11 @@ namespace GUI {
                       modified = true;
                   }
 
+                  NextRowTable("SFX/BGM");
+                  if (ImGui::Checkbox(("##BGM" + uniqueID).c_str(), &audioInstance.playSettings.isBGM))
+                  {
+                      modified = true;
+                  }
                   ImGui::EndTable();
                   // Table for Post Processing settings
                   if (ImGui::BeginTable(("PostProcessingTable##" + uniqueID).c_str(), 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit))

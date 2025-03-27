@@ -39,7 +39,8 @@ namespace IGE {
                             }
                             else {
                                 //std::cout << ECS::Entity{ entity }.GetComponent<Component::Tag>().tag << " setting volume" << std::endl;
-                                channel->setVolume(sound.second.playSettings.volume * AudioManager::GetInstance().mGlobalVolume);
+                                float volumeModifier{ ((setting.isBGM) ? AudioManager::GetInstance().mBGMVolume : AudioManager::GetInstance().mSFXVolume) * AudioManager::GetInstance().mGlobalVolume };
+                                channel->setVolume(sound.second.playSettings.volume * volumeModifier);
                             }
 
                         }

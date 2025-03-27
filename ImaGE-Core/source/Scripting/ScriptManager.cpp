@@ -308,6 +308,10 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetSoundVolume);
   ADD_INTERNAL_CALL(SetSoundGlobalVolume);
   ADD_INTERNAL_CALL(GetSoundGlobalVolume);
+  ADD_INTERNAL_CALL(SetSoundBGMVolume);
+  ADD_INTERNAL_CALL(GetSoundBGMVolume);
+  ADD_INTERNAL_CALL(SetSoundSFXVolume);
+  ADD_INTERNAL_CALL(GetSoundSFXVolume);
   ADD_INTERNAL_CALL(EnableSoundPostProcessing);
   ADD_INTERNAL_CALL(DisableSoundPostProcessing);
   ADD_INTERNAL_CALL(PlaySound);
@@ -1255,10 +1259,20 @@ void Mono::SetSoundVolume(ECS::Entity::EntityID e, MonoString* s, float v)
 void Mono::SetSoundGlobalVolume(float vol) {
     IGE::Audio::AudioManager::GetInstance().mGlobalVolume = vol;
 }
-
-
 float Mono::GetSoundGlobalVolume() {
   return IGE::Audio::AudioManager::GetInstance().mGlobalVolume;
+}
+void Mono::SetSoundBGMVolume(float vol) {
+    IGE::Audio::AudioManager::GetInstance().mBGMVolume = vol;
+}
+float Mono::GetSoundBGMVolume() {
+    return IGE::Audio::AudioManager::GetInstance().mBGMVolume;
+}
+void Mono::SetSoundSFXVolume(float vol) {
+    IGE::Audio::AudioManager::GetInstance().mSFXVolume = vol;
+}
+float Mono::GetSoundSFXVolume() {
+    return IGE::Audio::AudioManager::GetInstance().mSFXVolume;
 }
 
 void Mono::EnableSoundPostProcessing(ECS::Entity::EntityID e, MonoString* s)

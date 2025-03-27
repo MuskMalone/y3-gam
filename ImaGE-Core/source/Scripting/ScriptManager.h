@@ -350,6 +350,10 @@ namespace Mono
 		static void SetSoundVolume(ECS::Entity::EntityID, MonoString*, float);
 		static void SetSoundGlobalVolume(float vol);
 		static float GetSoundGlobalVolume();
+		static void SetSoundBGMVolume(float vol);
+		static float GetSoundBGMVolume();
+		static void SetSoundSFXVolume(float vol);
+		static float GetSoundSFXVolume();
 		static void EnableSoundPostProcessing(ECS::Entity::EntityID, MonoString*);
 		static void DisableSoundPostProcessing(ECS::Entity::EntityID, MonoString*);
 		static void PlaySound(ECS::Entity::EntityID, MonoString*);

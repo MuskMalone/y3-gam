@@ -71,7 +71,7 @@ namespace IGE {
 			float maxDistance{ 500.0f }; // Maximum distance for 3D attenuation
 			// Custom rolloff curves for advanced sound properties
 			RolloffType rolloffType{ RolloffType::NONE };
-
+			bool isBGM{ false };
 			bool enablePostProcessing{ false };
 			PostProcessingType processingType{PostProcessingType::REVERB};
 			mutable std::vector<PostProcessingSetting> postProcessingSettings;
@@ -177,6 +177,8 @@ namespace IGE {
 			 bool mDebug{ false };
 		public:
 			 float mGlobalVolume{ 1.f };
+			 float mBGMVolume{ 1.f };
+			 float mSFXVolume{ 1.f };
 		};
 
 	}

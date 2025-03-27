@@ -226,6 +226,7 @@ static void rttr_auto_register_reflection_function_(); namespace {
           .property("minDistance", &IGE::Audio::SoundInvokeSetting::minDistance)
           .property("maxDistance", &IGE::Audio::SoundInvokeSetting::maxDistance)
           .property("rolloffType", &IGE::Audio::SoundInvokeSetting::rolloffType) // As reference for mutable property
+          .property("isBGM", &IGE::Audio::SoundInvokeSetting::isBGM)
           .property("enablePostProcessing", &IGE::Audio::SoundInvokeSetting::enablePostProcessing)
           .property("processingType", &IGE::Audio::SoundInvokeSetting::processingType)
           .property("postProcessingSettings", &IGE::Audio::SoundInvokeSetting::postProcessingSettings);
