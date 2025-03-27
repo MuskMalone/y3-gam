@@ -69,6 +69,7 @@ namespace IGE {
 			newFp = inputModelPath;
 			return GUID{ GUID::Seed{} }; // generate a unique guid
 		}
+
 		void* ModelAsset::Load(GUID guid)
 		{
 			//converting in imsh is done here
@@ -91,6 +92,7 @@ namespace IGE {
 				finalfp
 			);
 		}
+
 		void ModelAsset::Unload(ModelAsset* ptr, GUID guid)
 		{
 			delete ptr;
