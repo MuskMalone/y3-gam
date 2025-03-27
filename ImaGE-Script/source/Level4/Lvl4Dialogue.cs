@@ -87,11 +87,22 @@ public class Lvl4Dialogue : Entity
 
     void Update()
     {
-        if (InternalCalls.GetIsPaused())
-        {
-          InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
-          return;
-        }
+    if (InternalCalls.GetIsPaused())
+    {
+      InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+      InternalCalls.SetActive(mEntityID, false);
+      DialogueBox.SetActive(false);
+      DeactivateAllEmotions();
+      return;
+    }
+
+    if (isInDialogueMode && !InternalCalls.GetIsPaused())
+    {
+      InternalCalls.SetActive(mEntityID, true);
+      DialogueBox.SetActive(true);
+      SetEmotion(emotions[lineIndex]);
+      playerMove.FreezePlayer();
+    }
 
     if (isInDialogueMode && IsActive() && DialogueBox.IsActive() &&
           Time.gameTime >= nextCharTime && charIndex < lines[lineIndex].Length)
