@@ -156,7 +156,7 @@ namespace Graphics {
 
     void MaterialTable::ApplyMaterialTextures(std::shared_ptr<Graphics::Shader> const& shader, unsigned batchStart, unsigned batchEnd) {
       IGE::Assets::AssetManager& am{ IGE_ASSETMGR };
-      unsigned const matCount{ batchEnd - batchStart + 1 };
+      unsigned const matCount{ batchEnd == batchStart ? 0 : batchEnd - batchStart + 1 };
 
       am.GetAsset<IGE::Assets::TextureAsset>(Renderer::GetWhiteTexture())->mTexture.Bind(Texture::sDefaultAlbedoUnit);
       am.GetAsset<IGE::Assets::TextureAsset>(Renderer::GetWhiteTexture())->mTexture.Bind(Texture::sDefaultNormalUnit); // change to normal Tex
