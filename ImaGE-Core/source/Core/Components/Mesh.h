@@ -13,7 +13,9 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 
 namespace Component {
 	struct Mesh{
-		Mesh(const char* name = "Cube") : meshName{ name }, meshSource{},
+		Mesh() : meshName{ sDefaultMeshName }, meshSource{ sDefaultMeshSrc },
+			submeshIdx{}, isCustomMesh{ false }, castShadows{ true }, receiveShadows{ true } {}
+		Mesh(const char* name) : meshName{ name }, meshSource{ IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(meshName) },
 			submeshIdx{}, isCustomMesh{ false }, castShadows{ true }, receiveShadows{ true } {}
 		Mesh(IGE::Assets::GUID const& meshSrc, std::string name, bool custom = false, uint32_t _submeshIdx = 0) :
 			meshName{ std::move(name) }, meshSource { meshSrc }, submeshIdx{ _submeshIdx },
@@ -31,6 +33,12 @@ namespace Component {
 			isCustomMesh = false;
 		}
 
+		// currently called in Renderer::InitMeshSources
+		static void SetDefaultMesh(const char* meshName) {
+			sDefaultMeshName = meshName;
+			sDefaultMeshSrc = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>(sDefaultMeshName);
+		}
+
 		std::string meshName;
 		IGE::Assets::GUID meshSource;  // The blueprint (geometry and submeshes)
 		uint32_t submeshIdx;
@@ -39,5 +47,9 @@ namespace Component {
 		bool receiveShadows;	// not implemented yet
 		//std::vector<uint32_t> m_Submeshes;  // Indices to submeshes in MeshSource - Maybe need in future?
 		// std::vector<std::shared_ptr<Material>> mMaterials;  // Instance-specific mat @TODO CHANGE TO MATERIAL TABLE INSTEAD?
+
+	private:
+		inline static std::string sDefaultMeshName;
+		inline static IGE::Assets::GUID sDefaultMeshSrc;
 	};
 } // namespace Component

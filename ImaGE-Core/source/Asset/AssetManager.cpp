@@ -75,7 +75,6 @@ namespace IGE {
 					mPath2GUIDRegistry.emplace(entry.second.metadata.at("path"), GUID(entry.first));
 				}
 			}
-			//SaveAllMetadata();
 		}
 		std::string AssetManager::CreateProjectFile() const
 		{
