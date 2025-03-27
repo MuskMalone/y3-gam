@@ -102,7 +102,9 @@ namespace GUI {
       { typeid(Component::Video), ICON_FA_VIDEO ICON_PADDING }
     },
     mObjFactory{ Reflection::ObjectFactory::GetInstance() },
-    mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
+    mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, 
+    mEditingPrefab{ false }, mEntityChanged{ false }
+  {
     for (auto const& component : Reflection::gComponentTypes) {
       mComponentOpenStatusMap[component.get_name().to_string()] = true;
     }
@@ -151,7 +153,6 @@ namespace GUI {
     ImGui::Begin(mWindowName.c_str());
     ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
     ECS::Entity currentEntity{ GUIVault::GetSelectedEntity() };
-    
     // run the inspector for the selected file
     if (!currentEntity) {
       RunFileInspector();
@@ -164,6 +165,8 @@ namespace GUI {
       }
       else
         mEntityChanged = false;
+
+      HandleDragInputWrapping();
 
       entityRotModified = false;
       static Component::PrefabOverrides* prefabOverride{ nullptr };
@@ -508,6 +511,8 @@ namespace GUI {
           }
         }
       }
+      // ComponentWindows endregion
+#pragma endregion
 
       if (prefabOverride) {
         for (rttr::type const& type : prefabOverride->removedComponents) {
@@ -531,13 +536,12 @@ namespace GUI {
       mFirstEdit = true;
     }
 
-    // wrap cursor when an input field is used
-    if (ImGui::IsKeyDown(ImGuiKey_MouseLeft) && mIsComponentEdited) {
-      ImGuiHelpers::WrapMousePos(1 << ImGuiAxis_X);
-    }
+    //if (!ImGui::IsKeyDown(ImGuiKey_MouseLeft) && isDragging) {
+    //  //ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
+    //  isDragging = false;
+    //  IGE_DBGLOGGER.LogInfo("SHOW!");
+    //}
   }
-  // ComponentWindows endregion
-#pragma endregion
 
   EVENT_CALLBACK_DEF(Inspector, OnSceneSave) {
       mIsComponentEdited = mFirstEdit = false;
@@ -1147,8 +1151,6 @@ namespace GUI {
       WindowEnd(isOpen);
       return modified;
   }
-
-
 
   bool Inspector::CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight)
   {
@@ -2236,6 +2238,7 @@ namespace GUI {
     WindowEnd(isOpen);
     return modified;
   }
+
   bool Inspector::BloomComponentWindow(ECS::Entity entity, bool highlight)
   {
       bool const isOpen{ WindowBegin<Component::Bloom>("Bloom", highlight) };
@@ -2251,6 +2254,7 @@ namespace GUI {
       WindowEnd(isOpen);
       return modified;
   }
+
   bool Inspector::SphereColliderComponentWindow(ECS::Entity entity, bool highlight)
   {
       bool const isOpen{ WindowBegin<Component::SphereCollider>("Sphere Collider", highlight) };
@@ -2497,6 +2501,7 @@ namespace GUI {
     WindowEnd(isOpen);
     return modified;
   }
+
   bool Inspector::EmitterSystemComponentWindow(ECS::Entity entity, bool highlight) {
       bool const isOpen{ WindowBegin<Component::EmitterSystem>("Emitter System", highlight) };
       bool modified{ false };
@@ -2632,6 +2637,7 @@ namespace GUI {
       WindowEnd(isOpen);
       return modified;
   }
+
   bool Inspector::TextComponentWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Text>("Text", highlight) };
     bool modified{ false };
@@ -3036,6 +3042,28 @@ namespace GUI {
     }
 
     ImGui::Separator();
+  }
+
+  void Inspector::HandleDragInputWrapping() {
+    //static ImVec2 originalMousePos{};
+    //static bool isDragging = false;
+
+    // wrap cursor when an input field is used
+    if (ImGui::IsMouseDragging(ImGuiMouseButton_Left) && ImGui::IsWindowFocused() && ImGui::IsAnyItemActive()) {
+      ImGuiHelpers::WrapMousePos(1 << ImGuiAxis_X);
+      /*if (!isDragging) {
+        isDragging = true;
+        originalMousePos = ImGui::GetMousePos();
+      }*/
+    }
+    /*else if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) && isDragging) {
+      ImGui::TeleportMousePos(originalMousePos);
+      isDragging = false;
+    }
+
+    if (isDragging) {
+      ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+    }*/
   }
 
   bool Inspector::BeginVec3Table(const char* fieldName, float inputWidth) {

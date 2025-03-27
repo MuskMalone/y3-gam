@@ -30,12 +30,15 @@ namespace GUI {
 
   void PostProcessingSettings::Run()
   {
+    ImGui::Begin(mWindowName.c_str());
     {
       Scenes::SceneManager& sceneManager{ IGE_SCENEMGR };
-      if (sceneManager.NoSceneSelected() || sceneManager.GetSceneState() == Scenes::PREFAB_EDITOR) { return; }
+      if (sceneManager.NoSceneSelected() || sceneManager.GetSceneState() == Scenes::PREFAB_EDITOR) {
+        ImGui::End();
+        return; 
+      }
     }
 
-    ImGui::Begin(mWindowName.c_str());
     {
       // Text label for the fog settings
       ImGui::Text("Fog Settings");
