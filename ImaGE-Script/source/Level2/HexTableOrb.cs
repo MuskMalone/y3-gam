@@ -16,14 +16,15 @@ public class HexTableOrb : Entity
   public Entity glowingOrb, dimmedOrb;
   public Entity brokenOrb;
   public Entity tableSurface, hexFloor;
+  public Entity orbFallTrigger;
 
+  public static readonly Vector3 tableSurfaceMidpoint = new Vector3(63.429f, 67.564f, -425.342f);
   private static readonly float violentDuration = 5f;
   private static readonly float riseVelocity = 4f;
   private static readonly float intensity = 0.002f; // How much it vibrates
   private static readonly float frequency = 0.05f;  // How fast it vibrates
   private static readonly float violentIntensity = intensity * 3f; // How much it vibrates
   private static readonly float violentFrequency = frequency * 0.3f;  // How fast it vibrates
-  private static readonly Vector3 tableSurfaceMidpoint = new Vector3(63.429f, 67.564f, -425.342f);
   private static readonly float pushOffStrength = 45f;
 
   private LeverManager leverManager;
@@ -36,8 +37,8 @@ public class HexTableOrb : Entity
     VIOLENT,
     FALLING,
     ROLLING,
-    OFF_TABLE,
-    SHATTERED
+    OFF_TABLE
+    //SHATTERED
   }
 
   private uint firstBrokenPiece;
@@ -165,20 +166,24 @@ public class HexTableOrb : Entity
       case State.ROLLING:
         {
           // if orb has rolled off
-          if (InternalCalls.GetVelocity(mEntityID).Y < -2f)
+          if (InternalCalls.OnTriggerEnter(orbFallTrigger.mEntityID, mEntityID))
           {
             // orb is falliing off now, swap to brokenOrb
             SetActive(false);
             brokenOrb.SetActive(true);  // activate the broken orb and all its pieces
             InternalCalls.UnparentEntity(brokenOrb.mEntityID);
-            currState = State.OFF_TABLE;
             InternalCalls.StopSound(mEntityID, "Roll");
 
+            Vector3 currVelocity = InternalCalls.GetVelocity(mEntityID);
             // align all colliders to their pieces
             foreach (uint id in InternalCalls.GetAllChildren(brokenOrb.mEntityID))
             {
               InternalCalls.UpdatePhysicsToTransform(id);
+              InternalCalls.SetVelocity(id, currVelocity);
+              InternalCalls.SetGravityFactor(id, 20f);
+              InternalCalls.LockRigidBody(id, false);
             }
+            currState = State.OFF_TABLE;
             return;
           }
 
@@ -194,23 +199,6 @@ public class HexTableOrb : Entity
         }
 
       case State.OFF_TABLE:
-        {
-          if (firstFrameAfterFall)
-          {
-            firstFrameAfterFall = false;
-            return;
-          }
-
-          foreach (uint id in InternalCalls.GetAllChildren(brokenOrb.mEntityID))
-          {
-            InternalCalls.LockRigidBody(id, false);
-          }
-          currState = State.SHATTERED;
-          
-          break;
-        }
-
-      case State.SHATTERED:
         {
           // if pieces touched the ground
           if (InternalCalls.GetContactPoints(firstBrokenPiece, hexFloor.mEntityID).Length > 0)

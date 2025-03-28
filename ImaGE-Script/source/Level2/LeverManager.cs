@@ -68,7 +68,10 @@ public class LeverManager : Entity
     switch (currState)
     {
       case State.IDLE:
-
+        if (Input.GetKeyTriggered(KeyCode.V))
+        {
+          playerMove.SetRotation(new Vector3(-1f, 1.9f, 0));  // make player look at table
+        }
         break;
 
       case State.TABLE_CAM:
@@ -94,6 +97,7 @@ public class LeverManager : Entity
             if (leversPulled >= totalLevers)
             {
               hexTeleport.TeleportPlayer(teleportPositionTable);
+              playerMove.SetRotation(new Vector3(-1f, 1.9f, 0));  // make player look at table
               currState = State.DEACTIVATE_ORBS;
             }
           }
@@ -152,7 +156,7 @@ public class LeverManager : Entity
 
   private void SetPlayerCameraAsMain()
   {
-    Console.WriteLine("Entered SetCamera as Main");
+    //Console.WriteLine("Entered SetCamera as Main");
     InternalCalls.SetTag(playerCamera.mEntityID, "MainCamera");
     InternalCalls.SetTag(tableCamera.mEntityID, "hexTableCamera");
   }

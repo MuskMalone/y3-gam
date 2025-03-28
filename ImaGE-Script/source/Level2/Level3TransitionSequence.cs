@@ -44,6 +44,7 @@ public class Level3TransitionSequence : Entity
 
     mainGround.SetActive(true);
     sinkHole.SetActive(false);
+    sinkHoleVictims.SetActive(true);
     groundSmoke.SetActive(false);
     aftermathSmoke.SetActive(false);
   }

@@ -33,7 +33,6 @@ namespace {
 
 namespace GUI
 {
-
   Toolbar::Toolbar(const char* name, std::vector<std::shared_ptr<GUIWindow>> const& windowsRef,
     std::weak_ptr<Graphics::EditorCamera> editorCam) : GUIWindow(name),
       mWindowsRef{ windowsRef }, mEditorCam{ std::move(editorCam) }, mScenePopup{false}, mPrefabPopup{false},
@@ -45,7 +44,6 @@ namespace GUI
 
   void Toolbar::Run()
   {
-
     if (ImGui::BeginMainMenuBar())
     {
       float const contentRegionX{ ImGui::GetContentRegionAvail().x };

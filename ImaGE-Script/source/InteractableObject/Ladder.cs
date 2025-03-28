@@ -172,14 +172,14 @@ public class Ladder : Entity
       // Transform these local points into world space.
       Vector3 bottomNearLeft = position + Vector3.Transform(localBottomNearLeft, rotation);
       Vector3 topNearLeft = position + Vector3.Transform(localTopNearLeft, rotation);
-      Debug.Log($"{topNearLeft - bottomNearLeft}, playerPosition {playerPosition}, position {position}, rotation {rotation}, sz {halfSize}, topleft {topNearLeft} ");
+      //Debug.Log($"{topNearLeft - bottomNearLeft}, playerPosition {playerPosition}, position {position}, rotation {rotation}, sz {halfSize}, topleft {topNearLeft} ");
       // Prevent climbing above max height.
       if (verticalInput > 0 && playerPosition.Y >= maxLadderHeight)
         return;
       if (verticalInput < 0 && playerPosition.Y <= minLadderHeight)
         return;
       Vector3 velocity = Vector3.Normalize(topNearLeft - bottomNearLeft);
-      Debug.Log($"im walking up ladder {velocity * ladderSpeed * InternalCalls.GetDeltaTime() * new Vector3(verticalInput, verticalInput, verticalInput)}");
+      //Debug.Log($"im walking up ladder {velocity * ladderSpeed * InternalCalls.GetDeltaTime() * new Vector3(verticalInput, verticalInput, verticalInput)}");
 
       // Only modify the Y position.
       playerPosition += velocity * ladderSpeed * InternalCalls.GetDeltaTime() * new Vector3(verticalInput, verticalInput, verticalInput);
