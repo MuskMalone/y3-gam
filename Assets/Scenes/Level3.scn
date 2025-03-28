@@ -14049,10 +14049,10 @@
                 357,
                 360,
                 368,
-                677,
                 1049011,
                 1049013,
                 1049105,
+                3146744,
                 5242962
             ],
             "Components": [
@@ -25841,50 +25841,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 560,
+                                                "entityID": 527,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 560,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 555,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 555,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 563,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 563,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 557,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 557,
+                                                        "data": 527,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -25906,11 +25867,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 527,
+                                                "entityID": 557,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 527,
+                                                        "data": 557,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 563,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 563,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 555,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 555,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 560,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 560,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -34704,194 +34704,6 @@
             ]
         },
         {
-            "ID": 677,
-            "Parent": 326,
-            "Child Entities": [
-                678,
-                679,
-                680
-            ],
-            "Position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "Prefab": {
-                "GUID": {
-                    "ID": 14950610396875536120
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "ScriptComponent",
-                        "value": {
-                            "scriptList": [
-                                {
-                                    "entityID": 677,
-                                    "scriptName": "SettingsPage",
-                                    "scriptFieldInstList": [
-                                        {
-                                            "data": {
-                                                "entityID": 679,
-                                                "scriptName": "PauseMenuButtons"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "BackButton"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 678,
-                                                "scriptName": "SettingsButtons"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "BrightnessSlider"
-                                            }
-                                        },
-                                        {
-                                            "data": 0.5,
-                                            "type": "System.Single",
-                                            "scriptField": {
-                                                "fieldName": "CanvasmaxX"
-                                            }
-                                        },
-                                        {
-                                            "data": -0.5,
-                                            "type": "System.Single",
-                                            "scriptField": {
-                                                "fieldName": "CanvasminX"
-                                            }
-                                        },
-                                        {
-                                            "data": -2.0,
-                                            "type": "System.Single",
-                                            "scriptField": {
-                                                "fieldName": "OriginalTargetZButton"
-                                            }
-                                        },
-                                        {
-                                            "data": -2.0,
-                                            "type": "System.Single",
-                                            "scriptField": {
-                                                "fieldName": "OriginalTargetZMenu"
-                                            }
-                                        },
-                                        {
-                                            "data": 3.0,
-                                            "type": "System.Single",
-                                            "scriptField": {
-                                                "fieldName": "TargetZButton"
-                                            }
-                                        },
-                                        {
-                                            "data": 2.0,
-                                            "type": "System.Single",
-                                            "scriptField": {
-                                                "fieldName": "TargetZMenu"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 680,
-                                                "scriptName": "SettingsButtons"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "VolumeSlider"
-                                            }
-                                        },
-                                        {
-                                            "data": 0.20999999344348907,
-                                            "type": "System.Single",
-                                            "scriptField": {
-                                                "fieldName": "maxX"
-                                            }
-                                        },
-                                        {
-                                            "data": -0.03700000047683716,
-                                            "type": "System.Single",
-                                            "scriptField": {
-                                                "fieldName": "minX"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 1049105,
-                                                "scriptName": "PauseMenu"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "pauseMenu"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 326,
-                                                "scriptName": "Transition"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "transition"
-                                            }
-                                        },
-                                        {
-                                            "data": 0.5,
-                                            "type": "System.Single",
-                                            "scriptField": {
-                                                "fieldName": "transitionDuration"
-                                            }
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 678,
-            "Parent": 677,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 14950610396875536120
-                },
-                "subDataId": 1,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 679,
-            "Parent": 677,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 14950610396875536120
-                },
-                "subDataId": 2,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 680,
-            "Parent": 677,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 14950610396875536120
-                },
-                "subDataId": 3,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 681,
             "Parent": 172,
             "Child Entities": [],
@@ -37768,6 +37580,67 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 1048713,
+            "Parent": 3146744,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 1048713,
+                                    "scriptName": "SettingsButtons",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 1049279,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Border"
+                                            }
+                                        },
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "IsClicked"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 2097963,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Text"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "BrightnessSlider",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 1048715,
@@ -45225,7 +45098,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 677,
+                                            "entityID": 3146744,
                                             "scriptName": "SettingsPage"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -46341,6 +46214,21 @@
             ]
         },
         {
+            "ID": 1049279,
+            "Parent": 3146744,
+            "Child Entities": [
+                2097963
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 1049284,
             "Parent": 3146295,
             "Child Entities": [],
@@ -46860,6 +46748,21 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 1049441,
+            "Parent": 3146744,
+            "Child Entities": [
+                2097857
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 9,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 1049506,
@@ -51932,6 +51835,67 @@
             ]
         },
         {
+            "ID": 2097678,
+            "Parent": 3146744,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 2097678,
+                                    "scriptName": "SettingsButtons",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 3146851,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Border"
+                                            }
+                                        },
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "IsClicked"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3146852,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Text"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "VolumeSlider",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097746,
             "Parent": 93,
             "Child Entities": [
@@ -52416,6 +52380,19 @@
             ]
         },
         {
+            "ID": 2097857,
+            "Parent": 1049441,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 10,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097907,
             "Parent": 93,
             "Child Entities": [],
@@ -52778,6 +52755,80 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 2097963,
+            "Parent": 1049279,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2098079,
+            "Parent": 3146744,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 11,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 2098079,
+                                    "scriptName": "SettingsButtons",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 1049441,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Border"
+                                            }
+                                        },
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "IsClicked"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 2097857,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Text"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "SfxSlider",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 2098118,
@@ -56588,6 +56639,230 @@
             ]
         },
         {
+            "ID": 3146744,
+            "Parent": 326,
+            "Child Entities": [
+                1048713,
+                1049279,
+                1049441,
+                2097678,
+                2098079,
+                3146851,
+                3146854,
+                3146920
+            ],
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 3146744,
+                                    "scriptName": "SettingsPage",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 3146851,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BGMBorder"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3146852,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BGMText"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 3146920,
+                                                "scriptName": "PauseMenuButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BackButton"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048713,
+                                                "scriptName": "SettingsButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BrightnessSlider"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "CanvasmaxX"
+                                            }
+                                        },
+                                        {
+                                            "data": -0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "CanvasminX"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1049279,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "GammaBorder"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 2097963,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "GammaText"
+                                            }
+                                        },
+                                        {
+                                            "data": -2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "OriginalTargetZButton"
+                                            }
+                                        },
+                                        {
+                                            "data": -2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "OriginalTargetZMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1049441,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "SFXBorder"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 2098079,
+                                                "scriptName": "SettingsButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "SFXSlider"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 2097857,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "SFXText"
+                                            }
+                                        },
+                                        {
+                                            "data": 3.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "TargetZButton"
+                                            }
+                                        },
+                                        {
+                                            "data": 2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "TargetZMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 2097678,
+                                                "scriptName": "SettingsButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "VolumeSlider"
+                                            }
+                                        },
+                                        {
+                                            "data": -0.1850000023841858,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxX"
+                                            }
+                                        },
+                                        {
+                                            "data": -0.33000001311302185,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minX"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1049105,
+                                                "scriptName": "PauseMenu"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "pauseMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 326,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "transitionDuration"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 3146795,
             "Parent": 2097554,
             "Child Entities": [],
@@ -57142,6 +57417,68 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 3146851,
+            "Parent": 3146744,
+            "Child Entities": [
+                3146852
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 5,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3146852,
+            "Parent": 3146851,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 6,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3146854,
+            "Parent": 3146744,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "SettingsImage",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3146920,
+            "Parent": 3146744,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 8,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 4194351,
