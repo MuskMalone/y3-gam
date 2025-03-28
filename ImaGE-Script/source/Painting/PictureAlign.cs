@@ -660,7 +660,7 @@ public class PictureAlign : Entity
   {
     ClearUI();
     currentImg.SetActive(false);
-    currentImg = null;
+    //currentImg = null;
   }
 
   public bool ChangeSkyBox()
