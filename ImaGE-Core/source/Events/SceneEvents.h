@@ -6,7 +6,7 @@
 namespace Events
 {
 
-  // NewSceneState newState, std::string const& name
+  // NewSceneState newState, std::string const& name, bool isReload = false
   class SceneStateChange : public Event
   {
   public:
@@ -19,12 +19,13 @@ namespace Events
       STOPPED
     };
 
-    SceneStateChange(NewSceneState newState, std::string const& name)
-      : Event(), mSceneName{ name }, mNewState { newState } {}
+    SceneStateChange(NewSceneState newState, std::string const& name, bool isReload = false)
+      : Event(), mSceneName{ name }, mNewState{ newState }, mIsReload{ isReload } {}
     inline std::string GetName() const noexcept override { return "Scene state of " + mSceneName + " changed to " + std::to_string(static_cast<int>(mNewState)); }
 
     std::string const mSceneName;
     NewSceneState const mNewState;
+    bool const mIsReload;
   };
 
   // name, path

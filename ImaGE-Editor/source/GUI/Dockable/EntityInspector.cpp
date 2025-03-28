@@ -550,12 +550,8 @@ namespace GUI {
   EVENT_CALLBACK_DEF(Inspector, OnSceneStateChange) {
     auto state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
     // if changing to another scene, reset modified flag
-    if (state == Events::SceneStateChange::CHANGED) {
+    if (state == Events::SceneStateChange::CHANGED || state == Events::SceneStateChange::NEW) {
       mIsComponentEdited = mFirstEdit = mEditingPrefab = false;
-    }
-    else if (state == Events::SceneStateChange::NEW) {
-      mIsComponentEdited = true;
-      mFirstEdit = mEditingPrefab = false;
     }
   }
 

@@ -24,10 +24,13 @@ namespace GUI {
   }
 
   EVENT_CALLBACK_DEF(GUIVault, OnSceneStateChange) {
-    switch (CAST_TO_EVENT(Events::SceneStateChange)->mNewState) {
+    auto sscEvent{ CAST_TO_EVENT(Events::SceneStateChange) };
+    switch (sscEvent->mNewState) {
       case Events::SceneStateChange::NEW:
       case Events::SceneStateChange::CHANGED:
-        sSceneModified = false;
+        if (!sscEvent->mIsReload) {
+          sSceneModified = false;
+        }
         break;
       default:
         break;
