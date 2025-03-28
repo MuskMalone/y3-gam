@@ -44,7 +44,7 @@ namespace CMD
 			}
 		};
 
-		inline static constexpr unsigned sMaxCommands = 100u;
+		inline static constexpr unsigned sMaxCommands = 150u;
 
 	public:
 		CommandManager();
@@ -53,7 +53,6 @@ namespace CMD
 		void AddCommand(std::string const& cmd, _args&&... args) {
 			if (mCommandStack.size() >= sMaxCommands) {
 				mCommandStack.pop_front();
-				IGE_DBGLOGGER.LogInfo("Popped front");
 			}
 			mCommandStack.emplace_back(cmd, std::forward<_args>(args)...);
 		}

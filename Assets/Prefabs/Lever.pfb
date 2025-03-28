@@ -1,0 +1,661 @@
+{
+    "Name": "Lever",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": 0,
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "LeverDown",
+                                "value": {
+                                    "guid": {
+                                        "ID": 16975383616013872283
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "LeverUp",
+                                "value": {
+                                    "guid": {
+                                        "ID": 15466202925208512019
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Light Switch",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.9999999403953552,
+                            "w": 0.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 180.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.9999999403953552,
+                            "w": 0.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": []
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 0,
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "LeverUp",
+                                "value": {
+                                    "guid": {
+                                        "ID": 15466202925208512019
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.000005722044534195447,
+                                            "y": 0.0,
+                                            "z": -0.00002288818359375
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Lever",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.0000019073486328125,
+                            "y": 0.0,
+                            "z": -0.00000762939453125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.000005722044534195447,
+                            "y": 0.0,
+                            "z": -0.00002288818359375
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.9999999403953552,
+                            "w": 0.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.5,
+                            "y": 1.5,
+                            "z": 1.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "SwitchOff",
+                                "value": {
+                                    "ID": 6867738549244953467
+                                }
+                            },
+                            {
+                                "key": "SwitchOn",
+                                "value": {
+                                    "ID": 8458106001911501966
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Parent": 1,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.006",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.00000762939453125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.000005722044534195447,
+                            "y": 0.0,
+                            "z": -0.0000457763671875
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.9999999403953552,
+                            "w": 0.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 14884879012582128277
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.006",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 3,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "Parent": 1,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.008",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.00000762939453125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.000005722044534195447,
+                            "y": 0.0,
+                            "z": -0.0000457763671875
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.9999999403953552,
+                            "w": 0.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 14884879012582128277
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.008",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "Parent": 1,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.004",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.00000762939453125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.000005722044534195447,
+                            "y": 0.0,
+                            "z": -0.0000457763671875
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.9999999403953552,
+                            "w": 0.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 14884879012582128277
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.004",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 2,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.00000762939453125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.00002288818359375
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.9999999403953552,
+                            "w": 0.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 14181723587714629200
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 6,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Circle.009",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.00000762939453125
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.00002288818359375
+                        },
+                        "worldScale": {
+                            "x": 3.0,
+                            "y": 3.0,
+                            "z": 3.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.9999999403953552,
+                            "w": 0.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 4670183329071227760
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Circle.009",
+                        "GUID": {
+                            "ID": 14090961136758613768
+                        },
+                        "submeshIdx": 4,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}
