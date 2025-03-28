@@ -286,14 +286,14 @@ namespace GUI {
     if (ImGui::Button("Save"))
     {
       IGE_EVENTMGR.DispatchImmediateEvent<Events::SaveSceneEvent>(GUIVault::sSerializePrettyScene);
-      IGE_EVENTMGR.DispatchImmediateEvent<Events::QuitApplication>();
+      QUEUE_EVENT(Events::QuitApplication);
     }
     ImGui::PopStyleColor();
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.65f, 0.2f, 0.2f, 1.f));
     ImGui::SameLine();
 
     if (ImGui::Button("Discard Changes")) {
-      IGE_EVENTMGR.DispatchImmediateEvent<Events::QuitApplication>();
+      QUEUE_EVENT(Events::QuitApplication);
     }
     ImGui::PopStyleColor();
     ImGui::SameLine();
