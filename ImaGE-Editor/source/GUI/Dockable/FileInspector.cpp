@@ -36,8 +36,10 @@ namespace GUI {
     MaterialInspector(selectedFile);
   }
 
+  // macro magic - did u know u can concat strings with ##
   #define TextureMapField(Title, MapType) {NextRowTable(Title);\
-            if (selectedMaterial->IsDefault##MapType##Map()) {\
+            bool const isDefault{ selectedMaterial->IsDefault##MapType##Map() };\
+            if (isDefault) {\
               name = "Drag Texture Here##" Title;\
             } else {\
                IGE::Assets::GUID guid{ selectedMaterial->Get##MapType##Map() };\
@@ -45,7 +47,7 @@ namespace GUI {
                 name = am.GUIDToPath(guid).c_str();\
             }\
             if (ImGui::Button(name.c_str(), ImVec2(inputWidth, 30.f))) { selectedMaterial->Set##MapType##Map({}); }\
-            if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove Texture"); }\
+            if (ImGui::IsItemHovered() && !isDefault) { ImGui::BeginTooltip(); ImGui::Text(name.c_str()); ImGui::Text("Click to Remove"); ImGui::EndTooltip(); }\
             std::string const path{ DragDropComponent(AssetPayload::SPRITE) };\
             if (!path.empty()) { try {\
               selectedMaterial->Set##MapType##Map(am.LoadRef<IGE::Assets::TextureAsset>(path));\
