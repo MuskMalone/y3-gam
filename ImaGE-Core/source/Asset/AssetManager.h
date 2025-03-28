@@ -360,8 +360,6 @@ namespace IGE {
           }
           template <typename T>
           AssetMetadata::AssetProps& GetMetadata(GUID const& guid) {
-              std::lock_guard<std::mutex> lock(mAssetsMutex);
-
               auto category{ GetTypeName<T>() };
               auto& props{ mMetadata.mAssetProperties };
               if (props.find(category) != props.end()) {
@@ -375,7 +373,6 @@ namespace IGE {
           }
           template <typename T>
           AssetMetadata::AssetProps const& GetCMetadata(GUID const& guid) const {
-              std::lock_guard<std::mutex> lock(mAssetsMutex);
               return GetMetadata<T>(guid);
           }
           template <typename T>

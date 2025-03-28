@@ -1124,6 +1124,9 @@ namespace
         case GUI::AssetPayload::PREFAB:
           am.ChangeAssetPath<IGE::Assets::PrefabAsset>(guid, newPath);
           break;
+        case GUI::AssetPayload::MATERIAL:
+          am.ChangeAssetPath<IGE::Assets::MaterialAsset>(guid, newPath);
+          break;
         case GUI::AssetPayload::SPRITE:
           am.ChangeAssetPath<IGE::Assets::TextureAsset>(guid, newPath);
           break;
