@@ -484,9 +484,9 @@ namespace ImGuiHelpers
     }
     if (p_mouse.x != g.IO.MousePos.x || p_mouse.y != g.IO.MousePos.y) {
       ImGui::TeleportMousePos(p_mouse);
-      //ImGui::ResetMouseDragDelta();
-      //g.IO.MouseDragMaxDistanceAbs[0] = g.IO.MouseDragMaxDistanceAbs[1] = { 0.f, 0.f };
-      //g.IO.MouseDragMaxDistanceSqr[0] = g.IO.MouseDragMaxDistanceSqr[1] = 0.f;
+      /*ImGui::ResetMouseDragDelta();
+      g.IO.MouseDragMaxDistanceAbs[0] = g.IO.MouseDragMaxDistanceAbs[1] = { 0.f, 0.f };
+      g.IO.MouseDragMaxDistanceSqr[0] = g.IO.MouseDragMaxDistanceSqr[1] = 0.f;*/
     }
   }
 

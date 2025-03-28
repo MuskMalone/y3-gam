@@ -132,6 +132,7 @@ namespace GUI {
       {
         glm::vec4 emission{ selectedMaterial->GetEmission() };
         if (ImGui::ColorEdit4("##Emission", &emission[0], ImGuiColorEditFlags_NoAlpha)) {
+          DragInputUsed();
           selectedMaterial->SetEmission(emission);
         }
         if (ImGui::SliderFloat("##EmissionBrightness", &emission[3], 0.f, 1.f, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
@@ -169,6 +170,7 @@ namespace GUI {
       {
         glm::vec2 tiling{ selectedMaterial->GetTiling() };
         if (ImGuiHelpers::TableInputFloat2("Tiling", &tiling[0], vec2InputWidth, false, -FLT_MAX, FLT_MAX, -0.03f)) {
+          DragInputUsed();
           selectedMaterial->SetTiling(tiling);
         }
       }
@@ -176,6 +178,7 @@ namespace GUI {
       {
         glm::vec2 offset{ selectedMaterial->GetOffset() };
         if (ImGuiHelpers::TableInputFloat2("Offset", &offset[0], vec2InputWidth, false, -FLT_MAX, FLT_MAX, -0.03f)) {
+          DragInputUsed();
           selectedMaterial->SetOffset(offset);
         }
       }
