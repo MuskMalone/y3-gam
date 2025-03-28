@@ -115,7 +115,7 @@ public class Ladder : Entity
         if (Vector3.DistanceSquared(playerPosition, topNearLeft) < Vector3.DistanceSquared(playerPosition, bottomNearLeft))
         {
           playerPosition = new Vector3(15.9f, 98f, -477);
-          Debug.Log($"{Vector3.DistanceSquared(playerPosition, topNearLeft)} {Vector3.DistanceSquared(playerPosition, bottomNearLeft)} ,{playerPosition}ehhhhhhhhhhhhhhhhhhhhhhhhhhhhw");
+          //Debug.Log($"{Vector3.DistanceSquared(playerPosition, topNearLeft)} {Vector3.DistanceSquared(playerPosition, bottomNearLeft)} ,{playerPosition}ehhhhhhhhhhhhhhhhhhhhhhhhhhhhw");
 
           InternalCalls.SetWorldPosition(playerMove.mEntityID, ref playerPosition);
           InternalCalls.UpdatePhysicsToTransform(playerMove.mEntityID);
