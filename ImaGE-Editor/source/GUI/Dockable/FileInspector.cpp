@@ -34,8 +34,6 @@ namespace GUI {
     HandleDragInputWrapping();
 
     MaterialInspector(selectedFile);
-
-    ImGui::PopFont();
   }
 
   #define TextureMapField(Title, MapType) {NextRowTable(Title);\
@@ -82,11 +80,18 @@ namespace GUI {
     {
       ECS::Entity const prevEntity{ GUIVault::GetPrevSelectedEntity() };
       if (prevEntity) {
-        if (ImGui::Button("<")) {
+        if (ImGui::Button(ICON_FA_ARROW_LEFT)) {
           GUIVault::SetSelectedFile({});
           GUIVault::SetSelectedEntity(prevEntity);
           return;
         }
+        if (ImGui::IsItemHovered()) {
+          ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_LIGHT));
+          ImGui::SetTooltip(("Return to " + prevEntity.GetTag()).c_str());
+          ImGui::PopFont();
+        }
+        ImGui::SameLine();
+        ImGui::Dummy({ 10.f, 0.f });
         ImGui::SameLine();
       }
     }
@@ -206,6 +211,8 @@ namespace GUI {
 
       ImGui::EndTable();
     }
+
+    ImGui::PopFont();
   }
 
   void Inspector::SaveLastEditedFile() const {
