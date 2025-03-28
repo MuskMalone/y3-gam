@@ -219,13 +219,13 @@ namespace GUI
     {
     case Events::SceneStateChange::NEW:
     case Events::SceneStateChange::CHANGED:
+      mSceneName = sceneStateEvent->mSceneName;
       if (sceneStateEvent->mIsReload) {
         if (mSceneModified) {
-          mSceneName = sceneStateEvent->mSceneName + " *";
+          mSceneName += " *";
         }
       }
       else {
-        mSceneName = sceneStateEvent->mSceneName;
         mEditingPrefab = mSceneModified = false;
       }
       break;
