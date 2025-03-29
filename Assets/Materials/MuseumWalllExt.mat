@@ -1,13 +1,13 @@
 {
-    "name": "CPNum0",
+    "name": "MuseumWalllExt",
     "shader": "PBR",
     "albedoColor": {
         "x": 1.0,
         "y": 1.0,
         "z": 1.0
     },
-    "metalness": 0.18700000643730164,
-    "roughness": 0.878000020980835,
+    "metalness": 0.5,
+    "roughness": 0.5,
     "ao": 1.0,
     "emission": {
         "x": 0.0,
@@ -17,15 +17,15 @@
     },
     "transparency": 1.0,
     "tiling": {
-        "x": 1.0,
-        "y": 1.0
+        "x": 30.170000076293945,
+        "y": 7.039999961853027
     },
     "offset": {
         "x": 0.0,
         "y": 0.0
     },
     "albedoMap": {
-        "ID": 16457188508562481857
+        "ID": 10611370934467350287
     },
     "normalMap": {
         "ID": 0
