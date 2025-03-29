@@ -2,13 +2,13 @@
 #include <Asset/SmartPointer.h>
 #include <memory>
 #include <Graphics/Texture.h>
-
+#include "Audio/AudioManager.h"
 struct plm_t;
 
 namespace Component {
   struct Video {
-    Video() : buffer{}, texture{}, videoSource{}, guid{}, renderType{ RenderType::WORLD },
-      started{ false }, paused{ false }, playOnStart{ true }, loop{ false }, audioEnabled{ true } {}
+      Video() : buffer{}, texture{}, videoSource{}, audioSource{}, guid{}, renderType{ RenderType::WORLD },
+        started{ false }, paused{ false }, playOnStart{ true }, loop{ false }, audioEnabled{ true }, channelGroup{ IGE::Audio::AudioManager::GetInstance().CreateGroup() } {}
     Video(IGE::Assets::GUID guid);
     Video(Video const& rhs);
     ~Video();
@@ -53,6 +53,7 @@ namespace Component {
     std::vector<uint8_t> buffer;
     std::unique_ptr<Graphics::Texture> texture;
     plm_t* videoSource;
+    plm_t* audioSource;
 
     IGE::Assets::GUID guid;
     RenderType renderType;
@@ -61,5 +62,9 @@ namespace Component {
     bool playOnStart;
     bool loop;          // don't modify this directly!
     bool audioEnabled;  // don't modify this directly!
+
+    IGE::Audio::Sound sound;
+    IGE::Audio::SoundInvokeSetting audioPlaySettings;
+    uint64_t channelGroup{};
   };
 }

@@ -8,6 +8,7 @@
 #include "Singleton/ThreadSafeSingleton.h"
 #include "Events/EventCallback.h"
 #include <Audio/AudioSystem.h>
+#include <Container/ThreadSafeDeque.h>	
 
 //1: No filtering
 //0: Full filtering, completely muffles
@@ -80,6 +81,7 @@ namespace IGE {
 			//then set the channel pointer back to nullptr
 			static FMOD_RESULT FMODChannelCallback(FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type,
 				FMOD_CHANNELCONTROL_CALLBACK_TYPE callbackType, void* commanddata1, void* commanddata2);
+
 			mutable std::unordered_set<FMOD::Channel*> channels; // not for imgui
 			mutable FMOD::ChannelGroup* dspGroup{ nullptr };
 			mutable bool paused{ false }; // not fo rimgui
@@ -91,12 +93,21 @@ namespace IGE {
 		}; 
 
 		struct Sound {
-
-			const std::string mKey;
-			const uint32_t mKeyhash;
+			using SoundGUID = Core::GUID<Sound>;
+			std::string mKey;
+			uint32_t mKeyhash;
+			int mSampleRate;
+			int mChannels;
+			std::shared_ptr<ThreadSafeDeque<float>> mPCMBuffer;
 			~Sound();
+			Sound();
 			Sound(std::string const& fp);
+			Sound(int sampleRate, int channels); // for livestream sound
+			Sound(Sound const& rhs);
+			Sound& operator=(Sound const& rhs);
 			void PlaySound(SoundInvokeSetting const&, FMOD::ChannelGroup* group, std::string const& name);
+			FMOD::Sound* GetSoundPtr();
+			static FMOD_RESULT F_CALLBACK PCMReadCallback(FMOD_SOUND* sound, void* data, unsigned int datalen);
 		};
 
 		class AudioManager : public ThreadSafeSingleton<AudioManager> {
@@ -130,11 +141,14 @@ namespace IGE {
 			 void ReleaseAllSounds();
 			//Add a sound to FMOD and audio manager
 			 FMOD::Sound* AddSound(std::string const& path, uint32_t name);
+			 FMOD::Sound* AddSound(uint32_t name, int sampleRate, int channels, FMOD_SOUND_PCMREAD_CALLBACK);
 
 			 void PlaySound(uint32_t sound, SoundInvokeSetting const& settings, FMOD::ChannelGroup* group, std::string const& name);
 
 			//Free a speciifc sound from FMOD and audio manager, free up memory when a sound is no longer needed
 			 void PlaySound(IGE::Assets::GUID const& guid, SoundInvokeSetting const&, uint64_t group, std::string const& name);
+			 void PlaySound(Sound& sound, SoundInvokeSetting const& settings, uint64_t group, std::string const& name);
+			 FMOD::Sound* GetSound(uint32_t keyhash);
 			 void PauseSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const&);
 			 void StopSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const&);
 			 void FreeSound(uint32_t sound);
@@ -159,6 +173,7 @@ namespace IGE {
 			friend AudioSystem;
 			friend SoundInvokeSetting;
 			using ChannelGroupGUID = Core::GUID<FMOD::Channel>;
+			
 			//for managing FMOD system
 			 FMOD::System* mSystem;
 			//stores the sounds by name. FMOD provides a handle to each sound through FMOD::Sound
@@ -170,6 +185,7 @@ namespace IGE {
 			 EVENT_CALLBACK_DECL(HandleRemoveComponent);
 			 EVENT_CALLBACK_DECL(HandleRemoveEntity);
 			 EVENT_CALLBACK_DECL(HandleSystemEvents);
+
 			 bool mSceneStarted{false};
 			 bool mSceneStopped{true}; // scene starts from a stopped state
 			 bool mScenePaused{false};

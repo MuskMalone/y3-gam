@@ -6,6 +6,8 @@
 #include <Asset/AssetUtils.h>
 #include "Asset/AssetManager.h"
 
+
+
 namespace IGE::Assets {
   GUID VideoAsset::Import(std::string const& fp, std::string& newFp, AssetMetadata::AssetProps& metadata) {
     std::string const fileName{ GetFileName(fp) };

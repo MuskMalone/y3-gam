@@ -74,22 +74,67 @@ namespace IGE {
             //    
             //}
             if (Scenes::SceneManager::GetInstance().GetSceneState() == Scenes::SceneState::PLAYING) {
-                auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
-                for (auto entity : rbsystem) {
-                    auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
-                    if (mgr.mSceneStarted && mgr.mScenePaused) {
-                        mgr.mGroup[audiosource.channelGroup]->setPaused(false);
+                {
+                    auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::AudioSource, Component::Transform>() };
+                    for (auto entity : rbsystem) {
+                        auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
+                        if (mgr.mSceneStarted && mgr.mScenePaused) {
+                            mgr.mGroup[audiosource.channelGroup]->setPaused(false);
+                        }
+                        for (auto& sound : audiosource.sounds) {
+                            auto& setting{ sound.second.playSettings };
+                            if (mgr.mSceneStarted && mgr.mSceneStopped && setting.playOnAwake) {
+                                audiosource.PlaySound(sound.first);
+                            }
+
+                            for (auto channel : setting.channels) {
+                                FMOD_VECTOR fmodPosition = { setting.position.x, setting.position.y, setting.position.z };
+                                channel->set3DAttributes(&fmodPosition, 0);
+                            }
+                        }
                     }
-                    for (auto& sound : audiosource.sounds) {
-                        auto& setting{ sound.second.playSettings };
-                        if (mgr.mSceneStarted && mgr.mSceneStopped && setting.playOnAwake) {
-                            audiosource.PlaySound(sound.first);
+                }
+                {
+                    auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::Video, Component::Transform>() };
+                    for (auto entity : rbsystem) {
+                        auto& video{ rbsystem.get<Component::Video>(entity) };
+                        if (mgr.mSceneStarted && mgr.mScenePaused) {
+                            mgr.mGroup[video.channelGroup]->setPaused(false);
                         }
-                        
-                        for (auto channel : setting.channels) {
-                            FMOD_VECTOR fmodPosition = { setting.position.x, setting.position.y, setting.position.z };
-                            channel->set3DAttributes(&fmodPosition, 0);
+                        if (mgr.mSceneStarted && mgr.mSceneStopped) {
+                            mgr.PlaySound(video.sound, video.audioPlaySettings, video.channelGroup, "video");
+                            if (mgr.mGroup.find(video.channelGroup) != mgr.mGroup.end()) {
+                                FMOD::ChannelGroup* videoSoundGrp = mgr.mGroup[video.channelGroup];
+                                int numChannels = 0;
+                                videoSoundGrp->getNumChannels(&numChannels);
+                                for (int i = 0; i < numChannels; ++i) {
+                                    FMOD::Channel* channel = nullptr;
+                                    videoSoundGrp->getChannel(i, &channel);
+                                    if (channel) {
+                                        unsigned int pos = 5000;
+                                        FMOD_RESULT result = channel->setPosition(pos, FMOD_TIMEUNIT_MS);
+                                        if (result == FMOD_OK) {
+                                            printf("Channel %d position: %u ms\n", i, pos);
+                                        }
+                                        else {
+                                            printf("Channel %d: setPosition error: %s\n", i, FMOD_ErrorString(result));
+                                        }
+                                    }
+                                }
+                            }
                         }
+
+                        //for (auto& sound : audiosource.sounds) {
+                        //    auto& setting{ sound.second.playSettings };
+                        //    if (mgr.mSceneStarted && mgr.mSceneStopped && setting.playOnAwake) {
+                        //        audiosource.PlaySound(sound.first);
+                        //    }
+
+                        //    //for (auto channel : setting.channels) {
+                        //    //    FMOD_VECTOR fmodPosition = { setting.position.x, setting.position.y, setting.position.z };
+                        //    //    channel->set3DAttributes(&fmodPosition, 0);
+                        //    //}
+                        //}
                     }
                 }
                 mgr.mSceneStarted = false;

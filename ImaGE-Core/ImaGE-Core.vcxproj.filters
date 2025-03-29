@@ -43,6 +43,9 @@
     <Filter Include="BoundingVolumes">
       <UniqueIdentifier>{06DECC74-7269-3A39-7B7A-BD2DE7849639}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Container">
+      <UniqueIdentifier>{68AD6C08-D417-217F-1D56-D22489FFFED3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
     </Filter>
@@ -287,6 +290,9 @@
       <Filter>BoundingVolumes</Filter>
     </ClInclude>
     <ClInclude Include="source\Color.h" />
+    <ClInclude Include="source\Container\ThreadSafeDeque.h">
+      <Filter>Container</Filter>
+    </ClInclude>
     <ClInclude Include="source\Core\Components\Animation.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
@@ -862,6 +868,7 @@
     <ClInclude Include="source\Singleton\ThreadSafeSingleton.h">
       <Filter>Singleton</Filter>
     </ClInclude>
+    <ClInclude Include="source\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
@@ -1168,5 +1175,6 @@
     <ClCompile Include="source\Serialization\Serializer.cpp">
       <Filter>Serialization</Filter>
     </ClCompile>
+    <ClCompile Include="source\pch.cpp" />
   </ItemGroup>
 </Project>

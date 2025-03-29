@@ -242,12 +242,12 @@ namespace ImTerm {
 
 		// set logging pattern per message type, for feed-back messages from the terminal
 		void set_terminal_pattern(const std::string& pattern, ImTerm::message::type type) {
-			std::lock_guard<Mutex> lock(SinkBase::mutex_);
+			std::lock_guard<Mutex> lock(SinkBase::mMutex);
 			set_terminal_pattern_(std::make_unique<spdlog::pattern_formatter>(pattern), type);
 		}
 
 		void set_terminal_formatter(std::unique_ptr<spdlog::formatter>&& terminal_formatter, ImTerm::message::type type) {
-			std::lock_guard<Mutex> lock(SinkBase::mutex_);
+			std::lock_guard<Mutex> lock(SinkBase::mMutex);
 			set_terminal_formatter_(std::move(terminal_formatter), type);
 		}
 

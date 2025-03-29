@@ -13,13 +13,17 @@ namespace {
 }
 
 namespace Component {
-  Video::Video(IGE::Assets::GUID _guid) : buffer{}, texture{}, videoSource{}, guid{},
+    Video::Video(IGE::Assets::GUID _guid) : buffer{}, texture{}, videoSource{}, audioSource{}, guid{},
     renderType{ RenderType::WORLD }, started{ false }, paused{ false },
-    playOnStart{ true }, loop{ false }, audioEnabled{ true } {}
+    playOnStart{ true }, loop{ false }, audioEnabled{ true }, channelGroup{ IGE::Audio::AudioManager::GetInstance().CreateGroup() } {}
 
-  Video::Video(Video const& rhs) : buffer{}, texture{}, videoSource{}, guid{ rhs.guid },
+    Video::Video(Video const& rhs) : buffer{}, texture{}, videoSource{}, audioSource{}, guid{ rhs.guid },
     renderType{ rhs.renderType }, started{ false }, paused{ false },
-    playOnStart{ rhs.playOnStart }, loop{ rhs.loop }, audioEnabled{ rhs.audioEnabled } {}
+      playOnStart{ rhs.playOnStart }, loop{ rhs.loop }, audioEnabled{ rhs.audioEnabled }, 
+      sound{ rhs.sound }, audioPlaySettings{ rhs.audioPlaySettings }, channelGroup {
+      IGE::Audio::AudioManager::GetInstance().CreateGroup()
+  } {
+  }
 
   Video& Video::operator=(Video const& rhs) {
     renderType = rhs.renderType;
@@ -28,6 +32,9 @@ namespace Component {
     audioEnabled = rhs.audioEnabled;
     loop = rhs.loop;
 
+    sound = rhs.sound;
+    audioPlaySettings = rhs.audioPlaySettings;
+    
     return *this;
   }
 
@@ -41,13 +48,24 @@ namespace Component {
     };
 
     videoSource = plm_create_with_filename(path.c_str());
-    if (!videoSource) {
+    audioSource = plm_create_with_filename(path.c_str());
+
+    if (!videoSource || !audioSource) {
       throw Debug::Exception<Video>(Debug::LVL_ERROR, 
         Msg("Unable to create video buffer for " + path));
     }
+    plm_set_video_enabled(audioSource, false);
+    plm_set_audio_enabled(videoSource, false);
 
+    double leadTime = plm_get_duration(videoSource) * 0.2; // 10% of video
+    int sampleRate = plm_get_samplerate(videoSource);
+    int channels = 2; //assuming 2
+    
+    sound = IGE::Audio::Sound{ sampleRate, channels };
+    auto soundptr{ sound.GetSoundPtr() };
+    soundptr->setUserData(this);
     plm_set_video_decode_callback(videoSource, VideoDecodeCallback, this);
-    plm_set_audio_decode_callback(videoSource, AudioDecodeCallback, this);
+    plm_set_audio_decode_callback(audioSource, AudioDecodeCallback, this);
 
     // init texture
     texture = std::make_unique<Graphics::Texture>(
@@ -59,9 +77,9 @@ namespace Component {
     
     // set the image to the first frame as a preview
     bool const originalAudioEnabled{ audioEnabled };
-    if (originalAudioEnabled) {
-      EnableAudio(false); // we don't require audio for the previw
-    }
+    //if (originalAudioEnabled) {
+    //  EnableAudio(false); // we don't require audio for the previw
+    //}
 
     if (!PreviewFirstFrame()) {
       throw Debug::Exception<Video>(Debug::LVL_ERROR, Msg("Unable to decode video frame from " + path));
@@ -69,6 +87,10 @@ namespace Component {
 
     EnableAudio(originalAudioEnabled);
     SetLoop(loop);
+
+    //preload audio
+    plm_decode(audioSource, leadTime);
+
     guid = _guid;
   }
 
@@ -94,10 +116,11 @@ namespace Component {
 
   void Video::AdvanceVideo(float seconds) {
     plm_decode(videoSource, seconds);
+    plm_decode(audioSource, seconds);
   }
 
   void Video::EnableAudio(bool enabled) {
-    plm_set_audio_enabled(videoSource, enabled);
+    plm_set_audio_enabled(audioSource, enabled);
     audioEnabled = enabled;
   }
 
@@ -107,6 +130,7 @@ namespace Component {
 
   void Video::SetLoop(bool enabled) {
     plm_set_loop(videoSource, enabled);
+    plm_set_loop(audioSource, enabled);
     loop = enabled;
   }
 
@@ -134,6 +158,10 @@ namespace Component {
       plm_destroy(videoSource);
       videoSource = nullptr;
     }
+    if (audioSource) {
+        plm_destroy(audioSource);
+        audioSource = nullptr;
+    }
   }
 
   void Video::Clear() noexcept {
@@ -148,6 +176,9 @@ namespace Component {
   Video::~Video() {
     if (videoSource) {
       plm_destroy(videoSource);
+    }
+    if (audioSource) {
+        plm_destroy(audioSource);
     }
   }
 } // namespace Component
@@ -187,6 +218,9 @@ namespace {
     }
 
     Component::Video* video{ reinterpret_cast<Component::Video*>(user) };
+    unsigned numFloats = samples->count * 2;
+    video->sound.mPCMBuffer->write(samples->interleaved, numFloats);
+    //printf("READ audio has smth %u\n", numFloats);
 
     /* ======= SAMPLE EXAMPLE FOR SDL =======
     void app_on_audio(plm_t * mpeg, plm_samples_t * samples, void* user) {

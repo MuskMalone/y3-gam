@@ -1,6 +1,7 @@
 #pragma once
 #include "../../SmartPointer.h"
 #include "Asset/AssetMetadata.h"
+#include "Audio/AudioManager.h"
 
 namespace IGE::Assets {
 	struct VideoAsset : public RefCounted {
