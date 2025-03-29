@@ -12,7 +12,8 @@ public class LeverManager : Entity
   public PlayerMove playerMove;
   public BlackBorder blackBorders;
 
-  public float timeBeforeOrbsDrop;  // how much time to wait after all levers pulled
+  public float timeBeforeOrbsDrop;  // how much time to wait after orbs get violent
+  public float timeBeforeFinalTeleport; // delay after all levers pulled
 
   private int leversPulled = 0;
   private int totalLevers = 5; // Set total number of levers required
@@ -27,6 +28,7 @@ public class LeverManager : Entity
   {
     IDLE,
     TABLE_CAM,
+    TELEPORT_PLAYER,
     DEACTIVATE_ORBS
   }
   private State currState = State.IDLE;
@@ -68,7 +70,10 @@ public class LeverManager : Entity
     switch (currState)
     {
       case State.IDLE:
-
+        if (Input.GetKeyTriggered(KeyCode.V))
+        {
+          playerMove.SetRotation(new Vector3(-1f, 1.9f, 0));  // make player look at table
+        }
         break;
 
       case State.TABLE_CAM:
@@ -93,9 +98,22 @@ public class LeverManager : Entity
             // if all levers pulled, transition to next phase
             if (leversPulled >= totalLevers)
             {
-              hexTeleport.TeleportPlayer(teleportPositionTable);
-              currState = State.DEACTIVATE_ORBS;
+              currState = State.TELEPORT_PLAYER;
             }
+          }
+
+          break;
+        }
+
+      case State.TELEPORT_PLAYER:
+        {
+          timeElapsed += Time.deltaTime;
+
+          if (timeElapsed >= timeBeforeFinalTeleport)
+          {
+            hexTeleport.TeleportPlayer(teleportPositionTable);
+            playerMove.SetRotation(new Vector3(-1f, 1.9f, 0));  // make player look at table
+            currState = State.DEACTIVATE_ORBS;
           }
 
           break;
@@ -152,7 +170,7 @@ public class LeverManager : Entity
 
   private void SetPlayerCameraAsMain()
   {
-    Console.WriteLine("Entered SetCamera as Main");
+    //Console.WriteLine("Entered SetCamera as Main");
     InternalCalls.SetTag(playerCamera.mEntityID, "MainCamera");
     InternalCalls.SetTag(tableCamera.mEntityID, "hexTableCamera");
   }

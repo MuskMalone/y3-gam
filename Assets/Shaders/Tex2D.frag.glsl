@@ -14,6 +14,6 @@ uniform float u_Gamma;
 void main() {
     vec4 texColor = texture(u_Tex[int(v_TexIdx)], v_TexCoord);
     vec4 finalColor = (texColor * v_Color); 
-    fragColor = vec4(pow(vec3(finalColor), vec3(1.0 / u_Gamma )* 1.9 ), finalColor.a);
+    fragColor = vec4(pow(vec3(finalColor), vec3(1.0 / u_Gamma )* 1.8 ), finalColor.a);
     entity = v_Entity;
 }

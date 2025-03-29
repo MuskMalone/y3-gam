@@ -116,7 +116,7 @@ namespace GUI {
     Reflection::ObjectFactory& mObjFactory;
     ECS::Entity mPreviousEntity;
     bool mIsComponentEdited, mFirstEdit, mEditingPrefab;
-    bool mEntityChanged;
+    bool mEntityChanged, mIsUsingDragInput;
 
     static inline constexpr ImU32 sComponentHighlightCol{ IM_COL32(253, 208, 23, 255) };
     static inline constexpr float ITEM_SPACING{ 0 };
@@ -146,6 +146,7 @@ namespace GUI {
     EVENT_CALLBACK_DECL(OnPrefabEdit);
 
     bool RunDragDropInspector(ECS::Entity entity);
+    void HandleDragInputWrapping();
 
     /*!*********************************************************************
     \brief
@@ -195,6 +196,8 @@ namespace GUI {
     ************************************************************************/
     bool BeginVec3Table(const char* fieldName, float inputWidth);
     void EndVec3Table();
+
+    inline void DragInputUsed() noexcept { mIsUsingDragInput = true; }
 
     /*!*********************************************************************
     \brief

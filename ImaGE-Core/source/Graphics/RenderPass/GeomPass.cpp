@@ -54,8 +54,8 @@ namespace Graphics {
 
       // Get light data to pass into shader
       LightUniforms<sMaxLights> const lightUniforms{ GetLightData<sMaxLights>(entities) };
-      unsigned matCount = static_cast<unsigned>(MaterialTable::GetMaterialCount());
-      float time = static_cast<float>(glfwGetTime()); // for shaders requiring time
+      unsigned const matCount = static_cast<unsigned>(MaterialTable::GetMaterialCount());
+      float const time = static_cast<float>(glfwGetTime()); // for shaders requiring time
 
       // Sort transparent objects back-to-front
       for (auto& [shader, matGrp] : transparentGroups) {
@@ -81,12 +81,12 @@ namespace Graphics {
           shader->SetUniform("u_ViewMtx", cam.viewMatrix);
 
           // If this shader is for water, set the time uniform
-          bool isWaterShader = (shader == ShaderLibrary::Get("Water"));
+          bool const isWaterShader = (shader == ShaderLibrary::Get("Water"));
           if (isWaterShader) {
               shader->SetUniform("u_Time", time);
           }
 
-          bool isLeafShader = (shader == ShaderLibrary::Get("Leaf"));
+          bool const isLeafShader = (shader == ShaderLibrary::Get("Leaf"));
           if (isLeafShader) {
             shader->SetUniform("u_Time", time);
             shader->SetUniform("u_Dist", Component::Light::sGlobalProps.dist);
@@ -95,7 +95,7 @@ namespace Graphics {
           }
 
           // Only set camera and shadow uniforms if this isn't an unlit shader
-          bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
+          bool const isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
           if (!isUnlitShader) {
               shader->SetUniform("u_CamPos", cam.position);
               lightUniforms.SetUniforms(shader);
@@ -114,13 +114,9 @@ namespace Graphics {
 
           // Render instances for each material group
           for (auto const& [matGrpIndex, entityData] : matGrp) {
-              unsigned batchStart = matGrpIndex * MaterialTable::sMaterialsPerBatch;
-              unsigned batchEnd = std::min(batchStart + MaterialTable::sMaterialsPerBatch - 1, matCount - 1);
+              unsigned const batchStart = static_cast<unsigned>(matGrpIndex) * MaterialTable::sMaterialsPerBatch;
+              unsigned const batchEnd = matCount == 0 ? 0 : std::min(batchStart + MaterialTable::sMaterialsPerBatch - 1, matCount - 1);
 
-              if (batchStart >= matCount) {
-                  // Skip this batch because the computed batchStart is out-of-range.
-                  continue;
-              }
               MaterialTable::ApplyMaterialTextures(shader, batchStart, batchEnd);
 
               // Set the offset for material indices
@@ -149,12 +145,12 @@ namespace Graphics {
           shader->SetUniform("u_ViewMtx", cam.viewMatrix);
 
           // If this shader is for water, set the time uniform
-          bool isWaterShader = (shader == ShaderLibrary::Get("Water"));
+          bool const isWaterShader = (shader == ShaderLibrary::Get("Water"));
           if (isWaterShader) {
               shader->SetUniform("u_Time", time);
           }
 
-          bool isLeafShader = (shader == ShaderLibrary::Get("Leaf"));
+          bool const isLeafShader = (shader == ShaderLibrary::Get("Leaf"));
           if (isLeafShader) {
             shader->SetUniform("u_Time", time); 
             shader->SetUniform("u_Dist", Component::Light::sGlobalProps.dist);
@@ -163,7 +159,7 @@ namespace Graphics {
           }
 
           // Only set camera and shadow uniforms if this isn't an unlit shader
-          bool isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
+          bool const isUnlitShader = (shader == ShaderLibrary::Get("Unlit"));
           if (!isUnlitShader) {
               shader->SetUniform("u_CamPos", cam.position);
               lightUniforms.SetUniforms(shader);
@@ -182,13 +178,8 @@ namespace Graphics {
 
           // Render instances for each material group
           for (auto const& [matGrpIndex, entityData] : matGrp) {
-              unsigned batchStart = matGrpIndex * MaterialTable::sMaterialsPerBatch;
-              unsigned batchEnd = std::min(batchStart + MaterialTable::sMaterialsPerBatch - 1, matCount - 1);
-
-              if (batchStart >= matCount) {
-                  // Skip this batch because the computed batchStart is out-of-range.
-                  continue;
-              }
+              unsigned const batchStart = static_cast<unsigned>(matGrpIndex) * MaterialTable::sMaterialsPerBatch;
+              unsigned const batchEnd = matCount == 0 ? 0 : std::min(batchStart + MaterialTable::sMaterialsPerBatch - 1, matCount - 1);
 
               MaterialTable::ApplyMaterialTextures(shader, batchStart, batchEnd);
 

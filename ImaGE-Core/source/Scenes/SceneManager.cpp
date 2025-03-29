@@ -75,7 +75,7 @@ namespace Scenes
     if (!mSaveStates.empty()) {
       LoadTemporarySave();
       InitScene();
-      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName);
+      QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName, true);
     }
 
     mSceneState = SceneState::STOPPED;
@@ -116,7 +116,7 @@ namespace Scenes
     LoadTemporarySave();
     InitScene();
 
-    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::NEW, mSceneName);
+    QUEUE_EVENT(Events::SceneStateChange, Events::SceneStateChange::CHANGED, mSceneName, true);
   }
 
   EVENT_CALLBACK_DEF(SceneManager, OnSceneLoad) {

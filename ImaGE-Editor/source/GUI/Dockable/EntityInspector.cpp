@@ -102,7 +102,9 @@ namespace GUI {
       { typeid(Component::Video), ICON_FA_VIDEO ICON_PADDING }
     },
     mObjFactory{ Reflection::ObjectFactory::GetInstance() },
-    mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, mEditingPrefab{ false }, mEntityChanged{ false } {
+    mPreviousEntity{}, mIsComponentEdited{ false }, mFirstEdit{ false }, 
+    mEditingPrefab{ false }, mEntityChanged{ false }, mIsUsingDragInput{ false }
+  {
     for (auto const& component : Reflection::gComponentTypes) {
       mComponentOpenStatusMap[component.get_name().to_string()] = true;
     }
@@ -151,7 +153,6 @@ namespace GUI {
     ImGui::Begin(mWindowName.c_str());
     ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_SEMIBOLD));
     ECS::Entity currentEntity{ GUIVault::GetSelectedEntity() };
-    
     // run the inspector for the selected file
     if (!currentEntity) {
       RunFileInspector();
@@ -164,6 +165,8 @@ namespace GUI {
       }
       else
         mEntityChanged = false;
+
+      HandleDragInputWrapping();
 
       entityRotModified = false;
       static Component::PrefabOverrides* prefabOverride{ nullptr };
@@ -508,6 +511,8 @@ namespace GUI {
           }
         }
       }
+      // ComponentWindows endregion
+#pragma endregion
 
       if (prefabOverride) {
         for (rttr::type const& type : prefabOverride->removedComponents) {
@@ -531,13 +536,12 @@ namespace GUI {
       mFirstEdit = true;
     }
 
-    // wrap cursor when an input field is used
-    if (ImGui::IsKeyDown(ImGuiKey_MouseLeft) && mIsComponentEdited) {
-      ImGuiHelpers::WrapMousePos(1 << ImGuiAxis_X);
-    }
+    //if (!ImGui::IsKeyDown(ImGuiKey_MouseLeft) && isDragging) {
+    //  //ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
+    //  isDragging = false;
+    //  IGE_DBGLOGGER.LogInfo("SHOW!");
+    //}
   }
-  // ComponentWindows endregion
-#pragma endregion
 
   EVENT_CALLBACK_DEF(Inspector, OnSceneSave) {
       mIsComponentEdited = mFirstEdit = false;
@@ -546,12 +550,8 @@ namespace GUI {
   EVENT_CALLBACK_DEF(Inspector, OnSceneStateChange) {
     auto state{ CAST_TO_EVENT(Events::SceneStateChange)->mNewState };
     // if changing to another scene, reset modified flag
-    if (state == Events::SceneStateChange::CHANGED) {
+    if (state == Events::SceneStateChange::CHANGED || state == Events::SceneStateChange::NEW) {
       mIsComponentEdited = mFirstEdit = mEditingPrefab = false;
-    }
-    else if (state == Events::SceneStateChange::NEW) {
-      mIsComponentEdited = true;
-      mFirstEdit = mEditingPrefab = false;
     }
   }
 
@@ -755,7 +755,8 @@ namespace GUI {
                   // Table for 3D position
                   if (BeginVec3Table(("PositionTable##" + uniqueID).c_str(), inputWidth)) {
                       if (ImGuiHelpers::TableInputFloat3(("Position##" + uniqueID).c_str(), &audioInstance.playSettings.position.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
-                          modified = true;
+                        DragInputUsed();
+                        modified = true;
                       }
                       EndVec3Table();
                   }
@@ -767,31 +768,37 @@ namespace GUI {
 
                       NextRowTable("Volume");
                       if (ImGui::DragFloat(("##Volume" + uniqueID).c_str(), &audioInstance.playSettings.volume, 0.01f, 0.0f, 1.0f)) {
+                        DragInputUsed();
                           modified = true;
                       }
 
                       NextRowTable("Pitch");
                       if (ImGui::DragFloat(("##Pitch" + uniqueID).c_str(), &audioInstance.playSettings.pitch, 0.01f, 0.1f, 3.0f)) {
+                        DragInputUsed();
                           modified = true;
                       }
 
                       NextRowTable("Pan");
                       if (ImGui::DragFloat(("##Pan" + uniqueID).c_str(), &audioInstance.playSettings.pan, 0.01f, -1.0f, 1.0f)) {
+                        DragInputUsed();
                           modified = true;
                       }
 
                       NextRowTable("Doppler Level");
                       if (ImGui::DragFloat(("##DopplerLevel" + uniqueID).c_str(), &audioInstance.playSettings.dopplerLevel, 0.01f, 0.0f, 5.0f)) {
+                        DragInputUsed();
                           modified = true;
                       }
 
                       NextRowTable("Min Distance");
                       if (ImGui::DragFloat(("##MinDistance" + uniqueID).c_str(), &audioInstance.playSettings.minDistance, 0.1f, 0.0f, 1000.0f)) {
+                        DragInputUsed();
                           modified = true;
                       }
 
                       NextRowTable("Max Distance");
                       if (ImGui::DragFloat(("##MaxDistance" + uniqueID).c_str(), &audioInstance.playSettings.maxDistance, 0.1f, 0.0f, 1000.0f)) {
+                        DragInputUsed();
                           modified = true;
                       }
 
@@ -987,18 +994,21 @@ namespace GUI {
       // Modify the scale (vec3 input)
       if (ImGuiHelpers::TableInputFloat3("Box Scale", &collider.scale.x, inputWidth, false, 0.1f, 100.0f, 0.1f)) {
           IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
+          DragInputUsed();
           modified = true;
       }
 
       // Modify positionOffset (vec3 input)
       if (ImGuiHelpers::TableInputFloat3("Box Position Offset", &collider.positionOffset.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
           IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
+          DragInputUsed();
           modified = true;
       }
 
       // Modify rotationOffset (vec3 input)
       if (ImGuiHelpers::TableInputFloat3("Box Rotation Offset", &collider.degreeRotationOffsetEuler.x, inputWidth, false, -360.f, 360.f, 1.f)) {
           IGE::Physics::PhysicsSystem::GetInstance()->ChangeBoxColliderVar(entity);
+          DragInputUsed();
           modified = true;
       }
 
@@ -1068,10 +1078,12 @@ namespace GUI {
 
         NextRowTable("Near Clip");
         if (ImGui::DragFloat("##Near", &camera.nearClip, 5.f, -100.f, FLT_MAX)) {
+          DragInputUsed();
           modified = true;
         }
         NextRowTable("Far Clip");
         if (ImGui::DragFloat("##Far", &camera.farClip, 5.f, 0.f, 1000.f)) {
+          DragInputUsed();
           modified = true;
         }
 
@@ -1138,6 +1150,7 @@ namespace GUI {
           // Fade color picker
           NextRowTable("Fade Color");
           if (ImGui::ColorEdit4("##FadeColor", &canvas.fadeColor[0])) {
+            DragInputUsed();
               modified = true;
           }
 
@@ -1147,8 +1160,6 @@ namespace GUI {
       WindowEnd(isOpen);
       return modified;
   }
-
-
 
   bool Inspector::CapsuleColliderComponentWindow(ECS::Entity entity, bool highlight)
   {
@@ -1171,6 +1182,7 @@ namespace GUI {
       ImGui::TableSetColumnIndex(1);  // Span across X column
       if (ImGui::DragFloat("##Radius", &collider.radius, 0.1f, 0.1f, 100.f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
+        DragInputUsed();
         modified = true;
       }
 
@@ -1180,18 +1192,21 @@ namespace GUI {
       ImGui::TableSetColumnIndex(1);  // Span across X column
       if (ImGui::DragFloat("##HalfHeight", &collider.halfheight, 0.1f, 0.1f, 100.f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
+        DragInputUsed();
         modified = true;
       }
 
       // Modify positionOffset (vec3 input)
       if (ImGuiHelpers::TableInputFloat3("Capsule Position Offset", &collider.positionOffset.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
+        DragInputUsed();
         modified = true;
       }
 
       // Modify rotationOffset (vec3 input)
       if (ImGuiHelpers::TableInputFloat3("Capsule Rotation Offset", &collider.degreeRotationOffsetEuler.x, inputWidth, false, -360.f, 360.f, 1.f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeCapsuleColliderVar(entity);
+        DragInputUsed();
         modified = true;
       }
 
@@ -1236,6 +1251,7 @@ namespace GUI {
       // Color input
       NextRowTable("Color");
       if (ImGui::ColorEdit4("##ImageColor", &image.color[0])) {
+        DragInputUsed();
         modified = true;
       }
 
@@ -1376,11 +1392,13 @@ namespace GUI {
 
       NextRowTable("Color");
       if (ImGui::ColorEdit4("##LightCol", &light.color[0], ImGuiColorEditFlags_NoAlpha)) {
+        DragInputUsed();
         modified = true;
       }
 
       NextRowTable("Intensity");
       if (ImGui::DragFloat("##In", &light.mLightIntensity, 0.5f, 0.f, FLT_MAX, "%.2f")) {
+        DragInputUsed();
         modified = true;
       }
       if (light.type == Component::SPOTLIGHT)
@@ -1409,6 +1427,7 @@ namespace GUI {
         ImGui::Text("Range");
         ImGui::TableNextColumn();
         if (ImGui::DragFloat("##R", &light.mRange, 0.5f, 0.f, FLT_MAX)) {
+          DragInputUsed();
           modified = true;
         }
       }
@@ -1419,6 +1438,7 @@ namespace GUI {
         ImGui::Text("Range");
         ImGui::TableNextColumn();
         if (ImGui::DragFloat("##R", &light.mRange, 0.5f, 0.f, FLT_MAX)) {
+          DragInputUsed();
           modified = true;
         }
       }
@@ -1461,6 +1481,7 @@ namespace GUI {
             }
             ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
             if (ImGui::DragFloat("##BiasSlider", &lightShadow.bias, 0.0005f, 0.f, FLT_MAX, "% .4f")) {
+              DragInputUsed();
               modified = lightShadow.shadowModified = true;
             }
 
@@ -1474,6 +1495,7 @@ namespace GUI {
             }
             ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
             if (ImGui::DragFloat("##NearPlane", &lightShadow.nearPlane, 0.1f, -FLT_MAX, FLT_MAX, "% .2f")) {
+              DragInputUsed();
               modified = lightShadow.shadowModified = true;
             }
 
@@ -1487,6 +1509,7 @@ namespace GUI {
             }
             ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
             if (ImGui::DragFloat("##FarPlane", &lightShadow.farPlane, 0.1f, -FLT_MAX, FLT_MAX, "% .2f")) {
+              DragInputUsed();
               modified = lightShadow.shadowModified = true;
             }
 
@@ -1497,6 +1520,7 @@ namespace GUI {
             }
             ImGui::TableSetColumnIndex(1); ImGui::SetNextItemWidth(INPUT_SIZE);
             if (ImGui::DragFloat("##ScenesBounds", &lightShadow.scenesBounds, 0.1f, 0.01f, FLT_MAX, "%.2f")) {
+              DragInputUsed();
               modified = lightShadow.shadowModified = true;
             }
 
@@ -1527,6 +1551,7 @@ namespace GUI {
                 ImGui::TableHeadersRow();
 
                 if (ImGuiHelpers::TableInputFloat3("Center", &lightShadow.centerPos[0], vec3InputWidth, false, -FLT_MAX, FLT_MAX, 0.3f)) {
+                  DragInputUsed();
                   modified = lightShadow.shadowModified = true;
                 }
 
@@ -1768,10 +1793,12 @@ namespace GUI {
 
       if (ImGuiHelpers::TableInputFloat3("Velocity", &rigidBody.velocity.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::VELOCITY);
+        DragInputUsed();
         modified = true;
       }
       if (ImGuiHelpers::TableInputFloat3("Angular Velocity", &rigidBody.angularVelocity.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::ANGULAR_VELOCITY);
+        DragInputUsed();
         modified = true;
       }
 
@@ -1832,36 +1859,42 @@ namespace GUI {
       NextRowTable("Linear Damping");
       if (ImGui::DragFloat("##RigidBodyLinearDamping", &rigidBody.linearDamping, 0.01f, 0.0f, 1024.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LINEAR_DAMPING);
+        DragInputUsed();
         modified = true;
       }
 
       NextRowTable("Static Friction");
       if (ImGui::DragFloat("##RigidBodyStaticFriction", &rigidBody.staticFriction, 0.01f, 0.0f, 1024.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::STATIC_FRICTION);
+        DragInputUsed();
         modified = true;
       }
 
       NextRowTable("Dynamic Friction");
       if (ImGui::DragFloat("##RigidBodyDynamicFriction", &rigidBody.dynamicFriction, 0.01f, 0.0f, 1024.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::DYNAMIC_FRICTION);
+        DragInputUsed();
         modified = true;
       }
 
       NextRowTable("Restitution");
       if (ImGui::DragFloat("##RigidBodyRestitution", &rigidBody.restitution, 0.01f, 0.0f, 1.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::RESTITUTION);
+        DragInputUsed();
         modified = true;
       }
 
       NextRowTable("Gravity Factor");
       if (ImGui::DragFloat("##RigidBodyGravityFactor", &rigidBody.gravityFactor, 0.01f, -10.0f, 10.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::GRAVITY_FACTOR);
+        DragInputUsed();
         modified = true;
       }
 
       NextRowTable("Mass");
       if (ImGui::DragFloat("##RigidBodyMass", &rigidBody.mass, 0.01f, 0.0f, 1000'000.0f)) {
         IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MASS);
+        DragInputUsed();
         modified = true;
       }
 
@@ -1997,13 +2030,19 @@ namespace GUI {
                     if (ImGui::DragFloat("Motor Force Limit", &config.motorForceLimit, 0.1f, 0.0f, 10000.0f))
                         modified = true, jointModified = true;
                 }
+
+                if (modified) {
+                  DragInputUsed();
+                }
+
                 break;
             }
 
             case Component::RigidBody::JointType::SPHERICAL:
             {
-                if (ImGui::DragFloat("Break Force", &config.breakForce, 0.1f, 0.0f, 10000.0f))
+                if (ImGui::DragFloat("Break Force", &config.breakForce, 0.1f, 0.0f, 10000.0f)) {
                     modified = true, jointModified = true;
+                }
                 if (ImGui::DragFloat("Break Torque", &config.breakTorque, 0.1f, 0.0f, 10000.0f))
                     modified = true, jointModified = true;
                 if (ImGui::DragFloat("Stiffness", &config.stiffness, 0.1f, 0.0f, 1000.0f))
@@ -2023,6 +2062,11 @@ namespace GUI {
                     config.zLimit = zLimitDeg * glm::pi<float>() / 180.0f;
                     modified = true, jointModified = true;
                 }
+
+                if (modified) {
+                  DragInputUsed();
+                }
+
                 break;
             }
 
@@ -2049,6 +2093,10 @@ namespace GUI {
                     if (ImGui::DragFloat("Motor Force Limit", &config.motorForceLimit, 0.1f, 0.0f, 10000.0f))
                         modified = true, jointModified = true;
                 }
+                if (modified) {
+                  DragInputUsed();
+                }
+
                 break;
             }
 
@@ -2066,6 +2114,11 @@ namespace GUI {
                     modified = true, jointModified = true;
                 if (ImGui::DragFloat("Upper Limit", &config.upperLimit, 0.01f, -1000.0f, 1000.0f))
                     modified = true, jointModified = true;
+
+                if (modified) {
+                  DragInputUsed();
+                }
+
                 break;
             }
 
@@ -2073,10 +2126,14 @@ namespace GUI {
                 break;
             }
             // Joint Offset GUI
-          if (ImGui::DragFloat3("Joint Offset", &rigidBody.jointOffset.x, 0.1f, -1000.f, 1000.f))
-              modified = true, jointModified = true;
-          if (ImGui::DragFloat3("Other Joint Offset", &rigidBody.entityLinkedJointOffset.x, 0.1f, -1000.f, 1000.f))
-              modified = true, jointModified = true;
+          if (ImGui::DragFloat3("Joint Offset", &rigidBody.jointOffset.x, 0.1f, -1000.f, 1000.f)) {
+            modified = true, jointModified = true;
+            DragInputUsed();
+          }
+          if (ImGui::DragFloat3("Other Joint Offset", &rigidBody.entityLinkedJointOffset.x, 0.1f, -1000.f, 1000.f)) {
+            modified = true, jointModified = true;
+            DragInputUsed();
+          }
 
           if (jointModified) { IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::JOINT_PROPS); }
       }
@@ -2236,6 +2293,7 @@ namespace GUI {
     WindowEnd(isOpen);
     return modified;
   }
+
   bool Inspector::BloomComponentWindow(ECS::Entity entity, bool highlight)
   {
       bool const isOpen{ WindowBegin<Component::Bloom>("Bloom", highlight) };
@@ -2243,14 +2301,24 @@ namespace GUI {
 
       if (isOpen) {
           auto& bloom{ entity.GetComponent<Component::Bloom>() };
-          ImGui::DragFloat("Threshold", &bloom.threshold, 0.01f, 0.f, 1024.f);
-          ImGui::DragFloat("Intensity", &bloom.intensity, 0.01f, 0.f, 1024.f);
-          ImGui::DragFloat("Range", &bloom.range, 0.01f, 1.f, 1024.f);
+          if (ImGui::DragFloat("Threshold", &bloom.threshold, 0.01f, 0.f, 1024.f)) {
+            DragInputUsed();
+            modified = true;
+          }
+          if (ImGui::DragFloat("Intensity", &bloom.intensity, 0.01f, 0.f, 1024.f)) {
+            DragInputUsed();
+            modified = true;
+          }
+          if (ImGui::DragFloat("Range", &bloom.range, 0.01f, 1.f, 1024.f)) {
+            DragInputUsed();
+            modified = true;
+          }
       }
 
       WindowEnd(isOpen);
       return modified;
   }
+
   bool Inspector::SphereColliderComponentWindow(ECS::Entity entity, bool highlight)
   {
       bool const isOpen{ WindowBegin<Component::SphereCollider>("Sphere Collider", highlight) };
@@ -2272,18 +2340,21 @@ namespace GUI {
           ImGui::TableSetColumnIndex(1);  // Span across X column
           if (ImGui::DragFloat("##Radius", &collider.radius, 0.1f, 0.f, 100.f)) {
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
+              DragInputUsed();
               modified = true;
           }
 
           // Modify positionOffset (vec3 input)
           if (ImGuiHelpers::TableInputFloat3("Sphere Position Offset", &collider.positionOffset.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
+              DragInputUsed();
               modified = true;
           }
 
           // Modify rotationOffset (vec3 input)
           if (ImGuiHelpers::TableInputFloat3("Sphere Rotation Offset", &collider.degreeRotationOffsetEuler.x, inputWidth, false, -360.f, 360.f, 1.f)) {
               IGE::Physics::PhysicsSystem::GetInstance()->ChangeSphereColliderVar(entity);
+              DragInputUsed();
               modified = true;
           }
 
@@ -2334,6 +2405,7 @@ namespace GUI {
       // Color input
       NextRowTable("Color");
       if (ImGui::ColorEdit4("##ImageColor", &sprite.color[0])) {
+        DragInputUsed();
         modified = true;
       }
 
@@ -2497,6 +2569,7 @@ namespace GUI {
     WindowEnd(isOpen);
     return modified;
   }
+
   bool Inspector::EmitterSystemComponentWindow(ECS::Entity entity, bool highlight) {
       bool const isOpen{ WindowBegin<Component::EmitterSystem>("Emitter System", highlight) };
       bool modified{ false };
@@ -2549,58 +2622,69 @@ namespace GUI {
                   // Show vertices based on vCount
                   for (int j = 0; j < emitter.vCount; ++j) {
                       if (ImGui::DragFloat3(("Vertex " + std::to_string(j + 1) + "##" + std::to_string(i) + "_" + std::to_string(j)).c_str(), &emitter.vertices[j][0], 0.1f, -FLT_MAX, FLT_MAX)) {
-                          modified = true;
+                        DragInputUsed();
+                        modified = true;
                       }
                   }
 
                   // Edit color
                   if (ImGui::ColorEdit4(("Color##" + std::to_string(i)).c_str(), &emitter.col[0])) {
-                      modified = true;
+                    DragInputUsed();
+                    modified = true;
                   }
 
                   // Edit velocity
                   if (ImGui::DragFloat3(("Velocity##" + std::to_string(i)).c_str(), &emitter.vel[0], 0.1f, -FLT_MAX, FLT_MAX)) {
-                      modified = true;
+                    DragInputUsed();
+                    modified = true;
                   }
 
                   // Edit lifetime
                   if (ImGui::DragFloat(("Spread Angle##" + std::to_string(i)).c_str(), &emitter.spreadAngle, 0.0f, 0.1f, 180.f)) {
-                      modified = true;
+                    DragInputUsed();
+                    modified = true;
                   }
 
                   // Edit gravity
                   if (ImGui::DragFloat3(("Gravity##" + std::to_string(i)).c_str(), &emitter.gravity[0], 0.01f, -99999.f, 99999.f)) {
-                      modified = true;
+                    DragInputUsed();
+                    modified = true;
                   }
 
                   // Edit size
                   if (ImGui::DragFloat2(("Size##" + std::to_string(i)).c_str(), &emitter.size[0], 0.02f, 0.001f, FLT_MAX)) {
-                      modified = true;
+                    DragInputUsed();
+                    modified = true;
                   }
 
                   //// Edit angular velocity
                   //if (ImGui::DragFloat(("Angular Velocity##" + std::to_string(i)).c_str(), &emitter.angvel, 0.1f, -FLT_MAX, FLT_MAX)) {
+                  //    DragInputUsed();
                   //    modified = true;
                   //}
 
                   // Edit lifetime
                   if (ImGui::DragFloat(("Lifetime##" + std::to_string(i)).c_str(), &emitter.lifetime, 0.1f, 0.1f, 100.f)) {
-                      modified = true;
+                    DragInputUsed();
+                    modified = true;
                   }
 
                   // Edit speed
                   if (ImGui::DragFloat(("Speed##" + std::to_string(i)).c_str(), &emitter.speed, 0.1f, 0.1f, 100.f)) {
-                      modified = true;
+                    DragInputUsed();
+                    modified = true;
                   }
 
                   // Edit frequency
                   if (ImGui::DragFloat(("Frequency##" + std::to_string(i)).c_str(), &emitter.frequency, 0.01f, 0.01f, 10.f)) {
-                      modified = true;
+                    DragInputUsed();
+                    modified = true;
                   }
 
                   // Edit particles per frame
                   if (ImGui::DragInt(("Particles Per Frame##" + std::to_string(i)).c_str(), &emitter.particlesPerFrame, 1, 1, 1000)) {
-                      modified = true;
+                    DragInputUsed();
+                    modified = true;
                   }
 
                   // Dropdown for preset
@@ -2632,6 +2716,7 @@ namespace GUI {
       WindowEnd(isOpen);
       return modified;
   }
+
   bool Inspector::TextComponentWindow(ECS::Entity entity, bool highlight) {
     bool const isOpen{ WindowBegin<Component::Text>("Text", highlight) };
     bool modified{ false };
@@ -2692,6 +2777,7 @@ namespace GUI {
 
       NextRowTable("Color");
       if (ImGui::ColorEdit4("##TextColor", &text.color[0])) {
+        DragInputUsed();
         modified = true;
       }
 
@@ -2703,11 +2789,13 @@ namespace GUI {
 
       NextRowTable("Scale");
       if (ImGui::DragFloat("##TextScale", &text.scale, .001f, 0.f, 2.f)) {
+        DragInputUsed();
         modified = true;
       }
 
       NextRowTable("Multi-Line Space Offset");
       if (ImGui::DragFloat("##MultiLineSpacingOffset", &text.multiLineSpacingOffset, .01f, -2.f, 2.f)) {
+        DragInputUsed();
         modified = true;
       }
 
@@ -2748,6 +2836,7 @@ namespace GUI {
         ImGui::TableHeadersRow();
 
         if (ImGuiHelpers::TableInputFloat3("Textbox Dimensions", &text.textBoxDimensions.x, inputWidth, false, -100.f, 100.f, 0.1f)) {
+          DragInputUsed();
           text.newLineIndicesUpdatedFlag = false;
           modified = true;
         }
@@ -2772,11 +2861,13 @@ namespace GUI {
 
       // @TODO: Replace min and max with the world min and max
       if (ImGuiHelpers::TableInputFloat3("Position", &transform.position[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
+        DragInputUsed();
         modified = true;
       }
       glm::vec3 localRot{ transform.eulerAngles };
       if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.3f)) {
         transform.SetLocalRotWithEuler(localRot);
+        DragInputUsed();
         modified = true;
 
         entityRotModified = true;
@@ -2784,6 +2875,7 @@ namespace GUI {
       static bool constrainedScale{ true };
       glm::vec3 scale{ transform.scale };
       if (ImGuiHelpers::TableInputFloat3("Scale", &scale[0], inputWidth, false, 0.001f, FLT_MAX, 0.02f)) {
+        DragInputUsed();
         modified = true;
         if (constrainedScale) {
           scale -= transform.scale;
@@ -3248,6 +3340,28 @@ namespace GUI {
     }
 
     ImGui::Separator();
+  }
+
+  void Inspector::HandleDragInputWrapping() {
+    //static ImVec2 originalMousePos{};
+    static bool isDragging = false;
+
+    // wrap cursor when an input field is used
+    if (mIsUsingDragInput && !isDragging) {
+      isDragging = true;
+      //originalMousePos = ImGui::GetMousePos();
+    }
+    else if (!ImGui::IsMouseDown(ImGuiMouseButton_Left) && isDragging) {
+      //ImGui::TeleportMousePos(originalMousePos);
+      isDragging = false;
+    }
+
+    if (isDragging) {
+      ImGuiHelpers::WrapMousePos(1 << ImGuiAxis_X);
+      //ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+    }
+
+    mIsUsingDragInput = false;  // reset every loop
   }
 
   bool Inspector::BeginVec3Table(const char* fieldName, float inputWidth) {

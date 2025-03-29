@@ -76,6 +76,77 @@
             ]
         },
         {
+            "ID": 2,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Cube",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 6.201000213623047,
+                            "y": 6.201000213623047,
+                            "z": 6.201000213623047
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 6.201000213623047,
+                            "y": 6.201000213623047,
+                            "z": 6.201000213623047
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 3,
             "Parent": null,
             "Child Entities": [

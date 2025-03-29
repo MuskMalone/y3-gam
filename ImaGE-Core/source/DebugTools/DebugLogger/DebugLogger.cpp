@@ -56,6 +56,7 @@ DebugLogger::~DebugLogger()
 	// Flush logs
 	mLogger->flush();
 
+	mLogger.reset();
 	mFileLogger.reset();
 
 	if (std::filesystem::file_size(mFileName) == 0)

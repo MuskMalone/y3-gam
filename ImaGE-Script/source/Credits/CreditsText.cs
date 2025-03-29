@@ -38,6 +38,8 @@ public class CreditsText : Entity
   public Entity ProgrammersName;
   public Entity Artist;
   public Entity ArtistName;
+  public Entity SpecialThanks;
+  public Entity SpecialThanksName;
   public float speed;
   public Transition transition;
 
@@ -70,7 +72,8 @@ public class CreditsText : Entity
       ProgrammersName.GetComponent<Transform>().position = ProgrammersName.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
       Artist.GetComponent<Transform>().position = Artist.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
       ArtistName.GetComponent<Transform>().position = ArtistName.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
-
+      SpecialThanks.GetComponent<Transform>().position = SpecialThanks.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
+      SpecialThanksName.GetComponent<Transform>().position = SpecialThanksName.GetComponent<Transform>().position + new Vector3(0, speed, 0) * Time.deltaTime;
       if (Input.GetKeyTriggered(KeyCode.ESCAPE) || transitionTimer >= creditTime)
       {
         toSwitch = true;

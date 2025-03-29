@@ -43,11 +43,17 @@ namespace CMD
 				(params.push_back(std::any(std::forward<_args>(args))), ...);
 			}
 		};
+
+		inline static constexpr unsigned sMaxCommands = 150u;
+
 	public:
 		CommandManager();
 
 		template <typename... _args>
 		void AddCommand(std::string const& cmd, _args&&... args) {
+			if (mCommandStack.size() >= sMaxCommands) {
+				mCommandStack.pop_front();
+			}
 			mCommandStack.emplace_back(cmd, std::forward<_args>(args)...);
 		}
 		inline void UndoCommand() {

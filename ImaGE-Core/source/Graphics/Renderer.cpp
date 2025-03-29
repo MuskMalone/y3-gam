@@ -415,6 +415,7 @@ namespace Graphics {
 	void Renderer::InitMeshSources(){
 		//mData.debugMeshSources[0] = IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>("Cube");
 		mData.quadMeshSource = { IGE_ASSETMGR.LoadRef<IGE::Assets::ModelAsset>("Quad") };
+		Component::Mesh::SetDefaultMesh("Cube");
 	}
 
 	void Renderer::InitFullscreenQuad(){

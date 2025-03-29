@@ -454,13 +454,13 @@ namespace ImGuiHelpers
     if (g.IO.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
     {
       const ImGuiPlatformMonitor* monitor = ImGui::GetViewportPlatformMonitor(g.MouseViewport);
-      WrapMousePosEx(axises_mask, ImRect(monitor->MainPos, monitor->MainPos + monitor->MainSize));
+      WrapMousePosEx(axises_mask, ImRect(monitor->MainPos, monitor->MainPos + monitor->MainSize - ImVec2(1.0f, 1.0f)));
     }
     else
 #endif
     {
       ImGuiViewport* viewport = ImGui::GetMainViewport();
-      WrapMousePosEx(axises_mask, ImRect(viewport->Pos, viewport->Pos + viewport->Size));
+      WrapMousePosEx(axises_mask, ImRect(viewport->Pos, viewport->Pos + viewport->Size - ImVec2(1.0f, 1.0f)));
     }
   }
 
@@ -475,15 +475,18 @@ namespace ImGuiHelpers
         continue;
       }
       float size = wrap_rect.Max[axis] - wrap_rect.Min[axis];
-      if (p_mouse[axis] >= wrap_rect.Max[axis] - 1.f) {
+      if (p_mouse[axis] >= wrap_rect.Max[axis]) {
         p_mouse[axis] = wrap_rect.Min[axis] + 1.0f;
       }
-      else if (p_mouse[axis] <= wrap_rect.Min[axis] + 1.f) {
+      else if (p_mouse[axis] <= wrap_rect.Min[axis]) {
         p_mouse[axis] = wrap_rect.Max[axis] - 1.0f;
       }
     }
     if (p_mouse.x != g.IO.MousePos.x || p_mouse.y != g.IO.MousePos.y) {
       ImGui::TeleportMousePos(p_mouse);
+      /*ImGui::ResetMouseDragDelta();
+      g.IO.MouseDragMaxDistanceAbs[0] = g.IO.MouseDragMaxDistanceAbs[1] = { 0.f, 0.f };
+      g.IO.MouseDragMaxDistanceSqr[0] = g.IO.MouseDragMaxDistanceSqr[1] = 0.f;*/
     }
   }
 

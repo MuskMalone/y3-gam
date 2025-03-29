@@ -15,7 +15,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -24.799999237060548,
+                            "y": -24.799999237060547,
                             "z": 0.0
                         },
                         "scale": {
@@ -36,7 +36,7 @@
                         },
                         "worldPos": {
                             "x": 0.0,
-                            "y": -24.799999237060548,
+                            "y": -24.799999237060547,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -72,7 +72,7 @@
                         },
                         "fontFamilyName": "PressStart2P-Regular",
                         "alignment": 2,
-                        "multiLineSpacingOffset": 0.47999998927116396,
+                        "multiLineSpacingOffset": 0.47999998927116394,
                         "textBoxEnabledFlag": false,
                         "textBoxDimensions": {
                             "x": 5.0,
@@ -155,7 +155,7 @@
                         },
                         "fontFamilyName": "PressStart2P-Regular",
                         "alignment": 2,
-                        "multiLineSpacingOffset": 0.47999998927116396,
+                        "multiLineSpacingOffset": 0.47999998927116394,
                         "textBoxEnabledFlag": false,
                         "textBoxDimensions": {
                             "x": 5.0,
@@ -181,7 +181,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -9.899999618530274,
+                            "y": -9.899999618530273,
                             "z": 0.0
                         },
                         "scale": {
@@ -202,7 +202,7 @@
                         },
                         "worldPos": {
                             "x": 0.0,
-                            "y": -9.899999618530274,
+                            "y": -9.899999618530273,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -238,7 +238,7 @@
                         },
                         "fontFamilyName": "PressStart2P-Regular",
                         "alignment": 2,
-                        "multiLineSpacingOffset": 0.47999998927116396,
+                        "multiLineSpacingOffset": 0.47999998927116394,
                         "textBoxEnabledFlag": false,
                         "textBoxDimensions": {
                             "x": 5.0,
@@ -264,7 +264,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -19.799999237060548,
+                            "y": -19.799999237060547,
                             "z": 0.0
                         },
                         "scale": {
@@ -285,7 +285,7 @@
                         },
                         "worldPos": {
                             "x": 0.0,
-                            "y": -19.799999237060548,
+                            "y": -19.799999237060547,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -321,7 +321,7 @@
                         },
                         "fontFamilyName": "PressStart2P-Regular",
                         "alignment": 2,
-                        "multiLineSpacingOffset": 0.47999998927116396,
+                        "multiLineSpacingOffset": 0.47999998927116394,
                         "textBoxEnabledFlag": false,
                         "textBoxDimensions": {
                             "x": 5.0,
@@ -347,7 +347,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -17.200000762939454,
+                            "y": -17.200000762939453,
                             "z": 0.0
                         },
                         "scale": {
@@ -368,7 +368,7 @@
                         },
                         "worldPos": {
                             "x": 0.0,
-                            "y": -17.200000762939454,
+                            "y": -17.200000762939453,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -404,7 +404,7 @@
                         },
                         "fontFamilyName": "PressStart2P-Regular",
                         "alignment": 2,
-                        "multiLineSpacingOffset": 0.47999998927116396,
+                        "multiLineSpacingOffset": 0.47999998927116394,
                         "textBoxEnabledFlag": false,
                         "textBoxDimensions": {
                             "x": 5.0,
@@ -430,7 +430,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -25.200000762939454,
+                            "y": -25.200000762939453,
                             "z": 0.0
                         },
                         "scale": {
@@ -451,7 +451,7 @@
                         },
                         "worldPos": {
                             "x": 0.0,
-                            "y": -25.200000762939454,
+                            "y": -25.200000762939453,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -487,7 +487,90 @@
                         },
                         "fontFamilyName": "PressStart2P-Regular",
                         "alignment": 2,
-                        "multiLineSpacingOffset": 0.47999998927116396,
+                        "multiLineSpacingOffset": 0.47999998927116394,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 11,
+            "Parent": 1048578,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Sepcial Thanks",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -28.100000381469727,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -28.100000381469727,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "Special thanks",
+                        "color": {
+                            "x": 0.557052493095398,
+                            "y": 0.9832776188850403,
+                            "z": 0.5130143761634827,
+                            "w": 1.0
+                        },
+                        "scale": 0.00800000037997961,
+                        "textAssetGUID": {
+                            "ID": 10355075193979688064
+                        },
+                        "fontFamilyName": "PressStart2P-Regular",
+                        "alignment": 2,
+                        "multiLineSpacingOffset": 0.47999998927116394,
                         "textBoxEnabledFlag": false,
                         "textBoxDimensions": {
                             "x": 5.0,
@@ -655,7 +738,7 @@
                         "yaw": 0.0,
                         "pitch": 0.0,
                         "fov": 60.0,
-                        "aspectRatio": 1.7777777910232545,
+                        "aspectRatio": 1.7777777910232544,
                         "nearClip": 0.10000000149011612,
                         "farClip": 100.0
                     }
@@ -672,8 +755,10 @@
                 7,
                 9,
                 10,
+                11,
                 1048582,
-                1048584
+                1048584,
+                1048588
             ],
             "Components": [
                 {
@@ -806,7 +891,27 @@
                                         }
                                     },
                                     {
-                                        "data": 7.0,
+                                        "data": {
+                                            "entityID": 11,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "SpecialThanks"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048588,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "SpecialThanksName"
+                                        }
+                                    },
+                                    {
+                                        "data": 8.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "creditTime"
@@ -1045,6 +1150,89 @@
                         },
                         "textureAssetGUID": {
                             "ID": 14344846759704546565
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048588,
+            "Parent": 1048578,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SpecialThanksName ",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -29.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -29.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "Jace Lim",
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "scale": 0.004999999888241291,
+                        "textAssetGUID": {
+                            "ID": 10355075193979688064
+                        },
+                        "fontFamilyName": "PressStart2P-Regular",
+                        "alignment": 2,
+                        "multiLineSpacingOffset": 0.47999998927116394,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
                         }
                     }
                 }
@@ -1385,6 +1573,6 @@
             "y": 1.0,
             "z": 1.0
         },
-        "ambIntensity": 0.014999999664723874
+        "ambIntensity": 0.014999999664723873
     }
 }

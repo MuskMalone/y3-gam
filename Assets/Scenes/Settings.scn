@@ -1,0 +1,1282 @@
+{
+    "Scene": [
+        {
+            "ID": 0,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Directional Light",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Light": {
+                        "lightType": "DIRECTIONAL",
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "intensity": 1.0,
+                        "innerAngle": 5.0,
+                        "outerAngle": 12.5,
+                        "range": 10.0,
+                        "castShadows": false,
+                        "shadowConfig": {
+                            "centerPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "softness": 1,
+                            "bias": 0.004999999888241291,
+                            "nearPlane": -100.0,
+                            "farPlane": 200.0,
+                            "scenesBounds": 1.0,
+                            "isStatic": true,
+                            "shadowModified": true,
+                            "customCenter": false
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "MainCamera",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Camera": {
+                        "projType": "PERSP",
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "yaw": 0.0,
+                        "pitch": 0.0,
+                        "fov": 60.0,
+                        "aspectRatio": 1.7777777910232544,
+                        "nearClip": 0.10000000149011612,
+                        "farClip": 100.0
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Parent": null,
+            "Child Entities": [
+                6,
+                7
+            ],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "..\\Assets\\Audio\\BGM_MainMenuLoop.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2322684557627490496
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": true,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "Canvas",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 2,
+                                "scriptName": "Transition",
+                                "scriptFieldInstList": []
+                            },
+                            {
+                                "entityID": 2,
+                                "scriptName": "LevelStartFade",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "fadeDuration"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Canvas": {
+                        "isVisible": true,
+                        "hasTransition": true,
+                        "transitionProgress": 0.0,
+                        "transitionSpeed": 1.0,
+                        "fadeColor": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "fadingOut": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 6,
+            "Parent": 2,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "GameImg",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.019999999552965164
+                        },
+                        "scale": {
+                            "x": 36.619998931884766,
+                            "y": 20.059999465942383,
+                            "z": 20.059999465942383
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": -0.019999999552965164
+                        },
+                        "worldScale": {
+                            "x": 36.619998931884766,
+                            "y": 20.059999465942383,
+                            "z": 20.059999465942383
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 9375776238859830221
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 7,
+            "Parent": 2,
+            "Child Entities": [
+                8,
+                9,
+                10,
+                12,
+                14,
+                15,
+                16,
+                18
+            ],
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 2.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 7,
+                                    "scriptName": "SettingsScene",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 12,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BGMBorder"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 13,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BGMText"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 15,
+                                                "scriptName": "PauseMenuButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BackButton"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 9,
+                                                "scriptName": "SettingsButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "BrightnessSlider"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "CanvasmaxX"
+                                            }
+                                        },
+                                        {
+                                            "data": -0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "CanvasminX"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 10,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "GammaBorder"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 11,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "GammaText"
+                                            }
+                                        },
+                                        {
+                                            "data": -2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "OriginalTargetZButton"
+                                            }
+                                        },
+                                        {
+                                            "data": -2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "OriginalTargetZMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 16,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "SFXBorder"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 18,
+                                                "scriptName": "SettingsButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "SFXSlider"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 17,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "SFXText"
+                                            }
+                                        },
+                                        {
+                                            "data": 3.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "TargetZButton"
+                                            }
+                                        },
+                                        {
+                                            "data": 2.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "TargetZMenu"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 8,
+                                                "scriptName": "SettingsButtons"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "VolumeSlider"
+                                            }
+                                        },
+                                        {
+                                            "data": -0.1850000023841858,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxX"
+                                            }
+                                        },
+                                        {
+                                            "data": -0.33000001311302185,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minX"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 2,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "transitionDuration"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Settings",
+                            "isActive": true
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 8,
+            "Parent": 7,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 8,
+                                    "scriptName": "SettingsButtons",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 12,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Border"
+                                            }
+                                        },
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "IsClicked"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 13,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Text"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 9,
+            "Parent": 7,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 2,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 9,
+                                    "scriptName": "SettingsButtons",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 10,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Border"
+                                            }
+                                        },
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "IsClicked"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 11,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Text"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 10,
+            "Parent": 7,
+            "Child Entities": [
+                11
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "GammaBorder",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 11,
+            "Parent": 10,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 4,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "GammaText",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 12,
+            "Parent": 7,
+            "Child Entities": [
+                13
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 5,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "BGMBorder",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 13,
+            "Parent": 12,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 6,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 14,
+            "Parent": 7,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -0.04100000113248825,
+                                "y": 0.0,
+                                "z": -0.009999999776482582
+                            },
+                            "scale": {
+                                "x": 0.9900000095367432,
+                                "y": 1.0072726011276245,
+                                "z": 1.0091559886932373
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -1.461240291595459,
+                                "y": 0.0,
+                                "z": 1.7882000207901
+                            },
+                            "worldScale": {
+                                "x": 35.283607482910156,
+                                "y": 22.22043228149414,
+                                "z": 21.373924255371094
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 15,
+            "Parent": 7,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 8,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 16,
+            "Parent": 7,
+            "Child Entities": [
+                17
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 9,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 17,
+            "Parent": 16,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 10,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 18,
+            "Parent": 7,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 11,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 18,
+                                    "scriptName": "SettingsButtons",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 16,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Border"
+                                            }
+                                        },
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "IsClicked"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 17,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Text"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        }
+    ],
+    "Layers": {
+        "layerNames": [
+            "Default",
+            "Player",
+            "UI",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "layerVisibility": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "collisionMatrix": [
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ]
+    },
+    "Global Properties": {
+        "ambColor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "ambIntensity": 0.0
+    }
+}

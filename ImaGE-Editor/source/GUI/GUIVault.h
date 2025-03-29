@@ -19,6 +19,7 @@ namespace GUI {
       The currently selected entity
     ************************************************************************/
     static inline ECS::Entity GetSelectedEntity() noexcept { return sSelectedEntity; }
+    static inline ECS::Entity GetPrevSelectedEntity() noexcept { return sPreviousEntity; }
 
     /*!*********************************************************************
     \brief
@@ -42,7 +43,7 @@ namespace GUI {
     \param file
       The path of the file to set
     ************************************************************************/
-    static inline void SetSelectedFile(std::filesystem::path const& file) { mSelectedFile = file; sSelectedEntity = {}; }
+    static void SetSelectedFile(std::filesystem::path const& file);
     static inline std::filesystem::path const& GetSelectedFile() noexcept { return mSelectedFile; }
 
     static inline bool IsSceneModified() noexcept { return sSceneModified; }
@@ -66,7 +67,7 @@ namespace GUI {
 
     inline static std::unordered_set<ECS::Entity::EntityID> sSelectedEntities;
     inline static std::filesystem::path mSelectedFile;  // @TODO: should change to GUID in future
-    inline static ECS::Entity sSelectedEntity; // currently selected entity
+    inline static ECS::Entity sSelectedEntity, sPreviousEntity; // currently selected entity
     inline static bool sSceneModified = false;
 
     static EVENT_CALLBACK_DECL(OnSceneModified);

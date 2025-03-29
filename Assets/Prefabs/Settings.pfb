@@ -3,7 +3,7 @@
     "SubData": [
         {
             "ID": 0,
-            "Parent": null,
+            "Parent": 0,
             "Components": [
                 {
                     "Tag": {
@@ -20,7 +20,7 @@
                         },
                         "scale": {
                             "x": 35.64000701904297,
-                            "y": 22.059999465942384,
+                            "y": 22.059999465942383,
                             "z": 21.18000030517578
                         },
                         "rotation": {
@@ -41,7 +41,7 @@
                         },
                         "worldScale": {
                             "x": 35.64000701904297,
-                            "y": 22.059999465942384,
+                            "y": 22.059999465942383,
                             "z": 21.18000030517578
                         },
                         "worldRot": {
@@ -61,12 +61,32 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 665,
+                                "entityID": 1048579,
                                 "scriptName": "SettingsPage",
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
-                                            "entityID": 666,
+                                            "entityID": 424,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "BGMBorder"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 286,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "BGMText"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 492,
                                             "scriptName": "PauseMenuButtons"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -76,7 +96,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 414,
+                                            "entityID": 288,
                                             "scriptName": "SettingsButtons"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -99,6 +119,26 @@
                                         }
                                     },
                                     {
+                                        "data": {
+                                            "entityID": 377,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "GammaBorder"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 287,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "GammaText"
+                                        }
+                                    },
+                                    {
                                         "data": -2.0,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -110,6 +150,36 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "OriginalTargetZMenu"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 526,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "SFXBorder"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 571,
+                                            "scriptName": "SettingsButtons"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "SFXSlider"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 577,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "SFXText"
                                         }
                                     },
                                     {
@@ -128,7 +198,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 667,
+                                            "entityID": 260,
                                             "scriptName": "SettingsButtons"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -137,14 +207,14 @@
                                         }
                                     },
                                     {
-                                        "data": 0.20999999344348908,
+                                        "data": -0.1850000023841858,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "maxX"
                                         }
                                     },
                                     {
-                                        "data": -0.03700000047683716,
+                                        "data": -0.33000001311302185,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "minX"
@@ -181,19 +251,6 @@
                             }
                         ]
                     }
-                },
-                {
-                    "Image": {
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
-                        },
-                        "textureAssetGUID": {
-                            "ID": 2526722337056533777
-                        }
-                    }
                 }
             ]
         },
@@ -202,22 +259,57 @@
             "Parent": 0,
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PickUpObjects_SFX",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7072180673722841169
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -11.761202812194824,
+                                            "y": 5.757659912109375,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
-                        "tag": "BrightnessSlider",
-                        "isActive": false
+                        "tag": "VolumeSlider",
+                        "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": -0.04800000041723251,
+                            "x": -0.33000001311302185,
+                            "y": 0.26100000739097595,
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 0.05999999865889549,
-                            "y": 0.07727255672216416,
-                            "z": 0.07915599644184113
+                            "x": 0.03500000014901161,
+                            "y": 0.05227257311344147,
+                            "z": 0.05415599048137665
                         },
                         "rotation": {
                             "x": 0.0,
@@ -231,14 +323,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
-                            "y": -1.0588799715042115,
+                            "x": -11.761202812194824,
+                            "y": 5.757659912109375,
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 2.1384003162384035,
-                            "y": 1.7046325206756592,
-                            "z": 1.676524043083191
+                            "x": 1.2474002838134766,
+                            "y": 1.1531329154968262,
+                            "z": 1.1470239162445068
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -257,14 +349,34 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 414,
+                                "entityID": 1048590,
                                 "scriptName": "SettingsButtons",
                                 "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Border"
+                                        }
+                                    },
                                     {
                                         "data": false,
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Text"
                                         }
                                     }
                                 ]
@@ -292,22 +404,57 @@
             "Parent": 0,
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PickUpObjects_SFX",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7072180673722841169
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -11.761202812194824,
+                                            "y": 3.000159978866577,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
-                        "tag": "BackButton",
-                        "isActive": false
+                        "tag": "BrightnessSlider",
+                        "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": -0.23100000619888307,
+                            "x": -0.33000001311302185,
+                            "y": 0.13600000739097595,
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 0.20999999344348908,
-                            "y": 0.08999999612569809,
-                            "z": 0.13621437549591065
+                            "x": 0.03500000014901161,
+                            "y": 0.05227255821228027,
+                            "z": 0.054155997931957245
                         },
                         "rotation": {
                             "x": 0.0,
@@ -321,14 +468,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.0,
-                            "y": -5.095860004425049,
+                            "x": -11.761202812194824,
+                            "y": 3.000159978866577,
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 7.484401226043701,
-                            "y": 1.985399842262268,
-                            "z": 2.8850204944610597
+                            "x": 1.2474002838134766,
+                            "y": 1.1531325578689575,
+                            "z": 1.1470240354537964
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -347,7 +494,494 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 666,
+                                "entityID": 1048596,
+                                "scriptName": "SettingsButtons",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Border"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Text"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6689603120792449434
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "GammaBorder",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.3499999940395355,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.30000001192092896,
+                            "y": 0.04600000008940697,
+                            "z": 0.04915599524974823
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -7.720999717712402,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 10.692002296447754,
+                            "y": 1.0147600173950195,
+                            "z": 1.0411239862442017
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 0.6078431606292725
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11587003713487795447
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "Parent": 3,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "GammaText",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -8.100000381469727,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.08016673475503922,
+                            "y": 0.9066182971000671,
+                            "z": 0.9605004191398621
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -15.940556526184082,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.8571429252624512,
+                            "y": 0.9200000166893005,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "Adjust the game's display brightness.",
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "scale": 0.004999999888241291,
+                        "textAssetGUID": {
+                            "ID": 11715672305158928427
+                        },
+                        "fontFamilyName": "Sniglet-Regular",
+                        "alignment": 2,
+                        "multiLineSpacingOffset": 0.0,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BGMBorder",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.3499999940395355,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.3400000035762787,
+                            "y": 0.04600000008940697,
+                            "z": 0.04915599524974823
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -7.720999717712402,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 12.117602348327637,
+                            "y": 1.0147600173950195,
+                            "z": 1.0411239862442017
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 0.6078431606292725
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11587003713487795447
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 6,
+            "Parent": 5,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BGMText",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -8.100000381469727,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.08016673475503922,
+                            "y": 0.9066182971000671,
+                            "z": 0.9605004191398621
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -15.940556526184082,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.971428632736206,
+                            "y": 0.9200000166893005,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "Adjust the volume of the background music.",
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "scale": 0.004999999888241291,
+                        "textAssetGUID": {
+                            "ID": 11715672305158928427
+                        },
+                        "fontFamilyName": "Sniglet-Regular",
+                        "alignment": 2,
+                        "multiLineSpacingOffset": 0.0,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 7,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SettingsImage",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.04100000113248825,
+                            "y": 0.0,
+                            "z": -0.10000000149011612
+                        },
+                        "scale": {
+                            "x": 0.9900000095367432,
+                            "y": 1.0072726011276245,
+                            "z": 1.0091559886932373
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -1.461240291595459,
+                            "y": 0.0,
+                            "z": -2.118000030517578
+                        },
+                        "worldScale": {
+                            "x": 35.283607482910156,
+                            "y": 22.22043228149414,
+                            "z": 21.373924255371094
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 2510675263599276987
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 8,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BackButton",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.2879999876022339,
+                            "y": 0.06700000166893005,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.10599999874830246,
+                            "y": 0.04500000178813934,
+                            "z": 0.02621438354253769
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -10.264321327209473,
+                            "y": 1.4780199527740479,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 3.7778406143188477,
+                            "y": 0.9927000403404236,
+                            "z": 0.5552206635475159
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048605,
                                 "scriptName": "PauseMenuButtons",
                                 "scriptFieldInstList": [
                                     {
@@ -392,12 +1026,12 @@
             ]
         },
         {
-            "ID": 3,
+            "ID": 9,
             "Parent": 0,
             "Components": [
                 {
                     "Tag": {
-                        "tag": "VolumeSlider",
+                        "tag": "SfxBorder",
                         "isActive": false
                     }
                 },
@@ -405,13 +1039,13 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 0.08049999922513962,
+                            "y": -0.3499999940395355,
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 0.05999999865889549,
-                            "y": 0.07727257162332535,
-                            "z": 0.07915598899126053
+                            "x": 0.30000001192092896,
+                            "y": 0.04600000008940697,
+                            "z": 0.04915599524974823
                         },
                         "rotation": {
                             "x": 0.0,
@@ -426,13 +1060,201 @@
                         },
                         "worldPos": {
                             "x": 0.0,
-                            "y": 1.7758299112319947,
+                            "y": -7.720999717712402,
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 2.1384003162384035,
-                            "y": 1.7046328783035279,
-                            "z": 1.6765239238739014
+                            "x": 10.692002296447754,
+                            "y": 1.0147600173950195,
+                            "z": 1.0411239862442017
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 0.6078431606292725
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11587003713487795447
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 10,
+            "Parent": 9,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SFXText",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -8.100000381469727,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.08016673475503922,
+                            "y": 0.9066182971000671,
+                            "z": 0.9605004191398621
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -15.940556526184082,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.8571429252624512,
+                            "y": 0.9200000166893005,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "Adjust the volume of the sound effects.",
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "scale": 0.004999999888241291,
+                        "textAssetGUID": {
+                            "ID": 11715672305158928427
+                        },
+                        "fontFamilyName": "Sniglet-Regular",
+                        "alignment": 2,
+                        "multiLineSpacingOffset": 0.0,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 11,
+            "Parent": 0,
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PickUpObjects_SFX",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7072180673722841169
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -6.5934014320373535,
+                                            "y": 4.4120001792907715,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "SfxSlider",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.1850000023841858,
+                            "y": 0.20000000298023224,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.03500000014901161,
+                            "y": 0.05227255821228027,
+                            "z": 0.054155997931957245
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -6.5934014320373535,
+                            "y": 4.4120001792907715,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.2474002838134766,
+                            "y": 1.1531325578689575,
+                            "z": 1.1470240354537964
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -451,14 +1273,34 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 667,
+                                "entityID": 2097160,
                                 "scriptName": "SettingsButtons",
                                 "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Border"
+                                        }
+                                    },
                                     {
                                         "data": false,
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "IsClicked"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Text"
                                         }
                                     }
                                 ]

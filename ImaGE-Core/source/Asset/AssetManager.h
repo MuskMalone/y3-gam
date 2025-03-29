@@ -166,7 +166,7 @@ namespace IGE {
           }
           template <typename T>
           void DeleteAsset(GUID const& guid) {
-              auto type{ GetTypeName<T>() };
+              std::string const type{ GetTypeName<T>() };
               TypeGUID typeguid{ type };
               TypeAssetKey key{ typeguid ^ guid };
               //removes the file from all maps
@@ -191,8 +191,21 @@ namespace IGE {
                   mGUID2PathRegistry.erase(guid);
               }
 
-              auto metaToRemove{ cAssetProjectSettingsPath + GetTypeName<T>() + "\\" + GetFileName(path) + "." + std::to_string(static_cast<uint64_t>(guid)) + cAssetMetadataFileExtension };
-              std::remove(metaToRemove.c_str());
+              std::string const fileName{ GetFileName(path) };
+              auto metaToRemove{ cAssetProjectSettingsPath + type + "\\" + fileName + "." + std::to_string(static_cast<uint64_t>(guid)) + cAssetMetadataFileExtension };
+              std::filesystem::remove(metaToRemove);
+
+              // remove compiled version
+              std::string const compiledPath{ gAssetsDirectory + type + "\\" + "Compiled\\" };
+              if (std::filesystem::exists(compiledPath)) {
+                // not sure if there's a btr way then iterating through the whole directory
+                for (auto const& file : std::filesystem::directory_iterator(std::filesystem::directory_iterator(compiledPath))) {
+                  if (file.path().stem() == fileName) {
+                    std::filesystem::remove(file);
+                    break;
+                  }
+                }
+              }
           }
 
           //-------------------------------------------------------------------------
@@ -358,33 +371,24 @@ namespace IGE {
 
               return (mAssetRefs.find(key) != mAssetRefs.end());
           }
+
           template <typename T>
           AssetMetadata::AssetProps& GetMetadata(GUID const& guid) {
-              std::lock_guard<std::mutex> lock(mAssetsMutex);
-
-              auto category{ GetTypeName<T>() };
-              auto& props{ mMetadata.mAssetProperties };
-              if (props.find(category) != props.end()) {
-                  auto& cat{ props.at(category) };
-                  if (cat.find(guid) != cat.end()) {
-                      return cat.at(guid);
-                  }
-                  else throw Debug::Exception<AssetManager>(Debug::LVL_ERROR, Msg("asset category has no such guid: " + std::to_string(guid)));
-              }
-              else throw Debug::Exception<AssetManager>(Debug::LVL_ERROR, Msg("asset metadatas have no such category: " + category));
+            std::lock_guard<std::mutex> lock(mAssetsMutex);
+            GetMetadataInternal<T>(guid);
           }
           template <typename T>
           AssetMetadata::AssetProps const& GetCMetadata(GUID const& guid) const {
-              std::lock_guard<std::mutex> lock(mAssetsMutex);
               return GetMetadata<T>(guid);
           }
+
           template <typename T>
           void ChangeAssetPath(GUID const& guid, std::string newPath) {
               try {
                   std::lock_guard<std::mutex> lock(mAssetsMutex);
 
                   //update the metadata stuff
-                  auto& metadata{ GetMetadata<T>(guid) };
+                  auto& metadata{ GetMetadataInternal<T>(guid) };
                   metadata.modified = true;
                   auto const& oldPath{ metadata.metadata.at("path") };
                   //since guid is already in the metadata, safe to assume that it will be in the registries as well
@@ -409,6 +413,21 @@ namespace IGE {
           }
 
         private:
+          // used internally by asset manager (no lock_guard to prevent deadlocks)
+          template <typename T>
+          AssetMetadata::AssetProps& GetMetadataInternal(GUID const& guid) {
+            auto category{ GetTypeName<T>() };
+            auto& props{ mMetadata.mAssetProperties };
+            if (props.find(category) != props.end()) {
+              auto& cat{ props.at(category) };
+              if (cat.find(guid) != cat.end()) {
+                return cat.at(guid);
+              }
+              else throw Debug::Exception<AssetManager>(Debug::LVL_ERROR, Msg("asset category has no such guid: " + std::to_string(guid)));
+            }
+            else throw Debug::Exception<AssetManager>(Debug::LVL_ERROR, Msg("asset metadatas have no such category: " + category));
+          }
+
           AssetMetadata mMetadata;
           std::unordered_map<std::string, GUID> mPath2GUIDRegistry;
           std::unordered_map<GUID, std::string> mGUID2PathRegistry;

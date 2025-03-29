@@ -31,14 +31,15 @@ namespace GUI {
     // @TODO: Work for other files in future
     if (selectedFile.empty() || selectedFile.extension() != gMaterialFileExt) { return; }
 
+    HandleDragInputWrapping();
 
     MaterialInspector(selectedFile);
-
-    ImGui::PopFont();
   }
 
+  // macro magic - did u know u can concat strings with ##
   #define TextureMapField(Title, MapType) {NextRowTable(Title);\
-            if (selectedMaterial->IsDefault##MapType##Map()) {\
+            bool const isDefault{ selectedMaterial->IsDefault##MapType##Map() };\
+            if (isDefault) {\
               name = "Drag Texture Here##" Title;\
             } else {\
                IGE::Assets::GUID guid{ selectedMaterial->Get##MapType##Map() };\
@@ -46,7 +47,7 @@ namespace GUI {
                 name = am.GUIDToPath(guid).c_str();\
             }\
             if (ImGui::Button(name.c_str(), ImVec2(inputWidth, 30.f))) { selectedMaterial->Set##MapType##Map({}); }\
-            if (ImGui::IsItemHovered()) { ImGui::SetTooltip("Remove Texture"); }\
+            if (ImGui::IsItemHovered() && !isDefault) { ImGui::BeginTooltip(); ImGui::Text(name.c_str()); ImGui::Text("Click to Remove"); ImGui::EndTooltip(); }\
             std::string const path{ DragDropComponent(AssetPayload::SPRITE) };\
             if (!path.empty()) { try {\
               selectedMaterial->Set##MapType##Map(am.LoadRef<IGE::Assets::TextureAsset>(path));\
@@ -78,6 +79,24 @@ namespace GUI {
         selectedMaterial->SetName(name);
       }
     }*/
+    {
+      ECS::Entity const prevEntity{ GUIVault::GetPrevSelectedEntity() };
+      if (prevEntity) {
+        if (ImGui::Button(ICON_FA_ARROW_LEFT)) {
+          GUIVault::SetSelectedFile({});
+          GUIVault::SetSelectedEntity(prevEntity);
+          return;
+        }
+        if (ImGui::IsItemHovered()) {
+          ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_LIGHT));
+          ImGui::SetTooltip(("Return to " + prevEntity.GetTag()).c_str());
+          ImGui::PopFont();
+        }
+        ImGui::SameLine();
+        ImGui::Dummy({ 10.f, 0.f });
+        ImGui::SameLine();
+      }
+    }
     ImGui::Text(selectedMaterial->GetName().c_str());
     ImGui::PushFont(mStyler.GetCustomFont(GUI::MONTSERRAT_LIGHT));
 
@@ -115,6 +134,7 @@ namespace GUI {
       {
         glm::vec4 emission{ selectedMaterial->GetEmission() };
         if (ImGui::ColorEdit4("##Emission", &emission[0], ImGuiColorEditFlags_NoAlpha)) {
+          DragInputUsed();
           selectedMaterial->SetEmission(emission);
         }
         if (ImGui::SliderFloat("##EmissionBrightness", &emission[3], 0.f, 1.f, "%.3f", ImGuiSliderFlags_AlwaysClamp)) {
@@ -152,6 +172,7 @@ namespace GUI {
       {
         glm::vec2 tiling{ selectedMaterial->GetTiling() };
         if (ImGuiHelpers::TableInputFloat2("Tiling", &tiling[0], vec2InputWidth, false, -FLT_MAX, FLT_MAX, -0.03f)) {
+          DragInputUsed();
           selectedMaterial->SetTiling(tiling);
         }
       }
@@ -159,6 +180,7 @@ namespace GUI {
       {
         glm::vec2 offset{ selectedMaterial->GetOffset() };
         if (ImGuiHelpers::TableInputFloat2("Offset", &offset[0], vec2InputWidth, false, -FLT_MAX, FLT_MAX, -0.03f)) {
+          DragInputUsed();
           selectedMaterial->SetOffset(offset);
         }
       }
@@ -194,6 +216,8 @@ namespace GUI {
 
       ImGui::EndTable();
     }
+
+    ImGui::PopFont();
   }
 
   void Inspector::SaveLastEditedFile() const {

@@ -101,7 +101,11 @@ public class  PlayerMove : Entity
     if (Input.GetKeyTriggered(KeyCode.GRAVE_ACCENT))
     {
       noClip = !noClip;
-      if (!noClip)
+      if (noClip)
+      {
+        InternalCalls.SetGravityFactor(mEntityID, 0f);
+      }
+      else
       {
         InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
       }
@@ -139,7 +143,6 @@ public class  PlayerMove : Entity
       {
         movementVector.Y -= 1f;
       }
-      InternalCalls.SetGravityFactor(mEntityID, 0f);
       GetComponent<Transform>().worldPosition += movementVector * (Input.GetKeyDown(KeyCode.Q) ? 5f : 3f);
       InternalCalls.UpdatePhysicsToTransform(mEntityID);
     }

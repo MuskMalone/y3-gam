@@ -98,7 +98,35 @@
                         "linearDamping": 0.9800000190734863,
                         "motionType": "DYNAMIC",
                         "axisLock": 0,
-                        "angularAxisLock": 0
+                        "angularAxisLock": 0,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
@@ -110,7 +138,7 @@
                 {
                     "Bloom": {
                         "threshold": 0.7900000214576721,
-                        "intensity": 1.2000000476837159,
+                        "intensity": 1.2000000476837158,
                         "range": 10.0
                     }
                 },
@@ -325,7 +353,7 @@
                         "scale": {
                             "x": 0.10000000149011612,
                             "y": 0.10000000149011612,
-                            "z": 0.20000000298023225
+                            "z": 0.20000000298023224
                         },
                         "positionOffset": {
                             "x": -0.25,
@@ -338,9 +366,9 @@
                             "z": -23.0
                         },
                         "rotationOffset": {
-                            "x": -0.015642227604985238,
+                            "x": -0.015642227604985237,
                             "y": -0.07688400894403458,
-                            "z": -0.19875334203243257,
+                            "z": -0.19875334203243256,
                             "w": 0.9769038558006287
                         },
                         "sensor": false
@@ -361,11 +389,39 @@
                         "staticFriction": 0.5,
                         "dynamicFriction": 0.5,
                         "restitution": 0.0,
-                        "gravityFactor": 10.0,
+                        "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
                         "motionType": "DYNAMIC",
                         "axisLock": 7,
-                        "angularAxisLock": 7
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
@@ -448,7 +504,7 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 0.30000001192092898,
+                            "x": 0.30000001192092896,
                             "y": 0.05000000074505806,
                             "z": 0.10000000149011612
                         },
@@ -465,8 +521,8 @@
                         "rotationOffset": {
                             "x": -0.9754968881607056,
                             "y": 0.007143499329686165,
-                            "z": 0.17432408034801484,
-                            "w": 0.13403679430484773
+                            "z": 0.17432408034801483,
+                            "w": 0.13403679430484772
                         },
                         "sensor": false
                     }
@@ -486,11 +542,39 @@
                         "staticFriction": 0.5,
                         "dynamicFriction": 0.5,
                         "restitution": 0.0,
-                        "gravityFactor": 10.0,
+                        "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
                         "motionType": "DYNAMIC",
                         "axisLock": 7,
-                        "angularAxisLock": 7
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
@@ -575,11 +659,11 @@
                         "scale": {
                             "x": 0.10000000149011612,
                             "y": 0.10000000149011612,
-                            "z": 0.20000000298023225
+                            "z": 0.20000000298023224
                         },
                         "positionOffset": {
-                            "x": 0.20000000298023225,
-                            "y": 0.15000000596046449,
+                            "x": 0.20000000298023224,
+                            "y": 0.15000000596046448,
                             "z": 0.0
                         },
                         "degreeRotationOffsetEuler": {
@@ -589,7 +673,7 @@
                         },
                         "rotationOffset": {
                             "x": -0.05120934545993805,
-                            "y": -0.13053561747074128,
+                            "y": -0.13053561747074127,
                             "z": -0.4703085422515869,
                             "w": 0.8712909817695618
                         },
@@ -611,11 +695,39 @@
                         "staticFriction": 0.5,
                         "dynamicFriction": 0.5,
                         "restitution": 0.0,
-                        "gravityFactor": 10.0,
+                        "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
                         "motionType": "DYNAMIC",
                         "axisLock": 7,
-                        "angularAxisLock": 7
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
