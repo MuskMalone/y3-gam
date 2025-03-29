@@ -308,6 +308,42 @@ namespace IGE {
             return mData[namehash];
         }
 
+        FMOD::Sound* AudioManager::AddSound(uint32_t namehash, int sampleRate, int channels, FMOD_SOUND_PCMREAD_CALLBACK callback)
+        {
+            //checks if the sound already exist
+            if (mData.find(namehash) != mData.end() && mData[namehash] != nullptr)
+            {
+                return mData[namehash];
+            }
+
+            //remove for 2d audio
+            //FMOD_RESULT result = mSystem->createSound(filepath.c_str(), FMOD_DEFAULT | FMOD_2D, 0, &mData[namehash]); //non-3D sound
+            FMOD_CREATESOUNDEXINFO exinfo = {};
+            exinfo.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
+            exinfo.length = 0x7FFFFFFF;  // Length is -1 for a live stream
+            exinfo.numchannels = channels;  // e.g., stereo audio
+            exinfo.defaultfrequency = sampleRate;
+            exinfo.format = FMOD_SOUND_FORMAT_PCMFLOAT;
+            exinfo.pcmreadcallback = callback; // Our callback
+            // Optionally, set exinfo.pcmsetposcallback if needed
+            FMOD::Sound* temp{  };
+            FMOD_RESULT result = mSystem->createSound(0, FMOD_OPENUSER | FMOD_CREATESTREAM | FMOD_3D, &exinfo, &temp);
+
+            if (result != FMOD_OK)
+            {
+                std::string str(FMOD_ErrorString(result));
+                Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
+            }
+#ifdef AUDIO_VERBOSE
+            else
+            {
+                Debug::DebugLogger::GetInstance().LogInfo("Successfully added sound: " + std::string(filepath), true);
+            }
+#endif
+            mData.emplace(namehash, temp);
+            return mData[namehash];
+        }
+
         void AudioManager::PlaySound(uint32_t sound, SoundInvokeSetting const& settings, FMOD::ChannelGroup* group, std::string const& name)
         {
             if (!settings.dspGroup) {
@@ -333,19 +369,23 @@ namespace IGE {
             FMOD_RESULT result;
 
             // Set the loop count for the sound based on the `loop` setting
-            result = mData[sound]->setMode(settings.loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
-            result = mData[sound]->setLoopCount(settings.loop ? -1 : 0);
-            if (result != FMOD_OK)
-            {
-                std::string str(FMOD_ErrorString(result));
-                Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
-                return;
-            }
+            //if (name != "video") {
+                result = mData[sound]->setMode(settings.loop ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
+                result = mData[sound]->setLoopCount(settings.loop ? -1 : 0);
+                if (result != FMOD_OK)
+                {
+                    std::string str(FMOD_ErrorString(result));
+                    Debug::DebugLogger::GetInstance().LogError("FMOD ERROR! " + str, true);
+                    return;
+                }
+            //}
 
             FMOD::Channel* temp = nullptr;
 
             // Play the sound without grouping it
-            result = mSystem->playSound(mData[sound], (settings.enablePostProcessing) ? settings.dspGroup : group, true, &temp); // Start paused to set initial parameters
+            auto finalGrp{ (settings.enablePostProcessing) ? settings.dspGroup : group };
+            result = mSystem->playSound(mData[sound], finalGrp, true, &temp); // Start paused to set initial parameters
+            
             if (result != FMOD_OK)
             {
                 std::string str(FMOD_ErrorString(result));
@@ -499,6 +539,26 @@ namespace IGE {
             settings.paused = false;
         }
 
+        void AudioManager::PlaySound(Sound & sound, SoundInvokeSetting const& settings, uint64_t group, std::string const& name)
+        {
+            if (settings.paused) {
+                for (auto& channel : settings.channels) {
+                    channel->setPaused(false);
+                }
+                settings.paused = false;
+                return; // dont run rest of function
+            }
+            sound.PlaySound(settings, mGroup.at(group), name);
+        }
+
+        FMOD::Sound* AudioManager::GetSound(uint32_t keyhash)
+        {
+            if (mData.find(keyhash) != mData.end()) {
+                return mData.at(keyhash);
+            }
+            return nullptr;
+        }
+
         void AudioManager::PauseSound(IGE::Assets::GUID const& guid, SoundInvokeSetting const& setting)
         {
             //gets the SoundAsset ref
@@ -604,37 +664,97 @@ namespace IGE {
                     mSceneStarted = true;
                 }
                 mSceneStopped = true;
-                //auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource>() };
-                //for (auto entity : rbsystem) {
-                //    auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
-                //    auto grpiter{ mGroup.find(audiosource.channelGroup) };
-                //    if (grpiter != mGroup.end()) {
-                //        grpiter->second->stop();
-                //    }
-                //}
-                FMOD::ChannelGroup* mastergrp{ };
-                mSystem->getMasterChannelGroup(&mastergrp);
-                mastergrp->stop();
+                auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource>() };
+                for (auto entity : rbsystem) {
+                    auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
+                    auto grpiter{ mGroup.find(audiosource.channelGroup) };
+                    if (grpiter != mGroup.end()) {
+                        grpiter->second->stop();
+                    }
+                }
+                if (state == Events::SceneStateChange::NewSceneState::STOPPED) {
+                    //FMOD::ChannelGroup* mastergrp{ };
+                    //mSystem->getMasterChannelGroup(&mastergrp);
+                    //mastergrp->stop();
+                }
+
             }
             if (state == Events::SceneStateChange::NewSceneState::PAUSED) {
                 mScenePaused = true;
             }
         }
+        Sound::Sound() : mKey{}, mKeyhash{ 0 }, mPCMBuffer{ nullptr }, mSampleRate{ 0 }, mChannels{ 0 }{
 
+        }
         Sound::Sound(std::string const& fp) : mKey{ fp }, mKeyhash{ IGE::Core::Fnv1a32(fp.c_str(), fp.size()) } {
             AudioManager::GetInstance().AddSound(mKey, mKeyhash);
         }
-        Sound::~Sound()
+        Sound::Sound(int sampleRate, int channels) : mKey{}, mKeyhash{ static_cast<uint32_t>(SoundGUID{ SoundGUID::Seed{}}) }, mPCMBuffer{std::make_shared<ThreadSafeDeque<float>>()}, mSampleRate{sampleRate}, mChannels{channels} {
+                AudioManager::GetInstance().AddSound(mKeyhash, mSampleRate, mChannels, Sound::PCMReadCallback);
+        }
+        Sound::Sound(Sound const& rhs) : mKey{ rhs.mKey }, mKeyhash{ rhs.mKeyhash }, mPCMBuffer { std::make_shared<ThreadSafeDeque<float>>() }, mSampleRate{ rhs.mSampleRate }, mChannels{ rhs.mChannels }
         {
-            try {
-                AudioManager::GetInstance().FreeSound(mKeyhash);
-            }
-            catch (...) {
-              IGE_DBGLOGGER.LogError("[AudioManager] Failed to free sound" + mKey);
+            if (mKeyhash) {
+                mKeyhash = static_cast<uint32_t>(SoundGUID{ SoundGUID::Seed{} });
+                AudioManager::GetInstance().AddSound(mKeyhash, mSampleRate, mChannels, Sound::PCMReadCallback);
             }
         }
+        Sound& Sound::operator=(Sound const& rhs)
+        {
+            if (rhs.mKeyhash) {
+                AudioManager::GetInstance().FreeSound(mKeyhash);
+
+                mKey = rhs.mKey;
+                mKeyhash = static_cast<uint32_t>(SoundGUID{ SoundGUID::Seed{} });
+                mPCMBuffer = std::make_shared<ThreadSafeDeque<float>>();
+                mSampleRate = rhs.mSampleRate;
+                mChannels = rhs.mChannels;
+
+                AudioManager::GetInstance().AddSound(mKeyhash, mSampleRate, mChannels, Sound::PCMReadCallback);
+            }
+            return *this;
+        }
+
+        Sound::~Sound()
+        {
+            AudioManager::GetInstance().FreeSound(mKeyhash);
+        }
+
         void Sound::PlaySound(SoundInvokeSetting const& settings, FMOD::ChannelGroup* group, std::string const& name) {
+            if (mKeyhash == 0) return;
             AudioManager::GetInstance().PlaySound(mKeyhash, settings, group, name);
+        }
+        FMOD::Sound* Sound::GetSoundPtr() {
+            return AudioManager::GetInstance().GetSound(mKeyhash);
+        }
+        FMOD_RESULT F_CALLBACK Sound::PCMReadCallback(FMOD_SOUND* soundC, void* data, unsigned int datalen)
+        {
+            // 'data' is the buffer FMOD wants filled (in bytes)
+            // 'datalen' is the number of bytes to fill
+            float* outBuffer = reinterpret_cast<float*>(data);
+            unsigned int samplesNeeded = datalen / sizeof(float);
+
+            // Read from your circular buffer. Fill with silence if insufficient data.
+            FMOD::Sound* sound{ reinterpret_cast<FMOD::Sound*>(soundC) };
+            void* soundptr{ };
+            sound->getUserData(&soundptr);
+            auto video{ reinterpret_cast<Component::Video*>(soundptr) };
+            if (video) {
+                unsigned int samplesRead = video->sound.mPCMBuffer->read(outBuffer, samplesNeeded);
+
+                if (samplesRead < samplesNeeded)
+                {
+                    // Fill the remainder with silence.
+                    std::fill(outBuffer + samplesRead, outBuffer + samplesNeeded, 0.0f);
+                }
+                //printf("WRITE audio has smth %d %d\n", samplesRead, samplesNeeded);
+            }
+            else {
+                std::fill(outBuffer, outBuffer + samplesNeeded, 0.f);
+                //printf("no audio playingggg\n");
+            
+            }
+            return FMOD_OK;
         }
         FMOD_RESULT SoundInvokeSetting::FMODChannelCallback(
             FMOD_CHANNELCONTROL* chanCtrl, FMOD_CHANNELCONTROL_TYPE type, 

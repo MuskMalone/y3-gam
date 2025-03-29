@@ -3015,6 +3015,218 @@ namespace GUI {
           modified = true;
         }
 
+        NextRowTable("Audio Offset");
+        int audioOffset{ static_cast<int>(video.audioOffset) };
+        if (ImGui::DragInt("##AudioOffset", &audioOffset)) {
+            video.audioOffset = static_cast<unsigned>(audioOffset);
+            modified = true;
+        }
+
+        if (ImGui::TreeNode(("Sound Properties##"))) {
+            //// Table for 3D position
+            if (BeginVec3Table(("PositionTable##" ), 50)) {
+                if (ImGuiHelpers::TableInputFloat3(("Position##" ), &video.audioPlaySettings.position.x, 50, false, -100.f, 100.f, 0.1f)) {
+                    modified = true;
+                }
+                EndVec3Table();
+            }
+
+            // Table for single properties
+            if (ImGui::BeginTable(("SoundPropertyTable##" ), 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit)) {
+                ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+                ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
+
+                NextRowTable("Volume");
+                if (ImGui::DragFloat(("##Volume" ), &video.audioPlaySettings.volume, 0.01f, 0.0f, 1.0f)) {
+                    modified = true;
+                }
+
+                NextRowTable("Pitch");
+                if (ImGui::DragFloat(("##Pitch" ), &video.audioPlaySettings.pitch, 0.01f, 0.1f, 3.0f)) {
+                    modified = true;
+                }
+
+                NextRowTable("Pan");
+                if (ImGui::DragFloat(("##Pan" ), &video.audioPlaySettings.pan, 0.01f, -1.0f, 1.0f)) {
+                    modified = true;
+                }
+
+                NextRowTable("Doppler Level");
+                if (ImGui::DragFloat(("##DopplerLevel" ), &video.audioPlaySettings.dopplerLevel, 0.01f, 0.0f, 5.0f)) {
+                    modified = true;
+                }
+
+                NextRowTable("Min Distance");
+                if (ImGui::DragFloat(("##MinDistance" ), &video.audioPlaySettings.minDistance, 0.1f, 0.0f, 1000.0f)) {
+                    modified = true;
+                }
+
+                NextRowTable("Max Distance");
+                if (ImGui::DragFloat(("##MaxDistance" ), &video.audioPlaySettings.maxDistance, 0.1f, 0.0f, 1000.0f)) {
+                    modified = true;
+                }
+
+                // Checkboxes for Mute, Loop, and Play on Awake
+                NextRowTable("Mute");
+                if (ImGui::Checkbox(("##Mute" ), &video.audioPlaySettings.mute)) {
+                    modified = true;
+                }
+                ImGui::EndTable();
+            }
+
+            // Table for Rolloff Type
+            static const char* rolloffTypes[] = { "Linear", "Logarithmic", "None" };
+            int currentRolloff = static_cast<int>(video.audioPlaySettings.rolloffType);
+
+            ImGui::BeginTable(("RolloffTypeTable##" ), 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit);
+            ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+            ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
+
+            NextRowTable("Rolloff Type");
+            if (ImGui::Combo(("##RolloffType" ), &currentRolloff, rolloffTypes, IM_ARRAYSIZE(rolloffTypes))) {
+                video.audioPlaySettings.rolloffType = static_cast<IGE::Audio::SoundInvokeSetting::RolloffType>(currentRolloff);
+                modified = true;
+            }
+
+            NextRowTable("SFX/BGM");
+            if (ImGui::Checkbox(("##BGM" ), &video.audioPlaySettings.isBGM))
+            {
+                modified = true;
+            }
+            ImGui::EndTable();
+            // Table for Post Processing settings
+            //if (ImGui::BeginTable(("PostProcessingTable##" ), 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingFixedFit))
+            //{
+            //    ImGui::TableSetupColumn("##", ImGuiTableColumnFlags_WidthFixed, FIRST_COLUMN_LENGTH);
+            //    ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed, inputWidth * 3);
+
+            //    NextRowTable("Enable Post Processing");
+            //    if (ImGui::Checkbox(("##EnablePostProcessing" ), &video.audioPlaySettings.enablePostProcessing))
+            //    {
+            //        modified = true;
+            //    }
+
+            //    // Only show additional post-processing controls if enabled
+            //    if (video.audioPlaySettings.enablePostProcessing)
+            //    {
+            //        // ---- Dropdown Button to Add a New Effect ----
+            //        static const char* effectTypes[] = { "Reverb", "Echo", "Distortion", "Chorus" };
+            //        if (ImGui::BeginCombo(("Add Post Processing Effect##" ), "Select Effect"))
+            //        {
+            //            for (int i = 0; i < IM_ARRAYSIZE(effectTypes); ++i)
+            //            {
+            //                std::string selectableLabel = std::string(effectTypes[i]) + "##" ;
+            //                if (ImGui::Selectable(selectableLabel.c_str()))
+            //                {
+            //                    // Call the function to add a new effect.
+            //                    video.audioPlaySettings.AddPostProcessingEffect(static_cast<IGE::Audio::PostProcessingType>(i));
+            //                    modified = true;
+            //                }
+            //            }
+            //            ImGui::EndCombo();
+            //        }
+
+            //        // ---- Iterate over Existing Effects and Show Controls ----
+            //        for (size_t idx = 0; idx < video.audioPlaySettings.postProcessingSettings.size(); ++idx)
+            //        {
+            //            auto& effect = video.audioPlaySettings.postProcessingSettings[idx];
+            //            std::string effectLabel = "Effect " + std::to_string(idx) + ": ";
+            //            switch (effect.type)
+            //            {
+            //            case IGE::Audio::PostProcessingType::REVERB:
+            //            {
+            //                effectLabel += "Reverb";
+            //                if (ImGui::TreeNode((effectLabel + "##" + std::to_string(idx) ).c_str()))
+            //                {
+            //                    if (ImGui::DragFloat(("Decay Time##" + std::to_string(idx) ).c_str(), &effect.reverb_decayTime, 0.1f, 0.0f, 10000.f))
+            //                        modified = true;
+            //                    if (ImGui::DragFloat(("Early Delay##" + std::to_string(idx) ).c_str(), &effect.reverb_earlyDelay, 0.1f, 0.0f, 1000.f))
+            //                        modified = true;
+            //                    if (ImGui::DragFloat(("Late Delay##" + std::to_string(idx) ).c_str(), &effect.reverb_lateDelay, 0.1f, 0.0f, 1000.f))
+            //                        modified = true;
+            //                    if (ImGui::DragFloat(("Diffusion##" + std::to_string(idx) ).c_str(), &effect.reverb_diffusion, 0.1f, 0.0f, 100.f))
+            //                        modified = true;
+            //                    if (ImGui::DragFloat(("Density##" + std::to_string(idx) ).c_str(), &effect.reverb_density, 0.1f, 0.0f, 100.f))
+            //                        modified = true;
+            //                    // Delete button for Reverb effect:
+            //                    if (ImGui::Button(("Delete##" + std::to_string(idx) ).c_str()))
+            //                    {
+            //                        video.audioPlaySettings.RemovePostProcessingEffect(idx);
+            //                        modified = true;
+            //                    }
+            //                    ImGui::TreePop();
+            //                }
+            //                break;
+            //            }
+            //            case IGE::Audio::PostProcessingType::ECHO:
+            //            {
+            //                effectLabel += "Echo";
+            //                if (ImGui::TreeNode((effectLabel + "##" + std::to_string(idx) ).c_str()))
+            //                {
+            //                    if (ImGui::DragFloat(("Delay##" + std::to_string(idx) ).c_str(), &effect.echo_delay, 0.1f, 0.0f, 2000.f))
+            //                        modified = true;
+            //                    if (ImGui::DragFloat(("Feedback##" + std::to_string(idx) ).c_str(), &effect.echo_feedback, 0.1f, 0.0f, 100.f))
+            //                        modified = true;
+            //                    if (ImGui::DragFloat(("WetDryMix##" + std::to_string(idx) ).c_str(), &effect.echo_wetDryMix, 0.1f, 0.0f, 100.f))
+            //                        modified = true;
+            //                    // Delete button for Echo effect:
+            //                    if (ImGui::Button(("Delete##" + std::to_string(idx) ).c_str()))
+            //                    {
+            //                        video.audioPlaySettings.RemovePostProcessingEffect(idx);
+            //                        modified = true;
+            //                    }
+            //                    ImGui::TreePop();
+            //                }
+            //                break;
+            //            }
+            //            case IGE::Audio::PostProcessingType::DISTORTION:
+            //            {
+            //                effectLabel += "Distortion";
+            //                if (ImGui::TreeNode((effectLabel + "##" + std::to_string(idx) ).c_str()))
+            //                {
+            //                    if (ImGui::DragFloat(("Level##" + std::to_string(idx) ).c_str(), &effect.distortion_level, 0.1f, 0.0f, 100.f))
+            //                        modified = true;
+            //                    // Delete button for Distortion effect:
+            //                    if (ImGui::Button(("Delete##" + std::to_string(idx) ).c_str()))
+            //                    {
+            //                        video.audioPlaySettings.RemovePostProcessingEffect(idx);
+            //                        modified = true;
+            //                    }
+            //                    ImGui::TreePop();
+            //                }
+            //                break;
+            //            }
+            //            case IGE::Audio::PostProcessingType::CHORUS:
+            //            {
+            //                effectLabel += "Chorus";
+            //                if (ImGui::TreeNode((effectLabel + "##" + std::to_string(idx) ).c_str()))
+            //                {
+            //                    if (ImGui::DragFloat(("Rate##" + std::to_string(idx) ).c_str(), &effect.chorus_rate, 0.1f, 0.0f, 10.f))
+            //                        modified = true;
+            //                    if (ImGui::DragFloat(("Depth##" + std::to_string(idx) ).c_str(), &effect.chorus_depth, 0.01f, 0.0f, 1.f))
+            //                        modified = true;
+            //                    if (ImGui::DragFloat(("Mix##" + std::to_string(idx) ).c_str(), &effect.chorus_mix, 0.1f, 0.0f, 100.f))
+            //                        modified = true;
+            //                    // Delete button for Chorus effect:
+            //                    if (ImGui::Button(("Delete##" + std::to_string(idx) ).c_str()))
+            //                    {
+            //                        video.audioPlaySettings.RemovePostProcessingEffect(idx);
+            //                        modified = true;
+            //                    }
+            //                    ImGui::TreePop();
+            //                }
+            //                break;
+            //            }
+            //            default:
+            //                break;
+            //            }
+            //        }
+            //    }
+
+            //    ImGui::EndTable();
+            //}
+            ImGui::TreePop();
+        }
 
         ImGui::EndTable();
       }
