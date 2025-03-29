@@ -166,7 +166,7 @@ namespace IGE {
           }
           template <typename T>
           void DeleteAsset(GUID const& guid) {
-              auto type{ GetTypeName<T>() };
+              std::string const type{ GetTypeName<T>() };
               TypeGUID typeguid{ type };
               TypeAssetKey key{ typeguid ^ guid };
               //removes the file from all maps
@@ -191,8 +191,21 @@ namespace IGE {
                   mGUID2PathRegistry.erase(guid);
               }
 
-              auto metaToRemove{ cAssetProjectSettingsPath + GetTypeName<T>() + "\\" + GetFileName(path) + "." + std::to_string(static_cast<uint64_t>(guid)) + cAssetMetadataFileExtension };
-              std::remove(metaToRemove.c_str());
+              std::string const fileName{ GetFileName(path) };
+              auto metaToRemove{ cAssetProjectSettingsPath + type + "\\" + fileName + "." + std::to_string(static_cast<uint64_t>(guid)) + cAssetMetadataFileExtension };
+              std::filesystem::remove(metaToRemove);
+
+              // remove compiled version
+              std::string const compiledPath{ gAssetsDirectory + type + "\\" + "Compiled\\" };
+              if (std::filesystem::exists(compiledPath)) {
+                // not sure if there's a btr way then iterating through the whole directory
+                for (auto const& file : std::filesystem::directory_iterator(std::filesystem::directory_iterator(compiledPath))) {
+                  if (file.path().stem() == fileName) {
+                    std::filesystem::remove(file);
+                    break;
+                  }
+                }
+              }
           }
 
           //-------------------------------------------------------------------------
