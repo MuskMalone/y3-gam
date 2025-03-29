@@ -266,6 +266,29 @@
                                 "entityID": 2,
                                 "scriptName": "Transition",
                                 "scriptFieldInstList": []
+                            },
+                            {
+                                "entityID": 2,
+                                "scriptName": "LevelStartFade",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "fadeDuration"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    }
+                                ]
                             }
                         ]
                     }
@@ -273,8 +296,8 @@
                 {
                     "Canvas": {
                         "isVisible": true,
-                        "hasTransition": false,
-                        "transitionProgress": 1.0,
+                        "hasTransition": true,
+                        "transitionProgress": 0.0,
                         "transitionSpeed": 1.0,
                         "fadeColor": {
                             "x": 0.0,
@@ -375,7 +398,7 @@
             "Position": {
                 "x": 0.0,
                 "y": 0.0,
-                "z": 0.0
+                "z": 2.0
             },
             "Prefab": {
                 "GUID": {
@@ -805,7 +828,7 @@
                             "worldPos": {
                                 "x": -1.461240291595459,
                                 "y": 0.0,
-                                "z": -0.2117999941110611
+                                "z": 1.7882000207901
                             },
                             "worldScale": {
                                 "x": 35.283607482910156,

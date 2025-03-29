@@ -250,15 +250,15 @@ public class SettingsScene : Entity
     float screenWidth = screenMaxX - screenMinX;
     float canvasWidth = CanvasmaxX - CanvasminX;
 
-    Debug.Log("SX: " + screenX.ToString());
-    Debug.Log("SW: " + screenWidth.ToString());
-    Debug.Log("CW: " + canvasWidth.ToString());
+    //Debug.Log("SX: " + screenX.ToString());
+    //Debug.Log("SW: " + screenWidth.ToString());
+    //Debug.Log("CW: " + canvasWidth.ToString());
 
     // Normalize screenX to [0, 1] range, then scale to canvas width
     float normalizedX = (screenX - screenMinX) / screenWidth;
     float canvasX = CanvasminX + (normalizedX * canvasWidth);
-    Debug.Log("NX: " + normalizedX.ToString());
-    Debug.Log("CX: " + canvasX.ToString());
+    //Debug.Log("NX: " + normalizedX.ToString());
+    //Debug.Log("CX: " + canvasX.ToString());
 
 
     return canvasX;

@@ -28,6 +28,8 @@ public class SettingsButtons : Entity
   public void OnPointerDown()
   {
     IsClicked = true;
+    InternalCalls.PlaySound(mEntityID, "PickUpObjects_SFX");
+    Debug.Log("PLAY");
     //Text.SetActive(true);
     //Border.SetActive(true);
   }

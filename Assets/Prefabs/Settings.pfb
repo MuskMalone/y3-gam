@@ -3,7 +3,7 @@
     "SubData": [
         {
             "ID": 0,
-            "Parent": null,
+            "Parent": 0,
             "Components": [
                 {
                     "Tag": {
@@ -61,7 +61,7 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 450,
+                                "entityID": 1048579,
                                 "scriptName": "SettingsPage",
                                 "scriptFieldInstList": [
                                     {
@@ -259,6 +259,41 @@
             "Parent": 0,
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PickUpObjects_SFX",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7072180673722841169
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -11.761202812194824,
+                                            "y": 5.757659912109375,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "VolumeSlider",
                         "isActive": true
@@ -314,7 +349,7 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 260,
+                                "entityID": 1048590,
                                 "scriptName": "SettingsButtons",
                                 "scriptFieldInstList": [
                                     {
@@ -368,6 +403,41 @@
             "ID": 2,
             "Parent": 0,
             "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PickUpObjects_SFX",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7072180673722841169
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -11.761202812194824,
+                                            "y": 3.000159978866577,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
                 {
                     "Tag": {
                         "tag": "BrightnessSlider",
@@ -424,7 +494,7 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 288,
+                                "entityID": 1048596,
                                 "scriptName": "SettingsButtons",
                                 "scriptFieldInstList": [
                                     {
@@ -911,7 +981,7 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 492,
+                                "entityID": 1048605,
                                 "scriptName": "PauseMenuButtons",
                                 "scriptFieldInstList": [
                                     {
@@ -1113,6 +1183,41 @@
             "Parent": 0,
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "PickUpObjects_SFX",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7072180673722841169
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -6.5934014320373535,
+                                            "y": 4.4120001792907715,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "SfxSlider",
                         "isActive": true
@@ -1168,7 +1273,7 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 571,
+                                "entityID": 2097160,
                                 "scriptName": "SettingsButtons",
                                 "scriptFieldInstList": [
                                     {
