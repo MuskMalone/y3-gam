@@ -740,7 +740,7 @@ namespace IGE {
             sound->getUserData(&soundptr);
             auto video{ reinterpret_cast<Component::Video*>(soundptr) };
             if (video) {
-                unsigned int samplesRead = video->sound.mPCMBuffer->read(outBuffer, samplesNeeded);
+                unsigned int samplesRead = static_cast<int>(video->sound.mPCMBuffer->read(outBuffer, samplesNeeded));
 
                 if (samplesRead < samplesNeeded)
                 {
