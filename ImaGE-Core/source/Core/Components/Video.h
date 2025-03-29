@@ -63,6 +63,7 @@ namespace Component {
     bool loop;          // don't modify this directly!
     bool audioEnabled;  // don't modify this directly!
 
+    unsigned audioOffset{5000};
     IGE::Audio::Sound sound;
     IGE::Audio::SoundInvokeSetting audioPlaySettings;
     uint64_t channelGroup{};

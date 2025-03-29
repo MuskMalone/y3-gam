@@ -19,7 +19,7 @@ namespace Component {
 
     Video::Video(Video const& rhs) : buffer{}, texture{}, videoSource{}, audioSource{}, guid{ rhs.guid },
     renderType{ rhs.renderType }, started{ false }, paused{ false },
-      playOnStart{ rhs.playOnStart }, loop{ rhs.loop }, audioEnabled{ rhs.audioEnabled }, 
+        playOnStart{ rhs.playOnStart }, loop{ rhs.loop }, audioEnabled{ rhs.audioEnabled }, audioOffset{rhs.audioOffset},
       sound{ rhs.sound }, audioPlaySettings{ rhs.audioPlaySettings }, channelGroup {
       IGE::Audio::AudioManager::GetInstance().CreateGroup()
   } {
@@ -32,6 +32,7 @@ namespace Component {
     audioEnabled = rhs.audioEnabled;
     loop = rhs.loop;
 
+    audioOffset = rhs.audioOffset;
     sound = rhs.sound;
     audioPlaySettings = rhs.audioPlaySettings;
     

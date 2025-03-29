@@ -43,6 +43,40 @@ namespace IGE {
                                 channel->setVolume(sound.second.playSettings.volume * volumeModifier);
                             }
 
+                            FMOD_VECTOR fmodPosition = { setting.position.x, setting.position.y, setting.position.z };
+                            channel->set3DAttributes(&fmodPosition, 0);
+                        }
+                    }
+                }
+            }{
+                auto rbsystem{ mEntityManager.GetAllEntitiesWithComponents<Component::Video, Component::Transform>() };
+                for (auto entity : rbsystem) {
+                    auto& video{ rbsystem.get<Component::Video>(entity) };
+                    auto& xfm{ rbsystem.get<Component::Transform>(entity) };
+                    if (mgr.mGroup.find(video.channelGroup) != mgr.mGroup.end()) {
+                        FMOD::ChannelGroup* videoSoundGrp = mgr.mGroup[video.channelGroup];
+                        int numChannels = 0;
+                        videoSoundGrp->getNumChannels(&numChannels);
+                        video.audioPlaySettings.position = xfm.worldPos;
+
+                        for (int i = 0; i < numChannels; ++i) {
+                            FMOD::Channel* channel = nullptr;
+                            videoSoundGrp->getChannel(i, &channel);
+                            if (channel) {
+                                channel->setPitch(video.audioPlaySettings.pitch);
+                                if (video.audioPlaySettings.mute) {
+                                    channel->setVolume(0);
+                                }
+                                else {
+                                    //std::cout << ECS::Entity{ entity }.GetComponent<Component::Tag>().tag << " setting volume" << std::endl;
+                                    float volumeModifier{ ((video.audioPlaySettings.isBGM) ? AudioManager::GetInstance().mBGMVolume : AudioManager::GetInstance().mSFXVolume) * AudioManager::GetInstance().mGlobalVolume };
+                                    channel->setVolume(video.audioPlaySettings.volume * volumeModifier);
+                                }
+
+                                FMOD_VECTOR fmodPosition = { video.audioPlaySettings.position.x, video.audioPlaySettings.position.y, video.audioPlaySettings.position.z };
+                                channel->set3DAttributes(&fmodPosition, 0);
+
+                            }
                         }
                     }
                 }
@@ -87,10 +121,10 @@ namespace IGE {
                                 audiosource.PlaySound(sound.first);
                             }
 
-                            for (auto channel : setting.channels) {
-                                FMOD_VECTOR fmodPosition = { setting.position.x, setting.position.y, setting.position.z };
-                                channel->set3DAttributes(&fmodPosition, 0);
-                            }
+                            //for (auto channel : setting.channels) {
+                            //    FMOD_VECTOR fmodPosition = { setting.position.x, setting.position.y, setting.position.z };
+                            //    channel->set3DAttributes(&fmodPosition, 0);
+                            //}
                         }
                     }
                 }
@@ -102,39 +136,23 @@ namespace IGE {
                             mgr.mGroup[video.channelGroup]->setPaused(false);
                         }
                         if (mgr.mSceneStarted && mgr.mSceneStopped) {
-                            mgr.PlaySound(video.sound, video.audioPlaySettings, video.channelGroup, "video");
-                            if (mgr.mGroup.find(video.channelGroup) != mgr.mGroup.end()) {
-                                FMOD::ChannelGroup* videoSoundGrp = mgr.mGroup[video.channelGroup];
-                                int numChannels = 0;
-                                videoSoundGrp->getNumChannels(&numChannels);
-                                for (int i = 0; i < numChannels; ++i) {
-                                    FMOD::Channel* channel = nullptr;
-                                    videoSoundGrp->getChannel(i, &channel);
-                                    if (channel) {
-                                        unsigned int pos = 5000;
-                                        FMOD_RESULT result = channel->setPosition(pos, FMOD_TIMEUNIT_MS);
-                                        if (result == FMOD_OK) {
-                                            printf("Channel %d position: %u ms\n", i, pos);
-                                        }
-                                        else {
-                                            printf("Channel %d: setPosition error: %s\n", i, FMOD_ErrorString(result));
+                            if (video.IsAudioEnabled()) {
+                                mgr.PlaySound(video.sound, video.audioPlaySettings, video.channelGroup, "video");
+                                if (mgr.mGroup.find(video.channelGroup) != mgr.mGroup.end()) {
+                                    FMOD::ChannelGroup* videoSoundGrp = mgr.mGroup[video.channelGroup];
+                                    int numChannels = 0;
+                                    videoSoundGrp->getNumChannels(&numChannels);
+                                    for (int i = 0; i < numChannels; ++i) {
+                                        FMOD::Channel* channel = nullptr;
+                                        videoSoundGrp->getChannel(i, &channel);
+                                        if (channel) {
+                                            unsigned int pos = video.audioOffset; // jump 5 seconds into the playback
+                                            FMOD_RESULT result = channel->setPosition(pos, FMOD_TIMEUNIT_MS);
                                         }
                                     }
                                 }
                             }
                         }
-
-                        //for (auto& sound : audiosource.sounds) {
-                        //    auto& setting{ sound.second.playSettings };
-                        //    if (mgr.mSceneStarted && mgr.mSceneStopped && setting.playOnAwake) {
-                        //        audiosource.PlaySound(sound.first);
-                        //    }
-
-                        //    //for (auto channel : setting.channels) {
-                        //    //    FMOD_VECTOR fmodPosition = { setting.position.x, setting.position.y, setting.position.z };
-                        //    //    channel->set3DAttributes(&fmodPosition, 0);
-                        //    //}
-                        //}
                     }
                 }
                 mgr.mSceneStarted = false;

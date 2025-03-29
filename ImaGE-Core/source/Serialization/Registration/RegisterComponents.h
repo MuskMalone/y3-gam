@@ -185,11 +185,13 @@ static void rttr_auto_register_reflection_function2_(); namespace {
     .property("emitters", &EmitterSystem::emitters);
 
   REGISTER_COMPONENT(Video, "Video")
-    .property("renderType", &Video::renderType)
-    .property("guid", &Video::guid)
-    .property("audioEnabled", &Video::audioEnabled)
-    .property("loop", &Video::loop)
-    .property("playOnStart", &Video::playOnStart);
+      .property("renderType", &Video::renderType)
+      .property("guid", &Video::guid)
+      .property("audioEnabled", &Video::audioEnabled)
+      .property("loop", &Video::loop)
+      .property("playOnStart", &Video::playOnStart)
+      .property("audioOffset", &Video::audioOffset)
+      .property("audioPlaySettings", &Video::audioPlaySettings);;
 
     // stuff below are not actual "Components", hence we skip the REGISTER_COMPONENT checks
   rttr::registration::class_<PrefabOverrides>("PrefabOverrides")

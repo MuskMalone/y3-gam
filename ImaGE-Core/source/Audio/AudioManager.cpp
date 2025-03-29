@@ -327,7 +327,7 @@ namespace IGE {
             exinfo.pcmreadcallback = callback; // Our callback
             // Optionally, set exinfo.pcmsetposcallback if needed
             FMOD::Sound* temp{  };
-            FMOD_RESULT result = mSystem->createSound(0, FMOD_OPENUSER | FMOD_CREATESTREAM, &exinfo, &temp);
+            FMOD_RESULT result = mSystem->createSound(0, FMOD_OPENUSER | FMOD_CREATESTREAM | FMOD_3D, &exinfo, &temp);
 
             if (result != FMOD_OK)
             {
