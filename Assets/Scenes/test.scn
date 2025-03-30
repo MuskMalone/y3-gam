@@ -385,9 +385,9 @@
                             },
                             "softness": 3,
                             "bias": 0.004999999888241291,
-                            "nearPlane": -61.29999923706055,
+                            "nearPlane": -157.0,
                             "farPlane": 269.5,
-                            "scenesBounds": 2.4100000858306885,
+                            "scenesBounds": 2.7100000381469727,
                             "isStatic": true,
                             "shadowModified": false,
                             "customCenter": false
@@ -619,6 +619,7 @@
                         "loop": true,
                         "playOnStart": true,
                         "audioOffset": 5000,
+                        "alpha": 255,
                         "audioPlaySettings": {
                             "position": {
                                 "x": 0.0,
@@ -634,27 +635,11 @@
                             "dopplerLevel": 1.0,
                             "minDistance": 1.0,
                             "maxDistance": 500.0,
-                            "rolloffType": "LINEAR",
+                            "rolloffType": "NONE",
                             "isBGM": false,
-                            "enablePostProcessing": true,
+                            "enablePostProcessing": false,
                             "processingType": "REVERB",
-                            "postProcessingSettings": [
-                                {
-                                    "type": "DISTORTION",
-                                    "reverb_decayTime": 1500.0,
-                                    "reverb_earlyDelay": 0.0,
-                                    "reverb_lateDelay": 0.0,
-                                    "reverb_diffusion": 100.0,
-                                    "reverb_density": 100.0,
-                                    "echo_delay": 500.0,
-                                    "echo_feedback": 50.0,
-                                    "echo_wetDryMix": 50.0,
-                                    "distortion_level": 50.0,
-                                    "chorus_rate": 0.800000011920929,
-                                    "chorus_depth": 0.5,
-                                    "chorus_mix": 50.0
-                                }
-                            ]
+                            "postProcessingSettings": []
                         }
                     }
                 }
@@ -864,6 +849,148 @@
                         "submeshIdx": 0,
                         "isCustomMesh": false,
                         "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 13,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Wall",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 115.99504089355469,
+                            "y": 16.811874389648438,
+                            "z": -107.66876983642578
+                        },
+                        "scale": {
+                            "x": 1.9800000190734863,
+                            "y": 125.0999984741211,
+                            "z": 224.22000122070313
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 115.99504089355469,
+                            "y": 16.811874389648438,
+                            "z": -107.66876983642578
+                        },
+                        "worldScale": {
+                            "x": 1.9800000190734863,
+                            "y": 125.0999984741211,
+                            "z": 224.22000122070313
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": false,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 15,
+            "Parent": null,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Wall (Copy)",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 32.2772102355957,
+                            "y": 16.811874389648438,
+                            "z": -114.78948211669922
+                        },
+                        "scale": {
+                            "x": 1.9800000190734863,
+                            "y": 125.0999984741211,
+                            "z": 224.22000122070313
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 32.2772102355957,
+                            "y": 16.811874389648438,
+                            "z": -114.78948211669922
+                        },
+                        "worldScale": {
+                            "x": 1.9800000190734863,
+                            "y": 125.0999984741211,
+                            "z": 224.22000122070313
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Cube",
+                        "GUID": {
+                            "ID": 16211310182187335803
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": false,
+                        "castShadows": false,
                         "receiveShadows": true
                     }
                 }

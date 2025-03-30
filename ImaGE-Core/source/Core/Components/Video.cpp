@@ -126,6 +126,11 @@ namespace Component {
     for (unsigned i{ 3 }; i < buffer.size(); i += 4) {
       buffer[i] = newAlpha;
     }
+
+    if (!started) {
+      PreviewFirstFrame();
+    }
+
     alpha = newAlpha;
   }
 
