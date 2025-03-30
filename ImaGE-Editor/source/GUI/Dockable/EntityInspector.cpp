@@ -2857,63 +2857,66 @@ namespace GUI {
 
       float const inputWidth{ CalcInputWidth(50.f) / 3.f };
 
-      BeginVec3Table("LocalTransformTable", inputWidth);
+      if (BeginVec3Table("LocalTransformTable", inputWidth)) {
 
-      // @TODO: Replace min and max with the world min and max
-      if (ImGuiHelpers::TableInputFloat3("Position", &transform.position[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
-        DragInputUsed();
-        modified = true;
-      }
-      glm::vec3 localRot{ transform.eulerAngles };
-      if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.3f)) {
-        transform.SetLocalRotWithEuler(localRot);
-        DragInputUsed();
-        modified = true;
-
-        entityRotModified = true;
-      }
-      static bool constrainedScale{ true };
-      glm::vec3 scale{ transform.scale };
-      if (ImGuiHelpers::TableInputFloat3("Scale", &scale[0], inputWidth, false, 0.001f, FLT_MAX, 0.02f)) {
-        DragInputUsed();
-        modified = true;
-        if (constrainedScale) {
-          scale -= transform.scale;
-          float const offset{ scale.x != 0.f ? scale.x : scale.y != 0.f ? scale.y : scale.z };
-          transform.scale += offset;
+        // @TODO: Replace min and max with the world min and max
+        if (ImGuiHelpers::TableInputFloat3("Position", &transform.position[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.1f)) {
+          DragInputUsed();
+          modified = true;
         }
-        else {
-          transform.scale = scale;
+        glm::vec3 localRot{ transform.eulerAngles };
+        if (ImGuiHelpers::TableInputFloat3("Rotation", &localRot[0], inputWidth, false, -FLT_MAX, FLT_MAX, 0.3f)) {
+          transform.SetLocalRotWithEuler(localRot);
+          DragInputUsed();
+          modified = true;
+
+          entityRotModified = true;
         }
+        static bool constrainedScale{ true };
+        glm::vec3 scale{ transform.scale };
+        if (ImGuiHelpers::TableInputFloat3("Scale", &scale[0], inputWidth, false, 0.001f, FLT_MAX, 0.02f)) {
+          DragInputUsed();
+          modified = true;
+          if (constrainedScale) {
+            scale -= transform.scale;
+            float const offset{ scale.x != 0.f ? scale.x : scale.y != 0.f ? scale.y : scale.z };
+            transform.scale += offset;
+          }
+          else {
+            transform.scale = scale;
+          }
+        }
+        ImGui::TableSetColumnIndex(0);
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + FIRST_COLUMN_LENGTH - 30.f);
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.f, 0.f, 0.f));
+        if (ImGui::Button(constrainedScale ? ICON_FA_LOCK : ICON_FA_LOCK_OPEN)) {
+          constrainedScale = !constrainedScale;
+        }
+        ImGui::PopStyleColor();
+        if (ImGui::IsItemHovered()) {
+          ImGui::SetTooltip(((constrainedScale ? "Disable" : "Enable") + std::string(" constrained proportions")).c_str());
+        }
+
+        EndVec3Table();
       }
-      ImGui::TableSetColumnIndex(0);
-      ImGui::SetCursorPosX(ImGui::GetCursorPosX() + FIRST_COLUMN_LENGTH - 30.f);
-      ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.f, 0.f, 0.f, 0.f));
-      if (ImGui::Button(constrainedScale ? ICON_FA_LOCK : ICON_FA_LOCK_OPEN)) {
-        constrainedScale = !constrainedScale;
+
+      if (BeginVec3Table("WorldTransformTable", inputWidth)) {
+        // only allow local transform to be modified
+        glm::vec3 worldRot{ transform.GetWorldEulerAngles() };
+        ImGui::BeginDisabled();
+        ImGuiHelpers::TableInputFloat3("World Position", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f);
+        ImGuiHelpers::TableInputFloat3("World Rotation", &worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f);
+        ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.001f, 100.f, 1.f);
+        ImGui::EndDisabled();
+
+        EndVec3Table();
       }
-      ImGui::PopStyleColor();
-      if (ImGui::IsItemHovered()) {
-        ImGui::SetTooltip(((constrainedScale ? "Disable" : "Enable") + std::string(" constrained proportions")).c_str());
-      }
 
-      EndVec3Table();
-
-      BeginVec3Table("WorldTransformTable", inputWidth);
-
-      // only allow local transform to be modified
-      glm::vec3 worldRot{ transform.GetWorldEulerAngles() };
-      ImGui::BeginDisabled();
-      ImGuiHelpers::TableInputFloat3("World Position", &transform.worldPos[0], inputWidth, false, -100.f, 100.f, 0.1f);
-      ImGuiHelpers::TableInputFloat3("World Rotation", &worldRot[0], inputWidth, false, 0.f, 360.f, 0.1f);
-      ImGuiHelpers::TableInputFloat3("World Scale", &transform.worldScale[0], inputWidth, false, 0.001f, 100.f, 1.f);
-      ImGui::EndDisabled();
-
-      EndVec3Table();
-    }
-    if (modified) {
+      if (modified) {
         IGE::Physics::PhysicsSystem::GetInstance()->UpdatePhysicsToTransform(entity);
+      }
     }
+
     WindowEnd(isOpen);
     return modified;
   }
