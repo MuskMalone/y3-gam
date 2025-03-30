@@ -49,7 +49,13 @@ public class SpecialDialogue : Entity
   private readonly float mainDialogueFontScale = 0.006f;
   private readonly float specialDialogueFontScale = 0.003f;
 
-  public SpecialDialogue() : base()
+    private bool isIntroDialogue1Active = false; 
+    private bool isIntroDialogue2Active = false;
+    private bool hasPlayedLine0Sound = false;
+    private bool hasPlayedLine1Sound = false;
+    private bool hasPlayedLine2Sound = false;
+
+    public SpecialDialogue() : base()
   {
 
   }
@@ -213,9 +219,43 @@ public class SpecialDialogue : Entity
       dialogueSystem.SetDialogue(initialDialogue, 
         new Dialogue.Emotion[] { Dialogue.Emotion.Neutral, Dialogue.Emotion.Happy }, 
         mainDialogueFontScale);
+            isIntroDialogue1Active = true;
       triggerInitialDialogue = false;
     }
-  }
+
+    if(isIntroDialogue1Active)
+    {
+        if (dialogueSystem.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+        {
+            InternalCalls.PlaySound(mEntityID, "L1_1_VER1");
+            hasPlayedLine0Sound = true;
+        }
+        else if (dialogueSystem.CurrentLineIndex == 1 && !hasPlayedLine1Sound)
+        {
+            InternalCalls.PlaySound(mEntityID, "L1_2_VER1");
+            hasPlayedLine1Sound = true;
+            // Optionally disable the dialogue active flag if there are no more sounds
+            isIntroDialogue1Active = false;
+        }
+    }
+
+    if (isIntroDialogue2Active)
+    {
+        if (dialogueSystem.CurrentLineIndex == 0 && !hasPlayedLine2Sound)
+        {
+            InternalCalls.PlaySound(mEntityID, "L1_3_VER2");
+            hasPlayedLine2Sound = true;
+            //isIntroDialogue2Active = false;
+        }
+    }
+
+        if (isIntroDialogue2Active && !dialogueSystem.isInDialogueMode)
+        {
+            // Dialogue has finished, so it’s now safe to destroy this entity.
+            isIntroDialogue2Active = false;
+            Destroy();
+        }
+    }
 
   private void StartFade()
   {
@@ -305,8 +345,8 @@ public class SpecialDialogue : Entity
     dialogueSystem.SetDialogue(new string[] { "She left something on that table..."},
         new Dialogue.Emotion[] { Dialogue.Emotion.Surprised },
         mainDialogueFontScale);
-
+        isIntroDialogue2Active = true;
     InternalCalls.SetShaderState(0, false);
-    Destroy();
+    //Destroy();
   }
 }

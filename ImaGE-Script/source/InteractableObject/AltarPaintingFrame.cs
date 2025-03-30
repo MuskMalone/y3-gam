@@ -9,8 +9,10 @@ public class AltarPaintingFrame : Entity
   public Dialogue dialogueSystem;
 
   private bool paintingFlag = false;
-
-  void Start()
+    private bool hasPlayedLine0Sound = false;
+    private bool hasPlayedLine1Sound = false;
+    private bool isAltarPaintingActive = false;
+    void Start()
   {
     altarPaintingFrameUI?.SetActive(false);
   }
@@ -22,6 +24,7 @@ public class AltarPaintingFrame : Entity
     {
       dialogueSystem.SetDialogue(paintingDialogue, new Dialogue.Emotion[] { Dialogue.Emotion.Neutral, Dialogue.Emotion.Thinking });
       paintingFlag = true;
+      isAltarPaintingActive |= true;
       return;
     }
 
@@ -31,5 +34,21 @@ public class AltarPaintingFrame : Entity
     {
       paintingFlag = false;
     }
-  }
+
+        if (isAltarPaintingActive)
+        {
+            if (dialogueSystem.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L1_6_VER2");
+                hasPlayedLine0Sound = true;
+            }
+            else if (dialogueSystem.CurrentLineIndex == 1 && !hasPlayedLine1Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L1_7_VER2");
+                hasPlayedLine1Sound = true;
+                // Optionally disable the dialogue active flag if there are no more sounds
+                isAltarPaintingActive = false;
+            }
+        }
+    }
 }
