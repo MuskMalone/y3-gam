@@ -172,6 +172,14 @@ namespace Graphics {
 	{
 		return shaderElapsedTime;
 	}
+	void PostProcessingManager::SetStrength(float strength)
+	{
+		vigStrength = strength;
+	}
+	float PostProcessingManager::GetStrength()
+	{
+		return vigStrength;
+	}
 	void PostProcessingManager::CreateConfigFile()
 	{
 		IGE::Assets::CreateDirectoryIfNotExists(IGE::Assets::cPostProcessingDirectory);

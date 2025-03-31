@@ -443,6 +443,12 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetShaderElapsedTime();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetVignetteStrength(float strength);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetVignetteStrength();
     #endregion
   }
 }
