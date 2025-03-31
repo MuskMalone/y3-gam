@@ -331,7 +331,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 14884879012582128277
+                            "ID": 14181723587714629200
                         }
                     }
                 },
@@ -341,7 +341,7 @@
                         "GUID": {
                             "ID": 14090961136758613768
                         },
-                        "submeshIdx": 3,
+                        "submeshIdx": 0,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
@@ -428,7 +428,7 @@
         },
         {
             "ID": 4,
-            "Parent": 1,
+            "Parent": 0,
             "Components": [
                 {
                     "Tag": {
@@ -439,9 +439,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
+                            "x": -0.0000019073485191256623,
                             "y": 0.0,
-                            "z": -0.00000762939453125
+                            "z": -0.0000152587890625
                         },
                         "scale": {
                             "x": 1.0,
@@ -460,7 +460,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.000005722044534195447,
+                            "x": 0.0000057220440794480965,
                             "y": 0.0,
                             "z": -0.0000457763671875
                         },
@@ -572,84 +572,7 @@
                         "GUID": {
                             "ID": 14090961136758613768
                         },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 6,
-            "Parent": 0,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Circle.009",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": -0.00000762939453125
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": -0.00002288818359375
-                        },
-                        "worldScale": {
-                            "x": 3.0,
-                            "y": 3.0,
-                            "z": 3.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": -0.9999999403953552,
-                            "w": 0.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 4670183329071227760
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Circle.009",
-                        "GUID": {
-                            "ID": 14090961136758613768
-                        },
-                        "submeshIdx": 4,
+                        "submeshIdx": 3,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true

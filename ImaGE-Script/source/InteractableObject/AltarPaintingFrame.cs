@@ -25,7 +25,7 @@ public class AltarPaintingFrame : Entity
     {
       dialogueSystem.SetDialogue(paintingDialogue, new Dialogue.Emotion[] { Dialogue.Emotion.Neutral, Dialogue.Emotion.Thinking });
       paintingFlag = true;
-      isAltarPaintingActive |= true;
+      isAltarPaintingActive = true;
       return;
     }
 

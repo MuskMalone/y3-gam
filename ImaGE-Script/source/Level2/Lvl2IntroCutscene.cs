@@ -30,8 +30,12 @@ public class Lvl2IntroCutscene : Entity
     private float sillouetteElapsedTime = 0f;
     private const float activationInterval = 1.0f;
 
-    private TutorialDialogue tutorialDialogue;
-    public string[] introDialogueOne = { "Mom...?"};
+    private Lvl2Dialogue lvl2Dialogue;
+    public string[] introDialogueOne;
+    private bool hasPlayedLine0Sound = false;
+    private bool hasPlayedLine1Sound = false;
+    private bool isIntroDialogueActive = false;
+
     private Quaternion targetRot = Mathf.EulertoQuat(new Vector3(90, 0, 130));
 
     //private bool rotateAfterFirstSilhouette = false;
@@ -50,7 +54,7 @@ public class Lvl2IntroCutscene : Entity
         //    firstSilhouette, secondSilhouette, thirdSilhouette,
         //    fourthSilhouette, fifthSilhouette, sixthSilhouette
         //};
-        tutorialDialogue = FindObjectOfType<TutorialDialogue>();
+        lvl2Dialogue = FindObjectOfType<Lvl2Dialogue>();
         BeginningSilhouetteSequence = new Entity[5]
         {
             secondSilhouette, thirdSilhouette,
@@ -71,6 +75,7 @@ public class Lvl2IntroCutscene : Entity
 
     void Update()
     {
+
         //if (isRotatingPlayer)
         //{
         //    RotatePlayerToTarget();
@@ -178,6 +183,23 @@ public class Lvl2IntroCutscene : Entity
                 }
             }
         }
+
+        if (isIntroDialogueActive)
+        {
+            if (lvl2Dialogue.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L2_2");
+                hasPlayedLine0Sound = true;
+            }
+            else if (lvl2Dialogue.CurrentLineIndex == 1 && !hasPlayedLine1Sound)
+            {
+                InternalCalls.StopSound(mEntityID, "L2_2");
+                InternalCalls.PlaySound(mEntityID, "L2_3");
+                hasPlayedLine1Sound = true;
+                // Optionally disable the dialogue active flag if there are no more sounds
+                isIntroDialogueActive = false;
+            }
+        }
     }
 
 
@@ -232,11 +254,12 @@ public class Lvl2IntroCutscene : Entity
         playerMove.UnfreezePlayer();
         isInSillouetteSequence = false;
         // Start Dialogue at the end of the cutscene
-        if (tutorialDialogue != null)
+        if (lvl2Dialogue != null)
         {
             //string[] finalLines = { "Mom..?" };
             //tutorialDialogue.Emotion[] emotions = { TutorialDialogue.Emotion.Sad }; // Choose an emotion if needed
-            tutorialDialogue.SetDialogue(introDialogueOne, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Sad});
+            lvl2Dialogue.SetDialogue(introDialogueOne, new Lvl2Dialogue.Emotion[] { Lvl2Dialogue.Emotion.Neutral, Lvl2Dialogue.Emotion.Neutral });
+            isIntroDialogueActive = true;
         }
         else
         {
