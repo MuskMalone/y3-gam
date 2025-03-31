@@ -77,6 +77,7 @@ InputManager::InputManager(std::unique_ptr<GLFWwindow, GLFWwindowDestructor>& wi
 	glfwSetCursorPosCallback(window.get(), MousePosCallback);
 	glfwSetMouseButtonCallback(window.get(), MouseButtonCallback);
 	glfwSetScrollCallback(window.get(), MouseScrollCallback);
+	glfwSetWindowSizeCallback(window.get(), WindowSizeCallback);
 	FillKeyVec();
 }
 
@@ -86,9 +87,12 @@ void InputManager::SetDim(int width, int height)
 	mWidth = width;
 }
 
+
+
+
 glm::vec2 InputManager::GetDim()
 {
-	return glm::vec2(mWidth, mHeight);
+	return glm::vec2(mWidth,mHeight);
 }
 
 
@@ -329,6 +333,12 @@ vec2  InputManager::GetMousePos()
 void Input::InputManager::SetCurrFramebuffer(size_t framebufferID)
 {
 	mCurrFramebuffer = framebufferID;
+}
+
+void InputManager::WindowSizeCallback(GLFWwindow* window, int width, int height)
+{
+	mWidth = width;
+	mHeight = height;
 }
 
 vec3 InputManager::GetMousePosWorld(float depth)
