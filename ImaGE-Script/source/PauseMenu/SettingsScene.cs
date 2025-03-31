@@ -109,7 +109,7 @@ public class SettingsScene : Entity
 
   // Update is called once per frame
   void Update()
-  {
+  { Debug.Log(Input.mousePosition.X + "," + Input.mousePosition.Y);
     if (isTransitioning)
     {
       transitionTimer += Time.deltaTime;
@@ -122,19 +122,6 @@ public class SettingsScene : Entity
 
     else if (isPageActive && !isTransitioning)
     {
-      if (VolumeSlider.IsClicked)
-      {
-        HideAllText();
-        BGMBorder.SetActive(true);
-        BGMText.SetActive(true);
-        Vector3 originalResume = InternalCalls.GetPosition(VolumeSlider.mEntityID);
-        float NewXPos = screenToCanvas(Input.mousePosition.X, Input.screenWidth);
-        Vector3 newPosResume = new Vector3(NewXPos, originalResume.Y, originalResume.Z);
-        newPosResume.X = (newPosResume.X < minX) ? minX : (newPosResume.X > maxX) ? maxX : newPosResume.X;
-        InternalCalls.SetPosition(VolumeSlider.mEntityID, ref newPosResume);
-        float fraction = 1 - normalize(NewXPos, minX, maxX);
-        InternalCalls.SetSoundGlobalVolume(fraction);
-      }
 
       if (BrightnessSlider.IsClicked)
       {
@@ -147,6 +134,7 @@ public class SettingsScene : Entity
         newPosResume.X = (newPosResume.X < minX) ? minX : (newPosResume.X > maxX) ? maxX : newPosResume.X;
         InternalCalls.SetPosition(BrightnessSlider.mEntityID, ref newPosResume);
         float fraction = normalize(newPosResume.X, minX, maxX);
+        fraction = (fraction > 1) ? 1 : (fraction < 0)? 0:fraction;
         InternalCalls.SetBrightness(fraction);
 
       }
@@ -162,6 +150,7 @@ public class SettingsScene : Entity
         newPosResume.X = (newPosResume.X < minX) ? minX : (newPosResume.X > maxX) ? maxX : newPosResume.X;
         InternalCalls.SetPosition(VolumeSlider.mEntityID, ref newPosResume);
         float fraction = 1 - normalize(NewXPos, minX, maxX);
+        fraction = (fraction > 1) ? 1 : (fraction < 0) ? 0 : fraction;
         InternalCalls.SetSoundBGMVolume(fraction);
       }
 
@@ -176,6 +165,7 @@ public class SettingsScene : Entity
         newPosResume.X = (newPosResume.X < minX) ? minX : (newPosResume.X > maxX) ? maxX : newPosResume.X;
         InternalCalls.SetPosition(SFXSlider.mEntityID, ref newPosResume);
         float fraction = 1 - normalize(NewXPos, minX, maxX);
+        fraction = (fraction > 1) ? 1 : (fraction < 0) ? 0 : fraction;
         InternalCalls.SetSoundSFXVolume(fraction);
       }
 
