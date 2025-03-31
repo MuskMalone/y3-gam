@@ -184,22 +184,22 @@ public class Lvl2IntroCutscene : Entity
             }
         }
 
-        //if (isIntroDialogueActive)
-        //{
-        //    if (tutorialDialogue.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
-        //    {
-        //        InternalCalls.PlaySound(mEntityID, "L2_2");
-        //        hasPlayedLine0Sound = true;
-        //    }
-        //    else if (tutorialDialogue.CurrentLineIndex == 1 && !hasPlayedLine1Sound)
-        //    {
-        //        InternalCalls.StopSound(mEntityID, "L2_2");
-        //        InternalCalls.PlaySound(mEntityID, "L2_3");
-        //        hasPlayedLine1Sound = true;
-        //        // Optionally disable the dialogue active flag if there are no more sounds
-        //        isIntroDialogueActive = false;
-        //    }
-        //}
+        if (isIntroDialogueActive)
+        {
+            if (tutorialDialogue.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L2_2");
+                hasPlayedLine0Sound = true;
+            }
+            else if (tutorialDialogue.CurrentLineIndex == 1 && !hasPlayedLine1Sound)
+            {
+                InternalCalls.StopSound(mEntityID, "L2_2");
+                InternalCalls.PlaySound(mEntityID, "L2_3");
+                hasPlayedLine1Sound = true;
+                // Optionally disable the dialogue active flag if there are no more sounds
+                isIntroDialogueActive = false;
+            }
+        }
     }
 
 
