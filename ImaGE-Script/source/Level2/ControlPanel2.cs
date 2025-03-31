@@ -301,7 +301,7 @@ public class ControlPanel2 : Entity
         if (defaultStateActive)
         {
             SetDefaultHiddenText(false);
-            odysseusStatue.SetActive(false);
+            //odysseusStatue.SetActive(false);
             defaultStateActive = false;
         }
 
@@ -383,6 +383,7 @@ public class ControlPanel2 : Entity
         poseidonStatue.SetActive(false);
         athenaStatue.SetActive(false);
         hermesStatue.SetActive(false);
+        odysseusStatue.SetActive(false);
     }
 
     private void InitHiddenTexts()
