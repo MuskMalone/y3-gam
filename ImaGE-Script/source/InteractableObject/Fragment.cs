@@ -64,6 +64,7 @@ public class Fragment : Entity
             TriggerAnimation();
             currState = State.FLY_UP;
             fragmentPickupUI.SetActive(false);
+            fragmentCollected = true;
           }
           else
           {
@@ -148,7 +149,6 @@ public class Fragment : Entity
           SetPlayerCameraAsMain();
           blackBorder.HideBlackBorders();
           SetActive(false);
-          fragmentCollected = true;
           currState = State.COLLECTED;
 
           break;
