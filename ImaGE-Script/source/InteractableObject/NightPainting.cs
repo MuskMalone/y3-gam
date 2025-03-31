@@ -103,6 +103,7 @@ public class NightPainting : Entity, IInventoryItem
             }
             else if (dialogueSystem.CurrentLineIndex == 1 && !hasPlayedLine1Sound)
             {
+                InternalCalls.StopSound(mEntityID, "L1_4");
                 InternalCalls.PlaySound(mEntityID, "L1_5");
                 hasPlayedLine1Sound = true;
                 // Optionally disable the dialogue active flag if there are no more sounds

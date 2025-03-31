@@ -7,6 +7,7 @@ public class AltarPaintingFrame : Entity
   public Entity altarPaintingFrameUI;
   public string[] paintingDialogue;
   public Dialogue dialogueSystem;
+  public Fragment fragment;
 
   private bool paintingFlag = false;
     private bool hasPlayedLine0Sound = false;
@@ -28,7 +29,8 @@ public class AltarPaintingFrame : Entity
       return;
     }
 
-    altarPaintingFrameUI.SetActive(isPaintingHit);
+    if (!fragment.IsFragmentCollected())
+      altarPaintingFrameUI.SetActive(isPaintingHit);
 
     if (!isPaintingHit)
     {
