@@ -232,6 +232,7 @@ public class SpecialDialogue : Entity
         }
         else if (dialogueSystem.CurrentLineIndex == 1 && !hasPlayedLine1Sound)
         {
+                InternalCalls.StopSound(mEntityID, "L1_1_VER1");
             InternalCalls.PlaySound(mEntityID, "L1_2_VER1");
             hasPlayedLine1Sound = true;
             // Optionally disable the dialogue active flag if there are no more sounds

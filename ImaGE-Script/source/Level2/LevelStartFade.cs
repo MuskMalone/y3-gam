@@ -14,9 +14,15 @@ public class LevelStartFade : Entity
   public float fadeDuration = 3f;
   public Transition transition;
 
+
+
   void Start()
   {
     transition.StartTransition(true, fadeDuration, Transition.TransitionType.TV_SWITCH);
+    if(InternalCalls.GetCurrentScene() == "..\\Assets\\Scenes\\Level2.scn")
+        {
+
+        }
   }
 
   void Update()
