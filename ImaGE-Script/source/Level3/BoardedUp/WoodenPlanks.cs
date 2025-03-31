@@ -21,7 +21,9 @@ public class WoodenPlanks : Entity
   public string doorAnimName;
   public string[] notStrongEnoughDialogue;
 
-  private enum State
+    private bool isDialogueActive = false;
+
+    private enum State
   {
     BLOCKED,
     USING_HAMMER,
@@ -50,8 +52,9 @@ public class WoodenPlanks : Entity
             {
               // Play locked sound
               dialogue.SetDialogue(notStrongEnoughDialogue, new Level3Dialogue.Emotion[] {
-                Level3Dialogue.Emotion.Sad, Level3Dialogue.Emotion.Thinking
+                Level3Dialogue.Emotion.Thinking
               });
+              isDialogueActive = true;
               return;
             }
 
@@ -116,5 +119,16 @@ public class WoodenPlanks : Entity
           break;
         }
     }
+
+
+        if(isDialogueActive)
+        {
+            if(dialogue.CurrentLineIndex == 0)
+            {
+                InternalCalls.PlaySound(mEntityID, "L3_2");
+                isDialogueActive = false;
+            }
+
+        }
   }
 }
