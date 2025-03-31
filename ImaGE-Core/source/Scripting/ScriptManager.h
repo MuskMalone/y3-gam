@@ -497,6 +497,8 @@ namespace Mono
 
 		static void SetShaderElapsedTime(float elapsedTime);
 		static float GetShaderElapsedTime();
+		static void SetVignetteStrength(float strength);
+		static float GetVignetteStrength();
 
 		/*!**********************************************************************
 		*																																			  *
