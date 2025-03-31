@@ -46,6 +46,7 @@ public class AltarPaintingFrame : Entity
             }
             else if (dialogueSystem.CurrentLineIndex == 1 && !hasPlayedLine1Sound)
             {
+                InternalCalls.StopSound(mEntityID, "L1_6_VER2");
                 InternalCalls.PlaySound(mEntityID, "L1_7_VER2");
                 hasPlayedLine1Sound = true;
                 // Optionally disable the dialogue active flag if there are no more sounds
