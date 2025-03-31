@@ -30,7 +30,7 @@ public class Lvl2IntroCutscene : Entity
     private float sillouetteElapsedTime = 0f;
     private const float activationInterval = 1.0f;
 
-    private Lvl2Dialogue lvl2Dialogue;
+    private TutorialDialogue tutorialDialogue;
     public string[] introDialogueOne;
     private bool hasPlayedLine0Sound = false;
     private bool hasPlayedLine1Sound = false;
@@ -54,7 +54,7 @@ public class Lvl2IntroCutscene : Entity
         //    firstSilhouette, secondSilhouette, thirdSilhouette,
         //    fourthSilhouette, fifthSilhouette, sixthSilhouette
         //};
-        lvl2Dialogue = FindObjectOfType<Lvl2Dialogue>();
+        tutorialDialogue = FindObjectOfType<TutorialDialogue>();
         BeginningSilhouetteSequence = new Entity[5]
         {
             secondSilhouette, thirdSilhouette,
@@ -184,22 +184,22 @@ public class Lvl2IntroCutscene : Entity
             }
         }
 
-        if (isIntroDialogueActive)
-        {
-            if (lvl2Dialogue.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
-            {
-                InternalCalls.PlaySound(mEntityID, "L2_2");
-                hasPlayedLine0Sound = true;
-            }
-            else if (lvl2Dialogue.CurrentLineIndex == 1 && !hasPlayedLine1Sound)
-            {
-                InternalCalls.StopSound(mEntityID, "L2_2");
-                InternalCalls.PlaySound(mEntityID, "L2_3");
-                hasPlayedLine1Sound = true;
-                // Optionally disable the dialogue active flag if there are no more sounds
-                isIntroDialogueActive = false;
-            }
-        }
+        //if (isIntroDialogueActive)
+        //{
+        //    if (tutorialDialogue.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+        //    {
+        //        InternalCalls.PlaySound(mEntityID, "L2_2");
+        //        hasPlayedLine0Sound = true;
+        //    }
+        //    else if (tutorialDialogue.CurrentLineIndex == 1 && !hasPlayedLine1Sound)
+        //    {
+        //        InternalCalls.StopSound(mEntityID, "L2_2");
+        //        InternalCalls.PlaySound(mEntityID, "L2_3");
+        //        hasPlayedLine1Sound = true;
+        //        // Optionally disable the dialogue active flag if there are no more sounds
+        //        isIntroDialogueActive = false;
+        //    }
+        //}
     }
 
 
@@ -254,11 +254,11 @@ public class Lvl2IntroCutscene : Entity
         playerMove.UnfreezePlayer();
         isInSillouetteSequence = false;
         // Start Dialogue at the end of the cutscene
-        if (lvl2Dialogue != null)
+        if (tutorialDialogue != null)
         {
             //string[] finalLines = { "Mom..?" };
             //tutorialDialogue.Emotion[] emotions = { TutorialDialogue.Emotion.Sad }; // Choose an emotion if needed
-            lvl2Dialogue.SetDialogue(introDialogueOne, new Lvl2Dialogue.Emotion[] { Lvl2Dialogue.Emotion.Neutral, Lvl2Dialogue.Emotion.Neutral });
+            tutorialDialogue.SetDialogue(introDialogueOne, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Neutral, TutorialDialogue.Emotion.Neutral });
             isIntroDialogueActive = true;
         }
         else
