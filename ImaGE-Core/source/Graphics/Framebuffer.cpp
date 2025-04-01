@@ -69,14 +69,14 @@ namespace Graphics
         }
 
         if (mColorAttachments.size() > 1) {
-            if (mColorAttachments.size() > 4) {
+            if (mColorAttachments.size() > 5) {
 //#ifndef _INSTALLER
 //                LoggingSystem::GetInstance().Log(LogLevel::ERROR_LEVEL, "TOO MANY ATTACHMENTS!", __FUNCTION__);
 //#endif
                 throw std::runtime_error("TOO MANY ATTACHMENTS");
             }
 
-            GLenum buffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
+            GLenum buffers[5] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4 };
             glDrawBuffers(static_cast<GLsizei>(mColorAttachments.size()), buffers);
         }
         else if (mColorAttachments.empty()) {

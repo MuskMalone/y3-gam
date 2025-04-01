@@ -237,6 +237,7 @@ namespace Graphics {
 		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
 		ShaderLibrary::Add("Water", Shader::Create("Water.vert.glsl", "Water.frag.glsl"));
 		ShaderLibrary::Add("Leaf", Shader::Create("Leaf.vert.glsl", "Leaf.frag.glsl"));
+		ShaderLibrary::Add("WashingOff", Shader::Create("WashingOff.vert.glsl", "WashingOff.frag.glsl"));
 
 		ShaderLibrary::Add("Transition", Shader::Create("Transition.vert.glsl", "Transition.frag.glsl"));
 #ifdef DISTRIBUTION
@@ -264,7 +265,13 @@ namespace Graphics {
 		Graphics::FramebufferSpec framebufferSpec;
 		framebufferSpec.width = WINDOW_WIDTH<int>;
 		framebufferSpec.height = WINDOW_HEIGHT<int>;
-		framebufferSpec.attachments = { Graphics::FramebufferTextureFormat::RGBA8, Graphics::FramebufferTextureFormat::RED_INTEGER, Graphics::FramebufferTextureFormat::RGBA32F, Graphics::FramebufferTextureFormat::RGBA32F, Graphics::FramebufferTextureFormat::DEPTH };
+		framebufferSpec.attachments = { 
+			Graphics::FramebufferTextureFormat::RGBA8, //fragColor
+			Graphics::FramebufferTextureFormat::RED_INTEGER, //for entity picking
+			Graphics::FramebufferTextureFormat::RGBA32F, //for fog
+			Graphics::FramebufferTextureFormat::RGBA32F, //for bloom
+			Graphics::FramebufferTextureFormat::RGBA32F, //for high definition color
+			Graphics::FramebufferTextureFormat::DEPTH };
 		std::shared_ptr<Framebuffer> fb = Framebuffer::Create(framebufferSpec);
 		InitSkyboxPass(fb);
 

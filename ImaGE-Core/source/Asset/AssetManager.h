@@ -375,7 +375,7 @@ namespace IGE {
           template <typename T>
           AssetMetadata::AssetProps& GetMetadata(GUID const& guid) {
             std::lock_guard<std::mutex> lock(mAssetsMutex);
-            GetMetadataInternal<T>(guid);
+            return GetMetadataInternal<T>(guid);
           }
           template <typename T>
           AssetMetadata::AssetProps const& GetCMetadata(GUID const& guid) const {

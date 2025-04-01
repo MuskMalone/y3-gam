@@ -191,9 +191,11 @@ namespace GUI {
     ImGui::NewLine();
     // Shader Dropdown
     ImGui::Text("Shader");
-    static const char* shaderOptions[] = { "PBR", "Unlit", "Water", "Leaf" }; // Added "Water" option
+    static const char* shaderOptions[] = { "PBR", "Unlit", "Water", "Leaf", "WashingOff"}; // Added "Water" option
     static int currentShaderIndex = (selectedMaterial->GetShaderName() == "Unlit") ? 1 :
-        (selectedMaterial->GetShaderName() == "Water") ? 2 : (selectedMaterial->GetShaderName() == "Leaf") ? 3: 0;
+        (selectedMaterial->GetShaderName() == "Water") ? 2 : 
+        (selectedMaterial->GetShaderName() == "Leaf") ? 3 : 
+        (selectedMaterial->GetShaderName() == "WashingOff") ? 4 : 0;
 
     if (ImGui::Combo("##ShaderDropdown", &currentShaderIndex, shaderOptions, IM_ARRAYSIZE(shaderOptions))) {
         selectedMaterial->SetShaderName(shaderOptions[currentShaderIndex]);

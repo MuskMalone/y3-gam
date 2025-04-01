@@ -33,7 +33,13 @@ namespace {
   template <unsigned N>
   LightUniforms<N> GetLightData(std::vector<ECS::Entity> const& entities);
 }
-
+namespace {
+    //tuple stands for  [0]: previous active
+    //                  [1]: current active
+    //                  [2]: entity count
+    //                  [4]: Texture sharedptr
+    std::map<std::string, std::tuple<bool, bool, int, std::shared_ptr<Graphics::Texture>>> gShaderUsedMap; 
+}
 namespace Graphics {
   GeomPass::GeomPass(const RenderPassSpec& spec) : RenderPass(spec) {}
 
@@ -44,6 +50,7 @@ namespace Graphics {
       // Clears the last 2 frame buffers
       GLfloat clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f }; // Black with full alpha
       glClearBufferfv(GL_COLOR, 3, clearColor); // view pos buffer
+      glClearBufferfv(GL_COLOR, 4, clearColor); // smear
       GetTargetFramebuffer()->ClearAttachmentInt(1, -1);
 
       //=================================================SUBMESH VERSION===============================================================
@@ -92,6 +99,21 @@ namespace Graphics {
             shader->SetUniform("u_Dist", Component::Light::sGlobalProps.dist);
             shader->SetUniform("u_LeafSize", Component::Light::sGlobalProps.leafSize);
             shader->SetUniform("u_MaxRot", Component::Light::sGlobalProps.maxRot);
+          }
+
+          //WashingOff is technically transparent, but im gonna end it
+          bool const isWashingOffShader = (shader == ShaderLibrary::Get("WashingOff"));
+          if (isWashingOffShader) {
+              auto& smearTex = std::get<3>(gShaderUsedMap["WashingOff"]);
+              bool prevActive = std::get<0>(gShaderUsedMap["WashingOff"]), currActive = std::get<1>(gShaderUsedMap["WashingOff"]);
+              bool justActivated = !prevActive && currActive;
+              auto const& fb = mSpec.pipeline->GetSpec().targetFramebuffer;
+              shader->SetUniform("u_IsEditor", cam.isEditor);
+              shader->SetUniform("u_Time", time);
+              shader->SetUniform("u_DeltaTime", IGE_FRC.GetDeltaTime());
+              shader->SetUniform("u_ShaderActive", currActive);
+              shader->SetUniform("u_JustActivated", justActivated);
+              shader->SetUniform("u_previousSmearBuffer", smearTex, 34); //34th texture i think
           }
 
           // Only set camera and shadow uniforms if this isn't an unlit shader
@@ -327,6 +349,19 @@ namespace Graphics {
       if (bloomTexture) {
           bloomTexture->CopyFrom(fb->GetColorAttachmentID(3), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
       }
+
+      // Perform the copy operation
+      auto& smearTex = std::get<3>(gShaderUsedMap["WashingOff"]);
+      auto& currActive = std::get<1>(gShaderUsedMap["WashingOff"]);
+      auto& prevActive = std::get<0>(gShaderUsedMap["WashingOff"]);
+      if (!smearTex || smearTex->GetWidth() != fb->GetFramebufferSpec().width || smearTex->GetHeight() != fb->GetFramebufferSpec().height) {
+          // Create or resize mOutputTexture based on the framebuffer's specs
+          smearTex = std::make_shared<Graphics::Texture>(fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height, GL_RGBA32F);
+      }
+      //only do this for the game view
+      if (smearTex && !cam.isEditor) {
+          smearTex->CopyFrom(fb->GetColorAttachmentID(4), fb->GetFramebufferSpec().width, fb->GetFramebufferSpec().height);
+      }
   }
 
   std::shared_ptr<Texture> GeomPass::GetDepthTexture() {
@@ -396,12 +431,39 @@ namespace Graphics {
           MatGroupMap& matGroups = (transparency >= 0.99f)
               ? opaqueGroups[matData->GetShader()]
               : transparentGroups[matData->GetShader()];
+          auto const& matShdrName{ matData->GetShaderName() };
+
+          if (gShaderUsedMap.find(matShdrName) == gShaderUsedMap.end()) { // add the shader
+              gShaderUsedMap.emplace(matShdrName, std::make_tuple<bool, bool, int, std::shared_ptr<Graphics::Texture>>(false, false, 0, std::make_shared<Graphics::Texture>()));
+          }
+          {
+              if (entity.IsActive()) {
+                  auto& tag = entity.GetTag();
+                  auto& eCount = std::get<2>(gShaderUsedMap[matShdrName]);
+                  eCount++;
+              }
+          }
 
           auto const& xform = entity.GetComponent<Component::Transform>();
 
           // Add entity based on material batch number
           int const matBatch = CalculateMatBatch(matID);
           matGroups[matBatch].emplace_back(xform.worldMtx, entity, matID);
+      }
+
+      //reset gShaderusedMap entitycount
+      //set the active and prev active
+      for (auto& [name, row] : gShaderUsedMap) {
+        //tuple stands for  [0]: previous active
+        //                  [1]: current active
+        //                  [2]: entity count
+        //                  [4]: Texture sharedptr
+        auto& prevActive = std::get<0>(row);
+        auto& currActive = std::get<1>(row);
+        auto& eCount = std::get<2>(row);
+        prevActive = currActive;
+        currActive = (eCount > 0);
+        eCount = 0;
       }
   }
 
