@@ -47,7 +47,7 @@ public class  PlayerMove : Entity
   private bool startTimer = false;
 
   private readonly float defaultGravityFactor = 0f;
-  private readonly float inAirGravityFactor = 40f;
+  private readonly float inAirGravityFactor = 50f;
   private bool ungrounded = false;
 
   public float isGroundedRayHeight = 3f;
@@ -113,15 +113,17 @@ public class  PlayerMove : Entity
         ResetGravityFactor();
       }
     }
+    if (!noClip)
 #endif
 
-    if (ungrounded)
+    if (!IsGrounded())
     {
-      if (IsGrounded())
-      {
-        InternalCalls.SetGravityFactor(mEntityID, defaultGravityFactor);
-        ungrounded = false;
-      }
+      InternalCalls.SetGravityFactor(mEntityID, inAirGravityFactor);
+    }
+    else if (ungrounded)
+    {
+      InternalCalls.SetGravityFactor(mEntityID, defaultGravityFactor);
+      ungrounded = false;
     }
 
     float x = Input.GetAxis("Horizontal");

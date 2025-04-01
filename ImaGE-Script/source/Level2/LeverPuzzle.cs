@@ -39,7 +39,7 @@ public class LeverPuzzle : Entity
     private void PullLever(int index)
     {
         InternalCalls.PlaySound(mEntityID, "IncoherentWhispers");
-        InternalCalls.PlayAnimation(levers[index].mEntityID, "SwitchOn");
+        levers[index].GetComponent<Animation>().Play("SwitchOn");
         leverPulled[index] = true; // Prevent future interaction
     }
 }

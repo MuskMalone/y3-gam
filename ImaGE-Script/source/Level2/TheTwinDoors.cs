@@ -53,7 +53,7 @@ public class TheTwinDoors : Entity
       case State.ANIMATION:
         {
           // align collider during anim
-          if (InternalCalls.IsPlayingAnimation(leftDoor.mEntityID))
+          if (leftDoor.GetComponent<Animation>().IsPlaying())
           {
             InternalCalls.UpdatePhysicsToTransform(leftDoor.mEntityID);
             InternalCalls.UpdatePhysicsToTransform(rightDoor.mEntityID);
@@ -75,8 +75,8 @@ public class TheTwinDoors : Entity
 
   public void UnlockDoors()
   {
-    InternalCalls.PlayAnimation(leftDoor.mEntityID, doorAnimName);
-    InternalCalls.PlayAnimation(rightDoor.mEntityID, doorAnimName);
+    leftDoor.GetComponent<Animation>().Play(doorAnimName);
+    rightDoor.GetComponent<Animation>().Play(doorAnimName);
     currState = State.ANIMATION;
     interactDoorUI.SetActive(false);
   }

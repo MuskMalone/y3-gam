@@ -105,7 +105,7 @@ public class HammerLevel3 : Entity, IInventoryItem
 
   void Update()
   {
-    Console.WriteLine($"{sfxTimeElapsed} |||| {delayCount} ||||| {startSFX}");
+    //Console.WriteLine($"{sfxTimeElapsed} |||| {delayCount} ||||| {startSFX}");
     if (startSFX && delayCount < 5)
     {
       if (sfxTimeElapsed < sfxDelays[delayCount])
@@ -158,7 +158,7 @@ public class HammerLevel3 : Entity, IInventoryItem
         {
           startSFX = true;
           
-          if (InternalCalls.IsPlayingAnimation(mEntityID)) { return; }
+          if (GetComponent<Animation>().IsPlaying()) { return; }
 
           // if no more animations, go back to inactive
           if (++currIndex >= animations.Length)
@@ -171,7 +171,7 @@ public class HammerLevel3 : Entity, IInventoryItem
           }
 
           // trigger hammer anim
-          InternalCalls.PlayAnimation(mEntityID, animations[currIndex]);
+          GetComponent<Animation>().Play(animations[currIndex]);
 
           // also trigger the anim for both nails
           int offset = currIndex * 2;

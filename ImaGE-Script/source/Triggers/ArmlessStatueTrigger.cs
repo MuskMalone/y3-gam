@@ -42,7 +42,7 @@ public class ArmlessStatueTrigger : Entity
         // if player enters box, trigger first animation
         if (InternalCalls.OnTriggerEnter(mEntityID, Player.mEntityID))
         {
-          InternalCalls.PlayAnimation(Head.mEntityID, tiltAnimName);
+          Head.GetComponent<Animation>().Play(tiltAnimName);
           currState = State.HEAD_TILT;
           InternalCalls.PlaySound(Head.mEntityID, "..\\Assets\\Audio\\HeadMoving_SFX.wav");
           InternalCalls.StopSound(Head.mEntityID, "..\\Assets\\Audio\\GhostlyFemaleSinging_SFX.wav");
@@ -50,21 +50,21 @@ public class ArmlessStatueTrigger : Entity
         break;
 
       case State.HEAD_TILT:
-        if (InternalCalls.IsPlayingAnimation(Head.mEntityID))
+        if (Head.GetComponent<Animation>().IsPlaying())
         {
           InternalCalls.UpdatePhysicsToTransform(Head.mEntityID);
           return;
         }
 
         // after first animation, trigger tears falling
-        InternalCalls.PlayAnimation(Tears.mEntityID, tearsAnimName);
+        Tears.GetComponent<Animation>().Play(tearsAnimName);
         currState = State.TEARS;
         InternalCalls.PlaySound(Head.mEntityID, "..\\Assets\\Audio\\StatueCrying_SFX.wav");
 
         break;
 
       case State.TEARS:
-        if (InternalCalls.IsPlayingAnimation(Tears.mEntityID)) { return; }
+        if (Tears.GetComponent<Animation>().IsPlaying()) { return; }
 
         // activate support colliders
         ShoulderCollider1.SetActive(true);

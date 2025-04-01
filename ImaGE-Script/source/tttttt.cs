@@ -27,19 +27,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-public class Crasher : Entity
+public class tttttt : Entity
 {
-  List<int> ints;
   // Start is called before the first frame update
   void Start()
   {
-
+    GetComponent<Video>().ClearFrame();
   }
 
   // Update is called once per frame
   void Update()
   {
-    ints[5] = 4;
+    Video vid = GetComponent<Video>();
+    if (Input.GetKeyTriggered(KeyCode.RIGHT_BRACKET))
+    {
+      vid.Play();
+    }
+
+    if (Input.GetKeyTriggered(KeyCode.SEMICOLON))
+    {
+      vid.TogglePause();
+    }
   }
 }
 

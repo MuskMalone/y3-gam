@@ -66,7 +66,7 @@ public class ControlPanelDoor : Entity
         if (isDoorHit && Input.GetMouseButtonTriggered(0))
         {
           InternalCalls.PlaySound(controlPanel.mEntityID, "OpenDoor");
-          InternalCalls.PlayAnimation(mEntityID, doorOpenAnimation);
+          GetComponent<Animation>().Play(doorOpenAnimation);
           currState = State.OPENING;
           controlPanel.Unlock();  // we'll unlock the interaction the moment the animation starts
         }

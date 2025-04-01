@@ -136,7 +136,7 @@ namespace IGE {
                             mgr.mGroup[video.channelGroup]->setPaused(false);
                         }
                         if (mgr.mSceneStarted && mgr.mSceneStopped) {
-                            if (video.IsAudioEnabled()) {
+                            if (video.IsAudioEnabled() && video.playOnStart) {
                                 mgr.PlaySound(video.sound, video.audioPlaySettings, video.channelGroup, "video");
                                 if (mgr.mGroup.find(video.channelGroup) != mgr.mGroup.end()) {
                                     FMOD::ChannelGroup* videoSoundGrp = mgr.mGroup[video.channelGroup];

@@ -26,7 +26,7 @@ public class PitDoor : Entity
       bool isDoorHit = playerInteraction.RayHitString == entityTag;
       if (Input.GetMouseButtonTriggered(0) && isDoorHit)
       {
-        InternalCalls.PlayAnimation(mEntityID, openAnimName);
+        GetComponent<Animation>().Play(openAnimName);
         InternalCalls.DestroyEntity(gapCollider.mEntityID);
         playerInteracted = true;
         unlockDoorUI?.SetActive(false);
@@ -42,7 +42,7 @@ public class PitDoor : Entity
       // update collider
       InternalCalls.UpdatePhysicsToTransform(mEntityID);
 
-      if (!InternalCalls.IsPlayingAnimation(mEntityID))
+      if (!GetComponent<Animation>().IsPlaying())
       {
         Destroy(this);  // destroy this script
       }

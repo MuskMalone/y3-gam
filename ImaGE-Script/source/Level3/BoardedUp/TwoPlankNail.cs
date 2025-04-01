@@ -38,7 +38,7 @@ public class TwoPlankNail : Entity
       case State.ANIMATION:
       {
         // update collider to transform during animation
-        if (InternalCalls.IsPlayingAnimation(mEntityID))
+        if (GetComponent<Animation>().IsPlaying())
         {
           InternalCalls.UpdatePhysicsToTransform(mEntityID);
         }
@@ -78,7 +78,7 @@ public class TwoPlankNail : Entity
   }
   public void TriggerAnim()
   {
-    InternalCalls.PlayAnimation(mEntityID, dropAnimName);
+    GetComponent<Animation>().Play(dropAnimName);
     currState = State.ANIMATION;
   }
 }

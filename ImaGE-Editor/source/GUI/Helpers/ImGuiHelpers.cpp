@@ -203,14 +203,13 @@ namespace ImGuiHelpers
       try {
         IGE::Assets::GUID const guid{ IGE_ASSETMGR.LoadRef<IGE::Assets::VideoAsset>(assetPayload.GetFilePath()) };
 
-        // if entity has video component, simply set the guid
-        if (entity.HasComponent<Component::Video>()) {
-          entity.GetComponent<Component::Video>().InitVideoSource(guid);
+        // if entity has no video component, add the component and set the guid
+        if (!entity.HasComponent<Component::Video>()) {
+          entity.EmplaceComponent<Component::Video>().Init();
         }
-        // else add the component and set the guid
-        else {
-          entity.EmplaceComponent<Component::Video>().InitVideoSource(guid);
-        }
+        Component::Video& video{ entity.GetComponent<Component::Video>() };
+        video.guid = guid;
+        video.Init();
 
         // handle prefab instance overrides
         if (entity.HasComponent<Component::PrefabOverrides>()) {

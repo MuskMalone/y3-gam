@@ -323,6 +323,7 @@ namespace IGE.Utils
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void GetSoundPlaybackPosition(uint entity, string sound, uint time);
 
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void PlayAnimation(uint entity, string animation, bool loop = false);
 
@@ -340,6 +341,41 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void StopAnimationLoop(uint entity); // stops the animation after the current loop ends
+
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void PlayVideo(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ToggleVideoPause(uint entity);  // note: only works for video
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetVideoLoop(uint entity, bool loop);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool GetVideoLoop(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetVideoAudioEnabled(uint entity, bool enabled);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool GetVideoAudioEnabled(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ClearVideoFrame(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool HasVideoStarted(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool HasVideoEnded(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetVideoAlpha(uint entity, uint alpha);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static uint GetVideoAlpha(uint entity);
+
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetDeltaTime();
