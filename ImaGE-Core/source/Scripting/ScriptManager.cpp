@@ -324,6 +324,17 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(PauseAnimation);
   ADD_INTERNAL_CALL(ResumeAnimation);
   ADD_INTERNAL_CALL(StopAnimationLoop);
+  ADD_INTERNAL_CALL(PlayVideo);
+  ADD_INTERNAL_CALL(ToggleVideoPause);
+  ADD_INTERNAL_CALL(SetVideoLoop);
+  ADD_INTERNAL_CALL(GetVideoLoop);
+  ADD_INTERNAL_CALL(SetVideoAudioEnabled);
+  ADD_INTERNAL_CALL(GetVideoAudioEnabled);
+  ADD_INTERNAL_CALL(HasVideoStarted);
+  ADD_INTERNAL_CALL(HasVideoEnded);
+  ADD_INTERNAL_CALL(ClearVideoFrame);
+  ADD_INTERNAL_CALL(GetVideoAlpha);
+  ADD_INTERNAL_CALL(SetVideoAlpha);
   ADD_INTERNAL_CALL(GetLayerName);
   ADD_INTERNAL_CALL(GetCurrentScene);
   ADD_INTERNAL_CALL(SetCurrentScene);
@@ -1326,6 +1337,7 @@ void Mono::StopSound(ECS::Entity::EntityID e, MonoString* s)
     entity.GetComponent<Component::AudioSource>().StopSound(name);
 }
 
+
 void Mono::PlayAnimation(ECS::Entity::EntityID entity, MonoString* str, bool loop) {
   std::string const name{ MonoStringToSTD(str) };
   ECS::Entity(entity).GetComponent<Component::Animation>().PlayAnimation(name, loop);
@@ -1365,6 +1377,52 @@ void Mono::SetShaderState(unsigned idx, bool active)
 {
     Graphics::PostProcessingManager::GetInstance().SetShaderState(idx, active);
 }
+
+
+void Mono::PlayVideo(ECS::Entity::EntityID entity) {
+  ECS::Entity(entity).GetComponent<Component::Video>().PlayVideo();
+}
+
+void Mono::ToggleVideoPause(ECS::Entity::EntityID entity) {
+  ECS::Entity(entity).GetComponent<Component::Video>().TogglePause();
+}
+
+void Mono::SetVideoLoop(ECS::Entity::EntityID entity, bool loop) {
+  ECS::Entity(entity).GetComponent<Component::Video>().SetLoop(loop);
+}
+
+bool Mono::GetVideoLoop(ECS::Entity::EntityID entity) {
+  return ECS::Entity(entity).GetComponent<Component::Video>().loop;
+}
+
+void Mono::SetVideoAudioEnabled(ECS::Entity::EntityID entity, bool enabled) {
+  ECS::Entity(entity).GetComponent<Component::Video>().EnableAudio(enabled);
+}
+
+bool Mono::GetVideoAudioEnabled(ECS::Entity::EntityID entity) {
+  return ECS::Entity(entity).GetComponent<Component::Video>().IsAudioEnabled();
+}
+
+bool Mono::HasVideoStarted(ECS::Entity::EntityID entity) {
+  return ECS::Entity(entity).GetComponent<Component::Video>().started;
+}
+
+bool Mono::HasVideoEnded(ECS::Entity::EntityID entity) {
+  return ECS::Entity(entity).GetComponent<Component::Video>().HasVideoEnded();
+}
+
+void Mono::ClearVideoFrame(ECS::Entity::EntityID entity) {
+  ECS::Entity(entity).GetComponent<Component::Video>().ClearFrame();
+}
+
+void Mono::SetVideoAlpha(ECS::Entity::EntityID entity, unsigned alpha) {
+  ECS::Entity(entity).GetComponent<Component::Video>().SetAlpha(alpha);
+}
+
+unsigned Mono::GetVideoAlpha(ECS::Entity::EntityID entity) {
+  return ECS::Entity(entity).GetComponent<Component::Video>().alpha;
+}
+
 
 glm::vec3 Mono::GetVelocity(ECS::Entity::EntityID e)
 {

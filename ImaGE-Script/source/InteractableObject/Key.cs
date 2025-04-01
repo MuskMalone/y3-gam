@@ -123,7 +123,7 @@ public class Key : Entity, IInventoryItem
     if (isPlayingAnimation)
     {
       // update state of animation every loop
-      isPlayingAnimation = InternalCalls.IsPlayingAnimation(mEntityID);
+      isPlayingAnimation = GetComponent<Animation>().IsPlaying();
 
       if (isZoomingIn)
       {
@@ -151,7 +151,7 @@ public class Key : Entity, IInventoryItem
   void TriggerAnimation()
   {
     SetActive(true);
-    InternalCalls.PlayAnimation(mEntityID, keyAnimName);
+    GetComponent<Animation>().Play(keyAnimName);
     isPlayingAnimation = true;
     SetKeyCameraAsMain();
   }

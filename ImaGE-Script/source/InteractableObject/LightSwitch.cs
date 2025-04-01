@@ -24,7 +24,7 @@ public class LightSwitch : Entity
     {
         if (playingAnim)
         {
-            if (InternalCalls.IsPlayingAnimation(lever.mEntityID))
+            if (lever.GetComponent<Animation>().IsPlaying())
             {
                 return;
             }
@@ -49,7 +49,7 @@ public class LightSwitch : Entity
                 //Console.WriteLine("CameHere");
                 InternalCalls.PlaySound(mEntityID, lightsOn ? "LeverUp" : "LeverDown");
 
-                InternalCalls.PlayAnimation(lever.mEntityID, lightsOn ? "SwitchOff" : "SwitchOn");
+                lever.GetComponent<Animation>().Play(lightsOn ? "SwitchOff" : "SwitchOn");
                 playingAnim = true;
             }
         }

@@ -145,7 +145,7 @@ public class Safe : Entity
       case State.DOOR_OPENING:
         InternalCalls.UpdatePhysicsToTransform(doorPivot.mEntityID);
 
-        if (!InternalCalls.IsPlayingAnimation(doorPivot.mEntityID))
+        if (!doorPivot.GetComponent<Animation>().IsPlaying())
         {
           // unlock sound
           currState = State.UNLOCKED;
@@ -182,10 +182,10 @@ public class Safe : Entity
         //audioManager.Play3DSound(audioManager.crowbar, crowbarAtSafe, audioManager.CrowbarVolume);
 
         IInventoryItem itemToUse = inventory.GetItemByName("Crowbar");
-        Debug.Log("itemToUse" + itemToUse);
+        //Debug.Log("itemToUse" + itemToUse);
         if (itemToUse != null)
         {
-          Debug.Log("name" + itemToUse.Name);
+          //Debug.Log("name" + itemToUse.Name);
           inventory.RemoveItem(itemToUse);
         }
 
@@ -203,10 +203,10 @@ public class Safe : Entity
         hammerAtSafe.SetActive(true);
         //audioManager.Play3DSound(audioManager.hammer, hammerAtSafe, audioManager.HammerVolume);
         IInventoryItem itemToUse = inventory.GetItemByName("Hammer");
-        Debug.Log("itemToUse" + itemToUse);
+        //Debug.Log("itemToUse" + itemToUse);
         if (itemToUse != null)
         {
-          Debug.Log("name" + itemToUse.Name);
+          //Debug.Log("name" + itemToUse.Name);
           inventory.RemoveItem(itemToUse); // Remove after use
         }
 
@@ -397,7 +397,7 @@ public class Safe : Entity
     {
       InternalCalls.PlaySound(mEntityID, "SafeInteract");
       InternalCalls.PlaySound(mEntityID, "SafeUnlock");
-      InternalCalls.PlayAnimation(doorPivot.mEntityID, openSafeAnim);
+      doorPivot.GetComponent<Animation>().Play(openSafeAnim);
       EndSafeUI();
       //safeDoorPart.SetActive(false);
 

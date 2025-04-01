@@ -45,7 +45,7 @@ public class Nail : Entity
       case State.ANIMATION:
       {
         // update collider to transform during animation
-        if (InternalCalls.IsPlayingAnimation(mEntityID))
+        if (GetComponent<Animation>().IsPlaying())
         {
           InternalCalls.UpdatePhysicsToTransform(mEntityID);
         }
@@ -120,7 +120,7 @@ public class Nail : Entity
 
   public void TriggerAnim()
   {
-    InternalCalls.PlayAnimation(mEntityID, dropAnimName);
+    GetComponent<Animation>().Play(dropAnimName);
     currState = State.ANIMATION;
   }
 }

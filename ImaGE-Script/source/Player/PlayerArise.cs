@@ -46,12 +46,12 @@ public class PlayerArise  : Entity
       {
         playerMove.useScriptRotation = false;
       }
-      InternalCalls.PlayAnimation(mEntityID, PLayerAriseAnim);
+      GetComponent<Animation>().Play(PLayerAriseAnim);
       InternalCalls.UpdatePhysicsToTransform(mEntityID);
       hasArsied = true;
     }
 
-    else if (!InternalCalls.IsPlayingAnimation(mEntityID))
+    else if (!GetComponent<Animation>().IsPlaying())
     {
       playerMove.SetRotation(GetComponent<Transform>().rotationEuler);
       playerMove.useScriptRotation = true;

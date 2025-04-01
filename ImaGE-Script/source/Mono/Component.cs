@@ -248,8 +248,8 @@ public class Material : Component
   }
 
 
-  public class Image: Component
-  {
+public class Image : Component
+{
   public Color color
   {
     get
@@ -259,14 +259,115 @@ public class Material : Component
     }
     set
     {
-       InternalCalls.SetImageColor(entity.mEntityID, new Vector4(value.r, value.g, value.b, value.a));
+      InternalCalls.SetImageColor(entity.mEntityID, new Vector4(value.r, value.g, value.b, value.a));
     }
   }
 }
 
-  
+public class Animation : Component
+{
+  public string currentAnimation
+  {
+    get
+    {
+      return InternalCalls.GetCurrentAnimation(entity.mEntityID);
+    }
+  }
 
+  public bool IsPlaying()
+  {
+    return InternalCalls.IsPlayingAnimation(entity.mEntityID);
+  }
 
+  public void Play(string name, bool loop = false)
+  {
+    InternalCalls.PlayAnimation(entity.mEntityID, name, loop);
+  }
 
+  public void Pause()
+  {
+    InternalCalls.PauseAnimation(entity.mEntityID);
+  }
 
+  public void Resume()
+  {
+    InternalCalls.ResumeAnimation(entity.mEntityID);
+  }
 
+  public void StopAnimationLoop()
+  {
+    InternalCalls.StopAnimationLoop(entity.mEntityID);
+  }
+}
+
+public class Video : Component
+{
+  public uint alpha
+  {
+    get
+    {
+      return InternalCalls.GetVideoAlpha(entity.mEntityID);
+    }
+
+    set
+    {
+      InternalCalls.SetVideoAlpha(entity.mEntityID, value);
+    }
+  }
+
+  public bool audioEnabled
+  {
+    get
+    {
+      return InternalCalls.GetVideoAudioEnabled(entity.mEntityID);
+    }
+
+    set
+    {
+      InternalCalls.SetVideoAudioEnabled(entity.mEntityID, value);
+    }
+  }
+
+  public bool started
+  {
+    get
+    {
+      return InternalCalls.HasVideoStarted(entity.mEntityID);
+    }
+  }
+
+  public bool loop
+  {
+    get
+    {
+      return InternalCalls.GetVideoLoop(entity.mEntityID);
+    }
+
+    set
+    {
+      InternalCalls.SetVideoLoop(entity.mEntityID, value);
+    }
+  }
+
+  public void Play()
+  {
+    InternalCalls.PlayVideo(entity.mEntityID);
+  }
+
+  // note: only works for video
+  public void TogglePause()
+  {
+    InternalCalls.ToggleVideoPause(entity.mEntityID);
+  }
+
+  public bool HasEnded()
+  {
+    return InternalCalls.HasVideoEnded(entity.mEntityID);
+  }
+
+  // fill the texture with black
+  public void ClearFrame()
+  {
+    InternalCalls.ClearVideoFrame(entity.mEntityID);
+  }
+}

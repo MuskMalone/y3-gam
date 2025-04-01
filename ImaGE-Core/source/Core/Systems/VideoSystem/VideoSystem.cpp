@@ -19,7 +19,14 @@ namespace Systems {
 
       Component::Video& video{ entity.GetComponent<Component::Video>() };
       if (!video.guid || video.paused || video.HasVideoEnded()) { continue; }
-      if (!video.playOnStart && !video.started) { continue; }
+      if (video.playOnStart) {
+        if (!video.started) {
+          video.PlayVideo();
+        }
+      }
+      else if (!video.started) {
+        continue;
+      }
 
       // video component will handle the rest
       video.AdvanceVideo(IGE_FRC.GetDeltaTime());

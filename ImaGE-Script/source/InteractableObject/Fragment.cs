@@ -174,7 +174,7 @@ public class Fragment : Entity
 
   void TriggerAnimation()
   {
-    InternalCalls.PlayAnimation(mEntityID, fragAnimNameFlyUp, false);
+    GetComponent<Animation>().Play(fragAnimNameFlyUp);
     InternalCalls.PlaySound(mEntityID, "FloatUpSFX");
     GardenFragment.SetActive(true);
     Particles.SetActive(true);
@@ -186,8 +186,8 @@ public class Fragment : Entity
     InternalCalls.PlaySound(GardenFragment.mEntityID, "FlyInSFX");
     transition.StartTransition(true, 0.5f, Transition.TransitionType.WIPE);
     uint parent = InternalCalls.GetParentByID(GardenFragment.mEntityID);
-    InternalCalls.PlayAnimation(parent, fragAnimNameEnterBox, false);
-    Debug.Log("Playing animation: " + fragAnimNameEnterBox);
+    InternalCalls.PlayAnimation(parent, fragAnimNameEnterBox);
+    //Debug.Log("Playing animation: " + fragAnimNameEnterBox);
     SetFragmentCameraAsMain();
   }
 

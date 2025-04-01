@@ -16,8 +16,9 @@ namespace Component {
     // for EmplaceOrReplaceComponent
     Video& operator=(Video const& rhs);
 
-    inline void PlayVideo() noexcept { started = true; }
-    inline void TogglePause() noexcept { paused = !paused; }
+    void Init();
+    void PlayVideo();
+    void TogglePause() noexcept;  // note: only works for video
 
     float GetVideoTimestamp() const;
     float GetVideoLength() const;
@@ -28,21 +29,28 @@ namespace Component {
     inline bool IsAudioEnabled() const noexcept { return audioEnabled; }
     void EnableAudio(bool enabled);
 
-    bool IsLoopEnabled() const;
+    bool IsLoopEnabled() const noexcept { return loop; }
     void SetLoop(bool enabled);
 
-    void InitVideoSource(IGE::Assets::GUID guid);
+    bool IsPlayedOnAwake() const noexcept { return playOnStart; }
+    void SetPlayOnAwake(bool playOnAwake);
+
     void AdvanceVideo(float seconds);
     void SetAlpha(unsigned newAlpha);
 
     inline bool IsWorldObject() const noexcept{ return renderType == RenderType::WORLD; }
     inline bool IsUIObject() const noexcept { return renderType == RenderType::UI; }
 
+    void UpdateBuffer();
+    void ClearFrame();  // fills the texture with black
     void Release();
     void Clear() noexcept;
 
   private:
+    void InitVideoSource(IGE::Assets::GUID guid);
+    void InitAudioSource(IGE::Assets::GUID guid);
     bool PreviewFirstFrame();
+    void FreeSources();
 
   public:
     enum RenderType {
@@ -64,7 +72,7 @@ namespace Component {
     unsigned alpha;     // don't modify this directly!
     unsigned audioOffset;
     bool started, paused;                                 // should probably just private
-    bool playOnStart;                                     // the variables at this point
+    bool playOnStart;   // don't modify this directly!    // the variables at this point
     bool loop;          // don't modify this directly!
     bool audioEnabled;  // don't modify this directly!
   };

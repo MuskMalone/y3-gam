@@ -3006,26 +3006,29 @@ namespace GUI {
           modified = true;
         }
 
+        bool dummyBool; // used to display the following bool values in inspector
+
         NextRowTable("Play on Awake");
-        if (ImGui::Checkbox("##PlayOnStart", &video.playOnStart)) {
-          modified = true;
+        dummyBool = video.IsPlayedOnAwake();
+        if (ImGui::Checkbox("##PlayOnStart", &dummyBool)) {
+          video.SetPlayOnAwake(dummyBool);
         }
 
         NextRowTable("Loop");
-        bool loop{ video.loop };
-        if (ImGui::Checkbox("##Loop", &loop)) {
-          video.SetLoop(loop);
+        dummyBool = video.loop;
+        if (ImGui::Checkbox("##Loop", &dummyBool)) {
+          video.SetLoop(dummyBool);
           modified = true;
         }
 
         NextRowTable("Enable Audio");
-        bool audioEnabled{ video.audioEnabled };
-        if (ImGui::Checkbox("##EnableAudio", &audioEnabled)) {
-          video.EnableAudio(audioEnabled);
+        dummyBool = video.audioEnabled;
+        if (ImGui::Checkbox("##EnableAudio", &dummyBool)) {
+          video.EnableAudio(dummyBool);
           modified = true;
         }
 
-        if (!audioEnabled) {
+        if (!dummyBool) {
           ImGui::EndTable();
         }
         else {

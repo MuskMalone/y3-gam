@@ -237,7 +237,7 @@ namespace Reflection::ComponentUtils {
     try {
       Component::Video& newVid{ entity.EmplaceOrReplaceComponent<Video>(comp) };
       if (newVid.guid) {
-        newVid.InitVideoSource(newVid.guid);
+        newVid.Init();
       }
     }
     catch (Debug::ExceptionBase& err) {

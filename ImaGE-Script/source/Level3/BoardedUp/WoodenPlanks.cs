@@ -21,9 +21,9 @@ public class WoodenPlanks : Entity
   public string doorAnimName;
   public string[] notStrongEnoughDialogue;
 
-    private bool isDialogueActive = false;
+  private bool isDialogueActive = false;
 
-    private enum State
+  private enum State
   {
     BLOCKED,
     USING_HAMMER,
@@ -73,17 +73,17 @@ public class WoodenPlanks : Entity
           break;
         }
 
-        case State.USING_HAMMER:
+      case State.USING_HAMMER:
         {
           if (Hammer.GetState() != HammerLevel3.HammerState.COMPLETE)
           {
             // may want to do some camera stuff here
 
-            return; 
+            return;
           }
 
           SetActive(false);
-          InternalCalls.PlayAnimation(Door.mEntityID, doorAnimName);
+          Door.GetComponent<Animation>().Play(doorAnimName);
           currState = State.OPENING_DOOR;
 
           // workaround to disabling a collider - just teleporting it out of the map
@@ -98,12 +98,12 @@ public class WoodenPlanks : Entity
       case State.OPENING_DOOR:
         {
           // align the door's collider to its animation
-          if (InternalCalls.IsPlayingAnimation(Door.mEntityID)) 
+          if (Door.GetComponent<Animation>().IsPlaying())
           {
             InternalCalls.UpdatePhysicsToTransform(Door.mEntityID);
             return;
           }
-          
+
           // animation complete, enter last phase
           currState = State.BYE_BYE;
 
@@ -121,14 +121,14 @@ public class WoodenPlanks : Entity
     }
 
 
-        if(isDialogueActive)
-        {
-            if(dialogue.CurrentLineIndex == 0)
-            {
-                InternalCalls.PlaySound(mEntityID, "L3_2");
-                isDialogueActive = false;
-            }
+    if (isDialogueActive)
+    {
+      if (dialogue.CurrentLineIndex == 0)
+      {
+        InternalCalls.PlaySound(mEntityID, "L3_2");
+        isDialogueActive = false;
+      }
 
-        }
+    }
   }
 }

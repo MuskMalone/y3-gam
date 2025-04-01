@@ -134,6 +134,7 @@ namespace IGE {
 			 void PauseGroup(std::string const& name);
 			//Returns true if the group sound is paused, to prevent resume of playing groups
 			 bool IsGroupPaused(std::string const& name);
+			 FMOD::ChannelGroup* GetGroup(uint64_t);
 
 			 void StopChannel(FMOD::Channel* channel);
 			//SOUND MANAGEMENT FUNCTIONS

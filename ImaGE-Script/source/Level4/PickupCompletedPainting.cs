@@ -60,7 +60,7 @@ public class PickupCompletedPainting : Entity
 
       case State.CUTSCENE:
         {
-          if (InternalCalls.IsPlayingAnimation(leftGate.mEntityID)) {
+          if (leftGate.GetComponent<Animation>().IsPlaying()) {
             elapsedTime += Time.deltaTime;
             bloomProgress = Mathf.Clamp01(elapsedTime / lerpDuration);
             currentBloomIntensity = Easing.EaseInBounce(0f, maximumBloom, bloomProgress);
@@ -86,7 +86,7 @@ public class PickupCompletedPainting : Entity
     blackBorder.DisplayBlackBorders();
     currState = State.CUTSCENE;
     SetGateCameraAsMain();
-    InternalCalls.PlayAnimation(leftGate.mEntityID, leftGateAnimationName);
+    leftGate.GetComponent<Animation>().Play(leftGateAnimationName);
   }
 
   void EndCutscene()

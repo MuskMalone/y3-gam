@@ -50,13 +50,13 @@ public class LookAroundTrigger : Entity
           {
             SetLookAroundCameraAsMain();
             transition.StartTransition(false, transitionTime, Transition.TransitionType.FADE);
-            InternalCalls.PlayAnimation(lookAroundCamera.mEntityID, lookAroundAnimationName);
+            lookAroundCamera.GetComponent<Animation>().Play(lookAroundAnimationName);
             animationPlaying = true;
           }
 
           if (animationPlaying)
           {
-            if (!InternalCalls.IsPlayingAnimation(lookAroundCamera.mEntityID))
+            if (!lookAroundCamera.GetComponent<Animation>().IsPlaying())
             {
               transition.StartTransition(false, 0.5f, Transition.TransitionType.FADE);
               blackBorder.HideBlackBorders();
