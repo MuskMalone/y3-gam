@@ -21,9 +21,10 @@ public class HammerGlow : Entity
   private float timeElapsed = 0f;
   private float glowHoldDuration;
   private bool glowing = false, flipped = false;
+    public Entity hammerTriggerLight;
 
-  // Start is called before the first frame update
-  void Start()
+    // Start is called before the first frame update
+    void Start()
   {
     glowHoldDuration = glowInterval * 0.5f;
   }
@@ -69,7 +70,12 @@ public class HammerGlow : Entity
   {
     InternalCalls.SetBloomIntensity(hammerPart1.mEntityID, intensity);
     InternalCalls.SetBloomIntensity(hammerPart2.mEntityID, intensity);
-  }
+
+        if (hammerTriggerLight != null)
+        {
+            InternalCalls.SetLightIntensity(hammerTriggerLight.mEntityID, intensity);
+        }
+    }
 
   void Reset()
   {
