@@ -68,6 +68,11 @@ using IGE.Utils;
       return component;
     }
 
+    public bool IsValid()
+    {
+        return InternalCalls.IsValidEntity(mEntityID);
+    }
+
     public void SetActive(bool active)
     {
       InternalCalls.SetActive(mEntityID, active);

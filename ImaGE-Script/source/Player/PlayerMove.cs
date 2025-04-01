@@ -47,7 +47,7 @@ public class  PlayerMove : Entity
   private bool startTimer = false;
 
   private readonly float defaultGravityFactor = 0f;
-  private readonly float inAirGravityFactor = 50f;
+  private readonly float inAirGravityFactor = 40f;
   private bool ungrounded = false;
 
   public float isGroundedRayHeight = 3f;
@@ -119,6 +119,7 @@ public class  PlayerMove : Entity
     if (!IsGrounded())
     {
       InternalCalls.SetGravityFactor(mEntityID, inAirGravityFactor);
+      ungrounded = true;
     }
     else if (ungrounded)
     {

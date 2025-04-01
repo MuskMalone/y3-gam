@@ -274,6 +274,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(DestroyScript);
   ADD_INTERNAL_CALL(SetActive);
   ADD_INTERNAL_CALL(IsActive);
+  ADD_INTERNAL_CALL(IsValidEntity);
   ADD_INTERNAL_CALL(FindChildByTag);
   ADD_INTERNAL_CALL(FindParentByTag);
   ADD_INTERNAL_CALL(GetAllChildren);
@@ -1585,6 +1586,11 @@ bool Mono::IsActive(ECS::Entity::EntityID entity) {
     Debug::DebugLogger::GetInstance().LogError("Entity does not have the tag component!");
     return false;
   }
+}
+
+bool Mono::IsValidEntity(ECS::Entity::EntityID id) {
+  ECS::Entity const entity{ id };
+  return entity && IGE_ENTITYMGR.IsValidEntity(entity);
 }
 
 MonoArray* Mono::GetAllChildren(ECS::Entity::EntityID entity)
