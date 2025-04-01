@@ -35,7 +35,7 @@ public class LookAroundTrigger : Entity
           if (InternalCalls.OnTriggerEnter(mEntityID, blackBorder.playerMove.mEntityID))
           {
             currState = State.IN_ANIMATION;
-            transition.StartTransition(false, transitionTime, Transition.TransitionType.FADE);
+            transition.StartTransition(true, transitionTime, Transition.TransitionType.FADE);
             blackBorder.DisplayBlackBorders();
           }
 
@@ -49,15 +49,16 @@ public class LookAroundTrigger : Entity
           if (transitionTimer > transitionTime && !animationPlaying)
           {
             SetLookAroundCameraAsMain();
-            transition.StartTransition(true, 0.25f, Transition.TransitionType.FADE);
+            transition.StartTransition(false, transitionTime, Transition.TransitionType.FADE);
             InternalCalls.PlayAnimation(lookAroundCamera.mEntityID, lookAroundAnimationName);
             animationPlaying = true;
           }
 
           if (animationPlaying)
           {
-            if (!InternalCalls.IsPlayingAnimation(blackBorder.playerMove.mEntityID))
+            if (!InternalCalls.IsPlayingAnimation(lookAroundCamera.mEntityID))
             {
+              transition.StartTransition(false, 0.5f, Transition.TransitionType.FADE);
               blackBorder.HideBlackBorders();
               currState = State.FINISHED;
               SetPlayerCameraAsMain();

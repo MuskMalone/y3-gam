@@ -43321,6 +43321,72 @@
                         },
                         "sensor": true
                     }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 912,
+                                "scriptName": "LookAroundTrigger",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 3145972,
+                                            "scriptName": "BlackBorder"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorder"
+                                        }
+                                    },
+                                    {
+                                        "data": "LookAround",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "lookAroundAnimationName"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 915,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "lookAroundCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 394,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.5,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "transitionTime"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
                 }
             ]
         },
@@ -43552,15 +43618,22 @@
                     }
                 },
                 {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "LookAround",
+                                "value": {
+                                    "ID": 9842431569943315118
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
                         },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
+                        "repeat": false
                     }
                 },
                 {
@@ -43576,7 +43649,7 @@
                         "fov": 60.0,
                         "aspectRatio": 1.7777777910232544,
                         "nearClip": 0.10000000149011612,
-                        "farClip": 100.0
+                        "farClip": 1000.0
                     }
                 }
             ]
