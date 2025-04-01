@@ -353,7 +353,7 @@ vec4 GetAlbedoColor(sampler2D matTex, vec2 u)
     
     d = normalize(Up.yz + Down.yz + Left.yz + Right.yz);
     
-    d += (hash22(u - sin((u/R.xy)*1.))*20.);
+    d += (hash22(u - sin((u/R.xy)*1.)) * 200. * u_DeltaTime);
     
     float angle = abs(atan(d.y, d.x)) - pi;
     
