@@ -179,6 +179,10 @@ public class ControlPanel2 : Entity
             default:
                 break;
         }
+
+        UpdateHiddenTextVisibility();
+
+
     }
 
     private void HandleUVLightControls()
@@ -272,7 +276,7 @@ public class ControlPanel2 : Entity
             {
                 SetHiddenText(currStatue, false);
             }
-            uvLightEnabled = false; // Optionally reset this flag if it’s used only when lights are off
+            //uvLightEnabled = false; // Optionally reset this flag if it’s used only when lights are off
         }
     }
 
@@ -404,4 +408,21 @@ public class ControlPanel2 : Entity
 
         hiddenText0 = hiddenText1 = hiddenText2 = hiddenText3 = null;
     }
+
+    private void UpdateHiddenTextVisibility()
+    {
+        if (!areLightsOn && uvLightEnabled)
+        {
+            if (defaultStateActive)
+                SetDefaultHiddenText(true);
+            else
+                SetHiddenText(currStatue, true);
+        }
+        else
+        {
+            SetDefaultHiddenText(false);
+            SetHiddenText(currStatue, false);
+        }
+    }
+
 }
