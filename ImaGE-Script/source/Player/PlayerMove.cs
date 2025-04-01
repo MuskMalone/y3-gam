@@ -31,10 +31,10 @@ public class  PlayerMove : Entity
   public bool isTutorial = false;
   public Entity cam;
 
-  private float yaw = 0f;                                   // Rotation around the Y-axis (horizontal, for player)
-  private float pitch = 0f;                                 // Rotation around the X-axis (vertical, for camera)
+  public float yaw = 0f;                                   // Rotation around the Y-axis (horizontal, for player)
+  public float pitch = 0f;                                 // Rotation around the X-axis (vertical, for camera)
 
-  private float sensitivity = 0.1f;                         // Mouse sensitivity
+  public float sensitivity = 0.1f;                         // Mouse sensitivity
   private float maxPitch = 89f;                             // Limit to prevent camera flipping (in degrees)
   private float minPitch = -89f;                            // Limit to prevent camera flipping (in degrees)
   
