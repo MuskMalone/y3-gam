@@ -124,9 +124,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 111.56524658203125,
-                            "y": 44.650081634521484,
-                            "z": -83.56242370605469
+                            "x": -2.6104471683502197,
+                            "y": 178.84048461914063,
+                            "z": -449.24932861328125
                         },
                         "worldScale": {
                             "x": 0.7200000286102295,
@@ -150,9 +150,9 @@
                     "Camera": {
                         "projType": "PERSP",
                         "position": {
-                            "x": 111.56524658203125,
-                            "y": 44.650081634521484,
-                            "z": -83.56242370605469
+                            "x": -2.6104471683502197,
+                            "y": 178.84048461914063,
+                            "z": -449.24932861328125
                         },
                         "yaw": 0.0,
                         "pitch": 0.0,
@@ -4273,6 +4273,181 @@
                             "shadowModified": true,
                             "customCenter": false
                         }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 79,
+            "Parent": 354,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HorrorBridgeTriggerLower",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 48.7554817199707,
+                            "y": 181.0117950439453,
+                            "z": -446.3636474609375
+                        },
+                        "scale": {
+                            "x": 2.999999761581421,
+                            "y": 15.140000343322754,
+                            "z": 19.213563919067383
+                        },
+                        "rotation": {
+                            "x": -0.0017183278687298298,
+                            "y": -0.0383475162088871,
+                            "z": 0.08646553754806519,
+                            "w": 0.9955151081085205
+                        },
+                        "eulerAngles": {
+                            "x": -0.5776612162590027,
+                            "y": -4.361779689788818,
+                            "z": 9.949942588806152
+                        },
+                        "worldPos": {
+                            "x": 48.7554817199707,
+                            "y": 181.0117950439453,
+                            "z": -446.3636474609375
+                        },
+                        "worldScale": {
+                            "x": 2.999999761581421,
+                            "y": 15.140000343322754,
+                            "z": 19.213563919067383
+                        },
+                        "worldRot": {
+                            "x": -0.0017183278687298298,
+                            "y": -0.0383475162088871,
+                            "z": 0.08646553754806519,
+                            "w": 0.9955151081085205
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.4999998807907104,
+                            "y": 7.570000171661377,
+                            "z": 9.606781959533691
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": true
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 79,
+                                "scriptName": "BridgeHorrorTrigger",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "x": 141.58099365234375,
+                                            "y": 194.8699951171875,
+                                            "z": -440.802001953125
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "bridgeEnd"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 487,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "footstepSoundEntity"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 0.9895719885826111,
+                                            "y": 0.13220000267028809,
+                                            "z": 0.05700000002980232
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "initialCameraForward"
+                                        }
+                                    },
+                                    {
+                                        "data": [
+                                            "I'm too afraid...\nto look back."
+                                        ],
+                                        "type": "System.String[]",
+                                        "scriptField": {
+                                            "fieldName": "lookBackDialogue"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.014999999664723873,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "percentageToReduce"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 767,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "theOtherBridgeHorrorTrigger"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 394,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
@@ -13908,6 +14083,69 @@
             ]
         },
         {
+            "ID": 354,
+            "Parent": null,
+            "Child Entities": [
+                79,
+                767,
+                912
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "[Folder] Triggers",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 356,
             "Parent": 1048582,
             "Child Entities": [
@@ -14446,37 +14684,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 25,
+                                                "entityID": 184,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 25,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 26,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 26,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 40,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 40,
+                                                        "data": 184,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -14498,11 +14710,37 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 184,
+                                                "entityID": 40,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 184,
+                                                        "data": 40,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 26,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 26,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 25,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 25,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15874,50 +16112,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 192,
+                                                "entityID": 187,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 192,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 191,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 191,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 190,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 190,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 189,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 189,
+                                                        "data": 187,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15939,11 +16138,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 187,
+                                                "entityID": 189,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 187,
+                                                        "data": 189,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 190,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 190,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 191,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 191,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 192,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 192,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15960,50 +16198,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 198,
+                                                "entityID": 193,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 198,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 197,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 197,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 196,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 196,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 1048771,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 1048771,
+                                                        "data": 193,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16025,11 +16224,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 193,
+                                                "entityID": 1048771,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 193,
+                                                        "data": 1048771,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 196,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 196,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 197,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 197,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 198,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 198,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16046,50 +16284,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 258,
+                                                "entityID": 253,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 258,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 257,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 257,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 256,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 256,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 255,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 255,
+                                                        "data": 253,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16111,11 +16310,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 253,
+                                                "entityID": 255,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 253,
+                                                        "data": 255,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 256,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 256,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 257,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 257,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 258,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 258,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16132,50 +16370,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 264,
+                                                "entityID": 259,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 264,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 263,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 263,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 262,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 262,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 261,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 261,
+                                                        "data": 259,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -16197,11 +16396,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 259,
+                                                "entityID": 261,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 259,
+                                                        "data": 261,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 262,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 262,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 263,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 263,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 264,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 264,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -22605,6 +22843,131 @@
                         "textureAssetGUID": {
                             "ID": 14459776195008026826
                         }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 487,
+            "Parent": 3145735,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "MonsterFoot",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4955641416371614883
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -2.6601271629333496,
+                                            "y": 170.720458984375,
+                                            "z": -426.6516418457031
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 0.8500000238418579,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 0.0,
+                                        "maxDistance": 1000.0,
+                                        "rolloffType": "LINEAR",
+                                        "isBGM": true,
+                                        "enablePostProcessing": true,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            },
+                                            {
+                                                "type": "ECHO",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 435.1000061035156,
+                                                "echo_feedback": 89.30000305175781,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "MonsterFootsteps",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.0000152587890625,
+                            "z": 30.48468017578125
+                        },
+                        "scale": {
+                            "x": 1.3888888359069824,
+                            "y": 0.43103450536727905,
+                            "z": 1.3888888359069824
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -2.6601271629333496,
+                            "y": 170.720458984375,
+                            "z": -426.6516418457031
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
                     }
                 }
             ]
@@ -34024,9 +34387,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34053,9 +34416,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34082,9 +34445,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34111,9 +34474,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34140,9 +34503,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34169,9 +34532,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34198,9 +34561,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34227,9 +34590,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34256,9 +34619,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34301,9 +34664,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34346,9 +34709,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34391,9 +34754,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34436,9 +34799,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34481,9 +34844,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34526,9 +34889,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34571,9 +34934,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -34616,9 +34979,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -34661,9 +35024,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -34706,9 +35069,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -34751,9 +35114,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -34796,9 +35159,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -34841,9 +35204,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -34886,9 +35249,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -34931,9 +35294,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 43.28739929199219,
-                                            "y": -27.59819793701172,
-                                            "z": 136.6492919921875
+                                            "x": -70.88829040527344,
+                                            "y": 106.59220886230469,
+                                            "z": -229.03762817382813
                                         },
                                         "volume": 1.0,
                                         "pitch": 3.0,
@@ -35001,9 +35364,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 43.28739929199219,
-                            "y": -27.59819793701172,
-                            "z": 136.6492919921875
+                            "x": -70.88829040527344,
+                            "y": 106.59220886230469,
+                            "z": -229.03762817382813
                         },
                         "worldScale": {
                             "x": 1.3888888359069824,
@@ -36450,6 +36813,181 @@
             ]
         },
         {
+            "ID": 767,
+            "Parent": 354,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "HorrorBridgeTriggerHigher",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 73.75201416015625,
+                            "y": 185.565185546875,
+                            "z": -444.6935729980469
+                        },
+                        "scale": {
+                            "x": 2.999999761581421,
+                            "y": 15.140000343322754,
+                            "z": 19.213563919067383
+                        },
+                        "rotation": {
+                            "x": -0.0017183278687298298,
+                            "y": -0.0383475162088871,
+                            "z": 0.08646553754806519,
+                            "w": 0.9955151081085205
+                        },
+                        "eulerAngles": {
+                            "x": -0.5776612162590027,
+                            "y": -4.361779689788818,
+                            "z": 9.949942588806152
+                        },
+                        "worldPos": {
+                            "x": 73.75201416015625,
+                            "y": 185.565185546875,
+                            "z": -444.6935729980469
+                        },
+                        "worldScale": {
+                            "x": 2.999999761581421,
+                            "y": 15.140000343322754,
+                            "z": 19.213563919067383
+                        },
+                        "worldRot": {
+                            "x": -0.0017183278687298298,
+                            "y": -0.0383475162088871,
+                            "z": 0.08646553754806519,
+                            "w": 0.9955151081085205
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.4999998807907104,
+                            "y": 7.570000171661377,
+                            "z": 9.606781959533691
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": true
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 767,
+                                "scriptName": "BridgeHorrorTrigger",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "x": 13.0,
+                                            "y": 169.0,
+                                            "z": -449.0090026855469
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "bridgeEnd"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 487,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "footstepSoundEntity"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": -0.9760000109672546,
+                                            "y": -0.21131999790668488,
+                                            "z": -0.04944999888539314
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "initialCameraForward"
+                                        }
+                                    },
+                                    {
+                                        "data": [
+                                            "I'm too afraid...\nto look back."
+                                        ],
+                                        "type": "System.String[]",
+                                        "scriptField": {
+                                            "fieldName": "lookBackDialogue"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.014999999664723873,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "percentageToReduce"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 3145735,
+                                            "scriptName": "PlayerMove"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerMove"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 79,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "theOtherBridgeHorrorTrigger"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 394,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
             "ID": 769,
             "Parent": 597,
             "Child Entities": [],
@@ -37140,9 +37678,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 111.51556396484375,
-                            "y": 36.53008270263672,
-                            "z": -82.91370391845703
+                            "x": -2.6601271629333496,
+                            "y": 170.72048950195313,
+                            "z": -448.6006164550781
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -43241,7 +43779,7 @@
         },
         {
             "ID": 912,
-            "Parent": null,
+            "Parent": 354,
             "Child Entities": [],
             "Components": [
                 {
@@ -71115,6 +71653,7 @@
             "Parent": null,
             "Child Entities": [
                 1,
+                487,
                 736,
                 777
             ],
@@ -71130,9 +71669,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 111.51556396484375,
-                                            "y": 36.53008270263672,
-                                            "z": -82.91370391845703
+                                            "x": -2.6601271629333496,
+                                            "y": 170.72048950195313,
+                                            "z": -448.6006164550781
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -71159,9 +71698,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 111.51556396484375,
-                                            "y": 36.53008270263672,
-                                            "z": -82.91370391845703
+                                            "x": -2.6601271629333496,
+                                            "y": 170.72048950195313,
+                                            "z": -448.6006164550781
                                         },
                                         "volume": 0.6000000238418579,
                                         "pitch": 1.0,
@@ -71188,9 +71727,9 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": 111.51556396484375,
-                                            "y": 36.53008270263672,
-                                            "z": -82.91370391845703
+                                            "x": -2.6601271629333496,
+                                            "y": 170.72048950195313,
+                                            "z": -448.6006164550781
                                         },
                                         "volume": 1.0,
                                         "pitch": 1.0,
@@ -71221,9 +71760,9 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 111.51556396484375,
-                            "y": 36.53008270263672,
-                            "z": -82.91370391845703
+                            "x": -2.6601271629333496,
+                            "y": 170.72048950195313,
+                            "z": -448.6006164550781
                         },
                         "scale": {
                             "x": 0.7200000286102295,
@@ -71242,9 +71781,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 111.51556396484375,
-                            "y": 36.53008270263672,
-                            "z": -82.91370391845703
+                            "x": -2.6601271629333496,
+                            "y": 170.72048950195313,
+                            "z": -448.6006164550781
                         },
                         "worldScale": {
                             "x": 0.7200000286102295,
@@ -71416,10 +71955,24 @@
                                         }
                                     },
                                     {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "pitch"
+                                        }
+                                    },
+                                    {
                                         "data": 40.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.10000000149011612,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "sensitivity"
                                         }
                                     },
                                     {
@@ -71441,6 +71994,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "walkingSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "yaw"
                                         }
                                     }
                                 ]
