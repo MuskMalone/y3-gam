@@ -13,17 +13,23 @@ namespace {
 }
 
 namespace Component {
-    Video::Video(IGE::Assets::GUID _guid) : buffer{}, texture{}, videoSource{}, audioSource{}, guid{},
-    renderType{ RenderType::WORLD }, started{ false }, paused{ false },
-    playOnStart{ true }, loop{ false }, audioEnabled{ true }, channelGroup{ IGE::Audio::AudioManager::GetInstance().CreateGroup() } {}
+  Video::Video() : audioPlaySettings{}, sound{}, buffer{}, texture{},
+    channelGroup{ IGE::Audio::AudioManager::GetInstance().CreateGroup() },
+    videoSource{}, audioSource{}, guid{}, renderType{ RenderType::WORLD },
+    alpha{ 255u }, audioOffset{ 5000u }, started{ false }, paused{ false },
+    playOnStart{ true }, loop{ false }, audioEnabled{ true } {}
 
-    Video::Video(Video const& rhs) : buffer{}, texture{}, videoSource{}, audioSource{}, guid{ rhs.guid },
-    renderType{ rhs.renderType }, started{ false }, paused{ false },
-        playOnStart{ rhs.playOnStart }, loop{ rhs.loop }, audioEnabled{ rhs.audioEnabled }, audioOffset{rhs.audioOffset},
-      sound{ rhs.sound }, audioPlaySettings{ rhs.audioPlaySettings }, channelGroup {
-      IGE::Audio::AudioManager::GetInstance().CreateGroup()
-  } {
-  }
+  Video::Video(IGE::Assets::GUID _guid) : audioPlaySettings{}, sound{}, buffer{}, texture{},
+    channelGroup{ IGE::Audio::AudioManager::GetInstance().CreateGroup() },
+    videoSource{}, audioSource{}, guid{}, renderType{ RenderType::WORLD }, 
+    alpha{ 255u }, audioOffset{ 5000u }, started{ false }, paused{ false },
+    playOnStart{ true }, loop{ false }, audioEnabled{ true } {}
+
+  Video::Video(Video const& rhs) : audioPlaySettings{ rhs.audioPlaySettings }, sound{ rhs.sound },
+    buffer{}, texture{}, channelGroup{ IGE::Audio::AudioManager::GetInstance().CreateGroup() },
+    videoSource{}, audioSource{}, guid{ rhs.guid }, renderType{ rhs.renderType }, alpha{ 255u },
+    audioOffset{ rhs.audioOffset }, started{ false }, paused{ false },
+    playOnStart{ rhs.playOnStart }, loop{ rhs.loop }, audioEnabled{ rhs.audioEnabled } {}
 
   Video& Video::operator=(Video const& rhs) {
     renderType = rhs.renderType;
@@ -55,6 +61,7 @@ namespace Component {
       throw Debug::Exception<Video>(Debug::LVL_ERROR, 
         Msg("Unable to create video buffer for " + path));
     }
+    // separate video and audio sources
     plm_set_video_enabled(audioSource, false);
     plm_set_audio_enabled(videoSource, false);
 
@@ -72,21 +79,16 @@ namespace Component {
     texture = std::make_unique<Graphics::Texture>(
       static_cast<uint32_t>(plm_get_width(videoSource)),
       static_cast<uint32_t>(plm_get_height(videoSource)),
-      GL_RGB8 // not sure if we need alpha channel
+      GL_RGBA8 // RGBA to ensure any resolution is aligned
     );
-    buffer.resize(texture->GetWidth() * texture->GetHeight() * 3);
+    buffer.resize(texture->GetWidth() * texture->GetHeight() * 4, alpha);
     
     // set the image to the first frame as a preview
-    bool const originalAudioEnabled{ audioEnabled };
-    //if (originalAudioEnabled) {
-    //  EnableAudio(false); // we don't require audio for the previw
-    //}
-
     if (!PreviewFirstFrame()) {
       throw Debug::Exception<Video>(Debug::LVL_ERROR, Msg("Unable to decode video frame from " + path));
     }
 
-    EnableAudio(originalAudioEnabled);
+    EnableAudio(audioEnabled);
     SetLoop(loop);
 
     //preload audio
@@ -120,6 +122,18 @@ namespace Component {
     plm_decode(audioSource, seconds);
   }
 
+  void Video::SetAlpha(unsigned newAlpha) {
+    for (unsigned i{ 3 }; i < buffer.size(); i += 4) {
+      buffer[i] = newAlpha;
+    }
+
+    if (!started) {
+      PreviewFirstFrame();
+    }
+
+    alpha = newAlpha;
+  }
+
   void Video::EnableAudio(bool enabled) {
     plm_set_audio_enabled(audioSource, enabled);
     audioEnabled = enabled;
@@ -139,13 +153,13 @@ namespace Component {
     plm_frame_t* frame{ plm_decode_video(videoSource) };
     if (!frame) { return false; }
 
-    plm_frame_to_rgb(frame, buffer.data(), frame->width * 3);
+    plm_frame_to_rgba(frame, buffer.data(), frame->width * 4);
 
     GLCALL(glTextureSubImage2D(
       texture->GetTexHdl(),
       0, 0, 0,
       frame->width, frame->height,
-      GL_RGB, GL_UNSIGNED_BYTE, buffer.data())
+      GL_RGBA, GL_UNSIGNED_BYTE, buffer.data())
     );
 
     plm_rewind(videoSource); // reset it back to default
@@ -168,10 +182,7 @@ namespace Component {
   void Video::Clear() noexcept {
     Release();
 
-    renderType = RenderType::WORLD;
-    guid = {};
-    playOnStart = audioEnabled = true;
-    started = paused = loop = false;
+    *this = {};
   }
 
   Video::~Video() {
@@ -201,14 +212,14 @@ namespace {
     //IGE_DBGLOGGER.LogInfo("Frame decoded! Timestamp: " + std::to_string(video->GetVideoTimestamp()));
 
     // convert to rgb format
-    plm_frame_to_rgb(frame, video->buffer.data(), frame->width * 3);
+    plm_frame_to_rgba(frame, video->buffer.data(), frame->width * 4);
 
     // update the texture buffer
     GLCALL(glTextureSubImage2D(
       video->texture->GetTexHdl(),
       0, 0, 0,
       frame->width, frame->height,
-      GL_RGB, GL_UNSIGNED_BYTE, video->buffer.data())
+      GL_RGBA, GL_UNSIGNED_BYTE, video->buffer.data())
     );
   }
 

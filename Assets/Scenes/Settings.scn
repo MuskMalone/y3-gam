@@ -95,6 +95,41 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "..\\Assets\\Audio\\BGM_MainMenuLoop.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2322684557627490496
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": true,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "MainCamera",
                         "isActive": true
@@ -172,41 +207,6 @@
                 7
             ],
             "Components": [
-                {
-                    "AudioSource": {
-                        "sounds": [
-                            {
-                                "key": "..\\Assets\\Audio\\BGM_MainMenuLoop.wav",
-                                "value": {
-                                    "guid": {
-                                        "ID": 2322684557627490496
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 0.0,
-                                            "y": 0.0,
-                                            "z": 0.0
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": true,
-                                        "playOnAwake": true,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
-                                        "isBGM": true,
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingSettings": []
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                },
                 {
                     "Tag": {
                         "tag": "Canvas",

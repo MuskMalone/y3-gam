@@ -301,6 +301,8 @@ Copyright (C) 2024 DigiPen Institute of Technology. All rights reserved.
 			************************************************************************/
 			static void MouseButtonCallback(GLFWwindow* pwin, int button, int action, int mod);
 
+			static void WindowSizeCallback(GLFWwindow* window, int width, int height);
+
 			/*!*********************************************************************
 			\brief
 				.This callback function is called when the user scrolls, whether with a mouse wheel or touchpad gesture

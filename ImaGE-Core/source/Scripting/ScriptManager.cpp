@@ -350,6 +350,8 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetBrightness);
   ADD_INTERNAL_CALL(SetBGM);
   ADD_INTERNAL_CALL(GetGammaNorm);
+  ADD_INTERNAL_CALL(SetVignetteStrength);
+  ADD_INTERNAL_CALL(GetVignetteStrength);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -2193,6 +2195,16 @@ void Mono::SetShaderElapsedTime(float elapsedTime)
 float Mono::GetShaderElapsedTime()
 {
   return Graphics::PostProcessingManager::GetInstance().GetShaderElapsedTime();
+}
+
+void Mono::SetVignetteStrength(float strength)
+{
+  Graphics::PostProcessingManager::GetInstance().SetStrength(strength);
+}
+
+float Mono::GetVignetteStrength()
+{
+  return Graphics::PostProcessingManager::GetInstance().GetStrength();
 }
 
 /*!**********************************************************************

@@ -3,12 +3,12 @@
 #include <memory>
 #include <Graphics/Texture.h>
 #include "Audio/AudioManager.h"
+
 struct plm_t;
 
 namespace Component {
   struct Video {
-      Video() : buffer{}, texture{}, videoSource{}, audioSource{}, guid{}, renderType{ RenderType::WORLD },
-        started{ false }, paused{ false }, playOnStart{ true }, loop{ false }, audioEnabled{ true }, channelGroup{ IGE::Audio::AudioManager::GetInstance().CreateGroup() } {}
+    Video();
     Video(IGE::Assets::GUID guid);
     Video(Video const& rhs);
     ~Video();
@@ -33,6 +33,7 @@ namespace Component {
 
     void InitVideoSource(IGE::Assets::GUID guid);
     void AdvanceVideo(float seconds);
+    void SetAlpha(unsigned newAlpha);
 
     inline bool IsWorldObject() const noexcept{ return renderType == RenderType::WORLD; }
     inline bool IsUIObject() const noexcept { return renderType == RenderType::UI; }
@@ -50,22 +51,21 @@ namespace Component {
       NUM_TYPES
     };
 
+    IGE::Audio::SoundInvokeSetting audioPlaySettings;
+    IGE::Audio::Sound sound;
     std::vector<uint8_t> buffer;
     std::unique_ptr<Graphics::Texture> texture;
+    uint64_t channelGroup{};
     plm_t* videoSource;
     plm_t* audioSource;
 
     IGE::Assets::GUID guid;
     RenderType renderType;
-    //float prevTimestamp, timeElapsed;
-    bool started, paused;
-    bool playOnStart;
+    unsigned alpha;     // don't modify this directly!
+    unsigned audioOffset;
+    bool started, paused;                                 // should probably just private
+    bool playOnStart;                                     // the variables at this point
     bool loop;          // don't modify this directly!
     bool audioEnabled;  // don't modify this directly!
-
-    unsigned audioOffset{5000};
-    IGE::Audio::Sound sound;
-    IGE::Audio::SoundInvokeSetting audioPlaySettings;
-    uint64_t channelGroup{};
   };
 }

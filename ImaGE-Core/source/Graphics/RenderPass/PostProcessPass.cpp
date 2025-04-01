@@ -125,7 +125,13 @@ namespace Graphics {
 					mSpec.pipeline->GetSpec().targetFramebuffer->GetFramebufferSpec().height
 				));
 				
-				if (Graphics::PostProcessingManager::GetInstance().GetShaderName(i) == "..\\Assets\\PostProcessing\\teleport.frag.glsl") {
+				std::string currShaderName = Graphics::PostProcessingManager::GetInstance().GetShaderName(i);
+
+				if (currShaderName == "..\\Assets\\PostProcessing\\vignette.frag.glsl") {
+					shader->SetUniform("u_Strength", Graphics::PostProcessingManager::GetInstance().GetStrength());
+				}
+
+				if (currShaderName == "..\\Assets\\PostProcessing\\teleport.frag.glsl") {
 					shader->SetUniform("u_Time", Graphics::PostProcessingManager::GetInstance().GetShaderElapsedTime());
 				}
 				else {

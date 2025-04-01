@@ -31,7 +31,11 @@ public class Lvl2IntroCutscene : Entity
     private const float activationInterval = 1.0f;
 
     private TutorialDialogue tutorialDialogue;
-    public string[] introDialogueOne = { "Mom...?"};
+    public string[] introDialogueOne;
+    private bool hasPlayedLine0Sound = false;
+    private bool hasPlayedLine1Sound = false;
+    private bool isIntroDialogueActive = false;
+
     private Quaternion targetRot = Mathf.EulertoQuat(new Vector3(90, 0, 130));
 
     //private bool rotateAfterFirstSilhouette = false;
@@ -71,6 +75,7 @@ public class Lvl2IntroCutscene : Entity
 
     void Update()
     {
+
         //if (isRotatingPlayer)
         //{
         //    RotatePlayerToTarget();
@@ -178,6 +183,23 @@ public class Lvl2IntroCutscene : Entity
                 }
             }
         }
+
+        if (isIntroDialogueActive)
+        {
+            if (tutorialDialogue.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L2_2");
+                hasPlayedLine0Sound = true;
+            }
+            else if (tutorialDialogue.CurrentLineIndex == 1 && !hasPlayedLine1Sound)
+            {
+                InternalCalls.StopSound(mEntityID, "L2_2");
+                InternalCalls.PlaySound(mEntityID, "L2_3");
+                hasPlayedLine1Sound = true;
+                // Optionally disable the dialogue active flag if there are no more sounds
+                isIntroDialogueActive = false;
+            }
+        }
     }
 
 
@@ -236,7 +258,8 @@ public class Lvl2IntroCutscene : Entity
         {
             //string[] finalLines = { "Mom..?" };
             //tutorialDialogue.Emotion[] emotions = { TutorialDialogue.Emotion.Sad }; // Choose an emotion if needed
-            tutorialDialogue.SetDialogue(introDialogueOne, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Sad});
+            tutorialDialogue.SetDialogue(introDialogueOne, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Neutral, TutorialDialogue.Emotion.Neutral });
+            isIntroDialogueActive = true;
         }
         else
         {

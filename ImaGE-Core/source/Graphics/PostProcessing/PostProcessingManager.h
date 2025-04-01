@@ -43,6 +43,8 @@ namespace Graphics {
 		glm::vec3& GetFogColor();
 		void SetShaderElapsedTime(float elapsedTime);
 		float GetShaderElapsedTime();
+		void SetStrength(float strength);
+		float GetStrength();
 	private:
 		void CreateConfigFile();
 	private: 
@@ -54,6 +56,7 @@ namespace Graphics {
 		std::shared_ptr<Graphics::Shader> mDefaultShader;
 		PostProcessingConfigs mPpc;
 		float shaderElapsedTime = 0; // Small workaround
+		float vigStrength = 0;
 		EVENT_CALLBACK_DECL(HandleSystemEvents);
 	};
 }

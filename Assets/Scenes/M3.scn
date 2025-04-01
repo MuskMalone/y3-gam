@@ -20022,6 +20022,93 @@
                                         "postProcessingSettings": []
                                     }
                                 }
+                            },
+                            {
+                                "key": "L1_1_VER1",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2709013815173487372
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -17.100000381469727,
+                                            "y": -7.5,
+                                            "z": 0.0
+                                        },
+                                        "volume": 3.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "L1_2_VER1",
+                                "value": {
+                                    "guid": {
+                                        "ID": 5197747984802397685
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -17.100000381469727,
+                                            "y": -7.5,
+                                            "z": 0.0
+                                        },
+                                        "volume": 3.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "L1_3_VER2",
+                                "value": {
+                                    "guid": {
+                                        "ID": 2911926676314243743
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -17.100000381469727,
+                                            "y": -7.5,
+                                            "z": 0.0
+                                        },
+                                        "volume": 3.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
                             }
                         ]
                     }
@@ -20148,8 +20235,8 @@
                                     },
                                     {
                                         "data": [
-                                            "In the dream I had, I saw her...",
-                                            "She must be somewhere around here!"
+                                            "This place feels familiar, like I've been here before.",
+                                            "She must be around here somewhere."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -31409,7 +31496,136 @@
                     "ID": 16013359636150386060
                 },
                 "subDataId": 1,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "AudioSource",
+                        "value": {
+                            "sounds": [
+                                {
+                                    "key": "L1_6_VER2",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 12012858622586973602
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 6.321000099182129,
+                                                "y": 14.519998550415039,
+                                                "z": -36.41400146484375
+                                            },
+                                            "volume": 3.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "isBGM": false,
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingSettings": []
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "L1_7_VER2",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 5085874172055765194
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 6.321000099182129,
+                                                "y": 14.519998550415039,
+                                                "z": -36.41400146484375
+                                            },
+                                            "volume": 3.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "isBGM": false,
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingSettings": []
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 1049551,
+                                    "scriptName": "AltarPaintingFrame",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 2098176,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "altarPaintingFrameUI"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 197,
+                                                "scriptName": "Dialogue"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "dialogueSystem"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 203,
+                                                "scriptName": "Fragment"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "fragment"
+                                            }
+                                        },
+                                        {
+                                            "data": [
+                                                "It's incomplete.",
+                                                "I should come back later..."
+                                            ],
+                                            "type": "System.String[]",
+                                            "scriptField": {
+                                                "fieldName": "paintingDialogue"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 40,
+                                                "scriptName": "PlayerInteraction"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerInteraction"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -39038,6 +39254,48 @@
                         "value": {
                             "tag": "Props_PaintingFrame2",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "scale": {
+                                "x": 6.0,
+                                "y": 6.0,
+                                "z": 6.0
+                            },
+                            "rotation": {
+                                "x": 4.656611762854368e-10,
+                                "y": 0.0,
+                                "z": -9.313223525708736e-10,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 5.3360839302740715e-8,
+                                "y": 4.969614431690395e-17,
+                                "z": -1.0672167860548143e-7
+                            },
+                            "worldPos": {
+                                "x": 21.385643005371094,
+                                "y": 4.965000152587891,
+                                "z": -9.512203216552734
+                            },
+                            "worldScale": {
+                                "x": 4.920000076293945,
+                                "y": 4.920000076293945,
+                                "z": 4.920000076293945
+                            },
+                            "worldRot": {
+                                "x": -0.03476633131504059,
+                                "y": -0.3755069077014923,
+                                "z": -0.014097357168793678,
+                                "w": 0.9260600209236145
+                            }
                         }
                     }
                 ],
@@ -46895,6 +47153,35 @@
                         "value": {
                             "sounds": [
                                 {
+                                    "key": "L1_4",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 14936973940315116292
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 21.385643005371094,
+                                                "y": 4.965000152587891,
+                                                "z": -9.512203216552734
+                                            },
+                                            "volume": 3.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "isBGM": false,
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingSettings": []
+                                        }
+                                    }
+                                },
+                                {
                                     "key": "L1_5",
                                     "value": {
                                         "guid": {
@@ -46906,7 +47193,7 @@
                                                 "y": 4.965000152587891,
                                                 "z": -9.512203216552734
                                             },
-                                            "volume": 2.0,
+                                            "volume": 1.5,
                                             "pitch": 1.0,
                                             "pan": 0.0,
                                             "mute": false,
@@ -47083,7 +47370,7 @@
                                         },
                                         {
                                             "data": [
-                                                "Is that my mom's painting?",
+                                                "Isn't this mom's painting?",
                                                 "Why is it here? "
                                             ],
                                             "type": "System.String[]",
@@ -47833,6 +48120,48 @@
                         "value": {
                             "tag": "Painting Plane",
                             "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -0.000003814697265625,
+                                "y": 0.0,
+                                "z": -0.05754852294921875
+                            },
+                            "scale": {
+                                "x": 5.048220157623291,
+                                "y": 0.999999463558197,
+                                "z": 4.987085819244385
+                            },
+                            "rotation": {
+                                "x": 0.7071067690849304,
+                                "y": 9.313225746154785e-10,
+                                "z": -1.4901161193847656e-8,
+                                "w": 0.7071068286895752
+                            },
+                            "eulerAngles": {
+                                "x": 90.0,
+                                "y": 0.0000012828818398702424,
+                                "z": -0.0000011319547184029943
+                            },
+                            "worldPos": {
+                                "x": 21.418415069580078,
+                                "y": 4.961462020874023,
+                                "z": -9.54597282409668
+                            },
+                            "worldScale": {
+                                "x": 4.139540672302246,
+                                "y": 0.8199995756149292,
+                                "z": 4.089410305023193
+                            },
+                            "worldRot": {
+                                "x": 0.6302397847175598,
+                                "y": -0.2754918336868286,
+                                "z": 0.255555123090744,
+                                "w": 0.6794068813323975
+                            }
                         }
                     }
                 ],

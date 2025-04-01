@@ -664,19 +664,19 @@ namespace IGE {
                     mSceneStarted = true;
                 }
                 mSceneStopped = true;
-                auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource>() };
-                for (auto entity : rbsystem) {
-                    auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
-                    auto grpiter{ mGroup.find(audiosource.channelGroup) };
-                    if (grpiter != mGroup.end()) {
-                        grpiter->second->stop();
-                    }
-                }
-                if (state == Events::SceneStateChange::NewSceneState::STOPPED) {
-                    //FMOD::ChannelGroup* mastergrp{ };
-                    //mSystem->getMasterChannelGroup(&mastergrp);
-                    //mastergrp->stop();
-                }
+                //auto rbsystem{ ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::AudioSource>() };
+                //for (auto entity : rbsystem) {
+                //    auto& audiosource{ rbsystem.get<Component::AudioSource>(entity) };
+                //    auto grpiter{ mGroup.find(audiosource.channelGroup) };
+                //    if (grpiter != mGroup.end()) {
+                //        grpiter->second->stop();
+                //    }
+                //}
+                //if (state == Events::SceneStateChange::NewSceneState::STOPPED) {
+                    FMOD::ChannelGroup* mastergrp{ };
+                    mSystem->getMasterChannelGroup(&mastergrp);
+                    mastergrp->stop();
+                //}
 
             }
             if (state == Events::SceneStateChange::NewSceneState::PAUSED) {
@@ -740,7 +740,7 @@ namespace IGE {
             sound->getUserData(&soundptr);
             auto video{ reinterpret_cast<Component::Video*>(soundptr) };
             if (video) {
-                unsigned int samplesRead = video->sound.mPCMBuffer->read(outBuffer, samplesNeeded);
+                unsigned int samplesRead = static_cast<int>(video->sound.mPCMBuffer->read(outBuffer, samplesNeeded));
 
                 if (samplesRead < samplesNeeded)
                 {
