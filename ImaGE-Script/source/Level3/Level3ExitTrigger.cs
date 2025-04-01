@@ -79,14 +79,14 @@ public class Level3ExitTrigger : Entity
 
             animationPlaying = true;
             transition.StartTransition(true, 0.25f, Transition.TransitionType.WIPE);
-            InternalCalls.PlayAnimation(blackBorder.playerMove.mEntityID, turnAroundAnimationName);
+            blackBorder.playerMove.GetComponent<Animation>().Play(turnAroundAnimationName);
             InternalCalls.UpdatePhysicsToTransform(blackBorder.playerMove.mEntityID);
             blackBorder.playerMove.useScriptRotation = false;
           }
 
           if (animationPlaying)
           {
-            if (!InternalCalls.IsPlayingAnimation(blackBorder.playerMove.mEntityID))
+            if (!blackBorder.playerMove.GetComponent<Animation>().IsPlaying())
             {
               blackBorder.playerMove.useScriptRotation = true;
               InternalCalls.UpdatePhysicsToTransform(blackBorder.playerMove.mEntityID);

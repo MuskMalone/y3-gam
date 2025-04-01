@@ -27,16 +27,21 @@ namespace Component {
 
   Video::Video(Video const& rhs) : audioPlaySettings{ rhs.audioPlaySettings }, sound{ rhs.sound },
     buffer{}, texture{}, channelGroup{ IGE::Audio::AudioManager::GetInstance().CreateGroup() },
-    videoSource{}, audioSource{}, guid{ rhs.guid }, renderType{ rhs.renderType }, alpha{ 255u },
+    videoSource{}, audioSource{}, guid{ rhs.guid }, renderType{ rhs.renderType }, alpha{ rhs.alpha },
     audioOffset{ rhs.audioOffset }, started{ false }, paused{ false },
-    playOnStart{ rhs.playOnStart }, loop{ rhs.loop }, audioEnabled{ rhs.audioEnabled } {}
+    playOnStart{ rhs.playOnStart }, loop{ rhs.loop }, audioEnabled{ rhs.audioEnabled }
+  {
+    SetPlayOnAwake(playOnStart);
+    SetLoop(loop);
+  }
 
   Video& Video::operator=(Video const& rhs) {
     renderType = rhs.renderType;
-    playOnStart = rhs.playOnStart;
+    SetPlayOnAwake(rhs.playOnStart);
     guid = rhs.guid;
     audioEnabled = rhs.audioEnabled;
-    loop = rhs.loop;
+    SetLoop(rhs.loop);
+    alpha = rhs.alpha;
 
     audioOffset = rhs.audioOffset;
     sound = rhs.sound;
@@ -45,35 +50,48 @@ namespace Component {
     return *this;
   }
 
-  void Video::InitVideoSource(IGE::Assets::GUID _guid) {
+  void Video::Init() {
     Release();  // clear previous video if needed
 
-    std::string const& path{ 
+    if (!guid) { 
+      IGE_DBGLOGGER.LogError("[Video] Component does not hold a video source!");
+      return;
+    }
+
+    InitVideoSource(guid);
+    PreviewFirstFrame();
+  }
+
+  void Video::PlayVideo() {
+    started = audioPlaySettings.playOnAwake = true;
+    
+    InitVideoSource(guid);
+    InitAudioSource(guid);
+    SetLoop(loop);
+  }
+
+  void Video::TogglePause() noexcept {
+    paused = !paused;
+    audioPlaySettings.paused = paused;
+    
+  }
+
+  void Video::InitVideoSource(IGE::Assets::GUID _guid) {
+    std::string const& path{
       IGE_ASSETMGR.GetAsset<IGE::Assets::VideoAsset>(
-        IGE_ASSETMGR.LoadRef<IGE::Assets::VideoAsset>(_guid)
+        IGE_ASSETMGR.LoadRef<IGE::Assets::VideoAsset>(guid)
       )->mVideoPath
     };
 
     videoSource = plm_create_with_filename(path.c_str());
-    audioSource = plm_create_with_filename(path.c_str());
 
-    if (!videoSource || !audioSource) {
-      throw Debug::Exception<Video>(Debug::LVL_ERROR, 
+    if (!videoSource) {
+      throw Debug::Exception<Video>(Debug::LVL_ERROR,
         Msg("Unable to create video buffer for " + path));
     }
-    // separate video and audio sources
-    plm_set_video_enabled(audioSource, false);
     plm_set_audio_enabled(videoSource, false);
-
-    double leadTime = plm_get_duration(videoSource) * 0.2; // 10% of video
-    int sampleRate = plm_get_samplerate(videoSource);
-    int channels = 2; //assuming 2
-    
-    sound = IGE::Audio::Sound{ sampleRate, channels };
-    auto soundptr{ sound.GetSoundPtr() };
-    soundptr->setUserData(this);
+    plm_set_video_enabled(videoSource, true);
     plm_set_video_decode_callback(videoSource, VideoDecodeCallback, this);
-    plm_set_audio_decode_callback(audioSource, AudioDecodeCallback, this);
 
     // init texture
     texture = std::make_unique<Graphics::Texture>(
@@ -82,19 +100,36 @@ namespace Component {
       GL_RGBA8 // RGBA to ensure any resolution is aligned
     );
     buffer.resize(texture->GetWidth() * texture->GetHeight() * 4, alpha);
-    
-    // set the image to the first frame as a preview
-    if (!PreviewFirstFrame()) {
-      throw Debug::Exception<Video>(Debug::LVL_ERROR, Msg("Unable to decode video frame from " + path));
+  }
+
+  void Video::InitAudioSource(IGE::Assets::GUID _guid) {
+    std::string const& path{
+      IGE_ASSETMGR.GetAsset<IGE::Assets::VideoAsset>(
+        IGE_ASSETMGR.LoadRef<IGE::Assets::VideoAsset>(guid)
+      )->mVideoPath
+    };
+
+    audioSource = plm_create_with_filename(path.c_str());
+
+    if (!audioSource) {
+      throw Debug::Exception<Video>(Debug::LVL_ERROR,
+        Msg("Unable to create audio buffer for " + path));
     }
-
+    plm_set_video_enabled(audioSource, false);
     EnableAudio(audioEnabled);
-    SetLoop(loop);
 
-    //preload audio
+    double leadTime = plm_get_duration(videoSource) * 0.2; // 10% of video
+    int sampleRate = plm_get_samplerate(videoSource);
+    int channels = 2; //assuming 2
+
+    sound = IGE::Audio::Sound{ sampleRate, channels };
+    auto soundptr{ sound.GetSoundPtr() };
+    soundptr->setUserData(this);
+    plm_set_audio_decode_callback(audioSource, AudioDecodeCallback, this);
+
+
+    // preload audio
     plm_decode(audioSource, leadTime);
-
-    guid = _guid;
   }
 
   float Video::GetVideoTimestamp() const {
@@ -106,6 +141,8 @@ namespace Component {
   }
 
   bool Video::HasVideoEnded() const {
+    if (!started) { return false; }
+
     return static_cast<bool>(plm_has_ended(videoSource));
   }
 
@@ -135,18 +172,24 @@ namespace Component {
   }
 
   void Video::EnableAudio(bool enabled) {
-    plm_set_audio_enabled(audioSource, enabled);
     audioEnabled = enabled;
-  }
 
-  bool Video::IsLoopEnabled() const {
-    return static_cast<bool>(plm_get_loop(videoSource));
+    if (started) {
+      plm_set_audio_enabled(audioSource, enabled);
+    }
   }
 
   void Video::SetLoop(bool enabled) {
-    plm_set_loop(videoSource, enabled);
-    plm_set_loop(audioSource, enabled);
     loop = enabled;
+
+    if (started) {
+      plm_set_loop(videoSource, enabled);
+      plm_set_loop(audioSource, enabled);
+    }
+  }
+
+  void Video::SetPlayOnAwake(bool playOnAwake) {
+    playOnStart = playOnAwake;
   }
 
   bool Video::PreviewFirstFrame() {
@@ -155,28 +198,48 @@ namespace Component {
 
     plm_frame_to_rgba(frame, buffer.data(), frame->width * 4);
 
-    GLCALL(glTextureSubImage2D(
-      texture->GetTexHdl(),
-      0, 0, 0,
-      frame->width, frame->height,
-      GL_RGBA, GL_UNSIGNED_BYTE, buffer.data())
-    );
+    UpdateBuffer();
 
-    plm_rewind(videoSource); // reset it back to default
+    FreeSources();
     return true;
   }
 
-  void Video::Release() {
-    buffer.clear();
-    texture.reset();
+  void Video::ClearFrame() {
+    constexpr uint32_t mask{ 0xFF000000 };
+
+    // leave the alpha untouched
+    for (size_t i = 0; i + 3 < buffer.size(); i += 4) {
+      uint32_t* p{ reinterpret_cast<uint32_t*>(buffer.data() + i) };
+      *p &= mask;
+    }
+    
+    UpdateBuffer();
+  }
+
+  void Video::UpdateBuffer() {
+    GLCALL(glTextureSubImage2D(
+      texture->GetTexHdl(),
+      0, 0, 0,
+      texture->GetWidth(), texture->GetHeight(),
+      GL_RGBA, GL_UNSIGNED_BYTE, buffer.data())
+    );
+  }
+
+  void Video::FreeSources() {
     if (videoSource) {
       plm_destroy(videoSource);
       videoSource = nullptr;
     }
     if (audioSource) {
-        plm_destroy(audioSource);
-        audioSource = nullptr;
+      plm_destroy(audioSource);
+      audioSource = nullptr;
     }
+  }
+
+  void Video::Release() {
+    buffer.clear();
+    texture.reset();
+    FreeSources();
   }
 
   void Video::Clear() noexcept {
@@ -190,7 +253,7 @@ namespace Component {
       plm_destroy(videoSource);
     }
     if (audioSource) {
-        plm_destroy(audioSource);
+      plm_destroy(audioSource);
     }
   }
 } // namespace Component
@@ -212,15 +275,11 @@ namespace {
     //IGE_DBGLOGGER.LogInfo("Frame decoded! Timestamp: " + std::to_string(video->GetVideoTimestamp()));
 
     // convert to rgb format
+
     plm_frame_to_rgba(frame, video->buffer.data(), frame->width * 4);
 
     // update the texture buffer
-    GLCALL(glTextureSubImage2D(
-      video->texture->GetTexHdl(),
-      0, 0, 0,
-      frame->width, frame->height,
-      GL_RGBA, GL_UNSIGNED_BYTE, video->buffer.data())
-    );
+    video->UpdateBuffer();
   }
 
   void AudioDecodeCallback([[maybe_unused]] plm_t* self, plm_samples_t* samples, void* user) {

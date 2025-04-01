@@ -46,7 +46,7 @@ public class PullLever : Entity
     }
 
     // when animation has finished, notify lever manager
-    if (!InternalCalls.IsPlayingAnimation(mEntityID))
+    if (!GetComponent<Animation>().IsPlaying())
     {
       timeElapsed += Time.deltaTime;
 
@@ -66,7 +66,7 @@ public class PullLever : Entity
   private void ActivateLever()
   {
     InternalCalls.PlaySound(mEntityID, "LeverUp");
-    InternalCalls.PlayAnimation(mEntityID, "SwitchOff");
+    GetComponent<Animation>().Play("SwitchOff");
     leverPulled = true;
     level2InventoryScript.CloseInventoryAndUnselectAllItems();
     picAlignScript.ClearAll();

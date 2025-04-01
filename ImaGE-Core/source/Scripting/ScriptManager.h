@@ -369,6 +369,18 @@ namespace Mono
 		static void ResumeAnimation(ECS::Entity::EntityID entity);
 		static void StopAnimationLoop(ECS::Entity::EntityID entity);
 
+		static void PlayVideo(ECS::Entity::EntityID entity);
+		static void ToggleVideoPause(ECS::Entity::EntityID entity);
+		static void SetVideoLoop(ECS::Entity::EntityID entity, bool loop);
+		static bool GetVideoLoop(ECS::Entity::EntityID entity);
+		static void SetVideoAudioEnabled(ECS::Entity::EntityID entity, bool enabled);
+		static bool GetVideoAudioEnabled(ECS::Entity::EntityID entity);
+		static bool HasVideoStarted(ECS::Entity::EntityID entity);
+		static bool HasVideoEnded(ECS::Entity::EntityID entity);
+		static void ClearVideoFrame(ECS::Entity::EntityID entity);
+		static void SetVideoAlpha(ECS::Entity::EntityID entity, unsigned alpha);
+		static unsigned GetVideoAlpha(ECS::Entity::EntityID entity);
+
 		static void SetShaderState(unsigned idx, bool active);
 
 		// updates physics of the entity to align with its world transform values

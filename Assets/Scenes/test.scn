@@ -610,6 +610,17 @@
                     }
                 },
                 {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 7,
+                                "scriptName": "tttttt",
+                                "scriptFieldInstList": []
+                            }
+                        ]
+                    }
+                },
+                {
                     "Video": {
                         "renderType": "WORLD",
                         "guid": {
@@ -617,7 +628,7 @@
                         },
                         "audioEnabled": true,
                         "loop": true,
-                        "playOnStart": true,
+                        "playOnStart": false,
                         "audioOffset": 5000,
                         "alpha": 255,
                         "audioPlaySettings": {
