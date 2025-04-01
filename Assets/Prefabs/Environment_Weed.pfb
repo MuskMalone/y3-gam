@@ -1,0 +1,82 @@
+{
+    "Name": "Environment_Weed",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Environment_Weed",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -23.894020080566406,
+                            "y": 0.47470295429229736,
+                            "z": 23.116287231445313
+                        },
+                        "scale": {
+                            "x": 4.0,
+                            "y": 4.0,
+                            "z": 4.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -23.894020080566406,
+                            "y": 0.47470295429229736,
+                            "z": 23.116287231445313
+                        },
+                        "worldScale": {
+                            "x": 4.0,
+                            "y": 4.0,
+                            "z": 4.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 15231545523349079529
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Environment_Weed",
+                        "GUID": {
+                            "ID": 15442895773538937003
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}
