@@ -162,6 +162,9 @@ namespace IGE.Utils
     extern public static bool IsActive(uint entityHandle);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool IsValidEntity(uint entityHandle);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void DestroyEntity(uint EntityID);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

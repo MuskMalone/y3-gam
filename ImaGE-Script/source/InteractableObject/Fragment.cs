@@ -10,6 +10,7 @@ public class Fragment : Entity
   public Entity fragmentPickupUI;
   public string fragAnimNameFlyUp;
   public string fragAnimNameEnterBox;
+  public Entity altarArea;  //leave blank if not needed, just to only set active during animation
   public Entity playerCamera, fragmentCamera;
   public Entity GardenFragment, Particles;
   public Entity ParticleBurst;  // boom
@@ -42,6 +43,7 @@ public class Fragment : Entity
   void Start()
   {
     fragmentPickupUI?.SetActive(false);
+    SetAltarActive(false);
   }
 
   void Update()
@@ -150,6 +152,7 @@ public class Fragment : Entity
           blackBorder.HideBlackBorders();
           SetActive(false);
           currState = State.COLLECTED;
+          SetAltarActive(false);
 
           break;
         }
@@ -172,8 +175,17 @@ public class Fragment : Entity
     InternalCalls.SetTag(fragmentCamera.mEntityID, "FragmentCamera");
   }
 
+  void SetAltarActive(bool active)
+  {
+    if (altarArea.IsValid())
+    {
+      altarArea.SetActive(active);
+    }
+  }
+
   void TriggerAnimation()
   {
+    SetAltarActive(true);
     GetComponent<Animation>().Play(fragAnimNameFlyUp);
     InternalCalls.PlaySound(mEntityID, "FloatUpSFX");
     GardenFragment.SetActive(true);

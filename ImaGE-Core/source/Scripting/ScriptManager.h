@@ -410,6 +410,8 @@ namespace Mono
 
 		static bool IsActive(ECS::Entity::EntityID entity);
 
+		static bool IsValidEntity(ECS::Entity::EntityID entity);
+
 		static glm::vec3 GetMousePos();
 
 		static glm::vec3 GetScreenDimension();

@@ -504,10 +504,24 @@
                                         }
                                     },
                                     {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "pitch"
+                                        }
+                                    },
+                                    {
                                         "data": 30.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.10000000149011612,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "sensitivity"
                                         }
                                     },
                                     {
@@ -529,6 +543,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "walkingSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "yaw"
                                         }
                                     }
                                 ]
@@ -25843,50 +25864,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 560,
+                                                "entityID": 527,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 560,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 555,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 555,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 563,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 563,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 557,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 557,
+                                                        "data": 527,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -25908,11 +25890,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 527,
+                                                "entityID": 557,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 527,
+                                                        "data": 557,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 563,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 563,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 555,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 555,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 560,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 560,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -32802,6 +32823,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "Particles"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 531,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "altarArea"
                                         }
                                     },
                                     {

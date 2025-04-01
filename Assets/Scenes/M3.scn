@@ -2290,10 +2290,24 @@
                                         }
                                     },
                                     {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "pitch"
+                                        }
+                                    },
+                                    {
                                         "data": 30.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.10000000149011612,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "sensitivity"
                                         }
                                     },
                                     {
@@ -2315,6 +2329,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "walkingSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "yaw"
                                         }
                                     }
                                 ]
@@ -10960,6 +10981,16 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "Particles"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 4294967295,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "altarArea"
                                             }
                                         },
                                         {
@@ -28818,6 +28849,26 @@
             }
         },
         {
+            "ID": 1049463,
+            "Parent": 4194764,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5179621797397581550
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 1049496,
             "Parent": 767,
             "Child Entities": [],
@@ -36824,6 +36875,19 @@
             }
         },
         {
+            "ID": 2098011,
+            "Parent": 3146174,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 9091869979550632056
+                },
+                "subDataId": 76,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2098042,
             "Parent": 1048980,
             "Child Entities": [],
@@ -36832,6 +36896,19 @@
                     "ID": 8127129382647120287
                 },
                 "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2098055,
+            "Parent": 3146174,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 9091869979550632056
+                },
+                "subDataId": 77,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -39322,6 +39399,8 @@
             "ID": 3146174,
             "Parent": 3146505,
             "Child Entities": [
+                2098011,
+                2098055,
                 3145983,
                 3146050,
                 3146059,
@@ -43599,7 +43678,7 @@
             "ID": 4194764,
             "Parent": 6,
             "Child Entities": [
-                6292315,
+                1049463,
                 8389169
             ],
             "Prefab": {
@@ -48319,26 +48398,6 @@
         {
             "ID": 6292252,
             "Parent": 4194765,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 5179621797397581550
-                },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 6292315,
-            "Parent": 4194764,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
