@@ -127,7 +127,7 @@ namespace Graphics {
 				
 				std::string currShaderName = Graphics::PostProcessingManager::GetInstance().GetShaderName(i);
 
-				if (currShaderName == "..\\Assets\\PostProcessing\\vignette.frag.glsl") {
+				if (currShaderName == "..\\Assets\\PostProcessing\\vignette.glsl") {
 					shader->SetUniform("u_Strength", Graphics::PostProcessingManager::GetInstance().GetStrength());
 				}
 
