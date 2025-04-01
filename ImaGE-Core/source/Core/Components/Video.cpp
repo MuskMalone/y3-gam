@@ -67,6 +67,21 @@ namespace Component {
     
     InitVideoSource(guid);
     InitAudioSource(guid);
+    auto& mgr = IGE::Audio::AudioManager::GetInstance();
+    mgr.PlaySound(sound, audioPlaySettings, channelGroup, "video");
+    auto videoSoundGrp = mgr.GetGroup(channelGroup);
+    if (videoSoundGrp != nullptr) {
+        int numChannels = 0;
+        videoSoundGrp->getNumChannels(&numChannels);
+        for (int i = 0; i < numChannels; ++i) {
+            FMOD::Channel* channel = nullptr;
+            videoSoundGrp->getChannel(i, &channel);
+            if (channel) {
+                unsigned int pos = audioOffset; // jump 5 seconds into the playback
+                FMOD_RESULT result = channel->setPosition(pos, FMOD_TIMEUNIT_MS);
+            }
+        }
+    }
     SetLoop(loop);
   }
 

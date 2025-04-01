@@ -271,6 +271,14 @@ namespace IGE {
             return status;  // return the paused status (true if paused, false otherwise)
         }
 
+        FMOD::ChannelGroup* AudioManager::GetGroup(uint64_t grpid)
+        {
+            if (mGroup.find(grpid) != mGroup.end()) {
+                return mGroup[grpid];
+            }
+            return nullptr;
+        }
+
         void AudioManager::StopChannel(FMOD::Channel* channel)
         {
             bool isplaying{ false };
