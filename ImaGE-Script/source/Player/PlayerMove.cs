@@ -45,7 +45,10 @@ public class  PlayerMove : Entity
   private double currTime = 0.0;
   private double targetTime = 1.0;
   private bool startTimer = false;
-  private readonly float initialGravityFactor = 40f;
+
+  private readonly float defaultGravityFactor = 0f;
+  private readonly float inAirGravityFactor = 40f;
+  private bool ungrounded = false;
 
   public float isGroundedRayHeight = 3f;
   public float minIsGroundedDistance = 4.35f;
@@ -59,11 +62,7 @@ public class  PlayerMove : Entity
   void Start()
   {
     ResetPlayerVelocity();
-    if (!isTutorial)
-    {
-      InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
-    }
-    //initialGravityFactor = InternalCalls.GetGravityFactor(mEntityID);
+    InternalCalls.SetGravityFactor(mEntityID, defaultGravityFactor);
   }
 
   // Update is called once per frame
@@ -91,7 +90,11 @@ public class  PlayerMove : Entity
       PlayerMovement();
   }
 
-  public float GetInitialGravityFactor() { return initialGravityFactor; }
+  public void ResetGravityFactor()
+  {
+    ungrounded = true;
+    InternalCalls.SetGravityFactor(mEntityID, inAirGravityFactor);
+  }
 
   void PlayerMovement()
   {
@@ -107,10 +110,19 @@ public class  PlayerMove : Entity
       }
       else
       {
-        InternalCalls.SetGravityFactor(mEntityID, initialGravityFactor);
+        ResetGravityFactor();
       }
     }
 #endif
+
+    if (ungrounded)
+    {
+      if (IsGrounded())
+      {
+        InternalCalls.SetGravityFactor(mEntityID, defaultGravityFactor);
+        ungrounded = false;
+      }
+    }
 
     float x = Input.GetAxis("Horizontal");
     float z = Input.GetAxis("Vertical");

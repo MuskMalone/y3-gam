@@ -310,7 +310,7 @@ namespace Serialization
 
     // deserialize removed components
     {
-      rttr::variant var{ std::set<rttr::type>() };
+      rttr::variant var{ std::set<std::string>() };
       auto associativeView{ var.create_associative_view() };
       DeserializeAssociativeContainer(associativeView, json["removedComponents"]);
       overrides.removedComponents = std::move(var.get_value<std::set<std::string>>());

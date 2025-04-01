@@ -285,6 +285,9 @@ namespace Reflection
 
         // restore its prefab overrides
         if (isPrefabValid) {
+          if (ent.GetEntityID() == 5243086) {
+            std::cout << "Restoring entity " << ent.GetTag() << " " << ent.GetEntityID() << "\n";
+          }
           ent.EmplaceComponent<Component::PrefabOverrides>(instData.mOverrides.ToPrefabOverrides());
         }
       }
