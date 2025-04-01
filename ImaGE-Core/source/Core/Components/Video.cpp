@@ -32,7 +32,6 @@ namespace Component {
     playOnStart{ rhs.playOnStart }, loop{ rhs.loop }, audioEnabled{ rhs.audioEnabled }
   {
     SetPlayOnAwake(playOnStart);
-    SetLoop(loop);
   }
 
   Video& Video::operator=(Video const& rhs) {
@@ -40,7 +39,7 @@ namespace Component {
     SetPlayOnAwake(rhs.playOnStart);
     guid = rhs.guid;
     audioEnabled = rhs.audioEnabled;
-    SetLoop(rhs.loop);
+    loop = rhs.loop;
     alpha = rhs.alpha;
 
     audioOffset = rhs.audioOffset;
@@ -67,20 +66,23 @@ namespace Component {
     
     InitVideoSource(guid);
     InitAudioSource(guid);
-    auto& mgr = IGE::Audio::AudioManager::GetInstance();
-    mgr.PlaySound(sound, audioPlaySettings, channelGroup, "video");
-    auto videoSoundGrp = mgr.GetGroup(channelGroup);
-    if (videoSoundGrp != nullptr) {
+
+    if (!playOnStart) {
+      auto& mgr = IGE::Audio::AudioManager::GetInstance();
+      mgr.PlaySound(sound, audioPlaySettings, channelGroup, "video");
+      auto videoSoundGrp = mgr.GetGroup(channelGroup);
+      if (videoSoundGrp != nullptr) {
         int numChannels = 0;
         videoSoundGrp->getNumChannels(&numChannels);
         for (int i = 0; i < numChannels; ++i) {
-            FMOD::Channel* channel = nullptr;
-            videoSoundGrp->getChannel(i, &channel);
-            if (channel) {
-                unsigned int pos = audioOffset; // jump 5 seconds into the playback
-                FMOD_RESULT result = channel->setPosition(pos, FMOD_TIMEUNIT_MS);
-            }
+          FMOD::Channel* channel = nullptr;
+          videoSoundGrp->getChannel(i, &channel);
+          if (channel) {
+            unsigned int pos = audioOffset; // jump 5 seconds into the playback
+            FMOD_RESULT result = channel->setPosition(pos, FMOD_TIMEUNIT_MS);
+          }
         }
+      }
     }
     SetLoop(loop);
   }
@@ -141,7 +143,6 @@ namespace Component {
     auto soundptr{ sound.GetSoundPtr() };
     soundptr->setUserData(this);
     plm_set_audio_decode_callback(audioSource, AudioDecodeCallback, this);
-
 
     // preload audio
     plm_decode(audioSource, leadTime);
