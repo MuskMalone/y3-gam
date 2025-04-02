@@ -1,0 +1,944 @@
+{
+    "Name": "NewGardenStairs",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "StairsToAltar",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 5.8507981300354,
+                            "y": 4.423060894012451,
+                            "z": -22.69051742553711
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 5.850792407989502,
+                            "y": 4.423060894012451,
+                            "z": -22.69051742553711
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "new_stairs",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 16.0,
+                            "y": 16.0,
+                            "z": 16.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 5.850792407989502,
+                            "y": 4.423060894012451,
+                            "z": -22.69051742553711
+                        },
+                        "worldScale": {
+                            "x": 16.0,
+                            "y": 16.0,
+                            "z": 16.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8761168420841437668
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "new_stairs",
+                        "GUID": {
+                            "ID": 9626686772205811226
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "AssistCollider",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -1.052596092224121,
+                            "z": 0.7425174713134766
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.3461170494556427,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9381913542747498
+                        },
+                        "eulerAngles": {
+                            "x": 40.499996185302734,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 5.850792407989502,
+                            "y": 3.37046480178833,
+                            "z": -21.947999954223633
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.3461170494556427,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 0.9381913542747498
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.0,
+                            "y": 1.0,
+                            "z": 6.400000095367432
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 20.0,
+                        "dynamicFriction": 20.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 1.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "StepCollider5",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -0.9140279293060303,
+                            "z": -4.03729248046875
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 5.850792407989502,
+                            "y": 3.509032964706421,
+                            "z": -26.72780990600586
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.0,
+                            "y": 5.0,
+                            "z": 1.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 20.0,
+                        "dynamicFriction": 20.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 1.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "StepCollider4",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -1.4818768501281738,
+                            "z": -2.0300235748291016
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 5.850792407989502,
+                            "y": 2.9411840438842773,
+                            "z": -24.72054100036621
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.0,
+                            "y": 4.0,
+                            "z": 1.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 20.0,
+                        "dynamicFriction": 20.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 1.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "StepCollider3",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -2.0858027935028076,
+                            "z": -0.03561592102050781
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 5.850792407989502,
+                            "y": 2.3372581005096436,
+                            "z": -22.726133346557617
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.0,
+                            "y": 3.0,
+                            "z": 1.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 20.0,
+                        "dynamicFriction": 20.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 1.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 6,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "StepCollider2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -2.7915220260620117,
+                            "z": 1.975027084350586
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 5.850792407989502,
+                            "y": 1.6315388679504395,
+                            "z": -20.715490341186523
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.0,
+                            "y": 2.0,
+                            "z": 1.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 20.0,
+                        "dynamicFriction": 20.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 1.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 7,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "StepCollider",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -3.4407248497009277,
+                            "z": 3.977397918701172
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 5.850792407989502,
+                            "y": 0.9823360443115234,
+                            "z": -18.713119506835938
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 8.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 20.0,
+                        "dynamicFriction": 20.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 1.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
