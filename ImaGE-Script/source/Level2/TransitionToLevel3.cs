@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
@@ -31,7 +32,8 @@ public class TransitionToLevel3 : Entity
     {
       if (InternalCalls.OnTriggerEnter(mEntityID, player.mEntityID))
       {
-        transition.StartTransition(true, 1.5f, Transition.TransitionType.FADE);
+        transition.StartTransition(true, 1f, Transition.TransitionType.FADE);
+        InternalCalls.SetLinearDamping(player.mEntityID, 5f);
         playerEntered = true;
       }
 

@@ -9832,7 +9832,7 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
-                                            "entityID": 3145972,
+                                            "entityID": 1049102,
                                             "scriptName": "BlackBorder"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -14076,37 +14076,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 184,
+                                                "entityID": 25,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 184,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 121,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 121,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 40,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 40,
+                                                        "data": 25,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -14128,11 +14102,37 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 25,
+                                                "entityID": 40,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 25,
+                                                        "data": 40,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 121,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 121,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 184,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 184,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15544,50 +15544,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 187,
+                                                "entityID": 192,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 187,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 188,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 188,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 189,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 189,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 190,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 190,
+                                                        "data": 192,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15609,11 +15570,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 192,
+                                                "entityID": 190,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 192,
+                                                        "data": 190,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 189,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 189,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 188,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 188,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 187,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 187,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15630,50 +15630,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 193,
+                                                "entityID": 198,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 193,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 194,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 194,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 1048771,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 1048771,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 196,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 196,
+                                                        "data": 198,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15695,11 +15656,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 198,
+                                                "entityID": 196,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 198,
+                                                        "data": 196,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 1048771,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 1048771,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 194,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 194,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 193,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 193,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15716,50 +15716,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 253,
+                                                "entityID": 258,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 253,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 254,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 254,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 255,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 255,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 256,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 256,
+                                                        "data": 258,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15781,11 +15742,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 258,
+                                                "entityID": 256,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 258,
+                                                        "data": 256,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 255,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 255,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 254,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 254,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 253,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 253,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15802,50 +15802,11 @@
                                     {
                                         "data": [
                                             {
-                                                "entityID": 259,
+                                                "entityID": 264,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 259,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 260,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 260,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 261,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 261,
-                                                        "type": "System.UInt32",
-                                                        "scriptField": {
-                                                            "fieldName": "mEntityID"
-                                                        }
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "entityID": 262,
-                                                "scriptName": "Entity",
-                                                "scriptFieldInstList": [
-                                                    {
-                                                        "data": 262,
+                                                        "data": 264,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -15867,11 +15828,50 @@
                                                 ]
                                             },
                                             {
-                                                "entityID": 264,
+                                                "entityID": 262,
                                                 "scriptName": "Entity",
                                                 "scriptFieldInstList": [
                                                     {
-                                                        "data": 264,
+                                                        "data": 262,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 261,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 261,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 260,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 260,
+                                                        "type": "System.UInt32",
+                                                        "scriptField": {
+                                                            "fieldName": "mEntityID"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "entityID": 259,
+                                                "scriptName": "Entity",
+                                                "scriptFieldInstList": [
+                                                    {
+                                                        "data": 259,
                                                         "type": "System.UInt32",
                                                         "scriptField": {
                                                             "fieldName": "mEntityID"
@@ -27101,7 +27101,7 @@
                                         },
                                         {
                                             "data": {
-                                                "entityID": 670,
+                                                "entityID": 1049650,
                                                 "scriptName": "Entity"
                                             },
                                             "type": "Image.Mono.ScriptInstance",
@@ -27142,8 +27142,8 @@
                                         {
                                             "data": {
                                                 "x": 0.47200000286102295,
-                                                "y": 9.865141188846712e-43,
-                                                "z": 6.0
+                                                "y": -0.21131999790668488,
+                                                "z": -0.04944999888539314
                                             },
                                             "type": "System.Numerics.Vector3",
                                             "scriptField": {
@@ -27640,8 +27640,8 @@
                                         {
                                             "data": {
                                                 "x": 0.9919999837875366,
-                                                "y": 9.865141188846712e-43,
-                                                "z": 6.0
+                                                "y": -0.21131999790668488,
+                                                "z": -0.04944999888539314
                                             },
                                             "type": "System.Numerics.Vector3",
                                             "scriptField": {
@@ -30057,8 +30057,8 @@
                                         {
                                             "data": {
                                                 "x": 0.921999990940094,
-                                                "y": 9.865141188846712e-43,
-                                                "z": 6.0
+                                                "y": -0.21131999790668488,
+                                                "z": -0.04944999888539314
                                             },
                                             "type": "System.Numerics.Vector3",
                                             "scriptField": {
@@ -30474,8 +30474,8 @@
                                         {
                                             "data": {
                                                 "x": 0.8960000276565552,
-                                                "y": 9.865141188846712e-43,
-                                                "z": 6.0
+                                                "y": -0.21131999790668488,
+                                                "z": -0.04944999888539314
                                             },
                                             "type": "System.Numerics.Vector3",
                                             "scriptField": {
@@ -30831,8 +30831,8 @@
                                         {
                                             "data": {
                                                 "x": 0.9129999876022339,
-                                                "y": 9.865141188846712e-43,
-                                                "z": 6.0
+                                                "y": -0.21131999790668488,
+                                                "z": -0.04944999888539314
                                             },
                                             "type": "System.Numerics.Vector3",
                                             "scriptField": {
@@ -47287,7 +47287,7 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 23.662155151367188,
+                            "x": 23.030452728271484,
                             "y": -6.214996337890625,
                             "z": 2.40447998046875
                         },
@@ -47308,7 +47308,7 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 86.0615234375,
+                            "x": 85.42981719970703,
                             "y": 63.22834014892578,
                             "z": -423.03839111328125
                         },
@@ -48113,7 +48113,7 @@
                         "position": {
                             "x": 0.718170166015625,
                             "y": -6.214992523193359,
-                            "z": -24.60162353515625
+                            "z": -24.0643310546875
                         },
                         "scale": {
                             "x": 1.0,
@@ -48134,7 +48134,7 @@
                         "worldPos": {
                             "x": 63.11753463745117,
                             "y": 63.22834396362305,
-                            "z": -450.04449462890625
+                            "z": -449.5072021484375
                         },
                         "worldScale": {
                             "x": 1.0,
@@ -55145,7 +55145,7 @@
                                     },
                                     {
                                         "data": {
-                                            "entityID": 3145972,
+                                            "entityID": 1049102,
                                             "scriptName": "BlackBorder"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
@@ -55426,7 +55426,7 @@
                                         }
                                     },
                                     {
-                                        "data": 0.800000011920929,
+                                        "data": 1.2000000476837158,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "tiltUpDuration"
@@ -56926,6 +56926,56 @@
                         },
                         "sensor": false
                     }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
                 }
             ]
         },
@@ -57518,8 +57568,8 @@
                     "Transform": {
                         "position": {
                             "x": -0.6332778930664063,
-                            "y": -178.32095336914063,
-                            "z": -0.2594165503978729
+                            "y": -75.5469970703125,
+                            "z": -0.2594165802001953
                         },
                         "scale": {
                             "x": 1.0,
@@ -57539,7 +57589,7 @@
                         },
                         "worldPos": {
                             "x": 62.43648147583008,
-                            "y": -136.3230438232422,
+                            "y": -33.54909133911133,
                             "z": -427.2761535644531
                         },
                         "worldScale": {
@@ -58350,6 +58400,56 @@
                         },
                         "sensor": false
                     }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
                 }
             ]
         },
@@ -58435,6 +58535,56 @@
                         },
                         "sensor": false
                     }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
                 }
             ]
         },
@@ -58519,6 +58669,56 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
@@ -58683,6 +58883,56 @@
                         },
                         "sensor": false
                     }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
                 }
             ]
         },
@@ -58768,6 +59018,56 @@
                         },
                         "sensor": false
                     }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
                 }
             ]
         },
@@ -58852,6 +59152,56 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
@@ -59015,6 +59365,56 @@
                             "w": 1.0
                         },
                         "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.0,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 0,
+                        "angularAxisLock": 0,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
@@ -69719,6 +70119,13 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "isTutorial"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "lockGravity"
                                         }
                                     },
                                     {

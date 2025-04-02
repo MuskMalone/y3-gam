@@ -78,8 +78,10 @@ public class Level3TransitionSequence : Entity
           {
             timeElapsed = 0f;
             TransformHexRoom();
-            InternalCalls.SetGravityFactor(playerInteraction.mEntityID, 50f);
+            InternalCalls.SetGravityFactor(playerInteraction.mEntityID, 55f);
+            playerMove.lockGravity = true;
             InternalCalls.SetDynamicFriction(playerInteraction.mEntityID, 0f);
+            InternalCalls.SetLinearDamping(playerInteraction.mEntityID, 0.98f);
             playerMove.FreezePlayer();
             originalCamPos = playerCam.GetComponent<Transform>().rotationEuler;
             currState = State.CAVE_IN;
@@ -113,6 +115,7 @@ public class Level3TransitionSequence : Entity
           Vector3 newRot = playerCam.GetComponent<Transform>().rotationEuler;
           newRot.X = Mathf.Lerp(originalCamPos.X, 85f, timeElapsed / tiltUpDuration);
           playerCam.GetComponent<Transform>().rotationEuler = newRot;
+
           break;
         }
     }

@@ -41,6 +41,7 @@ public class  PlayerMove : Entity
   private Quaternion playerRotation = Quaternion.Identity;  // Player rotation (yaw only)
   private Quaternion cameraRotation = Quaternion.Identity;  // Camera rotation (pitch only)
   public bool canLook = true, canMove = true, useScriptRotation = true, climbing = false;
+  public bool lockGravity = false;
   private bool skipNextMouseDelta = false;  // to skip the jump in delta when unfreezing player
   private double currTime = 0.0;
   private double targetTime = 1.0;
@@ -116,15 +117,18 @@ public class  PlayerMove : Entity
     if (!noClip)
 #endif
 
-    if (!IsGrounded())
+    if (!lockGravity)
     {
-      InternalCalls.SetGravityFactor(mEntityID, inAirGravityFactor);
-      ungrounded = true;
-    }
-    else if (ungrounded)
-    {
-      InternalCalls.SetGravityFactor(mEntityID, defaultGravityFactor);
-      ungrounded = false;
+      if (!IsGrounded())
+      {
+        InternalCalls.SetGravityFactor(mEntityID, inAirGravityFactor);
+        ungrounded = true;
+      }
+      else if (ungrounded)
+      {
+        InternalCalls.SetGravityFactor(mEntityID, defaultGravityFactor);
+        ungrounded = false;
+      }
     }
 
     float x = Input.GetAxis("Horizontal");

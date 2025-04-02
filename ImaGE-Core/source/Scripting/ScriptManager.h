@@ -339,6 +339,7 @@ namespace Mono
 		static void LockRigidBody(ECS::Entity::EntityID entity, bool lock);
 		static void LockRigidBodyRotation(ECS::Entity::EntityID entity, bool x, bool y, bool z);
 		static void SetDynamicFriction(ECS::Entity::EntityID entityId, float val);
+		static void SetLinearDamping(ECS::Entity::EntityID entityId, float val);
 
 		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
 

@@ -415,6 +415,9 @@ namespace IGE.Utils
     internal extern static void SetDynamicFriction(uint entity, float frictionValue);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetLinearDamping(uint entity, float value);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void LockRigidBodyRotation(uint entity, bool x, bool y, bool z);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

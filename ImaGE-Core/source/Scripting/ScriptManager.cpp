@@ -252,6 +252,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(LockRigidBody);
   ADD_INTERNAL_CALL(LockRigidBodyRotation);
   ADD_INTERNAL_CALL(SetDynamicFriction);
+  ADD_INTERNAL_CALL(SetLinearDamping);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -1173,6 +1174,12 @@ void Mono::SetDynamicFriction(ECS::Entity::EntityID entityId, float val) {
   entity.GetComponent<Component::RigidBody>().dynamicFriction = val;
   IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::DYNAMIC_FRICTION);
   //IGE_DBGLOGGER.LogInfo("Set dynamic friction of " + entity.GetTag() + " to " + std::to_string(val));
+}
+
+void Mono::SetLinearDamping(ECS::Entity::EntityID entityId, float val) {
+  ECS::Entity entity{ entityId };
+  entity.GetComponent<Component::RigidBody>().linearDamping = val;
+  IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LINEAR_DAMPING);
 }
 
 glm::vec3 Mono::GetMouseDelta()
