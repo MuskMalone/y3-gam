@@ -64,7 +64,7 @@ namespace IGE {
 			float pan{ 0.0f };           // Stereo panning (-1.0 = left, 1.0 = right)
 			bool mute{ false };          // Mute/unmute sound
 			bool loop{ false };          // Enable/disable looping
-			bool playOnAwake{ true };    // Play sound immediately on creation
+			bool playOnAwake{ false };    // Play sound immediately on creation
 
 			// 3D sound settings
 			float dopplerLevel{ 1.0f };  // Doppler effect intensity
