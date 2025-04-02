@@ -1,0 +1,39 @@
+{
+    "name": "AltarConcrete",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+    },
+    "metalness": 0.5,
+    "roughness": 0.5,
+    "ao": 1.0,
+    "emission": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "transparency": 1.0,
+    "tiling": {
+        "x": 11.649999618530273,
+        "y": 2.049999952316284
+    },
+    "offset": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "albedoMap": {
+        "ID": 10901289160556677871
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}
