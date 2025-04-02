@@ -2084,10 +2084,24 @@
                                         }
                                     },
                                     {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "pitch"
+                                        }
+                                    },
+                                    {
                                         "data": 30.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.10000000149011612,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "sensitivity"
                                         }
                                     },
                                     {
@@ -2109,6 +2123,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "walkingSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "yaw"
                                         }
                                     }
                                 ]
@@ -9342,162 +9363,6 @@
                             "w": 0.9328007102012634
                         },
                         "sensor": false
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 203,
-                                "scriptName": "Fragment",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 415,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "GardenFragment"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 634,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "ParticleBurst"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 26,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "Particles"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 4294967295,
-                                            "scriptName": "BlackBorder"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "blackBorder"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "x": 6.400000095367432,
-                                            "y": 15.0,
-                                            "z": -22.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "downPos"
-                                        }
-                                    },
-                                    {
-                                        "data": 2.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "explosionWaitTime"
-                                        }
-                                    },
-                                    {
-                                        "data": "FlyIn",
-                                        "type": "System.String",
-                                        "scriptField": {
-                                            "fieldName": "fragAnimNameEnterBox"
-                                        }
-                                    },
-                                    {
-                                        "data": "FlyUp",
-                                        "type": "System.String",
-                                        "scriptField": {
-                                            "fieldName": "fragAnimNameFlyUp"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 118,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "fragmentCamera"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 123,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "fragmentPickupUI"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 0,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerCamera"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 40,
-                                            "scriptName": "PlayerInteraction"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "playerInteraction"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "x": 6.400000095367432,
-                                            "y": 24.0,
-                                            "z": -22.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "startPos"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 75,
-                                            "scriptName": "Transition"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "transition"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "x": 6.400000095367432,
-                                            "y": 15.0,
-                                            "z": -27.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "zoomPos"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
                     }
                 },
                 {
