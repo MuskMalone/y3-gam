@@ -3,7 +3,7 @@
     "SubData": [
         {
             "ID": 0,
-            "Parent": null,
+            "Parent": 0,
             "Components": [
                 {
                     "Tag": {
@@ -19,8 +19,8 @@
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 0.07000000029802323,
-                            "y": 0.07700000703334809,
+                            "x": 0.07000000029802322,
+                            "y": 0.07700000703334808,
                             "z": 0.0429999977350235
                         },
                         "rotation": {
@@ -40,8 +40,8 @@
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 0.07000000029802323,
-                            "y": 0.07700000703334809,
+                            "x": 0.07000000029802322,
+                            "y": 0.07700000703334808,
                             "z": 0.0429999977350235
                         },
                         "worldRot": {
@@ -93,9 +93,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.09674955904483795,
-                            "y": -14.279349327087403,
-                            "z": -0.017989985644817354
+                            "x": 0.09674956649541855,
+                            "y": -14.279349327087402,
+                            "z": -0.017989985644817352
                         },
                         "worldScale": {
                             "x": 19.53078842163086,
@@ -118,7 +118,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 17491784108210236163
+                            "ID": 6867673209907139826
                         }
                     }
                 },
@@ -179,7 +179,35 @@
                         "linearDamping": 0.9800000190734863,
                         "motionType": "KINEMATIC",
                         "axisLock": 7,
-                        "angularAxisLock": 7
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
@@ -224,7 +252,7 @@
                         },
                         "worldScale": {
                             "x": 2.940000057220459,
-                            "y": 3.2340002059936525,
+                            "y": 3.2340002059936523,
                             "z": 1.8059998750686646
                         },
                         "worldRot": {
@@ -280,8 +308,8 @@
                         },
                         "scale": {
                             "x": 14.285714149475098,
-                            "y": 12.987011909484864,
-                            "z": 23.255815505981447
+                            "y": 12.987011909484863,
+                            "z": 23.255815505981445
                         },
                         "rotation": {
                             "x": 0.0,
@@ -322,7 +350,7 @@
                         "scale": {
                             "x": 0.8999999761581421,
                             "y": 9.600000381469727,
-                            "z": 2.5139999389648439
+                            "z": 2.5139999389648438
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -362,7 +390,35 @@
                         "linearDamping": 0.9800000190734863,
                         "motionType": "KINEMATIC",
                         "axisLock": 7,
-                        "angularAxisLock": 7
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
@@ -386,8 +442,8 @@
                         },
                         "scale": {
                             "x": 14.285714149475098,
-                            "y": 12.987011909484864,
-                            "z": 23.255815505981447
+                            "y": 12.987011909484863,
+                            "z": 23.255815505981445
                         },
                         "rotation": {
                             "x": 0.0,
@@ -468,7 +524,35 @@
                         "linearDamping": 0.9800000190734863,
                         "motionType": "KINEMATIC",
                         "axisLock": 7,
-                        "angularAxisLock": 7
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
@@ -492,8 +576,8 @@
                         },
                         "scale": {
                             "x": 14.285714149475098,
-                            "y": 12.987011909484864,
-                            "z": 23.255815505981447
+                            "y": 12.987011909484863,
+                            "z": 23.255815505981445
                         },
                         "rotation": {
                             "x": 0.0,
@@ -534,7 +618,7 @@
                         "scale": {
                             "x": 0.8999999761581421,
                             "y": 9.600000381469727,
-                            "z": 2.5139999389648439
+                            "z": 2.5139999389648438
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -574,7 +658,35 @@
                         "linearDamping": 0.9800000190734863,
                         "motionType": "KINEMATIC",
                         "axisLock": 7,
-                        "angularAxisLock": 7
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
