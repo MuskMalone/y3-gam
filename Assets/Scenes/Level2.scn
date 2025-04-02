@@ -7751,12 +7751,12 @@
                                             "y": 101.97628784179688,
                                             "z": -152.19532775878906
                                         },
-                                        "volume": 1.0,
+                                        "volume": 0.0,
                                         "pitch": 1.0,
                                         "pan": 0.0,
                                         "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
+                                        "loop": true,
+                                        "playOnAwake": true,
                                         "dopplerLevel": 1.0,
                                         "minDistance": 1.0,
                                         "maxDistance": 500.0,
@@ -15474,6 +15474,13 @@
                                         }
                                     },
                                     {
+                                        "data": 1.7000000476837158,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "Shakesize"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "entityID": 183,
                                             "scriptName": "Entity"
@@ -15879,6 +15886,13 @@
                                         }
                                     },
                                     {
+                                        "data": 1.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "humVolume"
+                                        }
+                                    },
+                                    {
                                         "data": 119.0,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -15961,6 +15975,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "rotationSpeed"
+                                        }
+                                    },
+                                    {
+                                        "data": 0.20000000298023224,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "shakeTime"
                                         }
                                     },
                                     {

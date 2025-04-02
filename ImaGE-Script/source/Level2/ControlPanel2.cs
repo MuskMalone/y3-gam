@@ -72,7 +72,7 @@ public class ControlPanel2 : Entity
   public float Shakesize = 5f;
   public float shakeTime = 1f;
   private float currShakeTime;
-  public float humVolume = 0.2f;
+  public float humVolume = 1f;
 
   private Vector3 rotationBeforeShake = new Vector3();
 
@@ -206,7 +206,23 @@ public class ControlPanel2 : Entity
 
 
   }
+  private Vector3 AddRandomDirection(Vector3 originalRotation, float currShakeSize)
+  {
+    // Generate random angles for the direction vector.
+    double theta = 2 * Math.PI * new Random().NextDouble(); // Random angle between 0 and 2*pi
+    double phi = Math.Acos(2 * new Random().NextDouble() - 1); // Random angle between 0 and pi
 
+    // Convert spherical coordinates to Cartesian coordinates.
+    float x = currShakeSize * (float)(Math.Sin(phi) * Math.Cos(theta));
+    float y = currShakeSize * (float)(Math.Sin(phi) * Math.Sin(theta));
+    float z = currShakeSize * (float)Math.Cos(phi);
+
+    // Create the random direction vector.
+    Vector3 randomDirection = new Vector3(x, y, z);
+
+    // Add the random direction to the original rotation.
+    return originalRotation + randomDirection;
+  }
   private void HandleUVLightControls()
   {
     Vector3 currentRotation = InternalCalls.GetRotationEuler(UVLight.mEntityID);
@@ -214,22 +230,22 @@ public class ControlPanel2 : Entity
     bool playerInput = false;
     previousRotationVelo = currentRotationVelo;
     currentRotationVelo = new Vector3();
-    if (Input.GetKeyDown(KeyCode.W))
+    if (Input.GetKeyHeld(KeyCode.W))
     {
       currentRotationVelo.X += rotationSpeed * deltaTime;
       playerInput = true;
     }
-    if (Input.GetKeyDown(KeyCode.S))
+    if (Input.GetKeyHeld(KeyCode.S))
     {
       currentRotationVelo.X -= rotationSpeed * deltaTime;
       playerInput = true;
     }
-    if (Input.GetKeyDown(KeyCode.A))
+    if (Input.GetKeyHeld(KeyCode.A))
     {
       currentRotationVelo.Y += rotationSpeed * deltaTime;
       playerInput = true;
     }
-    if (Input.GetKeyDown(KeyCode.D))
+    if (Input.GetKeyHeld(KeyCode.D))
     {
       currentRotationVelo.Y -= rotationSpeed * deltaTime;
       playerInput = true;
@@ -237,56 +253,58 @@ public class ControlPanel2 : Entity
     if (previousRotationVelo.LengthSquared() <= float.Epsilon && currentRotationVelo.LengthSquared() > 0)
     {
       //just entered moving state
+      InternalCalls.PlaySound(UVLight.mEntityID, "..\\Assets\\Audio\\UV_StartMoving_SFX.wav");
+      InternalCalls.SetSoundVolume(UVLight.mEntityID, "..\\Assets\\Audio\\UV_Move_SFX.wav", humVolume);
       rotationBeforeShake = currentRotation;
       currShakeTime = shakeTime;
       
       currentLightState = LightState.UV_LIGHT_START_MOVE;
-      Debug.Log($"start move>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> curr: {currentRotationVelo} prev: {previousRotationVelo} input{playerInput}");
     }
     else if (previousRotationVelo.LengthSquared() > 0 && currentRotationVelo.LengthSquared() <= float.Epsilon) {
       //just exited moving state
+      InternalCalls.PlaySound(UVLight.mEntityID, "..\\Assets\\Audio\\UV_StopMoving_SFX.wav");
+
       rotationBeforeShake = currentRotation;
       currShakeTime = shakeTime;
       currentLightState = LightState.UV_LIGHT_STOP_MOVE;
-      Debug.Log($"stop move>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> curr: {currentRotationVelo} prev: {previousRotationVelo} input{playerInput}");
     }
 
     switch (currentLightState) {
       case LightState.UV_LIGHT_START_MOVE:
         currShakeTime -= InternalCalls.GetDeltaTime();
-        currentRotation = rotationBeforeShake + new Vector3(currShakesize, currShakesize, 0);
-        currShakesize = Easing.Linear(Shakesize, 0, 1 - (shakeTime / currShakeTime)); // decay the shake from shakesize to 0
+        currentRotation = AddRandomDirection(rotationBeforeShake, currShakesize);
+        currShakesize = Easing.Linear(Shakesize, 0, 1 - (currShakeTime/shakeTime)); // decay the shake from shakesize to 0
+        InternalCalls.SetSoundPitch(UVLight.mEntityID, "..\\Assets\\Audio\\UV_Move_SFX.wav", Easing.Linear(0, 1, 1 - (currShakeTime / shakeTime)));
+        Debug.Log($"{currShakesize} rotationBeforeShake{rotationBeforeShake} currRot{currentRotation}");
         if (currShakeTime <= 0) // times up 
         {
           currentRotation = rotationBeforeShake;
           currentLightState = LightState.UV_LIGHT_MOVING;
-          Debug.Log("Exiting start...");
         }
-        Debug.Log("in start move");
         break;
       case LightState.UV_LIGHT_MOVING:
-
+        currentRotation += currentRotationVelo;
         break;
       case LightState.UV_LIGHT_STOP_MOVE:
         currShakeTime -= InternalCalls.GetDeltaTime();
-        currentRotation = rotationBeforeShake + new Vector3(currShakesize, currShakesize, 0);
-        currShakesize = Easing.Linear(Shakesize, 0, 1 - (shakeTime / currShakeTime)); // decay the shake from shakesize to 0
+        currentRotation = AddRandomDirection(rotationBeforeShake, currShakesize);
+        currShakesize = Easing.Linear(Shakesize, 0, 1 - (currShakeTime / shakeTime)); // decay the shake from shakesize to 0
+        InternalCalls.SetSoundPitch(UVLight.mEntityID, "..\\Assets\\Audio\\UV_Move_SFX.wav", Easing.Linear(1, 0, 1 - (currShakeTime / shakeTime)));
         playerInput = true;
         if (currShakeTime <= 0) // times up 
         {
           currentRotation = rotationBeforeShake;
           currentLightState = LightState.UV_LIGHT_NOT_MOVING;
-          Debug.Log("Exiting stop...");
+          InternalCalls.SetSoundVolume(UVLight.mEntityID, "..\\Assets\\Audio\\UV_Move_SFX.wav", 0);
 
         }
-        Debug.Log("in stop move");
         break;
       case LightState.UV_LIGHT_NOT_MOVING:
         break;
     }
     if (playerInput)
     {
-      currentRotation += currentRotationVelo;
+      
       currentRotation.X = Mathf.Clamp(currentRotation.X, minVerticalRotation, maxVerticalRotation);
       currentRotation.Y = Mathf.Clamp(currentRotation.Y, minHorizontalRotation, maxHorizontalRotation);
       InternalCalls.SetRotationEuler(UVLight.mEntityID, ref currentRotation);

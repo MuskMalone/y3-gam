@@ -47,6 +47,10 @@ namespace IGE.Utils
       return InternalCalls.IsKeyHeld(button) || InternalCalls.IsKeyTriggered(button);
     }
 
+    public static bool GetKeyHeld(KeyCode button) {
+      return InternalCalls.IsKeyHeld(button);
+    }
+
     public static bool GetKeyTriggered(KeyCode button)
     {
       return InternalCalls.IsKeyTriggered(button);
