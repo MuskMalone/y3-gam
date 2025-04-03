@@ -6,6 +6,7 @@ using System.Numerics;
 
 public class LeverManager : Entity
 {
+  public Entity SFX;
   public Entity playerCamera;
   public Entity tableCamera;
   public Entity fragmentGlass;
@@ -98,6 +99,7 @@ public class LeverManager : Entity
             // if all levers pulled, transition to next phase
             if (leversPulled >= totalLevers)
             {
+              InternalCalls.PlaySound(SFX.mEntityID, "..\\Assets\\Audio\\Earthquake_Rumble1_SFX.wav");
               currState = State.TELEPORT_PLAYER;
             }
           }
@@ -108,7 +110,6 @@ public class LeverManager : Entity
       case State.TELEPORT_PLAYER:
         {
           timeElapsed += Time.deltaTime;
-
           if (timeElapsed >= timeBeforeFinalTeleport)
           {
             hexTeleport.TeleportPlayer(teleportPositionTable);
@@ -122,7 +123,7 @@ public class LeverManager : Entity
       case State.DEACTIVATE_ORBS:
         {
           timeElapsed += Time.deltaTime;
-
+          InternalCalls.SetSoundVolume(SFX.mEntityID, "..\\Assets\\Audio\\Earthquake_Rumble1_SFX.wav", Easing.Linear(0.3f, 0.7f, timeElapsed / (timeBeforeOrbsDrop)));
           if (timeElapsed < timeBeforeOrbsDrop) { return; }
 
           timeElapsed = 0f;
