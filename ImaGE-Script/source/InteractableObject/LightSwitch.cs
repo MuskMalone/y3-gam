@@ -7,6 +7,7 @@ public class LightSwitch : Entity
     public ControlPanel2 controlPanel;
     public Entity[] LightsToToggleActive;
     public Entity lever;
+    public Entity EToInteractUI;
 
     private bool playingAnim = false;
     private bool lightsOn = true;
@@ -51,7 +52,11 @@ public class LightSwitch : Entity
 
                 lever.GetComponent<Animation>().Play(lightsOn ? "SwitchOff" : "SwitchOn");
                 playingAnim = true;
+                EToInteractUI.SetActive(false);
+                return;
             }
+
+            EToInteractUI.SetActive(isSwitchHit);
         }
     }
 }

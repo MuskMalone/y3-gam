@@ -7,6 +7,7 @@ public class PullLever : Entity
   public HexTableOrb orb;
   public Entity leverLight;
   public float timeBeforeCamSwitch = 0.1f;
+  public Entity EToInteractUI;
 
   public Entity platformLight;
   private LeverManager leverManager; // Reference to the manager
@@ -39,8 +40,12 @@ public class PullLever : Entity
         if (hitObjectTag == thisLeverTag) // Check if player clicked this lever
         {
           ActivateLever();
+          EToInteractUI.SetActive(false);
+          return;
         }
       }
+
+      EToInteractUI.SetActive(playerInteraction.RayHitString == thisLeverTag);
 
       return;
     }

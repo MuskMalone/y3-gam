@@ -17,6 +17,7 @@ public class Fragment : Entity
   public Transition transition;
   public BlackBorder blackBorder;
   private bool fragmentCollected = false;
+  private bool fragmentAnimationOver = false;
 
   public Vector3 startPos;
   public Vector3 downPos;
@@ -153,7 +154,7 @@ public class Fragment : Entity
           SetActive(false);
           currState = State.COLLECTED;
           SetAltarActive(false);
-
+          fragmentAnimationOver = true;
           break;
         }
       case State.COLLECTED:
@@ -206,5 +207,10 @@ public class Fragment : Entity
   public bool IsFragmentCollected()
   {
     return fragmentCollected;
+  }
+
+  public bool IsFragmentAnimationOver()
+  {
+    return fragmentAnimationOver;
   }
 }
