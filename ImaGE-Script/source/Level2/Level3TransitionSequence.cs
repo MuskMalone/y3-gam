@@ -54,7 +54,7 @@ public class Level3TransitionSequence : Entity
     switch (currState)
     {
       case State.WAITING:
-        if (fragment.IsFragmentCollected())
+        if (fragment.IsFragmentAnimationOver())
         {
           timeElapsed += Time.deltaTime;
 
