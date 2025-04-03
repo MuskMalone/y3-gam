@@ -1,0 +1,82 @@
+{
+    "Name": "Vase2",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Vase2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 30.975385665893555,
+                            "y": 3.8183374404907227,
+                            "z": -12.756526947021484
+                        },
+                        "scale": {
+                            "x": 7.0,
+                            "y": 7.0,
+                            "z": 7.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 30.975385665893555,
+                            "y": 3.8183374404907227,
+                            "z": -12.756526947021484
+                        },
+                        "worldScale": {
+                            "x": 7.0,
+                            "y": 7.0,
+                            "z": 7.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Props"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 8435945311001043598
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Vase2",
+                        "GUID": {
+                            "ID": 6067097675426441896
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}

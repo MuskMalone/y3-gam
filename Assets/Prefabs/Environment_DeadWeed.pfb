@@ -1,0 +1,82 @@
+{
+    "Name": "Environment_DeadWeed",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Environment_DeadWeed",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -9.170614242553711,
+                            "y": 6.265177249908447,
+                            "z": 1.566655158996582
+                        },
+                        "scale": {
+                            "x": 4.0,
+                            "y": 4.0,
+                            "z": 4.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -9.170614242553711,
+                            "y": 6.265177249908447,
+                            "z": 1.566655158996582
+                        },
+                        "worldScale": {
+                            "x": 4.0,
+                            "y": 4.0,
+                            "z": 4.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 2144974575097073744
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Environment_DeadWeed",
+                        "GUID": {
+                            "ID": 14903139298581729822
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        }
+    ]
+}
