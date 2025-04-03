@@ -1,0 +1,801 @@
+{
+    "Name": "GardenDoor",
+    "SubData": [
+        {
+            "ID": 0,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "GardenDoor Pivot",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Animation": {
+                        "animations": [
+                            {
+                                "key": "OpenDoor",
+                                "value": {
+                                    "ID": 4479853625002199828
+                                }
+                            },
+                            {
+                                "key": "SlamDoor",
+                                "value": {
+                                    "ID": 16053413657916671263
+                                }
+                            }
+                        ],
+                        "currentAnimation": {
+                            "first": "",
+                            "second": {
+                                "ID": 0
+                            }
+                        },
+                        "repeat": false
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Keyhole",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.00341796875,
+                            "y": -9.5367431640625e-7,
+                            "z": -4.48211669921875
+                        },
+                        "scale": {
+                            "x": 16.8799991607666,
+                            "y": 16.8799991607666,
+                            "z": 16.8799991607666
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.00341796875,
+                            "y": -9.5367431640625e-7,
+                            "z": -4.48211669921875
+                        },
+                        "worldScale": {
+                            "x": 16.8799991607666,
+                            "y": 16.8799991607666,
+                            "z": 16.8799991607666
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 17715913249894061526
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Mesh.003",
+                        "GUID": {
+                            "ID": 13038401711823285392
+                        },
+                        "submeshIdx": 3,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Puzzle_GardenDoor_NoHandle",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.00341033935546875,
+                            "y": -0.8013944625854492,
+                            "z": -4.396808624267578
+                        },
+                        "scale": {
+                            "x": 15.481849670410156,
+                            "y": 14.559999465942383,
+                            "z": 15.339996337890625
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.00341033935546875,
+                            "y": -0.8013944625854492,
+                            "z": -4.396808624267578
+                        },
+                        "worldScale": {
+                            "x": 15.481849670410156,
+                            "y": 14.559999465942383,
+                            "z": 15.339996337890625
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 856761417764871326
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Puzzle_GardenDoor_NoHandle",
+                        "GUID": {
+                            "ID": 4449977309144352413
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "GardenDoor Frame",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -0.11899948120117188,
+                            "y": -0.00010967254638671875,
+                            "z": -4.48211669921875
+                        },
+                        "scale": {
+                            "x": 16.87999725341797,
+                            "y": 16.8799991607666,
+                            "z": 10.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -0.11899948120117188,
+                            "y": -0.00010967254638671875,
+                            "z": -4.48211669921875
+                        },
+                        "worldScale": {
+                            "x": 16.87999725341797,
+                            "y": 16.8799991607666,
+                            "z": 10.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 5138726443658682129
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Frame",
+                        "GUID": {
+                            "ID": 13038401711823285392
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 4,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Mesh.004",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.00341033935546875,
+                            "y": 0.0,
+                            "z": -4.48211669921875
+                        },
+                        "scale": {
+                            "x": 16.8799991607666,
+                            "y": 16.8799991607666,
+                            "z": 16.8799991607666
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.00341033935546875,
+                            "y": 0.0,
+                            "z": -4.48211669921875
+                        },
+                        "worldScale": {
+                            "x": 16.8799991607666,
+                            "y": 16.8799991607666,
+                            "z": 16.8799991607666
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 14194839714360005786
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Mesh.004",
+                        "GUID": {
+                            "ID": 13038401711823285392
+                        },
+                        "submeshIdx": 1,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 5,
+            "Parent": 0,
+            "Components": [
+                {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "DoorSlam",
+                                "value": {
+                                    "guid": {
+                                        "ID": 14529905657129758092
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.000274658203125,
+                                            "y": 0.0002288818359375,
+                                            "z": -4.476737976074219
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "DoorSwing",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8275416964736540374
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.000274658203125,
+                                            "y": 0.0002288818359375,
+                                            "z": -4.476737976074219
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "LockedDoor",
+                                "value": {
+                                    "guid": {
+                                        "ID": 17970498899727066841
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.000274658203125,
+                                            "y": 0.0002288818359375,
+                                            "z": -4.476737976074219
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "MotherHumming",
+                                "value": {
+                                    "guid": {
+                                        "ID": 11294076012291334009
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.000274658203125,
+                                            "y": 0.0002288818359375,
+                                            "z": -4.476737976074219
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "Tag": {
+                        "tag": "DoorCollider",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.000274658203125,
+                            "y": 0.0002288818359375,
+                            "z": -4.476737976074219
+                        },
+                        "scale": {
+                            "x": 2.0999999046325684,
+                            "y": 2.0799999237060547,
+                            "z": 2.0799999237060547
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.000274658203125,
+                            "y": 0.0002288818359375,
+                            "z": -4.476737976074219
+                        },
+                        "worldScale": {
+                            "x": 2.0999999046325684,
+                            "y": 2.0799999237060547,
+                            "z": 2.0799999237060547
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Puzzle"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 4.300000190734863,
+                            "y": 8.0,
+                            "z": 0.5
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 1048590,
+                                "scriptName": "KeyDoor",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 129,
+                                            "scriptName": "BlackBorder"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "blackBorder"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 210,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "corridorTrigger"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 197,
+                                            "scriptName": "Dialogue"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "dialogueSystem"
+                                        }
+                                    },
+                                    {
+                                        "data": "OpenDoor",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "doorAnimName"
+                                        }
+                                    },
+                                    {
+                                        "data": true,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "doorInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": "SlamDoor",
+                                        "type": "System.String",
+                                        "scriptField": {
+                                            "fieldName": "doorSlamAnimName"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 76,
+                                            "scriptName": "Inventory"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "inventoryScript"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1127,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "keyCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": [
+                                            "It won't budge. I need a key."
+                                        ],
+                                        "type": "System.String[]",
+                                        "scriptField": {
+                                            "fieldName": "lockedDialogue"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 114,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "motherHumming"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 0,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerCamera"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 40,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 486,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transitionCorridorTrigger"
+                                        }
+                                    },
+                                    {
+                                        "data": true,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "triggerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049245,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "unlockDoorUI"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

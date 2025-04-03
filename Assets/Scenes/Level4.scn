@@ -167,6 +167,7 @@
             "Child Entities": [
                 43,
                 98,
+                327,
                 353,
                 451,
                 469,
@@ -176,7 +177,6 @@
                 630,
                 638,
                 1048783,
-                1049003,
                 1049378,
                 1049636,
                 2097443,
@@ -425,14 +425,14 @@
             "ID": 11,
             "Parent": null,
             "Child Entities": [
-                93,
                 151,
                 214,
                 383,
                 516,
                 1049706,
                 2097156,
-                3145740
+                3145740,
+                6292099
             ],
             "Components": [
                 {
@@ -1074,41 +1074,41 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -44.352996826171875,
+                            "x": -44.1773681640625,
                             "y": 3.849996328353882,
                             "z": 5.301273345947266
                         },
                         "scale": {
-                            "x": 20.316957473754883,
+                            "x": 118.62699890136719,
                             "y": 4.493218421936035,
-                            "z": 118.62651062011719
+                            "z": 20.316999435424805
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -0.0,
+                            "y": 90.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -44.353004455566406,
+                            "x": -44.17737579345703,
                             "y": 3.849996328353882,
                             "z": 5.301273345947266
                         },
                         "worldScale": {
-                            "x": 20.316957473754883,
+                            "x": 118.62699890136719,
                             "y": 4.493218421936035,
-                            "z": 118.62651062011719
+                            "z": 20.316999435424805
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -1139,9 +1139,9 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 10.158478736877441,
+                            "x": 59.313499450683594,
                             "y": 2.2466092109680176,
-                            "z": 59.24788284301758
+                            "z": 10.158499717712402
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -1174,8 +1174,8 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 1.0,
-                        "dynamicFriction": 1.0,
+                        "staticFriction": 10.0,
+                        "dynamicFriction": 10.0,
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
@@ -2070,6 +2070,13 @@
                                         }
                                     },
                                     {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "lockGravity"
+                                        }
+                                    },
+                                    {
                                         "data": 4.349999904632568,
                                         "type": "System.Single",
                                         "scriptField": {
@@ -2603,7 +2610,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 8297051694531430861
+                            "ID": 12373565553598299103
                         }
                     }
                 },
@@ -2709,15 +2716,19 @@
                 588,
                 1033,
                 1048609,
+                1048797,
                 1049649,
-                2097832,
                 2098233,
                 3145886,
                 3146011,
                 3146283,
-                3146842,
+                3146292,
+                3146408,
                 5242945,
-                5243148
+                5243128,
+                5243148,
+                7340477,
+                11534530
             ],
             "Components": [
                 {
@@ -2901,7 +2912,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 8297051694531430861
+                            "ID": 5190865895737439345
                         }
                     }
                 },
@@ -4986,7 +4997,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 8297051694531430861
+                            "ID": 12373565553598299103
                         }
                     }
                 },
@@ -5493,7 +5504,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 2046570302303426118
+                            "ID": 4359750845501455582
                         }
                     }
                 },
@@ -6279,80 +6290,6 @@
             ]
         },
         {
-            "ID": 93,
-            "Parent": 11,
-            "Child Entities": [
-                4194597,
-                4194858
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "GardenDoor Pivot",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 53.933998107910156,
-                            "y": 14.156999588012695,
-                            "z": 58.63010025024414
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 53.933998107910156,
-                            "y": 14.156999588012695,
-                            "z": 58.63010025024414
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 98,
             "Parent": 6,
             "Child Entities": [
@@ -6477,7 +6414,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 5437073796557026432
+                            "ID": 12525023648723842310
                         }
                     }
                 },
@@ -6555,7 +6492,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 5437073796557026432
+                            "ID": 12525023648723842310
                         }
                     }
                 },
@@ -6607,7 +6544,7 @@
                         "key": "Material",
                         "value": {
                             "materialGUID": {
-                                "ID": 12878512862779641630
+                                "ID": 8359946011738352954
                             }
                         }
                     }
@@ -10092,7 +10029,7 @@
                 "GUID": {
                     "ID": 13818176251542423782
                 },
-                "subDataId": 6,
+                "subDataId": 2,
                 "componentData": [
                     {
                         "key": "Layer",
@@ -10217,7 +10154,7 @@
                 "GUID": {
                     "ID": 13818176251542423782
                 },
-                "subDataId": 6,
+                "subDataId": 2,
                 "componentData": [
                     {
                         "key": "Layer",
@@ -10256,12 +10193,12 @@
             "Child Entities": [
                 42,
                 145,
+                515,
                 1015,
                 1134,
                 1142,
                 1158,
                 1166,
-                1048903,
                 1049596,
                 1049630,
                 1049708,
@@ -10576,7 +10513,7 @@
         },
         {
             "ID": 282,
-            "Parent": 3146157,
+            "Parent": 457,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -10692,7 +10629,7 @@
         },
         {
             "ID": 286,
-            "Parent": 424,
+            "Parent": 476,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -11038,7 +10975,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 5437073796557026432
+                            "ID": 12472230093956268813
                         }
                     }
                 },
@@ -11256,6 +11193,256 @@
             ]
         },
         {
+            "ID": 327,
+            "Parent": 6,
+            "Child Entities": [
+                2098012,
+                3146093
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 16471873673115417314
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "AudioSource",
+                        "value": {
+                            "sounds": [
+                                {
+                                    "key": "PickupPainting",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 14271662682490721671
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 67.63999938964844,
+                                                "y": 12.164999961853027,
+                                                "z": -12.052000045776367
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "isBGM": false,
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingSettings": []
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 2.4100000858306885,
+                                "y": 2.4100000858306885,
+                                "z": 0.4099999964237213
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
+                        "key": "RigidBody",
+                        "value": {
+                            "velocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "angularVelocity": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "staticFriction": 0.0,
+                            "dynamicFriction": 0.0,
+                            "restitution": 0.0,
+                            "gravityFactor": 0.0,
+                            "linearDamping": 0.9800000190734863,
+                            "motionType": "KINEMATIC",
+                            "axisLock": 7,
+                            "angularAxisLock": 7,
+                            "hasJoint": false,
+                            "entityLinked": 4294967295,
+                            "joinConfig": {
+                                "jointType": "REVOLUTE",
+                                "breakForce": 3.4028234663852886e38,
+                                "breakTorque": 3.4028234663852886e38,
+                                "stiffness": 0.0,
+                                "damping": 0.0,
+                                "lowerAngle": 0.0,
+                                "upperAngle": 0.0,
+                                "yLimit": 0.009999999776482582,
+                                "zLimit": 0.009999999776482582,
+                                "lowerLimit": 0.0,
+                                "upperLimit": 0.0,
+                                "motorEnabled": false,
+                                "motorTargetVelocity": 0.0,
+                                "motorForceLimit": 0.0
+                            },
+                            "jointOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "entityLinkedJointOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            }
+                        }
+                    },
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 327,
+                                    "scriptName": "CorrdiorPainting",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 1049644,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "EToPickUpUI"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1022,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "_Image"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 197,
+                                                "scriptName": "Dialogue"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "dialogueSystem"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 76,
+                                                "scriptName": "Inventory"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "inventoryScript"
+                                            }
+                                        },
+                                        {
+                                            "data": [],
+                                            "type": "System.String[]",
+                                            "scriptField": {
+                                                "fieldName": "pitPaintingDialogue"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 40,
+                                                "scriptName": "PlayerInteraction"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerInteraction"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "CorridorPainting",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 67.63999938964844,
+                                "y": 12.164999961853027,
+                                "z": -12.052000045776367
+                            },
+                            "scale": {
+                                "x": 0.8199999928474426,
+                                "y": 0.8199999928474426,
+                                "z": 0.8199999928474426
+                            },
+                            "rotation": {
+                                "x": -0.033963464200496674,
+                                "y": -0.3751634955406189,
+                                "z": -0.01375661976635456,
+                                "w": 0.9262341856956482
+                            },
+                            "eulerAngles": {
+                                "x": -4.199999809265137,
+                                "y": -44.099998474121094,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 67.63999938964844,
+                                "y": 12.164999961853027,
+                                "z": -12.052000045776367
+                            },
+                            "worldScale": {
+                                "x": 0.8199999928474426,
+                                "y": 0.8199999928474426,
+                                "z": 0.8199999928474426
+                            },
+                            "worldRot": {
+                                "x": -0.033963464200496674,
+                                "y": -0.3751634955406189,
+                                "z": -0.01375661976635456,
+                                "w": 0.9262341856956482
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 329,
             "Parent": 46,
             "Child Entities": [],
@@ -11263,7 +11450,7 @@
                 {
                     "Tag": {
                         "tag": "BumpyGround",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -11686,7 +11873,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 7398324319315129017
+                            "ID": 14194839714360005786
                         }
                     }
                 },
@@ -11764,7 +11951,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 7398324319315129017
+                            "ID": 14194839714360005786
                         }
                     }
                 },
@@ -12541,42 +12728,6 @@
             }
         },
         {
-            "ID": 424,
-            "Parent": 450,
-            "Child Entities": [
-                286
-            ],
-            "Prefab": {
-                "GUID": {
-                    "ID": 14950610396875536120
-                },
-                "subDataId": 5,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 425,
-            "Parent": 450,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 14950610396875536120
-                },
-                "subDataId": 7,
-                "componentData": [
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "SettingsImage",
-                            "isActive": false
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 433,
             "Parent": 43,
             "Child Entities": [],
@@ -12856,7 +13007,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 5437073796557026432
+                            "ID": 12472230093956268813
                         }
                     }
                 },
@@ -12956,7 +13107,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 5437073796557026432
+                            "ID": 15302006979643363759
                         }
                     }
                 },
@@ -12981,8 +13132,8 @@
                 260,
                 288,
                 377,
-                424,
-                425,
+                476,
+                478,
                 492,
                 526,
                 571
@@ -13165,6 +13316,77 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 457,
+            "Parent": 1049698,
+            "Child Entities": [
+                282,
+                2097502,
+                2097503,
+                3146065,
+                4194403,
+                4195024,
+                4195052
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 18270607630731340668
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Large Pillar L",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -31.634437561035156,
+                                "y": 23.876808166503906,
+                                "z": -51.886688232421875
+                            },
+                            "scale": {
+                                "x": 31.219999313354492,
+                                "y": 31.219999313354492,
+                                "z": 31.219999313354492
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.24420398473739624,
+                                "w": 0.9697238802909851
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 28.26959228515625
+                            },
+                            "worldPos": {
+                                "x": -24.63404083251953,
+                                "y": 23.876808166503906,
+                                "z": -51.319374084472656
+                            },
+                            "worldScale": {
+                                "x": 31.219999313354492,
+                                "y": 31.219999313354492,
+                                "z": 31.219999313354492
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.24420398473739624,
+                                "w": 0.9697238802909851
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 469,
@@ -13484,6 +13706,42 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 476,
+            "Parent": 450,
+            "Child Entities": [
+                286
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 5,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 478,
+            "Parent": 450,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 14950610396875536120
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "SettingsImage",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 484,
@@ -13842,6 +14100,68 @@
             ]
         },
         {
+            "ID": 515,
+            "Parent": 269,
+            "Child Entities": [
+                1041,
+                1047,
+                1048910,
+                2097492,
+                2098268
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8786659095930452505
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 40.0,
+                                "y": 0.9392642974853516,
+                                "z": 0.0
+                            },
+                            "scale": {
+                                "x": 4.199999809265137,
+                                "y": 4.199999809265137,
+                                "z": 4.199999809265137
+                            },
+                            "rotation": {
+                                "x": -0.6022756695747375,
+                                "y": 0.3954614996910095,
+                                "z": -0.5227807760238647,
+                                "w": 0.4556034207344055
+                            },
+                            "eulerAngles": {
+                                "x": -92.27637481689453,
+                                "y": -15.626727104187012,
+                                "z": -81.60375213623047
+                            },
+                            "worldPos": {
+                                "x": 40.0,
+                                "y": 0.9392642974853516,
+                                "z": 0.0
+                            },
+                            "worldScale": {
+                                "x": 4.199999809265137,
+                                "y": 4.199999809265137,
+                                "z": 4.199999809265137
+                            },
+                            "worldRot": {
+                                "x": -0.6022756695747375,
+                                "y": 0.3954614996910095,
+                                "z": -0.5227807760238647,
+                                "w": 0.4556034207344055
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 516,
             "Parent": 11,
             "Child Entities": [],
@@ -13931,6 +14251,33 @@
                 },
                 "subDataId": 9,
                 "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 538,
+            "Parent": 9437526,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 3467401324182861937
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Props"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Vase4",
+                            "isActive": true
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -14622,7 +14969,7 @@
                 {
                     "Tag": {
                         "tag": "Crossroads",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -14726,7 +15073,7 @@
                 {
                     "Tag": {
                         "tag": "Crossroads",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -18235,13 +18582,13 @@
                 1049248,
                 2097850,
                 2097854,
+                2097887,
                 3146424,
                 3146425,
-                3146428,
                 3146431,
+                3146466,
                 4194992,
-                4194995,
-                4195008
+                4194995
             ],
             "Components": [
                 {
@@ -19410,7 +19757,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 2046570302303426118
+                            "ID": 4359750845501455582
                         }
                     }
                 },
@@ -19660,7 +20007,7 @@
         },
         {
             "ID": 1041,
-            "Parent": 1048903,
+            "Parent": 515,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -19754,7 +20101,7 @@
         },
         {
             "ID": 1047,
-            "Parent": 1048903,
+            "Parent": 515,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -20308,7 +20655,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 8297051694531430861
+                            "ID": 12373565553598299103
                         }
                     }
                 },
@@ -21809,7 +22156,7 @@
                 "GUID": {
                     "ID": 13818176251542423782
                 },
-                "subDataId": 6,
+                "subDataId": 2,
                 "componentData": [
                     {
                         "key": "Layer",
@@ -22089,41 +22436,41 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 10.01040267944336,
+                            "x": 10.13700008392334,
                             "y": 3.7090516090393066,
                             "z": 53.59003448486328
                         },
                         "scale": {
-                            "x": 93.5009994506836,
+                            "x": 20.5,
                             "y": 4.775000095367432,
-                            "z": 20.499656677246094
+                            "z": 88.41999816894531
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": -0.0,
+                            "y": 90.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 10.010396957397461,
+                            "x": 10.136994361877441,
                             "y": 3.7090516090393066,
                             "z": 53.59003448486328
                         },
                         "worldScale": {
-                            "x": 93.5009994506836,
+                            "x": 20.5,
                             "y": 4.775000095367432,
-                            "z": 20.499656677246094
+                            "z": 88.41999816894531
                         },
                         "worldRot": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": 0.7071067690849304,
                             "z": 0.0,
-                            "w": 1.0
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -22154,9 +22501,9 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 46.54199981689453,
-                            "y": 2.3788700103759766,
-                            "z": 10.229909896850586
+                            "x": 10.25,
+                            "y": 2.387500047683716,
+                            "z": 44.209999084472656
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -22189,8 +22536,8 @@
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "staticFriction": 1.0,
-                        "dynamicFriction": 1.0,
+                        "staticFriction": 10.0,
+                        "dynamicFriction": 10.0,
                         "restitution": 0.0,
                         "gravityFactor": 0.0,
                         "linearDamping": 0.9800000190734863,
@@ -22378,20 +22725,20 @@
                             "z": -53.63726806640625
                         },
                         "scale": {
-                            "x": 19.94854736328125,
-                            "y": 23.367412567138672,
+                            "x": 25.788999557495117,
+                            "y": 19.948999404907227,
                             "z": 1.5917702913284302
                         },
                         "rotation": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
+                            "z": 0.7071067690849304,
+                            "w": 0.7071067690849304
                         },
                         "eulerAngles": {
                             "x": 0.0,
                             "y": -0.0,
-                            "z": 0.0
+                            "z": 90.0
                         },
                         "worldPos": {
                             "x": -44.48382568359375,
@@ -22399,15 +22746,15 @@
                             "z": -53.63726806640625
                         },
                         "worldScale": {
-                            "x": 19.94854736328125,
-                            "y": 23.367412567138672,
+                            "x": 25.788999557495117,
+                            "y": 19.948999404907227,
                             "z": 1.5917702913284302
                         },
                         "worldRot": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
+                            "z": 0.7071067690849304,
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -22419,7 +22766,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 5373779004609209444
+                            "ID": 2498150348806229810
                         }
                     }
                 },
@@ -22438,9 +22785,9 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 9.974273681640625,
-                            "y": 11.683706283569336,
-                            "z": 0.7950079441070557
+                            "x": 12.894499778747559,
+                            "y": 9.974499702453613,
+                            "z": 0.7958851456642151
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -22529,39 +22876,39 @@
                         "position": {
                             "x": -10.739839553833008,
                             "y": 6.866655349731445,
-                            "z": -0.03464508056640625
+                            "z": -0.0344696044921875
                         },
                         "scale": {
                             "x": 1.136022686958313,
-                            "y": 37.607967376708984,
-                            "z": 5.549607753753662
+                            "y": 8.304316520690918,
+                            "z": 37.60799789428711
                         },
                         "rotation": {
-                            "x": 0.0,
-                            "y": -0.7071068286895752,
-                            "z": 0.0,
-                            "w": 0.7071068286895752
+                            "x": 0.4999999701976776,
+                            "y": -0.4999999701976776,
+                            "z": 0.4999999701976776,
+                            "w": 0.4999999701976776
                         },
                         "eulerAngles": {
-                            "x": 0.0,
-                            "y": -90.0,
+                            "x": 90.0,
+                            "y": -89.9720230102539,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.56535339355469,
+                            "x": 53.565528869628906,
                             "y": 17.231990814208984,
                             "z": 61.164886474609375
                         },
                         "worldScale": {
                             "x": 0.7384147047996521,
-                            "y": 24.821258544921875,
-                            "z": 5.549607753753662
+                            "y": 5.480849266052246,
+                            "z": 37.60799789428711
                         },
                         "worldRot": {
-                            "x": 0.0,
+                            "x": 0.7071067690849304,
                             "y": 0.0,
                             "z": 0.0,
-                            "w": 1.0000001192092896
+                            "w": 0.7071067690849304
                         }
                     }
                 },
@@ -22593,8 +22940,8 @@
                     "BoxCollider": {
                         "scale": {
                             "x": 0.36920735239982605,
-                            "y": 12.410629272460938,
-                            "z": 2.7717456817626953
+                            "y": 2.740424633026123,
+                            "z": 18.803998947143555
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -23584,6 +23931,87 @@
             ]
         },
         {
+            "ID": 1048797,
+            "Parent": 46,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "BumpyGroundCollider7",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -7.482699871063232,
+                            "y": -1.4155442714691162,
+                            "z": 44.890716552734375
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.075568437576294
+                        },
+                        "rotation": {
+                            "x": -0.3058883249759674,
+                            "y": 0.0029862006194889545,
+                            "z": 0.0038790053222328424,
+                            "w": 0.9520548582077026
+                        },
+                        "eulerAngles": {
+                            "x": -35.62238693237305,
+                            "y": 0.46175962686538696,
+                            "z": 0.31852856278419495
+                        },
+                        "worldPos": {
+                            "x": -7.482705593109131,
+                            "y": -1.4155442714691162,
+                            "z": 44.890716552734375
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.075568437576294
+                        },
+                        "worldRot": {
+                            "x": -0.3058883249759674,
+                            "y": 0.0029862006194889545,
+                            "z": 0.0038790053222328424,
+                            "w": 0.9520548582077026
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "SphereCollider": {
+                        "radius": 7.800000190734863,
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048806,
             "Parent": 1048887,
             "Child Entities": [],
@@ -23764,7 +24192,7 @@
                 "GUID": {
                     "ID": 13818176251542423782
                 },
-                "subDataId": 6,
+                "subDataId": 2,
                 "componentData": [
                     {
                         "key": "Layer",
@@ -24207,70 +24635,8 @@
             }
         },
         {
-            "ID": 1048903,
-            "Parent": 269,
-            "Child Entities": [
-                1041,
-                1047,
-                1048910,
-                2097492,
-                2098268
-            ],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": 40.0,
-                                "y": 0.9392642974853516,
-                                "z": 0.0
-                            },
-                            "scale": {
-                                "x": 4.199999809265137,
-                                "y": 4.199999809265137,
-                                "z": 4.199999809265137
-                            },
-                            "rotation": {
-                                "x": -0.6022756695747375,
-                                "y": 0.3954614996910095,
-                                "z": -0.5227807760238647,
-                                "w": 0.4556034207344055
-                            },
-                            "eulerAngles": {
-                                "x": -92.27637481689453,
-                                "y": -15.626727104187012,
-                                "z": -81.60375213623047
-                            },
-                            "worldPos": {
-                                "x": 40.0,
-                                "y": 0.9392642974853516,
-                                "z": 0.0
-                            },
-                            "worldScale": {
-                                "x": 4.199999809265137,
-                                "y": 4.199999809265137,
-                                "z": 4.199999809265137
-                            },
-                            "worldRot": {
-                                "x": -0.6022756695747375,
-                                "y": 0.3954614996910095,
-                                "z": -0.5227807760238647,
-                                "w": 0.4556034207344055
-                            }
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1048910,
-            "Parent": 1048903,
+            "Parent": 515,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -24380,7 +24746,7 @@
                 {
                     "Tag": {
                         "tag": "Stair Part",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -24737,256 +25103,6 @@
                     }
                 }
             ]
-        },
-        {
-            "ID": 1049003,
-            "Parent": 6,
-            "Child Entities": [
-                2098012,
-                3146093
-            ],
-            "Prefab": {
-                "GUID": {
-                    "ID": 16471873673115417314
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "AudioSource",
-                        "value": {
-                            "sounds": [
-                                {
-                                    "key": "PickupPainting",
-                                    "value": {
-                                        "guid": {
-                                            "ID": 14271662682490721671
-                                        },
-                                        "playSettings": {
-                                            "position": {
-                                                "x": 67.63999938964844,
-                                                "y": 12.164999961853027,
-                                                "z": -12.052000045776367
-                                            },
-                                            "volume": 1.0,
-                                            "pitch": 1.0,
-                                            "pan": 0.0,
-                                            "mute": false,
-                                            "loop": false,
-                                            "playOnAwake": false,
-                                            "dopplerLevel": 1.0,
-                                            "minDistance": 1.0,
-                                            "maxDistance": 500.0,
-                                            "rolloffType": "NONE",
-                                            "isBGM": false,
-                                            "enablePostProcessing": false,
-                                            "processingType": "REVERB",
-                                            "postProcessingSettings": []
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 2.4100000858306885,
-                                "y": 2.4100000858306885,
-                                "z": 0.4099999964237213
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "RigidBody",
-                        "value": {
-                            "velocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "angularVelocity": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "staticFriction": 0.0,
-                            "dynamicFriction": 0.0,
-                            "restitution": 0.0,
-                            "gravityFactor": 0.0,
-                            "linearDamping": 0.9800000190734863,
-                            "motionType": "KINEMATIC",
-                            "axisLock": 7,
-                            "angularAxisLock": 7,
-                            "hasJoint": false,
-                            "entityLinked": 4294967295,
-                            "joinConfig": {
-                                "jointType": "REVOLUTE",
-                                "breakForce": 3.4028234663852886e38,
-                                "breakTorque": 3.4028234663852886e38,
-                                "stiffness": 0.0,
-                                "damping": 0.0,
-                                "lowerAngle": 0.0,
-                                "upperAngle": 0.0,
-                                "yLimit": 0.009999999776482582,
-                                "zLimit": 0.009999999776482582,
-                                "lowerLimit": 0.0,
-                                "upperLimit": 0.0,
-                                "motorEnabled": false,
-                                "motorTargetVelocity": 0.0,
-                                "motorForceLimit": 0.0
-                            },
-                            "jointOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "entityLinkedJointOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            }
-                        }
-                    },
-                    {
-                        "key": "ScriptComponent",
-                        "value": {
-                            "scriptList": [
-                                {
-                                    "entityID": 1049003,
-                                    "scriptName": "CorrdiorPainting",
-                                    "scriptFieldInstList": [
-                                        {
-                                            "data": {
-                                                "entityID": 1049644,
-                                                "scriptName": "Entity"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "EToPickUpUI"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 1022,
-                                                "scriptName": "Entity"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "_Image"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 197,
-                                                "scriptName": "Dialogue"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "dialogueSystem"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 76,
-                                                "scriptName": "Inventory"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "inventoryScript"
-                                            }
-                                        },
-                                        {
-                                            "data": [],
-                                            "type": "System.String[]",
-                                            "scriptField": {
-                                                "fieldName": "pitPaintingDialogue"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 40,
-                                                "scriptName": "PlayerInteraction"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "playerInteraction"
-                                            }
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "CorridorPainting",
-                            "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": 67.63999938964844,
-                                "y": 12.164999961853027,
-                                "z": -12.052000045776367
-                            },
-                            "scale": {
-                                "x": 0.8199999928474426,
-                                "y": 0.8199999928474426,
-                                "z": 0.8199999928474426
-                            },
-                            "rotation": {
-                                "x": -0.033963464200496674,
-                                "y": -0.3751634955406189,
-                                "z": -0.01375661976635456,
-                                "w": 0.9262341856956482
-                            },
-                            "eulerAngles": {
-                                "x": -4.199999809265137,
-                                "y": -44.099998474121094,
-                                "z": 0.0
-                            },
-                            "worldPos": {
-                                "x": 67.63999938964844,
-                                "y": 12.164999961853027,
-                                "z": -12.052000045776367
-                            },
-                            "worldScale": {
-                                "x": 0.8199999928474426,
-                                "y": 0.8199999928474426,
-                                "z": 0.8199999928474426
-                            },
-                            "worldRot": {
-                                "x": -0.033963464200496674,
-                                "y": -0.3751634955406189,
-                                "z": -0.01375661976635456,
-                                "w": 0.9262341856956482
-                            }
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
         },
         {
             "ID": 1049159,
@@ -26446,7 +26562,7 @@
                         "scale": {
                             "x": 1.0,
                             "y": 1.0,
-                            "z": 1.0
+                            "z": 0.8999999761581421
                         },
                         "rotation": {
                             "x": 0.0,
@@ -26467,7 +26583,7 @@
                         "worldScale": {
                             "x": 2.0,
                             "y": 2.0,
-                            "z": 2.0
+                            "z": 1.7999999523162842
                         },
                         "worldRot": {
                             "x": -0.7746697068214417,
@@ -26485,7 +26601,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 8930139538896017712
+                            "ID": 856761417764871326
                         }
                     }
                 },
@@ -27849,20 +27965,20 @@
                             "z": -61.17512512207031
                         },
                         "scale": {
-                            "x": 19.94854736328125,
-                            "y": 23.367412567138672,
-                            "z": 1.5917702913284302
+                            "x": 23.367000579833984,
+                            "y": 39.4640007019043,
+                            "z": 1.5917705297470093
                         },
                         "rotation": {
-                            "x": 0.0,
-                            "y": 0.7071068286895752,
-                            "z": 0.0,
-                            "w": 0.7071068286895752
+                            "x": 0.4999999701976776,
+                            "y": -0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
                         },
                         "eulerAngles": {
-                            "x": 0.0,
-                            "y": 90.0,
-                            "z": 0.0
+                            "x": 90.0,
+                            "y": 0.0,
+                            "z": -90.0
                         },
                         "worldPos": {
                             "x": -35.26087951660156,
@@ -27870,15 +27986,15 @@
                             "z": -61.17512512207031
                         },
                         "worldScale": {
-                            "x": 19.94854736328125,
-                            "y": 23.367412567138672,
-                            "z": 1.5917702913284302
+                            "x": 23.367000579833984,
+                            "y": 39.4640007019043,
+                            "z": 1.5917705297470093
                         },
                         "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071068286895752,
-                            "z": 0.0,
-                            "w": 0.7071068286895752
+                            "x": 0.4999999701976776,
+                            "y": -0.4999999701976776,
+                            "z": -0.4999999701976776,
+                            "w": 0.4999999701976776
                         }
                     }
                 },
@@ -27890,7 +28006,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 8297051694531430861
+                            "ID": 2498150348806229810
                         }
                     }
                 },
@@ -27909,9 +28025,9 @@
                 {
                     "BoxCollider": {
                         "scale": {
-                            "x": 9.974273681640625,
-                            "y": 11.683706283569336,
-                            "z": 0.7950079441070557
+                            "x": 11.683500289916992,
+                            "y": 19.73200035095215,
+                            "z": 0.7958852648735046
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -28380,40 +28496,40 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 5.960464477539063e-8,
-                            "z": -1.1920928955078125e-7
+                            "y": -8.940696716308594e-7,
+                            "z": -3.2782554626464844e-7
                         },
                         "scale": {
                             "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
+                            "y": 0.9999998807907104,
+                            "z": 0.9200000166893005
                         },
                         "rotation": {
                             "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
+                            "y": 9.313225746154785e-10,
+                            "z": -1.862645149230957e-9,
+                            "w": 1.0000001192092896
                         },
                         "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
+                            "x": -1.987846169722852e-16,
+                            "y": 1.0672172123804557e-7,
+                            "z": -2.134433856326723e-7
                         },
                         "worldPos": {
                             "x": -20.808000564575195,
-                            "y": 0.9121331572532654,
-                            "z": 21.212797164916992
+                            "y": 0.9121330976486206,
+                            "z": 21.212799072265625
                         },
                         "worldScale": {
                             "x": 2.0,
-                            "y": 2.0,
-                            "z": 2.0
+                            "y": 1.999999761581421,
+                            "z": 1.840000033378601
                         },
                         "worldRot": {
-                            "x": -0.7746697068214417,
-                            "y": 0.03192906454205513,
+                            "x": -0.7746698260307312,
+                            "y": 0.03192906826734543,
                             "z": 0.018028534948825836,
-                            "w": 0.6313020586967468
+                            "w": 0.6313021183013916
                         }
                     }
                 },
@@ -28425,7 +28541,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 8930139538896017712
+                            "ID": 856761417764871326
                         }
                     }
                 },
@@ -28964,8 +29080,8 @@
             "ID": 1049698,
             "Parent": 8,
             "Child Entities": [
+                457,
                 2097507,
-                3146157,
                 4194651,
                 5243142
             ],
@@ -30145,12 +30261,12 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.000013027849490754306,
-                            "y": 18.48603630065918,
-                            "z": 0.16442108154296875
+                            "x": 0.009961781091988087,
+                            "y": 18.57404899597168,
+                            "z": 0.04102325439453125
                         },
                         "scale": {
-                            "x": 13.506285667419434,
+                            "x": 14.119000434875488,
                             "y": 7.313169479370117,
                             "z": 1.136000156402588
                         },
@@ -30162,16 +30278,16 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 0.0,
+                            "y": -0.0,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.76441955566406,
-                            "y": 24.900781631469727,
-                            "z": 54.183982849121094
+                            "x": 53.641021728515625,
+                            "y": 24.95886993408203,
+                            "z": 54.17751693725586
                         },
                         "worldScale": {
-                            "x": 8.779085159301758,
+                            "x": 9.177350044250488,
                             "y": 4.8266921043396,
                             "z": 1.136000156402588
                         },
@@ -30423,7 +30539,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 14194839714360005786
                         }
                     }
                 },
@@ -30985,7 +31101,7 @@
         },
         {
             "ID": 2097492,
-            "Parent": 1048903,
+            "Parent": 515,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -30998,7 +31114,7 @@
         },
         {
             "ID": 2097502,
-            "Parent": 3146157,
+            "Parent": 457,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -31020,7 +31136,7 @@
         },
         {
             "ID": 2097503,
-            "Parent": 3146157,
+            "Parent": 457,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -31661,33 +31777,6 @@
             }
         },
         {
-            "ID": 2097630,
-            "Parent": 9437526,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 3467401324182861937
-                },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Vase4",
-                            "isActive": true
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 2097663,
             "Parent": 353,
             "Child Entities": [],
@@ -31890,7 +31979,7 @@
                 {
                     "Tag": {
                         "tag": "Stair Part",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -32864,262 +32953,15 @@
             ]
         },
         {
-            "ID": 2097830,
-            "Parent": 3146842,
+            "ID": 2097816,
+            "Parent": 3146408,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
-                    "ID": 6262955587491398611
+                    "ID": 8412556556436434131
                 },
-                "subDataId": 2,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 3.514685869216919,
-                                "z": 0.9688934683799744
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 2097832,
-            "Parent": 46,
-            "Child Entities": [
-                2097837,
-                3146835,
-                3146847,
-                4194980,
-                5243312,
-                6292642,
-                8388802
-            ],
-            "Prefab": {
-                "GUID": {
-                    "ID": 6262955587491398611
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 7.940000057220459,
-                                "z": 0.9782022833824158
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Stair Head",
-                            "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": -33.2593994140625,
-                                "y": -1.9227677583694458,
-                                "z": 0.9688105583190918
-                            },
-                            "scale": {
-                                "x": 8.095969200134277,
-                                "y": 15.880000114440918,
-                                "z": 1.9564045667648315
-                            },
-                            "rotation": {
-                                "x": 0.0,
-                                "y": -0.7071067690849304,
-                                "z": 0.0,
-                                "w": 0.7071067690849304
-                            },
-                            "eulerAngles": {
-                                "x": 0.0,
-                                "y": -90.0,
-                                "z": 0.0
-                            },
-                            "worldPos": {
-                                "x": -33.25940704345703,
-                                "y": -1.9227677583694458,
-                                "z": 0.9688107371330261
-                            },
-                            "worldScale": {
-                                "x": 8.095969200134277,
-                                "y": 15.880000114440918,
-                                "z": 1.9564045667648315
-                            },
-                            "worldRot": {
-                                "x": 0.0,
-                                "y": -0.7071067690849304,
-                                "z": 0.0,
-                                "w": 0.7071067690849304
-                            }
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 2097835,
-            "Parent": 3146842,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 6262955587491398611
-                },
-                "subDataId": 4,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 6.603954792022705,
-                                "z": 0.908768355846405
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "Material",
-                        "value": {
-                            "materialGUID": {
-                                "ID": 5373779004609209444
-                            }
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 2097837,
-            "Parent": 2097832,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 6262955587491398611
-                },
-                "subDataId": 3,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 7.2537522315979,
-                                "z": 0.908768355846405
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Stair Part",
-                            "isActive": true
-                        }
-                    }
-                ],
+                "subDataId": 9,
+                "componentData": [],
                 "removedComponents": []
             }
         },
@@ -33205,46 +33047,60 @@
             }
         },
         {
-            "ID": 2097857,
-            "Parent": 3146842,
-            "Child Entities": [],
+            "ID": 2097887,
+            "Parent": 706,
+            "Child Entities": [
+                2097896
+            ],
+            "Position": {
+                "x": -4.272439956665039,
+                "y": 2.1375181674957275,
+                "z": 23.79846954345703
+            },
             "Prefab": {
                 "GUID": {
-                    "ID": 6262955587491398611
+                    "ID": 3533760579059501264
                 },
-                "subDataId": 6,
+                "subDataId": 0,
                 "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 5.473169326782227,
-                                "z": 0.908768355846405
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
                     {
                         "key": "Layer",
                         "value": {
                             "layerName": "Environment"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Weed",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097896,
+            "Parent": 2097887,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 3533760579059501264
+                },
+                "subDataId": 1,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Weed Mirror",
+                            "isActive": false
                         }
                     }
                 ],
@@ -33436,7 +33292,7 @@
         },
         {
             "ID": 2098012,
-            "Parent": 1049003,
+            "Parent": 327,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -33950,7 +33806,7 @@
         },
         {
             "ID": 2098268,
-            "Parent": 1048903,
+            "Parent": 515,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -34029,7 +33885,7 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 0
+                            "ID": 14194839714360005786
                         }
                     }
                 },
@@ -34414,6 +34270,19 @@
             ]
         },
         {
+            "ID": 3145894,
+            "Parent": 11534530,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 3145901,
             "Parent": 1048600,
             "Child Entities": [],
@@ -34421,7 +34290,7 @@
                 "GUID": {
                     "ID": 13818176251542423782
                 },
-                "subDataId": 6,
+                "subDataId": 2,
                 "componentData": [
                     {
                         "key": "Layer",
@@ -34547,6 +34416,19 @@
                         }
                     }
                 ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3145974,
+            "Parent": 3146408,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8412556556436434131
+                },
+                "subDataId": 11,
+                "componentData": [],
                 "removedComponents": []
             }
         },
@@ -34715,6 +34597,19 @@
             ]
         },
         {
+            "ID": 3146037,
+            "Parent": 11534530,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 3146054,
             "Parent": 3145886,
             "Child Entities": [],
@@ -34794,7 +34689,7 @@
         },
         {
             "ID": 3146065,
-            "Parent": 3146157,
+            "Parent": 457,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -34882,7 +34777,7 @@
         },
         {
             "ID": 3146093,
-            "Parent": 1049003,
+            "Parent": 327,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -34995,7 +34890,7 @@
                 {
                     "Tag": {
                         "tag": "Stair Part",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -35114,77 +35009,6 @@
             }
         },
         {
-            "ID": 3146157,
-            "Parent": 1049698,
-            "Child Entities": [
-                282,
-                2097502,
-                2097503,
-                3146065,
-                4194403,
-                4195024,
-                4195052
-            ],
-            "Prefab": {
-                "GUID": {
-                    "ID": 18270607630731340668
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Large Pillar L",
-                            "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": -31.634437561035156,
-                                "y": 23.876808166503906,
-                                "z": -51.886688232421875
-                            },
-                            "scale": {
-                                "x": 31.219999313354492,
-                                "y": 31.219999313354492,
-                                "z": 31.219999313354492
-                            },
-                            "rotation": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.24420398473739624,
-                                "w": 0.9697238802909851
-                            },
-                            "eulerAngles": {
-                                "x": 0.0,
-                                "y": -0.0,
-                                "z": 28.26959228515625
-                            },
-                            "worldPos": {
-                                "x": -24.63404083251953,
-                                "y": 23.876808166503906,
-                                "z": -51.319374084472656
-                            },
-                            "worldScale": {
-                                "x": 31.219999313354492,
-                                "y": 31.219999313354492,
-                                "z": 31.219999313354492
-                            },
-                            "worldRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.24420398473739624,
-                                "w": 0.9697238802909851
-                            }
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 3146208,
             "Parent": 1049655,
             "Child Entities": [],
@@ -35193,6 +35017,19 @@
                     "ID": 8127129382647120287
                 },
                 "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3146279,
+            "Parent": 3146408,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8412556556436434131
+                },
+                "subDataId": 12,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -35364,47 +35201,47 @@
         },
         {
             "ID": 3146292,
-            "Parent": 5243148,
+            "Parent": 46,
             "Child Entities": [],
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Stair Part",
+                        "tag": "Corrupted Step",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": -0.15512120723724365,
-                            "z": -3.6514618396759033
+                            "x": 5.85078763961792,
+                            "y": 2.625899314880371,
+                            "z": -22.916051864624023
                         },
                         "scale": {
-                            "x": 1.0,
-                            "y": 0.6893160343170166,
-                            "z": 0.9290188550949097
+                            "x": 14.4399995803833,
+                            "y": 5.3804402351379395,
+                            "z": 2.463092088699341
                         },
                         "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
+                            "x": 0.0000021020557596784784,
+                            "y": 1.0,
+                            "z": 0.0000021020557596784784,
+                            "w": 4.418638632069927e-12
                         },
                         "eulerAngles": {
-                            "x": 0.0,
+                            "x": 179.999755859375,
                             "y": -0.0,
-                            "z": 0.0
+                            "z": 179.999755859375
                         },
                         "worldPos": {
                             "x": 5.8507819175720215,
-                            "y": -1.847654104232788,
-                            "z": -19.76967430114746
+                            "y": 2.625899314880371,
+                            "z": -22.916051864624023
                         },
                         "worldScale": {
-                            "x": 17.30900001525879,
-                            "y": 10.946338653564453,
-                            "z": 1.81753671169281
+                            "x": 14.4399995803833,
+                            "y": 5.3804402351379395,
+                            "z": 2.463092088699341
                         },
                         "worldRot": {
                             "x": 0.0000021020557596784784,
@@ -35436,32 +35273,6 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 8.654500007629395,
-                            "y": 5.473169326782227,
-                            "z": 0.908768355846405
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
                     }
                 }
             ]
@@ -35630,7 +35441,7 @@
                 {
                     "Tag": {
                         "tag": "Stair Part",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -36195,100 +36006,6 @@
             ]
         },
         {
-            "ID": 3146398,
-            "Parent": 3146842,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 6262955587491398611
-                },
-                "subDataId": 5,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 6.031038284301758,
-                                "z": 0.908768355846405
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 3146405,
-            "Parent": 3146842,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 6262955587491398611
-                },
-                "subDataId": 7,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 4.918574810028076,
-                                "z": 0.908768355846405
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 3146407,
             "Parent": 3146412,
             "Child Entities": [],
@@ -36378,6 +36095,77 @@
             }
         },
         {
+            "ID": 3146408,
+            "Parent": 46,
+            "Child Entities": [
+                2097816,
+                3145974,
+                3146279,
+                3146413,
+                3146474,
+                4194977,
+                4195423,
+                5243430,
+                5243556,
+                5243580,
+                5243982,
+                6291888,
+                6292160,
+                10486300
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8412556556436434131
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 4.104000091552734,
+                                "y": 2.9820001125335693,
+                                "z": -6.283999919891357
+                            },
+                            "scale": {
+                                "x": 176.32000732421875,
+                                "y": 136.67999267578125,
+                                "z": 193.06500244140625
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 1.0,
+                                "z": 0.0,
+                                "w": -4.371138828673793e-8
+                            },
+                            "eulerAngles": {
+                                "x": 180.0,
+                                "y": -0.000005008956122765085,
+                                "z": 180.0
+                            },
+                            "worldPos": {
+                                "x": 4.103994369506836,
+                                "y": 2.9820001125335693,
+                                "z": -6.283999919891357
+                            },
+                            "worldScale": {
+                                "x": 176.32000732421875,
+                                "y": 136.67999267578125,
+                                "z": 193.06500244140625
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 1.0,
+                                "z": 0.0,
+                                "w": -4.371138828673793e-8
+                            }
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 3146410,
             "Parent": 3146412,
             "Child Entities": [],
@@ -36457,49 +36245,15 @@
             }
         },
         {
-            "ID": 3146417,
-            "Parent": 3146842,
+            "ID": 3146413,
+            "Parent": 3146408,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
-                    "ID": 6262955587491398611
+                    "ID": 8412556556436434131
                 },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 4.195086479187012,
-                                "z": 0.908768355846405
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
+                "subDataId": 8,
+                "componentData": [],
                 "removedComponents": []
             }
         },
@@ -36697,7 +36451,41 @@
             }
         },
         {
-            "ID": 3146428,
+            "ID": 3146431,
+            "Parent": 706,
+            "Child Entities": [
+                2098208
+            ],
+            "Position": {
+                "x": 28.595806121826172,
+                "y": 2.1375181674957275,
+                "z": 28.45652961730957
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 3533760579059501264
+                },
+                "subDataId": 0,
+                "componentData": [
+                    {
+                        "key": "Layer",
+                        "value": {
+                            "layerName": "Environment"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Weed",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3146466,
             "Parent": 706,
             "Child Entities": [
                 4194985
@@ -36731,36 +36519,15 @@
             }
         },
         {
-            "ID": 3146431,
-            "Parent": 706,
-            "Child Entities": [
-                2098208
-            ],
-            "Position": {
-                "x": 28.595806121826172,
-                "y": 2.1375181674957275,
-                "z": 28.45652961730957
-            },
+            "ID": 3146474,
+            "Parent": 3146408,
+            "Child Entities": [],
             "Prefab": {
                 "GUID": {
-                    "ID": 3533760579059501264
+                    "ID": 8412556556436434131
                 },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Weed",
-                            "isActive": false
-                        }
-                    }
-                ],
+                "subDataId": 7,
+                "componentData": [],
                 "removedComponents": []
             }
         },
@@ -36868,134 +36635,6 @@
                 },
                 "subDataId": 5,
                 "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 3146830,
-            "Parent": 4195008,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 3533760579059501264
-                },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Weed Mirror",
-                            "isActive": false
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 3146831,
-            "Parent": 3146842,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 6262955587491398611
-                },
-                "subDataId": 3,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 7.2537522315979,
-                                "z": 0.908768355846405
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 3146835,
-            "Parent": 2097832,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 6262955587491398611
-                },
-                "subDataId": 6,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 5.473169326782227,
-                                "z": 0.908768355846405
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Stair Part",
-                            "isActive": true
-                        }
-                    }
-                ],
                 "removedComponents": []
             }
         },
@@ -37135,157 +36774,6 @@
             ]
         },
         {
-            "ID": 3146842,
-            "Parent": 46,
-            "Child Entities": [
-                2097830,
-                2097835,
-                2097857,
-                3146398,
-                3146405,
-                3146417,
-                3146831
-            ],
-            "Prefab": {
-                "GUID": {
-                    "ID": 6262955587491398611
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 7.940000057220459,
-                                "z": 0.9782022833824158
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": 5.48431396484375,
-                                "y": -1.9249881505966187,
-                                "z": 42.36741638183594
-                            },
-                            "scale": {
-                                "x": 8.095969200134277,
-                                "y": 15.880000114440918,
-                                "z": 1.9564045667648315
-                            },
-                            "rotation": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "eulerAngles": {
-                                "x": 0.0,
-                                "y": -0.0,
-                                "z": 0.0
-                            },
-                            "worldPos": {
-                                "x": 5.484308242797852,
-                                "y": -1.9249881505966187,
-                                "z": 42.36741638183594
-                            },
-                            "worldScale": {
-                                "x": 8.095969200134277,
-                                "y": 15.880000114440918,
-                                "z": 1.9564045667648315
-                            },
-                            "worldRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            }
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 3146847,
-            "Parent": 2097832,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 6262955587491398611
-                },
-                "subDataId": 7,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 4.918574810028076,
-                                "z": 0.908768355846405
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Stair Part",
-                            "isActive": true
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 4194386,
             "Parent": 1048610,
             "Child Entities": [],
@@ -37327,7 +36815,7 @@
         },
         {
             "ID": 4194403,
-            "Parent": 3146157,
+            "Parent": 457,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -37517,7 +37005,7 @@
                 "GUID": {
                     "ID": 13818176251542423782
                 },
-                "subDataId": 6,
+                "subDataId": 2,
                 "componentData": [
                     {
                         "key": "Layer",
@@ -37637,6 +37125,28 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Environment"
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 4194493,
+            "Parent": 6292099,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 1647673438062167829
+                },
+                "subDataId": 4,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 6193640463148332534
+                            }
                         }
                     }
                 ],
@@ -38055,84 +37565,6 @@
             }
         },
         {
-            "ID": 4194597,
-            "Parent": 93,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Puzzle_GardenDoor",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.00341033935546875,
-                            "y": -0.00010967254638671875,
-                            "z": -4.48211669921875
-                        },
-                        "scale": {
-                            "x": 16.15999984741211,
-                            "y": 16.139995574951172,
-                            "z": 16.139995574951172
-                        },
-                        "rotation": {
-                            "x": 0.0000067842183852917515,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282533,
-                            "w": 0.708476185798645
-                        },
-                        "eulerAngles": {
-                            "x": 0.08910302817821503,
-                            "y": 89.77794647216797,
-                            "z": 0.08834758400917053
-                        },
-                        "worldPos": {
-                            "x": 53.937408447265625,
-                            "y": 14.156889915466309,
-                            "z": 54.14798355102539
-                        },
-                        "worldScale": {
-                            "x": 16.15999984741211,
-                            "y": 16.139995574951172,
-                            "z": 16.139995574951172
-                        },
-                        "worldRot": {
-                            "x": 0.0000067842183852917515,
-                            "y": 0.7057347297668457,
-                            "z": -0.0000025389181246282533,
-                            "w": 0.708476185798645
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Puzzle"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 5373779004609209444
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "pasted__pasted__pCube43",
-                        "GUID": {
-                            "ID": 18165310156456293132
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 4194625,
             "Parent": 3145836,
             "Child Entities": [],
@@ -38424,6 +37856,19 @@
             }
         },
         {
+            "ID": 4194701,
+            "Parent": 6292099,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 1647673438062167829
+                },
+                "subDataId": 5,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 4194723,
             "Parent": 4195400,
             "Child Entities": [],
@@ -38444,139 +37889,17 @@
             }
         },
         {
-            "ID": 4194858,
-            "Parent": 93,
+            "ID": 4194734,
+            "Parent": 6292099,
             "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "DoorCollider",
-                        "isActive": true
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 1647673438062167829
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.000274658203125,
-                            "y": 0.0002288818359375,
-                            "z": -4.476737976074219
-                        },
-                        "scale": {
-                            "x": 2.0999999046325684,
-                            "y": 2.0799999237060547,
-                            "z": 2.0799999237060547
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.7071068286895752,
-                            "z": 0.0,
-                            "w": 0.7071068286895752
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 89.98021697998047,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 53.93427276611328,
-                            "y": 14.157228469848633,
-                            "z": 54.15336227416992
-                        },
-                        "worldScale": {
-                            "x": 2.0999999046325684,
-                            "y": 2.0799999237060547,
-                            "z": 2.0799999237060547
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071068286895752,
-                            "z": 0.0,
-                            "w": 0.7071068286895752
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Puzzle"
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 4.300000190734863,
-                            "y": 8.0,
-                            "z": 0.5
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "RigidBody": {
-                        "velocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "angularVelocity": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "staticFriction": 0.0,
-                        "dynamicFriction": 0.0,
-                        "restitution": 0.0,
-                        "gravityFactor": 0.0,
-                        "linearDamping": 0.9800000190734863,
-                        "motionType": "KINEMATIC",
-                        "axisLock": 7,
-                        "angularAxisLock": 7,
-                        "hasJoint": false,
-                        "entityLinked": 4294967295,
-                        "joinConfig": {
-                            "jointType": "REVOLUTE",
-                            "breakForce": 3.4028234663852886e38,
-                            "breakTorque": 3.4028234663852886e38,
-                            "stiffness": 0.0,
-                            "damping": 0.0,
-                            "lowerAngle": 0.0,
-                            "upperAngle": 0.0,
-                            "yLimit": 0.009999999776482582,
-                            "zLimit": 0.009999999776482582,
-                            "lowerLimit": 0.0,
-                            "upperLimit": 0.0,
-                            "motorEnabled": false,
-                            "motorTargetVelocity": 0.0,
-                            "motorForceLimit": 0.0
-                        },
-                        "jointOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "entityLinkedJointOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        }
-                    }
-                }
-            ]
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 4194861,
@@ -38657,53 +37980,34 @@
             ]
         },
         {
-            "ID": 4194980,
-            "Parent": 2097832,
+            "ID": 4194977,
+            "Parent": 3146408,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
-                    "ID": 6262955587491398611
+                    "ID": 8412556556436434131
                 },
-                "subDataId": 5,
+                "subDataId": 14,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 4194979,
+            "Parent": 6292099,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 1647673438062167829
+                },
+                "subDataId": 2,
                 "componentData": [
                     {
-                        "key": "BoxCollider",
+                        "key": "Material",
                         "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 6.031038284301758,
-                                "z": 0.908768355846405
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Stair Part",
-                            "isActive": true
+                            "materialGUID": {
+                                "ID": 5373779004609209444
+                            }
                         }
                     }
                 ],
@@ -38712,7 +38016,7 @@
         },
         {
             "ID": 4194985,
-            "Parent": 3146428,
+            "Parent": 3146466,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -38894,42 +38198,8 @@
             ]
         },
         {
-            "ID": 4195008,
-            "Parent": 706,
-            "Child Entities": [
-                3146830
-            ],
-            "Position": {
-                "x": -4.272439956665039,
-                "y": 2.1375181674957275,
-                "z": 23.79846954345703
-            },
-            "Prefab": {
-                "GUID": {
-                    "ID": 3533760579059501264
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Weed",
-                            "isActive": false
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 4195024,
-            "Parent": 3146157,
+            "Parent": 457,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -38951,7 +38221,7 @@
         },
         {
             "ID": 4195052,
-            "Parent": 3146157,
+            "Parent": 457,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
@@ -39147,6 +38417,19 @@
             }
         },
         {
+            "ID": 4195423,
+            "Parent": 3146408,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8412556556436434131
+                },
+                "subDataId": 6,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 5242885,
             "Parent": 1158,
             "Child Entities": [],
@@ -39301,7 +38584,7 @@
                 "GUID": {
                     "ID": 13818176251542423782
                 },
-                "subDataId": 6,
+                "subDataId": 2,
                 "componentData": [
                     {
                         "key": "Layer",
@@ -39349,7 +38632,7 @@
                 "GUID": {
                     "ID": 13818176251542423782
                 },
-                "subDataId": 6,
+                "subDataId": 2,
                 "componentData": [
                     {
                         "key": "Layer",
@@ -39650,47 +38933,47 @@
         },
         {
             "ID": 5243128,
-            "Parent": 5243148,
+            "Parent": 46,
             "Child Entities": [],
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Stair Part",
+                        "tag": "Corrupted Step",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.0,
-                            "y": -0.189962238073349,
-                            "z": -4.574307918548584
+                            "x": 5.850785255432129,
+                            "y": 0.9593081474304199,
+                            "z": -20.960073471069336
                         },
                         "scale": {
-                            "x": 1.0,
-                            "y": 0.6194678544998169,
-                            "z": 0.9290188550949097
+                            "x": 14.4399995803833,
+                            "y": 5.380000114440918,
+                            "z": 2.4630000591278076
                         },
                         "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
+                            "x": 0.0000021020557596784784,
+                            "y": 1.0,
+                            "z": 0.0000021020557596784784,
+                            "w": 4.418638632069927e-12
                         },
                         "eulerAngles": {
-                            "x": 0.0,
+                            "x": 179.999755859375,
                             "y": -0.0,
-                            "z": 0.0
+                            "z": 179.999755859375
                         },
                         "worldPos": {
                             "x": 5.8507795333862305,
-                            "y": -2.40093731880188,
-                            "z": -17.96422004699707
+                            "y": 0.9593081474304199,
+                            "z": -20.960073471069336
                         },
                         "worldScale": {
-                            "x": 17.30900001525879,
-                            "y": 9.837149620056152,
-                            "z": 1.81753671169281
+                            "x": 14.4399995803833,
+                            "y": 5.380000114440918,
+                            "z": 2.4630000591278076
                         },
                         "worldRot": {
                             "x": 0.0000021020557596784784,
@@ -39925,16 +39208,14 @@
                 1048977,
                 2097717,
                 3146110,
-                3146292,
                 3146298,
-                5243128,
                 6291692
             ],
             "Components": [
                 {
                     "Tag": {
                         "tag": "Stair Head",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -40194,56 +39475,80 @@
             }
         },
         {
-            "ID": 5243312,
-            "Parent": 2097832,
+            "ID": 5243430,
+            "Parent": 3146408,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
-                    "ID": 6262955587491398611
+                    "ID": 8412556556436434131
                 },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 4.195086479187012,
-                                "z": 0.908768355846405
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Stair Part",
-                            "isActive": true
-                        }
-                    }
-                ],
+                "subDataId": 10,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243556,
+            "Parent": 3146408,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8412556556436434131
+                },
+                "subDataId": 5,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243563,
+            "Parent": 11534530,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 3,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243580,
+            "Parent": 3146408,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8412556556436434131
+                },
+                "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243585,
+            "Parent": 11534530,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 5243982,
+            "Parent": 3146408,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8412556556436434131
+                },
+                "subDataId": 3,
+                "componentData": [],
                 "removedComponents": []
             }
         },
@@ -40561,7 +39866,7 @@
                 {
                     "Tag": {
                         "tag": "Stair Part",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -40779,6 +40084,19 @@
             }
         },
         {
+            "ID": 6291888,
+            "Parent": 3146408,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8412556556436434131
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 6292017,
             "Parent": 6,
             "Child Entities": [
@@ -40838,56 +40156,78 @@
             }
         },
         {
-            "ID": 6292642,
-            "Parent": 2097832,
+            "ID": 6292099,
+            "Parent": 11,
+            "Child Entities": [
+                4194493,
+                4194701,
+                4194734,
+                4194979,
+                6292307
+            ],
+            "Position": {
+                "x": 53.937408447265625,
+                "y": 14.156889915466309,
+                "z": 58.630001068115234
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 1647673438062167829
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 6292160,
+            "Parent": 3146408,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
-                    "ID": 6262955587491398611
+                    "ID": 8412556556436434131
                 },
-                "subDataId": 4,
-                "componentData": [
-                    {
-                        "key": "BoxCollider",
-                        "value": {
-                            "scale": {
-                                "x": 4.099999904632568,
-                                "y": 6.603954792022705,
-                                "z": 0.908768355846405
-                            },
-                            "positionOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "degreeRotationOffsetEuler": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "rotationOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "sensor": false
-                        }
-                    },
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Environment"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Stair Part",
-                            "isActive": true
-                        }
-                    }
-                ],
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 6292307,
+            "Parent": 6292099,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 1647673438062167829
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 6292559,
+            "Parent": 11534530,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 5,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 6292563,
+            "Parent": 11534530,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 6,
+                "componentData": [],
                 "removedComponents": []
             }
         },
@@ -40980,6 +40320,47 @@
             }
         },
         {
+            "ID": 7340247,
+            "Parent": 7340477,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 4,
+                "componentData": [
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.699999809265137,
+                                "y": 3.0,
+                                "z": 1.0
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 7340322,
             "Parent": 1049596,
             "Child Entities": [],
@@ -41006,44 +40387,22 @@
             }
         },
         {
-            "ID": 8388665,
-            "Parent": 4194651,
+            "ID": 7340354,
+            "Parent": 7340477,
             "Child Entities": [],
             "Prefab": {
                 "GUID": {
-                    "ID": 7212992046423042303
+                    "ID": 13572727687337563736
                 },
-                "subDataId": 4,
-                "componentData": [
-                    {
-                        "key": "Material",
-                        "value": {
-                            "materialGUID": {
-                                "ID": 8359946011738352954
-                            }
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 8388802,
-            "Parent": 2097832,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 6262955587491398611
-                },
-                "subDataId": 2,
+                "subDataId": 6,
                 "componentData": [
                     {
                         "key": "BoxCollider",
                         "value": {
                             "scale": {
-                                "x": 4.099999904632568,
-                                "y": 3.514685869216919,
-                                "z": 0.9688934683799744
+                                "x": 4.699999809265137,
+                                "y": 1.5,
+                                "z": 1.0
                             },
                             "positionOffset": {
                                 "x": 0.0,
@@ -41063,18 +40422,248 @@
                             },
                             "sensor": false
                         }
-                    },
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 7340477,
+            "Parent": 46,
+            "Child Entities": [
+                7340247,
+                7340354,
+                7340485,
+                7340541,
+                7340681,
+                7340866,
+                7340946
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 0,
+                "componentData": [
                     {
-                        "key": "Layer",
+                        "key": "Transform",
                         "value": {
-                            "layerName": "Environment"
+                            "position": {
+                                "x": -29.079072952270508,
+                                "y": 2.977565050125122,
+                                "z": 0.9008722901344299
+                            },
+                            "scale": {
+                                "x": 0.5797840356826782,
+                                "y": 0.7449141144752502,
+                                "z": 0.9999997615814209
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.7071067690849304,
+                                "z": 0.0,
+                                "w": 0.7071067690849304
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": 89.98021697998047,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -29.079078674316406,
+                                "y": 2.977565050125122,
+                                "z": 0.9008724689483643
+                            },
+                            "worldScale": {
+                                "x": 0.5797840356826782,
+                                "y": 0.7449141144752502,
+                                "z": 0.9999997615814209
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.7071067690849304,
+                                "z": 0.0,
+                                "w": 0.7071067690849304
+                            }
                         }
-                    },
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 7340485,
+            "Parent": 7340477,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 7340541,
+            "Parent": 7340477,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 2,
+                "componentData": [
                     {
                         "key": "Tag",
                         "value": {
-                            "tag": "Stair Part",
-                            "isActive": true
+                            "tag": "AssistCollider",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 7340681,
+            "Parent": 7340477,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.699999809265137,
+                                "y": 3.799999952316284,
+                                "z": 1.0
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 7340866,
+            "Parent": 7340477,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 5,
+                "componentData": [
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.699999809265137,
+                                "y": 2.200000047683716,
+                                "z": 1.0
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 7340946,
+            "Parent": 7340477,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.699999809265137,
+                                "y": 0.800000011920929,
+                                "z": 1.0
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 8388665,
+            "Parent": 4194651,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 7212992046423042303
+                },
+                "subDataId": 4,
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8359946011738352954
+                            }
                         }
                     }
                 ],
@@ -41171,8 +40760,8 @@
             "ID": 9437526,
             "Parent": 6,
             "Child Entities": [
-                2097620,
-                2097630
+                538,
+                2097620
             ],
             "Position": {
                 "x": 12.911238670349121,
@@ -41221,6 +40810,58 @@
                         }
                     }
                 ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 9438370,
+            "Parent": 11534530,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 7,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 10486300,
+            "Parent": 3146408,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8412556556436434131
+                },
+                "subDataId": 13,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 11534530,
+            "Parent": 46,
+            "Child Entities": [
+                3145894,
+                3146037,
+                5243563,
+                5243585,
+                6292559,
+                6292563,
+                9438370
+            ],
+            "Position": {
+                "x": 5.8507981300354,
+                "y": 4.423060894012451,
+                "z": -22.69051742553711
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 13572727687337563736
+                },
+                "subDataId": 0,
+                "componentData": [],
                 "removedComponents": []
             }
         }

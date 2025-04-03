@@ -6095,7 +6095,7 @@
             "Parent": 11,
             "Child Entities": [
                 366,
-                529,
+                472,
                 759,
                 4194858
             ],
@@ -6150,18 +6150,6 @@
                 {
                     "Layer": {
                         "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 },
                 {
@@ -8895,14 +8883,6 @@
                         }
                     },
                     {
-                        "key": "Material",
-                        "value": {
-                            "materialGUID": {
-                                "ID": 9688658947475917145
-                            }
-                        }
-                    },
-                    {
                         "key": "Tag",
                         "value": {
                             "tag": "pSphere1",
@@ -11438,14 +11418,6 @@
                         "value": {
                             "layerName": "Lights"
                         }
-                    },
-                    {
-                        "key": "Material",
-                        "value": {
-                            "materialGUID": {
-                                "ID": 9688658947475917145
-                            }
-                        }
                     }
                 ],
                 "removedComponents": []
@@ -12120,15 +12092,15 @@
             "Components": [
                 {
                     "Tag": {
-                        "tag": "Mesh.003",
+                        "tag": "Keyhole",
                         "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": 0.00341033935546875,
-                            "y": -0.00010967254638671875,
+                            "x": 0.00341796875,
+                            "y": -9.5367431640625e-7,
                             "z": -4.48211669921875
                         },
                         "scale": {
@@ -12144,12 +12116,12 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 90.0,
+                            "y": 89.98021697998047,
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 53.937408447265625,
-                            "y": 14.156889915466309,
+                            "x": 53.937416076660156,
+                            "y": 14.156998634338379,
                             "z": 54.14798355102539
                         },
                         "worldScale": {
@@ -12490,14 +12462,6 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Lights"
-                        }
-                    },
-                    {
-                        "key": "Material",
-                        "value": {
-                            "materialGUID": {
-                                "ID": 9688658947475917145
-                            }
                         }
                     },
                     {
@@ -13593,6 +13557,84 @@
             ]
         },
         {
+            "ID": 472,
+            "Parent": 93,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Puzzle_GardenDoor_NoHandle",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.00341033935546875,
+                            "y": -0.8013944625854492,
+                            "z": -4.396808624267578
+                        },
+                        "scale": {
+                            "x": 15.481849670410156,
+                            "y": 14.559999465942383,
+                            "z": 15.339996337890625
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": 89.98021697998047,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 53.937408447265625,
+                            "y": 13.355605125427246,
+                            "z": 54.23329162597656
+                        },
+                        "worldScale": {
+                            "x": 15.481849670410156,
+                            "y": 14.559999465942383,
+                            "z": 15.339996337890625
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 856761417764871326
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "Puzzle_GardenDoor_NoHandle",
+                        "GUID": {
+                            "ID": 4449977309144352413
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                }
+            ]
+        },
+        {
             "ID": 486,
             "Parent": 281,
             "Child Entities": [],
@@ -14298,84 +14340,6 @@
                 "componentData": [],
                 "removedComponents": []
             }
-        },
-        {
-            "ID": 529,
-            "Parent": 93,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Mesh.005",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.00341033935546875,
-                            "y": -0.00010967254638671875,
-                            "z": -4.48211669921875
-                        },
-                        "scale": {
-                            "x": 16.8799991607666,
-                            "y": 16.8799991607666,
-                            "z": 16.8799991607666
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 90.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 53.937408447265625,
-                            "y": 14.156889915466309,
-                            "z": 54.14798355102539
-                        },
-                        "worldScale": {
-                            "x": 16.8799991607666,
-                            "y": 16.8799991607666,
-                            "z": 16.8799991607666
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 856761417764871326
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Mesh.005",
-                        "GUID": {
-                            "ID": 13038401711823285392
-                        },
-                        "submeshIdx": 2,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
         },
         {
             "ID": 535,
@@ -19342,7 +19306,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.00341033935546875,
-                            "y": -0.00010967254638671875,
+                            "y": 0.0,
                             "z": -4.48211669921875
                         },
                         "scale": {
@@ -19358,12 +19322,12 @@
                         },
                         "eulerAngles": {
                             "x": 0.0,
-                            "y": 90.0,
+                            "y": 89.98021697998047,
                             "z": 0.0
                         },
                         "worldPos": {
                             "x": 53.937408447265625,
-                            "y": 14.156889915466309,
+                            "y": 14.156999588012695,
                             "z": 54.14798355102539
                         },
                         "worldScale": {
@@ -23654,14 +23618,6 @@
                         }
                     },
                     {
-                        "key": "Material",
-                        "value": {
-                            "materialGUID": {
-                                "ID": 9688658947475917145
-                            }
-                        }
-                    },
-                    {
                         "key": "Tag",
                         "value": {
                             "tag": "pSphere1",
@@ -24356,14 +24312,6 @@
                         }
                     },
                     {
-                        "key": "Material",
-                        "value": {
-                            "materialGUID": {
-                                "ID": 9688658947475917145
-                            }
-                        }
-                    },
-                    {
                         "key": "Tag",
                         "value": {
                             "tag": "pSphere1",
@@ -24461,14 +24409,6 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Lights"
-                        }
-                    },
-                    {
-                        "key": "Material",
-                        "value": {
-                            "materialGUID": {
-                                "ID": 9688658947475917145
-                            }
                         }
                     },
                     {
@@ -44160,14 +44100,6 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Lights"
-                        }
-                    },
-                    {
-                        "key": "Material",
-                        "value": {
-                            "materialGUID": {
-                                "ID": 9688658947475917145
-                            }
                         }
                     },
                     {
