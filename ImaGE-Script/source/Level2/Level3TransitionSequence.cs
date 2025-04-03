@@ -5,6 +5,7 @@ public class Level3TransitionSequence : Entity
 {
   public Entity playerCam;
   public Fragment fragment;
+  public Entity SFX;
   public Entity sinkHole, groundSmoke, aftermathSmoke;
   public Entity mainGround, sinkHoleVictims;
   public Entity invisibleBarrier, animGroundCollider;
@@ -57,7 +58,7 @@ public class Level3TransitionSequence : Entity
         if (fragment.IsFragmentAnimationOver())
         {
           timeElapsed += Time.deltaTime;
-
+          InternalCalls.SetSoundVolume(SFX.mEntityID, "..\\Assets\\Audio\\Earthquake_Rumble1_SFX.wav", Easing.Linear(0.7f, 1f, timeElapsed / delayAfterCollection));
           if (timeElapsed >= delayAfterCollection)
           {
             timeElapsed = 0f;
@@ -65,6 +66,7 @@ public class Level3TransitionSequence : Entity
             groundSmoke.SetActive(true);
             invisibleBarrier.SetActive(true);
             currState = State.GROUND_SHAKE;
+            InternalCalls.PlaySound(SFX.mEntityID, "..\\Assets\\Audio\\Earthquake_Rumble2_SFX.wav");
           }
         }
 
@@ -85,6 +87,7 @@ public class Level3TransitionSequence : Entity
             playerMove.FreezePlayer();
             originalCamPos = playerCam.GetComponent<Transform>().rotationEuler;
             currState = State.CAVE_IN;
+            InternalCalls.PlaySound(SFX.mEntityID, "..\\Assets\\Audio\\Earthquake_FloorCave_SFX.wav");
             return;
           }
 

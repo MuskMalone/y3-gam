@@ -247,6 +247,7 @@ public class PlayerFootsteps : Entity
         case "BottomCollider":
         case "baseCollidert":
         case "MainFloor":
+        case "AnimationGroundCollider":
           PlayRandomEchoeyPavementSound();
           break;
         case "Hallway Floor":
