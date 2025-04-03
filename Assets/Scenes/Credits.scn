@@ -582,6 +582,78 @@
             ]
         },
         {
+            "ID": 14,
+            "Parent": 1048578,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "DigipenLogo",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -43.5,
+                            "z": 0.10000000149011612
+                        },
+                        "scale": {
+                            "x": 16.559999465942383,
+                            "y": 5.599999904632568,
+                            "z": 5.599999904632568
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -43.5,
+                            "z": 0.10000000149011612
+                        },
+                        "worldScale": {
+                            "x": 16.559999465942383,
+                            "y": 5.599999904632568,
+                            "z": 5.599999904632568
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6189436968837044391
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048576,
             "Parent": null,
             "Child Entities": [],
@@ -756,9 +828,11 @@
                 9,
                 10,
                 11,
+                14,
                 1048582,
                 1048584,
-                1048588
+                1048588,
+                1048589
             ],
             "Components": [
                 {
@@ -911,10 +985,30 @@
                                         }
                                     },
                                     {
-                                        "data": 8.0,
+                                        "data": {
+                                            "entityID": 1048589,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "copyrighttext"
+                                        }
+                                    },
+                                    {
+                                        "data": 11.5,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "creditTime"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 14,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "logoimg"
                                         }
                                     },
                                     {
@@ -1170,7 +1264,7 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": -29.0,
+                            "y": -32.79999923706055,
                             "z": 0.0
                         },
                         "scale": {
@@ -1191,7 +1285,7 @@
                         },
                         "worldPos": {
                             "x": 0.0,
-                            "y": -29.0,
+                            "y": -32.79999923706055,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -1214,7 +1308,7 @@
                 },
                 {
                     "Text": {
-                        "textContent": "Jace Lim",
+                        "textContent": "Jace Lim\nClaude Comair\nChu Jason Yeu Tat\nMichael Gats\nTan Chek Ming\nPrasanna Kumar Ghali\nMandy Wong\nJohnny Deek",
                         "color": {
                             "x": 1.0,
                             "y": 1.0,
@@ -1228,6 +1322,89 @@
                         "fontFamilyName": "PressStart2P-Regular",
                         "alignment": 2,
                         "multiLineSpacingOffset": 0.47999998927116394,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1048589,
+            "Parent": 1048578,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "CoyrightText",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -39.29999923706055,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -39.29999923706055,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "All content (C) 2025 DigiPen Institute of Technology Singapore. All Rights Reserved. ",
+                        "color": {
+                            "x": 0.0012527831131592393,
+                            "y": 0.013377904891967773,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "scale": 0.004000000189989805,
+                        "textAssetGUID": {
+                            "ID": 10355075193979688064
+                        },
+                        "fontFamilyName": "PressStart2P-Regular",
+                        "alignment": 2,
+                        "multiLineSpacingOffset": 0.25,
                         "textBoxEnabledFlag": false,
                         "textBoxDimensions": {
                             "x": 5.0,
