@@ -1924,7 +1924,7 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
               l.color.g = 1.f;
               l.color.b = 0.96f;
             }
-            std::cout << l.color.r << "\n";
+            //std::cout << l.color.r << "\n";
           }
 
           if (gchild.GetTag() == "CeilingLightBloom") {

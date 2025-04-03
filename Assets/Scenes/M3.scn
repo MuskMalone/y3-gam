@@ -29034,58 +29034,6 @@
             ]
         },
         {
-            "ID": 1049617,
-            "Parent": 1049716,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 4,
-                "componentData": [
-                    {
-                        "key": "Light",
-                        "value": {
-                            "lightType": "POINT",
-                            "color": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "intensity": 1.0,
-                            "innerAngle": 5.0,
-                            "outerAngle": 12.5,
-                            "range": 10.0,
-                            "castShadows": false,
-                            "shadowConfig": {
-                                "centerPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "softness": 1,
-                                "bias": 0.004999999888241291,
-                                "nearPlane": -100.0,
-                                "farPlane": 200.0,
-                                "scenesBounds": 1.0,
-                                "isStatic": true,
-                                "shadowModified": true,
-                                "customCenter": false
-                            }
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Light",
-                            "isActive": false
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 1049623,
             "Parent": 8388900,
             "Child Entities": [],
@@ -30514,9 +30462,9 @@
             "Parent": 269,
             "Child Entities": [
                 627,
-                1049617,
                 1049717,
                 1049720,
+                2098317,
                 8388898
             ],
             "Prefab": {
@@ -30847,8 +30795,8 @@
             "Parent": 269,
             "Child Entities": [
                 1049740,
-                1049741,
                 1049742,
+                2097804,
                 3146058,
                 3146844
             ],
@@ -30913,19 +30861,6 @@
                     "ID": 8786659095930452505
                 },
                 "subDataId": 3,
-                "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 1049741,
-            "Parent": 1049737,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 8786659095930452505
-                },
-                "subDataId": 2,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -35994,6 +35929,19 @@
             ]
         },
         {
+            "ID": 2097804,
+            "Parent": 1049737,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8786659095930452505
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2097808,
             "Parent": 2097464,
             "Child Entities": [],
@@ -36775,6 +36723,177 @@
             ]
         },
         {
+            "ID": 2098193,
+            "Parent": 7340269,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 9091869979550632056
+                },
+                "subDataId": 82,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 2098193,
+                                    "scriptName": "KeyDoor",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 129,
+                                                "scriptName": "BlackBorder"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "blackBorder"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 210,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "corridorTrigger"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 197,
+                                                "scriptName": "Dialogue"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "dialogueSystem"
+                                            }
+                                        },
+                                        {
+                                            "data": "OpenDoor",
+                                            "type": "System.String",
+                                            "scriptField": {
+                                                "fieldName": "doorAnimName"
+                                            }
+                                        },
+                                        {
+                                            "data": true,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "doorInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": "SlamDoor",
+                                            "type": "System.String",
+                                            "scriptField": {
+                                                "fieldName": "doorSlamAnimName"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 76,
+                                                "scriptName": "Inventory"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "inventoryScript"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1127,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "keyCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": [
+                                                "It won't budge. I need a key."
+                                            ],
+                                            "type": "System.String[]",
+                                            "scriptField": {
+                                                "fieldName": "lockedDialogue"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 114,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "motherHumming"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 0,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerCamera"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 40,
+                                                "scriptName": "PlayerInteraction"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "playerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 486,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transitionCorridorTrigger"
+                                            }
+                                        },
+                                        {
+                                            "data": true,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "triggerInteraction"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1049245,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "unlockDoorUI"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "DoorCollider",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 2098206,
             "Parent": 6291461,
             "Child Entities": [],
@@ -36877,6 +36996,58 @@
                     }
                 }
             ]
+        },
+        {
+            "ID": 2098317,
+            "Parent": 1049716,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 8786659095930452505
+                },
+                "subDataId": 4,
+                "componentData": [
+                    {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "POINT",
+                            "color": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "intensity": 1.0,
+                            "innerAngle": 5.0,
+                            "outerAngle": 12.5,
+                            "range": 10.0,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Light",
+                            "isActive": false
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
         },
         {
             "ID": 3145740,
@@ -43101,6 +43272,48 @@
                             },
                             "sensor": false
                         }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -5.433037131297169e-7,
+                                "y": -0.9443032741546631,
+                                "z": -4.035348892211914
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -33.11442565917969,
+                                "y": 2.2741403579711914,
+                                "z": 0.900872528553009
+                            },
+                            "worldScale": {
+                                "x": 0.5797840356826782,
+                                "y": 0.7449141144752502,
+                                "z": 0.9999997615814209
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.7071067690849304,
+                                "z": 0.0,
+                                "w": 0.7071067690849304
+                            }
+                        }
                     }
                 ],
                 "removedComponents": []
@@ -46599,10 +46812,79 @@
                 "subDataId": 2,
                 "componentData": [
                     {
+                        "key": "BoxCollider",
+                        "value": {
+                            "scale": {
+                                "x": 4.699999809265137,
+                                "y": 1.0,
+                                "z": 6.699999809265137
+                            },
+                            "positionOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "degreeRotationOffsetEuler": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "rotationOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "sensor": false
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "AssistCollider",
-                            "isActive": false
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -0.000013557044439949095,
+                                "y": -1.7941503524780273,
+                                "z": 1.5686454772949219
+                            },
+                            "scale": {
+                                "x": 1.0000001192092896,
+                                "y": 1.0005635023117065,
+                                "z": 1.0000001192092896
+                            },
+                            "rotation": {
+                                "x": 0.26891982555389404,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 0.9631627202033997
+                            },
+                            "eulerAngles": {
+                                "x": 31.200000762939453,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": -27.510433197021484,
+                                "y": 1.6410771608352661,
+                                "z": 0.9008804559707642
+                            },
+                            "worldScale": {
+                                "x": 0.579784095287323,
+                                "y": 0.7453338503837585,
+                                "z": 0.9999998807907104
+                            },
+                            "worldRot": {
+                                "x": 0.190155029296875,
+                                "y": 0.6810588836669922,
+                                "z": -0.190155029296875,
+                                "w": 0.6810588836669922
+                            }
                         }
                     }
                 ],
@@ -46844,6 +47126,13 @@
                 },
                 "subDataId": 0,
                 "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "SideStairs",
+                            "isActive": true
+                        }
+                    },
                     {
                         "key": "Transform",
                         "value": {
@@ -47989,6 +48278,7 @@
             "Child Entities": [
                 418,
                 2097573,
+                2098193,
                 4194856,
                 5243703
             ],

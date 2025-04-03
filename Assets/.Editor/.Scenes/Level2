@@ -1,13 +1,13 @@
 {
     "editorCam": {
         "position": {
-            "x": 148.77862548828125,
-            "y": 49.229347229003906,
-            "z": -103.21717071533203
+            "x": -5.848154067993164,
+            "y": 8.255797386169434,
+            "z": 44.91336441040039
         },
-        "fov": 45.0,
-        "pitch": -19.9725341796875,
-        "yaw": 2850.750732421875,
+        "fov": 25.0,
+        "pitch": 1.5341383218765259,
+        "yaw": 2430.96337890625,
         "nearClip": 0.10000000149011612,
         "farClip": 1500.0
     },
@@ -88,11 +88,6 @@
             "isOpen": false
         },
         {
-            "entityId": 233,
-            "stackId": 2593644345,
-            "isOpen": true
-        },
-        {
             "entityId": 248,
             "stackId": 539419896,
             "isOpen": true
@@ -106,11 +101,6 @@
             "entityId": 290,
             "stackId": 3774703163,
             "isOpen": false
-        },
-        {
-            "entityId": 298,
-            "stackId": 2152387802,
-            "isOpen": true
         },
         {
             "entityId": 300,
@@ -263,11 +253,6 @@
             "isOpen": false
         },
         {
-            "entityId": 584,
-            "stackId": 1981111440,
-            "isOpen": true
-        },
-        {
             "entityId": 590,
             "stackId": 3740077958,
             "isOpen": true
@@ -328,11 +313,6 @@
             "isOpen": false
         },
         {
-            "entityId": 735,
-            "stackId": 621534101,
-            "isOpen": true
-        },
-        {
             "entityId": 780,
             "stackId": 705718000,
             "isOpen": true
@@ -340,11 +320,6 @@
         {
             "entityId": 812,
             "stackId": 781253163,
-            "isOpen": true
-        },
-        {
-            "entityId": 816,
-            "stackId": 2438389105,
             "isOpen": true
         },
         {
@@ -361,11 +336,6 @@
             "entityId": 822,
             "stackId": 3346707701,
             "isOpen": true
-        },
-        {
-            "entityId": 876,
-            "stackId": 294318422,
-            "isOpen": false
         },
         {
             "entityId": 881,
@@ -398,36 +368,6 @@
             "isOpen": false
         },
         {
-            "entityId": 918,
-            "stackId": 1351755594,
-            "isOpen": true
-        },
-        {
-            "entityId": 919,
-            "stackId": 4171059712,
-            "isOpen": true
-        },
-        {
-            "entityId": 931,
-            "stackId": 2983484990,
-            "isOpen": true
-        },
-        {
-            "entityId": 935,
-            "stackId": 565182899,
-            "isOpen": true
-        },
-        {
-            "entityId": 939,
-            "stackId": 1278009209,
-            "isOpen": true
-        },
-        {
-            "entityId": 945,
-            "stackId": 115970507,
-            "isOpen": true
-        },
-        {
             "entityId": 959,
             "stackId": 2596167988,
             "isOpen": true
@@ -438,11 +378,6 @@
             "isOpen": true
         },
         {
-            "entityId": 1048584,
-            "stackId": 1635650025,
-            "isOpen": false
-        },
-        {
             "entityId": 1048644,
             "stackId": 2201558058,
             "isOpen": false
@@ -450,11 +385,6 @@
         {
             "entityId": 1048656,
             "stackId": 1838928652,
-            "isOpen": true
-        },
-        {
-            "entityId": 1048658,
-            "stackId": 3912002172,
             "isOpen": true
         },
         {
@@ -508,14 +438,19 @@
             "isOpen": false
         },
         {
+            "entityId": 1048807,
+            "stackId": 12629026,
+            "isOpen": false
+        },
+        {
+            "entityId": 1048844,
+            "stackId": 1253411581,
+            "isOpen": false
+        },
+        {
             "entityId": 1048845,
             "stackId": 3736857963,
             "isOpen": true
-        },
-        {
-            "entityId": 1048855,
-            "stackId": 1305585986,
-            "isOpen": false
         },
         {
             "entityId": 1048856,
@@ -618,6 +553,11 @@
             "isOpen": true
         },
         {
+            "entityId": 1049235,
+            "stackId": 2423543594,
+            "isOpen": true
+        },
+        {
             "entityId": 1049247,
             "stackId": 601806659,
             "isOpen": false
@@ -628,9 +568,19 @@
             "isOpen": true
         },
         {
+            "entityId": 1049277,
+            "stackId": 321127636,
+            "isOpen": false
+        },
+        {
             "entityId": 1049288,
             "stackId": 914986289,
             "isOpen": true
+        },
+        {
+            "entityId": 1049308,
+            "stackId": 2979746765,
+            "isOpen": false
         },
         {
             "entityId": 1049330,
@@ -678,13 +628,48 @@
             "isOpen": true
         },
         {
-            "entityId": 1049502,
-            "stackId": 3804266704,
+            "entityId": 1049496,
+            "stackId": 2484670608,
+            "isOpen": true
+        },
+        {
+            "entityId": 1049500,
+            "stackId": 3109479251,
             "isOpen": true
         },
         {
             "entityId": 1049503,
             "stackId": 3730608995,
+            "isOpen": false
+        },
+        {
+            "entityId": 1049512,
+            "stackId": 1956801127,
+            "isOpen": true
+        },
+        {
+            "entityId": 1049516,
+            "stackId": 1344504124,
+            "isOpen": true
+        },
+        {
+            "entityId": 1049519,
+            "stackId": 2279831648,
+            "isOpen": true
+        },
+        {
+            "entityId": 1049521,
+            "stackId": 4216267701,
+            "isOpen": false
+        },
+        {
+            "entityId": 1049524,
+            "stackId": 1035811872,
+            "isOpen": true
+        },
+        {
+            "entityId": 1049528,
+            "stackId": 666465894,
             "isOpen": false
         },
         {
@@ -733,6 +718,11 @@
             "isOpen": false
         },
         {
+            "entityId": 2097160,
+            "stackId": 1854047960,
+            "isOpen": true
+        },
+        {
             "entityId": 2097200,
             "stackId": 54531027,
             "isOpen": false
@@ -745,6 +735,11 @@
         {
             "entityId": 2097203,
             "stackId": 2175474113,
+            "isOpen": false
+        },
+        {
+            "entityId": 2097229,
+            "stackId": 4275182186,
             "isOpen": false
         },
         {
@@ -771,6 +766,11 @@
             "entityId": 2097358,
             "stackId": 2246606968,
             "isOpen": true
+        },
+        {
+            "entityId": 2097431,
+            "stackId": 4107759855,
+            "isOpen": false
         },
         {
             "entityId": 2097443,
