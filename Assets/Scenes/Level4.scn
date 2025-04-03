@@ -37988,7 +37988,16 @@
                     "ID": 8412556556436434131
                 },
                 "subDataId": 14,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 300237230628516087
+                            }
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -40500,7 +40509,15 @@
                     "ID": 13572727687337563736
                 },
                 "subDataId": 1,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "new_stairs",
+                            "isActive": true
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -40946,7 +40963,16 @@
                     "ID": 8412556556436434131
                 },
                 "subDataId": 13,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Material",
+                        "value": {
+                            "materialGUID": {
+                                "ID": 8043365719639519028
+                            }
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
