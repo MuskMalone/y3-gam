@@ -2322,12 +2322,12 @@
                         "scale": {
                             "x": 0.5,
                             "y": 0.5,
-                            "z": 0.10000000149011612
+                            "z": 0.05000000074505806
                         },
                         "positionOffset": {
                             "x": 0.0,
                             "y": 0.0,
-                            "z": 0.0
+                            "z": -0.029999999329447746
                         },
                         "degreeRotationOffsetEuler": {
                             "x": 5.0,
@@ -2431,7 +2431,7 @@
                                         }
                                     },
                                     {
-                                        "data": 1.5,
+                                        "data": 3.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "finalDistanceAwayFromCamWhenPickedUp"
@@ -10716,6 +10716,13 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "isTutorial"
+                                        }
+                                    },
+                                    {
+                                        "data": false,
+                                        "type": "System.Boolean",
+                                        "scriptField": {
+                                            "fieldName": "lockGravity"
                                         }
                                     },
                                     {

@@ -16,12 +16,12 @@
             "z": 2.559999942779541
         },
         "nextNodes": [
-            8
+            1
         ]
     },
     "keyframes": [
         {
-            "nodeId": 8,
+            "nodeId": 1,
             "endValue": {
                 "x": 62.4739990234375,
                 "y": 75.7509994506836,
@@ -32,11 +32,11 @@
             "startTime": 0.0,
             "duration": 4.0,
             "nextNodes": [
-                10
+                2
             ]
         },
         {
-            "nodeId": 10,
+            "nodeId": 2,
             "endValue": {
                 "x": 0.0,
                 "y": 0.0,
@@ -45,22 +45,7 @@
             "type": "NONE",
             "interpolationType": "LINEAR",
             "startTime": 4.0,
-            "duration": 1.2999999523162842,
-            "nextNodes": [
-                1
-            ]
-        },
-        {
-            "nodeId": 1,
-            "endValue": {
-                "x": 0.0,
-                "y": 45.0,
-                "z": 0.0
-            },
-            "type": "ROTATION",
-            "interpolationType": "EASE_IN",
-            "startTime": 5.300000190734863,
-            "duration": 4.0,
+            "duration": 0.5,
             "nextNodes": [
                 3
             ]
@@ -69,27 +54,12 @@
             "nodeId": 3,
             "endValue": {
                 "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "type": "NONE",
-            "interpolationType": "LINEAR",
-            "startTime": 9.300000190734863,
-            "duration": 1.2999999523162842,
-            "nextNodes": [
-                2
-            ]
-        },
-        {
-            "nodeId": 2,
-            "endValue": {
-                "x": 0.0,
-                "y": -45.0,
+                "y": 45.0,
                 "z": 0.0
             },
             "type": "ROTATION",
-            "interpolationType": "EASE_INOUT",
-            "startTime": 10.600000381469727,
+            "interpolationType": "EASE_IN",
+            "startTime": 4.5,
             "duration": 4.0,
             "nextNodes": [
                 4
@@ -104,8 +74,8 @@
             },
             "type": "NONE",
             "interpolationType": "LINEAR",
-            "startTime": 14.600000381469727,
-            "duration": 1.0,
+            "startTime": 8.5,
+            "duration": 0.5,
             "nextNodes": [
                 5
             ]
@@ -115,12 +85,27 @@
             "endValue": {
                 "x": 0.0,
                 "y": -45.0,
-                "z": 70.0
+                "z": 0.0
             },
             "type": "ROTATION",
             "interpolationType": "EASE_INOUT",
-            "startTime": 15.600000381469727,
-            "duration": 3.5,
+            "startTime": 9.0,
+            "duration": 4.0,
+            "nextNodes": [
+                6
+            ]
+        },
+        {
+            "nodeId": 6,
+            "endValue": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "type": "NONE",
+            "interpolationType": "LINEAR",
+            "startTime": 13.0,
+            "duration": 0.5,
             "nextNodes": [
                 7
             ]
@@ -129,19 +114,34 @@
             "nodeId": 7,
             "endValue": {
                 "x": 0.0,
+                "y": -45.0,
+                "z": 70.0
+            },
+            "type": "ROTATION",
+            "interpolationType": "EASE_INOUT",
+            "startTime": 13.5,
+            "duration": 3.5,
+            "nextNodes": [
+                8
+            ]
+        },
+        {
+            "nodeId": 8,
+            "endValue": {
+                "x": 0.0,
                 "y": 0.0,
                 "z": 70.0
             },
             "type": "ROTATION",
             "interpolationType": "EASE_IN",
-            "startTime": 19.100000381469727,
+            "startTime": 17.0,
             "duration": 4.5,
             "nextNodes": [
-                11
+                9
             ]
         },
         {
-            "nodeId": 11,
+            "nodeId": 9,
             "endValue": {
                 "x": 0.0,
                 "y": 0.0,
@@ -149,8 +149,8 @@
             },
             "type": "NONE",
             "interpolationType": "LINEAR",
-            "startTime": 23.600000381469727,
-            "duration": 1.2999999523162842,
+            "startTime": 21.5,
+            "duration": 1.0,
             "nextNodes": []
         }
     ]
