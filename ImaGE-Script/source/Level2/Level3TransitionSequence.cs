@@ -6,6 +6,7 @@ public class Level3TransitionSequence : Entity
   public Entity playerCam;
   public Fragment fragment;
   public Entity SFX;
+  public Entity PlayerSFX;
   public Entity sinkHole, groundSmoke, aftermathSmoke;
   public Entity mainGround, sinkHoleVictims;
   public Entity invisibleBarrier, animGroundCollider;
@@ -88,6 +89,7 @@ public class Level3TransitionSequence : Entity
             originalCamPos = playerCam.GetComponent<Transform>().rotationEuler;
             currState = State.CAVE_IN;
             InternalCalls.PlaySound(SFX.mEntityID, "..\\Assets\\Audio\\Earthquake_FloorCave_SFX.wav");
+            InternalCalls.PlaySound(PlayerSFX.mEntityID, "..\\Assets\\Audio\\TaraFalling_SFX.wav");
             return;
           }
 
