@@ -90,7 +90,7 @@ public class SpecialDialogue : Entity
       return;
     }
 
-    if (isInSpecialDialogueMode && !InternalCalls.GetIsPaused())
+    if ((isInSpecialDialogueMode || isInSillouetteSequence) && !InternalCalls.GetIsPaused())
     {
       // InternalCalls.ResumeSound(mEntityID, "BootUploadingText"); Need resume sound to exist
       InternalCalls.SetActive(mEntityID, true);
