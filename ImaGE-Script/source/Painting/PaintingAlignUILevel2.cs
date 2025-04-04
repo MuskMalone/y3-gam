@@ -51,27 +51,27 @@ public class PaintingAlignUILevel2 : Entity
       return;
     }
 
-        //if (isSevenPaintingDialogueActive)
-        //{
-        //    if (dialogueScript.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
-        //    {
-        //        InternalCalls.PlaySound(mEntityID, "L2_6");
-        //        hasPlayedLine0Sound = true;
-        //        isSevenPaintingDialogueActive = false;
-        //    }
-            
-        //}
+        if (isSevenPaintingDialogueActive)
+        {
+            if (dialogueScript.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L2_6");
+                hasPlayedLine0Sound = true;
+                isSevenPaintingDialogueActive = false;
+            }
 
-        //if (isLeverDialogueActive)
-        //{
-        //    if (dialogueScript.CurrentLineIndex == 0 && !hasPlayedLine1Sound)
-        //    {
-        //        InternalCalls.PlaySound(mEntityID, "L2_7");
-        //        hasPlayedLine1Sound = true;
-        //        isLeverDialogueActive = false;
-        //    }
+        }
 
-        //}
+        if (isLeverDialogueActive)
+        {
+            if (dialogueScript.CurrentLineIndex == 0 && !hasPlayedLine1Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L2_7");
+                hasPlayedLine1Sound = true;
+                isLeverDialogueActive = false;
+            }
+
+        }
 
         if (holdupUIScript.isBigPaintingActive)
     {
@@ -88,7 +88,7 @@ public class PaintingAlignUILevel2 : Entity
           else if (Input.GetMouseButtonTriggered(0) && !dialogueScript.isInDialogueMode)
           {
             dialogueScript.SetDialogue(lever2Dialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking });
-            //isLeverDialogueActive = true;
+            isLeverDialogueActive = true;
 
           }
         }
@@ -102,7 +102,7 @@ public class PaintingAlignUILevel2 : Entity
           else if(Input.GetMouseButtonTriggered(0) && !dialogueScript.isInDialogueMode)
           {
             dialogueScript.SetDialogue(allPaintingsDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking });
-            //isSevenPaintingDialogueActive = true;
+            isSevenPaintingDialogueActive = true;
           }
         }
 
