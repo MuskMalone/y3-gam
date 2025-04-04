@@ -1,10 +1,10 @@
 {
-    "name": "transparent2",
-    "shader": "Unlit",
+    "name": "ArtMuseumWall10",
+    "shader": "PBR",
     "albedoColor": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
     },
     "metalness": 0.5,
     "roughness": 0.5,
@@ -15,17 +15,17 @@
         "z": 0.0,
         "w": 0.0
     },
-    "transparency": 0.22100000083446503,
+    "transparency": 1.0,
     "tiling": {
-        "x": 1.0,
-        "y": 1.0
+        "x": 4.809999942779541,
+        "y": 1.600000023841858
     },
     "offset": {
-        "x": 0.0,
-        "y": 0.0
+        "x": -0.6299999952316284,
+        "y": -0.5799999833106995
     },
     "albedoMap": {
-        "ID": 0
+        "ID": 3288828160425263810
     },
     "normalMap": {
         "ID": 0
