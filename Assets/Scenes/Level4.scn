@@ -1946,8 +1946,8 @@
                 },
                 {
                     "CapsuleCollider": {
-                        "radius": 1.0,
-                        "halfheight": 3.299999952316284,
+                        "radius": 1.2000000476837158,
+                        "halfheight": 2.799999952316284,
                         "positionOffset": {
                             "x": 0.0,
                             "y": 0.0,
@@ -34706,7 +34706,15 @@
                     "ID": 13572727687337563736
                 },
                 "subDataId": 1,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "new_stairs",
+                            "isActive": true
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -34964,7 +34972,15 @@
                     "ID": 13572727687337563736
                 },
                 "subDataId": 2,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "AssistCollider",
+                            "isActive": true
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -39292,7 +39308,7 @@
                 {
                     "Tag": {
                         "tag": "Corrupted Step",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -39358,32 +39374,6 @@
                         "isCustomMesh": false,
                         "castShadows": true,
                         "receiveShadows": true
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 8.654500007629395,
-                            "y": 4.918574810028076,
-                            "z": 0.908768355846405
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
                     }
                 }
             ]
@@ -39875,7 +39865,15 @@
                     "ID": 13572727687337563736
                 },
                 "subDataId": 3,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "StepCollider5",
+                            "isActive": true
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -39901,7 +39899,15 @@
                     "ID": 13572727687337563736
                 },
                 "subDataId": 4,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "StepCollider4",
+                            "isActive": true
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -40786,7 +40792,15 @@
                     "ID": 13572727687337563736
                 },
                 "subDataId": 5,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "StepCollider3",
+                            "isActive": true
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -40799,7 +40813,15 @@
                     "ID": 13572727687337563736
                 },
                 "subDataId": 6,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "StepCollider2",
+                            "isActive": true
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -41513,7 +41535,15 @@
                     "ID": 13572727687337563736
                 },
                 "subDataId": 7,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "StepCollider",
+                            "isActive": true
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -41561,7 +41591,15 @@
                     "ID": 13572727687337563736
                 },
                 "subDataId": 0,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "StairsToAltar",
+                            "isActive": true
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         }
