@@ -39,7 +39,9 @@ public class CameraCapture : Entity
 
   void CaptureImageAndStoreData()
   {
-     InternalCalls.TakeScreenShot(PictureName, imageWidth, imageHeight);
+    int newWidth = (int)((float)imageWidth * (float)Input.screenWidth / 1920.0f);
+    int newHeight = (int)((float)imageHeight * (float)Input.screenHeight/ 1080.0f);
+    InternalCalls.TakeScreenShot(PictureName, newWidth, newHeight);
 
     // Store the player's position, rotation, and the main camera's rotation
     savedPlayerPosition = player.GetComponent<Transform>().worldPosition;
@@ -55,11 +57,11 @@ public class CameraCapture : Entity
     imageCaptured = true;
 
     // Save the captured data to a text file
-    ExportDataToTxt();
+    ExportDataToTxt(newWidth,newHeight);
   }
 
   // Method to export data as a .txt file in the assets folder
-  void ExportDataToTxt()
+  void ExportDataToTxt(int w, int h)
   {
     // Create the path for the text file in the assets folder
     string dataPath = ("../Assets/GameImg/" + PictureName + ".txt");
@@ -70,9 +72,11 @@ public class CameraCapture : Entity
     content += $"Camera Rotation: {savedCameraRotation}\n";
     content += $"Camera Euler:    {savedCameraEuler}\n";
     content += $"shouldLock:      {shouldLock}\n";
+    content += $"Image Width:      {w}\n";
+    content += $"Image Height:      {h}\n";
 
-    // Write the content to the text file
-    File.WriteAllText(dataPath, content);
+        // Write the content to the text file
+        File.WriteAllText(dataPath, content);
 
     Debug.Log($"Data exported to: {dataPath}");
   }

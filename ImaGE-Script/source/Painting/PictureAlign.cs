@@ -204,6 +204,7 @@ public class PictureAlign : Entity
               currentImg.RemoveItself();
               currentImg = null;
               hasFaded = false;
+                            
             }
           }
         }
