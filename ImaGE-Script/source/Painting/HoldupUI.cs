@@ -54,14 +54,15 @@ public class HoldupUI : Entity
 
     LoadDataFromTextAsset();
     if (isBigPaintingActive)
-    { 
+    {
+      float Scaler = (
+                          (((float)ImageHeight / (float)Input.screenHeight) / (700.0f / 1080.0f)) *
+                          (((float)Input.screenHeight / (float)Input.screenWidth) / (1080.0f / 1920.0f))
+                        );
       Vector3 actualScale = bigPicScale;
-      actualScale.Y = (
-                        (  ((float)ImageHeight       /(float)Input.screenHeight) / (700.0f /1080.0f) ) *
-                        (  ((float)Input.screenHeight/ (float)Input.screenWidth) / (1080.0f/1920.0f) )
-                      ) * bigPicScale.Y;
-     Vector3 actualPos = bigPicPos;
-     actualPos.Y = (700.0f/ (float)ImageHeight) * bigPicPos.Y;
+      actualScale.Y = Scaler * bigPicScale.Y;
+      Vector3 actualPos = bigPicPos;
+      actualPos.Y = Scaler * bigPicPos.Y;
 
       GetComponent<Transform>().position = actualPos;
       GetComponent<Transform>().scale = actualScale;
@@ -103,13 +104,14 @@ public class HoldupUI : Entity
   
       if (isBigPaintingActive)
       {
+        float Scaler = (
+                               (((float)ImageHeight / (float)Input.screenHeight) / (700.0f / 1080.0f)) *
+                               (((float)Input.screenHeight / (float)Input.screenWidth) / (1080.0f / 1920.0f))
+                             );
         Vector3 actualScale = bigPicScale;
-        actualScale.Y = (
-                        (  ((float)ImageHeight       /(float)Input.screenHeight) / (700.0f /1080.0f) ) *
-                        (  ((float)Input.screenHeight/ (float)Input.screenWidth) / (1080.0f/1920.0f) )
-                        ) * bigPicScale.Y;
+        actualScale.Y = Scaler * bigPicScale.Y;
         Vector3 actualPos = bigPicPos;
-        actualPos.Y = (700.0f/ (float)ImageHeight) * bigPicPos.Y;
+        actualPos.Y = Scaler * bigPicPos.Y;
 
         GetComponent<Transform>().position = actualPos;
         GetComponent<Transform>().scale = actualScale;
@@ -154,16 +156,16 @@ public class HoldupUI : Entity
 
     if (isBigPaintingActive)
     {
-        Console.WriteLine(GetComponent<Tag>().tag + " set big");
-        Vector3 actualScale = bigPicScale;
-        actualScale.Y = (
-                        (  ((float)ImageHeight       /(float)Input.screenHeight) / (700.0f /1080.0f) ) *
-                        (  ((float)Input.screenHeight/ (float)Input.screenWidth) / (1080.0f/1920.0f) )
-                        ) * bigPicScale.Y;
-        Vector3 actualPos = bigPicPos;
-        actualPos.Y = (700.0f/ (float)ImageHeight) * bigPicPos.Y;
+      float Scaler = (
+                             (((float)ImageHeight / (float)Input.screenHeight) / (700.0f / 1080.0f)) *
+                             (((float)Input.screenHeight / (float)Input.screenWidth) / (1080.0f / 1920.0f))
+                           );
+      Vector3 actualScale = bigPicScale;
+      actualScale.Y = Scaler * bigPicScale.Y;
+      Vector3 actualPos = bigPicPos;
+      actualPos.Y = Scaler * bigPicPos.Y;
 
-        GetComponent<Transform>().position = actualPos;
+      GetComponent<Transform>().position = actualPos;
         GetComponent<Transform>().scale = actualScale;
     }
     else
