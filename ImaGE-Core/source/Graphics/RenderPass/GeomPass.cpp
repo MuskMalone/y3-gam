@@ -49,6 +49,7 @@ namespace Graphics {
 
       // Clears the last 2 frame buffers
       GLfloat clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f }; // Black with full alpha
+      glClearBufferfv(GL_COLOR, 2, clearColor);
       glClearBufferfv(GL_COLOR, 3, clearColor); // view pos buffer
       glClearBufferfv(GL_COLOR, 4, clearColor); // smear
       GetTargetFramebuffer()->ClearAttachmentInt(1, -1);
