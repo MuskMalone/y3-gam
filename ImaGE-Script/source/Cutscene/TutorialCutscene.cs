@@ -49,8 +49,14 @@ public class TutorialCutscene : Entity
     public string[] firstCutsceneDialogue;
     public string[] secondCutsceneDialogue;
     public string[] thirdCutsceneDialogue;
+    private bool isFirstDialogueActive;
+    private bool isSecondDialogueActive;  
+    private bool isThirdDialogueActive;
+    private bool hasPlayedLine0Sound = false;
+    private bool hasPlayedLine1Sound = false;
+    private bool hasPlayedLine2Sound = false;
 
-  void Start()
+    void Start()
     {
         tutorialDialogue = FindObjectOfType<TutorialDialogue>();
         playerMove = FindObjectOfType<PlayerMove>();
@@ -109,6 +115,39 @@ public class TutorialCutscene : Entity
       {
           EndSecondCutscene();
       }
+
+        if (isFirstDialogueActive)
+        {
+            if (tutorialDialogue.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "LT_5");
+                hasPlayedLine0Sound = true;
+                isFirstDialogueActive = false;
+            }
+
+        }
+
+        if(isSecondDialogueActive)
+        {
+            if (tutorialDialogue.CurrentLineIndex == 0 && !hasPlayedLine1Sound)
+            {
+                InternalCalls.StopSound(mEntityID, "LT_5");
+                InternalCalls.PlaySound(mEntityID, "LT_6");
+                hasPlayedLine1Sound = true;
+                isSecondDialogueActive = false;
+            }
+        }
+
+        if(isThirdDialogueActive)
+        {
+            if (tutorialDialogue.CurrentLineIndex == 0 && !hasPlayedLine2Sound)
+            {
+                InternalCalls.StopSound(mEntityID, "LT_6");
+                InternalCalls.PlaySound(mEntityID, "LT_7");
+                hasPlayedLine2Sound = true;
+                isThirdDialogueActive = false;
+            }
+        }
     }
 
     void StartFirstCutscene()
@@ -116,6 +155,7 @@ public class TutorialCutscene : Entity
         playerMove.FreezePlayer();
         firstCutscenePlaying = true;
         tutorialDialogue.SetDialogue(firstCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Neutral });
+        isFirstDialogueActive = true;
     }
 
     void EndFirstCutscene()
@@ -130,6 +170,7 @@ public class TutorialCutscene : Entity
     {
         secondCutscenePlaying = true;
         tutorialDialogue.SetDialogue(secondCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Shocked });
+        isSecondDialogueActive = true;
     }
 
     void EndSecondCutscene()
@@ -137,7 +178,8 @@ public class TutorialCutscene : Entity
         closeDoor.SetActive(true);
         openDoor.SetActive(false);
         glow.SetActive(false);
-        tutorialDialogue.SetDialogue(thirdCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Surprised });
+        tutorialDialogue.SetDialogue(thirdCutsceneDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Neutral });
+        isThirdDialogueActive = true;
         secondCutscenePlaying = false;
         cutsceneFinish = true;
     }

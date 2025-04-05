@@ -16,7 +16,11 @@ public class TutorialPainting : Entity, IInventoryItem
     public float finalDistanceAwayFromCamWhenPickedUp = 1.2f;
     public PlayerMove playerMove;
 
-  public string Name
+    private bool isDialogueActive = false;
+    private bool hasPlayedLine0Sound = false;
+    private bool hasPlayedLine1Sound = false;
+
+    public string Name
     {
         get
         {
@@ -63,6 +67,7 @@ public class TutorialPainting : Entity, IInventoryItem
       if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID, finalDistanceAwayFromCamWhenPickedUp))
       {
         tutorialDialogue.SetDialogue(dialogueWhenPaintingPickup, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking, TutorialDialogue.Emotion.Neutral });
+        isDialogueActive = true;
         InternalCalls.PlaySound(mEntityID, "PickupObjects");
         inventoryScript.Additem(this);
         isBeingPickedUp = false;
@@ -80,5 +85,23 @@ public class TutorialPainting : Entity, IInventoryItem
           return;
         }
         EToPickUpUI.SetActive(isTutorialPaintingHit);
+
+        if (isDialogueActive)
+        {
+            if (tutorialDialogue.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "LT_11_VER2");
+                hasPlayedLine0Sound = true;
+            }
+            else if (tutorialDialogue.CurrentLineIndex == 1 && !hasPlayedLine1Sound)
+            {
+                InternalCalls.StopSound(mEntityID, "LT_11_VER2");
+                InternalCalls.PlaySound(mEntityID, "LT_12");
+                hasPlayedLine1Sound = true;
+                isDialogueActive = false;
+            }
+        }
     }
+
+
 }

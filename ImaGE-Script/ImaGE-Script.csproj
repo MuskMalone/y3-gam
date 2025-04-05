@@ -97,6 +97,7 @@
     <Compile Include="source\Dialogue\BootupText.cs" />
     <Compile Include="source\Dialogue\Dialogue.cs" />
     <Compile Include="source\Dialogue\SpecialDialogue.cs" />
+    <Compile Include="source\Dialogue\TutorialDoorDialogueTrigger.cs" />
     <Compile Include="source\DynamicAudio\BGMLevel1.cs" />
     <Compile Include="source\DynamicAudio\BGMLevel3.cs" />
     <Compile Include="source\DynamicAudio\EyeBallFollowSFX.cs" />

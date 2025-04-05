@@ -12,6 +12,7 @@
                 115,
                 135,
                 141,
+                153,
                 1048618,
                 1048908,
                 1049184,
@@ -1558,6 +1559,99 @@
             ],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "LT_5",
+                                "value": {
+                                    "guid": {
+                                        "ID": 1087733666030523494
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0
+                                        },
+                                        "volume": 2.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "LT_6",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4180540953491819626
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0
+                                        },
+                                        "volume": 2.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "LT_7",
+                                "value": {
+                                    "guid": {
+                                        "ID": 4973012420225327828
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0
+                                        },
+                                        "volume": 2.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "[Folder] Cutscene",
                         "isActive": true
@@ -1645,7 +1739,7 @@
                                     },
                                     {
                                         "data": [
-                                            "I have a recurring dream of my mum,\nstanding at an open doorway."
+                                            "Mom? What are you..."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -1684,7 +1778,7 @@
                                     },
                                     {
                                         "data": [
-                                            "My legs are frozen, and no matter how much \nI beg... How much I cry... \nI can't stop her from slipping away."
+                                            "Wait!"
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -1693,7 +1787,7 @@
                                     },
                                     {
                                         "data": [
-                                            "Wait, the painting! Let's use it..."
+                                            "I need to go after her."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -2234,6 +2328,64 @@
                     "AudioSource": {
                         "sounds": [
                             {
+                                "key": "LT_11_VER2",
+                                "value": {
+                                    "guid": {
+                                        "ID": 12307189155478228526
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -15.41988754272461,
+                                            "y": 6.828000068664551,
+                                            "z": -23.147876739501953
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "LT_12",
+                                "value": {
+                                    "guid": {
+                                        "ID": 18315050540001480023
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -15.41988754272461,
+                                            "y": 6.828000068664551,
+                                            "z": -23.147876739501953
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
                                 "key": "PickupObjects",
                                 "value": {
                                     "guid": {
@@ -2422,8 +2574,8 @@
                                     },
                                     {
                                         "data": [
-                                            "Let's not lose her again.",
-                                            "I have to align this painting with the door."
+                                            "The paint used... Did mom leave this behind?",
+                                            "The door should open if I align this painting to it."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -3206,6 +3358,78 @@
                                 ]
                             }
                         ]
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 153,
+            "Parent": 37,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "InteractWithDoor",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 5.487936973571777,
+                            "z": -0.018710732460021973
+                        },
+                        "scale": {
+                            "x": 8.539999961853027,
+                            "y": 2.560000419616699,
+                            "z": -0.619999885559082
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 5.487936973571777,
+                            "z": -0.018710732460021973
+                        },
+                        "worldScale": {
+                            "x": 8.539999961853027,
+                            "y": 2.560000419616699,
+                            "z": -0.619999885559082
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 1470038238070845852
+                        }
                     }
                 }
             ]
@@ -11136,6 +11360,70 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "LT_8",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7534565973537755064
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": 14.101218223571777,
+                                            "z": -11.831483840942383
+                                        },
+                                        "volume": 2.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "LT_9_VER2",
+                                "value": {
+                                    "guid": {
+                                        "ID": 18233046450687590421
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 0.0,
+                                            "y": 14.101218223571777,
+                                            "z": -11.831483840942383
+                                        },
+                                        "volume": 2.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "ClosedDoor",
                         "isActive": true
@@ -11204,6 +11492,84 @@
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 0.6000000238418579,
+                            "y": 5.900000095367432,
+                            "z": 4.050000190734863
+                        },
+                        "positionOffset": {
+                            "x": 12.600000381469727,
+                            "y": -4.699999809265137,
+                            "z": 0.10000000149011612
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": true
+                    }
+                },
+                {
+                    "ScriptComponent": {
+                        "scriptList": [
+                            {
+                                "entityID": 2097182,
+                                "scriptName": "TutorialDoorDialogueTrigger",
+                                "scriptFieldInstList": [
+                                    {
+                                        "data": {
+                                            "entityID": 153,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "interactDoorUI"
+                                        }
+                                    },
+                                    {
+                                        "data": [
+                                            "That's odd... It won't budge.",
+                                            "I need to find a way to get this open."
+                                        ],
+                                        "type": "System.String[]",
+                                        "scriptField": {
+                                            "fieldName": "lockedDoorDialogue"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 2097156,
+                                            "scriptName": "PlayerInteraction"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "playerInteraction"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1048615,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "tutorialDialogue"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 }
             ]
