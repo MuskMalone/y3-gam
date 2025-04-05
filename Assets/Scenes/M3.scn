@@ -111,34 +111,34 @@
             "ID": 6,
             "Parent": null,
             "Child Entities": [
-                43,
                 278,
-                451,
                 469,
                 488,
                 506,
+                548,
                 553,
                 630,
                 638,
+                1048933,
                 1049200,
                 2097443,
                 2097475,
-                2097572,
                 2097579,
                 2097693,
+                3146148,
+                3146179,
                 3146195,
                 3146246,
                 3146617,
                 3146832,
-                4194563,
                 4194654,
                 4194669,
                 4194764,
                 4194765,
                 4194991,
+                5243139,
                 6291699,
                 6291847,
-                6292248,
                 7340444,
                 8388980,
                 10486102
@@ -2682,93 +2682,6 @@
                             "shadowModified": false,
                             "customCenter": true
                         }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 43,
-            "Parent": 6,
-            "Child Entities": [
-                433
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Statue of Anger",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 28.520172119140625,
-                            "y": 13.409857749938965,
-                            "z": -32.24686813354492
-                        },
-                        "scale": {
-                            "x": 9.760000228881836,
-                            "y": 9.760000228881836,
-                            "z": 9.760000228881836
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 28.520172119140625,
-                            "y": 13.409857749938965,
-                            "z": -32.24686813354492
-                        },
-                        "worldScale": {
-                            "x": 9.760000228881836,
-                            "y": 9.760000228881836,
-                            "z": 9.760000228881836
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Props"
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 2.200000047683716,
-                            "y": 4.900000095367432,
-                            "z": 1.5299999713897705
-                        },
-                        "positionOffset": {
-                            "x": -0.44999998807907104,
-                            "y": 0.0,
-                            "z": -2.200000047683716
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
                     }
                 }
             ]
@@ -5531,7 +5444,7 @@
                                     "playSettings": {
                                         "position": {
                                             "x": -14.399999618530273,
-                                            "y": -0.10000000149011612,
+                                            "y": 1.0,
                                             "z": -2.0
                                         },
                                         "volume": 1.0,
@@ -5560,7 +5473,7 @@
                                     "playSettings": {
                                         "position": {
                                             "x": -14.399999618530273,
-                                            "y": -0.10000000149011612,
+                                            "y": 1.0,
                                             "z": -2.0
                                         },
                                         "volume": 1.0,
@@ -5593,12 +5506,12 @@
                     "Transform": {
                         "position": {
                             "x": -14.399999618530273,
-                            "y": -0.10000000149011612,
+                            "y": 1.0,
                             "z": -2.0
                         },
                         "scale": {
-                            "x": 5.801000118255615,
-                            "y": 20.141000747680664,
+                            "x": 6.0,
+                            "y": 18.0,
                             "z": 0.14099788665771484
                         },
                         "rotation": {
@@ -5614,12 +5527,12 @@
                         },
                         "worldPos": {
                             "x": -14.399999618530273,
-                            "y": -0.10000000149011612,
+                            "y": 1.0,
                             "z": -2.0
                         },
                         "worldScale": {
-                            "x": 5.801000118255615,
-                            "y": 20.141000747680664,
+                            "x": 6.0,
+                            "y": 18.0,
                             "z": 0.14099788665771484
                         },
                         "worldRot": {
@@ -5942,7 +5855,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 1429824161077583112
+                            "ID": 14786790055428697666
                         }
                     }
                 }
@@ -12836,84 +12749,6 @@
             }
         },
         {
-            "ID": 433,
-            "Parent": 43,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "statue_anger_new",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.000006198883056640625,
-                            "y": -0.0000026226043701171875,
-                            "z": 0.00001430511474609375
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 28.520111083984375,
-                            "y": 13.409832000732422,
-                            "z": -32.246726989746094
-                        },
-                        "worldScale": {
-                            "x": 9.760000228881836,
-                            "y": 9.760000228881836,
-                            "z": 9.760000228881836
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Props"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 7398324319315129017
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "statue_anger_new",
-                        "GUID": {
-                            "ID": 9236198259268607520
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
             "ID": 436,
             "Parent": 1048974,
             "Child Entities": [],
@@ -13216,171 +13051,6 @@
                         "meshName": "Lily_new",
                         "GUID": {
                             "ID": 1006131847424678646
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 451,
-            "Parent": 6,
-            "Child Entities": [
-                452
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Statue of Depression",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -16.155197143554688,
-                            "y": 13.24123764038086,
-                            "z": -34.27106475830078
-                        },
-                        "scale": {
-                            "x": 9.420000076293945,
-                            "y": 9.420000076293945,
-                            "z": 9.420000076293945
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -16.155197143554688,
-                            "y": 13.24123764038086,
-                            "z": -34.27106475830078
-                        },
-                        "worldScale": {
-                            "x": 9.420000076293945,
-                            "y": 9.420000076293945,
-                            "z": 9.420000076293945
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Props"
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 2.299999952316284,
-                            "y": 4.699999809265137,
-                            "z": 1.7999999523162842
-                        },
-                        "positionOffset": {
-                            "x": -0.10000000149011612,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 452,
-            "Parent": 451,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "statue_depression_new",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 9.5367431640625e-7,
-                            "y": 0.00006413459777832031,
-                            "z": -0.00003814697265625
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": -16.155187606811523,
-                            "y": 13.241841316223145,
-                            "z": -34.27142333984375
-                        },
-                        "worldScale": {
-                            "x": 9.420000076293945,
-                            "y": 9.420000076293945,
-                            "z": 9.420000076293945
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Props"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 7398324319315129017
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "statue_depression_new",
-                        "GUID": {
-                            "ID": 15130106577089028539
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": true,
@@ -14420,6 +14090,24 @@
                     "ID": 8412556556436434131
                 },
                 "subDataId": 5,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 548,
+            "Parent": 6,
+            "Child Entities": [],
+            "Position": {
+                "x": 37.64899826049805,
+                "y": 3.440999984741211,
+                "z": -11.951000213623047
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 4072349741621575057
+                },
+                "subDataId": 0,
                 "componentData": [],
                 "removedComponents": []
             }
@@ -24390,6 +24078,110 @@
             }
         },
         {
+            "ID": 1048933,
+            "Parent": 6,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "depression_statue",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -16.155000686645508,
+                            "y": 13.241000175476074,
+                            "z": -34.270999908447266
+                        },
+                        "scale": {
+                            "x": 9.420000076293945,
+                            "y": 9.420000076293945,
+                            "z": 9.420000076293945
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -16.155000686645508,
+                            "y": 13.241000175476074,
+                            "z": -34.270999908447266
+                        },
+                        "worldScale": {
+                            "x": 9.420000076293945,
+                            "y": 9.420000076293945,
+                            "z": 9.420000076293945
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 7398324319315129017
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "depression_statue",
+                        "GUID": {
+                            "ID": 16541074891423536113
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 2.4100000858306885,
+                            "y": 4.710000038146973,
+                            "z": 2.2100000381469727
+                        },
+                        "positionOffset": {
+                            "x": -0.30000001192092896,
+                            "y": 0.0,
+                            "z": -0.10000000149011612
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048954,
             "Parent": 3146246,
             "Child Entities": [],
@@ -33750,26 +33542,6 @@
             }
         },
         {
-            "ID": 2097486,
-            "Parent": 6292248,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 11999469270414542136
-                },
-                "subDataId": 2,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 2097500,
             "Parent": 3146309,
             "Child Entities": [],
@@ -34005,78 +33777,6 @@
                 },
                 "subDataId": 9,
                 "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 2097572,
-            "Parent": 6,
-            "Child Entities": [
-                5243155,
-                7340296
-            ],
-            "Prefab": {
-                "GUID": {
-                    "ID": 11999469270414542136
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Props_Vase2",
-                            "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": -50.03403091430664,
-                                "y": 10.092392921447754,
-                                "z": 60.89167404174805
-                            },
-                            "scale": {
-                                "x": 4.068639755249023,
-                                "y": 4.068639755249023,
-                                "z": 4.068639755249023
-                            },
-                            "rotation": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "eulerAngles": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "worldPos": {
-                                "x": -50.03403091430664,
-                                "y": 10.092392921447754,
-                                "z": 60.89167404174805
-                            },
-                            "worldScale": {
-                                "x": 4.068639755249023,
-                                "y": 4.068639755249023,
-                                "z": 4.068639755249023
-                            },
-                            "worldRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            }
-                        }
-                    }
-                ],
                 "removedComponents": []
             }
         },
@@ -35933,8 +35633,8 @@
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 1.809999942779541,
-                            "y": 1.909999966621399,
+                            "x": 1.600000023841858,
+                            "y": 1.7000000476837158,
                             "z": -1.440000057220459
                         },
                         "rotation": {
@@ -35954,8 +35654,8 @@
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 1.809999942779541,
-                            "y": 1.909999966621399,
+                            "x": 1.600000023841858,
+                            "y": 1.7000000476837158,
                             "z": -1.440000057220459
                         },
                         "worldRot": {
@@ -35980,7 +35680,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 15167728305292783555
+                            "ID": 9202424445851176325
                         }
                     }
                 }
@@ -39055,6 +38755,24 @@
             }
         },
         {
+            "ID": 3146148,
+            "Parent": 6,
+            "Child Entities": [],
+            "Position": {
+                "x": -50.034000396728516,
+                "y": 9.579498291015625,
+                "z": 60.891998291015625
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 4072349741621575057
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
             "ID": 3146158,
             "Parent": 5243396,
             "Child Entities": [
@@ -39097,6 +38815,110 @@
                 ],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 3146179,
+            "Parent": 6,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "anger_statue",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 28.520000457763672,
+                            "y": 13.40999984741211,
+                            "z": -32.24700164794922
+                        },
+                        "scale": {
+                            "x": 9.760000228881836,
+                            "y": 9.760000228881836,
+                            "z": 9.760000228881836
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 28.520000457763672,
+                            "y": 13.40999984741211,
+                            "z": -32.24700164794922
+                        },
+                        "worldScale": {
+                            "x": 9.760000228881836,
+                            "y": 9.760000228881836,
+                            "z": 9.760000228881836
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 7398324319315129017
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "anger_statue",
+                        "GUID": {
+                            "ID": 7789088437997363979
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 2.609999895095825,
+                            "y": 4.880000114440918,
+                            "z": 4.210000038146973
+                        },
+                        "positionOffset": {
+                            "x": -0.20000000298023224,
+                            "y": 0.0,
+                            "z": -0.6000000238418579
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
         },
         {
             "ID": 3146193,
@@ -41508,34 +41330,6 @@
             ]
         },
         {
-            "ID": 4194563,
-            "Parent": 6,
-            "Child Entities": [
-                4194997,
-                6291722
-            ],
-            "Position": {
-                "x": 37.649322509765625,
-                "y": 3.4412083625793457,
-                "z": 13.261947631835938
-            },
-            "Prefab": {
-                "GUID": {
-                    "ID": 11999469270414542136
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 4194571,
             "Parent": 3146011,
             "Child Entities": [],
@@ -43748,26 +43542,6 @@
             }
         },
         {
-            "ID": 4194997,
-            "Parent": 4194563,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 11999469270414542136
-                },
-                "subDataId": 2,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 4195000,
             "Parent": 8388902,
             "Child Entities": [],
@@ -44865,29 +44639,20 @@
             }
         },
         {
-            "ID": 5243155,
-            "Parent": 2097572,
+            "ID": 5243139,
+            "Parent": 6,
             "Child Entities": [],
+            "Position": {
+                "x": 37.64899826049805,
+                "y": 3.440999984741211,
+                "z": 13.26200008392334
+            },
             "Prefab": {
                 "GUID": {
-                    "ID": 11999469270414542136
+                    "ID": 4072349741621575057
                 },
-                "subDataId": 2,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Vase3",
-                            "isActive": true
-                        }
-                    }
-                ],
+                "subDataId": 0,
+                "componentData": [],
                 "removedComponents": []
             }
         },
@@ -46020,68 +45785,6 @@
                 },
                 "subDataId": 4,
                 "componentData": [],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 5243603,
-            "Parent": 6292248,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 11999469270414542136
-                },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": 0.00002384185791015625,
-                                "y": 0.000006973743438720703,
-                                "z": 0.005042672157287598
-                            },
-                            "scale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "rotation": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "eulerAngles": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "worldPos": {
-                                "x": 37.64940643310547,
-                                "y": 3.4412333965301514,
-                                "z": -11.933117866516113
-                            },
-                            "worldScale": {
-                                "x": 3.5859999656677246,
-                                "y": 3.5859999656677246,
-                                "z": 3.5859999656677246
-                            },
-                            "worldRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            }
-                        }
-                    }
-                ],
                 "removedComponents": []
             }
         },
@@ -47236,68 +46939,6 @@
             }
         },
         {
-            "ID": 6291722,
-            "Parent": 4194563,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 11999469270414542136
-                },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": 0.00002384185791015625,
-                                "y": 0.000006973743438720703,
-                                "z": -0.01611185073852539
-                            },
-                            "scale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "rotation": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "eulerAngles": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "worldPos": {
-                                "x": 37.64940643310547,
-                                "y": 3.4412333965301514,
-                                "z": 13.204170227050781
-                            },
-                            "worldScale": {
-                                "x": 3.5859999656677246,
-                                "y": 3.5859999656677246,
-                                "z": 3.5859999656677246
-                            },
-                            "worldRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            }
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 6291724,
             "Parent": 46,
             "Child Entities": [
@@ -48112,34 +47753,6 @@
             }
         },
         {
-            "ID": 6292248,
-            "Parent": 6,
-            "Child Entities": [
-                2097486,
-                5243603
-            ],
-            "Position": {
-                "x": 37.649322509765625,
-                "y": 3.4412083625793457,
-                "z": -11.951200485229492
-            },
-            "Prefab": {
-                "GUID": {
-                    "ID": 11999469270414542136
-                },
-                "subDataId": 0,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
             "ID": 6292252,
             "Parent": 4194765,
             "Child Entities": [],
@@ -48520,75 +48133,6 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Default"
-                        }
-                    }
-                ],
-                "removedComponents": []
-            }
-        },
-        {
-            "ID": 7340296,
-            "Parent": 2097572,
-            "Child Entities": [],
-            "Prefab": {
-                "GUID": {
-                    "ID": 11999469270414542136
-                },
-                "subDataId": 1,
-                "componentData": [
-                    {
-                        "key": "Layer",
-                        "value": {
-                            "layerName": "Props"
-                        }
-                    },
-                    {
-                        "key": "Tag",
-                        "value": {
-                            "tag": "Vase2",
-                            "isActive": true
-                        }
-                    },
-                    {
-                        "key": "Transform",
-                        "value": {
-                            "position": {
-                                "x": 0.000022411346435546875,
-                                "y": 0.000006794929504394531,
-                                "z": -0.000003814697265625
-                            },
-                            "scale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "rotation": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            },
-                            "eulerAngles": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "worldPos": {
-                                "x": -50.033939361572266,
-                                "y": 10.09242057800293,
-                                "z": 60.891658782958984
-                            },
-                            "worldScale": {
-                                "x": 4.068639755249023,
-                                "y": 4.068639755249023,
-                                "z": 4.068639755249023
-                            },
-                            "worldRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0,
-                                "w": 1.0
-                            }
                         }
                     }
                 ],
