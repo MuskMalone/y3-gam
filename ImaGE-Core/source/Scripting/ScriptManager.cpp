@@ -1864,6 +1864,7 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
   int startX = (windowWidth - width) / 2;
   int startY = (windowHeight - height) / 2;
 
+
   // Ensure the capture area is within bounds
   if (startX < 0 || startY < 0 || startX + width > windowWidth || startY + height > windowHeight) {
 #ifdef _DEBUG
@@ -1873,20 +1874,20 @@ void Mono::SaveScreenShot(std::string name, int width, int height)
   }
 
   // Allocate memory for pixel data
-  std::vector<unsigned char> pixels(width * height * 3);
+  std::vector<unsigned char> pixels(width * height * 4);
 
   // Read pixels from the specified region
-  glReadPixels(startX, startY, width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels.data());
+  glReadPixels(startX, startY, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels.data());
 
   // Flip rows (OpenGL's origin is bo ttom-left, PNG expects top-left)
-  std::vector<unsigned char> flippedPixels(width * height * 3);
+  std::vector<unsigned char> flippedPixels(width * height * 4);
   for (int y = 0; y < height; ++y)
   {
-    memcpy(&flippedPixels[y * width * 3], &pixels[(height - 1 - y) * width * 3], width * 3);
+    memcpy(&flippedPixels[y * width * 4], &pixels[(height - 1 - y) * width * 4], width * 4);
   }
 
   // Save as PNG
-  if (stbi_write_png(("../Assets/GameImg/" + name + ".png").c_str(), width, height, 3, flippedPixels.data(), width * 3))
+  if (stbi_write_png(("../Assets/GameImg/" + name + ".png").c_str(), width, height, 4, flippedPixels.data(), width * 4))
   {
 #ifdef _DEBUG
     std::cout << "Screenshot saved to " << (name + ".png") << std::endl;

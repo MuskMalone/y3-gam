@@ -2375,7 +2375,7 @@
                                 "scriptName": "CameraCapture",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": "ToolsPaintingDay",
+                                        "data": "z",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "PictureName"
@@ -2579,6 +2579,20 @@
                                 ]
                             }
                         ]
+                    }
+                },
+                {
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 9000761672454317037
+                        },
+                        "isTransparent": false
                     }
                 }
             ]
@@ -15983,7 +15997,7 @@
                                     {
                                         "data": {
                                             "x": 0.0,
-                                            "y": 0.6000000238418579,
+                                            "y": 0.17000000178813934,
                                             "z": 0.0
                                         },
                                         "type": "System.Numerics.Vector3",
@@ -15994,7 +16008,7 @@
                                     {
                                         "data": {
                                             "x": 12.979999542236328,
-                                            "y": 13.800000190734863,
+                                            "y": 13.194999694824219,
                                             "z": 12.979999542236328
                                         },
                                         "type": "System.Numerics.Vector3",
@@ -16052,7 +16066,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 4392837205678514046
+                            "ID": 10368480357032392864
                         }
                     }
                 }
@@ -16138,7 +16152,7 @@
                 {
                     "Tag": {
                         "tag": "ToolsPaintingUI",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
@@ -16197,7 +16211,7 @@
                                     {
                                         "data": {
                                             "x": 0.0,
-                                            "y": 0.6000000238418579,
+                                            "y": 0.17000000178813934,
                                             "z": 0.0
                                         },
                                         "type": "System.Numerics.Vector3",
@@ -16208,7 +16222,7 @@
                                     {
                                         "data": {
                                             "x": 12.979999542236328,
-                                            "y": 13.800000190734863,
+                                            "y": 13.194999694824219,
                                             "z": 12.979999542236328
                                         },
                                         "type": "System.Numerics.Vector3",
@@ -16266,7 +16280,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 15242025849356918529
+                            "ID": 8283454073004925969
                         }
                     }
                 }
@@ -25940,6 +25954,28 @@
                                     },
                                     {
                                         "data": {
+                                            "x": 0.23000000417232513,
+                                            "y": 0.5,
+                                            "z": -0.009999999776482582
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "bigBorderPos"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 33.96099853515625,
+                                            "y": 19.5,
+                                            "z": -0.800000011920929
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "bigBorderScale"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 1049327,
                                             "scriptName": "Entity"
                                         },
@@ -26022,6 +26058,28 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "rotationThreshold"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 10.100000381469727,
+                                            "y": 0.15000000596046448,
+                                            "z": -0.009999999776482582
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "smallBorderPos"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 15.76099967956543,
+                                            "y": 9.0,
+                                            "z": -10.359999656677246
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "smallBorderScale"
                                         }
                                     },
                                     {
