@@ -257,7 +257,7 @@ public class PictureAlign : Entity
         }
         else if (picture == "MotherBehindGatePainting")
         {
-          Debug.Log("MotherBehindGatePainting Called in PictureAlign");
+          
         }
 
         // Greek god paintings: Dionysus, Artemis, Zeus, Poseidon
