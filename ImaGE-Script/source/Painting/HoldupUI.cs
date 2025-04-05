@@ -59,15 +59,13 @@ public class HoldupUI : Entity
     {
       // ensure that the width of the screenshot is always 700/1920 of the screen width
       // ensure that the height of the screenshot is always 700/1080 of the screen height
+      float YScaler = (((float)ImageHeight / 700.0f) / ((float)Input.screenHeight / 1080.0f));
+      float XScaler = (((float)ImageWidth / 700.0f) / ((float)Input.screenWidth / 1920.0f));
       Vector3 actualScale = bigPicScale;
-      actualScale.X = (float)ImageWidth / (float)OgScreenWidth * (float)Input.screenWidth;
-
-      float Scaler = (  (((float)ImageHeight / 700.0f) / ((float)Input.screenHeight / 1080.0f)) //*
-                      //  (((float)Input.screenHeight / (float)Input.screenWidth) / (1080.0f / 1920.0f))
-                        );
-      actualScale.Y = Scaler * bigPicScale.Y * ((float)Input.screenHeight / (float)OgScreenHeight);
+      actualScale.Y = YScaler * bigPicScale.Y * ((float)Input.screenHeight / (float)OgScreenHeight);
+      actualScale.X = XScaler * bigPicScale.X * ((float)Input.screenWidth / (float)OgScreenWidth);
       Vector3 actualPos = bigPicPos;
-      actualPos.Y = Scaler * bigPicPos.Y;
+      actualPos.Y = YScaler * bigPicPos.Y;
 
       GetComponent<Transform>().position = actualPos;
       GetComponent<Transform>().scale = actualScale;
@@ -109,14 +107,13 @@ public class HoldupUI : Entity
   
       if (isBigPaintingActive)
       {
-        float Scaler = (
-            (((float)ImageHeight / 700.0f) / ((float)Input.screenHeight / 1080.0f))  //*
-                               //(((float)Input.screenHeight / (float)Input.screenWidth) / (1080.0f / 1920.0f))
-                             );
-        Vector3 actualScale = bigPicScale;
-        actualScale.Y = Scaler * bigPicScale.Y * ((float)Input.screenHeight / (float)OgScreenHeight);
-        Vector3 actualPos = bigPicPos;
-        actualPos.Y = Scaler * bigPicPos.Y;
+      float YScaler = (((float)ImageHeight / 700.0f) / ((float)Input.screenHeight / 1080.0f));
+      float XScaler = (((float)ImageWidth / 700.0f) / ((float)Input.screenWidth / 1920.0f));
+      Vector3 actualScale = bigPicScale;
+      actualScale.Y = YScaler * bigPicScale.Y * ((float)Input.screenHeight / (float)OgScreenHeight);
+      actualScale.X = XScaler * bigPicScale.X * ((float)Input.screenWidth / (float)OgScreenWidth);
+      Vector3 actualPos = bigPicPos;
+      actualPos.Y = YScaler * bigPicPos.Y;
 
         GetComponent<Transform>().position = actualPos;
         GetComponent<Transform>().scale = actualScale;
@@ -161,14 +158,13 @@ public class HoldupUI : Entity
 
     if (isBigPaintingActive)
     {
-      float Scaler = (
-                             (((float)ImageHeight / 700.0f) / ((float)Input.screenHeight / 1080.0f)) //*
-                             //(((float)Input.screenHeight / (float)Input.screenWidth) / (1080.0f / 1920.0f))
-                           );
+      float YScaler = (((float)ImageHeight / 700.0f) / ((float)Input.screenHeight / 1080.0f));
+      float XScaler = (((float)ImageWidth / 700.0f) / ((float)Input.screenWidth / 1920.0f));
       Vector3 actualScale = bigPicScale;
-      actualScale.Y = Scaler * bigPicScale.Y * ((float)Input.screenHeight / (float)OgScreenHeight);
+      actualScale.Y = YScaler * bigPicScale.Y * ((float)Input.screenHeight / (float)OgScreenHeight);
+      actualScale.X = XScaler * bigPicScale.X * ((float)Input.screenWidth / (float)OgScreenWidth);
       Vector3 actualPos = bigPicPos;
-      actualPos.Y = Scaler * bigPicPos.Y;
+      actualPos.Y = YScaler * bigPicPos.Y;
 
       GetComponent<Transform>().position = actualPos;
         GetComponent<Transform>().scale = actualScale;
