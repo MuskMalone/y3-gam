@@ -221,6 +221,35 @@ namespace Systems {
     return xPos;
   }
 
+  float TextSystem::GetTextWidth(ECS::Entity entity, std::string const& textContent, float scale) {
+
+    auto& textComp{ ECS::Entity{entity}.GetComponent<Component::Text>() };
+    auto const& transComp{ ECS::Entity{entity}.GetComponent<Component::Transform>() };
+
+    if (!IGE_ASSETMGR.IsGUIDValid<IGE::Assets::FontAsset>(textComp.textAsset)) {
+        Debug::DebugLogger::GetInstance().LogWarning("[Text] Invalid Text Asset attached to Entity: "
+            + ECS::Entity{ entity }.GetTag());
+       return 0;
+    }
+
+    Systems::Font const& fontAsset{ IGE_ASSETMGR.GetAsset<IGE::Assets::FontAsset>(textComp.textAsset)->mFont };
+    if (!IsValid(fontAsset)) {
+        Debug::DebugLogger::GetInstance().LogWarning("[Text] Invalid Font attached to Entity: "
+            + ECS::Entity{ entity }.GetTag());
+        return 0;
+    }
+    float xPos{ 0.f };
+
+    std::shared_ptr<Systems::Font> font{ mFonts[fontAsset.mFilePathHash] };
+
+    for (char const& ch : textContent) {
+        Character currChar{ (font->mCharacterMap)[ch] };
+        xPos += (currChar.advance >> 6) * scale;
+    }
+
+    return xPos;
+  }
+
   bool TextSystem::IsValid(Font const& font) const {
     if (font.mCharacterMap.empty() || !font.mBitmap || !font.mFace.face) return false;
     return true;

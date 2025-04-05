@@ -70,6 +70,7 @@ namespace Systems {
 		*/
 
 		float GetTextWidth(uint32_t filePathHash, std::string const& textContent, float scale);
+		float GetTextWidth(ECS::Entity entity, std::string const& textContent, float scale);
 		bool IsValid(Font const& font) const;
 
 		// To be called once by entities with text component before rendering
