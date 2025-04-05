@@ -69,7 +69,7 @@ public class  PlayerMove : Entity
   // Update is called once per frame
   void Update()
   {
- 
+     Debug.Log(Input.screenWidth + ":" + Input.screenHeight);
     if (startTimer)
     {
       currTime += InternalCalls.GetDeltaTime();
