@@ -11,7 +11,7 @@ public class HoldupUI : Entity
   //Data on how to display the Image on the screen
   public bool isBigPaintingActive = false;
   public Vector3 bigPicPos = new Vector3(0, 0.17f, 0);
-  public Vector3 bigPicScale = new Vector3(12.980f, 12.950f, 12.980f);
+  public Vector3 bigPicScale = new Vector3(12.980f, 13.195f, 12.980f);
   public Vector3 smallPicPos = new Vector3(10,0, 0);
   public Vector3 smallPicScale = new Vector3(6, 6, 6);
   private int ImageWidth = 700;   // Width of the image
