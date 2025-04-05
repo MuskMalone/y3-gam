@@ -114,7 +114,7 @@ public class HoldupUI : Entity
                                (((float)Input.screenHeight / (float)Input.screenWidth) / (1080.0f / 1920.0f))
                              );
         Vector3 actualScale = bigPicScale;
-        actualScale.Y = Scaler * bigPicScale.Y;
+         actualScale.Y = Scaler * bigPicScale.Y * ((float)ImageHeight / (float)Input.screenHeight) / ((float)ImageHeight/(float)OgScreenHeight);
         Vector3 actualPos = bigPicPos;
         actualPos.Y = Scaler * bigPicPos.Y;
 
@@ -166,7 +166,7 @@ public class HoldupUI : Entity
                              (((float)Input.screenHeight / (float)Input.screenWidth) / (1080.0f / 1920.0f))
                            );
       Vector3 actualScale = bigPicScale;
-      actualScale.Y = Scaler * bigPicScale.Y;
+      actualScale.Y = Scaler * bigPicScale.Y * ((float)ImageHeight / (float)Input.screenHeight) / ((float)ImageHeight/(float)OgScreenHeight);
       Vector3 actualPos = bigPicPos;
       actualPos.Y = Scaler * bigPicPos.Y;
 
