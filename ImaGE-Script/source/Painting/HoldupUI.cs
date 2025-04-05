@@ -14,8 +14,10 @@ public class HoldupUI : Entity
   public Vector3 bigPicScale = new Vector3(12.980f, 13.25f, 12.980f);
   public Vector3 smallPicPos = new Vector3(10,0, 0);
   public Vector3 smallPicScale = new Vector3(6, 6, 6);
-  public int ImageWidth = 700;
-  public int ImageHeight = 700;
+  private int ImageWidth = 700;   // Width of the image
+  private int ImageHeight = 700;  // Height of the image
+  private int OgScreenWidth = 1920; //The width of the screen on which the image was taken.
+  private int OgScreenHeight = 1080; //The height of the screen on which the image was taken.
 
   // AudioManager audioManager;
   private Inventory inventoryScript;
@@ -55,12 +57,15 @@ public class HoldupUI : Entity
     LoadDataFromTextAsset();
     if (isBigPaintingActive)
     {
-      float Scaler = (
-                          (((float)ImageHeight / (float)Input.screenHeight) / (700.0f / 1080.0f)) *
-                          (((float)Input.screenHeight / (float)Input.screenWidth) / (1080.0f / 1920.0f))
-                        );
+      // ensure that the width of the screenshot is always 700/1920 of the screen width
+      // ensure that the height of the screenshot is always 700/1080 of the screen height
       Vector3 actualScale = bigPicScale;
-      actualScale.Y = Scaler * bigPicScale.Y;
+      actualScale.X = (float)ImageWidth / (float)OgScreenWidth * (float)Input.screenWidth;
+
+      float Scaler = (  (((float)ImageHeight / (float)Input.screenHeight) / (700.0f / 1080.0f)) *
+                        (((float)Input.screenHeight / (float)Input.screenWidth) / (1080.0f / 1920.0f))
+                        );
+      actualScale.Y = Scaler * bigPicScale.Y * ((float)ImageHeight / (float)Input.screenHeight) / ((float)ImageHeight/(float)OgScreenHeight);
       Vector3 actualPos = bigPicPos;
       actualPos.Y = Scaler * bigPicPos.Y;
 
@@ -177,6 +182,12 @@ public class HoldupUI : Entity
   }
 
   ///Functions to load Picture data
+  
+  //private float GetScaler()
+  //{
+  //   // we need to e
+  //}
+
 
   void LoadDataFromTextAsset()
   {
@@ -220,6 +231,14 @@ public class HoldupUI : Entity
         else if (line.StartsWith("Image Height:"))
         {
           ImageHeight = int.Parse(line.Replace("Image Height:", "").Trim());
+        }
+        else if (line.StartsWith("ScreenWidth:"))
+        {
+          OgScreenWidth = int.Parse(line.Replace("ScreenWidth:", "").Trim());
+        }
+        else if (line.StartsWith("ScreenHeight:"))
+        {
+          OgScreenHeight = int.Parse(line.Replace("ScreenHeight:", "").Trim());
         }
 
       }
