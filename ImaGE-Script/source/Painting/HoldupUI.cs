@@ -65,7 +65,7 @@ public class HoldupUI : Entity
       actualScale.Y = YScaler * bigPicScale.Y * ((float)Input.screenHeight / (float)OgScreenHeight);
       actualScale.X = XScaler * bigPicScale.X * ((float)Input.screenWidth / (float)OgScreenWidth);
       Vector3 actualPos = bigPicPos;
-      actualPos.Y = YScaler * bigPicPos.Y;
+      actualPos.Y = YScaler * bigPicPos.Y * ((float)Input.screenHeight / (float)OgScreenHeight);
 
       GetComponent<Transform>().position = actualPos;
       GetComponent<Transform>().scale = actualScale;
@@ -113,7 +113,7 @@ public class HoldupUI : Entity
       actualScale.Y = YScaler * bigPicScale.Y * ((float)Input.screenHeight / (float)OgScreenHeight);
       actualScale.X = XScaler * bigPicScale.X * ((float)Input.screenWidth / (float)OgScreenWidth);
       Vector3 actualPos = bigPicPos;
-      actualPos.Y = YScaler * bigPicPos.Y;
+      actualPos.Y = YScaler * bigPicPos.Y * ((float)Input.screenHeight / (float)OgScreenHeight);
 
         GetComponent<Transform>().position = actualPos;
         GetComponent<Transform>().scale = actualScale;
@@ -164,7 +164,7 @@ public class HoldupUI : Entity
       actualScale.Y = YScaler * bigPicScale.Y * ((float)Input.screenHeight / (float)OgScreenHeight);
       actualScale.X = XScaler * bigPicScale.X * ((float)Input.screenWidth / (float)OgScreenWidth);
       Vector3 actualPos = bigPicPos;
-      actualPos.Y = YScaler * bigPicPos.Y;
+      actualPos.Y = YScaler * bigPicPos.Y * ((float)Input.screenHeight / (float)OgScreenHeight);
 
       GetComponent<Transform>().position = actualPos;
         GetComponent<Transform>().scale = actualScale;

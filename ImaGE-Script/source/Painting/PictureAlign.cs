@@ -37,10 +37,10 @@ public class PictureAlign : Entity
   private Quaternion savedCameraRotation;
 
   //For setting the borderSize
-  private Vector3 smallBorderScale = new Vector3(15.761f, 9.000f, -10.360f);
-  private Vector3 bigBorderScale = new Vector3(33.961f, 20.880f, -0.800f);
-  private Vector3 smallBorderPos = new Vector3(10.100f, 0.150f, -0.010f);
-  private Vector3 bigBorderPos = new Vector3(0.230f, 0.850f, -0.010f);
+  public Vector3 smallBorderScale = new Vector3(15.761f, 9.000f, -10.360f);
+  public Vector3 bigBorderScale = new Vector3(33.961f, 20.880f, -0.800f);
+  public Vector3 smallBorderPos = new Vector3(10.100f, 0.150f, -0.010f);
+  public Vector3 bigBorderPos = new Vector3(0.230f, 0.850f, -0.010f);
 
   private float shaderElapsedTime = 0;
 
