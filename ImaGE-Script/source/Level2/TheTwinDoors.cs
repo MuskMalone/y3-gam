@@ -13,7 +13,11 @@ public class TheTwinDoors : Entity
   public Entity interactDoorUI;
   public string doorAnimName;
 
-  private enum State
+    
+    private bool hasPlayedLine0Sound = false;
+    private bool isDialogueActive = false;
+
+    private enum State
   {
     CLOSED,
     ANIMATION,
@@ -31,7 +35,24 @@ public class TheTwinDoors : Entity
 
   void Update()
   {
-    switch (currState)
+
+        if (isDialogueActive)
+        {
+            if (dialogueScript.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L2_4_VER2");
+                hasPlayedLine0Sound = true;
+                isDialogueActive = false;
+            }
+            
+        }
+
+        if (!dialogueScript.isInDialogueMode)
+        {
+            hasPlayedLine0Sound = false;
+            
+        }
+        switch (currState)
     {
       case State.CLOSED:
         {
@@ -41,6 +62,7 @@ public class TheTwinDoors : Entity
           {
             InternalCalls.PlaySound(mEntityID, "LockedDoor");
             dialogueScript.SetDialogue(lockedDoorDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking });
+                        isDialogueActive = true;
             interactDoorUI.SetActive(false);
           }
           else

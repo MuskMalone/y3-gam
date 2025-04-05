@@ -11,6 +11,10 @@
 #include "Asset/AssetMetadata.h"
 #include <mutex>
 
+#ifndef DISTRIBUTION
+//#define CHECK_UNUSED_ASSETS
+#endif
+
 #define IGE_ASSETMGR IGE::Assets::AssetManager::GetInstance()
 #define IGE_REF(type, guid) IGE::Assets::AssetManager::GetInstance().GetAsset<type>(guid)
 namespace IGE {
@@ -227,6 +231,14 @@ namespace IGE {
 
               std::lock_guard<std::mutex> lock(mAssetsMutex);
 
+#ifdef CHECK_UNUSED_ASSETS
+              {
+                std::string fp{ GUIDToPath(guid) };
+                assetsSoFar.emplace(fp);
+                assetsPerScene.back().second.emplace(std::move(fp));
+              }
+#endif
+
               if (mAssetRefs.find(key) != mAssetRefs.end()) {
                   return std::any_cast<Ref<T>>(mAssetRefs.at(key));
               }
@@ -258,7 +270,12 @@ namespace IGE {
 
               std::lock_guard<std::mutex> lock(mAssetsMutex);
 
-              std::string fp { GUIDToPath(guid) };
+              std::string const fp{ GUIDToPath(guid) };
+#ifdef CHECK_UNUSED_ASSETS
+              assetsSoFar.emplace(fp);
+              assetsPerScene.back().second.emplace(fp);
+#endif
+
               if (mAssetRefs.find(key) != mAssetRefs.end()) {
                   LoadRef<T>(std::any_cast<Ref<T>&>(mAssetRefs.at(key)));
                   return guid;
@@ -278,6 +295,11 @@ namespace IGE {
           // if you wanna do smth like LoadRef<Class>("SomeSpecialString"), do it with this function. 
           template <typename T>
           GUID LoadRef(std::string const& fp) {
+#ifdef CHECK_UNUSED_ASSETS
+            assetsSoFar.emplace(fp);
+            assetsPerScene.back().second.emplace(fp);
+#endif
+
               std::string filepath {fp};
               if (IsValidFilePath(fp) && !IsPathWithinDirectory(fp, gAssetsDirectory))
                   throw Debug::Exception<AssetManager>(Debug::EXCEPTION_LEVEL::LVL_CRITICAL, Msg("file is not within assets dir"));
@@ -434,6 +456,12 @@ namespace IGE {
 
           std::unordered_map<TypeKey, Details::UniversalInfo>  mRegisteredTypes;
           std::unordered_set<std::string> mRegisteredTypeNames;
+
+#ifdef CHECK_UNUSED_ASSETS
+          EVENT_CALLBACK_DECL(OnSceneLoad);
+          std::vector<std::pair<std::string, std::set<std::string>>> assetsPerScene{};
+          std::set<std::string> assetsSoFar{};
+#endif
 
           //template function instantiation
 

@@ -108,9 +108,8 @@ namespace Mono
     { "PauseMenu", ScriptFieldType::PAUSEMENU },
     { "SettingsButtons", ScriptFieldType::SETTINGSBUTTON },
     { "PauseMenuButtons", ScriptFieldType::PAUSEMENUBUTTON },
-     { "NewGameCD", ScriptFieldType::NEWCD }
-
-
+     { "NewGameCD", ScriptFieldType::NEWCD },
+    { "Level4Inventory", ScriptFieldType::LEVEL4_INVENTORY }
   };
 }
 
@@ -1956,6 +1955,29 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
   else
     Debug::DebugLogger::GetInstance().LogError("Unable to find entity: [Folder] Lights");
 
+
+  for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
+  {
+    if (child.GetComponent<Component::Tag>().tag != "LightHallway")
+    {
+      ECS::Entity parentEntity = ECS::EntityManager::GetInstance().GetParentEntity(child);
+      parentEntity.SetIsActive(true);
+      ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(parentEntity);
+      /*
+      std::string n = child.GetTag();
+      if (n == "Light")
+      {
+        child.SetIsActive(true);
+      }
+
+      if (n == "PseudoLampBloom") {
+        child.SetIsActive(true);
+      }
+    */
+    }
+  }
+
+
   ECS::Entity es = ECS::EntityManager::GetInstance().GetEntityFromTag("Garden Light");
   if (ECS::Entity(es))
   {
@@ -1963,32 +1985,12 @@ bool Mono::SetDaySkyBox(ECS::Entity::EntityID cameraEntity, float speed) {
   }
   else
     Debug::DebugLogger::GetInstance().LogError("Unable to find entity: Garden Light");
-   
-  for (ECS::Entity child : ECS::EntityManager::GetInstance().GetAllEntitiesWithComponents<Component::Light>())
-  {
-    ECS::Entity parentEntity = ECS::EntityManager::GetInstance().GetParentEntity(child);
-    parentEntity.SetIsActive(true);
-    ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(parentEntity);
-    /*
-    std::string n = child.GetTag();
-    if (n == "Light")
-    {
-      child.SetIsActive(true);
-    }
-
-    if (n == "PseudoLampBloom") {
-      child.SetIsActive(true);
-    }
-    */
-  }
-
-
 
   if (ECS::Entity(cameraEntity) && ECS::Entity{ cameraEntity }.HasComponent<Component::Skybox>()) {
-    ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend -= (ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend - 0.0f) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
+    ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend -= (ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend - 0.001f) * Performance::FrameRateController::GetInstance().GetDeltaTime() * speed;
     if (ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend <= 0.01f)
-      ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend = 0.f;
-    return(ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend <= 0.f);
+      ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend = 0.001f;
+    return(ECS::Entity{ cameraEntity }.GetComponent<Component::Skybox>().blend <= 0.001f);
   }
   else {
     Debug::DebugLogger::GetInstance().LogError("You are trying to change skybox using an entity that does not hav skybox!");

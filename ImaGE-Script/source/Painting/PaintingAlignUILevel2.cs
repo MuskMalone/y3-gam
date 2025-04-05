@@ -44,8 +44,13 @@ public class PaintingAlignUILevel2 : Entity
   // Update is called once per frame
   void Update()
   {
-    // Ensure UI does not show if no valid item is selected
-    if (level2inventoryScript.GetCurrentItem() == null || !level2inventoryScript.highlighted || !isPainting)
+        if (!dialogueScript.isInDialogueMode)
+        {
+            hasPlayedLine0Sound = false;
+            hasPlayedLine1Sound = false;
+        }
+        // Ensure UI does not show if no valid item is selected
+        if (level2inventoryScript.GetCurrentItem() == null || !level2inventoryScript.highlighted || !isPainting)
     {
       disableAlignUI();
       return;
