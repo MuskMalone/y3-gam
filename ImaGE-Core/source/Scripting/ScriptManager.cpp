@@ -108,9 +108,8 @@ namespace Mono
     { "PauseMenu", ScriptFieldType::PAUSEMENU },
     { "SettingsButtons", ScriptFieldType::SETTINGSBUTTON },
     { "PauseMenuButtons", ScriptFieldType::PAUSEMENUBUTTON },
-     { "NewGameCD", ScriptFieldType::NEWCD }
-
-
+     { "NewGameCD", ScriptFieldType::NEWCD },
+    { "Level4Inventory", ScriptFieldType::LEVEL4_INVENTORY }
   };
 }
 
@@ -286,6 +285,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetTextColor);
   ADD_INTERNAL_CALL(SetTextColor);
   ADD_INTERNAL_CALL(GetTextScale);
+  ADD_INTERNAL_CALL(GetTextBoxWidth);
   ADD_INTERNAL_CALL(SetTextScale);
   ADD_INTERNAL_CALL(SetBloomIntensity);
   ADD_INTERNAL_CALL(GetBloomIntensity);
@@ -1688,6 +1688,23 @@ float Mono::GetTextScale(ECS::Entity::EntityID textEntity) {
   }
 
   return ECS::Entity{ textEntity }.GetComponent<Component::Text>().scale;
+}
+
+float Mono::GetTextBoxWidth(ECS::Entity::EntityID textEntity) {
+    if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+        Debug::DebugLogger::GetInstance().LogError("You are trying to Get Text Scale of an entity that does not have the Text Component");
+        return 0;
+    }
+    auto& textComp{ ECS::Entity{textEntity}.GetComponent<Component::Text>() };
+    if (auto textSys = Systems::SystemManager::GetInstance().GetSystem<Systems::TextSystem>().lock()) {
+        // code here
+        return textSys->GetTextWidth(textEntity, textComp.textContent, textComp.scale);
+    }
+    else {
+        IGE_DBGLOGGER.LogCritical("Text system does not exist!");
+    }
+    return 0;
+    
 }
 
 void Mono::SetTextScale(ECS::Entity::EntityID textEntity, float textScale) {

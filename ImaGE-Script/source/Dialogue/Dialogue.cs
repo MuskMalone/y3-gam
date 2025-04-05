@@ -37,7 +37,7 @@ public class Dialogue : Entity
   private string[] lines;               // The lines from the caller
   private int charIndex = 0;            // Tracks the current character index
   private float nextCharTime = 0f;      // Tracks the time for the next character
-  private const float defaultFontSize = 0.006f;
+  private const float defaultFontSize = 0.004f;
   private bool specialSequence = true;
   private string textAudioName = "DefaultDialogueSound";
   private const string defaultFont = "..\\Assets\\Textures\\Sniglet-Regular.ttf";
@@ -76,16 +76,18 @@ public class Dialogue : Entity
     {
       InternalCalls.SetActive(mEntityID, true);
       DialogueBox.SetActive(true);
-      SetEmotion(emotions[lineIndex]);
+      //SetEmotion(emotions[lineIndex]);
       playerMove.FreezePlayer();
     }
 
     if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && 
       Time.gameTime >= nextCharTime && charIndex < lines[lineIndex].Length)
     {
+
       InternalCalls.AppendText(mEntityID, lines[lineIndex][charIndex].ToString());
       charIndex++;
       nextCharTime = Time.gameTime + textSpeed;
+      SkipTyping();
     }
 
     if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && charIndex >= lines[lineIndex].Length)
@@ -148,7 +150,7 @@ public class Dialogue : Entity
     isInDialogueMode = true;
     DialogueBox.SetActive(true);
     SetActive(true);
-    SetEmotion(emotions[lineIndex]);
+    //SetEmotion(emotions[lineIndex]);
     charIndex = 0;                      // Reset character index for typing effect
     nextCharTime = Time.gameTime;       // Start typing immediately
   }
@@ -184,7 +186,7 @@ public class Dialogue : Entity
     if (lineIndex < lines.Length - 1)
     {
       lineIndex++;
-      SetEmotion(emotions[lineIndex]);
+     // SetEmotion(emotions[lineIndex]);
       InternalCalls.SetText(mEntityID, string.Empty);
       charIndex = 0;                                      // Reset character index for new line
       nextCharTime = Time.gameTime;                       // Start typing new line immediately

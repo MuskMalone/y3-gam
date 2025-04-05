@@ -21,6 +21,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -55,6 +56,7 @@ public class TutorialDialogue : Entity
     public Entity HappyTara;
     public Entity DisturbedTara;
     public Entity SadTara;
+    public Entity TaraName;
     //public SpecialDialogue specialDialogue;
 
     // Private Variables
@@ -63,9 +65,9 @@ public class TutorialDialogue : Entity
     private string[] lines;               // The lines from the caller
     private int charIndex = 0;            // Tracks the current character index
     private float nextCharTime = 0f;      // Tracks the time for the next character
-    private const float defaultFontSize = 0.006f;
+    private const float defaultFontSize = 0.004f;
     private bool specialSequence = true;
-
+    private bool hasSkipped = false;
     public bool isLineComplete = false;
 
     private string textAudioName = "DefaultDialogueSound";
@@ -87,6 +89,7 @@ public class TutorialDialogue : Entity
 
         DeactivateAllEmotions();
         DialogueBox.SetActive(false);
+        TaraName.SetActive(false);
         SetActive(false);
     }
 
@@ -97,6 +100,7 @@ public class TutorialDialogue : Entity
             InternalCalls.StopSound(mEntityID, textAudioName);
             InternalCalls.SetActive(mEntityID, false);
             DialogueBox.SetActive(false);
+            TaraName.SetActive(false);
             DeactivateAllEmotions();
             return;
         }
@@ -105,7 +109,8 @@ public class TutorialDialogue : Entity
         {
             InternalCalls.SetActive(mEntityID, true);
             DialogueBox.SetActive(true);
-            SetEmotion(emotions[lineIndex]);
+            TaraName.SetActive(true);
+            //SetEmotion(emotions[lineIndex]);
             playerMove.FreezePlayer();
         }
 
@@ -115,7 +120,9 @@ public class TutorialDialogue : Entity
             InternalCalls.AppendText(mEntityID, lines[lineIndex][charIndex].ToString());
             charIndex++;
             nextCharTime = Time.gameTime + textSpeed;
-            isLineComplete = false;
+            //isLineComplete = false;
+            SkipTyping();
+            hasSkipped = true;
         }
 
         if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && charIndex >= lines[lineIndex].Length)
@@ -128,15 +135,41 @@ public class TutorialDialogue : Entity
         if (isInDialogueMode && IsActive() && DialogueBox.IsActive() &&
           Input.GetMouseButtonTriggered(0))
         {
-            if (charIndex >= lines[lineIndex].Length)
+            if(!hasSkipped)
             {
-                NextLine();
+                if (charIndex >= lines[lineIndex].Length)
+                {
+                    NextLine();
+                }
+                else
+                {
+                    SkipTyping();
+                }
             }
             else
-            {
-                SkipTyping();
-            }
+                hasSkipped = false;
+           
         }
+
+        //Debug.Log("Width:" + InternalCalls.GetTextBoxWidth(mEntityID) );
+        SetTaraNameXpos();
+    }
+
+    public void SetTaraNameXpos()
+    {
+        float CurrentTextWidth = InternalCalls.GetTextBoxWidth(mEntityID);
+        float TaraTextWidth = InternalCalls.GetTextBoxWidth(TaraName.mEntityID);
+        float TotalWidth = CurrentTextWidth + TaraTextWidth;
+        Vector3 CurrPosition = TaraName.GetComponent<Transform>().position;
+        CurrPosition.X = (0f - (TotalWidth / 2f)) + TaraTextWidth / 2f;
+        TaraName.GetComponent<Transform>().position = CurrPosition;
+        CurrPosition = GetComponent<Transform>().position;
+        CurrPosition.X = (0f + (TotalWidth / 2f)) - CurrentTextWidth / 2f;
+        GetComponent<Transform>().position = CurrPosition;
+        Vector3 currScale = DialogueBox.GetComponent<Transform>().scale;
+        currScale.X = TotalWidth + 2f;
+        DialogueBox.GetComponent<Transform>().scale = currScale;
+
     }
 
     // To be called by other scripts before starting the dialogue
@@ -176,8 +209,9 @@ public class TutorialDialogue : Entity
         InternalCalls.SetText(mEntityID, string.Empty);
         isInDialogueMode = true;
         DialogueBox.SetActive(true);
+        TaraName.SetActive(true);
         SetActive(true);
-        SetEmotion(emotions[lineIndex]);
+       // SetEmotion(emotions[lineIndex]);
         charIndex = 0;                      // Reset character index for typing effect
         nextCharTime = Time.gameTime;       // Start typing immediately
     }
@@ -188,6 +222,7 @@ public class TutorialDialogue : Entity
         InternalCalls.StopSound(mEntityID, textAudioName);
         playerMove.UnfreezePlayer();
         DialogueBox.SetActive(false);
+        TaraName.SetActive(false);
         SetActive(false);
         isInDialogueMode = false;
 
@@ -217,7 +252,7 @@ public class TutorialDialogue : Entity
         {
             Debug.Log("TriggeredLine");
             lineIndex++;
-            SetEmotion(emotions[lineIndex]);
+           // SetEmotion(emotions[lineIndex]);
             InternalCalls.SetText(mEntityID, string.Empty);
             charIndex = 0;                                      // Reset character index for new line
             nextCharTime = Time.gameTime;                       // Start typing new line immediately

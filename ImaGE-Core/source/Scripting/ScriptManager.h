@@ -451,6 +451,8 @@ namespace Mono
 
 		static float GetTextScale(ECS::Entity::EntityID textEntity);
 
+		static float GetTextBoxWidth(ECS::Entity::EntityID textEntity);
+
 		static void SetTextScale(ECS::Entity::EntityID textEntity, float textScale);
 
 		static MonoString* GetText(ECS::Entity::EntityID entity);
