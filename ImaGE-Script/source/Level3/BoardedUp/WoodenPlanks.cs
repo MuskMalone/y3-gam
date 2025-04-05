@@ -83,6 +83,7 @@ public class WoodenPlanks : Entity
           }
 
           SetActive(false);
+          InternalCalls.PlaySound(Door.mEntityID, "..\\Assets\\Audio\\PitDoorSwing_SFX.wav");
           Door.GetComponent<Animation>().Play(doorAnimName);
           currState = State.OPENING_DOOR;
 

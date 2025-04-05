@@ -30,6 +30,7 @@ public class PitDoor : Entity
         InternalCalls.DestroyEntity(gapCollider.mEntityID);
         playerInteracted = true;
         unlockDoorUI?.SetActive(false);
+        InternalCalls.PlaySound(mEntityID, "..\\Assets\\Audio\\PitDoorSwing_SFX.wav");
       }
       else
       {
