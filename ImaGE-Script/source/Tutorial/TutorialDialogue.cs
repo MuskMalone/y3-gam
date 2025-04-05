@@ -121,7 +121,7 @@ public class TutorialDialogue : Entity
         if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && charIndex >= lines[lineIndex].Length)
         {
             // Line has ended, stop sound
-            InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+            InternalCalls.StopSound(mEntityID, textAudioName);
             isLineComplete = true;
         }
 

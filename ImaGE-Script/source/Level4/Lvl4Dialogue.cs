@@ -68,6 +68,8 @@ public class Lvl4Dialogue : Entity
 
     public bool isLineComplete = false;
 
+    private string textAudioName = "DefaultDialogueSound";
+    private bool audioUpdated = false;
     public Lvl4Dialogue() : base()
     {
 
@@ -89,7 +91,7 @@ public class Lvl4Dialogue : Entity
     {
     if (InternalCalls.GetIsPaused())
     {
-      InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+      InternalCalls.StopSound(mEntityID, textAudioName);
       InternalCalls.SetActive(mEntityID, false);
       DialogueBox.SetActive(false);
       DeactivateAllEmotions();
@@ -116,7 +118,7 @@ public class Lvl4Dialogue : Entity
         if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && charIndex >= lines[lineIndex].Length)
         {
             // Line has ended, stop sound
-            InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+            InternalCalls.StopSound(mEntityID, textAudioName);
             isLineComplete = true;
         }
 
@@ -135,7 +137,7 @@ public class Lvl4Dialogue : Entity
     }
 
     // To be called by other scripts before starting the dialogue
-    public void SetDialogue(string[] newLines, Emotion[] newEmotions, float textScale = defaultFontSize)
+    public void SetDialogue(string[] newLines, Emotion[] newEmotions, float textScale = defaultFontSize, string textAudio = "DefaultDialogueSound")
     {
         InternalCalls.SetTextScale(mEntityID, textScale);
         if (newLines.Length != newEmotions.Length)
@@ -152,6 +154,7 @@ public class Lvl4Dialogue : Entity
 
     private void StartDialogue()
     {
+        audioUpdated = false;
         if (playerMove == null)
         {
             Debug.LogError("PlayerMove script not attached to Dialogue script.");
@@ -164,7 +167,7 @@ public class Lvl4Dialogue : Entity
             return;
         }
 
-        InternalCalls.PlaySound(mEntityID, "DefaultDialogueSound");
+        InternalCalls.PlaySound(mEntityID, textAudioName);
         playerMove.FreezePlayer();
         lineIndex = 0;
         InternalCalls.SetText(mEntityID, string.Empty);
@@ -179,7 +182,7 @@ public class Lvl4Dialogue : Entity
     private void EndDialogue()
     {
         isLineComplete = true;
-        InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+        InternalCalls.StopSound(mEntityID, textAudioName);
         playerMove.UnfreezePlayer();
         DialogueBox.SetActive(false);
         SetActive(false);
@@ -195,7 +198,7 @@ public class Lvl4Dialogue : Entity
 
     private void SkipTyping()
     {
-        InternalCalls.StopSound(mEntityID, "DefaultDialogueSound");
+        InternalCalls.StopSound(mEntityID, textAudioName);
         InternalCalls.SetText(mEntityID, lines[lineIndex]);
         charIndex = lines[lineIndex].Length;
         isLineComplete = true;
@@ -204,7 +207,7 @@ public class Lvl4Dialogue : Entity
     private void NextLine()
     {
         DeactivateAllEmotions();
-        InternalCalls.PlaySound(mEntityID, "DefaultDialogueSound");
+        InternalCalls.PlaySound(mEntityID, textAudioName);
 
         if (lineIndex < lines.Length - 1)
         {
@@ -261,4 +264,6 @@ public class Lvl4Dialogue : Entity
         SadTara.SetActive(false);
         NeutralTara.SetActive(false);
     }
+
+    public int CurrentLineIndex { get { return lineIndex; } }
 }
