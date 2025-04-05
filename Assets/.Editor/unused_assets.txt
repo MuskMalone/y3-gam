@@ -1,41 +1,5 @@
   LIST OF UNUSED ASSETS FOR YOUR SESSION  
 ==========================================
-..\Assets\Animations\L1\DoorClose.anim
-..\Assets\Animations\L1\FragmentFloat.anim
-..\Assets\Animations\L1\FragmentFlyIn.anim
-..\Assets\Animations\L1\FragmentFlyUp.anim
-..\Assets\Animations\L1\GardenDoorKey.anim
-..\Assets\Animations\L1\GardenDoorOpen.anim
-..\Assets\Animations\L1\PaintingDrop.anim
-..\Assets\Animations\L1\SafeOpen.anim
-..\Assets\Animations\L2\ControlPanelOpen.anim
-..\Assets\Animations\L2\FragmentFloatLevel2.anim
-..\Assets\Animations\L2\FragmentFlyInLevel2.anim
-..\Assets\Animations\L2\FragmentFlyUpLevel2.anim
-..\Assets\Animations\L2\LeftHexDoor.anim
-..\Assets\Animations\L2\LightSwitch_Off.anim
-..\Assets\Animations\L2\LightSwitch_On.anim
-..\Assets\Animations\L2\LookAround.anim
-..\Assets\Animations\L2\RightHexDoor.anim
-..\Assets\Animations\L3\BlockedDoorOpen.anim
-..\Assets\Animations\L3\FragmentFloatLevel3.anim
-..\Assets\Animations\L3\FragmentFlyInLevel3.anim
-..\Assets\Animations\L3\FragmentFlyUpLevel3.anim
-..\Assets\Animations\L3\HammerPlank1.anim
-..\Assets\Animations\L3\HammerPlank2.anim
-..\Assets\Animations\L3\HammerPlank3.anim
-..\Assets\Animations\L3\IHaveNoArmsButISureCanCry.anim
-..\Assets\Animations\L3\IHaveNoArmsButISureCanTiltMyHead.anim
-..\Assets\Animations\L3\NailDrop1.anim
-..\Assets\Animations\L3\NailDrop2.anim
-..\Assets\Animations\L3\NailDrop3.anim
-..\Assets\Animations\L3\NailDrop4.anim
-..\Assets\Animations\L3\NailDrop5.anim
-..\Assets\Animations\L3\NotSoFast.anim
-..\Assets\Animations\L3\PitDoorOpen.anim
-..\Assets\Animations\L3\PlayerArise.anim
-..\Assets\Animations\L4\OpenGateLeft.anim
-..\Assets\Animations\MainMenu\MovingBackground.anim
 ..\Assets\Animations\SilhouetteTest.anim
 ..\Assets\Audio\ClothEquip_SFX.wav
 ..\Assets\Audio\Clothout_SFX.wav
@@ -53,11 +17,8 @@
 ..\Assets\Audio\L1_6_VER1.wav
 ..\Assets\Audio\L1_7_VER1.wav
 ..\Assets\Audio\L1_8_VER1.wav
-..\Assets\Audio\L2_4_VER2.wav
 ..\Assets\Audio\L2_5.5.wav
 ..\Assets\Audio\L2_5.wav
-..\Assets\Audio\L2_6.wav
-..\Assets\Audio\L2_7.wav
 ..\Assets\Audio\LightBeamtoPainting_SFX.wav
 ..\Assets\Audio\LightswitchoffSFX.wav
 ..\Assets\Audio\LockDoor2_SFX.wav
@@ -203,7 +164,6 @@
 ..\Assets\Models\Statues\statue _artemis.fbx
 ..\Assets\Models\Statues\statue _artemis_new.fbx
 ..\Assets\Models\Statues\statue _dionysus.fbx
-..\Assets\Models\acceptance_statue.fbx
 ..\Assets\Models\box.fbx
 ..\Assets\Models\bust3.fbx
 ..\Assets\Models\bustsmile_no_nose_basement.fbx
@@ -212,10 +172,10 @@
 ..\Assets\Models\hexRoom4.fbx
 ..\Assets\Models\hexRoom5.fbx
 ..\Assets\Models\lever2.fbx
-..\Assets\Models\mother.fbx
 ..\Assets\Models\museum_bench.fbx
 ..\Assets\Models\museum_pamphlet.fbx
 ..\Assets\Models\quad.fbx
+..\Assets\Models\stairs.fbx
 ..\Assets\Models\statue_zeus.fbx
 ..\Assets\Models\vines.fbx
 ..\Assets\Models\windowwallTALL.fbx
@@ -244,7 +204,6 @@
 ..\Assets\Scenes\Control Room Prototype.scn
 ..\Assets\Scenes\Image.scn
 ..\Assets\Scenes\MaterialTest.scn
-..\Assets\Scenes\MonstersAteMyMom.scn
 ..\Assets\Scenes\ToBeContinued.scn
 ..\Assets\Scenes\audiotest.scn
 ..\Assets\Scenes\contacttest.scn
@@ -257,18 +216,6 @@
 ..\Assets\Scripts\ImaGE-Script.dll
 ..\Assets\Scripts\ImaGE-Script.pdb
 ..\Assets\Scripts\ThisFolderExist.txt
-..\Assets\Shaders\Particle\Common.glsl
-..\Assets\Shaders\Particle\Emitter.glsl
-..\Assets\Shaders\Particle\EmitterStep.glsl
-..\Assets\Shaders\Particle\Particle.frag.glsl
-..\Assets\Shaders\Particle\Particle.geom.glsl
-..\Assets\Shaders\Particle\Particle.vert.glsl
-..\Assets\Shaders\Particle\ParticleStep.glsl
-..\Assets\Shaders\Particle\ParticleUniforms.glsl
-..\Assets\Shaders\Skybox\Panoramic.frag.glsl
-..\Assets\Shaders\Skybox\Panoramic.vert.glsl
-..\Assets\Shaders\Skybox\Procedural.frag.glsl
-..\Assets\Shaders\Skybox\Procedural.vert.glsl
 ..\Assets\Textures\2PlaceholderNumber7.png
 ..\Assets\Textures\3Dframe_PicturePerfectSettingsMenu.png
 ..\Assets\Textures\ArtermisPainting.png
@@ -309,7 +256,6 @@
 ..\Assets\Textures\Metal Texture.png
 ..\Assets\Textures\MopTexture.png
 ..\Assets\Textures\Mother_Frontshot.png
-..\Assets\Textures\Neutral_Mum.png
 ..\Assets\Textures\NoteHintLvl2.png
 ..\Assets\Textures\OdysseusPlaceholder.png
 ..\Assets\Textures\OdysseySeqPlaceholder.png
@@ -346,7 +292,6 @@
 ..\Assets\Textures\Texture_TaraSignatureWhite.png
 ..\Assets\Textures\Texture_TerracottaVase.png
 ..\Assets\Textures\Texture_Wood3.png
-..\Assets\Textures\ToolsPaintingNight.png
 ..\Assets\Textures\TutorialPainting.png
 ..\Assets\Textures\TutorialPaintingFrame.png
 ..\Assets\Textures\TutorialPaintingM4.png
@@ -398,6 +343,7 @@ Quad
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>> END Bootup <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>> START mainmenu <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+..\Assets\Animations\MainMenu\MovingBackground.anim
 ..\Assets\Audio\BGM_MainMenuLoop.wav
 ..\Assets\Audio\CloseConsole_SFX.wav
 ..\Assets\Audio\OpenConsole_SFX.wav
@@ -441,7 +387,6 @@ Plane
 ..\Assets\Textures\UI_Settings.png
 ..\Assets\Textures\Ui_PaintbrushSliderIcon.png
 ..\Assets\Textures\black.png
-..\Assets\Textures\sun_icon.png
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>> END Settings <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>> START TutorialLevel <<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -552,6 +497,14 @@ Plane
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>> END TutorialLevel <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>> START M3 <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+..\Assets\Animations\L1\DoorClose.anim
+..\Assets\Animations\L1\FragmentFloat.anim
+..\Assets\Animations\L1\FragmentFlyIn.anim
+..\Assets\Animations\L1\FragmentFlyUp.anim
+..\Assets\Animations\L1\GardenDoorKey.anim
+..\Assets\Animations\L1\GardenDoorOpen.anim
+..\Assets\Animations\L1\PaintingDrop.anim
+..\Assets\Animations\L1\SafeOpen.anim
 ..\Assets\Audio\Bootuploadingtext_SFX.wav
 ..\Assets\Audio\DialogueTyping.wav
 ..\Assets\Audio\DoorNotBudging_SFX.wav
@@ -734,12 +687,12 @@ Plane
 ..\Assets\Models\Puzzle_GardenDoor_NoHandle.fbx
 ..\Assets\Models\Puzzle_door_keyhole.fbx
 ..\Assets\Models\Reuploaded_Cereus.obj
-..\Assets\Models\Statues\statue_acceptance_new.fbx
-..\Assets\Models\Statues\statue_bargain_new.fbx
-..\Assets\Models\Statues\statue_denial_new.fbx
 ..\Assets\Models\Vase2.fbx
+..\Assets\Models\acceptance_statue_new.fbx
 ..\Assets\Models\anger_statue.fbx
+..\Assets\Models\bargain_statue.fbx
 ..\Assets\Models\bust2.fbx
+..\Assets\Models\denial_statue_new.fbx
 ..\Assets\Models\depression_statue.fbx
 ..\Assets\Models\displayCaseSword3.fbx
 ..\Assets\Models\fountain.fbx
@@ -824,6 +777,8 @@ Plane
 ..\Assets\Textures\Puzzle_CrowbarUV.png
 ..\Assets\Textures\Puzzle_TransitionSilhouette.png
 ..\Assets\Textures\Reuploaded_Cereus_BaseColor.1001.png
+..\Assets\Textures\Sniglet-Regular.ttf
+..\Assets\Textures\Stagedive-d58X.ttf
 ..\Assets\Textures\StaticRetroOverlay_UI.png
 ..\Assets\Textures\Texture_ArtMuseumCeilingOption2.png
 ..\Assets\Textures\Texture_ConcreteStatues.png
@@ -841,6 +796,7 @@ Plane
 ..\Assets\Textures\Texture_Wood.png
 ..\Assets\Textures\Texture_Wood2.png
 ..\Assets\Textures\ToolsPaintingDay.png
+..\Assets\Textures\ToolsPaintingNight.png
 ..\Assets\Textures\UI\Dialogue\UI_DialogueBoxWithoutTara.png
 ..\Assets\Textures\UI\Dialogue\UI_DialogueTaraDisturbed.png
 ..\Assets\Textures\UI\Dialogue\UI_DialogueTaraHappy.png
@@ -921,6 +877,15 @@ Sphere
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>> END M3 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>> START Level2 <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+..\Assets\Animations\L2\ControlPanelOpen.anim
+..\Assets\Animations\L2\FragmentFloatLevel2.anim
+..\Assets\Animations\L2\FragmentFlyInLevel2.anim
+..\Assets\Animations\L2\FragmentFlyUpLevel2.anim
+..\Assets\Animations\L2\LeftHexDoor.anim
+..\Assets\Animations\L2\LightSwitch_Off.anim
+..\Assets\Animations\L2\LightSwitch_On.anim
+..\Assets\Animations\L2\LookAround.anim
+..\Assets\Animations\L2\RightHexDoor.anim
 ..\Assets\Audio\ControlPanelOpen2_SFX.wav
 ..\Assets\Audio\DialogueTyping.wav
 ..\Assets\Audio\DoorNotBudging_SFX.wav
@@ -979,6 +944,9 @@ Sphere
 ..\Assets\Audio\L2_1_VER1.wav
 ..\Assets\Audio\L2_2.wav
 ..\Assets\Audio\L2_3.wav
+..\Assets\Audio\L2_4_VER2.wav
+..\Assets\Audio\L2_6.wav
+..\Assets\Audio\L2_7.wav
 ..\Assets\Audio\LeverDown_SFX.wav
 ..\Assets\Audio\LeverUp_SFX.wav
 ..\Assets\Audio\LockedDoor_SFX.wav
@@ -1324,7 +1292,6 @@ Sphere
 ..\Assets\Textures\spainchurchhallway.png
 ..\Assets\Textures\spaincross.png
 ..\Assets\Textures\spainprayer.png
-..\Assets\Textures\spotlight_icon.png
 ..\Assets\Textures\theOtherRoom.png
 ..\Assets\Textures\wenpaintin1.jpg
 ..\Assets\Textures\wenpaintin3.jpg
@@ -1336,6 +1303,23 @@ Sphere
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>> END Level2 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>> START Level3 <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+..\Assets\Animations\L3\BlockedDoorOpen.anim
+..\Assets\Animations\L3\FragmentFloatLevel3.anim
+..\Assets\Animations\L3\FragmentFlyInLevel3.anim
+..\Assets\Animations\L3\FragmentFlyUpLevel3.anim
+..\Assets\Animations\L3\HammerPlank1.anim
+..\Assets\Animations\L3\HammerPlank2.anim
+..\Assets\Animations\L3\HammerPlank3.anim
+..\Assets\Animations\L3\IHaveNoArmsButISureCanCry.anim
+..\Assets\Animations\L3\IHaveNoArmsButISureCanTiltMyHead.anim
+..\Assets\Animations\L3\NailDrop1.anim
+..\Assets\Animations\L3\NailDrop2.anim
+..\Assets\Animations\L3\NailDrop3.anim
+..\Assets\Animations\L3\NailDrop4.anim
+..\Assets\Animations\L3\NailDrop5.anim
+..\Assets\Animations\L3\NotSoFast.anim
+..\Assets\Animations\L3\PitDoorOpen.anim
+..\Assets\Animations\L3\PlayerArise.anim
 ..\Assets\Audio\BasementAmbience_SFX.wav
 ..\Assets\Audio\Dialogue_SFX.wav
 ..\Assets\Audio\EyeballMove2_SFX.wav
@@ -1587,6 +1571,8 @@ Sphere
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>> END Level3 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 >>>>>>>>>>>>>>>>>>>>>>>>>>>> START Level4 <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+..\Assets\Animations\L1\FragmentFloat.anim
+..\Assets\Animations\L4\OpenGateLeft.anim
 ..\Assets\Audio\DialogueTyping.wav
 ..\Assets\Audio\DoorNotBudging_SFX.wav
 ..\Assets\Audio\DoorSwingingOpenSFX1.wav
@@ -1869,10 +1855,55 @@ Plane
 Sphere
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>> END Level4 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+>>>>>>>>>>>>>>>>>>>>>>>>>>>> START MonstersAteMyMom <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+..\Assets\Materials\Red.mat
+..\Assets\Materials\White.mat
+..\Assets\Models\mother.fbx
+..\Assets\Prefabs\Static Overlay UI Filter.pfb
+..\Assets\Textures\Neutral_Mum.png
+..\Assets\Textures\StaticRetroOverlay_UI.png
+..\Assets\Textures\white.dds
+Cube
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END MonstersAteMyMom <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 >>>>>>>>>>>>>>>>>>>>>>>>>>>> START Credits <<<<<<<<<<<<<<<<<<<<<<<<<<<<
 ..\Assets\Fonts\PressStart2P-Regular.ttf
 ..\Assets\Textures\DigiPen_Singapore_WEB_WHITE.png
 ..\Assets\Textures\MainMenu\MainMenu_MainMenuBackground.png
-..\Assets\Textures\sun_icon.png
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>> END Credits <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>> START mainmenu <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+..\Assets\Animations\MainMenu\MovingBackground.anim
+..\Assets\Audio\BGM_MainMenuLoop.wav
+..\Assets\Audio\CloseConsole_SFX.wav
+..\Assets\Audio\OpenConsole_SFX.wav
+..\Assets\Audio\PickupCD_SFX.wav
+..\Assets\Audio\PlaceCD_SFX.wav
+..\Assets\Audio\SpinningDiscPS1_SFX.wav
+..\Assets\Audio\WrongInput_SFX.wav
+..\Assets\Materials\ContinueCD3.mat
+..\Assets\Materials\CreditsCD.mat
+..\Assets\Materials\MainMenuBG.mat
+..\Assets\Materials\NewGameCDNormal.mat
+..\Assets\Materials\PicturePerfectLogoColour.mat
+..\Assets\Materials\Ps1Base2.mat
+..\Assets\Materials\Ps1Lid.mat
+..\Assets\Materials\SettingsCD2.mat
+..\Assets\Models\MainMenu_CD (2).fbx
+..\Assets\Models\MainMenu_PS1_Open.fbx
+..\Assets\Models\PicturePerfect_Logo (2).fbx
+..\Assets\Textures\MainMenu\MainMenu_ContinueCD.png
+..\Assets\Textures\MainMenu\MainMenu_CreditsCD.png
+..\Assets\Textures\MainMenu\MainMenu_MainMenuBackground.png
+..\Assets\Textures\MainMenu\MainMenu_NewGameNormal.png
+..\Assets\Textures\MainMenu\MainMenu_PS1basepixel (1).png
+..\Assets\Textures\MainMenu\MainMenu_PS1lidPixel.png
+..\Assets\Textures\MainMenu\MainMenu_SettingsCD.png
+..\Assets\Textures\spotlight_icon.png
+..\Assets\Textures\standardSurface2_BC.1001.png
+..\Assets\Textures\sun_icon.png
+..\Assets\Textures\white.dds
+Cube
+Plane
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>> END mainmenu <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
