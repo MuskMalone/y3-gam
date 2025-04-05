@@ -18,8 +18,16 @@ public class PaintingAlignUILevel2 : Entity
   private PullLever leverTwoScript;
   private TutorialDialogue dialogueScript;
 
-  // Start is called before the first frame update
-  void Start()
+
+    private bool isSevenPaintingDialogueActive = false;
+    private bool isLeverDialogueActive = false;
+    private bool hasPlayedLine0Sound = false;
+    private bool hasPlayedLine1Sound = false;
+
+    
+
+    // Start is called before the first frame update
+    void Start()
   {
     holdupUIScript = FindObjectOfType<HoldupUI>();
     level2inventoryScript = FindObjectOfType<Level2Inventory>();
@@ -43,7 +51,29 @@ public class PaintingAlignUILevel2 : Entity
       return;
     }
 
-    if (holdupUIScript.isBigPaintingActive)
+        //if (isSevenPaintingDialogueActive)
+        //{
+        //    if (dialogueScript.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+        //    {
+        //        InternalCalls.PlaySound(mEntityID, "L2_6");
+        //        hasPlayedLine0Sound = true;
+        //        isSevenPaintingDialogueActive = false;
+        //    }
+            
+        //}
+
+        //if (isLeverDialogueActive)
+        //{
+        //    if (dialogueScript.CurrentLineIndex == 0 && !hasPlayedLine1Sound)
+        //    {
+        //        InternalCalls.PlaySound(mEntityID, "L2_7");
+        //        hasPlayedLine1Sound = true;
+        //        isLeverDialogueActive = false;
+        //    }
+
+        //}
+
+        if (holdupUIScript.isBigPaintingActive)
     {
       if (pictureAlignScript.IsAligned())
       {
@@ -58,6 +88,8 @@ public class PaintingAlignUILevel2 : Entity
           else if (Input.GetMouseButtonTriggered(0) && !dialogueScript.isInDialogueMode)
           {
             dialogueScript.SetDialogue(lever2Dialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking });
+            //isLeverDialogueActive = true;
+
           }
         }
         else if (currPainting.StartsWith("HexPaintingIndestructible"))
@@ -70,6 +102,7 @@ public class PaintingAlignUILevel2 : Entity
           else if(Input.GetMouseButtonTriggered(0) && !dialogueScript.isInDialogueMode)
           {
             dialogueScript.SetDialogue(allPaintingsDialogue, new TutorialDialogue.Emotion[] { TutorialDialogue.Emotion.Thinking });
+            //isSevenPaintingDialogueActive = true;
           }
         }
 

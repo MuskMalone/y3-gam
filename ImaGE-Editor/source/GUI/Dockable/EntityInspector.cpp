@@ -1271,18 +1271,18 @@ namespace GUI {
       ImGui::InputText("##TextureAsset", &textureText);
       ImGui::EndDisabled();
 
-      //if (ImGui::BeginDragDropTarget()) {
-      //    ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-      //    if (drop) {
-      //        AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-      //        if (assetPayload.mAssetType == AssetPayload::SPRITE) {
-      //            image.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
-      //            textureText = assetPayload.GetFileName();  // Display the file name in the UI
-      //            modified = true;
-      //        }
-      //    }
-      //    ImGui::EndDragDropTarget();
-      //}
+      if (ImGui::BeginDragDropTarget()) {
+          ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+          if (drop) {
+              AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+              if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+                  image.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+                  textureText = assetPayload.GetFileName();  // Display the file name in the UI
+                  modified = true;
+              }
+          }
+          ImGui::EndDragDropTarget();
+      }
 
       ImGui::EndTable();
     }
@@ -2433,18 +2433,18 @@ namespace GUI {
           modified = true;
       }
 
-      //if (ImGui::BeginDragDropTarget()) {
-      //  ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
-      //  if (drop) {
-      //    AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
-      //    if (assetPayload.mAssetType == AssetPayload::SPRITE) {
-      //      sprite.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
-      //      textureText = assetPayload.GetFileName();  // Display the file name in the UI
-      //      modified = true;
-      //    }
-      //  }
-      //  ImGui::EndDragDropTarget();
-      //}
+      if (ImGui::BeginDragDropTarget()) {
+        ImGuiPayload const* drop = ImGui::AcceptDragDropPayload(AssetPayload::sAssetDragDropPayload);
+        if (drop) {
+          AssetPayload assetPayload{ reinterpret_cast<const char*>(drop->Data) };
+          if (assetPayload.mAssetType == AssetPayload::SPRITE) {
+            sprite.textureAsset = IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(assetPayload.GetFilePath());
+            textureText = assetPayload.GetFileName();  // Display the file name in the UI
+            modified = true;
+          }
+        }
+        ImGui::EndDragDropTarget();
+      }
 
       ImGui::EndTable();
     }

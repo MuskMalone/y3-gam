@@ -22,6 +22,7 @@ public class ControlPanel2 : Entity
   public Entity hermesStatue;
 
     public Entity WASDtoRotate;
+    public Entity ExitToEscape;
 
   private Entity[][] hiddenTexts;
   public Entity playerCamera;
@@ -91,6 +92,7 @@ public class ControlPanel2 : Entity
     InitHiddenTexts();
 
     WASDtoRotate.SetActive(false);
+        ExitToEscape.SetActive(false);
     odysseusStatue.SetActive(true);
     SetDefaultHiddenText(true);
 
@@ -139,6 +141,7 @@ public class ControlPanel2 : Entity
           SetControlPanelCameraAsMain();
           playerMove.FreezePlayer();
                     WASDtoRotate.SetActive(true);
+                    ExitToEscape.SetActive(true);
                     if (!areLightsOn)
           {
             SetHiddenText(currStatue, true);
@@ -163,6 +166,7 @@ public class ControlPanel2 : Entity
           playerMove.UnfreezePlayer();
           SetPlayerCameraAsMain();
                     WASDtoRotate.SetActive(false);
+                    ExitToEscape.SetActive(false);
                     currState = State.OPEN;
           
         }
@@ -196,6 +200,7 @@ public class ControlPanel2 : Entity
           SetPlayerCameraAsMain();
           InternalCalls.StopSound(UVLight.mEntityID, "..\\Assets\\Audio\\UV_Humming_SFX.wav");
                     WASDtoRotate.SetActive(false);
+                    ExitToEscape.SetActive(false);
                     currState = State.OPEN;
         }
         break;
