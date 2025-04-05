@@ -53,6 +53,7 @@ public class  PlayerMove : Entity
 
   public float isGroundedRayHeight = 3f;
   public float minIsGroundedDistance = 4.35f;
+  bool tochange = false;
 
   public PlayerMove() : base()
   {
@@ -69,7 +70,22 @@ public class  PlayerMove : Entity
   // Update is called once per frame
   void Update()
   {
-     Debug.Log(Input.screenWidth + ":" + Input.screenHeight);
+    if(Input.GetKeyDown(KeyCode.N))
+    {
+      tochange = true;
+    }
+
+    if (tochange)
+    {
+      Global.isNighttime = true;
+      InternalCalls.SetDaySkyBox(cam.mEntityID, 1.0f);
+    }
+    if(Input.GetKeyDown(KeyCode.M))
+    {
+      canLook = false;
+      canMove = false;
+    }
+    // Debug.Log(Input.screenWidth + ":" + Input.screenHeight);
     if (startTimer)
     {
       currTime += InternalCalls.GetDeltaTime();

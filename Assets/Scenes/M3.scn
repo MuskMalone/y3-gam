@@ -2375,7 +2375,7 @@
                                 "scriptName": "CameraCapture",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": "z",
+                                        "data": "NightPainting",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "PictureName"
@@ -10244,7 +10244,7 @@
                 {
                     "Tag": {
                         "tag": "Center Dot",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -16066,7 +16066,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 10368480357032392864
+                            "ID": 4392837205678514046
                         }
                     }
                 }
@@ -16280,7 +16280,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 8283454073004925969
+                            "ID": 8929247322339184217
                         }
                     }
                 }
@@ -39303,7 +39303,50 @@
                     "ID": 8786659095930452505
                 },
                 "subDataId": 2,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": -0.023430943489074707,
+                                "y": 0.0,
+                                "z": 0.0033288002014160156
+                            },
+                            "scale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "rotation": {
+                                "x": -0.7551866173744202,
+                                "y": 4.888204330200097e-7,
+                                "z": 0.6555098295211792,
+                                "w": -4.3244028802291723e-7
+                            },
+                            "eulerAngles": {
+                                "x": 179.99948120117188,
+                                "y": 81.91663360595703,
+                                "z": -0.0005318449693731964
+                            },
+                            "worldPos": {
+                                "x": -17.75999641418457,
+                                "y": 1.1679999828338623,
+                                "z": -14.339040756225586
+                            },
+                            "worldScale": {
+                                "x": 2.2799999713897705,
+                                "y": 2.2799999713897705,
+                                "z": 2.2799999713897705
+                            },
+                            "worldRot": {
+                                "x": -0.14061379432678223,
+                                "y": 1.7136383689830836e-7,
+                                "z": 0.9900645017623901,
+                                "w": -4.371099748823326e-8
+                            }
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -40351,6 +40394,13 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Default"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "LightHallway",
+                            "isActive": true
                         }
                     }
                 ],
@@ -42452,7 +42502,15 @@
                     "ID": 1015828374232023724
                 },
                 "subDataId": 0,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Static Overlay UI Filter",
+                            "isActive": false
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -44089,7 +44147,15 @@
                     "ID": 9091869979550632056
                 },
                 "subDataId": 12,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "LightHallway",
+                            "isActive": false
+                        }
+                    }
+                ],
                 "removedComponents": [
                     "Light"
                 ]
@@ -44943,7 +45009,15 @@
                     "ID": 9091869979550632056
                 },
                 "subDataId": 77,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "LightHallway",
+                            "isActive": true
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -45494,6 +45568,13 @@
                         "key": "Layer",
                         "value": {
                             "layerName": "Default"
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "LightHallway",
+                            "isActive": true
                         }
                     }
                 ],
@@ -46107,6 +46188,37 @@
                 "subDataId": 4,
                 "componentData": [
                     {
+                        "key": "Light",
+                        "value": {
+                            "lightType": "POINT",
+                            "color": {
+                                "x": 0.8862876296043396,
+                                "y": 0.6708911061286926,
+                                "z": 0.24009796977043152
+                            },
+                            "intensity": 0.10000000149011612,
+                            "innerAngle": 5.0,
+                            "outerAngle": 12.5,
+                            "range": 3.0,
+                            "castShadows": false,
+                            "shadowConfig": {
+                                "centerPos": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                },
+                                "softness": 1,
+                                "bias": 0.004999999888241291,
+                                "nearPlane": -100.0,
+                                "farPlane": 200.0,
+                                "scenesBounds": 1.0,
+                                "isStatic": true,
+                                "shadowModified": true,
+                                "customCenter": false
+                            }
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "Light",
@@ -46145,6 +46257,13 @@
                         "value": {
                             "layerName": "Default"
                         }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "LightHallway",
+                            "isActive": true
+                        }
                     }
                 ],
                 "removedComponents": []
@@ -46179,7 +46298,15 @@
                     "ID": 9091869979550632056
                 },
                 "subDataId": 14,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "LightHallway",
+                            "isActive": false
+                        }
+                    }
+                ],
                 "removedComponents": [
                     "Light"
                 ]
@@ -48061,7 +48188,15 @@
                     "ID": 9091869979550632056
                 },
                 "subDataId": 76,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "LightHallway",
+                            "isActive": true
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -48074,7 +48209,15 @@
                     "ID": 9091869979550632056
                 },
                 "subDataId": 17,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "LightHallway",
+                            "isActive": false
+                        }
+                    }
+                ],
                 "removedComponents": [
                     "Light"
                 ]
