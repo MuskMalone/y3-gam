@@ -19,7 +19,10 @@ public class InitialSequence : Entity
   private float fadeProgress = 0f;
   private bool triggerInitialSpecialDialogue = false;
 
-  public InitialSequence() : base()
+    private bool isDialogueActive = false;
+    private bool hasPlayedLine0Sound = false;
+
+    public InitialSequence() : base()
   {
 
   }
@@ -49,10 +52,23 @@ public class InitialSequence : Entity
 
     if (triggerInitialSpecialDialogue)
     {
-      dialogue.SetDialogue(initialText, new Lvl4Dialogue.Emotion[] { Lvl4Dialogue.Emotion.Disturbed });
+      dialogue.SetDialogue(initialText, new Lvl4Dialogue.Emotion[] { Lvl4Dialogue.Emotion.Happy});
+            isDialogueActive = true;
       triggerInitialSpecialDialogue = false;
     }
-  }
+
+        if (isDialogueActive)
+        {
+            if (dialogue.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L4_1");
+                hasPlayedLine0Sound = true;
+                isDialogueActive = false;
+            }
+            
+        }
+
+    }
 
   private void StartFade()
   {
