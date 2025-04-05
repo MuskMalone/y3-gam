@@ -108,9 +108,8 @@ namespace Mono
     { "PauseMenu", ScriptFieldType::PAUSEMENU },
     { "SettingsButtons", ScriptFieldType::SETTINGSBUTTON },
     { "PauseMenuButtons", ScriptFieldType::PAUSEMENUBUTTON },
-     { "NewGameCD", ScriptFieldType::NEWCD }
-
-
+     { "NewGameCD", ScriptFieldType::NEWCD },
+    { "Level4Inventory", ScriptFieldType::LEVEL4_INVENTORY }
   };
 }
 
