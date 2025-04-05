@@ -2375,7 +2375,7 @@
                                 "scriptName": "CameraCapture",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": "ToolsPaintingDay",
+                                        "data": "huh",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "PictureName"
@@ -2579,6 +2579,20 @@
                                 ]
                             }
                         ]
+                    }
+                },
+                {
+                    "Sprite2D": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 9000761672454317037
+                        },
+                        "isTransparent": false
                     }
                 }
             ]
@@ -15924,7 +15938,7 @@
                 {
                     "Tag": {
                         "tag": "NightPaintingUI",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
@@ -15981,9 +15995,23 @@
                                 "scriptName": "HoldupUI",
                                 "scriptFieldInstList": [
                                     {
+                                        "data": 700,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "ImageHeight"
+                                        }
+                                    },
+                                    {
+                                        "data": 700,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "ImageWidth"
+                                        }
+                                    },
+                                    {
                                         "data": {
                                             "x": 0.0,
-                                            "y": 0.6000000238418579,
+                                            "y": 0.17000000178813934,
                                             "z": 0.0
                                         },
                                         "type": "System.Numerics.Vector3",
@@ -15994,7 +16022,7 @@
                                     {
                                         "data": {
                                             "x": 12.979999542236328,
-                                            "y": 13.800000190734863,
+                                            "y": 13.25,
                                             "z": 12.979999542236328
                                         },
                                         "type": "System.Numerics.Vector3",
@@ -16052,7 +16080,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 4392837205678514046
+                            "ID": 9000761672454317037
                         }
                     }
                 }
@@ -16194,6 +16222,20 @@
                                 "entityID": 611,
                                 "scriptName": "HoldupUI",
                                 "scriptFieldInstList": [
+                                    {
+                                        "data": 700,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "ImageHeight"
+                                        }
+                                    },
+                                    {
+                                        "data": 700,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "ImageWidth"
+                                        }
+                                    },
                                     {
                                         "data": {
                                             "x": 0.0,
@@ -21188,6 +21230,20 @@
                                 "entityID": 1066,
                                 "scriptName": "HoldupUI",
                                 "scriptFieldInstList": [
+                                    {
+                                        "data": 700,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "ImageHeight"
+                                        }
+                                    },
+                                    {
+                                        "data": 700,
+                                        "type": "System.Int32",
+                                        "scriptField": {
+                                            "fieldName": "ImageWidth"
+                                        }
+                                    },
                                     {
                                         "data": {
                                             "x": 0.0,
