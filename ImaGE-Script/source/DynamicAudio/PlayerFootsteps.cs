@@ -214,15 +214,11 @@ public class PlayerFootsteps : Entity
         case "Stair Part":
         case "Altar Platform":
         case "StepCollider":
-        case "StepCollider2":
-        case "StepCollider3":
-        case "StepCollider4":
-        case "StepCollider5":
+        case "Crossroads":
           PlayRandomPavementSound();
           break;
-        case "Crossroads":
-          PlayRandomGravelSound();
-          break;
+          //PlayRandomGravelSound();
+          //break;
         case "Floor":
         case "Floor (Main Area)":
         case "Floor (Exit)":

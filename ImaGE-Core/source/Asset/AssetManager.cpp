@@ -11,6 +11,7 @@
 
 #include <DebugTools/DebugLogger/DebugLogger.h>
 #include <DebugTools/Exception/Exception.h>
+
 namespace IGE {
 	namespace Assets {
 		void AssetManager::Initialize()
@@ -44,12 +45,12 @@ namespace IGE {
 					for (const auto& entry : std::filesystem::directory_iterator(directoryPath)) {
 						if (entry.is_regular_file()) { // Check if it's a regular file
 							auto file{ GetFileNameWithExtension(entry.path().string()) };
-							auto filename{ GetFileName(file) };
+							auto dirName{ GetFileName(file) };
 							auto fileext{ GetFileExtension(file) };
 							if (fileext == cAssetMetadataFileExtension) {
 								uint64_t guidUint64{};
 								// Extract substring between the dots
-								auto guid64str{ GetFileExtension(filename) };
+								auto guid64str{ GetFileExtension(dirName) };
 								guid64str = guid64str.substr(1, guid64str.size());
 								guidUint64 = std::stoull(guid64str);
 								AssetMetadata::AssetProps metadata{};
@@ -117,6 +118,10 @@ namespace IGE {
 		AssetManager::AssetManager() : mAssetsMutex{} {
 			SUBSCRIBE_CLASS_FUNC(Events::RegisterAssetsEvent, &AssetManager::HandleAddFiles, this);
 			SUBSCRIBE_CLASS_FUNC(Events::RemapGUID, &AssetManager::OnRemapGUID, this);
+#ifdef CHECK_UNUSED_ASSETS
+			SUBSCRIBE_CLASS_FUNC(Events::LoadSceneEvent, &AssetManager::OnSceneLoad, this);
+			assetsPerScene.emplace_back("Engine Init", std::set<std::string>());
+#endif
 			Initialize();
 			 //code snippet to "manufacture" all the data needed for importing
 			 //assumes that all the files are imported as is
@@ -162,16 +167,80 @@ namespace IGE {
 			}*/
 		}
 
+#ifdef CHECK_UNUSED_ASSETS
+		EVENT_CALLBACK_DEF(AssetManager, OnSceneLoad) {
+			auto lscEvent{ CAST_TO_EVENT(Events::LoadSceneEvent) };
+			assetsPerScene.emplace_back(lscEvent->mSceneName, std::set<std::string>());
+			assetsSoFar.emplace(lscEvent->mPath);
+		}
+
+		std::set<std::string> GetAllAssetPaths() {
+			std::set<std::string> ret;
+
+			for (auto const& file : std::filesystem::recursive_directory_iterator(gAssetsDirectory)) {
+				// skip folders and meta files
+				if (!file.is_directory()) { continue; }
+				std::string dirName{ file.path().filename().string() };
+
+				// skip editor directories
+				if (!dirName.empty() && dirName[0] == '.' || dirName == "Compiled") { continue; }
+				else if (dirName == "GameImg" || dirName == "Shaders" || dirName == "PostProcessing") { continue; }
+
+				for (auto const& asset : std::filesystem::directory_iterator(file)) {
+					if (asset.is_directory()) { continue; }
+					else if (asset.path().extension() == cAssetMetadataFileExtension) { continue; }
+
+					ret.emplace(asset.path().string());
+				}
+			}
+
+			return ret;
+		}
+#endif
+
 		AssetManager::~AssetManager()
 		{
 			SaveAllMetadata();
+
+#ifdef CHECK_UNUSED_ASSETS
+			std::set<std::string> const fullAssetsList{ GetAllAssetPaths() };
+			std::set<std::string> unusedAssets{};
+			std::set_difference(fullAssetsList.cbegin(), fullAssetsList.cend(), assetsSoFar.cbegin(), assetsSoFar.cend(), std::inserter(unusedAssets, unusedAssets.end()));
+
+			std::ofstream ofs{ std::string(gEditorAssetsDirectory) + "unused_assets.txt" };
+			if (!ofs) {
+				IGE_DBGLOGGER.LogError("Unable to output unused assets to " + std::string(gEditorAssetsDirectory) + "unused_assets.txt");
+				std::cerr << "Unable to output unused assets to " + std::string(gEditorAssetsDirectory) + "unused_assets.txt" << std::endl;
+				return;
+			}
+
+			ofs << "  LIST OF UNUSED ASSETS FOR YOUR SESSION  \n"
+				<< "==========================================\n";
+			for (std::string const& file : unusedAssets) {
+				ofs << file << "\n";
+			}
+
+			ofs << "\n\n"
+					<< "   LOADED ASSETS BREAKDOWN   \n"
+					<< "=============================\n";
+
+			for (auto const& [scene, loadedAssets] : assetsPerScene) {
+				ofs << ">>>>>>>>>>>>>>>>>>>>>>>>>>>> START " << scene << " <<<<<<<<<<<<<<<<<<<<<<<<<<<<\n";
+				for (std::string const& file : loadedAssets) {
+					ofs << file << "\n";
+				}
+				ofs << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>> END " << scene << " <<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n";
+			}
+
+			ofs.close();
+#endif
 		}
 
 		void AssetManager::SaveMetadata(AssetMetadata::AssetProps& metadata, std::string const& category, GUID guid) const {
-			auto filename{ GetFileName(metadata.metadata.at("path")) };
+			auto dirName{ GetFileName(metadata.metadata.at("path")) };
 			// ill be storing the guid inside here for now
 			// using . as the delimiter
-			auto fp{ cAssetProjectSettingsPath + category + "\\" + filename + "." + std::to_string(guid) + cAssetMetadataFileExtension };
+			auto fp{ cAssetProjectSettingsPath + category + "\\" + dirName + "." + std::to_string(guid) + cAssetMetadataFileExtension };
 			Serialization::Serializer::SerializeAny(metadata, fp);
 			metadata.modified = false;
 		}
@@ -180,10 +249,10 @@ namespace IGE {
 			for (auto const& [cat, assets] : mMetadata.mAssetProperties) {
 				for (auto const& [guid, metadata] : assets) {
 					if (!metadata.modified) continue;
-					auto filename{ GetFileName(metadata.metadata.at("path")) };
+					auto dirName{ GetFileName(metadata.metadata.at("path")) };
 					// ill be storing the guid inside here for now
 					// using . as the delimiter
-					auto fp{ cAssetProjectSettingsPath + cat + "\\" + filename + "." + std::to_string(guid) + cAssetMetadataFileExtension};
+					auto fp{ cAssetProjectSettingsPath + cat + "\\" + dirName + "." + std::to_string(guid) + cAssetMetadataFileExtension};
 					Serialization::Serializer::SerializeAny(metadata, fp);
 				}
 			}
