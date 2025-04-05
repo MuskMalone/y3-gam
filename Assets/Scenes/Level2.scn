@@ -24865,6 +24865,35 @@
                     "AudioSource": {
                         "sounds": [
                             {
+                                "key": "L2_4_VER2",
+                                "value": {
+                                    "guid": {
+                                        "ID": 3976973941891396447
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 60.07774353027344,
+                                            "y": 67.3087158203125,
+                                            "z": -249.2189483642578
+                                        },
+                                        "volume": 2.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
                                 "key": "LockedDoor",
                                 "value": {
                                     "guid": {
@@ -24994,7 +25023,7 @@
                                     },
                                     {
                                         "data": [
-                                            "It's locked..."
+                                            "It’s locked. I think I need a passcode for it."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -51998,14 +52027,14 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -6.782005310058594,
+                            "x": -8.609000205993652,
                             "y": 12.560760498046875,
-                            "z": 85.17691040039063
+                            "z": 85.97699737548828
                         },
                         "scale": {
-                            "x": 17.912569046020508,
-                            "y": 150.0,
-                            "z": 10.819999694824219
+                            "x": 23.01300048828125,
+                            "y": 149.8999786376953,
+                            "z": 10.480999946594238
                         },
                         "rotation": {
                             "x": 0.0,
@@ -52019,14 +52048,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 60.35797882080078,
+                            "x": 58.530982971191406,
                             "y": 160.55653381347656,
-                            "z": -346.8930969238281
+                            "z": -346.093017578125
                         },
                         "worldScale": {
-                            "x": 17.912569046020508,
-                            "y": 150.0,
-                            "z": 10.819999694824219
+                            "x": 23.01300048828125,
+                            "y": 149.8999786376953,
+                            "z": 10.480999946594238
                         },
                         "worldRot": {
                             "x": 0.0,
