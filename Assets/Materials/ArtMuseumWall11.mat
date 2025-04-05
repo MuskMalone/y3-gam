@@ -1,0 +1,39 @@
+{
+    "name": "ArtMuseumWall11",
+    "shader": "PBR",
+    "albedoColor": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+    },
+    "metalness": 0.5,
+    "roughness": 0.5,
+    "ao": 1.0,
+    "emission": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "transparency": 1.0,
+    "tiling": {
+        "x": 4.690000057220459,
+        "y": 1.600000023841858
+    },
+    "offset": {
+        "x": 0.0,
+        "y": 0.4399999976158142
+    },
+    "albedoMap": {
+        "ID": 3288828160425263810
+    },
+    "normalMap": {
+        "ID": 0
+    },
+    "metalnessMap": {
+        "ID": 0
+    },
+    "roughnessMap": {
+        "ID": 0
+    }
+}

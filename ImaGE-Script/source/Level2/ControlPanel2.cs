@@ -21,6 +21,9 @@ public class ControlPanel2 : Entity
   public Entity athenaStatue;
   public Entity hermesStatue;
 
+    public Entity WASDtoRotate;
+    public Entity ExitToEscape;
+
   private Entity[][] hiddenTexts;
   public Entity playerCamera;
   public Entity controlPanelCamera;
@@ -88,7 +91,8 @@ public class ControlPanel2 : Entity
 
     InitHiddenTexts();
 
-
+    WASDtoRotate.SetActive(false);
+        ExitToEscape.SetActive(false);
     odysseusStatue.SetActive(true);
     SetDefaultHiddenText(true);
 
@@ -136,8 +140,9 @@ public class ControlPanel2 : Entity
           Debug.Log("HIT");
           SetControlPanelCameraAsMain();
           playerMove.FreezePlayer();
-
-          if (!areLightsOn)
+                    WASDtoRotate.SetActive(true);
+                    ExitToEscape.SetActive(true);
+                    if (!areLightsOn)
           {
             SetHiddenText(currStatue, true);
             UVLight.SetActive(true);
@@ -155,11 +160,15 @@ public class ControlPanel2 : Entity
         break;
 
       case State.CONTROL_PANEL:
+        
         if (Input.GetKeyTriggered(KeyCode.ESCAPE))
         {
           playerMove.UnfreezePlayer();
           SetPlayerCameraAsMain();
-          currState = State.OPEN;
+                    WASDtoRotate.SetActive(false);
+                    ExitToEscape.SetActive(false);
+                    currState = State.OPEN;
+          
         }
         break;
 
@@ -190,8 +199,9 @@ public class ControlPanel2 : Entity
           playerMove.UnfreezePlayer();
           SetPlayerCameraAsMain();
           InternalCalls.StopSound(UVLight.mEntityID, "..\\Assets\\Audio\\UV_Humming_SFX.wav");
-
-          currState = State.OPEN;
+                    WASDtoRotate.SetActive(false);
+                    ExitToEscape.SetActive(false);
+                    currState = State.OPEN;
         }
         break;
 

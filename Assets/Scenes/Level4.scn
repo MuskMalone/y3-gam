@@ -6561,7 +6561,15 @@
                     "ID": 9061078318612854985
                 },
                 "subDataId": 3,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "MainMenuHover",
+                            "isActive": false
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -6574,7 +6582,15 @@
                     "ID": 9061078318612854985
                 },
                 "subDataId": 2,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "ResumeHover",
+                            "isActive": false
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -6587,7 +6603,15 @@
                     "ID": 9061078318612854985
                 },
                 "subDataId": 1,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "SettingsHover",
+                            "isActive": false
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -8511,6 +8535,13 @@
                                     ]
                                 }
                             ]
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "PauseMenu",
+                            "isActive": false
                         }
                     }
                 ],
