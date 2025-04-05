@@ -7005,6 +7005,28 @@
                                     },
                                     {
                                         "data": {
+                                            "x": 0.23000000417232513,
+                                            "y": 0.5,
+                                            "z": -0.009999999776482582
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "bigBorderPos"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 33.96099853515625,
+                                            "y": 19.5,
+                                            "z": -0.800000011920929
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "bigBorderScale"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 225,
                                             "scriptName": "Entity"
                                         },
@@ -7087,6 +7109,28 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "rotationThreshold"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 10.100000381469727,
+                                            "y": 0.15000000596046448,
+                                            "z": -0.009999999776482582
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "smallBorderPos"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "x": 15.76099967956543,
+                                            "y": 9.0,
+                                            "z": -10.359999656677246
+                                        },
+                                        "type": "System.Numerics.Vector3",
+                                        "scriptField": {
+                                            "fieldName": "smallBorderScale"
                                         }
                                     },
                                     {
@@ -51798,7 +51842,7 @@
                                         }
                                     },
                                     {
-                                        "data": 2.0,
+                                        "data": 4.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "finalDistanceAwayFromCamAfterPickup"
