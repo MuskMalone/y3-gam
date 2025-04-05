@@ -34,13 +34,13 @@ public class Level3Inventory : Entity
     // Workaround for lack of Vec3<float>[]
     private List<Vec2<float>> iconPosition = new List<Vec2<float>>
     {
-        new Vec2<float>(-14.800f, 6.700f),
-        new Vec2<float>(-15.000f, 4.730f),
-        new Vec2<float>(-15.200f, 2.730f),
-        new Vec2<float>(-15.200f, 0.730f),
-        new Vec2<float>(-15.170f, -1.260f),
-        new Vec2<float>(-14.920f, -3.210f),
-        new Vec2<float>(-14.610f, -5.180f)
+        new Vec2<float>(-14.840f, 6.790f),
+        new Vec2<float>(-15.050f, 4.870f),
+        new Vec2<float>(-15.240f, 2.880f),
+        new Vec2<float>(-15.260f, 0.890f),
+        new Vec2<float>(-15.190f, -1.100f),
+        new Vec2<float>(-14.955f, -3.030f),
+        new Vec2<float>(-14.650f, -4.990f)
     };
 
     // Equipped Flags
