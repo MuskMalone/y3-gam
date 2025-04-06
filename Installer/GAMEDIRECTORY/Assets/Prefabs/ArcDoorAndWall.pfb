@@ -1,64 +1,66 @@
 {
     "Name": "ArcDoorAndWall",
-    "isActive": true,
-    "Components": [
-        {
-            "Tag": {
-                "tag": "ArcDoor",
-                "isActive": true
-            }
-        },
-        {
-            "Transform": {
-                "position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 0.07000000029802323,
-                    "y": 0.07700000703334809,
-                    "z": 0.0429999977350235
-                },
-                "rotation": {
-                    "x": 0.0,
-                    "y": 0.7071067690849304,
-                    "z": 0.0,
-                    "w": 0.7071067690849304
-                },
-                "eulerAngles": {
-                    "x": 0.0,
-                    "y": -0.0,
-                    "z": 0.0
-                },
-                "worldPos": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "worldScale": {
-                    "x": 0.07000000029802323,
-                    "y": 0.07700000703334809,
-                    "z": 0.0429999977350235
-                },
-                "worldRot": {
-                    "x": 0.0,
-                    "y": 0.7071067690849304,
-                    "z": 0.0,
-                    "w": 0.7071067690849304
-                }
-            }
-        },
-        {
-            "Layer": {
-                "layerName": "Default"
-            }
-        }
-    ],
     "SubData": [
         {
+            "ID": 0,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "ArcDoor",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 0.07000000029802322,
+                            "y": 0.07700000703334808,
+                            "z": 0.0429999977350235
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 0.07000000029802322,
+                            "y": 0.07700000703334808,
+                            "z": 0.0429999977350235
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -91,9 +93,9 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 0.09674955904483795,
-                            "y": -14.279349327087403,
-                            "z": -0.017989985644817354
+                            "x": 0.09674956649541855,
+                            "y": -14.279349327087402,
+                            "z": -0.017989985644817352
                         },
                         "worldScale": {
                             "x": 19.53078842163086,
@@ -116,16 +118,15 @@
                 {
                     "Material": {
                         "materialGUID": {
-                            "ID": 17491784108210236163
-                        },
-                        "matIdx": 14
+                            "ID": 6867673209907139826
+                        }
                     }
                 },
                 {
                     "Mesh": {
                         "meshName": "Cube",
                         "GUID": {
-                            "ID": 14971352809646686180
+                            "ID": 16211310182187335803
                         },
                         "submeshIdx": 0,
                         "isCustomMesh": false,
@@ -178,93 +179,41 @@
                         "linearDamping": 0.9800000190734863,
                         "motionType": "KINEMATIC",
                         "axisLock": 7,
-                        "angularAxisLock": 7
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 3,
-            "isActive": true,
-            "Parent": 0,
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Three_arc_pTorus4",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
                         },
-                        "scale": {
-                            "x": 42.0,
-                            "y": 42.0,
-                            "z": 42.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
+                        "entityLinkedJointOffset": {
                             "x": 0.0,
                             "y": 0.0,
                             "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 2.940000057220459,
-                            "y": 3.2340002059936525,
-                            "z": 1.8059998750686646
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.7071067690849304,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
                         }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8297051694531430861
-                        },
-                        "matIdx": 12
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Three_arc_pTorus4",
-                        "GUID": {
-                            "ID": 913401465805215234
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
                     }
                 }
             ]
         },
         {
             "ID": 4,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -282,8 +231,8 @@
                         },
                         "scale": {
                             "x": 14.285714149475098,
-                            "y": 12.987011909484864,
-                            "z": 23.255815505981447
+                            "y": 12.987011909484863,
+                            "z": 23.255815505981445
                         },
                         "rotation": {
                             "x": 0.0,
@@ -324,7 +273,7 @@
                         "scale": {
                             "x": 0.8999999761581421,
                             "y": 9.600000381469727,
-                            "z": 2.5139999389648439
+                            "z": 2.5139999389648438
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -364,14 +313,41 @@
                         "linearDamping": 0.9800000190734863,
                         "motionType": "KINEMATIC",
                         "axisLock": 7,
-                        "angularAxisLock": 7
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
         },
         {
             "ID": 5,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -389,8 +365,8 @@
                         },
                         "scale": {
                             "x": 14.285714149475098,
-                            "y": 12.987011909484864,
-                            "z": 23.255815505981447
+                            "y": 12.987011909484863,
+                            "z": 23.255815505981445
                         },
                         "rotation": {
                             "x": 0.0,
@@ -471,14 +447,41 @@
                         "linearDamping": 0.9800000190734863,
                         "motionType": "KINEMATIC",
                         "axisLock": 7,
-                        "angularAxisLock": 7
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
                     }
                 }
             ]
         },
         {
-            "ID": 6,
-            "isActive": true,
+            "ID": 2,
             "Parent": 0,
             "Components": [
                 {
@@ -496,8 +499,8 @@
                         },
                         "scale": {
                             "x": 14.285714149475098,
-                            "y": 12.987011909484864,
-                            "z": 23.255815505981447
+                            "y": 12.987011909484863,
+                            "z": 23.255815505981445
                         },
                         "rotation": {
                             "x": 0.0,
@@ -538,7 +541,7 @@
                         "scale": {
                             "x": 0.8999999761581421,
                             "y": 9.600000381469727,
-                            "z": 2.5139999389648439
+                            "z": 2.5139999389648438
                         },
                         "positionOffset": {
                             "x": 0.0,
@@ -578,7 +581,112 @@
                         "linearDamping": 0.9800000190734863,
                         "motionType": "KINEMATIC",
                         "axisLock": 7,
-                        "angularAxisLock": 7
+                        "angularAxisLock": 7,
+                        "hasJoint": false,
+                        "entityLinked": 4294967295,
+                        "joinConfig": {
+                            "jointType": "REVOLUTE",
+                            "breakForce": 3.4028234663852886e38,
+                            "breakTorque": 3.4028234663852886e38,
+                            "stiffness": 0.0,
+                            "damping": 0.0,
+                            "lowerAngle": 0.0,
+                            "upperAngle": 0.0,
+                            "yLimit": 0.009999999776482582,
+                            "zLimit": 0.009999999776482582,
+                            "lowerLimit": 0.0,
+                            "upperLimit": 0.0,
+                            "motorEnabled": false,
+                            "motorTargetVelocity": 0.0,
+                            "motorForceLimit": 0.0
+                        },
+                        "jointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "entityLinkedJointOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "Parent": 0,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Three_arc_pTorus4",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 275.3194274902344,
+                            "y": 323.40130615234375,
+                            "z": 333.6701354980469
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 19.27235984802246,
+                            "y": 24.90190315246582,
+                            "z": 14.34781551361084
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.7071067690849304,
+                            "z": 0.0,
+                            "w": 0.7071067690849304
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Material": {
+                        "materialGUID": {
+                            "ID": 13775549690974322161
+                        }
+                    }
+                },
+                {
+                    "Mesh": {
+                        "meshName": "new_arcwall",
+                        "GUID": {
+                            "ID": 3068477173387400831
+                        },
+                        "submeshIdx": 0,
+                        "isCustomMesh": true,
+                        "castShadows": true,
+                        "receiveShadows": true
                     }
                 }
             ]
