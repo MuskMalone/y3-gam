@@ -137,7 +137,7 @@ public class ControlPanel2 : Entity
 
         if (mouseClicked && isPanelHit)
         {
-          Debug.Log("HIT");
+        //Debug.Log("HIT");
           SetControlPanelCameraAsMain();
           playerMove.FreezePlayer();
                     WASDtoRotate.SetActive(true);
@@ -285,7 +285,7 @@ public class ControlPanel2 : Entity
         currentRotation = AddRandomDirection(rotationBeforeShake, currShakesize);
         currShakesize = Easing.Linear(Shakesize, 0, 1 - (currShakeTime/shakeTime)); // decay the shake from shakesize to 0
         InternalCalls.SetSoundPitch(UVLight.mEntityID, "..\\Assets\\Audio\\UV_Move_SFX.wav", Easing.Linear(0, 1, 1 - (currShakeTime / shakeTime)));
-        Debug.Log($"{currShakesize} rotationBeforeShake{rotationBeforeShake} currRot{currentRotation}");
+      //Debug.Log($"{currShakesize} rotationBeforeShake{rotationBeforeShake} currRot{currentRotation}");
         if (currShakeTime <= 0) // times up 
         {
           currentRotation = rotationBeforeShake;

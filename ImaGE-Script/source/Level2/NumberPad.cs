@@ -159,7 +159,7 @@ public class NumberPad : Entity
         if (typedCode == correctCode)
         {
             InternalCalls.PlaySound(mEntityID, "SafeUnlock"); 
-            Console.WriteLine("Correct code entered!");
+          //Console.WriteLine("Correct code entered!");
             CloseKeypadUI();
             currState = State.UNLOCKED;
             entityTag = null;
@@ -167,7 +167,7 @@ public class NumberPad : Entity
         else
         {
             InternalCalls.PlaySound(mEntityID, "WrongInput"); 
-            Console.WriteLine("Incorrect code, try again.");
+          //Console.WriteLine("Incorrect code, try again.");
             ClearCode();
         }
     }
