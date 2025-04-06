@@ -9,7 +9,9 @@ public class CorrdiorPainting : Entity, IInventoryItem
   public Entity EToPickUpUI;
   public Dialogue dialogueSystem;
   public string[] pitPaintingDialogue;
+  public Entity Ground;
 
+  private bool playedSound = false;
   private bool playerCollided = false;
   public string Name
   {
@@ -51,6 +53,13 @@ public class CorrdiorPainting : Entity, IInventoryItem
   void Update()
   {
     // For Painting Picking Up
+    if (!playedSound) {
+      if (InternalCalls.GetContactPoints(mEntityID, Ground.mEntityID).Length > 0) {
+        InternalCalls.PlaySound(mEntityID, "..\\Assets\\Audio\\CorridorPaintingDrop_SFX.wav");
+        
+        playedSound = true;
+      }
+    }
     bool isPaintHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
     if (isPaintHit && Input.GetKeyTriggered(KeyCode.E))
     {

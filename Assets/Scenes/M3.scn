@@ -43326,6 +43326,13 @@
                         }
                     },
                     {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "Ground",
+                            "isActive": true
+                        }
+                    },
+                    {
                         "key": "Transform",
                         "value": {
                             "position": {
@@ -47264,6 +47271,51 @@
                         "value": {
                             "sounds": [
                                 {
+                                    "key": "..\\Assets\\Audio\\CorridorPaintingDrop_SFX.wav",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 18188841909903774818
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 67.63999938964844,
+                                                "y": 52.57352066040039,
+                                                "z": -37.71795654296875
+                                            },
+                                            "volume": 0.44999998807907104,
+                                            "pitch": 1.0199999809265137,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "isBGM": false,
+                                            "enablePostProcessing": true,
+                                            "processingType": "REVERB",
+                                            "postProcessingSettings": [
+                                                {
+                                                    "type": "REVERB",
+                                                    "reverb_decayTime": 200.0,
+                                                    "reverb_earlyDelay": 0.0,
+                                                    "reverb_lateDelay": 0.0,
+                                                    "reverb_diffusion": 100.0,
+                                                    "reverb_density": 100.0,
+                                                    "echo_delay": 500.0,
+                                                    "echo_feedback": 50.0,
+                                                    "echo_wetDryMix": 50.0,
+                                                    "distortion_level": 50.0,
+                                                    "chorus_rate": 0.800000011920929,
+                                                    "chorus_depth": 0.5,
+                                                    "chorus_mix": 50.0
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                {
                                     "key": "PickupPainting",
                                     "value": {
                                         "guid": {
@@ -47389,6 +47441,16 @@
                                             "type": "Image.Mono.ScriptInstance",
                                             "scriptField": {
                                                 "fieldName": "EToPickUpUI"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 4194952,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "Ground"
                                             }
                                         },
                                         {
