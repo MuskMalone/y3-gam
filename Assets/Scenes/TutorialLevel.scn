@@ -237,12 +237,42 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "DemonPictureFORLEVEL4"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 104,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "DownArrow"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Gate1FORLEVEL4"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Gate2FORLEVEL4"
                                         }
                                     },
                                     {
@@ -273,6 +303,26 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "UpArrow"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "VideoCutscene"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "WashDownEffectImageFORLEVEL4"
                                         }
                                     },
                                     {
@@ -424,6 +474,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "targetY"
+                                        }
+                                    },
+                                    {
+                                        "data": 3.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "washdownEffectTotalTime"
                                         }
                                     }
                                 ]
@@ -1946,13 +2003,13 @@
                     "Transform": {
                         "position": {
                             "x": 2.5904319286346436,
-                            "y": 6.60099983215332,
+                            "y": 7.836765766143799,
                             "z": -25.89000701904297
                         },
                         "scale": {
-                            "x": 6.0,
-                            "y": 8.0,
-                            "z": 8.0
+                            "x": 21.18000030517578,
+                            "y": 28.42099952697754,
+                            "z": 11.180000305175781
                         },
                         "rotation": {
                             "x": 0.7071067690849304,
@@ -1967,13 +2024,13 @@
                         },
                         "worldPos": {
                             "x": 2.5904319286346436,
-                            "y": 6.60099983215332,
+                            "y": 7.836765766143799,
                             "z": -25.89000701904297
                         },
                         "worldScale": {
-                            "x": 6.0,
-                            "y": 8.0,
-                            "z": 8.0
+                            "x": 21.18000030517578,
+                            "y": 28.42099952697754,
+                            "z": 11.180000305175781
                         },
                         "worldRot": {
                             "x": 0.7071067690849304,
@@ -3422,12 +3479,12 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 5.487936973571777,
+                            "y": -1.5,
                             "z": -0.018710732460021973
                         },
                         "scale": {
-                            "x": 8.539999961853027,
-                            "y": 2.560000419616699,
+                            "x": 6.079999923706055,
+                            "y": 2.259999990463257,
                             "z": -0.619999885559082
                         },
                         "rotation": {
@@ -3443,12 +3500,12 @@
                         },
                         "worldPos": {
                             "x": 0.0,
-                            "y": 5.487936973571777,
+                            "y": -1.5,
                             "z": -0.018710732460021973
                         },
                         "worldScale": {
-                            "x": 8.539999961853027,
-                            "y": 2.560000419616699,
+                            "x": 6.079999923706055,
+                            "y": 2.259999990463257,
                             "z": -0.619999885559082
                         },
                         "worldRot": {
@@ -13541,7 +13598,7 @@
                 {
                     "Tag": {
                         "tag": "PickupTutorialPaintingUI",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -13552,7 +13609,7 @@
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 7.7769999504089355,
+                            "x": 7.517000198364258,
                             "y": 2.2049999237060547,
                             "z": 8.258000373840332
                         },
@@ -13573,7 +13630,7 @@
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 7.7769999504089355,
+                            "x": 7.517000198364258,
                             "y": 2.2049999237060547,
                             "z": 8.258000373840332
                         },
