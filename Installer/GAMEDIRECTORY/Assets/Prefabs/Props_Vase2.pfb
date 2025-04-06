@@ -1,90 +1,92 @@
 {
     "Name": "Props_Vase2",
-    "isActive": true,
-    "Components": [
-        {
-            "Tag": {
-                "tag": "Props_Vase2",
-                "isActive": true
-            }
-        },
-        {
-            "Transform": {
-                "position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 3.5859999656677248,
-                    "y": 3.5859999656677248,
-                    "z": 3.5859999656677248
-                },
-                "rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "eulerAngles": {
-                    "x": 0.0,
-                    "y": -0.0,
-                    "z": 0.0
-                },
-                "worldPos": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "worldScale": {
-                    "x": 3.5859999656677248,
-                    "y": 3.5859999656677248,
-                    "z": 3.5859999656677248
-                },
-                "worldRot": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            }
-        },
-        {
-            "Layer": {
-                "layerName": "Default"
-            }
-        },
-        {
-            "BoxCollider": {
-                "scale": {
-                    "x": 1.7429479360580445,
-                    "y": 3.6429998874664308,
-                    "z": 1.7429479360580445
-                },
-                "positionOffset": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "degreeRotationOffsetEuler": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "rotationOffset": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "sensor": false
-            }
-        }
-    ],
     "SubData": [
         {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Props_Vase2",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 3.5859999656677248,
+                            "y": 3.5859999656677248,
+                            "z": 3.5859999656677248
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 3.5859999656677248,
+                            "y": 3.5859999656677248,
+                            "z": 3.5859999656677248
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 1.7429479360580445,
+                            "y": 3.6429998874664308,
+                            "z": 1.7429479360580445
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -143,8 +145,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 8435945311001043598
-                        },
-                        "matIdx": 13
+                        }
                     }
                 },
                 {
@@ -163,7 +164,6 @@
         },
         {
             "ID": 2,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -222,8 +222,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 8435945311001043598
-                        },
-                        "matIdx": 13
+                        }
                     }
                 },
                 {

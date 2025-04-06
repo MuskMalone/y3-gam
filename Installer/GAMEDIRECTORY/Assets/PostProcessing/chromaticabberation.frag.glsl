@@ -16,8 +16,8 @@ uniform sampler2D u_ScreenTex;          // input channel. XX = 2D/Cube
 
 void mainImage( out vec4 O,  vec2 U )
 {
-    float ABERRATION_X = 0.06;
-    float ABERRATION_Y = 0.06;
+    float ABERRATION_X = 0.025;
+    float ABERRATION_Y = 0.0007;
     vec2 R = u_Resolution.xy, m = vec2(ABERRATION_X, ABERRATION_Y); 
 	// U/= R;
     float d = (length(m)<.02) ? .015 : m.x/10.;

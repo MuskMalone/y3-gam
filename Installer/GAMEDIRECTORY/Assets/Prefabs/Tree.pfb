@@ -1,64 +1,66 @@
 {
     "Name": "Tree",
-    "isActive": true,
-    "Components": [
-        {
-            "Tag": {
-                "tag": "Tree",
-                "isActive": true
-            }
-        },
-        {
-            "Transform": {
-                "position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 15.0,
-                    "y": 15.0,
-                    "z": 15.0
-                },
-                "rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "eulerAngles": {
-                    "x": 0.0,
-                    "y": -0.0,
-                    "z": 0.0
-                },
-                "worldPos": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "worldScale": {
-                    "x": 15.0,
-                    "y": 15.0,
-                    "z": 15.0
-                },
-                "worldRot": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            }
-        },
-        {
-            "Layer": {
-                "layerName": "Environment"
-            }
-        }
-    ],
     "SubData": [
         {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Tree",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 15.0,
+                            "y": 15.0,
+                            "z": 15.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 15.0,
+                            "y": 15.0,
+                            "z": 15.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Environment"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -129,7 +131,6 @@
         },
         {
             "ID": 2,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -188,8 +189,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 5307435333168071689
-                        },
-                        "matIdx": 3
+                        }
                     }
                 },
                 {
@@ -208,7 +208,6 @@
         },
         {
             "ID": 3,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -267,8 +266,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 5307435333168071689
-                        },
-                        "matIdx": 3
+                        }
                     }
                 },
                 {
@@ -287,7 +285,6 @@
         },
         {
             "ID": 4,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -346,8 +343,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 5307435333168071689
-                        },
-                        "matIdx": 3
+                        }
                     }
                 },
                 {
@@ -366,7 +362,6 @@
         },
         {
             "ID": 5,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -425,8 +420,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 5307435333168071689
-                        },
-                        "matIdx": 3
+                        }
                     }
                 },
                 {
@@ -445,7 +439,6 @@
         },
         {
             "ID": 6,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -504,8 +497,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 6047153977749223718
-                        },
-                        "matIdx": 4
+                        }
                     }
                 },
                 {
@@ -524,7 +516,6 @@
         },
         {
             "ID": 7,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
