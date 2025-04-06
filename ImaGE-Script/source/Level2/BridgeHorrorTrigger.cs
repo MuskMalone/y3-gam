@@ -25,10 +25,10 @@ public class BridgeHorrorTrigger : Entity
   private bool forceLookForward = false;
   private float lastFootstepProgress = 0f;
 
-   
 
-    //private bool whispersPlayed = false;
-    //private bool threatAudioPlayed = false;
+
+    private bool whispersPlayed = false;
+    private bool threatAudioPlayed = false;
 
 
     void Start()
@@ -84,10 +84,10 @@ public class BridgeHorrorTrigger : Entity
     forceLookForward = false;
     lastFootstepProgress = 0f;
 
-        //whispersPlayed = false;
-        //threatAudioPlayed = false;
-        //InternalCalls.StopSound(mEntityID, "phoneWhispers");
-        //InternalCalls.StopSound(mEntityID, "phoneVoiceWhispers");
+        whispersPlayed = false;
+        threatAudioPlayed = false;
+        InternalCalls.StopSound(mEntityID, "phoneWhispers");
+        InternalCalls.StopSound(mEntityID, "phoneVoiceWhispers");
     }
 
   private void ApplyHorrorEffects()
@@ -109,20 +109,20 @@ public class BridgeHorrorTrigger : Entity
       InternalCalls.PlaySound(footstepSoundEntity.mEntityID, "MonsterFoot");
     }
 
-        //if (progress > 0.3f && !whispersPlayed)
-        //{
-        //    whispersPlayed = true;
-        //    InternalCalls.PlaySound(mEntityID, "phoneWhispers"); // Assuming it's a looping ambient sound
-        //}
+        if (progress > 0.3f && !whispersPlayed)
+        {
+            whispersPlayed = true;
+            InternalCalls.PlaySound(mEntityID, "phoneWhispers"); // Assuming it's a looping ambient sound
+        }
 
-        //// Stage 2: Whispering stops, deeper voice starts near full vignette
-        //if (progress > 0.8f && !threatAudioPlayed)
-        //{
-        //    threatAudioPlayed = true;
-        //    InternalCalls.StopSound(mEntityID, "phoneWhispers");
-        //    InternalCalls.PlaySound(mEntityID, "phoneVoiceWhispers");
-        //}
-        if (progress > 0.85f)
+        // Stage 2: Whispering stops, deeper voice starts near full vignette
+        if (progress > 0.6f && !threatAudioPlayed)
+        {
+            threatAudioPlayed = true;
+            InternalCalls.StopSound(mEntityID, "phoneWhispers");
+            InternalCalls.PlaySound(mEntityID, "phoneVoiceWhispers");
+            }
+            if (progress > 0.85f)
     {
       Cleanup();
     }
