@@ -190,7 +190,7 @@ public class PictureAlign : Entity
           DownArrow.SetActive(false);
           //SetActive(false);
           InternalCalls.PlaySound(player.mEntityID, "PaintingMatchObject");
-          isNight = true;
+
         }
         else
         {
@@ -214,6 +214,7 @@ public class PictureAlign : Entity
           FadeOut();
           if (ChangeSkyBox())
           {
+            isNight = true;
             Console.WriteLine("NIght");
             InternalCalls.ChangeToolsPainting();
             if (hasFaded)

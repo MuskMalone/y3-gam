@@ -107,7 +107,7 @@ public class PanOutFromTV : Entity
           {
             InternalCalls.PlaySound(bgmEntity.mEntityID, "MainMenuBGM");
             GetComponent<Animation>().Play(panOutAnimName);
-            GetComponent<Video>().SetVolume(0.7f);
+            video.GetComponent<Video>().SetVolume(0.7f);
             currState = State.PANNING;
           }
 
