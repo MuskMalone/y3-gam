@@ -1,112 +1,114 @@
 {
     "Name": "Puzzle_Gardendoor",
-    "isActive": true,
-    "Components": [
-        {
-            "Tag": {
-                "tag": "Puzzle_Gardendoor",
-                "isActive": true
-            }
-        },
-        {
-            "Transform": {
-                "position": {
-                    "x": 53.70774841308594,
-                    "y": 12.561884880065918,
-                    "z": 54.18185043334961
-                },
-                "scale": {
-                    "x": 1.7480000257492066,
-                    "y": 1.7484735250473023,
-                    "z": 1.7480000257492066
-                },
-                "rotation": {
-                    "x": -3.726813702087384e-8,
-                    "y": 0.702570915222168,
-                    "z": -3.8393636714317839e-8,
-                    "w": 0.7116137742996216
-                },
-                "eulerAngles": {
-                    "x": -0.000479349575471133,
-                    "y": 89.26751708984375,
-                    "z": -0.000479440699564293
-                },
-                "worldPos": {
-                    "x": 53.70774459838867,
-                    "y": 12.561884880065918,
-                    "z": 54.18185043334961
-                },
-                "worldScale": {
-                    "x": 1.7480000257492066,
-                    "y": 1.7484735250473023,
-                    "z": 1.7480000257492066
-                },
-                "worldRot": {
-                    "x": -3.726813702087384e-8,
-                    "y": 0.702570915222168,
-                    "z": -3.8393636714317839e-8,
-                    "w": 0.7116137742996216
-                }
-            }
-        },
-        {
-            "Layer": {
-                "layerName": "Default"
-            }
-        },
-        {
-            "BoxCollider": {
-                "scale": {
-                    "x": 3.5739998817443849,
-                    "y": 6.473999977111816,
-                    "z": 0.8740000128746033
-                },
-                "positionOffset": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "degreeRotationOffsetEuler": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "rotationOffset": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "sensor": false
-            }
-        },
-        {
-            "RigidBody": {
-                "velocity": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "angularVelocity": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "staticFriction": 0.0,
-                "dynamicFriction": 0.0,
-                "restitution": 0.0,
-                "gravityFactor": 0.0,
-                "linearDamping": 0.9800000190734863,
-                "motionType": "KINEMATIC",
-                "axisLock": 7,
-                "angularAxisLock": 7
-            }
-        }
-    ],
     "SubData": [
         {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Puzzle_Gardendoor",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 53.70774841308594,
+                            "y": 12.561884880065918,
+                            "z": 54.18185043334961
+                        },
+                        "scale": {
+                            "x": 1.7480000257492066,
+                            "y": 1.7484735250473023,
+                            "z": 1.7480000257492066
+                        },
+                        "rotation": {
+                            "x": -3.726813702087384e-8,
+                            "y": 0.702570915222168,
+                            "z": -3.8393636714317839e-8,
+                            "w": 0.7116137742996216
+                        },
+                        "eulerAngles": {
+                            "x": -0.000479349575471133,
+                            "y": 89.26751708984375,
+                            "z": -0.000479440699564293
+                        },
+                        "worldPos": {
+                            "x": 53.70774459838867,
+                            "y": 12.561884880065918,
+                            "z": 54.18185043334961
+                        },
+                        "worldScale": {
+                            "x": 1.7480000257492066,
+                            "y": 1.7484735250473023,
+                            "z": 1.7480000257492066
+                        },
+                        "worldRot": {
+                            "x": -3.726813702087384e-8,
+                            "y": 0.702570915222168,
+                            "z": -3.8393636714317839e-8,
+                            "w": 0.7116137742996216
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "BoxCollider": {
+                        "scale": {
+                            "x": 3.5739998817443849,
+                            "y": 6.473999977111816,
+                            "z": 0.8740000128746033
+                        },
+                        "positionOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "degreeRotationOffsetEuler": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "rotationOffset": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "sensor": false
+                    }
+                },
+                {
+                    "RigidBody": {
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "angularVelocity": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "staticFriction": 0.0,
+                        "dynamicFriction": 0.0,
+                        "restitution": 0.0,
+                        "gravityFactor": 0.0,
+                        "linearDamping": 0.9800000190734863,
+                        "motionType": "KINEMATIC",
+                        "axisLock": 7,
+                        "angularAxisLock": 7
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -165,8 +167,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -185,7 +186,6 @@
         },
         {
             "ID": 2,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -244,8 +244,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -264,7 +263,6 @@
         },
         {
             "ID": 3,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -323,8 +321,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -343,7 +340,6 @@
         },
         {
             "ID": 4,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -402,8 +398,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -422,7 +417,6 @@
         },
         {
             "ID": 5,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -481,8 +475,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -501,7 +494,6 @@
         },
         {
             "ID": 6,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -560,8 +552,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -580,7 +571,6 @@
         },
         {
             "ID": 7,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -639,8 +629,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -659,7 +648,6 @@
         },
         {
             "ID": 8,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -718,8 +706,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {
@@ -738,7 +725,6 @@
         },
         {
             "ID": 9,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -797,8 +783,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 0
-                        },
-                        "matIdx": 0
+                        }
                     }
                 },
                 {

@@ -334,4 +334,12 @@ public class TutorialLevelInventory : Entity
         return currentItem;
     }
 
+  public void CloseInventoryAndUnselectAllItems()
+  {
+    currentItem = null;
+    if (isVisible)
+    {
+      ToggleInventoryVisibility();
+    }
+  }
 }
