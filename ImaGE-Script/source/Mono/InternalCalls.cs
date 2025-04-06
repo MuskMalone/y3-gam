@@ -494,6 +494,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetVignetteStrength();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void RemoveBoxCollider(uint entity);
     #endregion
   }
 }

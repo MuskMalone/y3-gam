@@ -365,6 +365,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetGammaNorm);
   ADD_INTERNAL_CALL(SetVignetteStrength);
   ADD_INTERNAL_CALL(GetVignetteStrength);
+  ADD_INTERNAL_CALL(RemoveBoxCollider);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -2297,6 +2298,13 @@ void Mono::SetVignetteStrength(float strength)
 float Mono::GetVignetteStrength()
 {
   return Graphics::PostProcessingManager::GetInstance().GetStrength();
+}
+
+void Mono::RemoveBoxCollider(ECS::Entity::EntityID e) {
+  ECS::Entity entity(e);
+  if (entity.HasComponent<Component::BoxCollider>()) {
+    entity.RemoveComponent<Component::BoxCollider>();
+  }
 }
 
 /*!**********************************************************************

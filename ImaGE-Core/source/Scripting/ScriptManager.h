@@ -517,6 +517,8 @@ namespace Mono
 		static void SetVignetteStrength(float strength);
 		static float GetVignetteStrength();
 
+		static void RemoveBoxCollider(ECS::Entity::EntityID entity);
+
 		/*!**********************************************************************
 		*																																			  *
 		*								            Helper Function			          						  *
