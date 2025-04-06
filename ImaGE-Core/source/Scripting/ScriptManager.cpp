@@ -339,6 +339,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(ClearVideoFrame);
   ADD_INTERNAL_CALL(GetVideoAlpha);
   ADD_INTERNAL_CALL(SetVideoAlpha);
+  ADD_INTERNAL_CALL(SetVideoVolume);
   ADD_INTERNAL_CALL(GetLayerName);
   ADD_INTERNAL_CALL(GetCurrentScene);
   ADD_INTERNAL_CALL(SetCurrentScene);
@@ -1439,6 +1440,10 @@ void Mono::SetVideoAlpha(ECS::Entity::EntityID entity, unsigned alpha) {
 
 unsigned Mono::GetVideoAlpha(ECS::Entity::EntityID entity) {
   return ECS::Entity(entity).GetComponent<Component::Video>().alpha;
+}
+
+void Mono::SetVideoVolume(ECS::Entity::EntityID id, float volume) {
+  ECS::Entity(id).GetComponent<Component::Video>().SetVolume(volume);
 }
 
 

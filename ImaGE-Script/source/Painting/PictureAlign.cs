@@ -330,6 +330,8 @@ public class PictureAlign : Entity
               currentImg.Level4RemoveItself();
               currentImg = null;
               VideoCutscene.SetActive(true);
+              VideoCutscene.GetComponent<Video>().ClearFrame();
+              VideoCutscene.GetComponent<Video>().Play();
             }
           }
         }

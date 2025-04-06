@@ -37,6 +37,7 @@ namespace Component {
 
     void AdvanceVideo(float seconds);
     void SetAlpha(unsigned newAlpha);
+    void SetVolume(float newVolume);
 
     inline bool IsWorldObject() const noexcept{ return renderType == RenderType::WORLD; }
     inline bool IsUIObject() const noexcept { return renderType == RenderType::UI; }

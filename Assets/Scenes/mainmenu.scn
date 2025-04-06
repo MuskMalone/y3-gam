@@ -788,6 +788,16 @@
                                     "scriptName": "PanOutFromTV",
                                     "scriptFieldInstList": [
                                         {
+                                            "data": {
+                                                "entityID": 3145739,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "bgmEntity"
+                                            }
+                                        },
+                                        {
                                             "data": 26.5,
                                             "type": "System.Single",
                                             "scriptField": {

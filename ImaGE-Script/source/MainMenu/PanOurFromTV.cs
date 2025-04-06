@@ -32,6 +32,7 @@ using System.Xml;
 public class PanOutFromTV : Entity
 {
   public Entity video;
+  public Entity bgmEntity;
   public Transition transition;
   public float delayTillVideoStart, delayTillPanOut;
   public string panOutAnimName;
@@ -51,6 +52,7 @@ public class PanOutFromTV : Entity
   // Start is called before the first frame update
   void Start()
   {
+    // start with black screen
     video.GetComponent<Video>().ClearFrame();
   }
 
@@ -63,14 +65,18 @@ public class PanOutFromTV : Entity
         {
           if (transition.IsFinished())
           {
-            // start with black screen
+            // for intro sequence, keep the camera still and
+            // don't play the bgm yet
             if (playIntroSequence)
             {
               currState = State.TV_FOCUS;
             }
             else
             {
-              video.GetComponent<Video>().Play();
+              InternalCalls.PlaySound(bgmEntity.mEntityID, "MainMenuBGM");
+              Video vid = video.GetComponent<Video>();
+              vid.Play();
+              vid.SetVolume(0.7f);
               GetComponent<Animation>().Play(panOutAnimName);
               currState = State.PANNING;
             }
@@ -99,7 +105,9 @@ public class PanOutFromTV : Entity
 
           if (timeElapsed >= delayTillPanOut)
           {
+            InternalCalls.PlaySound(bgmEntity.mEntityID, "MainMenuBGM");
             GetComponent<Animation>().Play(panOutAnimName);
+            GetComponent<Video>().SetVolume(0.7f);
             currState = State.PANNING;
           }
 
