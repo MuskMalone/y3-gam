@@ -120,7 +120,7 @@ public class TutorialDialogue : Entity
             InternalCalls.AppendText(mEntityID, lines[lineIndex][charIndex].ToString());
             charIndex++;
             nextCharTime = Time.gameTime + textSpeed;
-            //isLineComplete = false;
+            isLineComplete = false;
             SkipTyping();
             hasSkipped = true;
         }

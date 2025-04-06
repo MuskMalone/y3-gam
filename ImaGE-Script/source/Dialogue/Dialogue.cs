@@ -42,7 +42,7 @@ public class Dialogue : Entity
   private bool specialSequence = true;
   private string textAudioName = "DefaultDialogueSound";
   private const string defaultFont = "..\\Assets\\Textures\\Sniglet-Regular.ttf";
-
+  private bool ShowTara = true;
   private bool audioUpdated = false;
 
   public Dialogue() : base()
@@ -79,7 +79,8 @@ public class Dialogue : Entity
     {
       InternalCalls.SetActive(mEntityID, true);
       DialogueBox.SetActive(true);
-      TaraName.SetActive(true);
+      if(ShowTara)
+          TaraName.SetActive(true);
       //SetEmotion(emotions[lineIndex]);
       playerMove.FreezePlayer();
     }
@@ -98,6 +99,7 @@ public class Dialogue : Entity
     {
       // Line has ended, stop sound
       InternalCalls.StopSound(mEntityID, textAudioName);
+
     }
     
     if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && 
@@ -132,6 +134,13 @@ public class Dialogue : Entity
     lines = newLines;
     emotions = newEmotions;
     StartDialogue();
+
+    }
+
+  public void turnOffTara()
+  {
+    ShowTara = false;
+    TaraName.SetActive(false);
   }
 
   private void StartDialogue()
@@ -155,7 +164,8 @@ public class Dialogue : Entity
     InternalCalls.SetText(mEntityID, string.Empty);
     isInDialogueMode = true;
     DialogueBox.SetActive(true);
-    TaraName.SetActive(true);
+    if(ShowTara)
+      TaraName.SetActive(true);
     SetActive(true);
     //SetEmotion(emotions[lineIndex]);
     charIndex = 0;                      // Reset character index for typing effect
@@ -168,6 +178,7 @@ public class Dialogue : Entity
     playerMove.UnfreezePlayer();
     DialogueBox.SetActive(false);
     TaraName.SetActive(false);
+    ShowTara = true;
     SetActive(false);
     isInDialogueMode = false;
 
@@ -190,10 +201,17 @@ public class Dialogue : Entity
     {
         float CurrentTextWidth = InternalCalls.GetTextBoxWidth(mEntityID);
         float TaraTextWidth = InternalCalls.GetTextBoxWidth(TaraName.mEntityID);
+        if (!TaraName.IsActive())
+            TaraTextWidth = 0;
+
         float TotalWidth = CurrentTextWidth + TaraTextWidth;
         Vector3 CurrPosition = TaraName.GetComponent<Transform>().position;
-        CurrPosition.X = (0f - (TotalWidth / 2f)) + TaraTextWidth / 2f;
-        TaraName.GetComponent<Transform>().position = CurrPosition;
+        if (TaraName.IsActive())
+        {
+            CurrPosition.X = (0f - (TotalWidth / 2f)) + TaraTextWidth / 2f;
+            TaraName.GetComponent<Transform>().position = CurrPosition;
+        }
+
         CurrPosition = GetComponent<Transform>().position;
         CurrPosition.X = (0f + (TotalWidth / 2f)) - CurrentTextWidth / 2f;
         GetComponent<Transform>().position = CurrPosition;
