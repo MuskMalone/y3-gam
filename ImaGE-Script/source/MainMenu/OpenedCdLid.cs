@@ -30,66 +30,37 @@ using System.Numerics;
 
 public class OpenedCdLid : Entity
 {
-    //private CDDragAndDrop cDDragAndDrop;
-    public Vector3 outOfTheWay = new Vector3(10.0f, 10.0f, 10.0f);
+  public NewGameCD newGameCD;
+  public NewGameCD creditsCD;
+  public NewGameCD settingsCD;
+  public Entity openLid, closedLid;
+  public bool isCDInPlayer = false;
 
-    private Vector3 originalPosition;
-    //private Quaternion originalRotation;
-    private Vector3 openCDpos = new Vector3(0.382f, -0.308f, -0.442f);
-    public NewGameCD newGameCD;
-    public NewGameCD CreditsCD;
-    public NewGameCD SettingsCD;
   // Start is called before the first frame update
-  //private ContinueCD continueCD;
-
-  //private ContinueCD continueCD;
   void Start()
+  {
+
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+    if (InternalCalls.OnTriggerEnter(mEntityID, newGameCD.mEntityID)
+        || InternalCalls.OnTriggerEnter(mEntityID, creditsCD.mEntityID)
+        || InternalCalls.OnTriggerEnter(mEntityID, settingsCD.mEntityID))
     {
-        //newGameCD = FindObjectOfType<NewGameCD>();
-        //continueCD = FindObjectOfType<ContinueCD>();
-
-        originalPosition = InternalCalls.GetWorldPosition(mEntityID);
-        //originalRotation = InternalCalls.GetWorldRotation(mEntityID);
-
-        string tag = InternalCalls.GetTag(mEntityID);
-        if (tag == "OpenCircular_Lid")
-        {
-            InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
-        }
-        //else if (tag == "ClosedCircular_Lid")
-        //{
-
-        //}
+      openLid.SetActive(true);
+      closedLid.SetActive(false);
+      isCDInPlayer = true;
     }
-
-    // Update is called once per frame
-    void Update()
+    else if (InternalCalls.OnTriggerExit(mEntityID, newGameCD.mEntityID)
+        || InternalCalls.OnTriggerExit(mEntityID, creditsCD.mEntityID)
+        || InternalCalls.OnTriggerExit(mEntityID, settingsCD.mEntityID))
     {
-        string tag = InternalCalls.GetTag(mEntityID);
-        if (newGameCD.isLidOpen || CreditsCD.isLidOpen || SettingsCD.isLidOpen) //|| continueCD.isLidOpen)
-        {
-            if (tag == "OpenCircular_Lid")
-            {
-                InternalCalls.SetWorldPosition(mEntityID, ref openCDpos);
-            }
-            else if (tag == "ClosedCircular_Lid")
-            {
-                InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
-            
-            }
-        }
-        else
-        {
-            if (tag == "OpenCircular_Lid")
-            {
-                InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
-             }
-            else if (tag == "ClosedCircular_Lid")
-            {
-                InternalCalls.SetWorldPosition(mEntityID, ref originalPosition);
-             }
-        }
+      closedLid.SetActive(true);
+      openLid.SetActive(false);
+      isCDInPlayer = false;
     }
+  }
 }
-
 

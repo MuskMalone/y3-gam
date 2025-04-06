@@ -251,6 +251,7 @@ public class PlayerFootsteps : Entity
           PlayRandomEchoeyPavementSound();
           break;
         case "Hallway Floor":
+        case "Ground":
           PlayRandomCarpetSound();
           break;
         //case "Metal Pipes":
