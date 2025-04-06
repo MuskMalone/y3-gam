@@ -586,7 +586,7 @@
                                 "scriptName": "CameraCapture",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": "",
+                                        "data": "PitPainting",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "PictureName"
@@ -7021,12 +7021,42 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "DemonPictureFORLEVEL4"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 175,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "DownArrow"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Gate1FORLEVEL4"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Gate2FORLEVEL4"
                                         }
                                     },
                                     {
@@ -7057,6 +7087,26 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "UpArrow"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "VideoCutscene"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "WashDownEffectImageFORLEVEL4"
                                         }
                                     },
                                     {
@@ -7208,6 +7258,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "targetY"
+                                        }
+                                    },
+                                    {
+                                        "data": 3.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "washdownEffectTotalTime"
                                         }
                                     }
                                 ]
@@ -10774,9 +10831,9 @@
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 1.5,
-                            "y": 1.5,
-                            "z": 1.5
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
                         },
                         "rotation": {
                             "x": 0.0,
@@ -10795,9 +10852,9 @@
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 1.5,
-                            "y": 1.5,
-                            "z": 1.5
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -10821,7 +10878,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 5923686579628277651
+                            "ID": 11544437458207120238
                         }
                     }
                 }
@@ -10894,7 +10951,7 @@
                                     {
                                         "data": {
                                             "x": 0.0,
-                                            "y": 0.6000000238418579,
+                                            "y": 0.18000000715255737,
                                             "z": 0.0
                                         },
                                         "type": "System.Numerics.Vector3",
@@ -10905,7 +10962,7 @@
                                     {
                                         "data": {
                                             "x": 12.979999542236328,
-                                            "y": 13.800000190734863,
+                                            "y": 13.1899995803833,
                                             "z": 12.979999542236328
                                         },
                                         "type": "System.Numerics.Vector3",
@@ -10963,7 +11020,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 7188274541058791079
+                            "ID": 1378771833598221023
                         }
                     }
                 }
