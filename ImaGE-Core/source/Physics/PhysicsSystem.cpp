@@ -876,7 +876,7 @@ namespace IGE {
 					ECS::Entity e0{ entity };
 					ECS::Entity e1{ ECS::Entity::EntityID(rb.entityLinked) };
 
-					if (rb.hasJoint) {
+					if (rb.hasJoint && rb.jointID) {
 						// Retrieve the joint's local poses for actor0 and actor1
 						auto localPose0 = reinterpret_cast<physx::PxJoint*>(rb.jointID)->getLocalPose(physx::PxJointActorIndex::eACTOR0);
 						auto localPose1 = reinterpret_cast<physx::PxJoint*>(rb.jointID)->getLocalPose(physx::PxJointActorIndex::eACTOR1);

@@ -155,6 +155,8 @@
     <Compile Include="source\Inventory\Level2Inventory.cs" />
     <Compile Include="source\Inventory\Level3HUD.cs" />
     <Compile Include="source\Inventory\Level3Inventory.cs" />
+    <Compile Include="source\Inventory\Level4HUD.cs" />
+    <Compile Include="source\Inventory\Level4Inventory.cs" />
     <Compile Include="source\Inventory\TutorialLevelHUD.cs" />
     <Compile Include="source\Inventory\TutorialLevelInventory.cs" />
     <Compile Include="source\Level2\BridgeHorrorTrigger.cs" />
@@ -183,11 +185,13 @@
     <Compile Include="source\Level3\BoardedUp\TwoPlankNail.cs" />
     <Compile Include="source\Level3\BoardedUp\WoodenPlanks.cs" />
     <Compile Include="source\Level3\CandleFlicker.cs" />
+    <Compile Include="source\Level3\EyeballFollow2.cs" />
     <Compile Include="source\Level3\EyeballFollow.cs" />
     <Compile Include="source\Level3\GlitchSequence.cs" />
     <Compile Include="source\Level3\HammerGlow.cs" />
     <Compile Include="source\Level3\Level3Dialogue.cs" />
     <Compile Include="source\Level3\Level3ExitTrigger.cs" />
+    <Compile Include="source\Level3\MomPaintingCutscene.cs" />
     <Compile Include="source\Level3\PitPuzzle.cs" />
     <Compile Include="source\Level3\PropParty.cs" />
     <Compile Include="source\Level4\FinalCutscene.cs" />
@@ -228,6 +232,7 @@
     <Compile Include="source\Painting\PaintingAlignUIGarden.cs" />
     <Compile Include="source\Painting\PaintingAlignUILevel2.cs" />
     <Compile Include="source\Painting\PaintingAlignUILevel3.cs" />
+    <Compile Include="source\Painting\PaintingAlignUILevel4.cs" />
     <Compile Include="source\Painting\PictureAlign.cs" />
     <Compile Include="source\Painting\RotatePainting.cs" />
     <Compile Include="source\Painting\RotationGuidance.cs" />

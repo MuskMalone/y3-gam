@@ -222,6 +222,9 @@ namespace IGE.Utils
     extern public static void SetText(uint TextEntityID, string textContent);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetTextBoxWidth(uint EntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void AppendText(uint TextEntityID, string textContent);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -251,6 +254,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetLightIntensity(uint entityID, float intensity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetLightRange(uint entityID, float range);
     #endregion
 
 
@@ -418,6 +424,9 @@ namespace IGE.Utils
     internal extern static void SetLinearDamping(uint entity, float value);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetMotionType(uint entity, float value);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void LockRigidBodyRotation(uint entity, bool x, bool y, bool z);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -460,6 +469,9 @@ namespace IGE.Utils
     extern public static void SpawnToolBox();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetChildActiveToFollowParent(uint e, bool state);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SpawnOpenDoor();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -491,6 +503,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetVignetteStrength();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void RemoveBoxCollider(uint entity);
     #endregion
   }
 }

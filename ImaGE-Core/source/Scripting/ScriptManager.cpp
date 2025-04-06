@@ -108,9 +108,8 @@ namespace Mono
     { "PauseMenu", ScriptFieldType::PAUSEMENU },
     { "SettingsButtons", ScriptFieldType::SETTINGSBUTTON },
     { "PauseMenuButtons", ScriptFieldType::PAUSEMENUBUTTON },
-     { "NewGameCD", ScriptFieldType::NEWCD }
-
-
+     { "NewGameCD", ScriptFieldType::NEWCD },
+    { "Level4Inventory", ScriptFieldType::LEVEL4_INVENTORY }
   };
 }
 
@@ -253,6 +252,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(LockRigidBodyRotation);
   ADD_INTERNAL_CALL(SetDynamicFriction);
   ADD_INTERNAL_CALL(SetLinearDamping);
+  ADD_INTERNAL_CALL(SetMotionType);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -286,9 +286,11 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetTextColor);
   ADD_INTERNAL_CALL(SetTextColor);
   ADD_INTERNAL_CALL(GetTextScale);
+  ADD_INTERNAL_CALL(GetTextBoxWidth);
   ADD_INTERNAL_CALL(SetTextScale);
   ADD_INTERNAL_CALL(SetBloomIntensity);
   ADD_INTERNAL_CALL(GetBloomIntensity);
+  ADD_INTERNAL_CALL(SetLightRange);
   ADD_INTERNAL_CALL(SetLightIntensity);
   ADD_INTERNAL_CALL(GetLightIntensity);
   ADD_INTERNAL_CALL(GetText);
@@ -348,6 +350,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetContactPoints);
   ADD_INTERNAL_CALL(GetShortestDistance);
   ADD_INTERNAL_CALL(ChangeToolsPainting);
+  ADD_INTERNAL_CALL(SetChildActiveToFollowParent)
   ADD_INTERNAL_CALL(SpawnToolBox);
   ADD_INTERNAL_CALL(SpawnOpenDoor);
   ADD_INTERNAL_CALL(SpawnTaraSilhouette);
@@ -365,6 +368,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetGammaNorm);
   ADD_INTERNAL_CALL(SetVignetteStrength);
   ADD_INTERNAL_CALL(GetVignetteStrength);
+  ADD_INTERNAL_CALL(RemoveBoxCollider);
 }
 
 void ScriptManager::LoadAllMonoClass()
@@ -1182,6 +1186,12 @@ void Mono::SetLinearDamping(ECS::Entity::EntityID entityId, float val) {
   IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LINEAR_DAMPING);
 }
 
+void Mono::SetMotionType(ECS::Entity::EntityID entityId, int val) {
+    ECS::Entity entity{ entityId };
+    entity.GetComponent<Component::RigidBody>().motionType = (val == 0) ? Component::RigidBody::MotionType::DYNAMIC : Component::RigidBody::MotionType::KINEMATIC;
+    IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MOTION);
+}
+
 glm::vec3 Mono::GetMouseDelta()
 {
   //std::cout << Input::InputManager::GetInstance().GetMousePos() << "\n";
@@ -1690,6 +1700,23 @@ float Mono::GetTextScale(ECS::Entity::EntityID textEntity) {
   return ECS::Entity{ textEntity }.GetComponent<Component::Text>().scale;
 }
 
+float Mono::GetTextBoxWidth(ECS::Entity::EntityID textEntity) {
+    if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
+        Debug::DebugLogger::GetInstance().LogError("You are trying to Get Text Scale of an entity that does not have the Text Component");
+        return 0;
+    }
+    auto& textComp{ ECS::Entity{textEntity}.GetComponent<Component::Text>() };
+    if (auto textSys = Systems::SystemManager::GetInstance().GetSystem<Systems::TextSystem>().lock()) {
+        // code here
+        return textSys->GetTextWidth(textEntity, textComp.textContent, textComp.scale);
+    }
+    else {
+        IGE_DBGLOGGER.LogCritical("Text system does not exist!");
+    }
+    return 0;
+    
+}
+
 void Mono::SetTextScale(ECS::Entity::EntityID textEntity, float textScale) {
   if (!ECS::Entity{ textEntity }.HasComponent<Component::Text>()) {
     Debug::DebugLogger::GetInstance().LogError("You are trying to Get Text Scale of an entity that does not have the Text Component");
@@ -2031,6 +2058,15 @@ void Mono::ChangeToolsPainting() {
 
 }
 
+void Mono::SetChildActiveToFollowParent(ECS::Entity::EntityID entityID, bool state) {
+    ECS::Entity entity{ entityID };
+    if (ECS::EntityManager::GetInstance().IsValidEntity(entityID))
+    {
+        entity.SetIsActive(state);
+        ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(entity);
+    }
+}
+
 void Mono::SpawnToolBox() {
   ECS::Entity toolBox = ECS::EntityManager::GetInstance().GetEntityFromTag("Toolbox");
   if (ECS::EntityManager::GetInstance().IsValidEntity(toolBox))
@@ -2182,6 +2218,19 @@ float Mono::GetBloomIntensity(ECS::Entity::EntityID entity) {
   return 0.0f;
 }
 
+void Mono::SetLightRange(ECS::Entity::EntityID entity, float range) {
+    if (ECS::Entity(entity))
+    {
+        if (ECS::Entity(entity).HasComponent<Component::Light>())
+            ECS::Entity(entity).GetComponent<Component::Light>().mRange = range;
+        else
+            Debug::DebugLogger::GetInstance().LogError("SetLightRange: Entity " + ECS::Entity(entity).GetTag() + " does not have a Light component");
+    }
+    else {
+        Debug::DebugLogger::GetInstance().LogError("SetLightRange: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+    }
+}
+
 void Mono::SetLightIntensity(ECS::Entity::EntityID entity, float intensity) {
   if (ECS::Entity(entity))
   {
@@ -2280,6 +2329,13 @@ void Mono::SetVignetteStrength(float strength)
 float Mono::GetVignetteStrength()
 {
   return Graphics::PostProcessingManager::GetInstance().GetStrength();
+}
+
+void Mono::RemoveBoxCollider(ECS::Entity::EntityID e) {
+  ECS::Entity entity(e);
+  if (entity.HasComponent<Component::BoxCollider>()) {
+    entity.RemoveComponent<Component::BoxCollider>();
+  }
 }
 
 /*!**********************************************************************

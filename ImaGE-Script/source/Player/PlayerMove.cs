@@ -70,16 +70,16 @@ public class  PlayerMove : Entity
   // Update is called once per frame
   void Update()
   {
-    if(Input.GetKeyDown(KeyCode.N))
-    {
-      tochange = true;
-    }
+    //if(Input.GetKeyDown(KeyCode.N))
+    //{
+    //  tochange = true;
+    //}
 
-    if (tochange)
-    {
-      Global.isNighttime = true;
-      InternalCalls.SetDaySkyBox(cam.mEntityID, 1.0f);
-    }
+    //if (tochange)
+    //{
+    //  Global.isNighttime = true;
+    //  InternalCalls.SetDaySkyBox(cam.mEntityID, 1.0f);
+    //}
     if(Input.GetKeyDown(KeyCode.M))
     {
       canLook = false;

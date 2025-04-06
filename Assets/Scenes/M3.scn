@@ -2375,7 +2375,7 @@
                                 "scriptName": "CameraCapture",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": "NightPainting",
+                                        "data": "ttday",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "PictureName"
@@ -10418,7 +10418,7 @@
                     "Transform": {
                         "position": {
                             "x": 4.142082214355469,
-                            "y": 6.407981872558594,
+                            "y": 8.111410140991211,
                             "z": 36.752899169921875
                         },
                         "scale": {
@@ -10439,7 +10439,7 @@
                         },
                         "worldPos": {
                             "x": 70.95063781738281,
-                            "y": 16.607175827026367,
+                            "y": 18.310604095458984,
                             "z": 34.79376220703125
                         },
                         "worldScale": {
@@ -20467,7 +20467,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 13612275778870156583
+                            "ID": 12363053353531237807
                         }
                     }
                 }
@@ -36315,156 +36315,6 @@
                 "subDataId": 82,
                 "componentData": [
                     {
-                        "key": "ScriptComponent",
-                        "value": {
-                            "scriptList": [
-                                {
-                                    "entityID": 2098193,
-                                    "scriptName": "KeyDoor",
-                                    "scriptFieldInstList": [
-                                        {
-                                            "data": {
-                                                "entityID": 129,
-                                                "scriptName": "BlackBorder"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "blackBorder"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 210,
-                                                "scriptName": "Entity"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "corridorTrigger"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 197,
-                                                "scriptName": "Dialogue"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "dialogueSystem"
-                                            }
-                                        },
-                                        {
-                                            "data": "OpenDoor",
-                                            "type": "System.String",
-                                            "scriptField": {
-                                                "fieldName": "doorAnimName"
-                                            }
-                                        },
-                                        {
-                                            "data": true,
-                                            "type": "System.Boolean",
-                                            "scriptField": {
-                                                "fieldName": "doorInteraction"
-                                            }
-                                        },
-                                        {
-                                            "data": "SlamDoor",
-                                            "type": "System.String",
-                                            "scriptField": {
-                                                "fieldName": "doorSlamAnimName"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 76,
-                                                "scriptName": "Inventory"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "inventoryScript"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 1127,
-                                                "scriptName": "Entity"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "keyCamera"
-                                            }
-                                        },
-                                        {
-                                            "data": [
-                                                "It won't budge. I need a key."
-                                            ],
-                                            "type": "System.String[]",
-                                            "scriptField": {
-                                                "fieldName": "lockedDialogue"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 114,
-                                                "scriptName": "Entity"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "motherHumming"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 0,
-                                                "scriptName": "Entity"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "playerCamera"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 40,
-                                                "scriptName": "PlayerInteraction"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "playerInteraction"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 486,
-                                                "scriptName": "Entity"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "transitionCorridorTrigger"
-                                            }
-                                        },
-                                        {
-                                            "data": true,
-                                            "type": "System.Boolean",
-                                            "scriptField": {
-                                                "fieldName": "triggerInteraction"
-                                            }
-                                        },
-                                        {
-                                            "data": {
-                                                "entityID": 1049245,
-                                                "scriptName": "Entity"
-                                            },
-                                            "type": "Image.Mono.ScriptInstance",
-                                            "scriptField": {
-                                                "fieldName": "unlockDoorUI"
-                                            }
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    },
-                    {
                         "key": "Tag",
                         "value": {
                             "tag": "DoorCollider",
@@ -36472,7 +36322,9 @@
                         }
                     }
                 ],
-                "removedComponents": []
+                "removedComponents": [
+                    "ScriptComponent"
+                ]
             }
         },
         {
@@ -36677,6 +36529,93 @@
                                 "value": {
                                     "guid": {
                                         "ID": 11381209882212531234
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 53.09299850463867,
+                                            "y": 12.177000045776367,
+                                            "z": 47.76028823852539
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "L1_TOOL1",
+                                "value": {
+                                    "guid": {
+                                        "ID": 7166244902124931448
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 53.09299850463867,
+                                            "y": 12.177000045776367,
+                                            "z": 47.76028823852539
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "L1_TOOL2",
+                                "value": {
+                                    "guid": {
+                                        "ID": 14141141879242437304
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 53.09299850463867,
+                                            "y": 12.177000045776367,
+                                            "z": 47.76028823852539
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
+                                "key": "L1_TOOL3",
+                                "value": {
+                                    "guid": {
+                                        "ID": 10011179790537606413
                                     },
                                     "playSettings": {
                                         "position": {

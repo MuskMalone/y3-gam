@@ -79,9 +79,8 @@ public class CDDragAndDrop : Entity
     //dragging
     private float toCDDist;
     private Vector3 toCDVec;
-
-    //openorclose
-    public bool isLidOpen = false;
+  private Vector3 fromCDVec;
+  private OpenedCdLid CDPlayerScript;
     void Start()
     {
         InternalCalls.ShowCursor();
@@ -102,6 +101,7 @@ public class CDDragAndDrop : Entity
             originalScale.Y * 1.1f,
             originalScale.Z * 1.1f
         );
+      CDPlayerScript = cdPlayer.FindScript<OpenedCdLid>();
     }
         
     //private Image FindImageInChildren(uint parentEntityID)
@@ -131,6 +131,12 @@ public class CDDragAndDrop : Entity
         //Console.WriteLine("Entity " + InternalCalls.GetTag(hitEntity) + " hit ");
         //Console.WriteLine(MousePos.ToString() + " " + MousPosRayEnd.ToString());
             //string tag = InternalCalls.GetTag(mEntityID);
+        if (isBeingDragged && !InternalCalls.IsKeyPressed(KeyCode.MOUSE_BUTTON_1))
+        {
+          OnMouseUp();
+        }
+        
+
         if (initial)
         {
           transition.StartTransition(true, 3f, Transition.TransitionType.TV_SWITCH);
@@ -300,7 +306,6 @@ public class CDDragAndDrop : Entity
             //ShakeCD(0.5f, 0.005f);
             //return;
         //}
-        isLidOpen = true;
         isBeingDragged = true;
         //play sound
         InternalCalls.PlaySound(mEntityID, "PickupCD_SFX");
@@ -315,20 +320,20 @@ public class CDDragAndDrop : Entity
     public void OnMouseUp()
     {
         isBeingDragged = false;
-        bool mouseOnCDPlayer = false;
-        Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
-        Vector3 MousPosRayEnd = MousePos + (InternalCalls.GetCameraForward() * 5.0f);
-        uint hitEntity = InternalCalls.Raycast(MousePos, MousPosRayEnd);
-        string tag = InternalCalls.GetTag(mEntityID);
-        if (InternalCalls.GetTag(hitEntity) == "CDPlayer_Body") 
-        {
+    //bool mouseOnCDPlayer = false;
+    //Vector3 MousePos = InternalCalls.GetMousePosWorld(1.0f);
+    //Vector3 MousPosRayEnd = MousePos + (InternalCalls.GetCameraForward() * 5.0f);
+    //uint hitEntity = InternalCalls.Raycast(MousePos, MousPosRayEnd);
+    //string tag = InternalCalls.GetTag(mEntityID);
+    //if (InternalCalls.GetTag(hitEntity) == "CDPlayer_Body") 
+    //{
 
-            mouseOnCDPlayer = true;
-        }
+    //    mouseOnCDPlayer = true;
+    //}
+    bool mouseOnCDPlayer = CDPlayerScript.isCDInPlayer;
 
         if (mouseOnCDPlayer)
         {
-            isLidOpen = true;
            CDinCase.SetActive(true);
       //if (tag == "NewGameCDChild")
       //      {
@@ -348,13 +353,12 @@ public class CDDragAndDrop : Entity
       //         CreditCDinCase.SetActive(true);
       //      }
 
-
-             InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
+      SetActive(false);
+             //InternalCalls.SetWorldPosition(mEntityID, ref outOfTheWay);
             NextScene();
         }
         else
         {
-            isLidOpen = false;
             InternalCalls.SetWorldPosition(mEntityID, ref originalPosition);
         }
     }
@@ -363,9 +367,10 @@ public class CDDragAndDrop : Entity
     {
         Vector3 MousePos = InternalCalls.GetMousePosWorld(toCDDist);
         //mouse offset to make sure the mouse is not in the cd hole
-        MousePos.X += 0.03f;
-        MousePos.Y += 0.03f;
+        //MousePos.X += 0.03f;
+        //MousePos.Y += 0.03f;
         InternalCalls.SetWorldPosition(mEntityID, ref MousePos);
+    InternalCalls.UpdatePhysicsToTransform(mEntityID);
     }
     private void ShakeCD(float duration, float magnitude)
     {
