@@ -110,7 +110,7 @@
             "value": {
                 "shaders": [
                     {
-                        "active": true,
+                        "active": false,
                         "shader": 13294960607296803192
                     }
                 ],
@@ -229,6 +229,19 @@
         },
         {
             "key": "contacttest",
+            "value": {
+                "shaders": [],
+                "fogMinDist": 1.0,
+                "fogMaxDist": 1000.0,
+                "fogColor": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0
+                }
+            }
+        },
+        {
+            "key": "credits",
             "value": {
                 "shaders": [],
                 "fogMinDist": 1.0,
