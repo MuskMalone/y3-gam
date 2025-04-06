@@ -2037,11 +2037,20 @@ void Mono::HideCursor() {
 void Mono::ChangeToolsPainting() {
   ECS::Entity ToolsUI = ECS::EntityManager::GetInstance().GetEntityFromTag("ToolsPaintingUI");
   ECS::Entity Toolspaint = ECS::EntityManager::GetInstance().GetEntityFromTag("ToolsPainting");
+  ECS::Entity ToolsUIINv = ECS::EntityManager::GetInstance().GetEntityFromTag("ToolsPaintingUI (FOR INVENTORY)");
+
   IGE::Assets::GUID toolsPaintingNight{ IGE::Assets::AssetManager::GetInstance().PathToGUID("..\\Assets\\Textures\\ToolsPaintingNight.png") };
   IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(toolsPaintingNight);
   if (ECS::EntityManager::GetInstance().IsValidEntity(ToolsUI))
   {
     ToolsUI.GetComponent<Component::Image>().textureAsset = toolsPaintingNight;
+  }
+
+  IGE::Assets::GUID toolsPaintingNightInv{ IGE::Assets::AssetManager::GetInstance().PathToGUID("..\\Assets\\Textures\\ToolsNightPaintingFrameUI.png") };
+  IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(toolsPaintingNightInv);
+  if (ECS::EntityManager::GetInstance().IsValidEntity(ToolsUIINv))
+  {
+      ToolsUIINv.GetComponent<Component::Image>().textureAsset = toolsPaintingNightInv;
   }
  
   for (ECS::Entity& child : ECS::EntityManager::GetInstance().GetChildEntity(Toolspaint))
