@@ -1744,6 +1744,51 @@
                                 }
                             },
                             {
+                                "key": "Glitch",
+                                "value": {
+                                    "guid": {
+                                        "ID": 419373065535952996
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 5.6302056312561035,
+                                            "y": 9.895999908447266,
+                                            "z": 46.86476135253906
+                                        },
+                                        "volume": 0.699999988079071,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "LINEAR",
+                                        "isBGM": true,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": [
+                                            {
+                                                "type": "REVERB",
+                                                "reverb_decayTime": 1500.0,
+                                                "reverb_earlyDelay": 0.0,
+                                                "reverb_lateDelay": 0.0,
+                                                "reverb_diffusion": 100.0,
+                                                "reverb_density": 100.0,
+                                                "echo_delay": 500.0,
+                                                "echo_feedback": 50.0,
+                                                "echo_wetDryMix": 50.0,
+                                                "distortion_level": 50.0,
+                                                "chorus_rate": 0.800000011920929,
+                                                "chorus_depth": 0.5,
+                                                "chorus_mix": 50.0
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            {
                                 "key": "HallwayAmbience",
                                 "value": {
                                     "guid": {
@@ -5516,6 +5561,7 @@
                 178,
                 231,
                 450,
+                539,
                 589,
                 597,
                 602,
@@ -11845,7 +11891,7 @@
                 {
                     "Tag": {
                         "tag": "MomAngryTrigger",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
@@ -12696,6 +12742,99 @@
                 ],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 539,
+            "Parent": 75,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "EndVideoCutscene",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 2.5
+                        },
+                        "scale": {
+                            "x": 35.84000015258789,
+                            "y": 20.259998321533203,
+                            "z": 20.259998321533203
+                        },
+                        "rotation": {
+                            "x": 1.0,
+                            "y": 0.0,
+                            "z": -0.0,
+                            "w": -4.371138828673793e-8
+                        },
+                        "eulerAngles": {
+                            "x": 180.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 2.5
+                        },
+                        "worldScale": {
+                            "x": 35.84000015258789,
+                            "y": 20.259998321533203,
+                            "z": 20.259998321533203
+                        },
+                        "worldRot": {
+                            "x": 1.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": -4.371138828673793e-8
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "UI"
+                    }
+                },
+                {
+                    "Video": {
+                        "renderType": "UI",
+                        "guid": {
+                            "ID": 1418146722737285006
+                        },
+                        "audioEnabled": true,
+                        "loop": false,
+                        "playOnStart": true,
+                        "audioOffset": 5000,
+                        "alpha": 255,
+                        "audioPlaySettings": {
+                            "position": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 2.5
+                            },
+                            "volume": 1.0,
+                            "pitch": 1.0,
+                            "pan": 0.0,
+                            "mute": false,
+                            "loop": false,
+                            "playOnAwake": false,
+                            "dopplerLevel": 1.0,
+                            "minDistance": 1.0,
+                            "maxDistance": 500.0,
+                            "rolloffType": "NONE",
+                            "isBGM": false,
+                            "enablePostProcessing": false,
+                            "processingType": "REVERB",
+                            "postProcessingSettings": []
+                        }
+                    }
+                }
+            ]
         },
         {
             "ID": 543,
@@ -14190,6 +14329,8 @@
                 1066,
                 1049174,
                 1049180,
+                1049391,
+                1049394,
                 1049595,
                 2097904,
                 7340132,
@@ -22594,6 +22735,26 @@
                                         "scriptField": {
                                             "fieldName": "playerMove"
                                         }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 75,
+                                            "scriptName": "Transition"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "transition"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 539,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "videoEntity"
+                                        }
                                     }
                                 ]
                             }
@@ -24580,12 +24741,42 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 1049391,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "DemonPictureFORLEVEL4"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 749,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "DownArrow"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 363,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Gate1FORLEVEL4"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 374,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Gate2FORLEVEL4"
                                         }
                                     },
                                     {
@@ -24616,6 +24807,26 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "UpArrow"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 539,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "VideoCutscene"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049394,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "WashDownEffectImageFORLEVEL4"
                                         }
                                     },
                                     {
@@ -24658,7 +24869,7 @@
                                         }
                                     },
                                     {
-                                        "data": 1.2000000476837158,
+                                        "data": 2.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "fadeSpeed"
@@ -24767,6 +24978,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "targetY"
+                                        }
+                                    },
+                                    {
+                                        "data": 7.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "washdownEffectTotalTime"
                                         }
                                     }
                                 ]
@@ -26164,6 +26382,150 @@
                 ],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 1049391,
+            "Parent": 597,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "DemonPainting",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.17000000178813934,
+                            "z": 1.0
+                        },
+                        "scale": {
+                            "x": 12.975000381469727,
+                            "y": 13.189000129699707,
+                            "z": 14.039999961853027
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.17000000178813934,
+                            "z": 1.0
+                        },
+                        "worldScale": {
+                            "x": 12.975000381469727,
+                            "y": 13.189000129699707,
+                            "z": 14.039999961853027
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 6165445926244017842
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 1049394,
+            "Parent": 597,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "WashDownEffectPainting",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.17000000178813934,
+                            "z": 2.0
+                        },
+                        "scale": {
+                            "x": 12.975000381469727,
+                            "y": 13.189000129699707,
+                            "z": 14.399999618530273
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.17000000178813934,
+                            "z": 2.0
+                        },
+                        "worldScale": {
+                            "x": 12.975000381469727,
+                            "y": 13.189000129699707,
+                            "z": 14.399999618530273
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "textureAssetGUID": {
+                            "ID": 75625789725529545
+                        }
+                    }
+                }
+            ]
         },
         {
             "ID": 1049497,

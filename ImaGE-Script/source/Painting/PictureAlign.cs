@@ -8,6 +8,7 @@ using System.Numerics;
 using IGE.Utils;
 using System.Text.RegularExpressions;
 using System.Security;
+using System.Runtime.CompilerServices;
 
 public class PictureAlign : Entity
 {
@@ -23,6 +24,13 @@ public class PictureAlign : Entity
   private bool toStop = true;
   private bool isTransitioning = false;
   public bool isNight = false;
+
+  // For Level 4
+  public Entity DemonPictureFORLEVEL4;
+  public Entity WashDownEffectImageFORLEVEL4;
+  public Entity Gate1FORLEVEL4;
+  public Entity Gate2FORLEVEL4;
+  public Entity VideoCutscene;
 
   public float positionThreshold = 0.5f;  // Threshold for position alignment
   public float rotationThreshold = 2f;    // Threshold for rotation alignment (in degrees)
@@ -85,9 +93,20 @@ public class PictureAlign : Entity
     // For hiding level2 inventory when teleporting
     private Level2Inventory level2InventoryScript;
 
-    void Start()
+    private float washdownEffectTimer = 0f;
+    public float washdownEffectTotalTime = 3f;
+
+    private Level4Inventory level4InventoryScript;
+    private Transition transition;
+    private bool washingDown = false;
+    private float currentAlphaIntensity = 0f;
+    private float alphaProgress = 0f;
+
+  void Start()
     {
         level2InventoryScript = FindObjectOfType<Level2Inventory>();
+        level4InventoryScript = FindObjectOfType<Level4Inventory>();
+        transition = FindObjectOfType<Transition>();
         //tutorialFade = FindObjectOfType<TutorialFade>();
         // Initialize the movement and camera control components
         playerMove = player.FindObjectOfType<PlayerMove>();
@@ -257,7 +276,62 @@ public class PictureAlign : Entity
         }
         else if (picture == "MotherBehindGatePainting")
         {
-          
+          if (!washingDown && washdownEffectTimer == 0)
+          {
+            level4InventoryScript.CloseInventoryAndUnselectAllItems();
+            currentImg.SetActive(false);
+            DemonPictureFORLEVEL4.SetActive(true);
+            playerMove.FreezePlayer();
+            WashDownEffectImageFORLEVEL4.SetActive(true);
+            washingDown = true;
+            InternalCalls.SetShaderState(0, true);
+            InternalCalls.StopSound(player.mEntityID, "BGM");
+            InternalCalls.PlaySound(player.mEntityID, "Glitch");
+          }
+
+          if (washingDown)
+          {
+            washdownEffectTimer += Time.deltaTime;
+
+            alphaProgress = Mathf.Clamp01(washdownEffectTimer / washdownEffectTotalTime);
+            currentAlphaIntensity = Easing.EaseInOutBounce(1.0f, 0f, alphaProgress);
+            Image paintingImage = WashDownEffectImageFORLEVEL4.GetComponent<Image>();
+            Color painting_color = paintingImage.color;
+            painting_color.a = currentAlphaIntensity;
+            paintingImage.color = painting_color;
+
+            if (alphaProgress >= 1.0f)
+            {
+              washingDown = false;
+              InternalCalls.SetShaderState(0, false);
+              InternalCalls.StopSound(player.mEntityID, "Glitch");
+              InternalCalls.PlaySound(player.mEntityID, "PaintingMatchObject");
+            }
+          }
+
+          if (alphaProgress >= 1.0f && !washingDown)
+          {
+            if (!hasFaded)
+            {
+              LetEmLoose();
+              FadeOutDemon();
+              if (Mathf.Abs(currentAlpha - 0f) < 0.1f)
+              {
+                hasFaded = true;
+              }
+            }
+            else
+            {
+              transition.StartTransition(false, 1.0f, Transition.TransitionType.FADE);
+              currentAlpha = 1f;
+              ResetCurrentImgAlpha();
+              isTransitioning = false;
+              hasFaded = false;
+              currentImg.Level4RemoveItself();
+              currentImg = null;
+              VideoCutscene.SetActive(true);
+            }
+          }
         }
 
         // Greek god paintings: Dionysus, Artemis, Zeus, Poseidon
@@ -729,49 +803,75 @@ public class PictureAlign : Entity
         }
     }
 
-    //private void TransitionCamera()
-    //{
-    //    if (!isMovingCamera)
-    //    {
-    //        // Start camera transition
-    //        isMovingCamera = true;
-    //        elapsedTime = 0f;
-    //        startY = mainCamera.GetComponent<Transform>().position.Y;
-    //    }
+  void FadeOutDemon()
+  {
+    if (DemonPictureFORLEVEL4 != null || border != null)
+    {
+      isFading = true;
+      currentAlpha = Mathf.Lerp(currentAlpha, 0f, fadeSpeed * Time.deltaTime);
 
-    //    if (isMovingCamera)
-    //    {
-    //        elapsedTime += InternalCalls.GetDeltaTime();
+      Image paintingImage = DemonPictureFORLEVEL4.GetComponent<Image>();
+      Color painting_color = paintingImage.color;
+      painting_color.a = currentAlpha;
+      paintingImage.color = painting_color;
 
-    //        // Lerp the camera Y position over time
-    //        float newY = Mathf.Lerp(startY, targetY, elapsedTime / moveDuration);
-    //        mainCamera.GetComponent<Transform>().position = new Vector3(
-    //            mainCamera.GetComponent<Transform>().position.X,
-    //            newY,
-    //            mainCamera.GetComponent<Transform>().position.Z
-    //        );
+      Image borderImage = border.GetComponent<Image>();
+      Color border_color = borderImage.color;
+      border_color.a = currentAlpha;
+      borderImage.color = border_color;
 
-    //        // Check if movement is complete
-    //        if (elapsedTime >= moveDuration)
-    //        {
-    //            mainCamera.GetComponent<Transform>().position = new Vector3(
-    //                mainCamera.GetComponent<Transform>().position.X,
-    //                targetY,
-    //                mainCamera.GetComponent<Transform>().position.Z
-    //            );
+      if (Mathf.Abs(currentAlpha - 0f) < 0.01f)
+      {
+        currentAlpha = 0f;
+        hasFaded = true;
+        isFading = false;
+      }
+    }
+  }
 
-    //            isMovingCamera = false; // Stop updating
+  //private void TransitionCamera()
+  //{
+  //    if (!isMovingCamera)
+  //    {
+  //        // Start camera transition
+  //        isMovingCamera = true;
+  //        elapsedTime = 0f;
+  //        startY = mainCamera.GetComponent<Transform>().position.Y;
+  //    }
 
-    //            // Proceed with scene transition
-    //            isTransitioning = false;
-    //            playerMove.UnfreezePlayer();
-    //            currentImg.RemoveItself();
-    //            currentImg = null;
-    //            InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
-    //        }
-    //    }
-    //}
-    private void TransitionCamera()
+  //    if (isMovingCamera)
+  //    {
+  //        elapsedTime += InternalCalls.GetDeltaTime();
+
+  //        // Lerp the camera Y position over time
+  //        float newY = Mathf.Lerp(startY, targetY, elapsedTime / moveDuration);
+  //        mainCamera.GetComponent<Transform>().position = new Vector3(
+  //            mainCamera.GetComponent<Transform>().position.X,
+  //            newY,
+  //            mainCamera.GetComponent<Transform>().position.Z
+  //        );
+
+  //        // Check if movement is complete
+  //        if (elapsedTime >= moveDuration)
+  //        {
+  //            mainCamera.GetComponent<Transform>().position = new Vector3(
+  //                mainCamera.GetComponent<Transform>().position.X,
+  //                targetY,
+  //                mainCamera.GetComponent<Transform>().position.Z
+  //            );
+
+  //            isMovingCamera = false; // Stop updating
+
+  //            // Proceed with scene transition
+  //            isTransitioning = false;
+  //            playerMove.UnfreezePlayer();
+  //            currentImg.RemoveItself();
+  //            currentImg = null;
+  //            InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\Level2.scn");
+  //        }
+  //    }
+  //}
+  private void TransitionCamera()
     {
         if (!isMovingCamera)
         {
@@ -844,6 +944,27 @@ public class PictureAlign : Entity
         }
     }
 
-    
+  private void LetEmLoose()
+  {
+      if (Gate1FORLEVEL4 != null && Gate2FORLEVEL4 != null)
+      {
+        Vector3 Gate1Position = new Vector3(0.143f, 0f, 0.226f);
+        InternalCalls.SetPosition(Gate1FORLEVEL4.mEntityID, ref Gate1Position);
+
+        Vector3 Gate1Rotation = new Vector3(0f, 38.897f, 0f);
+        InternalCalls.SetRotationEuler(Gate1FORLEVEL4.mEntityID, ref Gate1Rotation);
+
+        Vector3 Gate2Position = new Vector3(-0.144f, 0f, 0.237f);
+        InternalCalls.SetPosition(Gate2FORLEVEL4.mEntityID, ref Gate2Position);
+
+        Vector3 Gate2Rotation = new Vector3(0f, -38.401f, 0f);
+        InternalCalls.SetRotationEuler(Gate2FORLEVEL4.mEntityID, ref Gate2Rotation);
+      }
+
+      else
+      {
+        Debug.Log("SET YOUR GATES");
+      }
+    }
 
 }

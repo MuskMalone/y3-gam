@@ -108,7 +108,12 @@
         {
             "key": "Level4",
             "value": {
-                "shaders": [],
+                "shaders": [
+                    {
+                        "active": true,
+                        "shader": 13294960607296803192
+                    }
+                ],
                 "fogMinDist": 1.0,
                 "fogMaxDist": 1000.0,
                 "fogColor": {
