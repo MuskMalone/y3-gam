@@ -252,6 +252,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(LockRigidBodyRotation);
   ADD_INTERNAL_CALL(SetDynamicFriction);
   ADD_INTERNAL_CALL(SetLinearDamping);
+  ADD_INTERNAL_CALL(SetMotionType);
 
   //Debug Functions
   ADD_INTERNAL_CALL(Log);
@@ -289,6 +290,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(SetTextScale);
   ADD_INTERNAL_CALL(SetBloomIntensity);
   ADD_INTERNAL_CALL(GetBloomIntensity);
+  ADD_INTERNAL_CALL(SetLightRange);
   ADD_INTERNAL_CALL(SetLightIntensity);
   ADD_INTERNAL_CALL(GetLightIntensity);
   ADD_INTERNAL_CALL(GetText);
@@ -348,6 +350,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(GetContactPoints);
   ADD_INTERNAL_CALL(GetShortestDistance);
   ADD_INTERNAL_CALL(ChangeToolsPainting);
+  ADD_INTERNAL_CALL(SetChildActiveToFollowParent)
   ADD_INTERNAL_CALL(SpawnToolBox);
   ADD_INTERNAL_CALL(SpawnOpenDoor);
   ADD_INTERNAL_CALL(SpawnTaraSilhouette);
@@ -1181,6 +1184,12 @@ void Mono::SetLinearDamping(ECS::Entity::EntityID entityId, float val) {
   ECS::Entity entity{ entityId };
   entity.GetComponent<Component::RigidBody>().linearDamping = val;
   IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::LINEAR_DAMPING);
+}
+
+void Mono::SetMotionType(ECS::Entity::EntityID entityId, int val) {
+    ECS::Entity entity{ entityId };
+    entity.GetComponent<Component::RigidBody>().motionType = (val == 0) ? Component::RigidBody::MotionType::DYNAMIC : Component::RigidBody::MotionType::KINEMATIC;
+    IGE::Physics::PhysicsSystem::GetInstance()->ChangeRigidBodyVar(entity, Component::RigidBodyVars::MOTION);
 }
 
 glm::vec3 Mono::GetMouseDelta()
@@ -2049,6 +2058,15 @@ void Mono::ChangeToolsPainting() {
 
 }
 
+void Mono::SetChildActiveToFollowParent(ECS::Entity::EntityID entityID, bool state) {
+    ECS::Entity entity{ entityID };
+    if (ECS::EntityManager::GetInstance().IsValidEntity(entityID))
+    {
+        entity.SetIsActive(state);
+        ECS::EntityManager::GetInstance().SetChildActiveToFollowParent(entity);
+    }
+}
+
 void Mono::SpawnToolBox() {
   ECS::Entity toolBox = ECS::EntityManager::GetInstance().GetEntityFromTag("Toolbox");
   if (ECS::EntityManager::GetInstance().IsValidEntity(toolBox))
@@ -2198,6 +2216,19 @@ float Mono::GetBloomIntensity(ECS::Entity::EntityID entity) {
     Debug::DebugLogger::GetInstance().LogError("GetBloomIntensity: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
   }
   return 0.0f;
+}
+
+void Mono::SetLightRange(ECS::Entity::EntityID entity, float range) {
+    if (ECS::Entity(entity))
+    {
+        if (ECS::Entity(entity).HasComponent<Component::Light>())
+            ECS::Entity(entity).GetComponent<Component::Light>().mRange = range;
+        else
+            Debug::DebugLogger::GetInstance().LogError("SetLightRange: Entity " + ECS::Entity(entity).GetTag() + " does not have a Light component");
+    }
+    else {
+        Debug::DebugLogger::GetInstance().LogError("SetLightRange: No entity with ID: " + std::to_string(static_cast<uint32_t>(entity)));
+    }
 }
 
 void Mono::SetLightIntensity(ECS::Entity::EntityID entity, float intensity) {
