@@ -16391,7 +16391,8 @@
             "Parent": 326,
             "Child Entities": [
                 358,
-                359
+                359,
+                744
             ],
             "Components": [
                 {
@@ -16462,14 +16463,14 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": 1.899999976158142,
-                            "y": -6.400000095367432,
+                            "x": 0.0,
+                            "y": -8.550000190734863,
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 16.65999984741211,
-                            "y": 5.340000152587891,
-                            "z": -0.4000000059604645
+                            "x": 13.260000228881836,
+                            "y": 0.9200000166893005,
+                            "z": -3.799999237060547
                         },
                         "rotation": {
                             "x": 0.0,
@@ -16483,14 +16484,14 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": 1.899999976158142,
-                            "y": -6.400000095367432,
+                            "x": 0.0,
+                            "y": -8.550000190734863,
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 16.65999984741211,
-                            "y": 5.340000152587891,
-                            "z": -0.4000000059604645
+                            "x": 13.260000228881836,
+                            "y": 0.9200000166893005,
+                            "z": -3.799999237060547
                         },
                         "worldRot": {
                             "x": 0.0,
@@ -16508,13 +16509,13 @@
                 {
                     "Image": {
                         "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
-                            "w": 1.0
+                            "x": 0.3686274588108063,
+                            "y": 0.3490196168422699,
+                            "z": 0.29019609093666077,
+                            "w": 0.6078431606292725
                         },
                         "textureAssetGUID": {
-                            "ID": 18060467368391342928
+                            "ID": 2203736300003804932
                         }
                     }
                 }
@@ -16536,8 +16537,8 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -4.599999904632568,
-                                            "y": -7.599999904632568,
+                                            "x": 0.0,
+                                            "y": -8.859999656677246,
                                             "z": 0.0
                                         },
                                         "volume": 1.0,
@@ -16569,8 +16570,8 @@
                 {
                     "Transform": {
                         "position": {
-                            "x": -4.599999904632568,
-                            "y": -7.599999904632568,
+                            "x": 0.0,
+                            "y": -8.859999656677246,
                             "z": 0.0
                         },
                         "scale": {
@@ -16590,8 +16591,8 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -4.599999904632568,
-                            "y": -7.599999904632568,
+                            "x": 0.0,
+                            "y": -8.859999656677246,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -16616,17 +16617,17 @@
                     "Text": {
                         "textContent": "YOUR TEXT HERE",
                         "color": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
+                            "x": 0.8227424621582031,
+                            "y": 0.8227424621582031,
+                            "z": 0.8227424621582031,
                             "w": 1.0
                         },
-                        "scale": 0.006000000052154064,
+                        "scale": 0.004000000189989805,
                         "textAssetGUID": {
                             "ID": 11715672305158928427
                         },
                         "fontFamilyName": "Sniglet-Regular",
-                        "alignment": 0,
+                        "alignment": 2,
                         "multiLineSpacingOffset": 0.0,
                         "textBoxEnabledFlag": false,
                         "textBoxDimensions": {
@@ -16711,6 +16712,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "SurprisedTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 744,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "TaraName"
                                         }
                                     },
                                     {
@@ -24209,7 +24220,7 @@
                                     },
                                     {
                                         "data": [
-                                            "I can't leave yet. I need to get that painting fragment \nfirst."
+                                            "I can't leave yet. I need to get that painting fragment  first."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -36060,6 +36071,89 @@
                         "entityLinkedJointOffset": {
                             "x": -0.5,
                             "y": 1.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 744,
+            "Parent": 357,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "TaraName",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -2.799999952316284,
+                            "y": -8.859999656677246,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -2.799999952316284,
+                            "y": -8.859999656677246,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "Tara: ",
+                        "color": {
+                            "x": 1.0,
+                            "y": 0.7882353067398071,
+                            "z": 0.3294117748737335,
+                            "w": 1.0
+                        },
+                        "scale": 0.004000000189989805,
+                        "textAssetGUID": {
+                            "ID": 11715672305158928427
+                        },
+                        "fontFamilyName": "Sniglet-Regular",
+                        "alignment": 2,
+                        "multiLineSpacingOffset": 0.0,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
                             "z": 0.0
                         }
                     }

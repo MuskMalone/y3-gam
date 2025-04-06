@@ -63,7 +63,8 @@ public class Hammer : Entity, IInventoryItem
         InternalCalls.PlaySound(mEntityID, "PickupObjects");
         InternalCalls.PlaySound(mEntityID, "IncoherentWhispers");
         inventoryScript.Additem(this);
-        dialogueSystem.SetDialogue(hammerDialogue, new Dialogue.Emotion[] { Emotion.Surprised }, 0.01f, "IncoherentWhispers", "..\\Assets\\Textures\\Stagedive-d58X.ttf");
+        dialogueSystem.SetDialogue(hammerDialogue, new Dialogue.Emotion[] { Emotion.Surprised }, 0.004f, "IncoherentWhispers", "..\\Assets\\Textures\\Stagedive-d58X.ttf");
+        dialogueSystem.turnOffTara();
         isBeingPickedUp = false;
       }
       return;
