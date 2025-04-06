@@ -244,7 +244,7 @@ public class PictureAlign : Entity
         else if (picture == "CorridorPainting")
         {
           FadeOut();
-          InternalCalls.SpawnTaraSilhouette();
+          //InternalCalls.SpawnTaraSilhouette();
           if (hasFaded)
           {
             TransitionCamera();
