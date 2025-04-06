@@ -92,7 +92,7 @@ public class Dialogue : Entity
       InternalCalls.AppendText(mEntityID, lines[lineIndex][charIndex].ToString());
       charIndex++;
       nextCharTime = Time.gameTime + textSpeed;
-      SkipTyping();
+     // SkipTyping();
     }
 
     if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && charIndex >= lines[lineIndex].Length)

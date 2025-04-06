@@ -121,7 +121,7 @@ public class Level3Dialogue : Entity
             charIndex++;
             nextCharTime = Time.gameTime + textSpeed;
             isLineComplete = false;
-            SkipTyping();
+            //SkipTyping();
         }
 
         if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && charIndex >= lines[lineIndex].Length)
