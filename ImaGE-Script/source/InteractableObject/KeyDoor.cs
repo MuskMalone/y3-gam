@@ -83,8 +83,7 @@ public class KeyDoor : Entity
           InternalCalls.PlaySound(mEntityID, "DoorSwing");
           initialAnimation = false;
         }
-        
-        if (!InternalCalls.IsPlayingAnimation(parent))
+        else if (!InternalCalls.IsPlayingAnimation(parent))
         {
           InternalCalls.PlaySound(mEntityID, "DoorSlam");
           currentAnim = null;
