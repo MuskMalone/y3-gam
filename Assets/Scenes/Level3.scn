@@ -24058,6 +24058,41 @@
             "Child Entities": [],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "L3_1",
+                                "value": {
+                                    "guid": {
+                                        "ID": 12800361712710987919
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": -8.4241943359375,
+                                            "y": 2.8640220165252686,
+                                            "z": -163.2230682373047
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "ExitTrigger",
                         "isActive": true
@@ -24174,7 +24209,7 @@
                                     },
                                     {
                                         "data": [
-                                            "I can't leave without the painting fragment."
+                                            "I can't leave yet. I need to get that painting fragment \nfirst."
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
