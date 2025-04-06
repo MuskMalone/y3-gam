@@ -3,19 +3,15 @@ using System;
 using System.Numerics;
 using System.Text;
 
-public class EyeBallFollowManager : Entity
+public class HeadFollow : Entity
 {
   public Entity player;
   public float RotationSpeed { get; set; } = 5f;  // Speed in radians per second
   public Vector3 headOffset = new Vector3(0, 1.0f, 0);
   private static readonly Vector3 LocalForward = -Vector3.UnitZ;
-  public float followDistance = 10f;
   public bool isFollowing = false;
 
-  // Store the original rotation of the eyeball.
-  private Quaternion originalRotation;
-
-  EyeBallFollowManager() : base()
+  HeadFollow() : base()
   {
   }
   bool ApproximatelyEqual(Quaternion q1, Quaternion q2, float tolerance = 0.0001f)
@@ -26,21 +22,18 @@ public class EyeBallFollowManager : Entity
   // Start is called before the first frame update
   void Start()
   {
-    // Save the eyeball's original rotation.
-    originalRotation = GetComponent<Transform>().rotation;
   }
 
   // Update is called once per frame
   void Update()
   {
-    // Calculate the player's head position using the offset.
-    Vector3 headPosition = player.GetComponent<Transform>().worldPosition + headOffset;
-    // Calculate the distance between the eyeball and the player's head.
-    float distance = Vector3.Distance(GetComponent<Transform>().worldPosition, headPosition);
-
-    // Only rotate to follow if the player is within followDistance.
-    if (distance < followDistance)
+    if (Global.shouldFollow)
     {
+      // Calculate the player's head position using the offset.
+      Vector3 headPosition = player.GetComponent<Transform>().worldPosition + headOffset;
+      // Calculate the distance between the eyeball and the player's head.
+      float distance = Vector3.Distance(GetComponent<Transform>().worldPosition, headPosition);
+
       // Calculate the direction from the eyeball to the player's head.
       Vector3 directionToHead = Vector3.Normalize(headPosition - GetComponent<Transform>().worldPosition);
 
@@ -75,25 +68,16 @@ public class EyeBallFollowManager : Entity
           targetRotation * GetComponent<Transform>().rotation,
           RotationSpeed * Time.deltaTime
       );
-    }
-    else
-    {
-      isFollowing = false;
-      // Player is out of range: smoothly return to the original rotation.
-      GetComponent<Transform>().rotation = Quaternion.Slerp(
-          GetComponent<Transform>().rotation,
-          originalRotation,
-          RotationSpeed * Time.deltaTime
-      );
-    }
 
-    if (isFollowing)
-    {
-      InternalCalls.SetSoundVolume(mEntityID, "EyeballMove2_SFX.wav", 1f);
-    }
-    else
-    {
-      InternalCalls.SetSoundVolume(mEntityID, "EyeballMove2_SFX.wav", 0.0f);
+
+      if (isFollowing)
+      {
+        InternalCalls.SetSoundVolume(mEntityID, "EyeballMove2_SFX.wav", 1f);
+      }
+      else
+      {
+        InternalCalls.SetSoundVolume(mEntityID, "EyeballMove2_SFX.wav", 0.0f);
+      }
     }
   }
 }
