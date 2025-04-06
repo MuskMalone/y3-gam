@@ -189,6 +189,7 @@ public class PauseMenu : Entity
             if (transitionTimer >= transitionDuration)
             {
               Reset();
+              ResumeGame();
               InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\mainmenu.scn");
             }
             break;
