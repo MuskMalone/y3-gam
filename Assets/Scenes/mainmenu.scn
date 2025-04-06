@@ -1,3203 +1,1110 @@
 {
     "Scene": [
         {
-            "ID": 2,
-            "Parent": 27,
+            "ID": 1048578,
+            "Parent": 1048583,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 23,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048579,
+            "Parent": 1048608,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 39,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048583,
+            "Parent": 1048603,
             "Child Entities": [
-                21
+                1048578
             ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Television",
-                        "isActive": true
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 2.9252126216888428,
-                            "y": -0.23399999737739563,
-                            "z": -0.5259040594100952
-                        },
-                        "scale": {
-                            "x": 1.0360000133514404,
-                            "y": 1.0360000133514404,
-                            "z": 1.3104701042175293
-                        },
-                        "rotation": {
-                            "x": -4.5786242708345526e-7,
-                            "y": -0.9124203324317932,
-                            "z": 4.5786242708345526e-7,
-                            "w": 0.4092543125152588
-                        },
-                        "eulerAngles": {
-                            "x": -179.99989318847656,
-                            "y": -48.316001892089844,
-                            "z": 179.99989318847656
-                        },
-                        "worldPos": {
-                            "x": 29.252126693725586,
-                            "y": -2.3399999141693115,
-                            "z": -5.259040832519531
-                        },
-                        "worldScale": {
-                            "x": 10.360000610351563,
-                            "y": 10.360000610351563,
-                            "z": 13.104701042175293
-                        },
-                        "worldRot": {
-                            "x": -4.5786242708345526e-7,
-                            "y": -0.9124203324317932,
-                            "z": 4.5786242708345526e-7,
-                            "w": 0.4092543125152588
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 5793627015618845796
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Television",
-                        "GUID": {
-                            "ID": 15247134111291787064
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
+                "subDataId": 22,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 3,
-            "Parent": 1048584,
-            "Child Entities": [
-                24
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "CreditsGameCDinCase",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": -0.31994688510894775,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 0.017999999225139618,
-                            "y": 0.017999999225139618,
-                            "z": 0.017999999225139618
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": -0.26675286889076233,
-                            "z": 0.0,
-                            "w": 0.9637649655342102
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -30.942270278930664,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 5.157263278961182,
-                            "y": -4.47967004776001,
-                            "z": -7.869848728179932
-                        },
-                        "worldScale": {
-                            "x": 0.08999999612569809,
-                            "y": 0.08999999612569809,
-                            "z": 0.08999999612569809
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 10,
-            "Parent": 27,
-            "Child Entities": [
-                1048592,
-                1048593,
-                1048606
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "CDs",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 1.4882758855819702,
-                            "y": -0.41840043663978577,
-                            "z": -0.7707598805427551
-                        },
-                        "scale": {
-                            "x": 0.10000000149011612,
-                            "y": 0.10000000149011612,
-                            "z": 0.10000000149011612
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 14.882759094238281,
-                            "y": -4.184004306793213,
-                            "z": -7.707598686218262
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 14,
-            "Parent": 27,
+            "ID": 1048585,
+            "Parent": 1048603,
             "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Spotlight1",
-                        "isActive": false
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.7873945832252502,
-                            "y": 0.21090099215507507,
-                            "z": 3.3518123626708984
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": -0.32371965050697327,
-                            "y": -0.014082551002502441,
-                            "z": 0.5130612254142761,
-                            "w": 0.7948430776596069
-                        },
-                        "eulerAngles": {
-                            "x": -33.80973434448242,
-                            "y": 18.046524047851563,
-                            "z": 60.1573371887207
-                        },
-                        "worldPos": {
-                            "x": -7.873945713043213,
-                            "y": 2.1090099811553955,
-                            "z": 33.518123626708984
-                        },
-                        "worldScale": {
-                            "x": 10.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "worldRot": {
-                            "x": -0.32371965050697327,
-                            "y": -0.014082551002502441,
-                            "z": 0.5130612254142761,
-                            "w": 0.7948430776596069
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Light": {
-                        "lightType": "SPOTLIGHT",
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "intensity": 1.0,
-                        "innerAngle": 83.0,
-                        "outerAngle": 298.0,
-                        "range": 20.0,
-                        "castShadows": false,
-                        "shadowConfig": {
-                            "centerPos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "softness": 1,
-                            "bias": 0.004999999888241291,
-                            "nearPlane": -100.0,
-                            "farPlane": 200.0,
-                            "scenesBounds": 1.0,
-                            "isStatic": true,
-                            "shadowModified": true,
-                            "customCenter": false
-                        }
-                    }
-                }
-            ]
+                "subDataId": 21,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 20,
-            "Parent": null,
-            "Child Entities": [
-                1048708
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Canvas",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 20,
-                                "scriptName": "Transition",
-                                "scriptFieldInstList": []
-                            }
-                        ]
-                    }
-                },
-                {
-                    "Canvas": {
-                        "isVisible": true,
-                        "hasTransition": true,
-                        "transitionProgress": 1.0,
-                        "transitionSpeed": 1.0,
-                        "fadeColor": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "fadingOut": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 21,
-            "Parent": 2,
+            "ID": 1048586,
+            "Parent": 1048608,
             "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Video",
-                        "isActive": true
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.19068396091461182,
-                            "y": -0.000010699033737182617,
-                            "z": 0.07505965232849121
-                        },
-                        "scale": {
-                            "x": 0.7570000290870667,
-                            "y": 0.4565434157848358,
-                            "z": 0.12887714803218842
-                        },
-                        "rotation": {
-                            "x": -0.7071067690849304,
-                            "y": -3.0908651638128504e-8,
-                            "z": 0.7071067094802856,
-                            "w": -3.0908651638128504e-8
-                        },
-                        "eulerAngles": {
-                            "x": -180.0,
-                            "y": 89.9720230102539,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 27.20378303527832,
-                            "y": -2.340108871459961,
-                            "z": -4.437838554382324
-                        },
-                        "worldScale": {
-                            "x": 7.842520713806152,
-                            "y": 4.729790210723877,
-                            "z": 1.6888965368270874
-                        },
-                        "worldRot": {
-                            "x": -0.9345650672912598,
-                            "y": 1.555216044835106e-8,
-                            "z": -0.3557921350002289,
-                            "w": -6.883664127599332e-7
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Video": {
-                        "renderType": "WORLD",
-                        "guid": {
-                            "ID": 4641089762535063004
-                        },
-                        "audioEnabled": true,
-                        "loop": false,
-                        "playOnStart": false,
-                        "audioOffset": 5000,
-                        "alpha": 255,
-                        "audioPlaySettings": {
-                            "position": {
-                                "x": 27.20378303527832,
-                                "y": -2.340108871459961,
-                                "z": -4.437838554382324
-                            },
-                            "volume": 1.0,
-                            "pitch": 1.0,
-                            "pan": 0.0,
-                            "mute": false,
-                            "loop": false,
-                            "playOnAwake": false,
-                            "dopplerLevel": 1.0,
-                            "minDistance": 1.0,
-                            "maxDistance": 500.0,
-                            "rolloffType": "NONE",
-                            "isBGM": false,
-                            "enablePostProcessing": false,
-                            "processingType": "REVERB",
-                            "postProcessingSettings": []
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 22,
-            "Parent": 27,
-            "Child Entities": [
-                23
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "ContinueCDinCase",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.43221044540405273,
-                            "y": -0.447966992855072,
-                            "z": -0.4292306900024414
-                        },
-                        "scale": {
-                            "x": 0.008999999612569809,
-                            "y": 0.008999999612569809,
-                            "z": 0.008999999612569809
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 4.322104454040527,
-                            "y": -4.47967004776001,
-                            "z": -4.292306900024414
-                        },
-                        "worldScale": {
-                            "x": 0.08999999612569809,
-                            "y": 0.08999999612569809,
-                            "z": 0.08999999612569809
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 23,
-            "Parent": 22,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Props_PS1CD",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.001110076904296875,
-                            "y": 0.00009918212890625,
-                            "z": -0.0044403076171875
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0,
-                            "w": -4.371138828673793e-8
-                        },
-                        "eulerAngles": {
-                            "x": 180.0,
-                            "y": -0.000005008956122765085,
-                            "z": 180.0
-                        },
-                        "worldPos": {
-                            "x": 4.322004318237305,
-                            "y": -4.479660987854004,
-                            "z": -4.292706489562988
-                        },
-                        "worldScale": {
-                            "x": 0.08999999612569809,
-                            "y": 0.08999999612569809,
-                            "z": 0.08999999612569809
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0,
-                            "w": -4.371138828673793e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 14840939470102888852
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Props_PS1CD",
-                        "GUID": {
-                            "ID": 3244419131253938194
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 24,
-            "Parent": 3,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Props_PS1CD",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.0011138916015625,
-                            "y": 0.000102996826171875,
-                            "z": -0.004436492919921875
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0,
-                            "w": -4.371138828673793e-8
-                        },
-                        "eulerAngles": {
-                            "x": 180.0,
-                            "y": -0.000005008956122765085,
-                            "z": 180.0
-                        },
-                        "worldPos": {
-                            "x": 5.157163143157959,
-                            "y": -4.479660987854004,
-                            "z": -7.870247840881348
-                        },
-                        "worldScale": {
-                            "x": 0.08999999612569809,
-                            "y": 0.08999999612569809,
-                            "z": 0.08999999612569809
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0,
-                            "w": -4.371138828673793e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 566910909923529782
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Props_PS1CD",
-                        "GUID": {
-                            "ID": 3244419131253938194
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 25,
-            "Parent": 1048584,
-            "Child Entities": [
-                26
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "SettingsCDinCAse",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": -0.31994688510894775,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 0.017999999225139618,
-                            "y": 0.017999999225139618,
-                            "z": 0.017999999225139618
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": -0.26675286889076233,
-                            "z": 0.0,
-                            "w": 0.9637649655342102
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -30.942270278930664,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 5.157263278961182,
-                            "y": -4.47967004776001,
-                            "z": -7.869848728179932
-                        },
-                        "worldScale": {
-                            "x": 0.08999999612569809,
-                            "y": 0.08999999612569809,
-                            "z": 0.08999999612569809
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 26,
-            "Parent": 25,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Props_PS1CD",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.0011138916015625,
-                            "y": 0.000102996826171875,
-                            "z": -0.004436492919921875
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0,
-                            "w": -4.371138828673793e-8
-                        },
-                        "eulerAngles": {
-                            "x": 180.0,
-                            "y": -0.000005008956122765085,
-                            "z": 180.0
-                        },
-                        "worldPos": {
-                            "x": 5.157163143157959,
-                            "y": -4.479660987854004,
-                            "z": -7.870247840881348
-                        },
-                        "worldScale": {
-                            "x": 0.08999999612569809,
-                            "y": 0.08999999612569809,
-                            "z": 0.08999999612569809
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0,
-                            "w": -4.371138828673793e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 3832641821579367456
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Props_PS1CD",
-                        "GUID": {
-                            "ID": 3244419131253938194
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 27,
-            "Parent": null,
-            "Child Entities": [
-                2,
-                10,
-                14,
-                22,
-                28,
-                29,
-                1048584,
-                1048637,
-                3145734,
-                3145772
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "UsingThisToScaleTheScene",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 10.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 10.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 28,
-            "Parent": 27,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Lid Pivot",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.2060602903366089,
-                            "y": -0.4254091680049896,
-                            "z": -0.4960440695285797
-                        },
-                        "scale": {
-                            "x": 0.5,
-                            "y": 0.5,
-                            "z": 0.5
-                        },
-                        "rotation": {
-                            "x": -6.32412380241476e-8,
-                            "y": -0.18139390647411346,
-                            "z": 3.4285520200683095e-7,
-                            "w": 0.9834105372428894
-                        },
-                        "eulerAngles": {
-                            "x": -0.000015257402083079796,
-                            "y": -20.90192222595215,
-                            "z": 0.00004276536492398009
-                        },
-                        "worldPos": {
-                            "x": 2.060602903366089,
-                            "y": -4.254091739654541,
-                            "z": -4.960440635681152
-                        },
-                        "worldScale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "worldRot": {
-                            "x": -6.32412380241476e-8,
-                            "y": -0.18139390647411346,
-                            "z": 3.4285520200683095e-7,
-                            "w": 0.9834105372428894
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 29,
-            "Parent": 27,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "WallMidPoint",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": -1.4500000476837158
-                        },
-                        "scale": {
-                            "x": 15.0,
-                            "y": 15.0,
-                            "z": 15.0
-                        },
-                        "rotation": {
-                            "x": 0.7071067690849304,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        },
-                        "eulerAngles": {
-                            "x": 90.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": -14.5
-                        },
-                        "worldScale": {
-                            "x": 150.0,
-                            "y": 150.0,
-                            "z": 150.0
-                        },
-                        "worldRot": {
-                            "x": 0.7071067690849304,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.7071067690849304
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 4004348736857560767
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Plane",
-                        "GUID": {
-                            "ID": 3815097445005270835
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "Animation": {
-                        "animations": [
-                            {
-                                "key": "Moving",
-                                "value": {
-                                    "ID": 3375499161158575559
-                                }
-                            }
-                        ],
-                        "currentAnimation": {
-                            "first": "Moving",
-                            "second": {
-                                "ID": 3375499161158575559
-                            }
-                        },
-                        "repeat": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048576,
-            "Parent": null,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Directional Light",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 4.807982444763184,
-                            "y": 1.6467396020889282,
-                            "z": -0.9058254361152649
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": -0.076961949467659,
-                            "y": 0.2598452866077423,
-                            "z": 0.5683257579803467,
-                            "w": 0.7768932580947876
-                        },
-                        "eulerAngles": {
-                            "x": 11.642000198364258,
-                            "y": 29.42099952697754,
-                            "z": 75.44000244140625
-                        },
-                        "worldPos": {
-                            "x": 4.807982444763184,
-                            "y": 1.6467396020889282,
-                            "z": -0.9058254361152649
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": -0.076961949467659,
-                            "y": 0.2598452866077423,
-                            "z": 0.5683257579803467,
-                            "w": 0.7768932580947876
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Light": {
-                        "lightType": "DIRECTIONAL",
-                        "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "intensity": 3.5,
-                        "innerAngle": 5.0,
-                        "outerAngle": 12.5,
-                        "range": 10.0,
-                        "castShadows": true,
-                        "shadowConfig": {
-                            "centerPos": {
-                                "x": 15.600000381469727,
-                                "y": 13.199999809265137,
-                                "z": 0.0
-                            },
-                            "softness": 3,
-                            "bias": 0.0044999998062849045,
-                            "nearPlane": -11.100000381469727,
-                            "farPlane": 93.19999694824219,
-                            "scenesBounds": 0.5099999904632568,
-                            "isStatic": true,
-                            "shadowModified": false,
-                            "customCenter": true
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048577,
-            "Parent": 1048637,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "MainCamera",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.00040733814239501953,
-                            "y": -0.00035762786865234375,
-                            "z": -0.0003936886787414551
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 7.450580596923828e-9,
-                            "y": -1.1641532182693481e-10,
-                            "z": 9.313225746154785e-10,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 8.537736562175269e-7,
-                            "y": -1.3340213378398857e-8,
-                            "z": 1.0672170702719086e-7
-                        },
-                        "worldPos": {
-                            "x": 24.37224006652832,
-                            "y": -2.269524097442627,
-                            "z": -1.0383445024490356
-                        },
-                        "worldScale": {
-                            "x": 10.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "worldRot": {
-                            "x": 6.642513206145395e-9,
-                            "y": -0.3529109060764313,
-                            "z": 3.500789436117202e-9,
-                            "w": 0.9356569051742554
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Camera": {
-                        "projType": "PERSP",
-                        "position": {
-                            "x": 24.37224006652832,
-                            "y": -2.269524097442627,
-                            "z": -1.0383445024490356
-                        },
-                        "yaw": 0.0,
-                        "pitch": 0.0,
-                        "fov": 60.0,
-                        "aspectRatio": 1.7777777910232544,
-                        "nearClip": 0.10000000149011612,
-                        "farClip": 100.0
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048584,
-            "Parent": 27,
-            "Child Entities": [
-                3,
-                25,
-                1048587,
-                1048588,
-                1048628,
-                2097156
-            ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "MainMenu_PS1_Open",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.5157263278961182,
-                            "y": -0.28799355030059814,
-                            "z": -0.7869848608970642
-                        },
-                        "scale": {
-                            "x": 0.5,
-                            "y": 0.5,
-                            "z": 0.5
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.26675286889076233,
-                            "z": 0.0,
-                            "w": 0.9637649655342102
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 30.942270278930664,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 5.157263278961182,
-                            "y": -2.8799355030059814,
-                            "z": -7.869848728179932
-                        },
-                        "worldScale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.26675286889076233,
-                            "z": 0.0,
-                            "w": 0.9637649655342102
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048587,
-            "Parent": 1048584,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "CDPlayer_Body",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.000027567148208618164,
-                            "y": -0.04557603597640991,
-                            "z": -0.00003802776336669922
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 5.157047271728516,
-                            "y": -3.107815742492676,
-                            "z": -7.869940757751465
-                        },
-                        "worldScale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.26675286889076233,
-                            "z": 0.0,
-                            "w": 0.9637649655342102
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 629386890410116330
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "polySurface9",
-                        "GUID": {
-                            "ID": 631313942861110887
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "BoxCollider": {
-                        "scale": {
-                            "x": 3.5999999046325684,
-                            "y": 2.5999999046325684,
-                            "z": 3.0
-                        },
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": true
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 1048587,
-                                "scriptName": "OpenedCdLid",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 1048628,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "closedLid"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1048591,
-                                            "scriptName": "NewGameCD"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "creditsCD"
-                                        }
-                                    },
-                                    {
-                                        "data": false,
-                                        "type": "System.Boolean",
-                                        "scriptField": {
-                                            "fieldName": "isCDInPlayer"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1048607,
-                                            "scriptName": "NewGameCD"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "newGameCD"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1048588,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "openLid"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1048594,
-                                            "scriptName": "NewGameCD"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "settingsCD"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
+                "subDataId": 42,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
             "ID": 1048588,
-            "Parent": 1048584,
+            "Parent": 1048612,
             "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "OpenCircular_Lid",
-                        "isActive": false
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.02268463373184204,
-                            "y": -0.018506288528442383,
-                            "z": -0.062414348125457764
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": -3.7779802397608364e-8,
-                            "y": 2.9802322387695313e-8,
-                            "z": -2.6453703227957703e-8,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": -0.0000043292466216371395,
-                            "y": 0.000003415094397496432,
-                            "z": -0.0000030313713068608195
-                        },
-                        "worldPos": {
-                            "x": 5.094085693359375,
-                            "y": -2.9724669456481934,
-                            "z": -8.19582748413086
-                        },
-                        "worldScale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "worldRot": {
-                            "x": -4.346745186012413e-8,
-                            "y": 0.2667528986930847,
-                            "z": -1.54172816735354e-8,
-                            "w": 0.9637649655342102
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8039897553712203878
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "OpenCircular_Lid",
-                        "GUID": {
-                            "ID": 631313942861110887
-                        },
-                        "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
+                "subDataId": 20,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 1048589,
-            "Parent": 2097156,
+            "ID": 1048590,
+            "Parent": 1048608,
             "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Props_PS1CD",
-                        "isActive": true
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.00000762939453125,
-                            "y": 0.000102996826171875,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0,
-                            "w": -4.371138828673793e-8
-                        },
-                        "eulerAngles": {
-                            "x": 180.0,
-                            "y": -0.000005008956122765085,
-                            "z": 180.0
-                        },
-                        "worldPos": {
-                            "x": 5.157262802124023,
-                            "y": -4.479660987854004,
-                            "z": -7.869848728179932
-                        },
-                        "worldScale": {
-                            "x": 0.08999999612569809,
-                            "y": 0.08999999612569809,
-                            "z": 0.08999999612569809
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 1.0,
-                            "z": 0.0,
-                            "w": -4.371138828673793e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 10418218796497224554
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Props_PS1CD",
-                        "GUID": {
-                            "ID": 3244419131253938194
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
+                "subDataId": 41,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 1048591,
-            "Parent": 1048592,
+            "ID": 1048595,
+            "Parent": 1048608,
             "Child Entities": [],
-            "Components": [
-                {
-                    "AudioSource": {
-                        "sounds": [
-                            {
-                                "key": "WrongInput_SFX",
-                                "value": {
-                                    "guid": {
-                                        "ID": 15700067558509682526
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 16.373830795288086,
-                                            "y": -4.184004783630371,
-                                            "z": -7.707606792449951
-                                        },
-                                        "volume": 0.20000000298023224,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
-                                        "isBGM": false,
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingSettings": []
-                                    }
-                                }
-                            }
-                        ]
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Tag": {
-                        "tag": "CreditsCDChild",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.000244140625,
-                            "y": -0.00014843145618215203,
-                            "z": -0.00000762939453125
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 16.373830795288086,
-                            "y": -4.184004783630371,
-                            "z": -7.707606792449951
-                        },
-                        "worldScale": {
-                            "x": 0.06000000238418579,
-                            "y": 0.06000000238418579,
-                            "z": 0.06000000238418579
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 566910909923529782
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Props_PS1CD",
-                        "GUID": {
-                            "ID": 3244419131253938194
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "SphereCollider": {
-                        "radius": 1.4299999475479126,
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 1048591,
-                                "scriptName": "CDDragAndDrop",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 3,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "CDinCase"
-                                        }
-                                    },
-                                    {
-                                        "data": "Credits",
-                                        "type": "System.String",
-                                        "scriptField": {
-                                            "fieldName": "SceneName"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1048587,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "cdPlayer"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "x": 10.0,
-                                            "y": 10.0,
-                                            "z": 10.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "outOfTheWay"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 20,
-                                            "scriptName": "Transition"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "transition"
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                "entityID": 1048591,
-                                "scriptName": "NewGameCD",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": false,
-                                        "type": "System.Boolean",
-                                        "scriptField": {
-                                            "fieldName": "isLidOpen"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
+                "subDataId": 31,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 1048592,
-            "Parent": 10,
+            "ID": 1048596,
+            "Parent": 1048608,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 29,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048597,
+            "Parent": 1048608,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 27,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048600,
+            "Parent": 1048608,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 40,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048601,
+            "Parent": 1048608,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 37,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048602,
+            "Parent": 1048608,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 38,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048603,
+            "Parent": null,
             "Child Entities": [
-                1048591
+                1048583,
+                1048585,
+                1048608,
+                1048612,
+                1048623,
+                2097152,
+                2097168,
+                2097170,
+                2097175,
+                2097183,
+                3145736,
+                4194348
             ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "CreditsCD",
-                        "isActive": true
-                    }
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 1.4910564422607422,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 0.06000000238418579,
-                            "y": 0.06000000238418579,
-                            "z": 0.06000000238418579
-                        },
-                        "rotation": {
-                            "x": -3.0908619663705394e-8,
-                            "y": 0.7071067690849304,
-                            "z": 0.7071067690849304,
-                            "w": -3.0908619663705394e-8
-                        },
-                        "eulerAngles": {
-                            "x": 90.0,
-                            "y": -0.0,
-                            "z": -180.0
-                        },
-                        "worldPos": {
-                            "x": 16.373815536499023,
-                            "y": -4.184004306793213,
-                            "z": -7.707598686218262
-                        },
-                        "worldScale": {
-                            "x": 0.06000000238418579,
-                            "y": 0.06000000238418579,
-                            "z": 0.06000000238418579
-                        },
-                        "worldRot": {
-                            "x": -3.0908619663705394e-8,
-                            "y": 0.7071067690849304,
-                            "z": 0.7071067690849304,
-                            "w": -3.0908619663705394e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 1048593,
-            "Parent": 10,
+            "ID": 1048605,
+            "Parent": 1048608,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 28,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048608,
+            "Parent": 1048603,
             "Child Entities": [
-                1048594
+                1048579,
+                1048586,
+                1048590,
+                1048595,
+                1048596,
+                1048597,
+                1048600,
+                1048601,
+                1048602,
+                1048605,
+                1048609,
+                1048610,
+                1048611,
+                2097165,
+                2097182,
+                2097284,
+                3145732
             ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "SettingsCD",
-                        "isActive": true
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 4.9788055419921875,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 0.06000000238418579,
-                            "y": 0.06000000238418579,
-                            "z": 0.06000000238418579
-                        },
-                        "rotation": {
-                            "x": -3.0908619663705394e-8,
-                            "y": 0.7071067690849304,
-                            "z": 0.7071067690849304,
-                            "w": -3.0908619663705394e-8
-                        },
-                        "eulerAngles": {
-                            "x": 90.0,
-                            "y": -0.0,
-                            "z": -180.0
-                        },
-                        "worldPos": {
-                            "x": 19.86156463623047,
-                            "y": -4.184004306793213,
-                            "z": -7.707598686218262
-                        },
-                        "worldScale": {
-                            "x": 0.06000000238418579,
-                            "y": 0.06000000238418579,
-                            "z": 0.06000000238418579
-                        },
-                        "worldRot": {
-                            "x": -3.0908619663705394e-8,
-                            "y": 0.7071067690849304,
-                            "z": 0.7071067690849304,
-                            "w": -3.0908619663705394e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
+                "subDataId": 26,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 1048594,
-            "Parent": 1048593,
+            "ID": 1048609,
+            "Parent": 1048608,
             "Child Entities": [],
-            "Components": [
-                {
-                    "AudioSource": {
-                        "sounds": [
-                            {
-                                "key": "WrongInput_SFX",
-                                "value": {
-                                    "guid": {
-                                        "ID": 15700067558509682526
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 19.86166763305664,
-                                            "y": -4.184078216552734,
-                                            "z": -7.7075910568237305
-                                        },
-                                        "volume": 0.20000000298023224,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
-                                        "isBGM": false,
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingSettings": []
-                                    }
-                                }
-                            }
-                        ]
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Tag": {
-                        "tag": "SettingsCDChild",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.001708984375,
-                            "y": 0.0001262268197024241,
-                            "z": -0.00122833251953125
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 19.86166763305664,
-                            "y": -4.184078216552734,
-                            "z": -7.7075910568237305
-                        },
-                        "worldScale": {
-                            "x": 0.06000000238418579,
-                            "y": 0.06000000238418579,
-                            "z": 0.06000000238418579
-                        },
-                        "worldRot": {
-                            "x": -3.0908619663705394e-8,
-                            "y": 0.7071067690849304,
-                            "z": 0.7071067690849304,
-                            "w": -3.0908619663705394e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 3832641821579367456
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Props_PS1CD",
-                        "GUID": {
-                            "ID": 3244419131253938194
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "SphereCollider": {
-                        "radius": 1.4299999475479126,
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 1048594,
-                                "scriptName": "CDDragAndDrop",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 25,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "CDinCase"
-                                        }
-                                    },
-                                    {
-                                        "data": "Settings",
-                                        "type": "System.String",
-                                        "scriptField": {
-                                            "fieldName": "SceneName"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1048587,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "cdPlayer"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "x": 10.0,
-                                            "y": 10.0,
-                                            "z": 10.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "outOfTheWay"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 20,
-                                            "scriptName": "Transition"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "transition"
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                "entityID": 1048594,
-                                "scriptName": "NewGameCD",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": false,
-                                        "type": "System.Boolean",
-                                        "scriptField": {
-                                            "fieldName": "isLidOpen"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
+                "subDataId": 36,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 1048606,
-            "Parent": 10,
+            "ID": 1048610,
+            "Parent": 1048608,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 35,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048611,
+            "Parent": 1048608,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 34,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048612,
+            "Parent": 1048603,
             "Child Entities": [
-                1048607
+                1048588
             ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "NewGameCD",
-                        "isActive": true
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -2.12412166595459,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 0.06000000238418579,
-                            "y": 0.06000000238418579,
-                            "z": 0.06000000238418579
-                        },
-                        "rotation": {
-                            "x": -3.736350251415388e-8,
-                            "y": 0.7071067690849304,
-                            "z": 0.7071067690849304,
-                            "w": -2.445373858961375e-8
-                        },
-                        "eulerAngles": {
-                            "x": 90.0,
-                            "y": 0.0000010460585144755896,
-                            "z": -180.0
-                        },
-                        "worldPos": {
-                            "x": 12.758637428283691,
-                            "y": -4.184004306793213,
-                            "z": -7.707598686218262
-                        },
-                        "worldScale": {
-                            "x": 0.06000000238418579,
-                            "y": 0.06000000238418579,
-                            "z": 0.06000000238418579
-                        },
-                        "worldRot": {
-                            "x": -3.736350251415388e-8,
-                            "y": 0.7071067690849304,
-                            "z": 0.7071067690849304,
-                            "w": -2.445373858961375e-8
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
+                "subDataId": 19,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 1048607,
-            "Parent": 1048606,
+            "ID": 1048613,
+            "Parent": 1048614,
             "Child Entities": [],
-            "Components": [
-                {
-                    "AudioSource": {
-                        "sounds": [
-                            {
-                                "key": "CloseConsole_SFX",
-                                "value": {
-                                    "guid": {
-                                        "ID": 9683382541312677822
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 12.75870132446289,
-                                            "y": -4.184010028839111,
-                                            "z": -7.707669258117676
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
-                                        "isBGM": false,
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingSettings": []
-                                    }
-                                }
-                            },
-                            {
-                                "key": "MainMenuBGM",
-                                "value": {
-                                    "guid": {
-                                        "ID": 2322684557627490496
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 12.75870132446289,
-                                            "y": -4.184010028839111,
-                                            "z": -7.707669258117676
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": true,
-                                        "playOnAwake": true,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
-                                        "isBGM": false,
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingSettings": []
-                                    }
-                                }
-                            },
-                            {
-                                "key": "OpenConsole_SFX",
-                                "value": {
-                                    "guid": {
-                                        "ID": 7035964496769354032
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 12.75870132446289,
-                                            "y": -4.184010028839111,
-                                            "z": -7.707669258117676
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
-                                        "isBGM": false,
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingSettings": []
-                                    }
-                                }
-                            },
-                            {
-                                "key": "PickupCD_SFX",
-                                "value": {
-                                    "guid": {
-                                        "ID": 12923978811107902370
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 12.75870132446289,
-                                            "y": -4.184010028839111,
-                                            "z": -7.707669258117676
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
-                                        "isBGM": false,
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingSettings": []
-                                    }
-                                }
-                            },
-                            {
-                                "key": "PlaceCD_SFX",
-                                "value": {
-                                    "guid": {
-                                        "ID": 15043012574322933012
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 12.75870132446289,
-                                            "y": -4.184010028839111,
-                                            "z": -7.707669258117676
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
-                                        "isBGM": false,
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingSettings": []
-                                    }
-                                }
-                            },
-                            {
-                                "key": "SpinningDiscPS1_SFX",
-                                "value": {
-                                    "guid": {
-                                        "ID": 11217827401232649265
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 12.75870132446289,
-                                            "y": -4.184010028839111,
-                                            "z": -7.707669258117676
-                                        },
-                                        "volume": 8.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": true,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
-                                        "isBGM": false,
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingSettings": []
-                                    }
-                                }
-                            },
-                            {
-                                "key": "WrongInput_SFX",
-                                "value": {
-                                    "guid": {
-                                        "ID": 15700067558509682526
-                                    },
-                                    "playSettings": {
-                                        "position": {
-                                            "x": 12.75870132446289,
-                                            "y": -4.184010028839111,
-                                            "z": -7.707669258117676
-                                        },
-                                        "volume": 1.0,
-                                        "pitch": 1.0,
-                                        "pan": 0.0,
-                                        "mute": false,
-                                        "loop": false,
-                                        "playOnAwake": false,
-                                        "dopplerLevel": 1.0,
-                                        "minDistance": 1.0,
-                                        "maxDistance": 500.0,
-                                        "rolloffType": "NONE",
-                                        "isBGM": false,
-                                        "enablePostProcessing": false,
-                                        "processingType": "REVERB",
-                                        "postProcessingSettings": []
-                                    }
-                                }
-                            }
-                        ]
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Tag": {
-                        "tag": "NewGameCDChild",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.0010833740234375,
-                            "y": -0.0011899113887920976,
-                            "z": -0.000091552734375
-                        },
-                        "scale": {
-                            "x": 1.0000252723693848,
-                            "y": 0.9999998807907104,
-                            "z": 0.9999998807907104
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 12.75870132446289,
-                            "y": -4.184010028839111,
-                            "z": -7.707669258117676
-                        },
-                        "worldScale": {
-                            "x": 0.060001518577337265,
-                            "y": 0.059999994933605194,
-                            "z": 0.059999994933605194
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 10418218796497224554
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Props_PS1CD",
-                        "GUID": {
-                            "ID": 3244419131253938194
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                },
-                {
-                    "SphereCollider": {
-                        "radius": 1.4299999475479126,
-                        "positionOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "degreeRotationOffsetEuler": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "rotationOffset": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "sensor": false
-                    }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 1048607,
-                                "scriptName": "CDDragAndDrop",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 2097156,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "CDinCase"
-                                        }
-                                    },
-                                    {
-                                        "data": "TutorialLevel",
-                                        "type": "System.String",
-                                        "scriptField": {
-                                            "fieldName": "SceneName"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 1048587,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "cdPlayer"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "x": 10.0,
-                                            "y": 10.0,
-                                            "z": 10.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "outOfTheWay"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 20,
-                                            "scriptName": "Transition"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "transition"
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                "entityID": 1048607,
-                                "scriptName": "NewGameCD",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": false,
-                                        "type": "System.Boolean",
-                                        "scriptField": {
-                                            "fieldName": "isLidOpen"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
+                "subDataId": 18,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 1048628,
-            "Parent": 1048584,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "ClosedCircular_Lid",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.000027507543563842773,
-                            "y": -0.4991905093193054,
-                            "z": 0.01554030179977417
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.5,
-                            "y": 5.960464477539063e-8,
-                            "z": -2.9802322387695313e-8,
-                            "w": 0.8660253882408142
-                        },
-                        "eulerAngles": {
-                            "x": 60.000003814697266,
-                            "y": 0.000007622665179951582,
-                            "z": 4.5753597532893764e-7
-                        },
-                        "worldPos": {
-                            "x": 5.1970977783203125,
-                            "y": -5.375887870788574,
-                            "z": -7.803134441375732
-                        },
-                        "worldScale": {
-                            "x": 5.0,
-                            "y": 5.0,
-                            "z": 5.0
-                        },
-                        "worldRot": {
-                            "x": 0.4818824827671051,
-                            "y": 0.23101481795310974,
-                            "z": -0.13337646424770355,
-                            "w": 0.8346449136734009
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8039897553712203878
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "OpenCircular_Lid",
-                        "GUID": {
-                            "ID": 631313942861110887
-                        },
-                        "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048637,
-            "Parent": 27,
+            "ID": 1048614,
+            "Parent": 2097175,
             "Child Entities": [
-                1048577
+                1048613
             ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Fake Player",
-                        "isActive": true
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 2.4366581439971924,
-                            "y": -0.22659479081630707,
-                            "z": -0.10380782932043076
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": -0.3529109060764313,
-                            "z": 0.0,
-                            "w": 0.9356569051742554
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -41.33092498779297,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 24.366580963134766,
-                            "y": -2.2659478187561035,
-                            "z": -1.0380783081054688
-                        },
-                        "worldScale": {
-                            "x": 10.0,
-                            "y": 10.0,
-                            "z": 10.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": -0.3529109060764313,
-                            "z": 0.0,
-                            "w": 0.9356569051742554
-                        }
-                    }
+                "subDataId": 17,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048615,
+            "Parent": 2097175,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
+                "subDataId": 16,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048616,
+            "Parent": 2097175,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 1048637,
-                                "scriptName": "CameraMovement",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "entityID": 1048577,
-                                            "scriptName": "Entity"
+                "subDataId": 15,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048617,
+            "Parent": 2097175,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 14,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 1048617,
+                                    "scriptName": "OpenedCdLid",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 1048615,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "closedLid"
+                                            }
                                         },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "cam"
-                                        }
-                                    },
-                                    {
-                                        "data": true,
-                                        "type": "System.Boolean",
-                                        "scriptField": {
-                                            "fieldName": "canLook"
-                                        }
-                                    },
-                                    {
-                                        "data": 89.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "maxPitch"
-                                        }
-                                    },
-                                    {
-                                        "data": -89.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "minPitch"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.003000000026077032,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "sensitivity"
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                "entityID": 1048637,
-                                "scriptName": "PanOutFromTV",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": 5.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "delayTillPanOut"
-                                        }
-                                    },
-                                    {
-                                        "data": 0.0,
-                                        "type": "System.Single",
-                                        "scriptField": {
-                                            "fieldName": "delayTillVideoStart"
-                                        }
-                                    },
-                                    {
-                                        "data": "PanOut",
-                                        "type": "System.String",
-                                        "scriptField": {
-                                            "fieldName": "panOutAnimName"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 20,
-                                            "scriptName": "Transition"
+                                        {
+                                            "data": {
+                                                "entityID": 4194310,
+                                                "scriptName": "NewGameCD"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "creditsCD"
+                                            }
                                         },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "transition"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 21,
-                                            "scriptName": "Entity"
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "isCDInPlayer"
+                                            }
                                         },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "video"
+                                        {
+                                            "data": {
+                                                "entityID": 3145739,
+                                                "scriptName": "NewGameCD"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "newGameCD"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048616,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "openLid"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 2097153,
+                                                "scriptName": "NewGameCD"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "settingsCD"
+                                            }
                                         }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                },
-                {
-                    "Animation": {
-                        "animations": [
-                            {
-                                "key": "PanOut",
-                                "value": {
-                                    "ID": 14371140426192083255
+                                    ]
                                 }
-                            }
-                        ],
-                        "currentAnimation": {
-                            "first": "",
-                            "second": {
-                                "ID": 0
-                            }
-                        },
-                        "repeat": false
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 1048708,
-            "Parent": 20,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "DummyObject",
-                        "isActive": true
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0
-                        },
-                        "worldScale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
+                            ]
                         }
                     }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
+                ],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 2097156,
-            "Parent": 1048584,
+            "ID": 1048618,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 13,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048619,
+            "Parent": 2097175,
             "Child Entities": [
-                1048589
+                1048618
             ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "NewGameCDinCase",
-                        "isActive": true
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.0,
-                            "y": -0.31994688510894775,
-                            "z": 0.0
-                        },
-                        "scale": {
-                            "x": 0.017999999225139618,
-                            "y": 0.017999999225139618,
-                            "z": 0.017999999225139618
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": -0.26675286889076233,
-                            "z": 0.0,
-                            "w": 0.9637649655342102
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -30.942270278930664,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 5.157263278961182,
-                            "y": -4.47967004776001,
-                            "z": -7.869848728179932
-                        },
-                        "worldScale": {
-                            "x": 0.08999999612569809,
-                            "y": 0.08999999612569809,
-                            "z": 0.08999999612569809
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
+                "subDataId": 12,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 3145734,
-            "Parent": 27,
+            "ID": 1048621,
+            "Parent": 2097174,
             "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Floor",
-                        "isActive": true
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.6790390014648438,
-                            "y": -0.6154258251190186,
-                            "z": -2.0
-                        },
-                        "scale": {
-                            "x": 9.60077953338623,
-                            "y": 0.10000002384185791,
-                            "z": 6.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0013810675591230392,
-                            "z": 0.0,
-                            "w": 0.9999990463256836
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 0.15825873613357544,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 6.7903900146484375,
-                            "y": -6.1542582511901855,
-                            "z": -20.0
-                        },
-                        "worldScale": {
-                            "x": 96.00779724121094,
-                            "y": 1.000000238418579,
-                            "z": 60.0
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.0013810675591230392,
-                            "z": 0.0,
-                            "w": 0.9999990463256836
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 4004348736857560767
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Cube",
-                        "GUID": {
-                            "ID": 16211310182187335803
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": false,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
+                "subDataId": 11,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 3145772,
-            "Parent": 27,
+            "ID": 1048623,
+            "Parent": 1048603,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 25,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097152,
+            "Parent": 1048603,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 24,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097153,
+            "Parent": 2097213,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 5,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 2097153,
+                                    "scriptName": "CDDragAndDrop",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 1048619,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "CDinCase"
+                                            }
+                                        },
+                                        {
+                                            "data": "Settings",
+                                            "type": "System.String",
+                                            "scriptField": {
+                                                "fieldName": "SceneName"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048617,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "cdPlayer"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "x": 10.0,
+                                                "y": 10.0,
+                                                "z": 10.0
+                                            },
+                                            "type": "System.Numerics.Vector3",
+                                            "scriptField": {
+                                                "fieldName": "outOfTheWay"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048612,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "entityID": 2097153,
+                                    "scriptName": "NewGameCD",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "isLidOpen"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097165,
+            "Parent": 1048608,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 33,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097167,
+            "Parent": 2097168,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 48,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097168,
+            "Parent": 1048603,
             "Child Entities": [
-                3145774
+                2097167
             ],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "PicturePerfect_Logo (2)",
-                        "isActive": true
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.871999979019165,
-                            "y": 0.8920000195503235,
-                            "z": -1.253000020980835
-                        },
-                        "scale": {
-                            "x": 0.07999999821186066,
-                            "y": 0.07999999821186066,
-                            "z": 0.07999999821186066
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.041875652968883514,
-                            "z": 0.0,
-                            "w": 0.9991228580474854
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": 4.800000190734863,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 8.719999313354492,
-                            "y": 8.920000076293945,
-                            "z": -12.530000686645508
-                        },
-                        "worldScale": {
-                            "x": 0.7999999523162842,
-                            "y": 0.7999999523162842,
-                            "z": 0.7999999523162842
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.041875652968883514,
-                            "z": 0.0,
-                            "w": 0.9991228580474854
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                }
-            ]
+                "subDataId": 47,
+                "componentData": [],
+                "removedComponents": []
+            }
         },
         {
-            "ID": 3145774,
-            "Parent": 3145772,
+            "ID": 2097169,
+            "Parent": 2097183,
             "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "PicturePerfectLogo",
-                        "isActive": true
-                    }
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": -0.0001373291015625,
-                            "y": 0.000007867813110351563,
-                            "z": -0.0003261566162109375
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 8.719867706298828,
-                            "y": 8.92000675201416,
-                            "z": -12.530251502990723
-                        },
-                        "worldScale": {
-                            "x": 0.7999999523162842,
-                            "y": 0.7999999523162842,
-                            "z": 0.7999999523162842
-                        },
-                        "worldRot": {
-                            "x": 0.0,
-                            "y": 0.041875652968883514,
-                            "z": 0.0,
-                            "w": 0.9991228580474854
+                "subDataId": 45,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097170,
+            "Parent": 1048603,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 46,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097174,
+            "Parent": 2097175,
+            "Child Entities": [
+                1048621
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 10,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097175,
+            "Parent": 1048603,
+            "Child Entities": [
+                1048614,
+                1048615,
+                1048616,
+                1048617,
+                1048619,
+                2097174
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 9,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097180,
+            "Parent": 4194348,
+            "Child Entities": [
+                3145739
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 6,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097182,
+            "Parent": 1048608,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 43,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097183,
+            "Parent": 1048603,
+            "Child Entities": [
+                2097169
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 44,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 2097183,
+                                    "scriptName": "CameraMovement",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 2097169,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "cam"
+                                            }
+                                        },
+                                        {
+                                            "data": true,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "canLook"
+                                            }
+                                        },
+                                        {
+                                            "data": 89.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxPitch"
+                                            }
+                                        },
+                                        {
+                                            "data": -89.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minPitch"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.003000000026077032,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "sensitivity"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "entityID": 2097183,
+                                    "scriptName": "PanOutFromTV",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": 26.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "delayTillPanOut"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "delayTillVideoStart"
+                                            }
+                                        },
+                                        {
+                                            "data": "PanOut",
+                                            "type": "System.String",
+                                            "scriptField": {
+                                                "fieldName": "panOutAnimName"
+                                            }
+                                        },
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "playIntroSequence"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048612,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048578,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "video"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097213,
+            "Parent": 4194348,
+            "Child Entities": [
+                2097153
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
+                "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097284,
+            "Parent": 1048608,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 8685098653303446995
+                "subDataId": 30,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3145732,
+            "Parent": 1048608,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 32,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3145736,
+            "Parent": 1048603,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 8,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3145739,
+            "Parent": 2097180,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 3145739,
+                                    "scriptName": "CDDragAndDrop",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 1048614,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "CDinCase"
+                                            }
+                                        },
+                                        {
+                                            "data": "TutorialLevel",
+                                            "type": "System.String",
+                                            "scriptField": {
+                                                "fieldName": "SceneName"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048617,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "cdPlayer"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "x": 10.0,
+                                                "y": 10.0,
+                                                "z": 10.0
+                                            },
+                                            "type": "System.Numerics.Vector3",
+                                            "scriptField": {
+                                                "fieldName": "outOfTheWay"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048612,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "entityID": 3145739,
+                                    "scriptName": "NewGameCD",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "isLidOpen"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 4194310,
+            "Parent": 4194350,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
                 },
-                {
-                    "Mesh": {
-                        "meshName": "PicturePerfectLogo",
-                        "GUID": {
-                            "ID": 12615966028523870522
-                        },
-                        "submeshIdx": 0,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 4194310,
+                                    "scriptName": "CDDragAndDrop",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 2097174,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "CDinCase"
+                                            }
+                                        },
+                                        {
+                                            "data": "Credits",
+                                            "type": "System.String",
+                                            "scriptField": {
+                                                "fieldName": "SceneName"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048617,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "cdPlayer"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "x": 10.0,
+                                                "y": 10.0,
+                                                "z": 10.0
+                                            },
+                                            "type": "System.Numerics.Vector3",
+                                            "scriptField": {
+                                                "fieldName": "outOfTheWay"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048612,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "entityID": 4194310,
+                                    "scriptName": "NewGameCD",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "isLidOpen"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
                     }
-                }
-            ]
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 4194348,
+            "Parent": 1048603,
+            "Child Entities": [
+                2097180,
+                2097213,
+                4194350
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 4194350,
+            "Parent": 4194348,
+            "Child Entities": [
+                4194310
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
         }
     ],
     "Layers": {

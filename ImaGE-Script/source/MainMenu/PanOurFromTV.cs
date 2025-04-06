@@ -35,6 +35,7 @@ public class PanOutFromTV : Entity
   public Transition transition;
   public float delayTillVideoStart, delayTillPanOut;
   public string panOutAnimName;
+  public bool playIntroSequence;
 
   enum State
   {
@@ -50,7 +51,6 @@ public class PanOutFromTV : Entity
   // Start is called before the first frame update
   void Start()
   {
-    // start with black screen
     video.GetComponent<Video>().ClearFrame();
   }
 
@@ -63,7 +63,17 @@ public class PanOutFromTV : Entity
         {
           if (transition.IsFinished())
           {
-            currState = State.TV_FOCUS;
+            // start with black screen
+            if (playIntroSequence)
+            {
+              currState = State.TV_FOCUS;
+            }
+            else
+            {
+              video.GetComponent<Video>().Play();
+              GetComponent<Animation>().Play(panOutAnimName);
+              currState = State.PANNING;
+            }
           }
 
           break;
