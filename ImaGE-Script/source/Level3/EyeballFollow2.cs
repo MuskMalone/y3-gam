@@ -22,6 +22,7 @@ public class EyeBallFollowManager2 : Entity
   // Start is called before the first frame update
   void Start()
   {
+
   }
 
   // Update is called once per frame
@@ -35,7 +36,7 @@ public class EyeBallFollowManager2 : Entity
       float distance = Vector3.Distance(GetComponent<Transform>().worldPosition, headPosition);
 
       // Calculate the direction from the eyeball to the player's head.
-      Vector3 directionToHead = Vector3.Normalize(headPosition - GetComponent<Transform>().worldPosition);
+      Vector3 directionToHead = Vector3.Normalize(headPosition - GetComponent<Transform>().worldPosition) * new Vector3(-1f, 1f, -1f);
 
       // Transform the local forward vector to world space using the eyeball's current rotation.
       Vector3 worldForward = Vector3.Transform(LocalForward, GetComponent<Transform>().rotation);

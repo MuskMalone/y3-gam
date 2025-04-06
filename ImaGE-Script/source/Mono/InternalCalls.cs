@@ -254,6 +254,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetLightIntensity(uint entityID, float intensity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetLightRange(uint entityID, float range);
     #endregion
 
 
@@ -421,6 +424,9 @@ namespace IGE.Utils
     internal extern static void SetLinearDamping(uint entity, float value);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetMotionType(uint entity, float value);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void LockRigidBodyRotation(uint entity, bool x, bool y, bool z);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -461,6 +467,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SpawnToolBox();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetChildActiveToFollowParent(uint e, bool state);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SpawnOpenDoor();
