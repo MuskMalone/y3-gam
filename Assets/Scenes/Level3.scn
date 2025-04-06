@@ -42556,46 +42556,6 @@
                             "z": 0.0
                         }
                     }
-                },
-                {
-                    "ScriptComponent": {
-                        "scriptList": [
-                            {
-                                "entityID": 874,
-                                "scriptName": "HeadFollow",
-                                "scriptFieldInstList": [
-                                    {
-                                        "data": {
-                                            "x": 0.0,
-                                            "y": 1.0,
-                                            "z": 0.0
-                                        },
-                                        "type": "System.Numerics.Vector3",
-                                        "scriptField": {
-                                            "fieldName": "headOffset"
-                                        }
-                                    },
-                                    {
-                                        "data": false,
-                                        "type": "System.Boolean",
-                                        "scriptField": {
-                                            "fieldName": "isFollowing"
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "entityID": 2,
-                                            "scriptName": "Entity"
-                                        },
-                                        "type": "Image.Mono.ScriptInstance",
-                                        "scriptField": {
-                                            "fieldName": "player"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
                 }
             ]
         },
@@ -42971,7 +42931,7 @@
                     "Transform": {
                         "position": {
                             "x": 8.041526794433594,
-                            "y": 26.266542434692383,
+                            "y": 27.5,
                             "z": -12.5592041015625
                         },
                         "scale": {
@@ -42992,7 +42952,7 @@
                         },
                         "worldPos": {
                             "x": 76.5263442993164,
-                            "y": 26.266542434692383,
+                            "y": 27.5,
                             "z": -133.17822265625
                         },
                         "worldScale": {
@@ -63352,7 +63312,7 @@
                     "Transform": {
                         "position": {
                             "x": 8.041526794433594,
-                            "y": 26.266542434692383,
+                            "y": 27.5,
                             "z": -12.5592041015625
                         },
                         "scale": {
@@ -63373,7 +63333,7 @@
                         },
                         "worldPos": {
                             "x": 74.43169403076172,
-                            "y": 26.266542434692383,
+                            "y": 27.5,
                             "z": -135.797607421875
                         },
                         "worldScale": {

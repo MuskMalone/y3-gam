@@ -30,7 +30,7 @@ public class MomPaintingCutscene : Entity
   void Start()
   {
     Global.shouldFollow = false;
-    //InternalCalls.SetChildActiveToFollowParent(puppet.mEntityID, false);
+    InternalCalls.SetChildActiveToFollowParent(puppet.mEntityID, false);
   }
   void Update()
   {
@@ -45,7 +45,7 @@ public class MomPaintingCutscene : Entity
             cutscene.SetActive(true);
             InternalCalls.PlayVideo(cutscene.mEntityID);
             state = State.PLAYING;
-            //InternalCalls.SetChildActiveToFollowParent(puppet.mEntityID, true);
+            InternalCalls.SetChildActiveToFollowParent(puppet.mEntityID, true);
             playerMove.FreezePlayer();
           }
         }
