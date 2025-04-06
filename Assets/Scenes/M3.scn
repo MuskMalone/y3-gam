@@ -2366,7 +2366,7 @@
                                         }
                                     },
                                     {
-                                        "data": 30.0,
+                                        "data": 12.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
@@ -10226,7 +10226,7 @@
                 {
                     "Tag": {
                         "tag": "Center Dot",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
@@ -25565,12 +25565,42 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "DemonPictureFORLEVEL4"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 749,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "DownArrow"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Gate1FORLEVEL4"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Gate2FORLEVEL4"
                                         }
                                     },
                                     {
@@ -25601,6 +25631,26 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "UpArrow"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "VideoCutscene"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "WashDownEffectImageFORLEVEL4"
                                         }
                                     },
                                     {
@@ -25752,6 +25802,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "targetY"
+                                        }
+                                    },
+                                    {
+                                        "data": 3.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "washdownEffectTotalTime"
                                         }
                                     }
                                 ]
@@ -42217,7 +42274,7 @@
                         "key": "Tag",
                         "value": {
                             "tag": "Static Overlay UI Filter",
-                            "isActive": false
+                            "isActive": true
                         }
                     }
                 ],
