@@ -121,7 +121,6 @@ public class TutorialDialogue : Entity
             charIndex++;
             nextCharTime = Time.gameTime + textSpeed;
             isLineComplete = false;
-            SkipTyping();
             hasSkipped = true;
         }
 
