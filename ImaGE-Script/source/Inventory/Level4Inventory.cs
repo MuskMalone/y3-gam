@@ -313,6 +313,14 @@ public class Level4Inventory : Entity
       currentItem = null;
     }
   }
+  public void CloseInventoryAndUnselectAllItems()
+  {
+    currentItem = null;
+    if (isVisible)
+    {
+      ToggleInventoryVisibility();
+    }
+  }
 
   private void ShowUIForItem(string itemName)
   {

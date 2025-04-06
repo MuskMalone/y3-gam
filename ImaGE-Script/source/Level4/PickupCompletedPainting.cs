@@ -12,6 +12,8 @@ public class PickupCompletedPainting : Entity, IInventoryItem
   public Entity fragmentBloom4;
   public Entity momBehindGatePainting;
   public float maximumBloom = 3f;
+  public Entity videoEntity;
+  public Transition transition;
 
   public Entity playerCamera;
   private bool isBeingPickedUp = false;
@@ -20,9 +22,11 @@ public class PickupCompletedPainting : Entity, IInventoryItem
 
   private float currentBloomIntensity = 0f;
   private float bloomProgress = 0f;
-  private float lerpDuration = 1.5f;
+  private readonly float lerpDuration = 1.5f;
   private float elapsedTime = 0f;
   private float initialBloom;
+
+  private bool endFade = false;
 
   private enum State
   {
@@ -75,10 +79,26 @@ public class PickupCompletedPainting : Entity, IInventoryItem
     EToPickUpUI?.SetActive(false);
     momBehindGatePainting?.SetActive(false);
     initialBloom = InternalCalls.GetBloomIntensity(fragmentBloom1.mEntityID);
+    InternalCalls.SetShaderState(0, false);
+    transition = FindObjectOfType<Transition>();
   }
 
   void Update()
   {
+    if (InternalCalls.HasVideoEnded(videoEntity.mEntityID) && videoEntity.IsActive() && !endFade)
+    {
+      transition.StartTransition(false, 2.0f, Transition.TransitionType.TV_SWITCH);
+      endFade = true;
+    }
+
+    if (endFade)
+    {
+      if (transition.IsFinished())
+      {
+        InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\" + "credits" + ".scn");
+      }
+    }
+
     switch (currState)
     {
       case State.NONE:

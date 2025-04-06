@@ -62,7 +62,7 @@ public class Level3ExitTrigger : Entity
             {
               dialogueSystem.SetDialogue(leavingWithoutFragmentDialogue,
                 new Level3Dialogue.Emotion[] { Level3Dialogue.Emotion.Thinking },
-                0.006f);
+                0.004f);
                             isExitDialogueActive = true;
               currState = State.IN_INTERACTION;
             }

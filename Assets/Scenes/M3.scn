@@ -93,17 +93,76 @@
             "ID": 2,
             "Parent": 231,
             "Child Entities": [],
-            "Position": {
-                "x": 1.899999976158142,
-                "y": -6.400000095367432,
-                "z": 0.0
-            },
             "Prefab": {
                 "GUID": {
                     "ID": 14337001799689692424
                 },
                 "subDataId": 0,
-                "componentData": [],
+                "componentData": [
+                    {
+                        "key": "Image",
+                        "value": {
+                            "color": {
+                                "x": 0.3686274588108063,
+                                "y": 0.3490196168422699,
+                                "z": 0.29019609093666077,
+                                "w": 0.6078431606292725
+                            },
+                            "textureAssetGUID": {
+                                "ID": 2203736300003804932
+                            }
+                        }
+                    },
+                    {
+                        "key": "Tag",
+                        "value": {
+                            "tag": "DialogueBox",
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.0,
+                                "y": -8.550000190734863,
+                                "z": 0.0
+                            },
+                            "scale": {
+                                "x": 13.260000228881836,
+                                "y": 0.9200000166893005,
+                                "z": -3.799999237060547
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 0.0,
+                                "y": -8.550000190734863,
+                                "z": 0.0
+                            },
+                            "worldScale": {
+                                "x": 13.260000228881836,
+                                "y": 0.9200000166893005,
+                                "z": -3.799999237060547
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            }
+                        }
+                    }
+                ],
                 "removedComponents": []
             }
         },
@@ -2307,7 +2366,7 @@
                                         }
                                     },
                                     {
-                                        "data": 30.0,
+                                        "data": 12.0,
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "runSpeed"
@@ -9674,7 +9733,7 @@
                                     },
                                     {
                                         "data": [
-                                            "ajwenas wenakdk sdjjwnq\nsjdsn wndakdadk jwndn"
+                                            "ajwenas wenakdk sdjjwnq sjdsn wndakdadk jwndn"
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
@@ -9892,8 +9951,8 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -4.599999904632568,
-                                            "y": -7.599999904632568,
+                                            "x": 0.0,
+                                            "y": -8.859999656677246,
                                             "z": 0.0
                                         },
                                         "volume": 1.0,
@@ -9921,8 +9980,8 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -4.599999904632568,
-                                            "y": -7.599999904632568,
+                                            "x": 0.0,
+                                            "y": -8.859999656677246,
                                             "z": 0.0
                                         },
                                         "volume": 1.0,
@@ -9948,14 +10007,14 @@
                 {
                     "Tag": {
                         "tag": "DialogueText",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": -4.599999904632568,
-                            "y": -7.599999904632568,
+                            "x": 0.0,
+                            "y": -8.859999656677246,
                             "z": 0.0
                         },
                         "scale": {
@@ -9975,8 +10034,8 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -4.599999904632568,
-                            "y": -7.599999904632568,
+                            "x": 0.0,
+                            "y": -8.859999656677246,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -9999,19 +10058,19 @@
                 },
                 {
                     "Text": {
-                        "textContent": "Use I to bring up your inventory and switch slots\nwith Num Keys!",
+                        "textContent": "Use I to bring up your inventory and switch slots with Num Keys!",
                         "color": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
                             "w": 1.0
                         },
-                        "scale": 0.006000000052154064,
+                        "scale": 0.004000000189989805,
                         "textAssetGUID": {
                             "ID": 11715672305158928427
                         },
                         "fontFamilyName": "Sniglet-Regular",
-                        "alignment": 0,
+                        "alignment": 2,
                         "multiLineSpacingOffset": 0.0,
                         "textBoxEnabledFlag": false,
                         "textBoxDimensions": {
@@ -10100,6 +10159,16 @@
                                     },
                                     {
                                         "data": {
+                                            "entityID": 470,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "TaraName"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 2097366,
                                             "scriptName": "Entity"
                                         },
@@ -10157,7 +10226,7 @@
                 {
                     "Tag": {
                         "tag": "Center Dot",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
@@ -10763,6 +10832,7 @@
                 2,
                 164,
                 197,
+                470,
                 668
             ],
             "Components": [
@@ -13074,6 +13144,89 @@
                 "componentData": [],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 470,
+            "Parent": 231,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "TaraName",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": -8.859999656677246,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": -8.859999656677246,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "Tara: ",
+                        "color": {
+                            "x": 1.0,
+                            "y": 0.7874743938446045,
+                            "z": 0.33110368251800537,
+                            "w": 1.0
+                        },
+                        "scale": 0.004000000189989805,
+                        "textAssetGUID": {
+                            "ID": 11715672305158928427
+                        },
+                        "fontFamilyName": "Sniglet-Regular",
+                        "alignment": 2,
+                        "multiLineSpacingOffset": 0.0,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
         },
         {
             "ID": 472,
@@ -25412,12 +25565,42 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "DemonPictureFORLEVEL4"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 749,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "DownArrow"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Gate1FORLEVEL4"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Gate2FORLEVEL4"
                                         }
                                     },
                                     {
@@ -25448,6 +25631,26 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "UpArrow"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "VideoCutscene"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "WashDownEffectImageFORLEVEL4"
                                         }
                                     },
                                     {
@@ -25599,6 +25802,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "targetY"
+                                        }
+                                    },
+                                    {
+                                        "data": 3.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "washdownEffectTotalTime"
                                         }
                                     }
                                 ]
@@ -42064,7 +42274,7 @@
                         "key": "Tag",
                         "value": {
                             "tag": "Static Overlay UI Filter",
-                            "isActive": false
+                            "isActive": true
                         }
                     }
                 ],

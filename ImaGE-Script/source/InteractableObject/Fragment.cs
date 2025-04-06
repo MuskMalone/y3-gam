@@ -16,6 +16,8 @@ public class Fragment : Entity
   public Entity ParticleBurst;  // boom
   public Transition transition;
   public BlackBorder blackBorder;
+
+
   private bool fragmentCollected = false;
   private bool fragmentAnimationOver = false;
 
@@ -178,7 +180,7 @@ public class Fragment : Entity
 
   void SetAltarActive(bool active)
   {
-    if (altarArea.IsValid())
+    if (altarArea != null && altarArea.IsValid())
     {
       altarArea.SetActive(active);
     }
@@ -191,6 +193,7 @@ public class Fragment : Entity
     InternalCalls.PlaySound(mEntityID, "FloatUpSFX");
     GardenFragment.SetActive(true);
     Particles.SetActive(true);
+    ParticleBurst.SetActive(false);
     blackBorder.DisplayBlackBorders();
   }
 

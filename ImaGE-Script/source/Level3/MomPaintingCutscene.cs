@@ -20,7 +20,7 @@ public class MomPaintingCutscene : Entity
   private State state = State.WAITING;
 
   private float timeElapsed = 0f;
-  private float delayAfterCollection = 0.5f;
+  private float delayAfterCollection = 1f;
   private float videoLength = 10f;
   private float turnSpeed = 0.3f;
   MomPaintingCutscene() : base()
@@ -38,12 +38,17 @@ public class MomPaintingCutscene : Entity
       case State.WAITING:
         if (fragment.IsFragmentAnimationOver())
         {
+          if (!cutscene.IsActive())
+          {
+            cutscene.SetActive(true);
+            cutscene.GetComponent<Video>().ClearFrame();
+          }
+
           timeElapsed += Time.deltaTime;
           if (timeElapsed >= delayAfterCollection)
           {
             timeElapsed = 0f;
-            cutscene.SetActive(true);
-            InternalCalls.PlayVideo(cutscene.mEntityID);
+            cutscene.GetComponent<Video>().Play();
             state = State.PLAYING;
             InternalCalls.SetChildActiveToFollowParent(puppet.mEntityID, true);
             playerMove.FreezePlayer();

@@ -61,7 +61,7 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 1048579,
+                                "entityID": 0,
                                 "scriptName": "SettingsPage",
                                 "scriptFieldInstList": [
                                     {
@@ -349,7 +349,7 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 1048590,
+                                "entityID": 1,
                                 "scriptName": "SettingsButtons",
                                 "scriptFieldInstList": [
                                     {
@@ -494,7 +494,7 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 1048596,
+                                "entityID": 2,
                                 "scriptName": "SettingsButtons",
                                 "scriptFieldInstList": [
                                     {
@@ -603,9 +603,9 @@
                 {
                     "Image": {
                         "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
+                            "x": 0.3686274588108063,
+                            "y": 0.3490196168422699,
+                            "z": 0.29019609093666077,
                             "w": 0.6078431606292725
                         },
                         "textureAssetGUID": {
@@ -675,9 +675,9 @@
                     "Text": {
                         "textContent": "Adjust the game's display brightness.",
                         "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
+                            "x": 0.7725752592086792,
+                            "y": 0.7725752592086792,
+                            "z": 0.7725752592086792,
                             "w": 1.0
                         },
                         "scale": 0.004999999888241291,
@@ -756,9 +756,9 @@
                 {
                     "Image": {
                         "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
+                            "x": 0.3686274588108063,
+                            "y": 0.3490196168422699,
+                            "z": 0.29019609093666077,
                             "w": 0.6078431606292725
                         },
                         "textureAssetGUID": {
@@ -828,9 +828,9 @@
                     "Text": {
                         "textContent": "Adjust the volume of the background music.",
                         "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
+                            "x": 0.7692307829856873,
+                            "y": 0.7692307829856873,
+                            "z": 0.7692307829856873,
                             "w": 1.0
                         },
                         "scale": 0.004999999888241291,
@@ -981,7 +981,7 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 1048605,
+                                "entityID": 8,
                                 "scriptName": "PauseMenuButtons",
                                 "scriptFieldInstList": [
                                     {
@@ -1084,9 +1084,9 @@
                 {
                     "Image": {
                         "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
+                            "x": 0.3678929805755615,
+                            "y": 0.35039380192756653,
+                            "z": 0.28914666175842285,
                             "w": 0.6078431606292725
                         },
                         "textureAssetGUID": {
@@ -1156,9 +1156,9 @@
                     "Text": {
                         "textContent": "Adjust the volume of the sound effects.",
                         "color": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0,
+                            "x": 0.785953164100647,
+                            "y": 0.785953164100647,
+                            "z": 0.785953164100647,
                             "w": 1.0
                         },
                         "scale": 0.004999999888241291,
@@ -1273,7 +1273,7 @@
                     "ScriptComponent": {
                         "scriptList": [
                             {
-                                "entityID": 2097160,
+                                "entityID": 11,
                                 "scriptName": "SettingsButtons",
                                 "scriptFieldInstList": [
                                     {
