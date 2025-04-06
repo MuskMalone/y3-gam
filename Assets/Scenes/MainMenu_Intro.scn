@@ -1,0 +1,1446 @@
+{
+    "Scene": [
+        {
+            "ID": 1048583,
+            "Parent": 2097155,
+            "Child Entities": [
+                1048585
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 2,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048585,
+            "Parent": 1048583,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 3,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 1048585,
+                                    "scriptName": "CDDragAndDrop",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 1048600,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "CDinCase"
+                                            }
+                                        },
+                                        {
+                                            "data": "Credits",
+                                            "type": "System.String",
+                                            "scriptField": {
+                                                "fieldName": "SceneName"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048605,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "cdPlayer"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "x": 10.0,
+                                                "y": 10.0,
+                                                "z": 10.0
+                                            },
+                                            "type": "System.Numerics.Vector3",
+                                            "scriptField": {
+                                                "fieldName": "outOfTheWay"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048612,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "entityID": 1048585,
+                                    "scriptName": "NewGameCD",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "isLidOpen"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048586,
+            "Parent": 2097155,
+            "Child Entities": [
+                1048588
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 4,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048588,
+            "Parent": 1048586,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 5,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 1048588,
+                                    "scriptName": "CDDragAndDrop",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 1048602,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "CDinCase"
+                                            }
+                                        },
+                                        {
+                                            "data": "Settings",
+                                            "type": "System.String",
+                                            "scriptField": {
+                                                "fieldName": "SceneName"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048605,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "cdPlayer"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "x": 10.0,
+                                                "y": 10.0,
+                                                "z": 10.0
+                                            },
+                                            "type": "System.Numerics.Vector3",
+                                            "scriptField": {
+                                                "fieldName": "outOfTheWay"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048612,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "entityID": 1048588,
+                                    "scriptName": "NewGameCD",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "isLidOpen"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048590,
+            "Parent": 2097155,
+            "Child Entities": [
+                1048595
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 6,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048595,
+            "Parent": 1048590,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 7,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 1048595,
+                                    "scriptName": "CDDragAndDrop",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 1048610,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "CDinCase"
+                                            }
+                                        },
+                                        {
+                                            "data": "TutorialLevel",
+                                            "type": "System.String",
+                                            "scriptField": {
+                                                "fieldName": "SceneName"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048605,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "cdPlayer"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "x": 10.0,
+                                                "y": 10.0,
+                                                "z": 10.0
+                                            },
+                                            "type": "System.Numerics.Vector3",
+                                            "scriptField": {
+                                                "fieldName": "outOfTheWay"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048612,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "entityID": 1048595,
+                                    "scriptName": "NewGameCD",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "isLidOpen"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048596,
+            "Parent": 2097154,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 8,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048597,
+            "Parent": 2097154,
+            "Child Entities": [
+                1048600,
+                1048602,
+                1048605,
+                1048608,
+                1048609,
+                1048610
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 9,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048600,
+            "Parent": 1048597,
+            "Child Entities": [
+                1048601
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 10,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048601,
+            "Parent": 1048600,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 11,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048602,
+            "Parent": 1048597,
+            "Child Entities": [
+                1048603
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 12,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048603,
+            "Parent": 1048602,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 13,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048605,
+            "Parent": 1048597,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 14,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 1048605,
+                                    "scriptName": "OpenedCdLid",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 1048609,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "closedLid"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048585,
+                                                "scriptName": "NewGameCD"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "creditsCD"
+                                            }
+                                        },
+                                        {
+                                            "data": false,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "isCDInPlayer"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048595,
+                                                "scriptName": "NewGameCD"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "newGameCD"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048608,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "openLid"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048588,
+                                                "scriptName": "NewGameCD"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "settingsCD"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048608,
+            "Parent": 1048597,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 15,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048609,
+            "Parent": 1048597,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 16,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048610,
+            "Parent": 1048597,
+            "Child Entities": [
+                1048611
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 17,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048611,
+            "Parent": 1048610,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 18,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048612,
+            "Parent": 2097154,
+            "Child Entities": [
+                1048613
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 19,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048613,
+            "Parent": 1048612,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 20,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048614,
+            "Parent": 2097154,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 21,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048615,
+            "Parent": 2097154,
+            "Child Entities": [
+                1048616
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 22,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048616,
+            "Parent": 1048615,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 23,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048617,
+            "Parent": 2097154,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 24,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048618,
+            "Parent": 2097154,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 25,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048619,
+            "Parent": 2097154,
+            "Child Entities": [
+                1048621,
+                1048623,
+                2097152,
+                2097153,
+                2097165,
+                2097167,
+                2097168,
+                2097169,
+                2097170,
+                2097174,
+                2097175,
+                2097180,
+                2097182,
+                2097183,
+                2097213,
+                2097284,
+                3145732
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 26,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048621,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 27,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 1048623,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 28,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097152,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 29,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097153,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 30,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097154,
+            "Parent": null,
+            "Child Entities": [
+                1048596,
+                1048597,
+                1048612,
+                1048614,
+                1048615,
+                1048617,
+                1048618,
+                1048619,
+                2097155,
+                3145736,
+                4194310,
+                4194348
+            ],
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 0,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097155,
+            "Parent": 2097154,
+            "Child Entities": [
+                1048583,
+                1048586,
+                1048590
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 1,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097165,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 31,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097167,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 32,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097168,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 33,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097169,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 34,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097170,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 35,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097174,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 36,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097175,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 37,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097180,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 38,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097182,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 39,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097183,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 40,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097213,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 41,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 2097284,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 42,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3145732,
+            "Parent": 1048619,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 43,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3145736,
+            "Parent": 2097154,
+            "Child Entities": [
+                3145739
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 44,
+                "componentData": [
+                    {
+                        "key": "ScriptComponent",
+                        "value": {
+                            "scriptList": [
+                                {
+                                    "entityID": 3145736,
+                                    "scriptName": "CameraMovement",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 3145739,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "cam"
+                                            }
+                                        },
+                                        {
+                                            "data": true,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "canLook"
+                                            }
+                                        },
+                                        {
+                                            "data": 89.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "maxPitch"
+                                            }
+                                        },
+                                        {
+                                            "data": -89.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "minPitch"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.003000000026077032,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "sensitivity"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "entityID": 3145736,
+                                    "scriptName": "PanOutFromTV",
+                                    "scriptFieldInstList": [
+                                        {
+                                            "data": 26.5,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "delayTillPanOut"
+                                            }
+                                        },
+                                        {
+                                            "data": 0.0,
+                                            "type": "System.Single",
+                                            "scriptField": {
+                                                "fieldName": "delayTillVideoStart"
+                                            }
+                                        },
+                                        {
+                                            "data": "PanOut",
+                                            "type": "System.String",
+                                            "scriptField": {
+                                                "fieldName": "panOutAnimName"
+                                            }
+                                        },
+                                        {
+                                            "data": true,
+                                            "type": "System.Boolean",
+                                            "scriptField": {
+                                                "fieldName": "playIntroSequence"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048612,
+                                                "scriptName": "Transition"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "transition"
+                                            }
+                                        },
+                                        {
+                                            "data": {
+                                                "entityID": 1048616,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "video"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 3145739,
+            "Parent": 3145736,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 45,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 4194310,
+            "Parent": 2097154,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 46,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 4194348,
+            "Parent": 2097154,
+            "Child Entities": [
+                4194350
+            ],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 47,
+                "componentData": [],
+                "removedComponents": []
+            }
+        },
+        {
+            "ID": 4194350,
+            "Parent": 4194348,
+            "Child Entities": [],
+            "Prefab": {
+                "GUID": {
+                    "ID": 5986337519268345942
+                },
+                "subDataId": 48,
+                "componentData": [],
+                "removedComponents": []
+            }
+        }
+    ],
+    "Layers": {
+        "layerNames": [
+            "Default",
+            "Player",
+            "UI",
+            "Props",
+            "Environment",
+            "Puzzle",
+            "Lights",
+            "Special Objects",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "layerVisibility": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "collisionMatrix": [
+            [
+                1,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ]
+    },
+    "Global Properties": {
+        "ambColor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "ambIntensity": 0.0
+    }
+}
