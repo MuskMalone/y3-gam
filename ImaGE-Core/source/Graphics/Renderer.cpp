@@ -236,6 +236,7 @@ namespace Graphics {
 		ShaderLibrary::Add("PBR", Shader::Create("PBR.vert.glsl", "PBR.frag.glsl"));
 		ShaderLibrary::Add("Unlit", Shader::Create("Unlit.vert.glsl", "Unlit.frag.glsl"));
 		ShaderLibrary::Add("Water", Shader::Create("Water.vert.glsl", "Water.frag.glsl"));
+		ShaderLibrary::Add("nPBR", Shader::Create("nPBR.vert.glsl", "nPBR.frag.glsl"));
 		ShaderLibrary::Add("Leaf", Shader::Create("Leaf.vert.glsl", "Leaf.frag.glsl"));
 		ShaderLibrary::Add("WashingOff", Shader::Create("WashingOff.vert.glsl", "WashingOff.frag.glsl"));
 

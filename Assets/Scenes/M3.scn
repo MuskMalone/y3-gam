@@ -17062,7 +17062,7 @@
                                             "y": -7.5,
                                             "z": 0.0
                                         },
-                                        "volume": 0.699999988079071,
+                                        "volume": 0.10000000149011612,
                                         "pitch": 1.0,
                                         "pan": 0.0,
                                         "mute": false,
@@ -17300,7 +17300,7 @@
                                         }
                                     },
                                     {
-                                        "data": "Lucid Dream\nEmulation Playtest (02)\n04-02-1998\n01:03am",
+                                        "data": "Lucid Dream Emulation Playtest\n\nActive Environment: \"PICTURE PERFECT\"\n\nSubject: Tara\n\nVisual Construct: Loaded",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "introMessage"
@@ -42661,6 +42661,35 @@
                                 }
                             },
                             {
+                                "key": "L1_DOOR",
+                                "value": {
+                                    "guid": {
+                                        "ID": 8612189206098607689
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 53.93427276611328,
+                                            "y": 14.157228469848633,
+                                            "z": 54.15336227416992
+                                        },
+                                        "volume": 1.0,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            },
+                            {
                                 "key": "LockedDoor",
                                 "value": {
                                     "guid": {
@@ -42929,7 +42958,7 @@
                                     },
                                     {
                                         "data": [
-                                            "It won't budge. I need a key."
+                                            "It won't budge. "
                                         ],
                                         "type": "System.String[]",
                                         "scriptField": {
