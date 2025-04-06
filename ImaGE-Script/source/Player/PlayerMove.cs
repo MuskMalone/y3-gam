@@ -80,11 +80,11 @@ public class  PlayerMove : Entity
     //  Global.isNighttime = true;
     //  InternalCalls.SetDaySkyBox(cam.mEntityID, 1.0f);
     //}
-    if(Input.GetKeyDown(KeyCode.M))
-    {
-      canLook = false;
-      canMove = false;
-    }
+    //if(Input.GetKeyDown(KeyCode.M))
+    //{
+    //  canLook = false;
+    //  canMove = false;
+    //}
     // Debug.Log(Input.screenWidth + ":" + Input.screenHeight);
     if (startTimer)
     {
