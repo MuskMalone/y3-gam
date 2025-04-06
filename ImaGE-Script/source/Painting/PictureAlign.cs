@@ -90,6 +90,9 @@ public class PictureAlign : Entity
     //For hex puzzle
     private HexTeleport HexTeleportScript;
 
+    private Inventory M3InventoryScript;
+  private TutorialLevelInventory tutorialInventoryScript;
+
     // For hiding level2 inventory when teleporting
     private Level2Inventory level2InventoryScript;
 
@@ -106,6 +109,8 @@ public class PictureAlign : Entity
     {
         level2InventoryScript = FindObjectOfType<Level2Inventory>();
         level4InventoryScript = FindObjectOfType<Level4Inventory>();
+        M3InventoryScript = FindObjectOfType<Inventory>();
+        tutorialInventoryScript = FindObjectOfType<TutorialLevelInventory>();
         transition = FindObjectOfType<Transition>();
         //tutorialFade = FindObjectOfType<TutorialFade>();
         // Initialize the movement and camera control components
@@ -190,7 +195,7 @@ public class PictureAlign : Entity
           DownArrow.SetActive(false);
           //SetActive(false);
           InternalCalls.PlaySound(player.mEntityID, "PaintingMatchObject");
-          isNight = true;
+
         }
         else
         {
@@ -211,9 +216,11 @@ public class PictureAlign : Entity
       {
         if (picture == "NightPainting")
         {
+          M3InventoryScript.CloseInventoryAndUnselectAllItems();
           FadeOut();
           if (ChangeSkyBox())
           {
+            isNight = true;
             Console.WriteLine("NIght");
             InternalCalls.ChangeToolsPainting();
             if (hasFaded)
@@ -229,6 +236,7 @@ public class PictureAlign : Entity
         }
         else if (picture == "ToolsPainting")
         {
+          M3InventoryScript.CloseInventoryAndUnselectAllItems();
           Console.WriteLine("Tool");
           FadeOut();
           InternalCalls.SpawnToolBox();
@@ -243,6 +251,7 @@ public class PictureAlign : Entity
         }
         else if (picture == "TutorialPainting")
         {
+          tutorialInventoryScript.CloseInventoryAndUnselectAllItems();
           Console.WriteLine("Tut");
           FadeOut();
           FindScript<GlowingLight>()?.StartBlooming();
@@ -262,6 +271,7 @@ public class PictureAlign : Entity
         }
         else if (picture == "CorridorPainting")
         {
+          M3InventoryScript.CloseInventoryAndUnselectAllItems();
           FadeOut();
           //InternalCalls.SpawnTaraSilhouette();
           if (hasFaded)
