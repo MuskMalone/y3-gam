@@ -27777,8 +27777,7 @@
             "Child Entities": [
                 573,
                 574,
-                575,
-                576
+                575
             ],
             "Components": [
                 {
@@ -28069,84 +28068,6 @@
                             "ID": 13853952119863121254
                         },
                         "submeshIdx": 1,
-                        "isCustomMesh": true,
-                        "castShadows": true,
-                        "receiveShadows": true
-                    }
-                }
-            ]
-        },
-        {
-            "ID": 576,
-            "Parent": 572,
-            "Child Entities": [],
-            "Components": [
-                {
-                    "Tag": {
-                        "tag": "Puzzle_PaintingFragment4",
-                        "isActive": false
-                    }
-                },
-                {
-                    "Transform": {
-                        "position": {
-                            "x": 0.000003814697265625,
-                            "y": 0.00000762939453125,
-                            "z": -0.0000019073486328125
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        },
-                        "rotation": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 1.0
-                        },
-                        "eulerAngles": {
-                            "x": 0.0,
-                            "y": -0.0,
-                            "z": 0.0
-                        },
-                        "worldPos": {
-                            "x": 156.040771484375,
-                            "y": 20.6319580078125,
-                            "z": -2.1373140811920166
-                        },
-                        "worldScale": {
-                            "x": 0.17413440346717834,
-                            "y": 0.17413440346717834,
-                            "z": 0.17413440346717834
-                        },
-                        "worldRot": {
-                            "x": -0.16122426092624664,
-                            "y": 0.0,
-                            "z": 0.0,
-                            "w": 0.9869178533554077
-                        }
-                    }
-                },
-                {
-                    "Layer": {
-                        "layerName": "Default"
-                    }
-                },
-                {
-                    "Material": {
-                        "materialGUID": {
-                            "ID": 0
-                        }
-                    }
-                },
-                {
-                    "Mesh": {
-                        "meshName": "Puzzle_PaintingFragment4",
-                        "GUID": {
-                            "ID": 13853952119863121254
-                        },
-                        "submeshIdx": 3,
                         "isCustomMesh": true,
                         "castShadows": true,
                         "receiveShadows": true
