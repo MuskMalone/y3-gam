@@ -83,6 +83,7 @@ public class TheTwinDoors : Entity
           else
           {
             currState = State.OPEN;
+            
           }
 
           break;
@@ -100,6 +101,7 @@ public class TheTwinDoors : Entity
     leftDoor.GetComponent<Animation>().Play(doorAnimName);
     rightDoor.GetComponent<Animation>().Play(doorAnimName);
     currState = State.ANIMATION;
+    InternalCalls.PlaySound(mEntityID, "..\\Assets\\Audio\\DoubleDoorOpen_SFX.wav");
     interactDoorUI.SetActive(false);
   }
 }
