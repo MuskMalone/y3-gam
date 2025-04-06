@@ -222,6 +222,9 @@ namespace IGE.Utils
     extern public static void SetText(uint TextEntityID, string textContent);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetTextBoxWidth(uint EntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void AppendText(uint TextEntityID, string textContent);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

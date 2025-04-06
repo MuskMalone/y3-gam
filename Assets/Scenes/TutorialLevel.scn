@@ -107,7 +107,8 @@
             "Parent": 37,
             "Child Entities": [
                 1048615,
-                1048639
+                1048639,
+                1049504
             ],
             "Components": [
                 {
@@ -5906,8 +5907,8 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -4.599999904632568,
-                                            "y": -7.599999904632568,
+                                            "x": 0.0,
+                                            "y": -8.850000381469727,
                                             "z": 0.0
                                         },
                                         "volume": 1.0,
@@ -5933,14 +5934,14 @@
                 {
                     "Tag": {
                         "tag": "DialogueText",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": -4.599999904632568,
-                            "y": -7.599999904632568,
+                            "x": 0.0,
+                            "y": -8.850000381469727,
                             "z": 0.0
                         },
                         "scale": {
@@ -5960,8 +5961,8 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -4.599999904632568,
-                            "y": -7.599999904632568,
+                            "x": 0.0,
+                            "y": -8.850000381469727,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -5986,17 +5987,17 @@
                     "Text": {
                         "textContent": "YOUR TEXT HERE",
                         "color": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
+                            "x": 0.7625417709350586,
+                            "y": 0.7625417709350586,
+                            "z": 0.7625417709350586,
                             "w": 1.0
                         },
-                        "scale": 0.006000000052154064,
+                        "scale": 0.004999999888241291,
                         "textAssetGUID": {
                             "ID": 11715672305158928427
                         },
                         "fontFamilyName": "Sniglet-Regular",
-                        "alignment": 0,
+                        "alignment": 2,
                         "multiLineSpacingOffset": 0.0,
                         "textBoxEnabledFlag": false,
                         "textBoxDimensions": {
@@ -6081,6 +6082,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "SurprisedTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049504,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "TaraName"
                                         }
                                     },
                                     {
@@ -7258,11 +7269,6 @@
             "ID": 1048639,
             "Parent": 52,
             "Child Entities": [],
-            "Position": {
-                "x": 1.899999976158142,
-                "y": -6.400000095367432,
-                "z": 0.0
-            },
             "Prefab": {
                 "GUID": {
                     "ID": 14337001799689692424
@@ -7270,10 +7276,66 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Image",
+                        "value": {
+                            "color": {
+                                "x": 0.5372549295425415,
+                                "y": 0.5137255191802979,
+                                "z": 0.4313725531101227,
+                                "w": 0.6078431606292725
+                            },
+                            "textureAssetGUID": {
+                                "ID": 2203736300003804932
+                            }
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "DialogueBox",
-                            "isActive": false
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.0,
+                                "y": -8.550000190734863,
+                                "z": 0.0
+                            },
+                            "scale": {
+                                "x": 13.260000228881836,
+                                "y": 0.9200000166893005,
+                                "z": -4.97999906539917
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 0.0,
+                                "y": -8.550000190734863,
+                                "z": 0.0
+                            },
+                            "worldScale": {
+                                "x": 13.260000228881836,
+                                "y": 0.9200000166893005,
+                                "z": -4.97999906539917
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            }
                         }
                     }
                 ],
@@ -10568,6 +10630,89 @@
                 ],
                 "removedComponents": []
             }
+        },
+        {
+            "ID": 1049504,
+            "Parent": 52,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "TaraName",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -2.799999952316284,
+                            "y": -8.850000381469727,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -2.799999952316284,
+                            "y": -8.850000381469727,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "Tara: ",
+                        "color": {
+                            "x": 0.7123745679855347,
+                            "y": 0.6097825765609741,
+                            "z": 0.4669746458530426,
+                            "w": 1.0
+                        },
+                        "scale": 0.004000000189989805,
+                        "textAssetGUID": {
+                            "ID": 11715672305158928427
+                        },
+                        "fontFamilyName": "Sniglet-Regular",
+                        "alignment": 2,
+                        "multiLineSpacingOffset": 0.0,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
         },
         {
             "ID": 2097152,

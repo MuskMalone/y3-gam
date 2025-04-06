@@ -5,6 +5,7 @@ using System.Text;
 
 public class MomPaintingCutscene : Entity
 {
+  public PlayerMove playerMove;
   public Entity cutscene;
   public Fragment fragment;
   private enum State
@@ -38,6 +39,7 @@ public class MomPaintingCutscene : Entity
             cutscene.SetActive(true);
             InternalCalls.PlayVideo(cutscene.mEntityID);
             state = State.PLAYING;
+            playerMove.FreezePlayer();
           }
         }
 
@@ -49,6 +51,7 @@ public class MomPaintingCutscene : Entity
           cutscene.SetActive(false);
           timeElapsed = 0f;
           state = State.DONE;
+          playerMove.UnfreezePlayer();
         }
         break;
       case State.DONE:
