@@ -883,6 +883,136 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 857,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cutmum"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 868,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cutmumLArm"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 872,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cutmumLForearm"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 871,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cutmumLHand"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 858,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cutmumLLeg"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 864,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cutmumLThigh"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 737,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cutmumRArm"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 867,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cutmumRForearm"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 866,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cutmumRHand"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 220,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cutmumRLeg"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 870,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cutmumRThigh"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 874,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cutmumhead"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 863,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "cutmumtorso"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 692,
                                             "scriptName": "Entity"
                                         },
@@ -10489,7 +10619,7 @@
                         "restitution": 0.0,
                         "gravityFactor": 20.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC",
+                        "motionType": "KINEMATIC",
                         "axisLock": 0,
                         "angularAxisLock": 0,
                         "hasJoint": true,
@@ -36020,7 +36150,7 @@
                         "restitution": 0.0,
                         "gravityFactor": 20.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC",
+                        "motionType": "KINEMATIC",
                         "axisLock": 0,
                         "angularAxisLock": 0,
                         "hasJoint": true,
@@ -41065,9 +41195,44 @@
             ],
             "Components": [
                 {
+                    "AudioSource": {
+                        "sounds": [
+                            {
+                                "key": "..\\Assets\\Audio\\PuppetSquishing_SFX.wav",
+                                "value": {
+                                    "guid": {
+                                        "ID": 15698254115434692991
+                                    },
+                                    "playSettings": {
+                                        "position": {
+                                            "x": 75.54637908935547,
+                                            "y": 2.33717942237854,
+                                            "z": -134.60000610351563
+                                        },
+                                        "volume": 0.10000000149011612,
+                                        "pitch": 1.0,
+                                        "pan": 0.0,
+                                        "mute": false,
+                                        "loop": false,
+                                        "playOnAwake": false,
+                                        "dopplerLevel": 1.0,
+                                        "minDistance": 1.0,
+                                        "maxDistance": 500.0,
+                                        "rolloffType": "NONE",
+                                        "isBGM": false,
+                                        "enablePostProcessing": false,
+                                        "processingType": "REVERB",
+                                        "postProcessingSettings": []
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
                     "Tag": {
                         "tag": "cutmum",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -41237,7 +41402,7 @@
                         "restitution": 0.0,
                         "gravityFactor": 20.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC",
+                        "motionType": "KINEMATIC",
                         "axisLock": 0,
                         "angularAxisLock": 0,
                         "hasJoint": true,
@@ -41391,7 +41556,7 @@
                         "restitution": 0.0,
                         "gravityFactor": 20.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC",
+                        "motionType": "KINEMATIC",
                         "axisLock": 0,
                         "angularAxisLock": 0,
                         "hasJoint": true,
@@ -41545,7 +41710,7 @@
                         "restitution": 0.0,
                         "gravityFactor": 20.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC",
+                        "motionType": "KINEMATIC",
                         "axisLock": 0,
                         "angularAxisLock": 2,
                         "hasJoint": true,
@@ -41699,7 +41864,7 @@
                         "restitution": 0.0,
                         "gravityFactor": 20.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC",
+                        "motionType": "KINEMATIC",
                         "axisLock": 0,
                         "angularAxisLock": 0,
                         "hasJoint": true,
@@ -41853,7 +42018,7 @@
                         "restitution": 0.0,
                         "gravityFactor": 20.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC",
+                        "motionType": "KINEMATIC",
                         "axisLock": 0,
                         "angularAxisLock": 0,
                         "hasJoint": true,
@@ -42007,7 +42172,7 @@
                         "restitution": 0.0,
                         "gravityFactor": 20.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC",
+                        "motionType": "KINEMATIC",
                         "axisLock": 0,
                         "angularAxisLock": 0,
                         "hasJoint": true,
@@ -42161,7 +42326,7 @@
                         "restitution": 0.0,
                         "gravityFactor": 20.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC",
+                        "motionType": "KINEMATIC",
                         "axisLock": 0,
                         "angularAxisLock": 2,
                         "hasJoint": true,
@@ -42315,7 +42480,7 @@
                         "restitution": 0.0,
                         "gravityFactor": 20.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC",
+                        "motionType": "KINEMATIC",
                         "axisLock": 0,
                         "angularAxisLock": 0,
                         "hasJoint": true,
@@ -42469,7 +42634,7 @@
                         "restitution": 0.0,
                         "gravityFactor": 20.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC",
+                        "motionType": "KINEMATIC",
                         "axisLock": 0,
                         "angularAxisLock": 0,
                         "hasJoint": true,
@@ -42631,7 +42796,7 @@
                         "restitution": 0.0,
                         "gravityFactor": 20.0,
                         "linearDamping": 0.9800000190734863,
-                        "motionType": "DYNAMIC",
+                        "motionType": "KINEMATIC",
                         "axisLock": 0,
                         "angularAxisLock": 0,
                         "hasJoint": false,
