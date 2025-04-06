@@ -83,7 +83,6 @@ public class CDDragAndDrop : Entity
   private OpenedCdLid CDPlayerScript;
     void Start()
     {
-        InternalCalls.ShowCursor();
         originalPosition = InternalCalls.GetWorldPosition(mEntityID);
         originalRotation = InternalCalls.GetWorldRotation(mEntityID);
         //Console.WriteLine("originalrotation " + originalRotation);
