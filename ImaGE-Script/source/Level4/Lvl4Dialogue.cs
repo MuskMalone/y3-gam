@@ -21,6 +21,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -55,6 +56,7 @@ public class Lvl4Dialogue : Entity
     public Entity HappyTara;
     public Entity DisturbedTara;
     public Entity SadTara;
+    public Entity TaraName;
     //public SpecialDialogue specialDialogue;
 
     // Private Variables
@@ -63,7 +65,7 @@ public class Lvl4Dialogue : Entity
     private string[] lines;               // The lines from the caller
     private int charIndex = 0;            // Tracks the current character index
     private float nextCharTime = 0f;      // Tracks the time for the next character
-    private const float defaultFontSize = 0.006f;
+    private const float defaultFontSize = 0.004f;
     private bool specialSequence = true;
 
     public bool isLineComplete = false;
@@ -84,6 +86,7 @@ public class Lvl4Dialogue : Entity
 
         DeactivateAllEmotions();
         DialogueBox.SetActive(false);
+        TaraName.SetActive(false);
         SetActive(false);
     }
 
@@ -94,6 +97,7 @@ public class Lvl4Dialogue : Entity
       InternalCalls.StopSound(mEntityID, textAudioName);
       InternalCalls.SetActive(mEntityID, false);
       DialogueBox.SetActive(false);
+      TaraName.SetActive(false);
       DeactivateAllEmotions();
       return;
     }
@@ -102,7 +106,8 @@ public class Lvl4Dialogue : Entity
     {
       InternalCalls.SetActive(mEntityID, true);
       DialogueBox.SetActive(true);
-      SetEmotion(emotions[lineIndex]);
+      TaraName.SetActive(true);
+     // SetEmotion(emotions[lineIndex]);
       playerMove.FreezePlayer();
     }
 
@@ -134,8 +139,33 @@ public class Lvl4Dialogue : Entity
                 SkipTyping();
             }
         }
+
+        SetTaraNameXpos();
     }
 
+    public void SetTaraNameXpos()
+    {
+        float CurrentTextWidth = InternalCalls.GetTextBoxWidth(mEntityID);
+        float TaraTextWidth = InternalCalls.GetTextBoxWidth(TaraName.mEntityID);
+        if (!TaraName.IsActive())
+            TaraTextWidth = 0;
+
+        float TotalWidth = CurrentTextWidth + TaraTextWidth;
+        Vector3 CurrPosition = TaraName.GetComponent<Transform>().position;
+        if (TaraName.IsActive())
+        {
+            CurrPosition.X = (0f - (TotalWidth / 2f)) + TaraTextWidth / 2f;
+            TaraName.GetComponent<Transform>().position = CurrPosition;
+        }
+
+        CurrPosition = GetComponent<Transform>().position;
+        CurrPosition.X = (0f + (TotalWidth / 2f)) - CurrentTextWidth / 2f;
+        GetComponent<Transform>().position = CurrPosition;
+        Vector3 currScale = DialogueBox.GetComponent<Transform>().scale;
+        currScale.X = TotalWidth + 2f;
+        DialogueBox.GetComponent<Transform>().scale = currScale;
+
+    }
     // To be called by other scripts before starting the dialogue
     public void SetDialogue(string[] newLines, Emotion[] newEmotions, float textScale = defaultFontSize, string textAudio = "DefaultDialogueSound")
     {
@@ -173,8 +203,9 @@ public class Lvl4Dialogue : Entity
         InternalCalls.SetText(mEntityID, string.Empty);
         isInDialogueMode = true;
         DialogueBox.SetActive(true);
+        TaraName.SetActive(true);
         SetActive(true);
-        SetEmotion(emotions[lineIndex]);
+        //SetEmotion(emotions[lineIndex]);
         charIndex = 0;                      // Reset character index for typing effect
         nextCharTime = Time.gameTime;       // Start typing immediately
     }
@@ -185,6 +216,7 @@ public class Lvl4Dialogue : Entity
         InternalCalls.StopSound(mEntityID, textAudioName);
         playerMove.UnfreezePlayer();
         DialogueBox.SetActive(false);
+        TaraName.SetActive(false);
         SetActive(false);
         isInDialogueMode = false;
 
@@ -212,7 +244,7 @@ public class Lvl4Dialogue : Entity
         if (lineIndex < lines.Length - 1)
         {
             lineIndex++;
-            SetEmotion(emotions[lineIndex]);
+            //SetEmotion(emotions[lineIndex]);
             InternalCalls.SetText(mEntityID, string.Empty);
             charIndex = 0;                                      // Reset character index for new line
             nextCharTime = Time.gameTime;                       // Start typing new line immediately
