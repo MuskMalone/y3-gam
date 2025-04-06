@@ -232,6 +232,216 @@
                 "subDataId": 7,
                 "componentData": [
                     {
+                        "key": "AudioSource",
+                        "value": {
+                            "sounds": [
+                                {
+                                    "key": "CloseConsole_SFX",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 9683382541312677822
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 12.758702278137207,
+                                                "y": -4.184010028839111,
+                                                "z": -7.707670211791992
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "isBGM": false,
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingSettings": []
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "MainMenuBGM",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 2322684557627490496
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 12.758702278137207,
+                                                "y": -4.184010028839111,
+                                                "z": -7.707670211791992
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": true,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "isBGM": false,
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingSettings": []
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "OpenConsole_SFX",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 7035964496769354032
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 12.758702278137207,
+                                                "y": -4.184010028839111,
+                                                "z": -7.707670211791992
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "isBGM": false,
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingSettings": []
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "PickupCD_SFX",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 12923978811107902370
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 12.758702278137207,
+                                                "y": -4.184010028839111,
+                                                "z": -7.707670211791992
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "isBGM": false,
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingSettings": []
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "PlaceCD_SFX",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 15043012574322933012
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 12.758702278137207,
+                                                "y": -4.184010028839111,
+                                                "z": -7.707670211791992
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "isBGM": false,
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingSettings": []
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "SpinningDiscPS1_SFX",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 11217827401232649265
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 12.758702278137207,
+                                                "y": -4.184010028839111,
+                                                "z": -7.707670211791992
+                                            },
+                                            "volume": 8.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": true,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "isBGM": false,
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingSettings": []
+                                        }
+                                    }
+                                },
+                                {
+                                    "key": "WrongInput_SFX",
+                                    "value": {
+                                        "guid": {
+                                            "ID": 15700067558509682526
+                                        },
+                                        "playSettings": {
+                                            "position": {
+                                                "x": 12.758702278137207,
+                                                "y": -4.184010028839111,
+                                                "z": -7.707670211791992
+                                            },
+                                            "volume": 1.0,
+                                            "pitch": 1.0,
+                                            "pan": 0.0,
+                                            "mute": false,
+                                            "loop": false,
+                                            "playOnAwake": false,
+                                            "dopplerLevel": 1.0,
+                                            "minDistance": 1.0,
+                                            "maxDistance": 500.0,
+                                            "rolloffType": "NONE",
+                                            "isBGM": false,
+                                            "enablePostProcessing": false,
+                                            "processingType": "REVERB",
+                                            "postProcessingSettings": []
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
                         "key": "ScriptComponent",
                         "value": {
                             "scriptList": [
@@ -995,6 +1205,16 @@
                                     "entityID": 3145736,
                                     "scriptName": "PanOutFromTV",
                                     "scriptFieldInstList": [
+                                        {
+                                            "data": {
+                                                "entityID": 1048595,
+                                                "scriptName": "Entity"
+                                            },
+                                            "type": "Image.Mono.ScriptInstance",
+                                            "scriptField": {
+                                                "fieldName": "bgmEntity"
+                                            }
+                                        },
                                         {
                                             "data": 26.5,
                                             "type": "System.Single",
