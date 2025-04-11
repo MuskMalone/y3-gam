@@ -22,8 +22,9 @@ public class WoodenPlanks : Entity
   public string[] notStrongEnoughDialogue;
 
   private bool isDialogueActive = false;
+    private bool hasPlayedLine0Sound = false;
 
-  private enum State
+    private enum State
   {
     BLOCKED,
     USING_HAMMER,
@@ -41,7 +42,26 @@ public class WoodenPlanks : Entity
   // Update is called once per frame
   void Update()
   {
-    switch (currState)
+
+        if (isDialogueActive)
+        {
+            if (dialogue.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L3_2");
+                hasPlayedLine0Sound = true;
+                isDialogueActive= false;
+            }
+            
+        }
+
+        if (!dialogue.isInDialogueMode)
+        {
+            hasPlayedLine0Sound = false;
+            //hasPlayedLine1Sound = false;
+        }
+
+
+        switch (currState)
     {
       case State.BLOCKED:
         {
@@ -83,6 +103,7 @@ public class WoodenPlanks : Entity
           }
 
           SetActive(false);
+          InternalCalls.PlaySound(Door.mEntityID, "..\\Assets\\Audio\\PitDoorSwing_SFX.wav");
           Door.GetComponent<Animation>().Play(doorAnimName);
           currState = State.OPENING_DOOR;
 

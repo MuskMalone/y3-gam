@@ -48,7 +48,7 @@ public class PictureAlignTools : Entity
     if (IsAligned())
     {
       alignCheck = true;
-      Debug.Log("Player is aligned.");
+    //Debug.Log("Player is aligned.");
       //FreezePlayer();
     }
     else
@@ -67,33 +67,33 @@ public class PictureAlignTools : Entity
   {
 
     float positionDistance = Vector3.Distance(player.position, savedPosition);
-    Debug.Log("Distance from saved position: " + positionDistance);
+  //Debug.Log("Distance from saved position: " + positionDistance);
 
     float rotationDifference = Mathf.QuaternionAngle(player.rotation, savedRotation);
-    Debug.Log("Rotation difference from saved rotation: " + rotationDifference);
+  //Debug.Log("Rotation difference from saved rotation: " + rotationDifference);
 
     if (Vector3.Distance(player.position, savedPosition) > positionThreshold)
     {
-      Debug.Log((Vector3.Distance(player.position, savedPosition)).ToString());
-      Debug.Log("Player position not aligned.");
+    //Debug.Log((Vector3.Distance(player.position, savedPosition)).ToString());
+    //Debug.Log("Player position not aligned.");
       return false;
     }
 
     // Check if the player's rotation is within the threshold of the saved rotation
     if (Mathf.QuaternionAngle(player.rotation, savedRotation) > rotationThreshold)
     {
-      Debug.Log("Player rotation not aligned.");
+    //Debug.Log("Player rotation not aligned.");
       return false;
     }
 
     // Check if the main camera's rotation is within the threshold of the saved camera rotation
     if (Mathf.QuaternionAngle(mainCamera.GetComponent<Transform>().rotation, savedCameraRotation) > rotationThreshold)
     {
-      Debug.Log("Camera rotation not aligned.");
+    //Debug.Log("Camera rotation not aligned.");
       return false;
     }
 
-    Debug.Log("Player is aligned.");
+  //Debug.Log("Player is aligned.");
     return true; // All checks passed, the player is aligned
   }
 
@@ -103,7 +103,7 @@ public class PictureAlignTools : Entity
     {
       playerMotor.canMove = false;  // Freeze player movement
       playerMotor.canLook = false;
-      Debug.Log("Player movement and camera look frozen.");
+    //Debug.Log("Player movement and camera look frozen.");
     }
     isFrozen = true;
   }
@@ -115,7 +115,7 @@ public class PictureAlignTools : Entity
     {
       playerMotor.canMove = true;  // Freeze player movement
       playerMotor.canLook = true;
-      Debug.Log("Player movement and camera look unfrozen.");
+    //Debug.Log("Player movement and camera look unfrozen.");
     }
     isFrozen = false;
   }

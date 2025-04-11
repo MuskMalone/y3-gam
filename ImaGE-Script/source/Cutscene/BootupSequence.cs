@@ -49,7 +49,7 @@ public class BootupSequence : Entity
 
     if (timer >= timeBetweenTransition && currentImageIndex >= images.Count)
     {
-      InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\mainmenu.scn");
+      InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\MainMenu_Intro.scn");
     }
   }
 

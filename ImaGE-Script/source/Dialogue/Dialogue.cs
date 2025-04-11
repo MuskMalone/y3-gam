@@ -30,6 +30,7 @@ public class Dialogue : Entity
   public Entity DisturbedTara;
   public Entity SadTara;
   public SpecialDialogue specialDialogue;
+  public Entity TaraName;
 
   // Private Variables
   private Emotion[] emotions;           // The emotions from the caller
@@ -37,11 +38,11 @@ public class Dialogue : Entity
   private string[] lines;               // The lines from the caller
   private int charIndex = 0;            // Tracks the current character index
   private float nextCharTime = 0f;      // Tracks the time for the next character
-  private const float defaultFontSize = 0.006f;
+  private const float defaultFontSize = 0.004f;
   private bool specialSequence = true;
   private string textAudioName = "DefaultDialogueSound";
   private const string defaultFont = "..\\Assets\\Textures\\Sniglet-Regular.ttf";
-
+  private bool ShowTara = true;
   private bool audioUpdated = false;
 
   public Dialogue() : base()
@@ -58,6 +59,7 @@ public class Dialogue : Entity
 
     DeactivateAllEmotions();
     DialogueBox.SetActive(false);
+    TaraName.SetActive(false);
     SetActive(false);
   }
 
@@ -68,6 +70,7 @@ public class Dialogue : Entity
       InternalCalls.StopSound(mEntityID, textAudioName);
       InternalCalls.SetActive(mEntityID, false);
       DialogueBox.SetActive(false);
+      TaraName.SetActive(false);
       DeactivateAllEmotions();
       return;
     }
@@ -76,22 +79,27 @@ public class Dialogue : Entity
     {
       InternalCalls.SetActive(mEntityID, true);
       DialogueBox.SetActive(true);
-      SetEmotion(emotions[lineIndex]);
+      if(ShowTara)
+          TaraName.SetActive(true);
+      //SetEmotion(emotions[lineIndex]);
       playerMove.FreezePlayer();
     }
 
     if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && 
       Time.gameTime >= nextCharTime && charIndex < lines[lineIndex].Length)
     {
+
       InternalCalls.AppendText(mEntityID, lines[lineIndex][charIndex].ToString());
       charIndex++;
       nextCharTime = Time.gameTime + textSpeed;
+     // SkipTyping();
     }
 
     if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && charIndex >= lines[lineIndex].Length)
     {
       // Line has ended, stop sound
       InternalCalls.StopSound(mEntityID, textAudioName);
+
     }
     
     if (isInDialogueMode && IsActive() && DialogueBox.IsActive() && 
@@ -107,6 +115,8 @@ public class Dialogue : Entity
           SkipTyping();
       }
     }
+
+    SetTaraNameXpos();
   }
 
   // To be called by other scripts before starting the dialogue
@@ -124,6 +134,13 @@ public class Dialogue : Entity
     lines = newLines;
     emotions = newEmotions;
     StartDialogue();
+
+    }
+
+  public void turnOffTara()
+  {
+    ShowTara = false;
+    TaraName.SetActive(false);
   }
 
   private void StartDialogue()
@@ -147,8 +164,10 @@ public class Dialogue : Entity
     InternalCalls.SetText(mEntityID, string.Empty);
     isInDialogueMode = true;
     DialogueBox.SetActive(true);
+    if(ShowTara)
+      TaraName.SetActive(true);
     SetActive(true);
-    SetEmotion(emotions[lineIndex]);
+    //SetEmotion(emotions[lineIndex]);
     charIndex = 0;                      // Reset character index for typing effect
     nextCharTime = Time.gameTime;       // Start typing immediately
   }
@@ -158,6 +177,8 @@ public class Dialogue : Entity
     InternalCalls.StopSound(mEntityID, textAudioName);
     playerMove.UnfreezePlayer();
     DialogueBox.SetActive(false);
+    TaraName.SetActive(false);
+    ShowTara = true;
     SetActive(false);
     isInDialogueMode = false;
 
@@ -176,7 +197,32 @@ public class Dialogue : Entity
     charIndex = lines[lineIndex].Length;
   }
 
-  private void NextLine()
+    public void SetTaraNameXpos()
+    {
+        float CurrentTextWidth = InternalCalls.GetTextBoxWidth(mEntityID);
+        float TaraTextWidth = InternalCalls.GetTextBoxWidth(TaraName.mEntityID);
+        if (!TaraName.IsActive())
+            TaraTextWidth = 0;
+
+        float TotalWidth = CurrentTextWidth + TaraTextWidth;
+        Vector3 CurrPosition = TaraName.GetComponent<Transform>().position;
+        if (TaraName.IsActive())
+        {
+            CurrPosition.X = (0f - (TotalWidth / 2f)) + TaraTextWidth / 2f;
+            TaraName.GetComponent<Transform>().position = CurrPosition;
+        }
+
+        CurrPosition = GetComponent<Transform>().position;
+        CurrPosition.X = (0f + (TotalWidth / 2f)) - CurrentTextWidth / 2f;
+        GetComponent<Transform>().position = CurrPosition;
+        Vector3 currScale = DialogueBox.GetComponent<Transform>().scale;
+        currScale.X = TotalWidth + 2f;
+        DialogueBox.GetComponent<Transform>().scale = currScale;
+
+    }
+
+
+    private void NextLine()
   {
     DeactivateAllEmotions();
     InternalCalls.PlaySound(mEntityID, textAudioName);
@@ -184,7 +230,7 @@ public class Dialogue : Entity
     if (lineIndex < lines.Length - 1)
     {
       lineIndex++;
-      SetEmotion(emotions[lineIndex]);
+     // SetEmotion(emotions[lineIndex]);
       InternalCalls.SetText(mEntityID, string.Empty);
       charIndex = 0;                                      // Reset character index for new line
       nextCharTime = Time.gameTime;                       // Start typing new line immediately

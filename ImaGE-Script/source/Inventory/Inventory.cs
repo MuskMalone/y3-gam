@@ -360,7 +360,7 @@ public class Inventory : Entity
         paintingAlignUIGardenScript.isPainting = false;
         break;
       case "NightPainting":
-        Console.WriteLine("Night");
+      //Console.WriteLine("Night");
         nightPaintingUI?.SetActive(true);
         paintingAlignUIGardenScript.isPainting = true;
         nightPaintingUI?.FindScript<HoldupUI>().SetAlginUI("NightPainting", GetItemByName("NightPainting"));
@@ -371,7 +371,7 @@ public class Inventory : Entity
         toolsPaintingUI?.FindScript<HoldupUI>().SetAlginUI("ToolsPainting", GetItemByName("ToolsPainting"));
         break;
       case "CorridorPainting":
-        Console.WriteLine("CORR");
+      //Console.WriteLine("CORR");
         CorridorPaintingUI?.SetActive(true);
         paintingAlignUIGardenScript.isPainting = true;
         CorridorPaintingUI?.FindScript<HoldupUI>().SetAlginUI("CorridorPainting", GetItemByName("CorridorPainting"));
@@ -425,4 +425,12 @@ public class Inventory : Entity
         return currentItem;
     }
 
+  public void CloseInventoryAndUnselectAllItems()
+  {
+    currentItem = null;
+    if (isVisible)
+    {
+      ToggleInventoryVisibility();
+    }
+  }
 }

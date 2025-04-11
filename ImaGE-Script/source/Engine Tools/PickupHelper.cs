@@ -6,8 +6,9 @@ public static class Pickup
 {
   public static bool MoveAndShrink(Entity entity, uint playerID, uint playerCameraID, float finalDistanceAwayFromCamera = 3f)
   {
-    Vector3 smallScale = new Vector3(0f, 0f, 0f);
-    InternalCalls.SetBoxColliderScale(entity.mEntityID, smallScale);
+    //Vector3 smallScale = new Vector3(0f, 0f, 0f);
+    //InternalCalls.SetBoxColliderScale(entity.mEntityID, smallScale);
+    InternalCalls.RemoveBoxCollider(entity.mEntityID);
 
     // Hardcoded values
     float moveSpeed = 5f;

@@ -89,7 +89,7 @@ public class EyeBallFollow : Entity
 
     if (isFollowing)
     {
-      InternalCalls.SetSoundVolume(mEntityID, "EyeballMove2_SFX.wav", 1f);
+      InternalCalls.SetSoundVolume(mEntityID, "EyeballMove2_SFX.wav", 0.7f);
     }
     else
     {

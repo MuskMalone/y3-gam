@@ -13,16 +13,33 @@ public class CameraMovement : Entity
   private float yaw = 0f;
   private float pitch = 0f;
   private bool skipNextMouseDelta = false;
+  private PanOutFromTV panOutScript;
+  private bool startPanning = false;
 
   void Start()
+  {
+    panOutScript = FindScript<PanOutFromTV>();
+  }
+
+  void Init()
   {
     // Use the initial rotation instead
     pitch = InternalCalls.GetRotationEuler(mEntityID).X;
     yaw = InternalCalls.GetRotationEuler(mEntityID).Y;
+
+    InternalCalls.ShowCursor();
   }
 
   void Update()
   {
+    if (!startPanning)
+    {
+      if (!panOutScript.HasInitialSequenceEnded()) { return; }
+
+      Init();
+      startPanning = true;
+    }
+
     ProcessLook();
   }
 

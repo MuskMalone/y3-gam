@@ -354,6 +354,11 @@ public class Video : Component
     InternalCalls.PlayVideo(entity.mEntityID);
   }
 
+  public void SetVolume(float volume)
+  {
+    InternalCalls.SetVideoVolume(entity.mEntityID, volume);
+  }
+
   // note: only works for video
   public void TogglePause()
   {

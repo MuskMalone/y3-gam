@@ -1,3 +1,8 @@
 ImaGE-Editor/source/Executables/ffmpeg.exe filter=lfs diff=lfs merge=lfs -text
 Assets/Textures/Compiled/skybox_day.dds filter=lfs diff=lfs merge=lfs -text
 Assets/Textures/Compiled/skybox_night.dds filter=lfs diff=lfs merge=lfs -text
+Assets/Textures/Compiled/Logo filter=lfs diff=lfs merge=lfs -text
+UVs_Textures_Frame.dds filter=lfs diff=lfs merge=lfs -text
+Assets/Videos/Compiled/Narrative_VeilPaintAdvert.mpg filter=lfs diff=lfs merge=lfs -text
+Assets/Videos/finalCutsceneFinal.mp4 filter=lfs diff=lfs merge=lfs -text
+Assets/Videos/Compiled/finalCutsceneFinal.mpg filter=lfs diff=lfs merge=lfs -text

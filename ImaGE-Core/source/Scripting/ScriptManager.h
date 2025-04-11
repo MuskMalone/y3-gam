@@ -341,6 +341,8 @@ namespace Mono
 		static void SetDynamicFriction(ECS::Entity::EntityID entityId, float val);
 		static void SetLinearDamping(ECS::Entity::EntityID entityId, float val);
 
+		static void SetMotionType(ECS::Entity::EntityID entityId, int val);
+
 		static ECS::Entity::EntityID Raycast(glm::vec3 start, glm::vec3 end);
 
 		static ECS::Entity::EntityID RaycastFromEntity(ECS::Entity::EntityID e, glm::vec3 start, glm::vec3 end);
@@ -381,6 +383,8 @@ namespace Mono
 		static void ClearVideoFrame(ECS::Entity::EntityID entity);
 		static void SetVideoAlpha(ECS::Entity::EntityID entity, unsigned alpha);
 		static unsigned GetVideoAlpha(ECS::Entity::EntityID entity);
+		static void SetVideoVolume(ECS::Entity::EntityID, float volume);
+
 
 		static void SetShaderState(unsigned idx, bool active);
 
@@ -451,6 +455,8 @@ namespace Mono
 
 		static float GetTextScale(ECS::Entity::EntityID textEntity);
 
+		static float GetTextBoxWidth(ECS::Entity::EntityID textEntity);
+
 		static void SetTextScale(ECS::Entity::EntityID textEntity, float textScale);
 
 		static MonoString* GetText(ECS::Entity::EntityID entity);
@@ -481,6 +487,8 @@ namespace Mono
 		static void HideCursor();
 
 		static void ChangeToolsPainting();
+
+		static void SetChildActiveToFollowParent(ECS::Entity::EntityID entityID, bool state);
 		
 
 		static void SpawnToolBox();
@@ -499,6 +507,7 @@ namespace Mono
 
 		static void SetBloomIntensity(ECS::Entity::EntityID bloomEntity, float intensity);
 		static float GetBloomIntensity(ECS::Entity::EntityID bloomEntity);
+		static void SetLightRange(ECS::Entity::EntityID entity, float range);
 		static void SetLightIntensity(ECS::Entity::EntityID lightEntity, float intensity);
 		static float GetLightIntensity(ECS::Entity::EntityID lightEntity);
 
@@ -514,6 +523,8 @@ namespace Mono
 		static float GetShaderElapsedTime();
 		static void SetVignetteStrength(float strength);
 		static float GetVignetteStrength();
+
+		static void RemoveBoxCollider(ECS::Entity::EntityID entity);
 
 		/*!**********************************************************************
 		*																																			  *

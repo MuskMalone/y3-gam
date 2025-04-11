@@ -41,7 +41,15 @@ public class Safe : Entity
   private SafeButtons EnterButtonScript;
   private SafeButtons BackButtonScript;
 
-  private enum State
+    private bool isHammerDialogueActive = false;
+    private bool isCrowbarDialogueActive = false;
+    private bool isLastDialogueActive = false;
+    private bool hasPlayedLine0Sound = false;
+    private bool hasPlayedLine1Sound = false;
+    private bool hasPlayedLine2Sound = false;
+
+
+    private enum State
   {
     LOCKED,
     SAFE_UI,
@@ -131,7 +139,45 @@ public class Safe : Entity
 
   void Update()
   {
-    switch (currState)
+        //Dialogue stuff
+        if(isHammerDialogueActive)
+        {
+            if (dialogue.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L1_TOOL1");
+                hasPlayedLine0Sound = true;
+                isHammerDialogueActive = false;
+            }
+        }
+
+        if(isCrowbarDialogueActive)
+        {
+            if (dialogue.CurrentLineIndex == 0 && !hasPlayedLine1Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L1_TOOL2");
+                hasPlayedLine1Sound = true;
+                isCrowbarDialogueActive = false;
+            }
+        }
+
+        if(isLastDialogueActive)
+        {
+            if (dialogue.CurrentLineIndex == 0 && !hasPlayedLine2Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L1_TOOL3");
+                hasPlayedLine2Sound = true;
+                isLastDialogueActive = false;
+            }
+        }
+
+        if (!dialogue.isInDialogueMode)
+        {
+            hasPlayedLine0Sound = false;
+            hasPlayedLine1Sound = false;
+            //hasPlayedLine2Sound = false;
+        }
+
+        switch (currState)
     {
       case State.LOCKED:
         SafeInteraction();
@@ -169,6 +215,7 @@ public class Safe : Entity
         inventory.hammerEquipped && !isCrowbarOnSafe && !dialogue.isInDialogueMode)
       {
         dialogue.SetDialogue(hammerDialogue, EhammerFirst);
+                isHammerDialogueActive = true;
         //interactWithSafeUI.SetActive(false);
         return;
       }
@@ -191,6 +238,7 @@ public class Safe : Entity
 
         isCrowbarOnSafe = true;
         dialogue.SetDialogue(crowbarDialogue, EcrowbarFirst);
+                isCrowbarDialogueActive = true;
         //interactWithSafeUI.SetActive(false);
         return;
       }
@@ -212,7 +260,7 @@ public class Safe : Entity
 
         isHammerOnSafe = true;
         dialogue.SetDialogue(lastDialogue, EhammerAfterCrowbar); // Send specific dialogue lines for scene 1
-                                                                 //interactWithSafeUI.SetActive(false);
+                isLastDialogueActive = true;                                                        //interactWithSafeUI.SetActive(false);
         return;
       }
 
@@ -381,7 +429,7 @@ public class Safe : Entity
     {
       if (InternalCalls.GetText(safeTextBox.mEntityID) == "CEREUS")
       {
-        Debug.Log("Correct answer");
+      //Debug.Log("Correct answer");
         correctAnswer = true;
       }
       else

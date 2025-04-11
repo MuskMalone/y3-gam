@@ -38,7 +38,7 @@ public class LeverManager : Entity
 
   void Start()
   {
-    Console.WriteLine("Lever Manager Initialized. Waiting for levers to be pulled.");
+  //Console.WriteLine("Lever Manager Initialized. Waiting for levers to be pulled.");
         hexTeleport = FindObjectOfType<HexTeleport>();
     }
 

@@ -13,7 +13,12 @@ public class Level3ExitTrigger : Entity
   private float transitionTimer = 0f;
   private bool animationPlaying = false;
 
-  private enum State
+    private bool isExitDialogueActive = false;
+   // private bool isWoodDialogueActive = false;
+    private bool hasPlayedLine0Sound = false;
+    //private bool hasPlayedLine1Sound = false;
+
+    private enum State
   {
     NONE,
     IN_INTERACTION, // Triggered
@@ -29,7 +34,26 @@ public class Level3ExitTrigger : Entity
 
   void Update()
   {
-    switch (currState)
+
+        if (isExitDialogueActive)
+        {
+            if (dialogueSystem.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L3_1");
+                hasPlayedLine0Sound = true;
+                isExitDialogueActive= false;
+            }
+            
+        }
+
+        
+
+        if (!dialogueSystem.isInDialogueMode)
+        {
+            hasPlayedLine0Sound = false;
+           // hasPlayedLine1Sound = false;
+        }
+        switch (currState)
     {
       case State.NONE:
         {
@@ -38,7 +62,8 @@ public class Level3ExitTrigger : Entity
             {
               dialogueSystem.SetDialogue(leavingWithoutFragmentDialogue,
                 new Level3Dialogue.Emotion[] { Level3Dialogue.Emotion.Thinking },
-                0.006f);
+                0.004f);
+                            isExitDialogueActive = true;
               currState = State.IN_INTERACTION;
             }
 

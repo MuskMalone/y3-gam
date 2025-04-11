@@ -30,6 +30,7 @@ public class Lvl2Dialogue : Entity
     public Entity HappyTara;
     public Entity DisturbedTara;
     public Entity SadTara;
+    public Entity TaraName;
     // Removed: public SpecialDialogue specialDialogue;
 
     // Private Variables
@@ -59,6 +60,7 @@ public class Lvl2Dialogue : Entity
 
         DeactivateAllEmotions();
         DialogueBox.SetActive(false);
+        TaraName.SetActive(false);
         SetActive(false);
     }
 
@@ -69,6 +71,7 @@ public class Lvl2Dialogue : Entity
             InternalCalls.StopSound(mEntityID, textAudioName);
             InternalCalls.SetActive(mEntityID, false);
             DialogueBox.SetActive(false);
+            TaraName.SetActive(false);
             DeactivateAllEmotions();
             return;
         }
@@ -77,6 +80,7 @@ public class Lvl2Dialogue : Entity
         {
             InternalCalls.SetActive(mEntityID, true);
             DialogueBox.SetActive(true);
+            TaraName.SetActive(true);
             SetEmotion(emotions[lineIndex]);
             playerMove.FreezePlayer();
         }
@@ -108,6 +112,8 @@ public class Lvl2Dialogue : Entity
                     SkipTyping();
             }
         }
+
+        SetTaraNameXpos();
     }
 
     // To be called by other scripts before starting the dialogue
@@ -148,17 +154,37 @@ public class Lvl2Dialogue : Entity
         InternalCalls.SetText(mEntityID, string.Empty);
         isInDialogueMode = true;
         DialogueBox.SetActive(true);
+        TaraName.SetActive(true);
         SetActive(true);
         SetEmotion(emotions[lineIndex]);
         charIndex = 0;                      // Reset character index for typing effect
         nextCharTime = Time.gameTime;       // Start typing immediately
     }
 
+    public void SetTaraNameXpos()
+    {
+        float CurrentTextWidth = InternalCalls.GetTextBoxWidth(mEntityID);
+        float TaraTextWidth = InternalCalls.GetTextBoxWidth(TaraName.mEntityID);
+        float TotalWidth = CurrentTextWidth + TaraTextWidth;
+        Vector3 CurrPosition = TaraName.GetComponent<Transform>().position;
+        CurrPosition.X = (0f - (TotalWidth / 2f)) + TaraTextWidth / 2f;
+        TaraName.GetComponent<Transform>().position = CurrPosition;
+        CurrPosition = GetComponent<Transform>().position;
+        CurrPosition.X = (0f + (TotalWidth / 2f)) - CurrentTextWidth / 2f;
+        GetComponent<Transform>().position = CurrPosition;
+        Vector3 currScale = DialogueBox.GetComponent<Transform>().scale;
+        currScale.X = TotalWidth + 2f;
+        DialogueBox.GetComponent<Transform>().scale = currScale;
+
+    }
+
+
     private void EndDialogue()
     {
         InternalCalls.StopSound(mEntityID, textAudioName);
         playerMove.UnfreezePlayer();
         DialogueBox.SetActive(false);
+        TaraName.SetActive(false);
         SetActive(false);
         isInDialogueMode = false;
 

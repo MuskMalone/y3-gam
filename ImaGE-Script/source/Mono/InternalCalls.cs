@@ -222,6 +222,9 @@ namespace IGE.Utils
     extern public static void SetText(uint TextEntityID, string textContent);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static float GetTextBoxWidth(uint EntityID);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void AppendText(uint TextEntityID, string textContent);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -251,6 +254,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetLightIntensity(uint entityID, float intensity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetLightRange(uint entityID, float range);
     #endregion
 
 
@@ -271,6 +277,64 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SetCanvasTransitionType(uint entityID, int intensity);
+    #endregion
+
+    #region Animation Component
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void PlayAnimation(uint entity, string animation, bool loop = false);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool IsPlayingAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static string GetCurrentAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void PauseAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ResumeAnimation(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void StopAnimationLoop(uint entity); // stops the animation after the current loop ends
+    #endregion
+
+    #region Video Component
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void PlayVideo(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ToggleVideoPause(uint entity);  // note: only works for video
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetVideoLoop(uint entity, bool loop);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool GetVideoLoop(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetVideoAudioEnabled(uint entity, bool enabled);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool GetVideoAudioEnabled(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void ClearVideoFrame(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool HasVideoStarted(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static bool HasVideoEnded(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetVideoAlpha(uint entity, uint alpha);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static uint GetVideoAlpha(uint entity);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static uint SetVideoVolume(uint entity, float volume);
     #endregion
 
     #region Utility
@@ -328,59 +392,6 @@ namespace IGE.Utils
 
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void PlayAnimation(uint entity, string animation, bool loop = false);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool IsPlayingAnimation(uint entity);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static string GetCurrentAnimation(uint entity);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void PauseAnimation(uint entity);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void ResumeAnimation(uint entity);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void StopAnimationLoop(uint entity); // stops the animation after the current loop ends
-
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void PlayVideo(uint entity);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void ToggleVideoPause(uint entity);  // note: only works for video
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetVideoLoop(uint entity, bool loop);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool GetVideoLoop(uint entity);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetVideoAudioEnabled(uint entity, bool enabled);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool GetVideoAudioEnabled(uint entity);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void ClearVideoFrame(uint entity);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool HasVideoStarted(uint entity);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static bool HasVideoEnded(uint entity);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static void SetVideoAlpha(uint entity, uint alpha);
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    extern public static uint GetVideoAlpha(uint entity);
-
-
-    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetDeltaTime();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -416,6 +427,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void SetLinearDamping(uint entity, float value);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void SetMotionType(uint entity, int value);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void LockRigidBodyRotation(uint entity, bool x, bool y, bool z);
@@ -460,6 +474,9 @@ namespace IGE.Utils
     extern public static void SpawnToolBox();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void SetChildActiveToFollowParent(uint e, bool state);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static void SpawnOpenDoor();
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -491,6 +508,9 @@ namespace IGE.Utils
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     extern public static float GetVignetteStrength();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    extern public static void RemoveBoxCollider(uint entity);
     #endregion
   }
 }

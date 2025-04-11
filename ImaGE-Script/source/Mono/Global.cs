@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace IGE.Utils
 {
-    public static class Global
-    {
-        public static bool isNighttime = false;
-    }
+  public static class Global
+  {
+    public static bool isNighttime = false;
+    public static bool shouldFollow = false;
+  }
 }

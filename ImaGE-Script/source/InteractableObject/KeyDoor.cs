@@ -31,14 +31,33 @@ public class KeyDoor : Entity
 
   private string currentAnim = null;
 
-  void Start()
+    private bool isIntroDialogue1Active = false;
+    private bool hasPlayedLine0Sound = false;
+
+    void Start()
   {
     unlockDoorUI?.SetActive(false);
   }
 
   void Update()
   {
-    if (doorInteraction)
+
+        if (isIntroDialogue1Active)
+        {
+            if(dialogueSystem.CurrentLineIndex == 0 && !hasPlayedLine0Sound)
+            {
+                InternalCalls.PlaySound(mEntityID, "L1_DOOR");
+                hasPlayedLine0Sound = true;
+                isIntroDialogue1Active = false;
+            }
+        }
+
+        if (!dialogueSystem.isInDialogueMode)
+        {
+            hasPlayedLine0Sound = false;
+            //hasPlayedLine1Sound = false;
+        }
+        if (doorInteraction)
     {
       bool isDoorHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
       if (isDoorHit && Input.GetMouseButtonTriggered(0))
@@ -51,6 +70,7 @@ public class KeyDoor : Entity
         {
           InternalCalls.PlaySound(mEntityID, "LockedDoor");
           dialogueSystem.SetDialogue(lockedDialogue, new Dialogue.Emotion[] { Dialogue.Emotion.Sad });
+                    isIntroDialogue1Active = true;
           return;
         }
       }
@@ -83,8 +103,7 @@ public class KeyDoor : Entity
           InternalCalls.PlaySound(mEntityID, "DoorSwing");
           initialAnimation = false;
         }
-        
-        if (!InternalCalls.IsPlayingAnimation(parent))
+        else if (!InternalCalls.IsPlayingAnimation(parent))
         {
           InternalCalls.PlaySound(mEntityID, "DoorSlam");
           currentAnim = null;

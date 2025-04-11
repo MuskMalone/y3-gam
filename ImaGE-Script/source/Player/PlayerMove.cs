@@ -70,21 +70,21 @@ public class  PlayerMove : Entity
   // Update is called once per frame
   void Update()
   {
-    if(Input.GetKeyDown(KeyCode.N))
-    {
-      tochange = true;
-    }
+    //if(Input.GetKeyDown(KeyCode.N))
+    //{
+    //  tochange = true;
+    //}
 
-    if (tochange)
-    {
-      Global.isNighttime = true;
-      InternalCalls.SetDaySkyBox(cam.mEntityID, 1.0f);
-    }
-    if(Input.GetKeyDown(KeyCode.M))
-    {
-      canLook = false;
-      canMove = false;
-    }
+    //if (tochange)
+    //{
+    //  Global.isNighttime = true;
+    //  InternalCalls.SetDaySkyBox(cam.mEntityID, 1.0f);
+    //}
+    //if(Input.GetKeyDown(KeyCode.M))
+    //{
+    //  canLook = false;
+    //  canMove = false;
+    //}
     // Debug.Log(Input.screenWidth + ":" + Input.screenHeight);
     if (startTimer)
     {
@@ -116,9 +116,9 @@ public class  PlayerMove : Entity
   void PlayerMovement()
   {
 #if COMMENT_OUT_FOR_SUBMISSION
-    // tilde(~) key to ALLOW NOCLIP MODE TO FLY AROUND
+    // shift + tilde(~) key to ALLOW NOCLIP MODE TO FLY AROUND
     // CONTROLS: WASD LSHIFT SPACE
-    if (Input.GetKeyTriggered(KeyCode.GRAVE_ACCENT))
+    if (Input.GetKeyHeld(KeyCode.LEFT_SHIFT) && Input.GetKeyTriggered(KeyCode.GRAVE_ACCENT))
     {
       noClip = !noClip;
       if (noClip)

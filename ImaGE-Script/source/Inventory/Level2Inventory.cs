@@ -55,13 +55,13 @@ public class Level2Inventory : Entity
     // Workaround for lack of Vec3<float>[]
     private List<Vec2<float>> iconPosition = new List<Vec2<float>>
   {
-      new Vec2<float>(-14.745f, 6.530f),
-      new Vec2<float>(-15.140f, 4.259f),
-      new Vec2<float>(-15.241f, 1.980f),
-      new Vec2<float>(-15.290f, -0.320f),
-      new Vec2<float>(-15.340f, -2.599f),
-      new Vec2<float>(-15.190f, -4.890f),
-      new Vec2<float>(-14.869f, -7.180f)
+      new Vec2<float>(-14.800f, 6.700f),
+      new Vec2<float>(-15.040f, 4.740f),
+      new Vec2<float>(-15.220f, 2.740f),
+      new Vec2<float>(-15.230f, 0.770f),
+      new Vec2<float>(-15.170f, -1.200f),
+      new Vec2<float>(-14.960f, -3.175f),
+      new Vec2<float>(-14.610f, -5.100f)
   };
 
 
@@ -118,7 +118,7 @@ public class Level2Inventory : Entity
 
                 if (ItemAdded != null)
                 {
-                    Debug.Log("Item has been added to inventory");
+                  //Debug.Log("Item has been added to inventory");
                     ItemAdded(this, new InventoryEventArgs(item, iconPosition[i]));
                 }
                 return;
@@ -163,7 +163,7 @@ public class Level2Inventory : Entity
       {
         if (item != null && !item.Name.StartsWith("HexPainting"))
         {
-          Debug.Log("Removing Item: " + item.Name);
+        //Debug.Log("Removing Item: " + item.Name);
           RemoveItem(item);
         }
       }
@@ -305,8 +305,8 @@ public class Level2Inventory : Entity
             if (highlighted) // i.e. Item is selected
             {
                 string itemName = mItems[index].Name;
-                Debug.Log($"Item in slot {index + 1}: {itemName}");
-                Debug.Log("Item selected");
+              //Debug.Log($"Item in slot {index + 1}: {itemName}");
+              //Debug.Log("Item selected");
                 ShowUIForItem(itemName);
             }
             else

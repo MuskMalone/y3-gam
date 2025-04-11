@@ -73,7 +73,7 @@ public class WoodenPlankSFXLevel3 : Entity
         if (!uniqueMagnitudes.Contains(roundedMagnitude) && roundedMagnitude > lowerImpulseThreshold)
         {
           uniqueMagnitudes.Add(roundedMagnitude);
-          Debug.Log($"play plank sound from {InternalCalls.GetTag(otherPlank1.mEntityID)} with mag: {roundedMagnitude}");
+        //Debug.Log($"play plank sound from {InternalCalls.GetTag(otherPlank1.mEntityID)} with mag: {roundedMagnitude}");
           PlaySound(roundedMagnitude);
         }
       }
@@ -93,7 +93,7 @@ public class WoodenPlankSFXLevel3 : Entity
         if (!uniqueMagnitudes.Contains(roundedMagnitude) && roundedMagnitude > lowerImpulseThreshold)
         {
           uniqueMagnitudes.Add(roundedMagnitude);
-          Debug.Log($"play plank sound from {InternalCalls.GetTag(otherPlank2.mEntityID)} with mag: {roundedMagnitude}");
+        //Debug.Log($"play plank sound from {InternalCalls.GetTag(otherPlank2.mEntityID)} with mag: {roundedMagnitude}");
           PlaySound(roundedMagnitude);
         }
       }
@@ -112,7 +112,7 @@ public class WoodenPlankSFXLevel3 : Entity
         if (!uniqueMagnitudes.Contains(roundedMagnitude) && roundedMagnitude > lowerImpulseThreshold)
         {
           uniqueMagnitudes.Add(roundedMagnitude);
-          Debug.Log($"play plank sound from {InternalCalls.GetTag(mEntityID)} hitting floor with mag: {roundedMagnitude}");
+        //Debug.Log($"play plank sound from {InternalCalls.GetTag(mEntityID)} hitting floor with mag: {roundedMagnitude}");
           PlaySound(roundedMagnitude);
         }
       }

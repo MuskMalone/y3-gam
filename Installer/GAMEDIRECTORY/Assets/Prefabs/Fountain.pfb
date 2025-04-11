@@ -1,64 +1,66 @@
 {
     "Name": "Fountain",
-    "isActive": true,
-    "Components": [
-        {
-            "Tag": {
-                "tag": "Fountain",
-                "isActive": true
-            }
-        },
-        {
-            "Transform": {
-                "position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "scale": {
-                    "x": 4.0,
-                    "y": 4.0,
-                    "z": 4.0
-                },
-                "rotation": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                },
-                "eulerAngles": {
-                    "x": 0.0,
-                    "y": -0.0,
-                    "z": 0.0
-                },
-                "worldPos": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0
-                },
-                "worldScale": {
-                    "x": 4.0,
-                    "y": 4.0,
-                    "z": 4.0
-                },
-                "worldRot": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": 0.0,
-                    "w": 1.0
-                }
-            }
-        },
-        {
-            "Layer": {
-                "layerName": "Default"
-            }
-        }
-    ],
     "SubData": [
         {
+            "ID": 0,
+            "Parent": null,
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Fountain",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 4.0,
+                            "y": 4.0,
+                            "z": 4.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 4.0,
+                            "y": 4.0,
+                            "z": 4.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -117,8 +119,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 13660955837435275474
-                        },
-                        "matIdx": 3
+                        }
                     }
                 },
                 {
@@ -137,7 +138,6 @@
         },
         {
             "ID": 2,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -196,8 +196,7 @@
                     "Material": {
                         "materialGUID": {
                             "ID": 13660955837435275474
-                        },
-                        "matIdx": 3
+                        }
                     }
                 },
                 {
@@ -216,7 +215,6 @@
         },
         {
             "ID": 3,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -323,7 +321,6 @@
         },
         {
             "ID": 4,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -430,7 +427,6 @@
         },
         {
             "ID": 5,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -537,7 +533,6 @@
         },
         {
             "ID": 6,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -644,7 +639,6 @@
         },
         {
             "ID": 7,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -751,7 +745,6 @@
         },
         {
             "ID": 8,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -858,7 +851,6 @@
         },
         {
             "ID": 9,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {
@@ -965,7 +957,6 @@
         },
         {
             "ID": 10,
-            "isActive": true,
             "Parent": 0,
             "Components": [
                 {

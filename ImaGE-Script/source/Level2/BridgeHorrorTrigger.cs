@@ -25,7 +25,13 @@ public class BridgeHorrorTrigger : Entity
   private bool forceLookForward = false;
   private float lastFootstepProgress = 0f;
 
-  void Start()
+
+
+    private bool whispersPlayed = false;
+    private bool threatAudioPlayed = false;
+
+
+    void Start()
   {
     tutorialDialogue = FindObjectOfType<TutorialDialogue>();
     oldPlayerWalkingSpeed = playerMove.walkingSpeed;
@@ -62,7 +68,7 @@ public class BridgeHorrorTrigger : Entity
     theOtherBridgeHorrorTrigger.SetActive(false);
     horrorSequenceTriggered = true;
     InternalCalls.SetShaderState(1, true);
-
+    InternalCalls.PlaySound(footstepSoundEntity.mEntityID, "..\\Assets\\Audio\\BridgeMother_SFX.wav");
     bridgeStart = InternalCalls.GetWorldPosition(playerMove.mEntityID);
     bridgeLength = Vector3.Distance(bridgeStart, bridgeEnd);
   }
@@ -77,14 +83,19 @@ public class BridgeHorrorTrigger : Entity
     lookBackTriggered = false;
     forceLookForward = false;
     lastFootstepProgress = 0f;
-  }
+
+        whispersPlayed = false;
+        threatAudioPlayed = false;
+        InternalCalls.StopSound(mEntityID, "phoneWhispers");
+        InternalCalls.StopSound(mEntityID, "phoneVoiceWhispers");
+    }
 
   private void ApplyHorrorEffects()
   {
     float progress = Mathf.Clamp01(Vector3.Distance(
         InternalCalls.GetWorldPosition(playerMove.mEntityID), bridgeStart) / bridgeLength);
 
-    Debug.Log("Horror Effect Progress: " + progress);
+    //Debug.Log("Horror Effect Progress: " + progress);
 
     playerMove.walkingSpeed = Easing.Linear(oldPlayerWalkingSpeed * 0.4f, oldPlayerWalkingSpeed * percentageToReduce, progress);
     playerMove.runSpeed = Easing.Linear(oldPlayerRunSpeed * 0.4f, oldPlayerRunSpeed * percentageToReduce, progress);
@@ -92,13 +103,26 @@ public class BridgeHorrorTrigger : Entity
 
     InternalCalls.SetVignetteStrength(progress);
 
-    if (progress - lastFootstepProgress >= 0.15f)
-    {
-      lastFootstepProgress = progress;
-      InternalCalls.PlaySound(footstepSoundEntity.mEntityID, "MonsterFoot");
-    }
+    //if (progress - lastFootstepProgress >= 0.15f)
+    //{
+    //  lastFootstepProgress = progress;
+    //  InternalCalls.PlaySound(footstepSoundEntity.mEntityID, "MonsterFoot");
+    //}
 
-    if (progress > 0.85f)
+        if (progress > 0.3f && !whispersPlayed)
+        {
+            whispersPlayed = true;
+            InternalCalls.PlaySound(mEntityID, "phoneWhispers"); // Assuming it's a looping ambient sound
+        }
+
+        // Stage 2: Whispering stops, deeper voice starts near full vignette
+        if (progress > 0.6f && !threatAudioPlayed)
+        {
+            threatAudioPlayed = true;
+            InternalCalls.StopSound(mEntityID, "phoneWhispers");
+            InternalCalls.PlaySound(mEntityID, "phoneVoiceWhispers");
+            }
+            if (progress > 0.85f)
     {
       Cleanup();
     }

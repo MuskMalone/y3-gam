@@ -46,7 +46,7 @@ public class SpecialDialogue : Entity
   private float nextCharTime = 0f;      // Tracks the time for the next character
 
   // Font Scales
-  private readonly float mainDialogueFontScale = 0.006f;
+  private readonly float mainDialogueFontScale = 0.004f;
   private readonly float specialDialogueFontScale = 0.003f;
 
     private bool isIntroDialogue1Active = false; 
@@ -157,7 +157,7 @@ public class SpecialDialogue : Entity
 
         isFadingOut = true;
 
-        Debug.Log($"Initialized First Sprite: {firstSprite.mEntityID}");
+      //Debug.Log($"Initialized First Sprite: {firstSprite.mEntityID}");
       }
 
       // Handle fading out of the current sprite
@@ -175,7 +175,7 @@ public class SpecialDialogue : Entity
           InternalCalls.SetSprite2DColor(currentSprite.mEntityID,
               new Vector4(initialColor.X, initialColor.Y, initialColor.Z, newAlpha));
 
-          Debug.Log($"Fading Out - Sprite: {currentSprite.mEntityID}, Alpha: {newAlpha}");
+        //Debug.Log($"Fading Out - Sprite: {currentSprite.mEntityID}, Alpha: {newAlpha}");
 
           if (fadeProgress >= 1f)
           {
@@ -205,7 +205,7 @@ public class SpecialDialogue : Entity
 
           isFadingOut = true;
 
-          Debug.Log($"Activated Sprite: {nextSprite.mEntityID}");
+        //Debug.Log($"Activated Sprite: {nextSprite.mEntityID}");
         }
         else
         {

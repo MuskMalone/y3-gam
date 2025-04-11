@@ -196,7 +196,7 @@ public class PlayerFootsteps : Entity
     Vector3 scale = InternalCalls.GetScale(player.mEntityID);
     uint entityHit = InternalCalls.RaycastFromEntity(player.mEntityID, position, position + (new Vector3(0, -200, 0)));
     tag = "";
-    Console.WriteLine($"IMPLAYING {tag}");
+  //Console.WriteLine($"IMPLAYING {tag}");
     if (entityHit != uint.MaxValue)
     {
       // Check the layer name of the object hit by the raycast
@@ -251,6 +251,7 @@ public class PlayerFootsteps : Entity
           PlayRandomEchoeyPavementSound();
           break;
         case "Hallway Floor":
+        case "Ground":
           PlayRandomCarpetSound();
           break;
         //case "Metal Pipes":
@@ -260,7 +261,7 @@ public class PlayerFootsteps : Entity
           PlayRandomWoodenSound();
           break;
         default:
-          Debug.Log("No Sound Case " + tag);
+        //Debug.Log("No Sound Case " + tag);
           break;
       }
     }

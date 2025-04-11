@@ -1,33 +1,73 @@
 ﻿using IGE.Utils;
-using System;
-using System.Numerics;
-using System.Text;
 
-public class PickupCompletedPainting : Entity
+public class PickupCompletedPainting : Entity, IInventoryItem
 {
-  public BlackBorder blackBorder;
+  public Entity _Image;
+  public Level4Inventory inventoryScript;
   public PlayerInteraction playerInteraction;
   public Entity EToPickUpUI;
-  public Entity playerCamera, gateCamera;
-  public Entity leftGate;
-  public Entity gateBloom;
-  public Entity exitTrigger;
-  public string leftGateAnimationName;
-  public float maximumBloom = 20f;
-  public Lvl4Dialogue dialogue;
+  public Entity fragmentBloom1;
+  public Entity fragmentBloom2;
+  public Entity fragmentBloom3;
+  public Entity fragmentBloom4;
+  public Entity momBehindGatePainting;
+  public float maximumBloom = 3f;
+  public Entity videoEntity;
+  public Transition transition;
+
+  public Entity playerCamera;
+  private bool isBeingPickedUp = false;
+  public float finalDistanceAwayFromCamAfterPickup = 2f;
+  public PlayerMove playerMove;
 
   private float currentBloomIntensity = 0f;
   private float bloomProgress = 0f;
-  private float lerpDuration = 6f;
+  private readonly float lerpDuration = 1.5f;
   private float elapsedTime = 0f;
+  private float initialBloom;
+
+  private bool endFade = false;
 
   private enum State
   {
     NONE,
-    CUTSCENE,
-    CUTSCENE_END
+    BLOOM_ACTIVATE,
+    CHANGE_INTO_PAINTING,
+    COLLECT_PAINTING,
+    END
   }
   private State currState = State.NONE;
+
+  public string Name
+  {
+    get
+    {
+      return "MotherBehindGatePainting";
+    }
+  }
+
+  public Entity Image
+  {
+    get
+    {
+      return _Image;
+    }
+
+    set
+    {
+      _Image = value;
+    }
+  }
+
+  public void OnPickup()
+  {
+    SetActive(false);
+  }
+
+  public void OnUsed()
+  {
+
+  }
 
   public PickupCompletedPainting() : base()
   {
@@ -36,12 +76,29 @@ public class PickupCompletedPainting : Entity
 
   void Start()
   {
-    exitTrigger.SetActive(false);
     EToPickUpUI?.SetActive(false);
+    momBehindGatePainting?.SetActive(false);
+    initialBloom = InternalCalls.GetBloomIntensity(fragmentBloom1.mEntityID);
+    InternalCalls.SetShaderState(0, false);
+    transition = FindObjectOfType<Transition>();
   }
 
   void Update()
   {
+    if (InternalCalls.HasVideoEnded(videoEntity.mEntityID) && videoEntity.IsActive() && !endFade)
+    {
+      transition.StartTransition(false, 2.0f, Transition.TransitionType.TV_SWITCH);
+      endFade = true;
+    }
+
+    if (endFade)
+    {
+      if (transition.IsFinished())
+      {
+        InternalCalls.SetCurrentScene("..\\Assets\\Scenes\\" + "credits" + ".scn");
+      }
+    }
+
     switch (currState)
     {
       case State.NONE:
@@ -49,65 +106,94 @@ public class PickupCompletedPainting : Entity
           bool isPaintingHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
           if (Input.GetKeyTriggered(KeyCode.E) && isPaintingHit)
           {
-            InternalCalls.PlaySound(mEntityID, "PickupObjects");
-            BeginCutscene();
+            currState = State.BLOOM_ACTIVATE;
             isPaintingHit = false;
-            SetActive(false);
+            EToPickUpUI.SetActive(isPaintingHit);
+            return;
           }
           EToPickUpUI.SetActive(isPaintingHit);
           break;
         }
 
-      case State.CUTSCENE:
+      case State.BLOOM_ACTIVATE:
         {
-          if (leftGate.GetComponent<Animation>().IsPlaying()) {
-            elapsedTime += Time.deltaTime;
-            bloomProgress = Mathf.Clamp01(elapsedTime / lerpDuration);
-            currentBloomIntensity = Easing.EaseInBounce(0f, maximumBloom, bloomProgress);
-            InternalCalls.SetBloomIntensity(gateBloom.mEntityID, currentBloomIntensity);
-            return; 
-          }
+          elapsedTime += Time.deltaTime;
+          bloomProgress = Mathf.Clamp01(elapsedTime / lerpDuration);
+          currentBloomIntensity = Easing.Linear(initialBloom, maximumBloom, bloomProgress);
+          InternalCalls.SetBloomIntensity(fragmentBloom1.mEntityID, currentBloomIntensity);
+          InternalCalls.SetBloomIntensity(fragmentBloom2.mEntityID, currentBloomIntensity);
+          InternalCalls.SetBloomIntensity(fragmentBloom3.mEntityID, currentBloomIntensity);
+          InternalCalls.SetBloomIntensity(fragmentBloom4.mEntityID, currentBloomIntensity);
 
-          EndCutscene();
+          if (bloomProgress >= 1.0f)
+          {
+            elapsedTime = 0;
+            bloomProgress = 0;
+            currState = State.CHANGE_INTO_PAINTING;
+            return;
+          }
 
           break;
         }
 
-      case State.CUTSCENE_END:
+      case State.CHANGE_INTO_PAINTING:
+        {
+          elapsedTime += Time.deltaTime;
+          bloomProgress = Mathf.Clamp01(elapsedTime / lerpDuration);
+          currentBloomIntensity = Easing.Linear(maximumBloom, 0, bloomProgress);
+          InternalCalls.SetBloomIntensity(fragmentBloom1.mEntityID, currentBloomIntensity);
+          InternalCalls.SetBloomIntensity(fragmentBloom2.mEntityID, currentBloomIntensity);
+          InternalCalls.SetBloomIntensity(fragmentBloom3.mEntityID, currentBloomIntensity);
+          InternalCalls.SetBloomIntensity(fragmentBloom4.mEntityID, currentBloomIntensity);
+
+          if (bloomProgress >= 1.0f)
+          {
+            InternalCalls.SetBloomIntensity(fragmentBloom1.mEntityID, 0);
+            InternalCalls.SetBloomIntensity(fragmentBloom2.mEntityID, 0);
+            InternalCalls.SetBloomIntensity(fragmentBloom3.mEntityID, 0);
+            InternalCalls.SetBloomIntensity(fragmentBloom4.mEntityID, 0);
+            momBehindGatePainting.SetActive(true);
+            currState = State.COLLECT_PAINTING;
+            return;
+          }
+
+          break;
+        }
+
+      case State.COLLECT_PAINTING:
+        {
+          if (isBeingPickedUp)
+          {
+            if (Pickup.MoveAndShrink(this, playerInteraction.mEntityID, playerCamera.mEntityID, finalDistanceAwayFromCamAfterPickup))
+            {
+              InternalCalls.PlaySound(mEntityID, "PickupObjects");
+              isBeingPickedUp = false;
+              playerMove.UnfreezePlayer();
+            //Debug.Log("Trying to add to inventory");
+              inventoryScript.Additem(this);
+              currState = State.END;
+            }
+            return;
+          }
+
+          bool isPaintingHit = playerInteraction.RayHitString == InternalCalls.GetTag(mEntityID);
+          if (Input.GetKeyTriggered(KeyCode.E) && isPaintingHit)
+          {
+            isPaintingHit = false;
+            EToPickUpUI.SetActive(isPaintingHit);
+            isBeingPickedUp = true;
+            playerMove.FreezePlayer();
+            return;
+          }
+          EToPickUpUI.SetActive(isPaintingHit);
+          break;
+        }
+
+      case State.END:
         {
 
           break;
         }
     }
-  }
-
-  void BeginCutscene()
-  {
-    blackBorder.DisplayBlackBorders();
-    currState = State.CUTSCENE;
-    SetGateCameraAsMain();
-    leftGate.GetComponent<Animation>().Play(leftGateAnimationName);
-  }
-
-  void EndCutscene()
-  {
-    blackBorder.HideBlackBorders();
-    SetPlayerCameraAsMain();
-    currState = State.CUTSCENE_END;
-    exitTrigger.SetActive(true);
-    dialogue.SetDialogue(new string[] { "Now that the painting is completed, I just\nneed to enter this gate." }, 
-      new Lvl4Dialogue.Emotion[] { Lvl4Dialogue.Emotion.Thinking });
-  }
-
-  private void SetGateCameraAsMain()
-  {
-    InternalCalls.SetTag(playerCamera.mEntityID, "PlayerCamera");
-    InternalCalls.SetTag(gateCamera.mEntityID, "MainCamera");
-  }
-
-  private void SetPlayerCameraAsMain()
-  {
-    InternalCalls.SetTag(playerCamera.mEntityID, "MainCamera");
-    InternalCalls.SetTag(gateCamera.mEntityID, "GateCamera");
   }
 }

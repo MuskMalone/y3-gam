@@ -24,6 +24,7 @@ public class HoldupUI : Entity
   private TutorialLevelInventory tutorialInventoryScript;
   private Level2Inventory level2InventoryScript;
   private Level3Inventory level3InventoryScript;
+  private Level4Inventory level4InventoryScript;
 
   // Track the associated item to remove
   private IInventoryItem associatedItem;
@@ -48,6 +49,7 @@ public class HoldupUI : Entity
     tutorialInventoryScript = FindObjectOfType<TutorialLevelInventory>();
     level2InventoryScript = FindObjectOfType<Level2Inventory>();
     level3InventoryScript = FindObjectOfType<Level3Inventory>();
+    level4InventoryScript = FindObjectOfType<Level4Inventory>();
     pictureAlignscript = FindObjectOfType<PictureAlign>();
     //if (pictureAlignscript != null)
     //  Console.WriteLine(pictureAlignscript.GetComponent<Tag>().tag);
@@ -171,7 +173,7 @@ public class HoldupUI : Entity
     }
     else
     {
-      Console.WriteLine(GetComponent<Tag>().tag + " set small");
+    //Console.WriteLine(GetComponent<Tag>().tag + " set small");
       GetComponent<Transform>().position = smallPicPos;
       GetComponent<Transform>().scale = smallPicScale;
     }
@@ -190,7 +192,7 @@ public class HoldupUI : Entity
     if (dataFilePath != null)
     {
       dataFilePath = "../Assets/GameImg/" + dataFilePath;
-      Console.WriteLine(dataFilePath);
+    //Console.WriteLine(dataFilePath);
       dataFile = new TextAsset(dataFilePath, dataFilePath);
     }
 
@@ -272,7 +274,7 @@ public class HoldupUI : Entity
 
   Quaternion ParseQuaternion(string value)
   {
-    Console.WriteLine("B4: " + value);
+  //Console.WriteLine("B4: " + value);
     value = value.Replace("(", "").Replace(")", ""); // Remove parentheses
     value = value.Replace("X", "");
     value = value.Replace("Y", "");
@@ -280,13 +282,13 @@ public class HoldupUI : Entity
     value = value.Replace("W", "");
     value = value.Replace("{", "");
     value = value.Replace("}", "");
-    Console.WriteLine("AFT: " + value);
+  //Console.WriteLine("AFT: " + value);
     string[] values = value.Split(':');
 
-    foreach (string s in values)
-    {
-      Console.WriteLine(s);
-    }
+    //foreach (string s in values)
+    //{
+    //  Console.WriteLine(s);
+    //}
 
     if (values.Length == 5)
     {
@@ -319,5 +321,10 @@ public class HoldupUI : Entity
     public void Level3RemoveItself()
     {
         level3InventoryScript.RemoveItem(associatedItem);
+    }
+
+    public void Level4RemoveItself()
+    {
+      level4InventoryScript.RemoveItem(associatedItem);
     }
 }

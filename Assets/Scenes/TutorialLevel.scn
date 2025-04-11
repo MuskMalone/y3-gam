@@ -107,7 +107,8 @@
             "Parent": 37,
             "Child Entities": [
                 1048615,
-                1048639
+                1048639,
+                1049504
             ],
             "Components": [
                 {
@@ -236,12 +237,42 @@
                                 "scriptFieldInstList": [
                                     {
                                         "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "DemonPictureFORLEVEL4"
+                                        }
+                                    },
+                                    {
+                                        "data": {
                                             "entityID": 104,
                                             "scriptName": "Entity"
                                         },
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "DownArrow"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Gate1FORLEVEL4"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "Gate2FORLEVEL4"
                                         }
                                     },
                                     {
@@ -272,6 +303,26 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "UpArrow"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "VideoCutscene"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 4294967295,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "WashDownEffectImageFORLEVEL4"
                                         }
                                     },
                                     {
@@ -423,6 +474,13 @@
                                         "type": "System.Single",
                                         "scriptField": {
                                             "fieldName": "targetY"
+                                        }
+                                    },
+                                    {
+                                        "data": 3.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "washdownEffectTotalTime"
                                         }
                                     }
                                 ]
@@ -1586,7 +1644,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 91233144482413210
+                            "ID": 13761730027197479399
                         }
                     }
                 }
@@ -1945,13 +2003,13 @@
                     "Transform": {
                         "position": {
                             "x": 2.5904319286346436,
-                            "y": 6.60099983215332,
+                            "y": 7.836765766143799,
                             "z": -25.89000701904297
                         },
                         "scale": {
-                            "x": 6.0,
-                            "y": 8.0,
-                            "z": 8.0
+                            "x": 21.18000030517578,
+                            "y": 28.42099952697754,
+                            "z": 11.180000305175781
                         },
                         "rotation": {
                             "x": 0.7071067690849304,
@@ -1966,13 +2024,13 @@
                         },
                         "worldPos": {
                             "x": 2.5904319286346436,
-                            "y": 6.60099983215332,
+                            "y": 7.836765766143799,
                             "z": -25.89000701904297
                         },
                         "worldScale": {
-                            "x": 6.0,
-                            "y": 8.0,
-                            "z": 8.0
+                            "x": 21.18000030517578,
+                            "y": 28.42099952697754,
+                            "z": 11.180000305175781
                         },
                         "worldRot": {
                             "x": 0.7071067690849304,
@@ -2844,7 +2902,7 @@
                 {
                     "Tag": {
                         "tag": "Painting_Deco",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -3255,7 +3313,7 @@
                                             "y": -7.5,
                                             "z": 0.0
                                         },
-                                        "volume": 1.0,
+                                        "volume": 0.10000000149011612,
                                         "pitch": 1.0,
                                         "pan": 0.0,
                                         "mute": false,
@@ -3334,7 +3392,7 @@
                             "x": 1.0,
                             "y": 1.0,
                             "z": 1.0,
-                            "w": 1.0
+                            "w": 0.501960813999176
                         },
                         "scale": 0.009999999776482582,
                         "textAssetGUID": {
@@ -3366,7 +3424,7 @@
                                         }
                                     },
                                     {
-                                        "data": "Player.EnterLevel([\"PICTUREPERFECT\"]\nbackgroundProcesses:\n[\"SOULLINK.EXE\"])",
+                                        "data": "Test Environment: \"PICTURE PERFECT\"\n\nSubject: Tara\n\nVisual Construct: Loading...",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "introMessage"
@@ -3421,12 +3479,12 @@
                     "Transform": {
                         "position": {
                             "x": 0.0,
-                            "y": 5.487936973571777,
+                            "y": -1.5,
                             "z": -0.018710732460021973
                         },
                         "scale": {
-                            "x": 8.539999961853027,
-                            "y": 2.560000419616699,
+                            "x": 6.079999923706055,
+                            "y": 2.259999990463257,
                             "z": -0.619999885559082
                         },
                         "rotation": {
@@ -3442,12 +3500,12 @@
                         },
                         "worldPos": {
                             "x": 0.0,
-                            "y": 5.487936973571777,
+                            "y": -1.5,
                             "z": -0.018710732460021973
                         },
                         "worldScale": {
-                            "x": 8.539999961853027,
-                            "y": 2.560000419616699,
+                            "x": 6.079999923706055,
+                            "y": 2.259999990463257,
                             "z": -0.619999885559082
                         },
                         "worldRot": {
@@ -4728,7 +4786,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere10",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -4806,7 +4864,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere9",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -4884,7 +4942,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere8",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -4962,7 +5020,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere7",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -5040,7 +5098,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere6",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -5118,7 +5176,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere4",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -5196,7 +5254,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere59",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -5274,7 +5332,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere60",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -5352,7 +5410,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere61",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -5430,7 +5488,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere62",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -5508,7 +5566,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere63",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -5586,7 +5644,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere64",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -5664,7 +5722,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere10",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -5742,7 +5800,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere9",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -5820,7 +5878,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere8",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -5906,8 +5964,8 @@
                                     },
                                     "playSettings": {
                                         "position": {
-                                            "x": -4.599999904632568,
-                                            "y": -7.599999904632568,
+                                            "x": 0.0,
+                                            "y": -8.850000381469727,
                                             "z": 0.0
                                         },
                                         "volume": 1.0,
@@ -5933,14 +5991,14 @@
                 {
                     "Tag": {
                         "tag": "DialogueText",
-                        "isActive": false
+                        "isActive": true
                     }
                 },
                 {
                     "Transform": {
                         "position": {
-                            "x": -4.599999904632568,
-                            "y": -7.599999904632568,
+                            "x": 0.0,
+                            "y": -8.850000381469727,
                             "z": 0.0
                         },
                         "scale": {
@@ -5960,8 +6018,8 @@
                             "z": 0.0
                         },
                         "worldPos": {
-                            "x": -4.599999904632568,
-                            "y": -7.599999904632568,
+                            "x": 0.0,
+                            "y": -8.850000381469727,
                             "z": 0.0
                         },
                         "worldScale": {
@@ -5986,17 +6044,17 @@
                     "Text": {
                         "textContent": "YOUR TEXT HERE",
                         "color": {
-                            "x": 0.0,
-                            "y": 0.0,
-                            "z": 0.0,
+                            "x": 0.7625417709350586,
+                            "y": 0.7625417709350586,
+                            "z": 0.7625417709350586,
                             "w": 1.0
                         },
-                        "scale": 0.006000000052154064,
+                        "scale": 0.004999999888241291,
                         "textAssetGUID": {
                             "ID": 11715672305158928427
                         },
                         "fontFamilyName": "Sniglet-Regular",
-                        "alignment": 0,
+                        "alignment": 2,
                         "multiLineSpacingOffset": 0.0,
                         "textBoxEnabledFlag": false,
                         "textBoxDimensions": {
@@ -6081,6 +6139,16 @@
                                         "type": "Image.Mono.ScriptInstance",
                                         "scriptField": {
                                             "fieldName": "SurprisedTara"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 1049504,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "TaraName"
                                         }
                                     },
                                     {
@@ -6222,7 +6290,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere7",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -6300,7 +6368,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere6",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -6378,7 +6446,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere4",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -6456,7 +6524,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere10",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -6534,7 +6602,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere9",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -6612,7 +6680,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere8",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -6690,7 +6758,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere7",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -6768,7 +6836,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere6",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -6846,7 +6914,7 @@
                 {
                     "Tag": {
                         "tag": "pSphere4",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -6924,7 +6992,7 @@
                 {
                     "Tag": {
                         "tag": "Frame2",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -7258,11 +7326,6 @@
             "ID": 1048639,
             "Parent": 52,
             "Child Entities": [],
-            "Position": {
-                "x": 1.899999976158142,
-                "y": -6.400000095367432,
-                "z": 0.0
-            },
             "Prefab": {
                 "GUID": {
                     "ID": 14337001799689692424
@@ -7270,10 +7333,66 @@
                 "subDataId": 0,
                 "componentData": [
                     {
+                        "key": "Image",
+                        "value": {
+                            "color": {
+                                "x": 0.5372549295425415,
+                                "y": 0.5137255191802979,
+                                "z": 0.4313725531101227,
+                                "w": 0.6078431606292725
+                            },
+                            "textureAssetGUID": {
+                                "ID": 2203736300003804932
+                            }
+                        }
+                    },
+                    {
                         "key": "Tag",
                         "value": {
                             "tag": "DialogueBox",
-                            "isActive": false
+                            "isActive": true
+                        }
+                    },
+                    {
+                        "key": "Transform",
+                        "value": {
+                            "position": {
+                                "x": 0.0,
+                                "y": -8.550000190734863,
+                                "z": 0.0
+                            },
+                            "scale": {
+                                "x": 13.260000228881836,
+                                "y": 0.9200000166893005,
+                                "z": -4.97999906539917
+                            },
+                            "rotation": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            },
+                            "eulerAngles": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "worldPos": {
+                                "x": 0.0,
+                                "y": -8.550000190734863,
+                                "z": 0.0
+                            },
+                            "worldScale": {
+                                "x": 13.260000228881836,
+                                "y": 0.9200000166893005,
+                                "z": -4.97999906539917
+                            },
+                            "worldRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0,
+                                "w": 1.0
+                            }
                         }
                     }
                 ],
@@ -9132,7 +9251,7 @@
                             "w": 1.0
                         },
                         "textureAssetGUID": {
-                            "ID": 7202365910271027553
+                            "ID": 6672883617820544559
                         }
                     }
                 }
@@ -10570,6 +10689,89 @@
             }
         },
         {
+            "ID": 1049504,
+            "Parent": 52,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "TaraName",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -2.799999952316284,
+                            "y": -8.850000381469727,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -2.799999952316284,
+                            "y": -8.850000381469727,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "Tara: ",
+                        "color": {
+                            "x": 0.7123745679855347,
+                            "y": 0.6097825765609741,
+                            "z": 0.4669746458530426,
+                            "w": 1.0
+                        },
+                        "scale": 0.004000000189989805,
+                        "textAssetGUID": {
+                            "ID": 11715672305158928427
+                        },
+                        "fontFamilyName": "Sniglet-Regular",
+                        "alignment": 2,
+                        "multiLineSpacingOffset": 0.0,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 2097152,
             "Parent": 1048581,
             "Child Entities": [],
@@ -11113,7 +11315,7 @@
                                 "scriptName": "CameraCapture",
                                 "scriptFieldInstList": [
                                     {
-                                        "data": "TutorialPaintingM6",
+                                        "data": "DONTTOUCHL",
                                         "type": "System.String",
                                         "scriptField": {
                                             "fieldName": "PictureName"
@@ -13396,7 +13598,7 @@
                 {
                     "Tag": {
                         "tag": "PickupTutorialPaintingUI",
-                        "isActive": true
+                        "isActive": false
                     }
                 },
                 {
@@ -13407,7 +13609,7 @@
                             "z": 0.0
                         },
                         "scale": {
-                            "x": 7.7769999504089355,
+                            "x": 7.517000198364258,
                             "y": 2.2049999237060547,
                             "z": 8.258000373840332
                         },
@@ -13428,7 +13630,7 @@
                             "z": 0.0
                         },
                         "worldScale": {
-                            "x": 7.7769999504089355,
+                            "x": 7.517000198364258,
                             "y": 2.2049999237060547,
                             "z": 8.258000373840332
                         },
