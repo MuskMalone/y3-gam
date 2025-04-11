@@ -12,7 +12,7 @@
 #include <mutex>
 
 #ifndef DISTRIBUTION
-//#define CHECK_UNUSED_ASSETS
+#define CHECK_UNUSED_ASSETS
 #endif
 
 #define IGE_ASSETMGR IGE::Assets::AssetManager::GetInstance()

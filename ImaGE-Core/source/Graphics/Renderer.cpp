@@ -181,7 +181,7 @@ namespace Graphics {
 		mFinalFramebuffer = mRenderPasses.back()->GetTargetFramebuffer();
 
 		IGE::Assets::GUID texguid1{ Texture::Create(gAssetsDirectory + std::string("Textures\\default.dds")) };
-		IGE::Assets::GUID texguid{ Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
+		//IGE::Assets::GUID texguid{ Texture::Create(gAssetsDirectory + std::string("Textures\\happy.dds")) };
 		//Init Materials
 		MaterialTable::Init(mData.cMaxMaterials);
 

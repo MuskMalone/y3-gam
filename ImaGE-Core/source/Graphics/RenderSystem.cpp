@@ -57,11 +57,22 @@ namespace Graphics {
 			Component::Mesh& mesh{ entity.GetComponent<Component::Mesh>() };
 			if (!mesh.meshSource) { return false; }
 
-			bool const ret{ Utils::Culling::EntityInViewFrustum(camFrustum, entity.GetComponent<Component::Transform>(),
-				am.GetAsset<IGE::Assets::ModelAsset>(mesh.meshSource)->mMeshSource) };
-			if (!ret) { ++cullCount; }
+#ifdef _DEBUG
+			try {
+#endif
+				bool const ret{ Utils::Culling::EntityInViewFrustum(camFrustum, entity.GetComponent<Component::Transform>(),
+					am.GetAsset<IGE::Assets::ModelAsset>(mesh.meshSource)->mMeshSource) };
+				if (!ret) { ++cullCount; }
 
-			return ret;
+				return ret;
+#ifdef _DEBUG
+			}
+			catch (Debug::ExceptionBase&) {
+				IGE_DBGLOGGER.LogError("Unable to get asset " + std::to_string((uint64_t)mesh.meshSource));
+			}
+
+			return true;
+#endif
 		};
 
 		std::vector<ECS::Entity> entityVector{};
