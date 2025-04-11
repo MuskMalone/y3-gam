@@ -383,6 +383,8 @@ namespace Mono
 		static void ClearVideoFrame(ECS::Entity::EntityID entity);
 		static void SetVideoAlpha(ECS::Entity::EntityID entity, unsigned alpha);
 		static unsigned GetVideoAlpha(ECS::Entity::EntityID entity);
+		static void SetVideoVolume(ECS::Entity::EntityID, float volume);
+
 
 		static void SetShaderState(unsigned idx, bool active);
 

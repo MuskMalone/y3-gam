@@ -46,7 +46,6 @@ public class Fragment : Entity
   void Start()
   {
     fragmentPickupUI?.SetActive(false);
-    SetAltarActive(false);
   }
 
   void Update()
@@ -188,12 +187,10 @@ public class Fragment : Entity
 
   void TriggerAnimation()
   {
-    SetAltarActive(true);
     GetComponent<Animation>().Play(fragAnimNameFlyUp);
     InternalCalls.PlaySound(mEntityID, "FloatUpSFX");
     GardenFragment.SetActive(true);
     Particles.SetActive(true);
-    ParticleBurst.SetActive(false);
     blackBorder.DisplayBlackBorders();
   }
 

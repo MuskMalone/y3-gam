@@ -425,4 +425,12 @@ public class Inventory : Entity
         return currentItem;
     }
 
+  public void CloseInventoryAndUnselectAllItems()
+  {
+    currentItem = null;
+    if (isVisible)
+    {
+      ToggleInventoryVisibility();
+    }
+  }
 }

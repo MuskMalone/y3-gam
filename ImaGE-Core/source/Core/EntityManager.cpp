@@ -97,7 +97,7 @@ namespace ECS {
       }
     }
 
-    Debug::DebugLogger::GetInstance().LogError("[EntityManager] No Entities have the specified Tag!");
+    Debug::DebugLogger::GetInstance().LogError("[EntityManager] No Entities have the specified Tag! [" + tag + "]");
     return Entity();
   }
 

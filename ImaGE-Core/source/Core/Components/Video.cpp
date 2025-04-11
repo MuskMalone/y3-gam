@@ -187,6 +187,11 @@ namespace Component {
     alpha = newAlpha;
   }
 
+  void Video::SetVolume(float newVolume) {
+    glm::clamp(newVolume, 0.f, 1.f);
+    audioPlaySettings.volume = newVolume;
+  }
+
   void Video::EnableAudio(bool enabled) {
     audioEnabled = enabled;
 

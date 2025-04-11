@@ -12,9 +12,10 @@ uniform int       u_Frame;                // shader playback frame
 uniform vec4      u_Mouse;                // mouse pixel coords. xy: current (if MLB down), zw: click
 
 uniform sampler2D u_ScreenTex;
+uniform sampler2D u_DepthBuffer;
 
 out vec4 fragColor;
 
 void main() {
-    fragColor = texture(u_ScreenTex, fragTexCoord) * vec4(1,0.1,0.5,1);
+    fragColor = texture(u_DepthBuffer, fragTexCoord) * vec4(1,1,1,1);
 }

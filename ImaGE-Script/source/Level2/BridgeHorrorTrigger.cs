@@ -68,7 +68,7 @@ public class BridgeHorrorTrigger : Entity
     theOtherBridgeHorrorTrigger.SetActive(false);
     horrorSequenceTriggered = true;
     InternalCalls.SetShaderState(1, true);
-
+    InternalCalls.PlaySound(footstepSoundEntity.mEntityID, "..\\Assets\\Audio\\BridgeMother_SFX.wav");
     bridgeStart = InternalCalls.GetWorldPosition(playerMove.mEntityID);
     bridgeLength = Vector3.Distance(bridgeStart, bridgeEnd);
   }
@@ -103,11 +103,11 @@ public class BridgeHorrorTrigger : Entity
 
     InternalCalls.SetVignetteStrength(progress);
 
-    if (progress - lastFootstepProgress >= 0.15f)
-    {
-      lastFootstepProgress = progress;
-      InternalCalls.PlaySound(footstepSoundEntity.mEntityID, "MonsterFoot");
-    }
+    //if (progress - lastFootstepProgress >= 0.15f)
+    //{
+    //  lastFootstepProgress = progress;
+    //  InternalCalls.PlaySound(footstepSoundEntity.mEntityID, "MonsterFoot");
+    //}
 
         if (progress > 0.3f && !whispersPlayed)
         {

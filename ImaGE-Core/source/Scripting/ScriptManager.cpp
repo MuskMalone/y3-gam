@@ -339,6 +339,7 @@ void ScriptManager::AddInternalCalls()
   ADD_INTERNAL_CALL(ClearVideoFrame);
   ADD_INTERNAL_CALL(GetVideoAlpha);
   ADD_INTERNAL_CALL(SetVideoAlpha);
+  ADD_INTERNAL_CALL(SetVideoVolume);
   ADD_INTERNAL_CALL(GetLayerName);
   ADD_INTERNAL_CALL(GetCurrentScene);
   ADD_INTERNAL_CALL(SetCurrentScene);
@@ -1441,6 +1442,10 @@ unsigned Mono::GetVideoAlpha(ECS::Entity::EntityID entity) {
   return ECS::Entity(entity).GetComponent<Component::Video>().alpha;
 }
 
+void Mono::SetVideoVolume(ECS::Entity::EntityID id, float volume) {
+  ECS::Entity(id).GetComponent<Component::Video>().SetVolume(volume);
+}
+
 
 glm::vec3 Mono::GetVelocity(ECS::Entity::EntityID e)
 {
@@ -2037,11 +2042,20 @@ void Mono::HideCursor() {
 void Mono::ChangeToolsPainting() {
   ECS::Entity ToolsUI = ECS::EntityManager::GetInstance().GetEntityFromTag("ToolsPaintingUI");
   ECS::Entity Toolspaint = ECS::EntityManager::GetInstance().GetEntityFromTag("ToolsPainting");
+  ECS::Entity ToolsUIINv = ECS::EntityManager::GetInstance().GetEntityFromTag("ToolsPaintingUI (FOR INVENTORY)");
+
   IGE::Assets::GUID toolsPaintingNight{ IGE::Assets::AssetManager::GetInstance().PathToGUID("..\\Assets\\Textures\\ToolsPaintingNight.png") };
   IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(toolsPaintingNight);
   if (ECS::EntityManager::GetInstance().IsValidEntity(ToolsUI))
   {
     ToolsUI.GetComponent<Component::Image>().textureAsset = toolsPaintingNight;
+  }
+
+  IGE::Assets::GUID toolsPaintingNightInv{ IGE::Assets::AssetManager::GetInstance().PathToGUID("..\\Assets\\Textures\\ToolsNightPaintingFrameUI.png") };
+  IGE_ASSETMGR.LoadRef<IGE::Assets::TextureAsset>(toolsPaintingNightInv);
+  if (ECS::EntityManager::GetInstance().IsValidEntity(ToolsUIINv))
+  {
+      ToolsUIINv.GetComponent<Component::Image>().textureAsset = toolsPaintingNightInv;
   }
  
   for (ECS::Entity& child : ECS::EntityManager::GetInstance().GetChildEntity(Toolspaint))
