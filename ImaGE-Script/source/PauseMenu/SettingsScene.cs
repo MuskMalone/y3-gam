@@ -109,7 +109,8 @@ public class SettingsScene : Entity
 
   // Update is called once per frame
   void Update()
-  { Debug.Log(Input.mousePosition.X + "," + Input.mousePosition.Y);
+  { 
+    //Debug.Log(Input.mousePosition.X + "," + Input.mousePosition.Y);
     if (isTransitioning)
     {
       transitionTimer += Time.deltaTime;
