@@ -15,7 +15,7 @@ namespace {
 namespace IGE {
 	namespace Assets {
 		ModelAsset::ModelAsset(std::string const& fp) : mMeshSource{ 
-			(std::filesystem::is_regular_file(fp)) ? 
+			(std::filesystem::path(fp).has_extension()) ? 
 				Graphics::MeshFactory::CreateModelFromImport(fp) :
 				Graphics::MeshFactory::CreateModelFromString(fp)
 		}
@@ -75,7 +75,7 @@ namespace IGE {
 			//converting in imsh is done here
 			//assuming that this is an imsh file that is added via the assets folder
 			std::string const& fp{ AssetManager::GetInstance().GUIDToPath(guid) };
-			if (!std::filesystem::is_regular_file(fp)) {
+			if (!std::filesystem::path(fp).has_extension()) {
 				return new ModelAsset(fp);
 			}
 

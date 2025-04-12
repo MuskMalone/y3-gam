@@ -64,7 +64,6 @@ public class PanOutFromTV : Entity
               vid.Play();
               vid.SetVolume(0.7f);
               GetComponent<Animation>().Play(panOutAnimName);
-              skipText.SetActive(true);
               currState = State.PANNING;
             }
           }

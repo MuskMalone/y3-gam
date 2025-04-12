@@ -9,7 +9,7 @@ int Main(int argc, char** argv) {
   IGE::Application::ApplicationSpecification spec;
   spec.EnableImGui = false;
   spec.Fullscreen = true;
-  spec.Name = "ImaGE Game";
+  spec.Name = "Picture Perfect";
   spec.Resizable = true;
   spec.StartMaximized = true;
   spec.VSync = true;

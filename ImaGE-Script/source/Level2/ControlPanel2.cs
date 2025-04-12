@@ -36,6 +36,8 @@ public class ControlPanel2 : Entity
   public float maxHorizontalRotation = 32.0f;
 
   private bool uvLightEnabled = false;
+  private Level2Inventory level2InventoryScript;
+  private PictureAlign picAlignScript;
 
   public Entity LeftClickControlPanelUI;
 
@@ -89,6 +91,9 @@ public class ControlPanel2 : Entity
       return;
     }
 
+    level2InventoryScript = FindObjectOfType<Level2Inventory>();
+    picAlignScript = FindObjectOfType<PictureAlign>();
+
     InitHiddenTexts();
 
     WASDtoRotate.SetActive(false);
@@ -137,7 +142,9 @@ public class ControlPanel2 : Entity
 
         if (mouseClicked && isPanelHit)
         {
-        //Debug.Log("HIT");
+          //Debug.Log("HIT");
+          level2InventoryScript.CloseInventoryAndUnselectAllItems();
+          picAlignScript.ClearAll();
           SetControlPanelCameraAsMain();
           playerMove.FreezePlayer();
                     WASDtoRotate.SetActive(true);
