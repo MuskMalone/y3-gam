@@ -95,7 +95,7 @@ public class BridgeHorrorTrigger : Entity
     float progress = Mathf.Clamp01(Vector3.Distance(
         InternalCalls.GetWorldPosition(playerMove.mEntityID), bridgeStart) / bridgeLength);
 
-    Debug.Log("Horror Effect Progress: " + progress);
+    //Debug.Log("Horror Effect Progress: " + progress);
 
     playerMove.walkingSpeed = Easing.Linear(oldPlayerWalkingSpeed * 0.4f, oldPlayerWalkingSpeed * percentageToReduce, progress);
     playerMove.runSpeed = Easing.Linear(oldPlayerRunSpeed * 0.4f, oldPlayerRunSpeed * percentageToReduce, progress);

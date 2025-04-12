@@ -60,13 +60,13 @@ public class RotationGuidanceToolsPainting : Entity
       if (yDifference > 0)
       {
         rightArrow.SetActive(true);
-        Debug.Log("Right arrow enabled.");
+      //Debug.Log("Right arrow enabled.");
       }
       else
       {
 
         leftArrow.SetActive(true);
-        Debug.Log("Left arrow enabled.");
+      //Debug.Log("Left arrow enabled.");
       }
     }
 
@@ -76,13 +76,13 @@ public class RotationGuidanceToolsPainting : Entity
       {
 
         bottomArrow.SetActive(true);
-        Debug.Log("Top arrow enabled.");
+      //Debug.Log("Top arrow enabled.");
       }
       else
       {
 
         topArrow.SetActive(true);
-        Debug.Log("Bottom arrow enabled.");
+      //Debug.Log("Bottom arrow enabled.");
       }
     }
   }

@@ -40,7 +40,7 @@ namespace Graphics {
 #ifdef _DEBUG
 			std::cerr << "Failed to load DDS texture: " << path << std::endl;
 #endif
-			throw std::runtime_error{ "failed to load dds tex"};
+			throw Debug::Exception<Texture>(Debug::LVL_ERROR, Msg("failed to load DDS texture: " + path));
 		}
 
 		// Flip the image vertically
@@ -50,7 +50,7 @@ namespace Graphics {
 #ifdef _DEBUG
 			std::cerr << "Failed to flip DDS texture vertically." << std::endl;
 #endif
-			throw std::runtime_error{ "Failed to flip DDS texture vertically" };
+			throw Debug::Exception<Texture>(Debug::LVL_ERROR, Msg("failed to flip DDS texture vertically: " + path));
 		}
 
 		// Retrieve the flipped image data
@@ -59,7 +59,7 @@ namespace Graphics {
 #ifdef _DEBUG
 			std::cerr << "Failed to retrieve flipped image data." << std::endl;
 #endif
-			throw std::runtime_error{ "Failed to retrieve flipped image data" };
+			throw Debug::Exception<Texture>(Debug::LVL_ERROR, Msg("failed to retrieve flipped image data: " + path));
 		}
 
 		mWidth = static_cast<uint32_t>(img->width);
@@ -375,7 +375,7 @@ namespace Graphics {
 		}
 		else {
 			Debug::DebugLogger::GetInstance().LogError("Bindless textures are not supported on this system.");
-			std::cout << "NOT SUPPORTED" << std::endl;
+			//std::cout << "NOT SUPPORTED" << std::endl;
 		}
 	}
 

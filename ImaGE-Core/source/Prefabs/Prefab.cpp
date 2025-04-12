@@ -164,7 +164,7 @@ void Prefab::FillPrefabInstance(IGE::Assets::GUID guid, std::unordered_map<Prefa
     PrefabSubData const* obj{ newSubData[i] };
 
     // dont have to check here because every sub-entity should have a parent
-    ECS::Entity const& child{ idToEntity[obj->mId] }, parent{ idToEntity[obj->mParent] };
+    ECS::Entity const child{ idToEntity[obj->mId] }, parent{ idToEntity[obj->mParent] };
     entityMan.SetParentEntity(parent, child);
   }
 }

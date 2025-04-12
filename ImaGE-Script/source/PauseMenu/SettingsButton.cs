@@ -29,7 +29,7 @@ public class SettingsButtons : Entity
   {
     IsClicked = true;
     InternalCalls.PlaySound(mEntityID, "PickUpObjects_SFX");
-    Debug.Log("PLAY");
+  //Debug.Log("PLAY");
     //Text.SetActive(true);
     //Border.SetActive(true);
   }

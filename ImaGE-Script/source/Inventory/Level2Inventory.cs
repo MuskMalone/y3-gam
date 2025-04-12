@@ -118,7 +118,7 @@ public class Level2Inventory : Entity
 
                 if (ItemAdded != null)
                 {
-                    Debug.Log("Item has been added to inventory");
+                  //Debug.Log("Item has been added to inventory");
                     ItemAdded(this, new InventoryEventArgs(item, iconPosition[i]));
                 }
                 return;
@@ -163,7 +163,7 @@ public class Level2Inventory : Entity
       {
         if (item != null && !item.Name.StartsWith("HexPainting"))
         {
-          Debug.Log("Removing Item: " + item.Name);
+        //Debug.Log("Removing Item: " + item.Name);
           RemoveItem(item);
         }
       }
@@ -305,8 +305,8 @@ public class Level2Inventory : Entity
             if (highlighted) // i.e. Item is selected
             {
                 string itemName = mItems[index].Name;
-                Debug.Log($"Item in slot {index + 1}: {itemName}");
-                Debug.Log("Item selected");
+              //Debug.Log($"Item in slot {index + 1}: {itemName}");
+              //Debug.Log("Item selected");
                 ShowUIForItem(itemName);
             }
             else

@@ -69,7 +69,7 @@ public class Transition : Entity
   // These functions are to be called from other scripts
   public void StartTransition(bool fadeIn, float duration, TransitionType transitionType)
   {
-    Debug.Log("Starting Transition");
+  //Debug.Log("Starting Transition");
     isFadeIn = fadeIn;
     totalTime = duration;
     transitionTimer = 0f;

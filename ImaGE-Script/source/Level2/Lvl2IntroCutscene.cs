@@ -124,7 +124,7 @@ public class Lvl2IntroCutscene : Entity
                 InternalCalls.SetSprite2DColor(firstSprite.mEntityID, new Vector4(initialColor.X, initialColor.Y, initialColor.Z, 0f));
 
                 isFadingOut = true;
-                Debug.Log($"[Lvl2IntroCutscene] Initialized First Sprite: {firstSprite.mEntityID}");
+              //Debug.Log($"[Lvl2IntroCutscene] Initialized First Sprite: {firstSprite.mEntityID}");
             }
 
             if (currentSillouetteIndex >= 0 && currentSillouetteIndex < BeginningSilhouetteSequence.Length)
@@ -138,7 +138,7 @@ public class Lvl2IntroCutscene : Entity
                     float newAlpha = 1f - Mathf.Clamp01(fadeProgress);
                     InternalCalls.SetSprite2DColor(currentSprite.mEntityID, new Vector4(initialColor.X, initialColor.Y, initialColor.Z, newAlpha));
 
-                    Debug.Log($"[Lvl2IntroCutscene] Fading Out - Sprite: {currentSprite.mEntityID}, Alpha: {newAlpha}");
+                  //Debug.Log($"[Lvl2IntroCutscene] Fading Out - Sprite: {currentSprite.mEntityID}, Alpha: {newAlpha}");
 
                     if (fadeProgress >= 1f)
                     {
@@ -174,7 +174,7 @@ public class Lvl2IntroCutscene : Entity
                     InternalCalls.SetSprite2DColor(nextSprite.mEntityID, new Vector4(initialColor.X, initialColor.Y, initialColor.Z, 0f));
 
                     isFadingOut = true;
-                    Debug.Log($"[Lvl2IntroCutscene] Activated Sprite: {nextSprite.mEntityID}");
+                  //Debug.Log($"[Lvl2IntroCutscene] Activated Sprite: {nextSprite.mEntityID}");
                 }
                 else
                 {
@@ -233,12 +233,12 @@ public class Lvl2IntroCutscene : Entity
         Vector3 triggerPosition = InternalCalls.GetPosition(mEntityID);
 
         InternalCalls.SetPosition(playerMove.mEntityID, ref triggerPosition);
-        Console.WriteLine("OgRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
+      //Console.WriteLine("OgRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
         //InternalCalls.SetRotation(mainCamera.mEntityID, ref targetRot);
 
         //playerMove.SetRotation(new Vector3(73, 65, 0));
         playerMove.SetRotation(new Vector3(0, 0, 0));
-        Console.WriteLine("NewRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
+      //Console.WriteLine("NewRot" + InternalCalls.GetMainCameraRotation(mainCamera.mEntityID));
        //-------------------
         //playerMove.canLook = true;
     }

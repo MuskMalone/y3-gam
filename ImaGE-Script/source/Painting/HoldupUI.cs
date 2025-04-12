@@ -173,7 +173,7 @@ public class HoldupUI : Entity
     }
     else
     {
-      Console.WriteLine(GetComponent<Tag>().tag + " set small");
+    //Console.WriteLine(GetComponent<Tag>().tag + " set small");
       GetComponent<Transform>().position = smallPicPos;
       GetComponent<Transform>().scale = smallPicScale;
     }
@@ -192,7 +192,7 @@ public class HoldupUI : Entity
     if (dataFilePath != null)
     {
       dataFilePath = "../Assets/GameImg/" + dataFilePath;
-      Console.WriteLine(dataFilePath);
+    //Console.WriteLine(dataFilePath);
       dataFile = new TextAsset(dataFilePath, dataFilePath);
     }
 
@@ -274,7 +274,7 @@ public class HoldupUI : Entity
 
   Quaternion ParseQuaternion(string value)
   {
-    Console.WriteLine("B4: " + value);
+  //Console.WriteLine("B4: " + value);
     value = value.Replace("(", "").Replace(")", ""); // Remove parentheses
     value = value.Replace("X", "");
     value = value.Replace("Y", "");
@@ -282,13 +282,13 @@ public class HoldupUI : Entity
     value = value.Replace("W", "");
     value = value.Replace("{", "");
     value = value.Replace("}", "");
-    Console.WriteLine("AFT: " + value);
+  //Console.WriteLine("AFT: " + value);
     string[] values = value.Split(':');
 
-    foreach (string s in values)
-    {
-      Console.WriteLine(s);
-    }
+    //foreach (string s in values)
+    //{
+    //  Console.WriteLine(s);
+    //}
 
     if (values.Length == 5)
     {

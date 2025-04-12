@@ -243,13 +243,13 @@ public class TutorialDialogue : Entity
 
     private void NextLine()
     {
-        Debug.Log("TriggeredNextLine");
+      //Debug.Log("TriggeredNextLine");
         DeactivateAllEmotions();
         InternalCalls.PlaySound(mEntityID, textAudioName);
 
         if (lineIndex < lines.Length - 1)
         {
-            Debug.Log("TriggeredLine");
+          //Debug.Log("TriggeredLine");
             lineIndex++;
            // SetEmotion(emotions[lineIndex]);
             InternalCalls.SetText(mEntityID, string.Empty);
@@ -259,7 +259,7 @@ public class TutorialDialogue : Entity
         }
         else
         {
-            Debug.Log("TriggeredTutorialDialogue");
+          //Debug.Log("TriggeredTutorialDialogue");
             EndDialogue();
         }
     }

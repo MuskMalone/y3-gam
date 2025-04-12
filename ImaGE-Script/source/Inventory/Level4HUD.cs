@@ -21,7 +21,7 @@ public class Level4HUD : Entity
 
   private void InventoryScript_ItemAdded(object sender, InventoryEventArgs e)
   {
-    Debug.Log("InventoryScript_ItemAdded was called");
+  //Debug.Log("InventoryScript_ItemAdded was called");
     Transform inventoryPanel = GetComponent<Transform>().Find("Inventory");
     Vector3 vec3 = new Vector3(e.InventoryPosition.X, e.InventoryPosition.Y, 1f);
     InternalCalls.SetPosition(e.Item.Image.mEntityID, ref vec3);

@@ -36,58 +36,58 @@ public class PauseMenu : Entity
 
   void Start()
   {
-    Console.WriteLine("1: Hiding ResumeButton.");
+  //Console.WriteLine("1: Hiding ResumeButton.");
     ResumeButton?.SetActive(false);
 
-    Console.WriteLine("2: Hiding MainMenuButton.");
+  //Console.WriteLine("2: Hiding MainMenuButton.");
     MainMenuButton?.SetActive(false);
 
-    Console.WriteLine("3: Hiding SettingsButton.");
+  //Console.WriteLine("3: Hiding SettingsButton.");
     SettingsButton?.SetActive(false);
 
-    Console.WriteLine("4: Finding script on ResumeButton.");
+  //Console.WriteLine("4: Finding script on ResumeButton.");
     ResumeButtonScript = ResumeButton.FindScript<PauseMenuButtons>();
 
-    Console.WriteLine("5: Finding script on MainMenuButton.");
+  //Console.WriteLine("5: Finding script on MainMenuButton.");
     MainMenuButtonScript = MainMenuButton.FindScript<PauseMenuButtons>();
 
-    Console.WriteLine("6: Finding script on SettingsButton.");
+  //Console.WriteLine("6: Finding script on SettingsButton.");
     SettingsButtonScript = SettingsButton.FindScript<PauseMenuButtons>();
 
-    Console.WriteLine("7: Getting original menu position.");
+  //Console.WriteLine("7: Getting original menu position.");
     Vector3 originalMenu = InternalCalls.GetPosition(mEntityID);
 
-    Console.WriteLine($"8: Original Menu Position -> X: {originalMenu.X}, Y: {originalMenu.Y}, Z: {originalMenu.Z}");
+  //Console.WriteLine($"8: Original Menu Position -> X: {originalMenu.X}, Y: {originalMenu.Y}, Z: {originalMenu.Z}");
     Vector3 newPosMenu = new Vector3(originalMenu.X, originalMenu.Y, OriginalTargetZMenu);
 
-    Console.WriteLine($"9: Setting Menu Position to -> X: {newPosMenu.X}, Y: {newPosMenu.Y}, Z: {newPosMenu.Z}");
+  //Console.WriteLine($"9: Setting Menu Position to -> X: {newPosMenu.X}, Y: {newPosMenu.Y}, Z: {newPosMenu.Z}");
     InternalCalls.SetPosition(mEntityID, ref newPosMenu);
 
-    Console.WriteLine("10: Getting original ResumeButton position.");
+  //Console.WriteLine("10: Getting original ResumeButton position.");
     Vector3 originalResume = InternalCalls.GetPosition(ResumeButtonScript.mEntityID);
 
-    Console.WriteLine($"11: Original ResumeButton Position -> X: {originalResume.X}, Y: {originalResume.Y}, Z: {originalResume.Z}");
+  //Console.WriteLine($"11: Original ResumeButton Position -> X: {originalResume.X}, Y: {originalResume.Y}, Z: {originalResume.Z}");
     Vector3 newPosResume = new Vector3(originalResume.X, originalResume.Y, OriginalTargetZButton);
 
-    Console.WriteLine($"12: Setting ResumeButton Position to -> X: {newPosResume.X}, Y: {newPosResume.Y}, Z: {newPosResume.Z}");
+  //Console.WriteLine($"12: Setting ResumeButton Position to -> X: {newPosResume.X}, Y: {newPosResume.Y}, Z: {newPosResume.Z}");
     InternalCalls.SetPosition(ResumeButtonScript.mEntityID, ref newPosResume);
 
-    Console.WriteLine("13: Getting original SettingsButton position.");
+  //Console.WriteLine("13: Getting original SettingsButton position.");
     Vector3 originalSettings = InternalCalls.GetPosition(SettingsButtonScript.mEntityID);
 
-    Console.WriteLine($"14: Original SettingsButton Position -> X: {originalSettings.X}, Y: {originalSettings.Y}, Z: {originalSettings.Z}");
+  //Console.WriteLine($"14: Original SettingsButton Position -> X: {originalSettings.X}, Y: {originalSettings.Y}, Z: {originalSettings.Z}");
     Vector3 newPosSettings = new Vector3(originalSettings.X, originalSettings.Y, OriginalTargetZButton);
 
-    Console.WriteLine($"15: Setting SettingsButton Position to -> X: {newPosSettings.X}, Y: {newPosSettings.Y}, Z: {newPosSettings.Z}");
+  //Console.WriteLine($"15: Setting SettingsButton Position to -> X: {newPosSettings.X}, Y: {newPosSettings.Y}, Z: {newPosSettings.Z}");
     InternalCalls.SetPosition(SettingsButtonScript.mEntityID, ref newPosSettings);
 
-    Console.WriteLine("16: Getting original MainMenuButton position.");
+  //Console.WriteLine("16: Getting original MainMenuButton position.");
     Vector3 originalMainMenu = InternalCalls.GetPosition(MainMenuButtonScript.mEntityID);
 
-    Console.WriteLine($"17: Original MainMenuButton Position -> X: {originalMainMenu.X}, Y: {originalMainMenu.Y}, Z: {originalMainMenu.Z}");
+  //Console.WriteLine($"17: Original MainMenuButton Position -> X: {originalMainMenu.X}, Y: {originalMainMenu.Y}, Z: {originalMainMenu.Z}");
     Vector3 newPosMainMenu = new Vector3(originalMainMenu.X, originalMainMenu.Y, OriginalTargetZButton);
 
-    Console.WriteLine($"18: Setting MainMenuButton Position to -> X: {newPosMainMenu.X}, Y: {newPosMainMenu.Y}, Z: {newPosMainMenu.Z}");
+  //Console.WriteLine($"18: Setting MainMenuButton Position to -> X: {newPosMainMenu.X}, Y: {newPosMainMenu.Y}, Z: {newPosMainMenu.Z}");
     InternalCalls.SetPosition(MainMenuButtonScript.mEntityID, ref newPosMainMenu);
   }
 
@@ -172,12 +172,12 @@ public class PauseMenu : Entity
 
         case State.RESUME:
           {
-            Debug.Log("RESUME???");
+          //Debug.Log("RESUME???");
             transitionTimer += Time.deltaTime;
             if (transitionTimer >= transitionDuration)
             {
               Reset();
-              Debug.Log("RESUME!!!");
+            //Debug.Log("RESUME!!!");
               ResumeGame();
             }
             break;
@@ -231,7 +231,7 @@ public class PauseMenu : Entity
   {
     SetActive(true);
     InternalCalls.ShowCursor();
-    Debug.Log("Game Paused");
+  //Debug.Log("Game Paused");
 
     Vector3 originalMenu = InternalCalls.GetPosition(mEntityID);
     Vector3 newPosMenu = new Vector3(originalMenu.X, originalMenu.Y, TargetZMenu);
@@ -284,7 +284,7 @@ public class PauseMenu : Entity
     SetActive(false);
     SetAllButtonsInactive();
     InternalCalls.HideCursor();
-    Debug.Log("Game Resume");
+  //Debug.Log("Game Resume");
 
     Vector3 originalMenu = InternalCalls.GetPosition(mEntityID);
     Vector3 newPosMenu = new Vector3(originalMenu.X, originalMenu.Y, OriginalTargetZMenu);

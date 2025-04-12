@@ -221,7 +221,7 @@ public class PictureAlign : Entity
           if (ChangeSkyBox())
           {
             isNight = true;
-            Console.WriteLine("NIght");
+            //Console.WriteLine("NIght");
             InternalCalls.ChangeToolsPainting();
             if (hasFaded)
             {
@@ -237,7 +237,7 @@ public class PictureAlign : Entity
         else if (picture == "ToolsPainting")
         {
           M3InventoryScript.CloseInventoryAndUnselectAllItems();
-          Console.WriteLine("Tool");
+          //Console.WriteLine("Tool");
           FadeOut();
           InternalCalls.SpawnToolBox();
           if (hasFaded)
@@ -252,7 +252,7 @@ public class PictureAlign : Entity
         else if (picture == "TutorialPainting")
         {
           tutorialInventoryScript.CloseInventoryAndUnselectAllItems();
-          Console.WriteLine("Tut");
+          //Console.WriteLine("Tut");
           FadeOut();
           FindScript<GlowingLight>()?.StartBlooming();
           InternalCalls.SpawnOpenDoor();
@@ -477,7 +477,7 @@ public class PictureAlign : Entity
               FadeOut();
               ClearUI();
               PlayWarpShaderEffect();
-              Debug.Log("Fading");
+            //Debug.Log("Fading");
               if (Mathf.Abs(currentAlpha - 0f) < 0.01f)
               {
                 EndWarpShaderEffect();
@@ -548,7 +548,7 @@ public class PictureAlign : Entity
         }
         else
         {
-          Console.WriteLine("WHAt");
+        //Console.WriteLine("WHAt");
         }
 
       }
@@ -975,7 +975,7 @@ public class PictureAlign : Entity
 
       else
       {
-        Debug.Log("SET YOUR GATES");
+      //Debug.Log("SET YOUR GATES");
       }
     }
 

@@ -169,7 +169,7 @@ public class PickupCompletedPainting : Entity, IInventoryItem
               InternalCalls.PlaySound(mEntityID, "PickupObjects");
               isBeingPickedUp = false;
               playerMove.UnfreezePlayer();
-              Debug.Log("Trying to add to inventory");
+            //Debug.Log("Trying to add to inventory");
               inventoryScript.Additem(this);
               currState = State.END;
             }

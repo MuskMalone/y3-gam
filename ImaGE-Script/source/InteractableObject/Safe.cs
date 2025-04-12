@@ -429,7 +429,7 @@ public class Safe : Entity
     {
       if (InternalCalls.GetText(safeTextBox.mEntityID) == "CEREUS")
       {
-        Debug.Log("Correct answer");
+      //Debug.Log("Correct answer");
         correctAnswer = true;
       }
       else

@@ -1,6 +1,163 @@
 {
     "Scene": [
         {
+            "ID": 48,
+            "Parent": 1048612,
+            "Child Entities": [
+                49
+            ],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "SkipText",
+                        "isActive": false
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": -12.800000190734863,
+                            "y": 7.699999809265137,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -12.800000190734863,
+                            "y": 7.699999809265137,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Text": {
+                        "textContent": "Press ESC to skip",
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 1.0
+                        },
+                        "scale": 0.009999999776482582,
+                        "textAssetGUID": {
+                            "ID": 11715672305158928427
+                        },
+                        "fontFamilyName": "Sniglet-Regular",
+                        "alignment": 2,
+                        "multiLineSpacingOffset": 0.0,
+                        "textBoxEnabledFlag": false,
+                        "textBoxDimensions": {
+                            "x": 5.0,
+                            "y": 5.0,
+                            "z": 0.0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "ID": 49,
+            "Parent": 48,
+            "Child Entities": [],
+            "Components": [
+                {
+                    "Tag": {
+                        "tag": "Image",
+                        "isActive": true
+                    }
+                },
+                {
+                    "Transform": {
+                        "position": {
+                            "x": 0.0,
+                            "y": 0.699999988079071,
+                            "z": 0.0
+                        },
+                        "scale": {
+                            "x": 8.640000343322754,
+                            "y": 1.8799999952316284,
+                            "z": 1.0
+                        },
+                        "rotation": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        },
+                        "eulerAngles": {
+                            "x": 0.0,
+                            "y": -0.0,
+                            "z": 0.0
+                        },
+                        "worldPos": {
+                            "x": -12.800000190734863,
+                            "y": 8.399999618530273,
+                            "z": 0.0
+                        },
+                        "worldScale": {
+                            "x": 8.640000343322754,
+                            "y": 1.8799999952316284,
+                            "z": 1.0
+                        },
+                        "worldRot": {
+                            "x": 0.0,
+                            "y": 0.0,
+                            "z": 0.0,
+                            "w": 1.0
+                        }
+                    }
+                },
+                {
+                    "Layer": {
+                        "layerName": "Default"
+                    }
+                },
+                {
+                    "Image": {
+                        "color": {
+                            "x": 1.0,
+                            "y": 1.0,
+                            "z": 1.0,
+                            "w": 0.18039216101169586
+                        },
+                        "textureAssetGUID": {
+                            "ID": 11587003713487795447
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "ID": 1048578,
             "Parent": 1048583,
             "Child Entities": [],
@@ -1496,6 +1653,7 @@
             "ID": 1048612,
             "Parent": 1048603,
             "Child Entities": [
+                48,
                 1048588
             ],
             "Components": [
@@ -3428,6 +3586,23 @@
                                         "type": "System.Boolean",
                                         "scriptField": {
                                             "fieldName": "playIntroSequence"
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "entityID": 48,
+                                            "scriptName": "Entity"
+                                        },
+                                        "type": "Image.Mono.ScriptInstance",
+                                        "scriptField": {
+                                            "fieldName": "skipText"
+                                        }
+                                    },
+                                    {
+                                        "data": 2.0,
+                                        "type": "System.Single",
+                                        "scriptField": {
+                                            "fieldName": "skipTextShownDuration"
                                         }
                                     },
                                     {

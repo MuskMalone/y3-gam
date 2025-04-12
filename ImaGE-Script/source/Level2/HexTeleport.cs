@@ -51,6 +51,6 @@ public class HexTeleport : Entity
         particleBurst.SetActive(true);
         triggerOneFrame = true;
 
-        Debug.Log($"Teleported player to: {newPosition}");
+      //Debug.Log($"Teleported player to: {newPosition}");
     }
 }

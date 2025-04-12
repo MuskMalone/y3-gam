@@ -94,7 +94,7 @@ public class TutorialLevelInventory : Entity
 
                 if (ItemAdded != null)
                 {
-                    Debug.Log("Item has been added to inventory");
+                  //Debug.Log("Item has been added to inventory");
                     ItemAdded(this, new InventoryEventArgs(item, iconPosition[i]));
                 }
                 return;
@@ -262,8 +262,8 @@ public class TutorialLevelInventory : Entity
             if (highlighted) // i.e. Item is selected
             {
                 string itemName = mItems[index].Name;
-                Debug.Log($"Item in slot {index + 1}: {itemName}");
-                Debug.Log("Item selected");
+              //Debug.Log($"Item in slot {index + 1}: {itemName}");
+              //Debug.Log("Item selected");
                 ShowUIForItem(itemName);
             }
             else

@@ -67,42 +67,42 @@ public class SettingsPage : Entity
   // Start is called before the first frame update
   void Start()
   {
-    Console.WriteLine("7: Getting original menu position.");
+  //Console.WriteLine("7: Getting original menu position.");
     Vector3 originalMenu = InternalCalls.GetPosition(mEntityID);
-    Console.WriteLine($"8: Original Menu Position -> X: {originalMenu.X}, Y: {originalMenu.Y}, Z: {originalMenu.Z}");
+  //Console.WriteLine($"8: Original Menu Position -> X: {originalMenu.X}, Y: {originalMenu.Y}, Z: {originalMenu.Z}");
     Vector3 newPosMenu = new Vector3(originalMenu.X, originalMenu.Y, OriginalTargetZMenu);
-    Console.WriteLine($"9: Setting Menu Position to -> X: {newPosMenu.X}, Y: {newPosMenu.Y}, Z: {newPosMenu.Z}");
+  //Console.WriteLine($"9: Setting Menu Position to -> X: {newPosMenu.X}, Y: {newPosMenu.Y}, Z: {newPosMenu.Z}");
     InternalCalls.SetPosition(mEntityID, ref newPosMenu);
 
-    Console.WriteLine("10: Getting original ResumeButton position.");
+  //Console.WriteLine("10: Getting original ResumeButton position.");
     Vector3 originalVol = InternalCalls.GetPosition(VolumeSlider.mEntityID);
-    Console.WriteLine($"11: Original ResumeButton Position -> X: {originalVol.X}, Y: {originalVol.Y}, Z: {originalVol.Z}");
+  //Console.WriteLine($"11: Original ResumeButton Position -> X: {originalVol.X}, Y: {originalVol.Y}, Z: {originalVol.Z}");
     Vector3 newPosVol = new Vector3(originalVol.X, originalVol.Y, OriginalTargetZButton);
-    Console.WriteLine($"12: Setting ResumeButton Position to -> X: {newPosVol.X}, Y: {newPosVol.Y}, Z: {newPosVol.Z}");
+  //Console.WriteLine($"12: Setting ResumeButton Position to -> X: {newPosVol.X}, Y: {newPosVol.Y}, Z: {newPosVol.Z}");
     InternalCalls.SetPosition(VolumeSlider.mEntityID, ref newPosVol);
 
-    Console.WriteLine("13: Getting original SettingsButton position.");
+  //Console.WriteLine("13: Getting original SettingsButton position.");
     Vector3 originalBright = InternalCalls.GetPosition(BrightnessSlider.mEntityID);
-    Console.WriteLine($"14: Original SettingsButton Position -> X: {originalBright.X}, Y: {originalBright.Y}, Z: {originalBright.Z}");
+  //Console.WriteLine($"14: Original SettingsButton Position -> X: {originalBright.X}, Y: {originalBright.Y}, Z: {originalBright.Z}");
     Vector3 newPosSettings = new Vector3(originalBright.X, originalBright.Y, OriginalTargetZButton);
-    Console.WriteLine($"15: Setting SettingsButton Position to -> X: {newPosSettings.X}, Y: {newPosSettings.Y}, Z: {newPosSettings.Z}");
+  //Console.WriteLine($"15: Setting SettingsButton Position to -> X: {newPosSettings.X}, Y: {newPosSettings.Y}, Z: {newPosSettings.Z}");
     InternalCalls.SetPosition(BrightnessSlider.mEntityID, ref newPosSettings);
 
 
-    Console.WriteLine("10: Getting original ResumeButton position.");
+  //Console.WriteLine("10: Getting original ResumeButton position.");
     Vector3 originalSFX = InternalCalls.GetPosition(SFXSlider.mEntityID);
-    Console.WriteLine($"11: Original ResumeButton Position -> X: {originalSFX.X}, Y: {originalSFX.Y}, Z: {originalSFX.Z}");
+  //Console.WriteLine($"11: Original ResumeButton Position -> X: {originalSFX.X}, Y: {originalSFX.Y}, Z: {originalSFX.Z}");
     Vector3 newPosSFX = new Vector3(originalSFX.X, originalSFX.Y, OriginalTargetZButton);
-    Console.WriteLine($"12: Setting ResumeButton Position to -> X: {newPosSFX.X}, Y: {newPosSFX.Y}, Z: {newPosSFX.Z}");
+  //Console.WriteLine($"12: Setting ResumeButton Position to -> X: {newPosSFX.X}, Y: {newPosSFX.Y}, Z: {newPosSFX.Z}");
     InternalCalls.SetPosition(SFXSlider.mEntityID, ref newPosSFX);
 
 
 
-    Console.WriteLine("16: Getting original MainMenuButton position.");
+  //Console.WriteLine("16: Getting original MainMenuButton position.");
     Vector3 originalBack = InternalCalls.GetPosition(BackButton.mEntityID);
-    Console.WriteLine($"17: Original MainMenuButton Position -> X: {originalBack.X}, Y: {originalBack.Y}, Z: {originalBack.Z}");
+  //Console.WriteLine($"17: Original MainMenuButton Position -> X: {originalBack.X}, Y: {originalBack.Y}, Z: {originalBack.Z}");
     Vector3 newPosMainMenu = new Vector3(originalBack.X, originalBack.Y, OriginalTargetZButton);
-    Console.WriteLine($"18: Setting MainMenuButton Position to -> X: {newPosMainMenu.X}, Y: {newPosMainMenu.Y}, Z: {newPosMainMenu.Z}");
+  //Console.WriteLine($"18: Setting MainMenuButton Position to -> X: {newPosMainMenu.X}, Y: {newPosMainMenu.Y}, Z: {newPosMainMenu.Z}");
     InternalCalls.SetPosition(BackButton.mEntityID, ref newPosMainMenu);
   
 }
@@ -299,15 +299,15 @@ public class SettingsPage : Entity
     float screenWidth = screenMaxX - screenMinX;
     float canvasWidth = CanvasmaxX - CanvasminX;
     
-    Debug.Log("SX: " + screenX.ToString());
-    Debug.Log("SW: " + screenWidth.ToString());
-    Debug.Log("CW: " + canvasWidth.ToString());
+  //Debug.Log("SX: " + screenX.ToString());
+  //Debug.Log("SW: " + screenWidth.ToString());
+  //Debug.Log("CW: " + canvasWidth.ToString());
 
     // Normalize screenX to [0, 1] range, then scale to canvas width
     float normalizedX = (screenX - screenMinX) / screenWidth;
     float canvasX = CanvasminX + (normalizedX * canvasWidth);
-    Debug.Log("NX: " + normalizedX.ToString());
-    Debug.Log("CX: " + canvasX.ToString());
+  //Debug.Log("NX: " + normalizedX.ToString());
+  //Debug.Log("CX: " + canvasX.ToString());
 
 
     return canvasX;

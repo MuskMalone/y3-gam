@@ -184,7 +184,8 @@ namespace IGE {
 
 				// skip editor directories
 				if (!dirName.empty() && dirName[0] == '.' || dirName == "Compiled") { continue; }
-				else if (dirName == "GameImg" || dirName == "Shaders" || dirName == "PostProcessing") { continue; }
+				else if (dirName == "GameImg" || dirName == "Shaders" || dirName == "PostProcessing"
+								|| dirName == "Particle" || dirName == "Skybox") { continue; }
 
 				for (auto const& asset : std::filesystem::directory_iterator(file)) {
 					if (asset.is_directory()) { continue; }
